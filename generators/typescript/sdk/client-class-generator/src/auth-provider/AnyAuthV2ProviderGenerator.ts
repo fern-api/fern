@@ -4,7 +4,7 @@ import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
 
-export declare namespace DiscriminatedUnionAuthProviderGenerator {
+export declare namespace AnyAuthV2ProviderGenerator {
     export interface Init {
         ir: FernIr.IntermediateRepresentation;
         neverThrowErrors: boolean;
@@ -13,11 +13,11 @@ export declare namespace DiscriminatedUnionAuthProviderGenerator {
     }
 }
 
-const CLASS_NAME = "DiscriminatedUnionAuthProvider";
+const CLASS_NAME = "AnyAuthProvider";
 const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 const AUTH_FIELD_NAME = "auth";
 
-export class DiscriminatedUnionAuthProviderGenerator implements AuthProviderGenerator {
+export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
     public static readonly AUTH_FIELD_NAME = AUTH_FIELD_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
@@ -25,7 +25,7 @@ export class DiscriminatedUnionAuthProviderGenerator implements AuthProviderGene
     private readonly includeSerdeLayer: boolean;
     private readonly oauthTokenOverride: boolean;
 
-    constructor(init: DiscriminatedUnionAuthProviderGenerator.Init) {
+    constructor(init: AnyAuthV2ProviderGenerator.Init) {
         this.ir = init.ir;
         this.neverThrowErrors = init.neverThrowErrors;
         this.includeSerdeLayer = init.includeSerdeLayer;
@@ -47,7 +47,7 @@ export class DiscriminatedUnionAuthProviderGenerator implements AuthProviderGene
     }
 
     public getOptionsType(): ts.TypeNode {
-        throw new Error("DiscriminatedUnionAuthProvider does not have an Options type");
+        throw new Error("AnyAuthProvider does not have an Options type");
     }
 
     public getAuthOptionsType(): ts.TypeNode {

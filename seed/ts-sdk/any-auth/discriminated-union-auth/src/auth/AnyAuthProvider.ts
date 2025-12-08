@@ -2,7 +2,7 @@
 
 import type * as core from "../core/index.js";
 
-export namespace DiscriminatedUnionAuthProvider {
+export namespace AnyAuthProvider {
     export type AuthOptions = {
         auth?:
             | {
@@ -14,10 +14,10 @@ export namespace DiscriminatedUnionAuthProvider {
     };
 }
 
-export class DiscriminatedUnionAuthProvider implements core.AuthProvider {
-    private readonly auth: DiscriminatedUnionAuthProvider.AuthOptions["auth"];
+export class AnyAuthProvider implements core.AuthProvider {
+    private readonly auth: AnyAuthProvider.AuthOptions["auth"];
 
-    constructor(auth: DiscriminatedUnionAuthProvider.AuthOptions["auth"]) {
+    constructor(auth: AnyAuthProvider.AuthOptions["auth"]) {
         this.auth = auth;
     }
 

@@ -355,7 +355,7 @@ fixtures:
         generateEndpointMetadata: true
     - outputFolder: discriminated-union-auth
       customConfig:
-        useDiscriminatedUnionAuth: true
+        anyAuth: v2
   simple-api:
     - outputFolder: use-yarn
       customConfig:

@@ -2,17 +2,17 @@
 - version: 3.38.0
   changelogEntry:
     - summary: |
-        Add support for discriminated union auth configuration via the `useDiscriminatedUnionAuth` feature flag.
-        When enabled, users explicitly choose the auth type via a `type` field instead of the SDK trying each auth method.
+        Add support for discriminated union auth configuration via the `anyAuth: v2` config option.
+        When enabled, users explicitly choose the auth type via a `type` field instead of the SDK trying each auth method (v1 behavior).
 
-        To enable this feature, add the `useDiscriminatedUnionAuth` configuration to your _generators.yml_ file:
+        To enable this feature, add the `anyAuth: v2` configuration to your _generators.yml_ file:
         ```yaml
         # In generators.yml
         groups:
           generators:
             - name: fernapi/fern-typescript-sdk
               config:
-                useDiscriminatedUnionAuth: true
+                anyAuth: v2
         ```
 
         Users can then instantiate the client with explicit auth type selection:

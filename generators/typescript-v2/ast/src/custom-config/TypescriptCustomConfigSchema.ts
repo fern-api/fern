@@ -61,11 +61,10 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // OAuth token override configuration
     oauthTokenOverride: z.optional(z.boolean()),
 
-    // Auth configuration
-    // When true, generates a discriminated union type for auth where the user explicitly chooses
-    // the auth type via a `type` field, instead of the default ANY behavior where the SDK tries
-    // each auth method and catches errors.
-    useDiscriminatedUnionAuth: z.optional(z.boolean()),
+    // Auth configuration for ANY auth requirement
+    // v1 (default): SDK tries each auth method and catches errors
+    // v2: User explicitly chooses the auth type via a `type` field (discriminated union)
+    anyAuth: z.optional(z.enum(["v1", "v2"])),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),

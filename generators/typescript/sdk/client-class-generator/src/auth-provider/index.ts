@@ -1,13 +1,13 @@
 export { AnyAuthProviderGenerator } from "./AnyAuthProviderGenerator";
 export { AnyAuthProviderInstance } from "./AnyAuthProviderInstance";
+export { AnyAuthV2ProviderGenerator } from "./AnyAuthV2ProviderGenerator";
+export { AnyAuthV2ProviderInstance } from "./AnyAuthV2ProviderInstance";
 export type { AuthProviderGenerator } from "./AuthProviderGenerator";
 export { AuthProviderInstance } from "./AuthProviderInstance";
 export { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator";
 export { BasicAuthProviderInstance } from "./BasicAuthProviderInstance";
 export { BearerAuthProviderGenerator } from "./BearerAuthProviderGenerator";
 export { BearerAuthProviderInstance } from "./BearerAuthProviderInstance";
-export { DiscriminatedUnionAuthProviderGenerator } from "./DiscriminatedUnionAuthProviderGenerator";
-export { DiscriminatedUnionAuthProviderInstance } from "./DiscriminatedUnionAuthProviderInstance";
 export { HeaderAuthProviderGenerator } from "./HeaderAuthProviderGenerator";
 export { HeaderAuthProviderInstance } from "./HeaderAuthProviderInstance";
 export { InferredAuthProviderGenerator } from "./InferredAuthProviderGenerator";

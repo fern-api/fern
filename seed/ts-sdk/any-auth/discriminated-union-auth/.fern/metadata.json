@@ -3,6 +3,6 @@
     "generatorName": "fernapi/fern-typescript-sdk",
     "generatorVersion": "latest",
     "generatorConfig": {
-        "useDiscriminatedUnionAuth": true
+        "anyAuth": "v2"
     }
 }

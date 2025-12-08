@@ -2,10 +2,10 @@ import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { getPropertyKey } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
+import { AnyAuthV2ProviderGenerator } from "./AnyAuthV2ProviderGenerator";
 import { AuthProviderInstance } from "./AuthProviderInstance";
-import { DiscriminatedUnionAuthProviderGenerator } from "./DiscriminatedUnionAuthProviderGenerator";
 
-export class DiscriminatedUnionAuthProviderInstance implements AuthProviderInstance {
+export class AnyAuthV2ProviderInstance implements AuthProviderInstance {
     private readonly ir: IntermediateRepresentation;
 
     constructor(ir: IntermediateRepresentation) {
@@ -13,15 +13,11 @@ export class DiscriminatedUnionAuthProviderInstance implements AuthProviderInsta
     }
 
     public instantiate({ context, params }: { context: SdkContext; params: ts.Expression[] }): ts.Expression {
-        context.importsManager.addImportFromRoot("auth/DiscriminatedUnionAuthProvider", {
-            namedImports: ["DiscriminatedUnionAuthProvider"]
+        context.importsManager.addImportFromRoot("auth/AnyAuthProvider", {
+            namedImports: ["AnyAuthProvider"]
         });
 
-        return ts.factory.createNewExpression(
-            ts.factory.createIdentifier("DiscriminatedUnionAuthProvider"),
-            undefined,
-            params
-        );
+        return ts.factory.createNewExpression(ts.factory.createIdentifier("AnyAuthProvider"), undefined, params);
     }
 
     public getSnippetProperties(context: SdkContext): ts.ObjectLiteralElementLike[] {
@@ -98,7 +94,7 @@ export class DiscriminatedUnionAuthProviderInstance implements AuthProviderInsta
 
         return [
             ts.factory.createPropertyAssignment(
-                DiscriminatedUnionAuthProviderGenerator.AUTH_FIELD_NAME,
+                AnyAuthV2ProviderGenerator.AUTH_FIELD_NAME,
                 ts.factory.createObjectLiteralExpression(authObjectProperties, false)
             )
         ];

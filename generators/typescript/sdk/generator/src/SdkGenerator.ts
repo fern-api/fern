@@ -161,7 +161,7 @@ export declare namespace SdkGenerator {
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
         oauthTokenOverride: boolean;
-        useDiscriminatedUnionAuth: boolean;
+        anyAuth: "v1" | "v2";
     }
 }
 
@@ -476,14 +476,14 @@ export class SdkGenerator {
             parameterNaming: config.parameterNaming,
             offsetSemantics: config.offsetSemantics,
             oauthTokenOverride: config.oauthTokenOverride,
-            useDiscriminatedUnionAuth: config.useDiscriminatedUnionAuth
+            anyAuth: config.anyAuth
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             omitFernHeaders: config.omitFernHeaders,
             oauthTokenOverride: config.oauthTokenOverride,
-            useDiscriminatedUnionAuth: config.useDiscriminatedUnionAuth
+            anyAuth: config.anyAuth
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
@@ -1392,21 +1392,21 @@ export class SdkGenerator {
         const isAnyAuth = this.intermediateRepresentation.auth.requirement === "ANY";
 
         if (isAnyAuth) {
-            // Check if we should use discriminated union auth
-            if (this.config.useDiscriminatedUnionAuth) {
-                // Generate the DiscriminatedUnionAuthProvider
-                const discriminatedUnionAuthProvidersGenerator = new AuthProvidersGenerator({
+            // Check if we should use v2 (discriminated union) auth
+            if (this.config.anyAuth === "v2") {
+                // Generate the AnyAuthProvider (v2 style with discriminated union)
+                const anyAuthV2ProvidersGenerator = new AuthProvidersGenerator({
                     ir: this.intermediateRepresentation,
-                    authScheme: { type: "discriminatedUnion" },
+                    authScheme: { type: "anyAuthV2" },
                     neverThrowErrors: this.config.neverThrowErrors,
                     includeSerdeLayer: this.config.includeSerdeLayer,
                     oauthTokenOverride: this.config.oauthTokenOverride
                 });
                 this.withSourceFile({
-                    filepath: discriminatedUnionAuthProvidersGenerator.getFilePath(),
+                    filepath: anyAuthV2ProvidersGenerator.getFilePath(),
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
-                        discriminatedUnionAuthProvidersGenerator.writeToFile(context);
+                        anyAuthV2ProvidersGenerator.writeToFile(context);
                     }
                 });
             } else {

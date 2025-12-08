@@ -1,1 +1,1 @@
-export { DiscriminatedUnionAuthProvider } from "./DiscriminatedUnionAuthProvider.js";
+export { AnyAuthProvider } from "./AnyAuthProvider.js";

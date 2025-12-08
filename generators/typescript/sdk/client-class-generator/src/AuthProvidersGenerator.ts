@@ -5,10 +5,10 @@ import { GeneratedFile, SdkContext } from "@fern-typescript/contexts";
 
 import {
     AnyAuthProviderGenerator,
+    AnyAuthV2ProviderGenerator,
     AuthProviderGenerator,
     BasicAuthProviderGenerator,
     BearerAuthProviderGenerator,
-    DiscriminatedUnionAuthProviderGenerator,
     HeaderAuthProviderGenerator,
     InferredAuthProviderGenerator,
     OAuthAuthProviderGenerator
@@ -17,7 +17,7 @@ import {
 export declare namespace AuthProvidersGenerator {
     export interface Init {
         ir: IntermediateRepresentation;
-        authScheme: AuthScheme | { type: "any" } | { type: "discriminatedUnion" };
+        authScheme: AuthScheme | { type: "any" } | { type: "anyAuthV2" };
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
         oauthTokenOverride: boolean;
@@ -39,8 +39,8 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
                     return new AnyAuthProviderGenerator({
                         ir
                     });
-                case "discriminatedUnion":
-                    return new DiscriminatedUnionAuthProviderGenerator({
+                case "anyAuthV2":
+                    return new AnyAuthV2ProviderGenerator({
                         ir,
                         neverThrowErrors,
                         includeSerdeLayer,

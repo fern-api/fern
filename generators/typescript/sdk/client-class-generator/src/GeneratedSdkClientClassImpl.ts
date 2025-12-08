@@ -45,10 +45,10 @@ import {
 import { Code, code } from "ts-poet";
 import {
     AnyAuthProviderInstance,
+    AnyAuthV2ProviderInstance,
     AuthProviderInstance,
     BasicAuthProviderInstance,
     BearerAuthProviderInstance,
-    DiscriminatedUnionAuthProviderInstance,
     HeaderAuthProviderInstance,
     InferredAuthProviderInstance,
     OAuthAuthProviderInstance
@@ -95,7 +95,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
         oauthTokenOverride: boolean;
-        useDiscriminatedUnionAuth: boolean;
+        anyAuth: "v1" | "v2";
     }
 }
 
@@ -168,7 +168,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         parameterNaming,
         offsetSemantics,
         oauthTokenOverride,
-        useDiscriminatedUnionAuth
+        anyAuth
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -439,9 +439,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             });
 
-        // If useDiscriminatedUnionAuth is enabled, use the discriminated union auth provider
-        if (isAnyAuth && useDiscriminatedUnionAuth) {
-            this.authProvider = new DiscriminatedUnionAuthProviderInstance(intermediateRepresentation);
+        // If anyAuth is v2, use the AnyAuthV2 provider (discriminated union style)
+        if (isAnyAuth && anyAuth === "v2") {
+            this.authProvider = new AnyAuthV2ProviderInstance(intermediateRepresentation);
         } else {
             for (const authScheme of authSchemes) {
                 if (isAnyAuth) {

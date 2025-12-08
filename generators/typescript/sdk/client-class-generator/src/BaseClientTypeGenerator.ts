@@ -11,7 +11,7 @@ export declare namespace BaseClientTypeGenerator {
         ir: FernIr.IntermediateRepresentation;
         omitFernHeaders: boolean;
         oauthTokenOverride: boolean;
-        useDiscriminatedUnionAuth: boolean;
+        anyAuth: "v1" | "v2";
     }
 }
 
@@ -23,20 +23,20 @@ export class BaseClientTypeGenerator {
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
     private readonly oauthTokenOverride: boolean;
-    private readonly useDiscriminatedUnionAuth: boolean;
+    private readonly anyAuth: "v1" | "v2";
 
     constructor({
         generateIdempotentRequestOptions,
         ir,
         omitFernHeaders,
         oauthTokenOverride,
-        useDiscriminatedUnionAuth
+        anyAuth
     }: BaseClientTypeGenerator.Init) {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;
         this.oauthTokenOverride = oauthTokenOverride;
-        this.useDiscriminatedUnionAuth = useDiscriminatedUnionAuth;
+        this.anyAuth = anyAuth;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -89,8 +89,8 @@ export type BaseClientOptions = {
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
         if (isAnyAuth) {
-            if (this.useDiscriminatedUnionAuth) {
-                authOptionsTypes.push("DiscriminatedUnionAuthProvider.AuthOptions");
+            if (this.anyAuth === "v2") {
+                authOptionsTypes.push("AnyAuthProvider.AuthOptions");
             } else {
                 authOptionsTypes.push("AnyAuthProvider.AuthOptions");
             }
@@ -247,14 +247,14 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
         if (isAnyAuth) {
-            if (this.useDiscriminatedUnionAuth) {
-                // Use discriminated union auth provider
+            if (this.anyAuth === "v2") {
+                // Use AnyAuthProvider v2 (discriminated union style)
                 context.sourceFile.addImportDeclaration({
-                    moduleSpecifier: "./auth/DiscriminatedUnionAuthProvider.js",
-                    namedImports: ["DiscriminatedUnionAuthProvider"]
+                    moduleSpecifier: "./auth/AnyAuthProvider.js",
+                    namedImports: ["AnyAuthProvider"]
                 });
 
-                authProviderCreation = `new DiscriminatedUnionAuthProvider(${OPTIONS_PARAMETER_NAME}.auth)`;
+                authProviderCreation = `new AnyAuthProvider(${OPTIONS_PARAMETER_NAME}.auth)`;
             } else {
                 // Use the existing AnyAuthProvider approach
                 context.sourceFile.addImportDeclaration({
