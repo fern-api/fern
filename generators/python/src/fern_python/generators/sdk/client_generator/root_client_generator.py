@@ -49,14 +49,14 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     BASE_URL_CONSTRUCTOR_PARAMETER_DOCS = "The base url to use for requests from the client."
     BASE_URL_MEMBER_NAME = "_base_url"
 
+    CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS = "The client identifier used for authentication."
+    CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS = "The client secret used for authentication."
+
     HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME = "httpx_client"
     HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS = (
         "The httpx client to use for making requests, a preconfigured client is used by default, "
         "however this is useful should you want to pass in any custom httpx configuration."
     )
-
-    CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS = "The client identifier used for authentication."
-    CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS = "The client secret used for authentication."
 
     FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_DOCS = (
         "Whether the default httpx client follows redirects or not, this is irrelevant "
@@ -195,82 +195,81 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     def _write_root_class_docstring(self, writer: AST.NodeWriter) -> None:
         writer.write_line(self.ROOT_CLASS_DOCSTRING)
 
-        if self._oauth_scheme is not None and self._context.custom_config.oauth_token_override:
-            writer.write_line("")
-            oauth = self._oauth_scheme.configuration.get_as_union()
-            if oauth.type == "clientCredentials":
-                writer.write_line("Parameters")
-                writer.write_line("----------")
+        oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+        is_oauth_override_client_credentials = (
+            oauth_union is not None
+            and oauth_union.type == "clientCredentials"
+            and self._context.custom_config.oauth_token_override
+        )
 
-                timeout_phrase = (
-                    f"the timeout is {self._context.custom_config.timeout_in_seconds} seconds"
-                    if isinstance(self._context.custom_config.timeout_in_seconds, int)
-                    else "there is no timeout set"
-                )
+        # For non client-credentials OAuth or when oauth_token_override is disabled,
+        # rely on the auto-generated parameter docstring.
+        if not is_oauth_override_client_credentials:
+            return
 
-                # Overload 1: client_id + client_secret
-                writer.write_line("")
-                writer.write_line(f"{self.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} : str")
-                writer.indent()
-                writer.write_line(self.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS)
-                writer.outdent()
-                writer.write_line("client_id : str")
-                writer.indent()
-                writer.write_line(self.CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS)
-                writer.outdent()
-                writer.write_line("client_secret : str")
-                writer.indent()
-                writer.write_line(self.CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS)
-                writer.outdent()
-                writer.write_line("timeout : typing.Optional[float]")
-                writer.indent()
-                writer.write_line(
-                    f"The timeout to be used, in seconds, for requests. By default {timeout_phrase}, "
-                    "unless a custom httpx client is used, in which case this default is not enforced."
-                )
-                writer.outdent()
-                writer.write_line(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} : typing.Optional[bool]")
-                writer.indent()
-                writer.write_line(self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_DOCS)
-                writer.outdent()
-                writer.write_line(f"{self.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} : typing.Optional[httpx.Client]")
-                writer.indent()
-                writer.write_line(self.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS)
-                writer.outdent()
+        # Custom Parameters section for client-credentials + oauth_token_override
+        writer.write_line("")
+        writer.write_line("Parameters")
+        writer.write_line("----------")
 
-                # Separator between overloads, mirroring Examples section style
-                writer.write_line("")
-                writer.write_line("# or ...")
-                writer.write_line("")
+        # Use the same constructor parameter definitions that drive the function
+        # signature so types/docs stay in sync with the actual AST.
+        constructor_parameters = self._get_constructor_parameters(is_async=False)
+        params_by_name: dict[str, RootClientConstructorParameter] = {
+            param.constructor_parameter_name: param for param in constructor_parameters
+        }
 
-                # Overload 2: token
-                writer.write_line(f"{self.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} : str")
-                writer.indent()
-                writer.write_line(self.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS)
-                writer.outdent()
-                writer.write_line("token : str")
-                writer.indent()
-                writer.write_line(
-                    "Authenticate by providing a pre-generated bearer token via 'token'. "
-                    "In this mode, OAuth client credentials are not required."
-                )
-                writer.outdent()
-                writer.write_line("timeout : typing.Optional[float]")
-                writer.indent()
-                writer.write_line(
-                    f"The timeout to be used, in seconds, for requests. By default {timeout_phrase}, "
-                    "unless a custom httpx client is used, in which case this default is not enforced."
-                )
-                writer.outdent()
-                writer.write_line(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} : typing.Optional[bool]")
-                writer.indent()
-                writer.write_line(self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_DOCS)
-                writer.outdent()
-                writer.write_line(f"{self.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} : typing.Optional[httpx.Client]")
-                writer.indent()
-                writer.write_line(self.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS)
-                writer.outdent()
-                writer.write_line("")
+        def write_param_block(param_names: list[str]) -> None:
+            is_first = True
+            for name in param_names:
+                param = params_by_name.get(name)
+                if param is None:
+                    continue
+                if not is_first:
+                    writer.write_line("")
+                is_first = False
+
+                writer.write(f"{param.constructor_parameter_name} : ")
+                if param.type_hint is not None:
+                    if param.constructor_parameter_name in {
+                        "client_id",
+                        "client_secret",
+                        RootClientGenerator.TOKEN_PARAMETER_NAME,
+                    }:
+                        writer.write_node(AST.TypeHint.str_())
+                    else:
+                        writer.write_node(param.type_hint)
+                if param.docs is not None:
+                    with writer.indent():
+                        writer.write_line(param.docs)
+
+        # Overload 1: client_id + client_secret
+        overload_1_param_names: list[str] = [
+            RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+            "client_id",
+            "client_secret",
+            self._timeout_constructor_parameter_name,
+            RootClientGenerator.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
+            RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
+        ]
+        writer.write_line("")
+        write_param_block(overload_1_param_names)
+
+        # Separator between overloads, mirroring Examples section style
+        writer.write_line("")
+        writer.write_line("# or ...")
+        writer.write_line("")
+
+        # Overload 2: token
+        overload_2_param_names: list[str] = [
+            RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+            RootClientGenerator.TOKEN_PARAMETER_NAME,
+            self._timeout_constructor_parameter_name,
+            RootClientGenerator.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
+            RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
+        ]
+        write_param_block(overload_2_param_names)
+        writer.write_line("")
 
     def _create_class_declaration(
         self,
@@ -587,6 +586,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                 if oauth.client_id_env_var is not None
                                 else AST.Expression("None")
                             ),
+                            docs=RootClientGenerator.CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS,
                             # No validation_check - validation happens in constructor body
                         ),
                     )
@@ -608,6 +608,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                 if oauth.client_secret_env_var is not None
                                 else AST.Expression("None")
                             ),
+                            docs=RootClientGenerator.CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS,
                             # No validation_check - validation happens in constructor body
                         ),
                     )
@@ -617,6 +618,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             constructor_parameter_name=self.TOKEN_PARAMETER_NAME,
                             type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                             initializer=AST.Expression("None"),
+                            docs=(
+                                "Authenticate by providing a pre-generated bearer token via 'token'. "
+                                "In this mode, OAuth client credentials are not required."
+                            ),
                         ),
                     )
                 else:
@@ -744,7 +749,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 ),
                 private_member_name=None,
                 initializer=AST.Expression(AST.TypeHint.none()),
-                docs="The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.",
+                docs=RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS,
             )
         )
         parameters.extend(self._get_literal_header_parameters())
@@ -809,9 +814,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         client_secret_param: AST.NamedFunctionParameter
 
         if oauth.client_id_env_var is not None:
+            # Even when there is an environment variable default, model client_id
+            # as a required str at the overload level for clearer typing.
             client_id_param = AST.NamedFunctionParameter(
                 name="client_id",
-                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                type_hint=AST.TypeHint.str_(),
                 initializer=AST.Expression(
                     AST.FunctionInvocation(
                         function_definition=AST.Reference(
@@ -829,9 +836,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
 
         if oauth.client_secret_env_var is not None:
+            # Same idea as client_id: keep the type required in the overload,
+            # even if there is a default from the environment.
             client_secret_param = AST.NamedFunctionParameter(
                 name="client_secret",
-                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                type_hint=AST.TypeHint.str_(),
                 initializer=AST.Expression(
                     AST.FunctionInvocation(
                         function_definition=AST.Reference(
