@@ -55,7 +55,6 @@ export class ReadmeConfigBuilder {
         });
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
         const addendums = readmeSnippetBuilder.buildReadmeAddendums();
-        const authenticationDescription = readmeSnippetBuilder.buildAuthenticationDescription();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
         for (const feature of featureConfig.features) {
             const snippetForFeature = snippets[feature.id];
@@ -76,11 +75,7 @@ export class ReadmeConfigBuilder {
                 feature.addendum = addendumForFeature;
             }
 
-            // Override description for AUTHENTICATION feature if we have a custom one
-            let description = feature.description ? this.processTemplateText(feature.description) : undefined;
-            if (feature.id === "AUTHENTICATION" && authenticationDescription != null) {
-                description = authenticationDescription;
-            }
+            const description = feature.description ? this.processTemplateText(feature.description) : undefined;
 
             features.push({
                 id: feature.id,

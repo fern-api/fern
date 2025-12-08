@@ -526,16 +526,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     }
 
     public buildAuthenticationDescription(): string | undefined {
-        if (!this.oauthTokenOverride) {
-            return undefined;
-        }
-
-        const oauthScheme = this.context.ir.auth.schemes.find((scheme) => scheme.type === "oauth");
-        if (oauthScheme == null) {
-            return undefined;
-        }
-
-        return "The SDK supports OAuth authentication with two options.";
+        return undefined;
     }
 
     private buildRuntimeCompatibilitySnippets(): string[] {
