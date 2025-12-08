@@ -1,0 +1,457 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_oneOfExamples",
+    ],
+    "types": [
+      "OneOfVariantA",
+      "OneOfVariantB",
+      "ErrorVariantA",
+      "ErrorVariantB",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {
+    "subpackage_oneOfExamples": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "authV2": undefined,
+          "availability": undefined,
+          "defaultEnvironment": "https://api.example.com/v1",
+          "description": "Demonstrates oneOf without discriminator or mapping.",
+          "environments": [
+            {
+              "baseUrl": "https://api.example.com/v1",
+              "id": "https://api.example.com/v1",
+            },
+          ],
+          "errors": undefined,
+          "errorsV2": [
+            {
+              "availability": undefined,
+              "description": "Bad request error",
+              "examples": [],
+              "headers": undefined,
+              "isWildcard": undefined,
+              "name": "BadRequestError",
+              "statusCode": 400,
+              "type": {
+                "type": "alias",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "OneOfExampleNoDiscriminatorRequestBadRequestError",
+                },
+              },
+            },
+          ],
+          "examples": [
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": undefined,
+              "path": "/oneOf/no-discriminator",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": {
+                "variantAField": "string",
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "variantAField": "string",
+                },
+              },
+              "responseBody": {
+                "success": true,
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "success": true,
+                },
+              },
+              "responseStatusCode": 200,
+            },
+          ],
+          "headers": [],
+          "id": "oneOfExampleNoDiscriminator",
+          "includeInApiExplorer": undefined,
+          "method": "POST",
+          "multiAuth": undefined,
+          "name": "Example endpoint using oneOf without discriminator",
+          "originalEndpointId": "endpoint_oneOfExamples.oneOfExampleNoDiscriminator",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/oneOf/no-discriminator",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "protocol": {
+            "type": "rest",
+          },
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "type": {
+              "contentType": "application/json",
+              "description": undefined,
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "oneOf Examples_oneOfExampleNoDiscriminator_Request",
+                },
+              },
+              "type": "json",
+            },
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "description": undefined,
+                "type": {
+                  "contentType": "application/json",
+                  "description": undefined,
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "default": undefined,
+                      "type": "id",
+                      "value": "oneOf Examples_oneOfExampleNoDiscriminator_Request",
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+            ],
+          },
+          "response": {
+            "description": "Success",
+            "isWildcard": undefined,
+            "statusCode": 200,
+            "type": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "oneOf Examples_oneOfExampleNoDiscriminator_Response_200",
+              },
+            },
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "description": "Success",
+                "isWildcard": undefined,
+                "statusCode": 200,
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "oneOf Examples_oneOfExampleNoDiscriminator_Response_200",
+                  },
+                },
+              },
+            ],
+          },
+          "slug": undefined,
+        },
+      ],
+      "name": "oneOfExamples",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_oneOfExamples",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "ErrorVariantA": {
+      "availability": undefined,
+      "description": "Error variant A without discriminator",
+      "displayName": undefined,
+      "name": "ErrorVariantA",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "errorCodeA",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "details",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ErrorVariantB": {
+      "availability": undefined,
+      "description": "Error variant B without discriminator",
+      "displayName": undefined,
+      "name": "ErrorVariantB",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "errorCodeB",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "integer",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "reason",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "OneOfExampleNoDiscriminatorRequestBadRequestError": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "OneOfExampleNoDiscriminatorRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "displayName": undefined,
+            "type": {
+              "default": undefined,
+              "type": "id",
+              "value": "ErrorVariantA",
+            },
+            "typeName": "ErrorVariantA",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "displayName": undefined,
+            "type": {
+              "default": undefined,
+              "type": "id",
+              "value": "ErrorVariantB",
+            },
+            "typeName": "ErrorVariantB",
+          },
+        ],
+      },
+    },
+    "OneOfVariantA": {
+      "availability": undefined,
+      "description": "First variant for oneOf without discriminator",
+      "displayName": undefined,
+      "name": "OneOfVariantA",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "variantAField",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "OneOfVariantB": {
+      "availability": undefined,
+      "description": "Second variant for oneOf without discriminator",
+      "displayName": undefined,
+      "name": "OneOfVariantB",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "variantBField",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "integer",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "oneOf Examples_oneOfExampleNoDiscriminator_Request": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "oneOf Examples_oneOfExampleNoDiscriminator_Request",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "displayName": undefined,
+            "type": {
+              "default": undefined,
+              "type": "id",
+              "value": "OneOfVariantA",
+            },
+            "typeName": "OneOfVariantA",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "displayName": undefined,
+            "type": {
+              "default": undefined,
+              "type": "id",
+              "value": "OneOfVariantB",
+            },
+            "typeName": "OneOfVariantB",
+          },
+        ],
+      },
+    },
+    "oneOf Examples_oneOfExampleNoDiscriminator_Response_200": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "oneOf Examples_oneOfExampleNoDiscriminator_Response_200",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "success",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "type": "boolean",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
