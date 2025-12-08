@@ -266,32 +266,32 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
 
             switch (authScheme.type) {
                 case "bearer": {
-                    // Pass options.auth directly to BearerAuthProvider - TypeScript narrows the type
+                    // Spread options and options.auth to create normalized options with auth fields at top level
                     switchCases.push(`
             case "${schemeKey}":
-                this.${DELEGATE_FIELD_NAME} = new ${BearerAuthProviderGenerator.CLASS_NAME}(${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME});
+                this.${DELEGATE_FIELD_NAME} = new ${BearerAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, ...${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME} });
                 break;`);
                     break;
                 }
                 case "basic": {
-                    // Pass options.auth directly to BasicAuthProvider - TypeScript narrows the type
+                    // Spread options and options.auth to create normalized options with auth fields at top level
                     switchCases.push(`
             case "${schemeKey}":
-                this.${DELEGATE_FIELD_NAME} = new ${BasicAuthProviderGenerator.CLASS_NAME}(${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME});
+                this.${DELEGATE_FIELD_NAME} = new ${BasicAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, ...${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME} });
                 break;`);
                     break;
                 }
                 case "header": {
-                    // Pass options.auth directly to HeaderAuthProvider - TypeScript narrows the type
+                    // Spread options and options.auth to create normalized options with auth fields at top level
                     switchCases.push(`
             case "${schemeKey}":
-                this.${DELEGATE_FIELD_NAME} = new ${HeaderAuthProviderGenerator.CLASS_NAME}(${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME});
+                this.${DELEGATE_FIELD_NAME} = new ${HeaderAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, ...${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME} });
                 break;`);
                     break;
                 }
                 case "oauth": {
                     if (context.generateOAuthClients) {
-                        // OAuthAuthProvider needs BaseClientOptions, so spread options and options.auth
+                        // Spread options and options.auth to create normalized options with auth fields at top level
                         switchCases.push(`
             case "${schemeKey}":
                 this.${DELEGATE_FIELD_NAME} = new ${OAuthAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, ...${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME} });

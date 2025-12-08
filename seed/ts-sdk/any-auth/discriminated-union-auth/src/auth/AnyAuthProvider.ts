@@ -25,10 +25,10 @@ export class AnyAuthProvider implements core.AuthProvider {
         }
         switch (options.auth.type) {
             case "Bearer":
-                this.delegate = new BearerAuthProvider(options.auth);
+                this.delegate = new BearerAuthProvider({ ...options, ...options.auth });
                 break;
             case "ApiKey":
-                this.delegate = new HeaderAuthProvider(options.auth);
+                this.delegate = new HeaderAuthProvider({ ...options, ...options.auth });
                 break;
             case "OAuth":
                 this.delegate = new OAuthAuthProvider({ ...options, ...options.auth });
