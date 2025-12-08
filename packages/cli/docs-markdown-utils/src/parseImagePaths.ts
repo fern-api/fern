@@ -547,6 +547,10 @@ function isExternalUrl(url: string): boolean {
     return false;
 }
 
+export function isValidRelativeSlug(slug: string): boolean {
+    return !isExternalUrl(slug);
+}
+
 function isWindowsAbsolutePath(path: string): boolean {
     // Match Windows drive letter paths like C:\, D:\, c:/, etc.
     return /^[a-zA-Z]:[\\/]/.test(path);
