@@ -223,7 +223,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const constructorOptionsType = hasTokenOverride
             ? `${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.ClientCredentials`
-            : getTextOfTsNode(this.getOptionsType());
+            : `${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`;
 
         let constructorStatements = "";
 
@@ -490,7 +490,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 parameters: [
                     {
                         name: "options",
-                        type: getTextOfTsNode(this.getOptionsType())
+                        type: `${CLASS_NAME}.${OPTIONS_TYPE_NAME} & Partial<${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}>`
                     }
                 ]
             },

@@ -45,6 +45,7 @@ import {
 import { Code, code } from "ts-poet";
 import {
     AnyAuthProviderInstance,
+    AnyAuthV2ProviderInstance,
     AuthProviderInstance,
     BasicAuthProviderInstance,
     BearerAuthProviderInstance,
@@ -94,6 +95,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
         oauthTokenOverride: boolean;
+        anyAuth: "v1" | "v2";
     }
 }
 
@@ -165,7 +167,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         generateEndpointMetadata,
         parameterNaming,
         offsetSemantics,
-        oauthTokenOverride
+        oauthTokenOverride,
+        anyAuth
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -436,19 +439,24 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             });
 
-        for (const authScheme of authSchemes) {
-            if (isAnyAuth) {
-                const authProvider = getAuthProvider(authScheme);
-                anyAuthProviders.push(authProvider);
-            } else {
-                this.authProvider = getAuthProvider(authScheme);
-                break;
+        // If anyAuth is v2, use the AnyAuthV2 provider (discriminated union style)
+        if (isAnyAuth && anyAuth === "v2") {
+            this.authProvider = new AnyAuthV2ProviderInstance(intermediateRepresentation);
+        } else {
+            for (const authScheme of authSchemes) {
+                if (isAnyAuth) {
+                    const authProvider = getAuthProvider(authScheme);
+                    anyAuthProviders.push(authProvider);
+                } else {
+                    this.authProvider = getAuthProvider(authScheme);
+                    break;
+                }
             }
-        }
 
-        // After the loop, if isAnyAuth, create AnyAuthProviderInstance with all collected providers
-        if (isAnyAuth && anyAuthProviders.length > 0) {
-            this.authProvider = new AnyAuthProviderInstance(anyAuthProviders);
+            // After the loop, if isAnyAuth, create AnyAuthProviderInstance with all collected providers
+            if (isAnyAuth && anyAuthProviders.length > 0) {
+                this.authProvider = new AnyAuthProviderInstance(anyAuthProviders);
+            }
         }
     }
 

@@ -11,6 +11,7 @@ export declare namespace BaseClientTypeGenerator {
         ir: FernIr.IntermediateRepresentation;
         omitFernHeaders: boolean;
         oauthTokenOverride: boolean;
+        anyAuth: "v1" | "v2";
     }
 }
 
@@ -22,17 +23,20 @@ export class BaseClientTypeGenerator {
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
     private readonly oauthTokenOverride: boolean;
+    private readonly anyAuth: "v1" | "v2";
 
     constructor({
         generateIdempotentRequestOptions,
         ir,
         omitFernHeaders,
-        oauthTokenOverride
+        oauthTokenOverride,
+        anyAuth
     }: BaseClientTypeGenerator.Init) {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;
         this.oauthTokenOverride = oauthTokenOverride;
+        this.anyAuth = anyAuth;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -85,7 +89,11 @@ export type BaseClientOptions = {
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
         if (isAnyAuth) {
-            authOptionsTypes.push("AnyAuthProvider.AuthOptions");
+            if (this.anyAuth === "v2") {
+                authOptionsTypes.push("AnyAuthProvider.AuthOptions");
+            } else {
+                authOptionsTypes.push("AnyAuthProvider.AuthOptions");
+            }
         } else {
             for (const authScheme of this.ir.auth.schemes) {
                 const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);
@@ -239,60 +247,71 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
         if (isAnyAuth) {
-            context.sourceFile.addImportDeclaration({
-                moduleSpecifier: "./auth/AnyAuthProvider.js",
-                namedImports: ["AnyAuthProvider"]
-            });
+            if (this.anyAuth === "v2") {
+                // Use AnyAuthProvider v2 (discriminated union style)
+                context.sourceFile.addImportDeclaration({
+                    moduleSpecifier: "./auth/AnyAuthProvider.js",
+                    namedImports: ["AnyAuthProvider"]
+                });
 
-            const providerImports: string[] = [];
-            const providerInstantiations: string[] = [];
+                authProviderCreation = `new AnyAuthProvider(${OPTIONS_PARAMETER_NAME})`;
+            } else {
+                // Use the existing AnyAuthProvider approach
+                context.sourceFile.addImportDeclaration({
+                    moduleSpecifier: "./auth/AnyAuthProvider.js",
+                    namedImports: ["AnyAuthProvider"]
+                });
 
-            for (const authScheme of this.ir.auth.schemes) {
-                if (authScheme.type === "bearer") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/BearerAuthProvider.js",
-                        namedImports: ["BearerAuthProvider"]
-                    });
-                    providerImports.push("BearerAuthProvider");
-                    providerInstantiations.push(
-                        "if (BearerAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new BearerAuthProvider(normalizedWithNoOpAuthProvider)); }"
-                    );
-                } else if (authScheme.type === "basic") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/BasicAuthProvider.js",
-                        namedImports: ["BasicAuthProvider"]
-                    });
-                    providerImports.push("BasicAuthProvider");
-                    providerInstantiations.push(
-                        "if (BasicAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new BasicAuthProvider(normalizedWithNoOpAuthProvider)); }"
-                    );
-                } else if (authScheme.type === "header") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/HeaderAuthProvider.js",
-                        namedImports: ["HeaderAuthProvider"]
-                    });
-                    providerImports.push("HeaderAuthProvider");
-                    providerInstantiations.push(
-                        "if (HeaderAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new HeaderAuthProvider(normalizedWithNoOpAuthProvider)); }"
-                    );
-                } else if (authScheme.type === "oauth") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/OAuthAuthProvider.js",
-                        namedImports: ["OAuthAuthProvider"]
-                    });
-                    providerImports.push("OAuthAuthProvider");
-                    const oauthCreation = this.oauthTokenOverride
-                        ? "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)); }"
-                        : "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider)); }";
-                    providerInstantiations.push(oauthCreation);
+                const providerImports: string[] = [];
+                const providerInstantiations: string[] = [];
+
+                for (const authScheme of this.ir.auth.schemes) {
+                    if (authScheme.type === "bearer") {
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/BearerAuthProvider.js",
+                            namedImports: ["BearerAuthProvider"]
+                        });
+                        providerImports.push("BearerAuthProvider");
+                        providerInstantiations.push(
+                            "if (BearerAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new BearerAuthProvider(normalizedWithNoOpAuthProvider)); }"
+                        );
+                    } else if (authScheme.type === "basic") {
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/BasicAuthProvider.js",
+                            namedImports: ["BasicAuthProvider"]
+                        });
+                        providerImports.push("BasicAuthProvider");
+                        providerInstantiations.push(
+                            "if (BasicAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new BasicAuthProvider(normalizedWithNoOpAuthProvider)); }"
+                        );
+                    } else if (authScheme.type === "header") {
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/HeaderAuthProvider.js",
+                            namedImports: ["HeaderAuthProvider"]
+                        });
+                        providerImports.push("HeaderAuthProvider");
+                        providerInstantiations.push(
+                            "if (HeaderAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new HeaderAuthProvider(normalizedWithNoOpAuthProvider)); }"
+                        );
+                    } else if (authScheme.type === "oauth") {
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/OAuthAuthProvider.js",
+                            namedImports: ["OAuthAuthProvider"]
+                        });
+                        providerImports.push("OAuthAuthProvider");
+                        const oauthCreation = this.oauthTokenOverride
+                            ? "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)); }"
+                            : "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider)); }";
+                        providerInstantiations.push(oauthCreation);
+                    }
                 }
-            }
 
-            authProviderCreation = `(() => {
+                authProviderCreation = `(() => {
         const authProviders: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())}[] = [];
         ${providerInstantiations.join("\n        ")}
         return new AnyAuthProvider(authProviders);
     })()`;
+            }
         } else {
             for (const authScheme of this.ir.auth.schemes) {
                 if (authScheme.type === "bearer") {

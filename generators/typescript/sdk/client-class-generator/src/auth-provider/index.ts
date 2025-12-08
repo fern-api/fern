@@ -1,5 +1,7 @@
 export { AnyAuthProviderGenerator } from "./AnyAuthProviderGenerator";
 export { AnyAuthProviderInstance } from "./AnyAuthProviderInstance";
+export { AnyAuthV2ProviderGenerator } from "./AnyAuthV2ProviderGenerator";
+export { AnyAuthV2ProviderInstance } from "./AnyAuthV2ProviderInstance";
 export type { AuthProviderGenerator } from "./AuthProviderGenerator";
 export { AuthProviderInstance } from "./AuthProviderInstance";
 export { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator";

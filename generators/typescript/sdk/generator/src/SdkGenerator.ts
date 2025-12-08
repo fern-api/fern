@@ -161,6 +161,7 @@ export declare namespace SdkGenerator {
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
         oauthTokenOverride: boolean;
+        anyAuth: "v1" | "v2";
     }
 }
 
@@ -474,13 +475,15 @@ export class SdkGenerator {
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming,
             offsetSemantics: config.offsetSemantics,
-            oauthTokenOverride: config.oauthTokenOverride
+            oauthTokenOverride: config.oauthTokenOverride,
+            anyAuth: config.anyAuth
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             omitFernHeaders: config.omitFernHeaders,
-            oauthTokenOverride: config.oauthTokenOverride
+            oauthTokenOverride: config.oauthTokenOverride,
+            anyAuth: config.anyAuth
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
@@ -1389,43 +1392,84 @@ export class SdkGenerator {
         const isAnyAuth = this.intermediateRepresentation.auth.requirement === "ANY";
 
         if (isAnyAuth) {
-            // For ANY auth, we need to generate all individual auth providers first,
-            // then generate the AnyAuthProvider that aggregates them
-            for (const authScheme of this.intermediateRepresentation.auth.schemes) {
-                const authProvidersGenerator = new AuthProvidersGenerator({
+            // Check if we should use v2 (discriminated union) auth
+            if (this.config.anyAuth === "v2") {
+                // For v2 auth, we need to generate all individual auth providers first,
+                // then generate the AnyAuthProvider that delegates to them
+                for (const authScheme of this.intermediateRepresentation.auth.schemes) {
+                    const authProvidersGenerator = new AuthProvidersGenerator({
+                        ir: this.intermediateRepresentation,
+                        authScheme,
+                        neverThrowErrors: this.config.neverThrowErrors,
+                        includeSerdeLayer: this.config.includeSerdeLayer,
+                        oauthTokenOverride: this.config.oauthTokenOverride
+                    });
+                    if (!authProvidersGenerator.shouldWriteFile()) {
+                        continue;
+                    }
+                    this.withSourceFile({
+                        filepath: authProvidersGenerator.getFilePath(),
+                        run: ({ sourceFile, importsManager }) => {
+                            const context = this.generateSdkContext({ sourceFile, importsManager });
+                            authProvidersGenerator.writeToFile(context);
+                        }
+                    });
+                }
+
+                // Now generate the AnyAuthProvider (v2 style with discriminated union)
+                const anyAuthV2ProvidersGenerator = new AuthProvidersGenerator({
                     ir: this.intermediateRepresentation,
-                    authScheme,
+                    authScheme: { type: "anyAuthV2" },
                     neverThrowErrors: this.config.neverThrowErrors,
                     includeSerdeLayer: this.config.includeSerdeLayer,
                     oauthTokenOverride: this.config.oauthTokenOverride
                 });
-                if (!authProvidersGenerator.shouldWriteFile()) {
-                    continue;
-                }
                 this.withSourceFile({
-                    filepath: authProvidersGenerator.getFilePath(),
+                    filepath: anyAuthV2ProvidersGenerator.getFilePath(),
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
-                        authProvidersGenerator.writeToFile(context);
+                        anyAuthV2ProvidersGenerator.writeToFile(context);
+                    }
+                });
+            } else {
+                // For ANY auth, we need to generate all individual auth providers first,
+                // then generate the AnyAuthProvider that aggregates them
+                for (const authScheme of this.intermediateRepresentation.auth.schemes) {
+                    const authProvidersGenerator = new AuthProvidersGenerator({
+                        ir: this.intermediateRepresentation,
+                        authScheme,
+                        neverThrowErrors: this.config.neverThrowErrors,
+                        includeSerdeLayer: this.config.includeSerdeLayer,
+                        oauthTokenOverride: this.config.oauthTokenOverride
+                    });
+                    if (!authProvidersGenerator.shouldWriteFile()) {
+                        continue;
+                    }
+                    this.withSourceFile({
+                        filepath: authProvidersGenerator.getFilePath(),
+                        run: ({ sourceFile, importsManager }) => {
+                            const context = this.generateSdkContext({ sourceFile, importsManager });
+                            authProvidersGenerator.writeToFile(context);
+                        }
+                    });
+                }
+
+                // Now generate the AnyAuthProvider that aggregates all the individual providers
+                const anyAuthProvidersGenerator = new AuthProvidersGenerator({
+                    ir: this.intermediateRepresentation,
+                    authScheme: { type: "any" },
+                    neverThrowErrors: this.config.neverThrowErrors,
+                    includeSerdeLayer: this.config.includeSerdeLayer,
+                    oauthTokenOverride: this.config.oauthTokenOverride
+                });
+                this.withSourceFile({
+                    filepath: anyAuthProvidersGenerator.getFilePath(),
+                    run: ({ sourceFile, importsManager }) => {
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        anyAuthProvidersGenerator.writeToFile(context);
                     }
                 });
             }
-
-            // Now generate the AnyAuthProvider that aggregates all the individual providers
-            const anyAuthProvidersGenerator = new AuthProvidersGenerator({
-                ir: this.intermediateRepresentation,
-                authScheme: { type: "any" },
-                neverThrowErrors: this.config.neverThrowErrors,
-                includeSerdeLayer: this.config.includeSerdeLayer,
-                oauthTokenOverride: this.config.oauthTokenOverride
-            });
-            this.withSourceFile({
-                filepath: anyAuthProvidersGenerator.getFilePath(),
-                run: ({ sourceFile, importsManager }) => {
-                    const context = this.generateSdkContext({ sourceFile, importsManager });
-                    anyAuthProvidersGenerator.writeToFile(context);
-                }
-            });
         } else {
             // For non-ANY auth, generate auth providers as before
             for (const authScheme of this.intermediateRepresentation.auth.schemes) {
