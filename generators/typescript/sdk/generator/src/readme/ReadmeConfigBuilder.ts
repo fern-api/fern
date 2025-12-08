@@ -55,22 +55,17 @@ export class ReadmeConfigBuilder {
         });
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
         const addendums = readmeSnippetBuilder.buildReadmeAddendums();
-        const authenticationDescription = readmeSnippetBuilder.buildAuthenticationDescription();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
         for (const feature of featureConfig.features) {
             const snippetForFeature = snippets[feature.id];
 
-            // Check if this is the AUTHENTICATION feature with a custom description
-            const isAuthenticationWithDescription =
-                feature.id === "AUTHENTICATION" && authenticationDescription != null;
-
-            // If snippet is explicitly false, skip this feature UNLESS it has a custom description
-            if (snippetForFeature === false && !isAuthenticationWithDescription) {
+            // If snippet is explicitly false, skip this feature
+            if (snippetForFeature === false) {
                 continue;
             }
 
-            // Skip features without snippets unless they have a custom description (like AUTHENTICATION)
-            if (snippetForFeature == null && !isAuthenticationWithDescription) {
+            // Skip features without snippets
+            if (snippetForFeature == null) {
                 continue;
             }
 
@@ -80,19 +75,15 @@ export class ReadmeConfigBuilder {
                 feature.addendum = addendumForFeature;
             }
 
-            // Override description for AUTHENTICATION feature if we have a custom one
-            let description = feature.description ? this.processTemplateText(feature.description) : undefined;
-            if (isAuthenticationWithDescription) {
-                description = authenticationDescription;
-            }
+            const description = feature.description ? this.processTemplateText(feature.description) : undefined;
 
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
                 description,
-                snippets: snippetForFeature === false ? [] : (snippetForFeature ?? []),
+                snippets: snippetForFeature,
                 addendum: feature.addendum ? this.processTemplateText(feature.addendum) : undefined,
-                snippetsAreOptional: isAuthenticationWithDescription
+                snippetsAreOptional: false
             });
         }
         return {

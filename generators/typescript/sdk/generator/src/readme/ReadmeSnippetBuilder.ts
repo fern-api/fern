@@ -83,8 +83,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         this.genericAPISdkErrorName = this.getGenericApiSdkErrorName();
     }
 
-    public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[] | false> {
-        const snippets: Record<FernGeneratorCli.FeatureId, string[] | false> = {};
+    public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, FernGeneratorCli.Snippet[] | false> {
+        const snippets: Record<FernGeneratorCli.FeatureId, FernGeneratorCli.Snippet[] | false> = {};
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
@@ -471,44 +471,58 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         ];
     }
 
-    private buildAuthenticationSnippets(): string[] | false {
-        // Return false to explicitly skip snippets - the full description is built in buildAuthenticationDescription()
-        return false;
-    }
-
-    public buildAuthenticationDescription(): string | undefined {
-        // Only show authentication section when OAuth token override is enabled
+    private buildAuthenticationSnippets(): FernGeneratorCli.Snippet[] | false {
         if (!this.oauthTokenOverride) {
-            return undefined;
+            return false;
         }
 
         const oauthScheme = this.context.ir.auth.schemes.find((scheme) => scheme.type === "oauth");
         if (oauthScheme == null) {
-            return undefined;
+            return false;
         }
 
-        return (
-            "The SDK supports OAuth authentication with two options:\n\n" +
-            "**Option 1: OAuth Client Credentials Flow**\n\n" +
-            "Use this when you want the SDK to automatically handle OAuth token retrieval and refreshing:\n\n" +
-            "```typescript\n" +
-            `import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";\n\n` +
+        const clientImport = `import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";`;
+
+        const option1Code =
+            `${clientImport}\n\n` +
             `const ${this.clientVariableName} = new ${this.rootClientConstructorName}({\n` +
             `    clientId: "YOUR_CLIENT_ID",\n` +
             `    clientSecret: "YOUR_CLIENT_SECRET",\n` +
             `    ...\n` +
-            `});\n` +
-            "```\n\n" +
-            "**Option 2: Token Override**\n\n" +
-            "Use this when you already have a valid bearer token and want to skip the OAuth flow:\n\n" +
-            "```typescript\n" +
-            `import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";\n\n` +
+            `});\n`;
+
+        const option2Code =
+            `${clientImport}\n\n` +
             `const ${this.clientVariableName} = new ${this.rootClientConstructorName}({\n` +
             `    token: "my-pre-generated-bearer-token",\n` +
             `    ...\n` +
-            `});\n` +
-            "```"
-        );
+            `});\n`;
+
+        return [
+            {
+                type: "markdown",
+                content:
+                    "The SDK supports OAuth authentication with two options:\n\n" +
+                    "**Option 1: OAuth Client Credentials Flow**\n\n" +
+                    "Use this when you want the SDK to automatically handle OAuth token retrieval and refreshing:"
+            },
+            {
+                type: "code",
+                language: "typescript",
+                content: option1Code
+            },
+            {
+                type: "markdown",
+                content:
+                    "**Option 2: Token Override**\n\n" +
+                    "Use this when you already have a valid bearer token and want to skip the OAuth flow:"
+            },
+            {
+                type: "code",
+                language: "typescript",
+                content: option2Code
+            }
+        ];
     }
 
     private buildRuntimeCompatibilitySnippets(): string[] {
