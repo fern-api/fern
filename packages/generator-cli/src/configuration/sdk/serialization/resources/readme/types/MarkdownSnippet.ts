@@ -10,11 +10,13 @@ export const MarkdownSnippet: core.serialization.ObjectSchema<
     serializers.MarkdownSnippet.Raw,
     FernGeneratorCli.MarkdownSnippet
 > = core.serialization.object({
+    type: core.serialization.stringLiteral("markdown"),
     content: core.serialization.string(),
 });
 
 export declare namespace MarkdownSnippet {
     interface Raw {
+        type: "markdown";
         content: string;
     }
 }

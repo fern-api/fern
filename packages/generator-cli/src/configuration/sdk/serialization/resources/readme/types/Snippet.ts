@@ -8,33 +8,9 @@ import * as core from "../../../../core";
 import { MarkdownSnippet } from "./MarkdownSnippet";
 import { CodeSnippet } from "./CodeSnippet";
 
-export const Snippet: core.serialization.Schema<serializers.Snippet.Raw, FernGeneratorCli.Snippet> = core.serialization
-    .union("type", {
-        markdown: MarkdownSnippet,
-        code: CodeSnippet,
-    })
-    .transform<FernGeneratorCli.Snippet>({
-        transform: (value) => {
-            switch (value.type) {
-                case "markdown":
-                    return FernGeneratorCli.Snippet.markdown(value);
-                case "code":
-                    return FernGeneratorCli.Snippet.code(value);
-                default:
-                    return value as FernGeneratorCli.Snippet;
-            }
-        },
-        untransform: ({ _visit, ...value }) => value as any,
-    });
+export const Snippet: core.serialization.Schema<serializers.Snippet.Raw, FernGeneratorCli.Snippet> =
+    core.serialization.undiscriminatedUnion([core.serialization.string(), MarkdownSnippet, CodeSnippet]);
 
 export declare namespace Snippet {
-    type Raw = Snippet.Markdown | Snippet.Code;
-
-    interface Markdown extends MarkdownSnippet.Raw {
-        type: "markdown";
-    }
-
-    interface Code extends CodeSnippet.Raw {
-        type: "code";
-    }
+    type Raw = string | MarkdownSnippet.Raw | CodeSnippet.Raw;
 }

@@ -5,69 +5,8 @@
 import * as FernGeneratorCli from "../../../index";
 
 /**
- * A snippet that can be either markdown content or a code block.
- * Code snippets will be wrapped in the appropriate language code fence.
+ * A snippet that can be either a plain string (treated as code in the generator's language),
+ * markdown content, or a code block with optional language override.
+ * Plain strings are supported for backwards compatibility.
  */
-export type Snippet = FernGeneratorCli.Snippet.Markdown | FernGeneratorCli.Snippet.Code;
-
-export declare namespace Snippet {
-    interface Markdown extends FernGeneratorCli.MarkdownSnippet, _Utils {
-        type: "markdown";
-    }
-
-    interface Code extends FernGeneratorCli.CodeSnippet, _Utils {
-        type: "code";
-    }
-
-    interface _Utils {
-        _visit: <_Result>(visitor: FernGeneratorCli.Snippet._Visitor<_Result>) => _Result;
-    }
-
-    interface _Visitor<_Result> {
-        markdown: (value: FernGeneratorCli.MarkdownSnippet) => _Result;
-        code: (value: FernGeneratorCli.CodeSnippet) => _Result;
-        _other: (value: { type: string }) => _Result;
-    }
-}
-
-export const Snippet = {
-    markdown: (value: FernGeneratorCli.MarkdownSnippet): FernGeneratorCli.Snippet.Markdown => {
-        return {
-            ...value,
-            type: "markdown",
-            _visit: function <_Result>(
-                this: FernGeneratorCli.Snippet.Markdown,
-                visitor: FernGeneratorCli.Snippet._Visitor<_Result>
-            ) {
-                return FernGeneratorCli.Snippet._visit(this, visitor);
-            },
-        };
-    },
-
-    code: (value: FernGeneratorCli.CodeSnippet): FernGeneratorCli.Snippet.Code => {
-        return {
-            ...value,
-            type: "code",
-            _visit: function <_Result>(
-                this: FernGeneratorCli.Snippet.Code,
-                visitor: FernGeneratorCli.Snippet._Visitor<_Result>
-            ) {
-                return FernGeneratorCli.Snippet._visit(this, visitor);
-            },
-        };
-    },
-
-    _visit: <_Result>(
-        value: FernGeneratorCli.Snippet,
-        visitor: FernGeneratorCli.Snippet._Visitor<_Result>
-    ): _Result => {
-        switch (value.type) {
-            case "markdown":
-                return visitor.markdown(value);
-            case "code":
-                return visitor.code(value);
-            default:
-                return visitor._other(value as any);
-        }
-    },
-} as const;
+export type Snippet = string | FernGeneratorCli.MarkdownSnippet | FernGeneratorCli.CodeSnippet;

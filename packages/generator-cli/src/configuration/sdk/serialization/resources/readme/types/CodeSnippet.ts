@@ -8,12 +8,14 @@ import * as core from "../../../../core";
 
 export const CodeSnippet: core.serialization.ObjectSchema<serializers.CodeSnippet.Raw, FernGeneratorCli.CodeSnippet> =
     core.serialization.object({
+        type: core.serialization.stringLiteral("code"),
         content: core.serialization.string(),
         language: core.serialization.string().optional(),
     });
 
 export declare namespace CodeSnippet {
     interface Raw {
+        type: "code";
         content: string;
         language?: string | null;
     }

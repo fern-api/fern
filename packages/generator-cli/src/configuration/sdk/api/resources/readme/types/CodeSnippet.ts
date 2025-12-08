@@ -7,6 +7,8 @@
  * If no language is specified, the generator's language will be used.
  */
 export interface CodeSnippet {
+    /** Discriminator field to identify this as a code snippet. */
+    type: "code";
     content: string;
     /** The language for the code fence. If not specified, the generator's language will be used. */
     language?: string;

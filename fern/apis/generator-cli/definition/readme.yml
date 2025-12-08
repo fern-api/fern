@@ -75,16 +75,23 @@ types:
 
   Snippet:
     docs: |
-      A snippet that can be either markdown content or a code block.
-      Code snippets will be wrapped in the appropriate language code fence.
+      A snippet that can be either a plain string (treated as code in the generator's language),
+      markdown content, or a code block with optional language override.
+      Plain strings are supported for backwards compatibility.
+    discriminated: false
     union:
-      markdown: MarkdownSnippet
-      code: CodeSnippet
+      - string
+      - MarkdownSnippet
+      - CodeSnippet
 
   MarkdownSnippet:
     docs: |
       A markdown snippet that will be rendered as-is without code fences.
     properties:
+      type:
+        docs: |
+          Discriminator field to identify this as a markdown snippet.
+        type: literal<"markdown">
       content: string
 
   CodeSnippet:
@@ -92,6 +99,10 @@ types:
       A code snippet that will be wrapped in a code fence with the specified language.
       If no language is specified, the generator's language will be used.
     properties:
+      type:
+        docs: |
+          Discriminator field to identify this as a code snippet.
+        type: literal<"code">
       content: string
       language:
         docs: |

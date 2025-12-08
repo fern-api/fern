@@ -12,11 +12,9 @@ const CONFIG: FernGeneratorCli.ReadmeConfig = {
             id: FernGeneratorCli.StructuredFeatureId.Usage,
             snippetsAreOptional: true,
             snippets: [
-                FernGeneratorCli.Snippet.code({
-                    content: `import { BasicClient } from "basic";
+                `import { BasicClient } from "basic";
 
 const client = new BasicClient({ apiKey: "YOUR_API_KEY" });`
-                })
             ]
         }
     ]

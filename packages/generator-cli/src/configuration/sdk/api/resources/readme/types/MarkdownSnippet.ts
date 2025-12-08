@@ -6,5 +6,7 @@
  * A markdown snippet that will be rendered as-is without code fences.
  */
 export interface MarkdownSnippet {
+    /** Discriminator field to identify this as a markdown snippet. */
+    type: "markdown";
     content: string;
 }
