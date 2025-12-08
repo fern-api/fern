@@ -5,11 +5,8 @@ import com.fern.ir.model.auth.OAuthClientCredentials;
 import com.fern.ir.model.commons.EndpointId;
 import com.fern.ir.model.commons.EndpointReference;
 import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpRequestBody;
 import com.fern.ir.model.http.HttpResponseBody;
 import com.fern.ir.model.http.HttpService;
-import com.fern.ir.model.http.InlinedRequestBody;
-import com.fern.ir.model.http.InlinedRequestBodyProperty;
 import com.fern.ir.model.http.JsonResponseBody;
 import com.fern.ir.model.http.RequestProperty;
 import com.fern.ir.model.http.ResponseProperty;
@@ -17,11 +14,9 @@ import com.fern.ir.model.http.SdkRequestBodyType;
 import com.fern.ir.model.http.SdkRequestShape.Visitor;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
-import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
-import com.fern.java.client.generators.visitors.RequestPropertyToTypeVisitor;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
@@ -35,15 +30,12 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeSpec.Builder;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
@@ -107,12 +99,27 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getCamelCase()
                 .getUnsafeName();
 
-        Map<String, RequestPropertyInfo> allOAuthProperties = collectOAuthProperties(requestProperties, httpEndpoint);
-        List<BuilderProperty> orderedBuilderProperties = getOrderedBuilderProperties(httpEndpoint, allOAuthProperties);
-        List<BuilderProperty> nonLiteralProperties =
-                orderedBuilderProperties.stream().filter(p -> !p.isLiteral).collect(Collectors.toList());
+        List<Map.Entry<String, String>> customPropertiesWithNames = new ArrayList<>();
+        if (requestProperties.getCustomProperties().isPresent()) {
+            for (RequestProperty customProp :
+                    requestProperties.getCustomProperties().get()) {
+                String propName = customProp
+                        .getProperty()
+                        .visit(new RequestPropertyToNameVisitor())
+                        .getName()
+                        .getCamelCase()
+                        .getUnsafeName();
+                customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(propName, propName));
+            }
+        }
+
+        for (var header : httpEndpoint.getHeaders()) {
+            String headerName = header.getName().getName().getCamelCase().getUnsafeName();
+            customPropertiesWithNames.add(new AbstractMap.SimpleEntry<>(headerName, headerName));
+        }
 
         TypeName fetchTokenRequestType = getFetchTokenRequestType(httpEndpoint, httpService);
+        // todo: handle other response types
         HttpResponseBody tokenHttpResponseBody =
                 httpEndpoint.getResponse().get().getBody().get();
         JsonResponseBody jsonResponseBody = tokenHttpResponseBody
@@ -176,16 +183,22 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         "return $S + $L",
                         clientCredentials.getTokenPrefix().orElse("Bearer") + " ",
                         ACCESS_TOKEN_FIELD_NAME);
-        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(String.class, CLIENT_ID_FIELD_NAME)
+                .addParameter(String.class, CLIENT_SECRET_FIELD_NAME);
 
-        for (BuilderProperty prop : nonLiteralProperties) {
-            constructorBuilder.addParameter(String.class, prop.fieldName);
+        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
+            constructorBuilder.addParameter(String.class, customProp.getKey());
         }
 
-        constructorBuilder.addParameter(authClientClassName, AUTH_CLIENT_NAME);
+        constructorBuilder
+                .addParameter(authClientClassName, AUTH_CLIENT_NAME)
+                .addStatement("this.$L = $L", CLIENT_ID_FIELD_NAME, CLIENT_ID_FIELD_NAME)
+                .addStatement("this.$L = $L", CLIENT_SECRET_FIELD_NAME, CLIENT_SECRET_FIELD_NAME);
 
-        for (BuilderProperty prop : nonLiteralProperties) {
-            constructorBuilder.addStatement("this.$L = $L", prop.fieldName, prop.fieldName);
+        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
+            constructorBuilder.addStatement("this.$L = $L", customProp.getKey(), customProp.getKey());
         }
 
         constructorBuilder.addStatement("this.$L = $L", AUTH_CLIENT_NAME, AUTH_CLIENT_NAME);
@@ -195,11 +208,15 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         }
         Builder oauthTypeSpecBuilder = TypeSpec.classBuilder(className)
                 .addSuperinterface(supplierOfString)
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addField(FieldSpec.builder(String.class, CLIENT_ID_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
+                        .build())
+                .addField(FieldSpec.builder(String.class, CLIENT_SECRET_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
+                        .build());
 
-        for (BuilderProperty prop : nonLiteralProperties) {
+        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
             oauthTypeSpecBuilder.addField(
-                    FieldSpec.builder(String.class, prop.fieldName, Modifier.PRIVATE, Modifier.FINAL)
+                    FieldSpec.builder(String.class, customProp.getKey(), Modifier.PRIVATE, Modifier.FINAL)
                             .build());
         }
 
@@ -210,7 +227,12 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         .build())
                 .addMethod(constructorBuilder.build())
                 .addMethod(buildFetchTokenMethod(
-                        fetchTokenReturnType, fetchTokenRequestType, orderedBuilderProperties, httpEndpoint))
+                        fetchTokenReturnType,
+                        fetchTokenRequestType,
+                        clientIdPropertyName,
+                        clientSecretPropertyName,
+                        customPropertiesWithNames,
+                        httpEndpoint))
                 .addMethod(getMethodSpecBuilder.build());
         if (refreshRequired) {
             oauthTypeSpecBuilder
@@ -252,179 +274,25 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 && !clientCredentials.getScopes().get().isEmpty()) throw new RuntimeException("Scopes not supported");
     }
 
-    /**
-     * Collects all OAuth-related properties (clientId, clientSecret, scopes, custom properties, headers) into a map
-     * keyed by property name for easy lookup.
-     */
-    private Map<String, RequestPropertyInfo> collectOAuthProperties(
-            OAuthAccessTokenRequestProperties requestProperties, HttpEndpoint httpEndpoint) {
-        Map<String, RequestPropertyInfo> properties = new LinkedHashMap<>();
-
-        String clientIdName = requestProperties
-                .getClientId()
-                .getProperty()
-                .visit(new RequestPropertyToNameVisitor())
-                .getName()
-                .getCamelCase()
-                .getUnsafeName();
-        properties.put(clientIdName, new RequestPropertyInfo(clientIdName, CLIENT_ID_FIELD_NAME));
-
-        String clientSecretName = requestProperties
-                .getClientSecret()
-                .getProperty()
-                .visit(new RequestPropertyToNameVisitor())
-                .getName()
-                .getCamelCase()
-                .getUnsafeName();
-        properties.put(clientSecretName, new RequestPropertyInfo(clientSecretName, CLIENT_SECRET_FIELD_NAME));
-
-        if (requestProperties.getScopes().isPresent()) {
-            TypeReference scopesType =
-                    requestProperties.getScopes().get().getProperty().visit(new RequestPropertyToTypeVisitor());
-            if (!isLiteralType(scopesType)) {
-                String scopesName = requestProperties
-                        .getScopes()
-                        .get()
-                        .getProperty()
-                        .visit(new RequestPropertyToNameVisitor())
-                        .getName()
-                        .getCamelCase()
-                        .getUnsafeName();
-                properties.put(scopesName, new RequestPropertyInfo(scopesName, scopesName));
-            }
-        }
-
-        if (requestProperties.getCustomProperties().isPresent()) {
-            for (RequestProperty customProp :
-                    requestProperties.getCustomProperties().get()) {
-                String propName = customProp
-                        .getProperty()
-                        .visit(new RequestPropertyToNameVisitor())
-                        .getName()
-                        .getCamelCase()
-                        .getUnsafeName();
-                properties.put(propName, new RequestPropertyInfo(propName, propName));
-            }
-        }
-
-        for (var header : httpEndpoint.getHeaders()) {
-            String headerName = header.getName().getName().getCamelCase().getUnsafeName();
-            properties.put(headerName, new RequestPropertyInfo(headerName, headerName));
-        }
-
-        return properties;
-    }
-
-    /**
-     * Returns builder properties in the correct order for staged builders: required properties first (in their
-     * definition order), then optional properties. Literal properties are included but marked as such so they can be
-     * skipped when generating constructor parameters and fields.
-     */
-    private List<BuilderProperty> getOrderedBuilderProperties(
-            HttpEndpoint httpEndpoint, Map<String, RequestPropertyInfo> allOAuthProperties) {
-        List<BuilderProperty> requiredProperties = new ArrayList<>();
-        List<BuilderProperty> optionalProperties = new ArrayList<>();
-        Set<String> processedProperties = new HashSet<>();
-
-        if (httpEndpoint.getRequestBody().isPresent()) {
-            httpEndpoint.getRequestBody().get().visit(new HttpRequestBody.Visitor<Void>() {
-                @Override
-                public Void visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
-                    for (InlinedRequestBodyProperty prop : inlinedRequestBody.getProperties()) {
-                        String propName =
-                                prop.getName().getName().getCamelCase().getUnsafeName();
-                        RequestPropertyInfo oauthProp = allOAuthProperties.get(propName);
-                        if (oauthProp == null) {
-                            continue;
-                        }
-
-                        processedProperties.add(propName);
-                        boolean isLiteral = isLiteralType(prop.getValueType());
-                        boolean isOptional = isOptionalType(prop.getValueType());
-
-                        BuilderProperty builderProp = new BuilderProperty(propName, oauthProp.fieldName, isLiteral);
-
-                        if (isLiteral) {
-                            continue;
-                        } else if (isOptional) {
-                            optionalProperties.add(builderProp);
-                        } else {
-                            requiredProperties.add(builderProp);
-                        }
-                    }
-                    return null;
-                }
-
-                @Override
-                public Void visitReference(com.fern.ir.model.http.HttpRequestBodyReference reference) {
-                    return null;
-                }
-
-                @Override
-                public Void visitFileUpload(com.fern.ir.model.http.FileUploadRequest fileUpload) {
-                    return null;
-                }
-
-                @Override
-                public Void visitBytes(com.fern.ir.model.http.BytesRequest bytes) {
-                    return null;
-                }
-
-                @Override
-                public Void _visitUnknown(Object unknownType) {
-                    return null;
-                }
-            });
-        }
-
-        for (Map.Entry<String, RequestPropertyInfo> entry : allOAuthProperties.entrySet()) {
-            if (!processedProperties.contains(entry.getKey())) {
-                optionalProperties.add(
-                        new BuilderProperty(entry.getValue().builderMethodName, entry.getValue().fieldName, false));
-            }
-        }
-
-        List<BuilderProperty> result = new ArrayList<>();
-        result.addAll(requiredProperties);
-        result.addAll(optionalProperties);
-        return result;
-    }
-
-    private boolean isLiteralType(TypeReference typeReference) {
-        if (typeReference.isContainer()) {
-            ContainerType container = typeReference.getContainer().get();
-            return container.isLiteral();
-        }
-        return false;
-    }
-
-    private boolean isOptionalType(TypeReference typeReference) {
-        if (typeReference.isContainer()) {
-            ContainerType container = typeReference.getContainer().get();
-            return container.isOptional() || container.isNullable();
-        }
-        return false;
-    }
-
-    /**
-     * Builds the fetchToken method that constructs the token request and calls the auth client. Properties are added to
-     * the builder in the correct staged builder order.
-     */
     private MethodSpec buildFetchTokenMethod(
             TypeName fetchTokenReturnType,
             TypeName fetchTokenRequestType,
-            List<BuilderProperty> orderedBuilderProperties,
+            String clientIdPropertyName,
+            String clientSecretPropertyName,
+            List<Map.Entry<String, String>> customPropertiesWithNames,
             HttpEndpoint httpEndpoint) {
+        // Custom properties (headers) must come BEFORE clientId/clientSecret for staged builders
         CodeBlock.Builder requestBuilderCode = CodeBlock.builder()
                 .add("$T $L = $T.builder()", fetchTokenRequestType, GET_TOKEN_REQUEST_NAME, fetchTokenRequestType);
 
-        for (BuilderProperty prop : orderedBuilderProperties) {
-            if (!prop.isLiteral) {
-                requestBuilderCode.add(".$L($L)", prop.builderMethodName, prop.fieldName);
-            }
+        for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
+            requestBuilderCode.add(".$L($L)", customProp.getValue(), customProp.getKey());
         }
 
-        requestBuilderCode.add(".build()");
+        requestBuilderCode
+                .add(".$L($L)", clientIdPropertyName, CLIENT_ID_FIELD_NAME)
+                .add(".$L($L)", clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME)
+                .add(".build()");
 
         return MethodSpec.methodBuilder(FETCH_TOKEN_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
@@ -459,27 +327,5 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 throw new RuntimeException("Unknown SdkRequestShape: " + unknownType);
             }
         });
-    }
-
-    private static class RequestPropertyInfo {
-        final String builderMethodName;
-        final String fieldName;
-
-        RequestPropertyInfo(String builderMethodName, String fieldName) {
-            this.builderMethodName = builderMethodName;
-            this.fieldName = fieldName;
-        }
-    }
-
-    private static class BuilderProperty {
-        final String builderMethodName;
-        final String fieldName;
-        final boolean isLiteral;
-
-        BuilderProperty(String builderMethodName, String fieldName, boolean isLiteral) {
-            this.builderMethodName = builderMethodName;
-            this.fieldName = fieldName;
-            this.isLiteral = isLiteral;
-        }
     }
 }

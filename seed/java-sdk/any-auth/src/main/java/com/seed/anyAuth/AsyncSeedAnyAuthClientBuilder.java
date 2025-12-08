@@ -27,6 +27,10 @@ public class AsyncSeedAnyAuthClientBuilder {
 
     private String clientSecret = System.getenv("MY_CLIENT_SECRET");
 
+    private String audience = null;
+
+    private String grantType = null;
+
     private String scope = null;
 
     private Environment environment;
@@ -66,6 +70,22 @@ public class AsyncSeedAnyAuthClientBuilder {
      */
     public AsyncSeedAnyAuthClientBuilder clientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
+        return this;
+    }
+
+    /**
+     * Sets audience
+     */
+    public AsyncSeedAnyAuthClientBuilder audience(String audience) {
+        this.audience = audience;
+        return this;
+    }
+
+    /**
+     * Sets grantType
+     */
+    public AsyncSeedAnyAuthClientBuilder grantType(String grantType) {
+        this.grantType = grantType;
         return this;
     }
 
@@ -167,8 +187,8 @@ public class AsyncSeedAnyAuthClientBuilder {
             ClientOptions.Builder authClientOptionsBuilder =
                     ClientOptions.builder().environment(this.environment);
             AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
-            OAuthTokenSupplier oAuthTokenSupplier =
-                    new OAuthTokenSupplier(this.clientId, this.clientSecret, this.scope, authClient);
+            OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(
+                    this.clientId, this.clientSecret, this.audience, this.grantType, this.scope, authClient);
             builder.addHeader("Authorization", oAuthTokenSupplier);
         }
     }

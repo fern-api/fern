@@ -33,7 +33,6 @@ export function parameter(args: Parameter.Args): Parameter {
 
 export {
     Access,
-    type BuilderEntryMethod,
     type BuilderParameter,
     Class,
     ClassInstantiation,
