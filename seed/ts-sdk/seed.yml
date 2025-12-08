@@ -84,9 +84,6 @@ fixtures:
     - outputFolder: serde-layer-zod
       customConfig:
         serializationFormat: zod
-    - outputFolder: serde-layer-none
-      customConfig:
-        serializationFormat: none
     - outputFolder: retain-original-casing
       customConfig:
         retainOriginalCasing: true
