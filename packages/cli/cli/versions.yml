@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix package.json metadata (name, version, repository, private) being lost during local TypeScript SDK generation when using non-self-hosted GitHub configuration with npm output.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-08"
+  version: 3.4.5
+
+- changelogEntry:
+    - summary: |
         Fallback to variant type for display name if title and mapping are not present.
       type: fix
   irVersion: 63

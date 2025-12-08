@@ -552,6 +552,20 @@ function getPublishConfig({
         });
     }
 
+    // For non-self-hosted github configs with output info, create a filesystem publishConfig
+    // with the publish target so that package.json metadata is preserved
+    if (generatorInvocation.raw?.github != null && generatorInvocation.raw?.output != null) {
+        const publishTarget = getPublishTarget({
+            outputSchema: generatorInvocation.raw.output,
+            version,
+            packageName
+        });
+        return FernIr.PublishingConfig.filesystem({
+            generateFullProject: org?.selfHostedSdKs ?? false,
+            publishTarget
+        });
+    }
+
     return generatorInvocation.outputMode._visit({
         downloadFiles: () => {
             return FernIr.PublishingConfig.filesystem({

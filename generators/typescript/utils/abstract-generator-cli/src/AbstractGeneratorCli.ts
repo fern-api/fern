@@ -84,14 +84,17 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 parse: serialization.IntermediateRepresentation.parse
             });
 
-            const npmPackage = ir.selfHosted
-                ? constructNpmPackageFromArgs(
-                      npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
-                  )
-                : constructNpmPackage({
-                      generatorConfig: config,
-                      isPackagePrivate: this.isPackagePrivate(customConfig)
-                  });
+            // First try to construct npmPackage from the output mode (github/publish modes)
+            // If that returns undefined (e.g., downloadFiles mode), fall back to publishConfig
+            const npmPackageFromOutputMode = constructNpmPackage({
+                generatorConfig: config,
+                isPackagePrivate: this.isPackagePrivate(customConfig)
+            });
+            const npmPackage =
+                npmPackageFromOutputMode ??
+                constructNpmPackageFromArgs(
+                    npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
+                );
 
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
@@ -315,6 +318,16 @@ function npmPackageInfoFromPublishConfig(
                 packageName: publishConfig.target.packageName,
                 version: publishConfig.target.version,
                 repoUrl,
+                publishInfo: undefined,
+                licenseConfig: config.license
+            };
+        }
+    } else if (publishConfig?.type === "filesystem") {
+        if (publishConfig.publishTarget?.type === "npm") {
+            args = {
+                packageName: publishConfig.publishTarget.packageName,
+                version: publishConfig.publishTarget.version,
+                repoUrl: undefined,
                 publishInfo: undefined,
                 licenseConfig: config.license
             };
