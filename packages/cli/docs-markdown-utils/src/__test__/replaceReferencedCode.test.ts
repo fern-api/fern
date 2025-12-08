@@ -761,4 +761,68 @@ describe("replaceReferencedCode", () => {
 
         `);
     });
+
+    it("should preserve for attribute for synced tabs", async () => {
+        const markdown = `
+            <CodeGroup>
+                <Code src="../snippets/test.py" title="yarn" language="shell" for="yarn" />
+                <Code src="../snippets/test.ts" title="npm" language="shell" for="npm" />
+            </CodeGroup>
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "yarn add package";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.ts")) {
+                    return "npm install package";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            <CodeGroup>
+                \`\`\`shell title={"yarn"} for={"yarn"}
+                yarn add package
+                \`\`\`
+
+                \`\`\`shell title={"npm"} for={"npm"}
+                npm install package
+                \`\`\`
+
+            </CodeGroup>
+        `);
+    });
+
+    it("should preserve for attribute with curly brace syntax", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" title="yarn" language="shell" for={"yarn"} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "yarn add package";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`shell title={"yarn"} for={"yarn"}
+            yarn add package
+            \`\`\`
+
+        `);
+    });
 });

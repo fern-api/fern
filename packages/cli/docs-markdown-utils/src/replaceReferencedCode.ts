@@ -215,7 +215,25 @@ export async function replaceReferencedCode({
 
             // Add remaining properties as-is to metastring
             for (const [propName, propData] of allProps) {
-                metastring += ` ${propName}={${propData.value}}`;
+                // For string attributes from quotes, wrap in quotes. For expressions from curly braces, keep as-is.
+                if (propData.fromCurlyBraces) {
+                    // If it came from curly braces, use the value as-is (it might be an expression or already quoted)
+                    metastring += ` ${propName}={${propData.value}}`;
+                } else {
+                    // If it came from quotes, check if it's a number or boolean
+                    const trimmedValue = propData.value.trim();
+                    // Check if it's a number (integer or float)
+                    if (/^-?\d+(\.\d+)?$/.test(trimmedValue)) {
+                        // It's a number, output without quotes
+                        metastring += ` ${propName}={${trimmedValue}}`;
+                    } else if (trimmedValue === "true" || trimmedValue === "false") {
+                        // It's a boolean, output without quotes
+                        metastring += ` ${propName}={${trimmedValue}}`;
+                    } else {
+                        // It's a string, wrap in quotes for the metastring
+                        metastring += ` ${propName}={${JSON.stringify(propData.value)}}`;
+                    }
+                }
             }
 
             // TODO: if the code content includes ```, add more backticks to avoid conflicts
