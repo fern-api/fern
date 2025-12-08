@@ -2,9 +2,9 @@
 - version: 3.37.1
   changelogEntry:
     - summary: |
-        Fix file upload request parameters to use bracket notation for property names that are not valid JavaScript identifiers (e.g., header names with hyphens like `X-UIPATH-OrganizationUnitId`).
-        Previously, the generator produced invalid JavaScript like `request.X - UIPATH - OrganizationUnitId` which was interpreted as subtraction operations.
-        Now it correctly generates `request["X-UIPATH-OrganizationUnitId"]`.
+        Fix file upload request parameters to use bracket notation for property names that are not valid JavaScript identifiers (e.g., header names with hyphens like `X-Custom-Header`).
+        Previously, the generator produced invalid JavaScript like `request.X - Custom - Header` which was interpreted as subtraction operations.
+        Now it correctly generates `request["X-Custom-Header"]`.
       type: fix
   createdAt: "2025-12-08"
   irVersion: 62
