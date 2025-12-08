@@ -231,12 +231,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
                 writer.write(f"{param.constructor_parameter_name} : ")
                 if param.type_hint is not None:
-                    if param.constructor_parameter_name in {
-                        "client_id",
-                        "client_secret",
-                        RootClientGenerator.TOKEN_PARAMETER_NAME,
-                    }:
+                    if param.constructor_parameter_name in {"client_id", "client_secret"}:
                         writer.write_node(AST.TypeHint.str_())
+                    elif param.constructor_parameter_name == RootClientGenerator.TOKEN_PARAMETER_NAME:
+                        writer.write_node(AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_()))
                     else:
                         writer.write_node(param.type_hint)
                 if param.docs is not None:
@@ -616,10 +614,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     parameters.append(
                         RootClientConstructorParameter(
                             constructor_parameter_name=self.TOKEN_PARAMETER_NAME,
-                            type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                            type_hint=AST.TypeHint.optional(
+                                AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
+                            ),
                             initializer=AST.Expression("None"),
                             docs=(
-                                "Authenticate by providing a pre-generated bearer token via 'token'. "
+                                "Authenticate by providing a callable that returns a pre-generated bearer token. "
                                 "In this mode, OAuth client credentials are not required."
                             ),
                         ),
@@ -864,7 +864,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         token_params = base_params + [
             AST.NamedFunctionParameter(
                 name=self.TOKEN_PARAMETER_NAME,
-                type_hint=AST.TypeHint.str_(),
+                type_hint=AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_()),
             ),
         ]
         token_signature = AST.FunctionSignature(named_parameters=token_params)
@@ -1062,7 +1062,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         # if token is not None:
         writer.write_line(f"if {self.TOKEN_PARAMETER_NAME} is not None:")
         with writer.indent():
-            # Direct token mode - wrap the token in a lambda for the client wrapper
+            # Direct token mode - use the provided callable for the client wrapper
             client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
                 client_wrapper_generator=client_wrapper_generator,
                 environments_config=self._environments_config,
@@ -1070,25 +1070,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 is_async=is_async,
                 exclude_auth=True,
             )
-            # Add token to kwargs - using a lambda to wrap the string token
-            if is_async:
-                client_wrapper_constructor_kwargs.append(
-                    (
-                        "token",
-                        AST.Expression(
-                            f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else (lambda: {self.TOKEN_PARAMETER_NAME})"
-                        ),
-                    )
+            # Add token to kwargs - prefer the explicit override, otherwise use the provided callable
+            client_wrapper_constructor_kwargs.append(
+                (
+                    "token",
+                    AST.Expression(
+                        f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else {self.TOKEN_PARAMETER_NAME}"
+                    ),
                 )
-            else:
-                client_wrapper_constructor_kwargs.append(
-                    (
-                        "token",
-                        AST.Expression(
-                            f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else (lambda: {self.TOKEN_PARAMETER_NAME})"
-                        ),
-                    )
-                )
+            )
             writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
             writer.write_node(
                 AST.ClassInstantiation(
