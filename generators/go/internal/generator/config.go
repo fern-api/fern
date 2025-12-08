@@ -28,6 +28,7 @@ type Config struct {
 	UseReaderForBytesRequest     bool
 	GettersPassByValue           bool
 	ExportAllRequestsAtRoot      bool
+	OAuthTokenOverride           bool
 	Organization                 string
 	Version                      string
 	IRFilepath                   string
@@ -74,6 +75,7 @@ func NewConfig(
 	useReaderForBytesRequest bool,
 	gettersPassByValue bool,
 	exportAllRequestsAtRoot bool,
+	oauthTokenOverride bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -105,6 +107,7 @@ func NewConfig(
 		UseReaderForBytesRequest:     useReaderForBytesRequest,
 		GettersPassByValue:           gettersPassByValue,
 		ExportAllRequestsAtRoot:      exportAllRequestsAtRoot,
+		OAuthTokenOverride:           oauthTokenOverride,
 		Version:                      version,
 		IRFilepath:                   irFilepath,
 		SnippetFilepath:              snippetFilepath,

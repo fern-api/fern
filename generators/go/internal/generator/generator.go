@@ -382,6 +382,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.SdkConfig,
 			g.config.ModuleConfig,
 			g.config.Version,
+			g.config.OAuthTokenOverride,
 		); err != nil {
 			return nil, err
 		}

@@ -290,6 +290,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	sdkConfig *ir.SdkConfig,
 	moduleConfig *ModuleConfig,
 	sdkVersion string,
+	oauthTokenOverride bool,
 ) error {
 	importPath := path.Join(f.baseImportPath, "core")
 	f.P("// RequestOption adapts the behavior of the client or an individual request.")
@@ -328,6 +329,9 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				" ",
 				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
 			)
+		}
+		if authScheme.Oauth != nil && oauthTokenOverride {
+			f.P("Token string")
 		}
 	}
 	for _, header := range headers {
@@ -370,7 +374,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0)
+		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, oauthTokenOverride)
 	}
 
 	// Generate the ToHeader method.
@@ -417,6 +421,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
 			f.P("}")
 		}
+		if authScheme.Oauth != nil && oauthTokenOverride {
+			f.P(`if r.Token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + r.Token)`)
+			f.P("}")
+		}
 	}
 	for _, header := range headers {
 		valueTypeFormat := formatForValueType(header.ValueType, f.types)
@@ -455,7 +464,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, oauthTokenOverride); err != nil {
 		return err
 	}
 
@@ -493,6 +502,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 	auth *ir.ApiAuth,
 	headers []*ir.HttpHeader,
 	asIdempotentRequestOption bool,
+	oauthTokenOverride bool,
 ) error {
 	if err := f.writeOptionStruct("BaseURL", "string", true, asIdempotentRequestOption); err != nil {
 		return err
@@ -554,6 +564,11 @@ func (f *fileWriter) writeRequestOptionStructs(
 					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
 				)
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+			}
+			if authScheme.Oauth != nil && oauthTokenOverride {
+				if err := f.writeOptionStruct("Token", "string", true, asIdempotentRequestOption); err != nil {
 					return err
 				}
 			}
