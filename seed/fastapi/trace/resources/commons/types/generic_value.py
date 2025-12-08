@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class GenericValue(UniversalBaseModel):
-    stringified_type: typing.Optional[str] = pydantic.Field(alias="stringifiedType", default=None)
-    stringified_value: str = pydantic.Field(alias="stringifiedValue")
+    stringified_type: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="stringifiedType")] = None
+    stringified_value: typing_extensions.Annotated[str, pydantic.Field(alias="stringifiedValue")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

@@ -11,7 +11,7 @@ from ....core.serialization import FieldMetadata
 
 
 class ObjectWithOptionalField(UniversalBaseModel):
-    string: typing.Optional[str] = pydantic.Field(default=None)
+    string: typing.Optional[str] = None
     """
     This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
     """

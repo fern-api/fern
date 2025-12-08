@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 4.42.1
+  changelogEntry:
+    - summary: |
+        Emit aliased Pydantic fields as `Annotated[..., pydantic.Field(alias=...)]` instead of using `Field` as the default value, preserving aliases while improving static type checking.
+      type: fix
+  createdAt: "2025-12-05"
+  irVersion: 61
+
 - version: 4.42.0
   changelogEntry:
     - summary: |

@@ -5,13 +5,14 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .actual_result import ActualResult
 
 
 class TestCaseResult(UniversalBaseModel):
-    expected_result: "VariableValue" = pydantic.Field(alias="expectedResult")
-    actual_result: ActualResult = pydantic.Field(alias="actualResult")
+    expected_result: typing_extensions.Annotated["VariableValue", pydantic.Field(alias="expectedResult")]
+    actual_result: typing_extensions.Annotated[ActualResult, pydantic.Field(alias="actualResult")]
     passed: bool
 
     if IS_PYDANTIC_V2:

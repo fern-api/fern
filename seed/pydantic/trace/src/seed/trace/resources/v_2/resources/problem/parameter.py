@@ -5,14 +5,15 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .parameter_id import ParameterId
 
 
 class Parameter(UniversalBaseModel):
-    parameter_id: ParameterId = pydantic.Field(alias="parameterId")
+    parameter_id: typing_extensions.Annotated[ParameterId, pydantic.Field(alias="parameterId")]
     name: str
-    variable_type: "VariableType" = pydantic.Field(alias="variableType")
+    variable_type: typing_extensions.Annotated["VariableType", pydantic.Field(alias="variableType")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

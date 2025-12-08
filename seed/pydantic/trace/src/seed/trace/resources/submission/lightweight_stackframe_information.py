@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class LightweightStackframeInformation(UniversalBaseModel):
-    num_stack_frames: int = pydantic.Field(alias="numStackFrames")
-    top_stack_frame_method_name: str = pydantic.Field(alias="topStackFrameMethodName")
+    num_stack_frames: typing_extensions.Annotated[int, pydantic.Field(alias="numStackFrames")]
+    top_stack_frame_method_name: typing_extensions.Annotated[str, pydantic.Field(alias="topStackFrameMethodName")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

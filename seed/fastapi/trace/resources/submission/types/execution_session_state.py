@@ -3,20 +3,23 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...commons.types.language import Language
 from .execution_session_status import ExecutionSessionStatus
 
 
 class ExecutionSessionState(UniversalBaseModel):
-    last_time_contacted: typing.Optional[str] = pydantic.Field(alias="lastTimeContacted", default=None)
-    session_id: str = pydantic.Field(alias="sessionId")
+    last_time_contacted: typing_extensions.Annotated[
+        typing.Optional[str], pydantic.Field(alias="lastTimeContacted")
+    ] = None
+    session_id: typing_extensions.Annotated[str, pydantic.Field(alias="sessionId")]
     """
     The auto-generated session id. Formatted as a uuid.
     """
 
-    is_warm_instance: bool = pydantic.Field(alias="isWarmInstance")
-    aws_task_id: typing.Optional[str] = pydantic.Field(alias="awsTaskId", default=None)
+    is_warm_instance: typing_extensions.Annotated[bool, pydantic.Field(alias="isWarmInstance")]
+    aws_task_id: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="awsTaskId")] = None
     language: Language
     status: ExecutionSessionStatus
 

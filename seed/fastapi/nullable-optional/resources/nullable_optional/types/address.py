@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .nullable_user_id import NullableUserId
 from .optional_user_id import OptionalUserId
@@ -16,10 +17,10 @@ class Address(UniversalBaseModel):
     street: str
     city: typing.Optional[str] = None
     state: typing.Optional[str] = None
-    zip_code: str = pydantic.Field(alias="zipCode")
+    zip_code: typing_extensions.Annotated[str, pydantic.Field(alias="zipCode")]
     country: typing.Optional[str] = None
-    building_id: NullableUserId = pydantic.Field(alias="buildingId")
-    tenant_id: OptionalUserId = pydantic.Field(alias="tenantId")
+    building_id: typing_extensions.Annotated[NullableUserId, pydantic.Field(alias="buildingId")]
+    tenant_id: typing_extensions.Annotated[OptionalUserId, pydantic.Field(alias="tenantId")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

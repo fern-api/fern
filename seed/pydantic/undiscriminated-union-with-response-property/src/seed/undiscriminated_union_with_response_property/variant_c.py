@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from .core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class VariantC(UniversalBaseModel):
     type: typing.Literal["C"] = "C"
-    value_c: bool = pydantic.Field(alias="valueC")
+    value_c: typing_extensions.Annotated[bool, pydantic.Field(alias="valueC")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

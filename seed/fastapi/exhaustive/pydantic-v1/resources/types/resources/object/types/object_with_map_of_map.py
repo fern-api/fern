@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import UniversalBaseModel
 
 
 class ObjectWithMapOfMap(UniversalBaseModel):
-    map_: typing.Dict[str, typing.Dict[str, str]] = pydantic.Field(alias="map")
+    map_: typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], pydantic.Field(alias="map")]
 
     class Config:
         extra = pydantic.Extra.forbid

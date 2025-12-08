@@ -3,15 +3,16 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .page import Page
 from .users import Users
 
 
 class ListUsersPaginationResponse(UniversalBaseModel):
-    has_next_page: typing.Optional[bool] = pydantic.Field(alias="hasNextPage", default=None)
+    has_next_page: typing_extensions.Annotated[typing.Optional[bool], pydantic.Field(alias="hasNextPage")] = None
     page: typing.Optional[Page] = None
-    total_count: int = pydantic.Field()
+    total_count: int
     """
     The totall number of /users
     """

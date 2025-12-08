@@ -14,7 +14,7 @@ class User(UniversalBaseModel):
     """
 
     id: str
-    name: str = pydantic.Field()
+    name: str
     """
     The user's name. This name is unique to each user. A few examples are included below:
      - Alice
@@ -22,7 +22,7 @@ class User(UniversalBaseModel):
      - Charlie
     """
 
-    age: typing.Optional[int] = pydantic.Field(default=None)
+    age: typing.Optional[int] = None
     """
     The user's age.
     """

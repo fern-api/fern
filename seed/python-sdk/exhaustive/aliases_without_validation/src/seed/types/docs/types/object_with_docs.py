@@ -8,7 +8,7 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 
 
 class ObjectWithDocs(UncheckedBaseModel):
-    string: str = pydantic.Field()
+    string: str
     """
     Characters that could lead to broken generated SDKs:
     

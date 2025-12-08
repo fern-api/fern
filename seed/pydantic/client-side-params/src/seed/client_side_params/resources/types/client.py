@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -11,152 +12,152 @@ class Client(UniversalBaseModel):
     Represents a client application
     """
 
-    client_id: str = pydantic.Field()
+    client_id: str
     """
     The unique client identifier
     """
 
-    tenant: typing.Optional[str] = pydantic.Field(default=None)
+    tenant: typing.Optional[str] = None
     """
     The tenant name
     """
 
-    name: str = pydantic.Field()
+    name: str
     """
     Name of the client
     """
 
-    description: typing.Optional[str] = pydantic.Field(default=None)
+    description: typing.Optional[str] = None
     """
     Free text description of the client
     """
 
-    global_: typing.Optional[bool] = pydantic.Field(alias="global", default=None)
+    global_: typing_extensions.Annotated[typing.Optional[bool], pydantic.Field(alias="global")] = None
     """
     Whether this is a global client
     """
 
-    client_secret: typing.Optional[str] = pydantic.Field(default=None)
+    client_secret: typing.Optional[str] = None
     """
     The client secret (only for non-public clients)
     """
 
-    app_type: typing.Optional[str] = pydantic.Field(default=None)
+    app_type: typing.Optional[str] = None
     """
     The type of application (spa, native, regular_web, non_interactive)
     """
 
-    logo_uri: typing.Optional[str] = pydantic.Field(default=None)
+    logo_uri: typing.Optional[str] = None
     """
     URL of the client logo
     """
 
-    is_first_party: typing.Optional[bool] = pydantic.Field(default=None)
+    is_first_party: typing.Optional[bool] = None
     """
     Whether this client is a first party client
     """
 
-    oidc_conformant: typing.Optional[bool] = pydantic.Field(default=None)
+    oidc_conformant: typing.Optional[bool] = None
     """
     Whether this client conforms to OIDC specifications
     """
 
-    callbacks: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    callbacks: typing.Optional[typing.List[str]] = None
     """
     Allowed callback URLs
     """
 
-    allowed_origins: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    allowed_origins: typing.Optional[typing.List[str]] = None
     """
     Allowed origins for CORS
     """
 
-    web_origins: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    web_origins: typing.Optional[typing.List[str]] = None
     """
     Allowed web origins for CORS
     """
 
-    grant_types: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    grant_types: typing.Optional[typing.List[str]] = None
     """
     Allowed grant types
     """
 
-    jwt_configuration: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    jwt_configuration: typing.Optional[typing.Dict[str, typing.Any]] = None
     """
     JWT configuration for the client
     """
 
-    signing_keys: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = pydantic.Field(default=None)
+    signing_keys: typing.Optional[typing.List[typing.Dict[str, typing.Any]]] = None
     """
     Client signing keys
     """
 
-    encryption_key: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    encryption_key: typing.Optional[typing.Dict[str, typing.Any]] = None
     """
     Encryption key
     """
 
-    sso: typing.Optional[bool] = pydantic.Field(default=None)
+    sso: typing.Optional[bool] = None
     """
     Whether SSO is enabled
     """
 
-    sso_disabled: typing.Optional[bool] = pydantic.Field(default=None)
+    sso_disabled: typing.Optional[bool] = None
     """
     Whether SSO is disabled
     """
 
-    cross_origin_auth: typing.Optional[bool] = pydantic.Field(default=None)
+    cross_origin_auth: typing.Optional[bool] = None
     """
     Whether to use cross-origin authentication
     """
 
-    cross_origin_loc: typing.Optional[str] = pydantic.Field(default=None)
+    cross_origin_loc: typing.Optional[str] = None
     """
     URL for cross-origin authentication
     """
 
-    custom_login_page_on: typing.Optional[bool] = pydantic.Field(default=None)
+    custom_login_page_on: typing.Optional[bool] = None
     """
     Whether a custom login page is enabled
     """
 
-    custom_login_page: typing.Optional[str] = pydantic.Field(default=None)
+    custom_login_page: typing.Optional[str] = None
     """
     Custom login page URL
     """
 
-    custom_login_page_preview: typing.Optional[str] = pydantic.Field(default=None)
+    custom_login_page_preview: typing.Optional[str] = None
     """
     Custom login page preview URL
     """
 
-    form_template: typing.Optional[str] = pydantic.Field(default=None)
+    form_template: typing.Optional[str] = None
     """
     Form template for WS-Federation
     """
 
-    is_heroku_app: typing.Optional[bool] = pydantic.Field(default=None)
+    is_heroku_app: typing.Optional[bool] = None
     """
     Whether this is a Heroku application
     """
 
-    addons: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    addons: typing.Optional[typing.Dict[str, typing.Any]] = None
     """
     Addons enabled for this client
     """
 
-    token_endpoint_auth_method: typing.Optional[str] = pydantic.Field(default=None)
+    token_endpoint_auth_method: typing.Optional[str] = None
     """
     Requested authentication method for the token endpoint
     """
 
-    client_metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    client_metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
     """
     Metadata associated with the client
     """
 
-    mobile: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    mobile: typing.Optional[typing.Dict[str, typing.Any]] = None
     """
     Mobile app settings
     """

@@ -3,14 +3,15 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .error_info import ErrorInfo
 from .submission_id import SubmissionId
 
 
 class ErroredResponse(UniversalBaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    error_info: ErrorInfo = pydantic.Field(alias="errorInfo")
+    submission_id: typing_extensions.Annotated[SubmissionId, pydantic.Field(alias="submissionId")]
+    error_info: typing_extensions.Annotated[ErrorInfo, pydantic.Field(alias="errorInfo")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

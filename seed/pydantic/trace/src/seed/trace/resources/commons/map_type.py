@@ -5,12 +5,13 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
 class MapType(UniversalBaseModel):
-    key_type: "VariableType" = pydantic.Field(alias="keyType")
-    value_type: "VariableType" = pydantic.Field(alias="valueType")
+    key_type: typing_extensions.Annotated["VariableType", pydantic.Field(alias="keyType")]
+    value_type: typing_extensions.Annotated["VariableType", pydantic.Field(alias="valueType")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

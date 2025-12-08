@@ -3,14 +3,15 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .submission_id import SubmissionId
 from .workspace_run_details import WorkspaceRunDetails
 
 
 class WorkspaceRanResponse(UniversalBaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    run_details: WorkspaceRunDetails = pydantic.Field(alias="runDetails")
+    submission_id: typing_extensions.Annotated[SubmissionId, pydantic.Field(alias="submissionId")]
+    run_details: typing_extensions.Annotated[WorkspaceRunDetails, pydantic.Field(alias="runDetails")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
