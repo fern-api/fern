@@ -29,12 +29,12 @@ service:
             type: optional<nullable<string>>
             docs: Optional nullable without default - should check wasSpecified
           regularOptional:
-            type: optional<string>
-            docs: Regular optional with default for comparison
+            type: optional<nullable<string>>
+            docs: Another optional nullable with default for comparison
             default: "default-value"
           regularOptionalNoDefault:
-            type: optional<string>
-            docs: Regular optional without default for comparison
+            type: optional<nullable<string>>
+            docs: Another optional nullable without default for comparison
       response: SearchResponse
 
 types:

@@ -106,7 +106,7 @@ client.search(
 <dl>
 <dd>
 
-**regularOptional:** `Optional<String>` — Regular optional with default for comparison
+**regularOptional:** `Optional<String>` — Another optional nullable with default for comparison
     
 </dd>
 </dl>
@@ -114,7 +114,7 @@ client.search(
 <dl>
 <dd>
 
-**regularOptionalNoDefault:** `Optional<String>` — Regular optional without default for comparison
+**regularOptionalNoDefault:** `Optional<String>` — Another optional nullable without default for comparison
     
 </dd>
 </dl>

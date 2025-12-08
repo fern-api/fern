@@ -67,11 +67,11 @@ public class RawSeedJavaOptionalNullableQueryParamsClient {
         }
         QueryStringMapper.addQueryParameter(
                 httpUrl, "regularOptional", request.getRegularOptional().orElse("default-value"), false);
-        if (request.getRegularOptionalNoDefault().isPresent()) {
+        if (!request.getRegularOptionalNoDefault().isAbsent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,
                     "regularOptionalNoDefault",
-                    request.getRegularOptionalNoDefault().get(),
+                    request.getRegularOptionalNoDefault().orElse(null),
                     false);
         }
         Request.Builder _requestBuilder = new Request.Builder()

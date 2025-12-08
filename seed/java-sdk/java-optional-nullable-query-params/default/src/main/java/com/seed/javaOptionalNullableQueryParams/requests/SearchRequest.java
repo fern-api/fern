@@ -34,9 +34,9 @@ public final class SearchRequest {
 
     private final OptionalNullable<String> optionalWithoutDefault;
 
-    private final Optional<String> regularOptional;
+    private final OptionalNullable<String> regularOptional;
 
-    private final Optional<String> regularOptionalNoDefault;
+    private final OptionalNullable<String> regularOptionalNoDefault;
 
     private final Map<String, Object> additionalProperties;
 
@@ -46,8 +46,8 @@ public final class SearchRequest {
             OptionalNullable<Boolean> includeArchived,
             OptionalNullable<SortOrder> sortOrder,
             OptionalNullable<String> optionalWithoutDefault,
-            Optional<String> regularOptional,
-            Optional<String> regularOptionalNoDefault,
+            OptionalNullable<String> regularOptional,
+            OptionalNullable<String> regularOptionalNoDefault,
             Map<String, Object> additionalProperties) {
         this.query = query;
         this.limit = limit;
@@ -111,18 +111,23 @@ public final class SearchRequest {
     }
 
     /**
-     * @return Regular optional with default for comparison
+     * @return Another optional nullable with default for comparison
      */
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("regularOptional")
-    public Optional<String> getRegularOptional() {
+    public OptionalNullable<String> getRegularOptional() {
         return regularOptional;
     }
 
     /**
-     * @return Regular optional without default for comparison
+     * @return Another optional nullable without default for comparison
      */
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
     @JsonProperty("regularOptionalNoDefault")
-    public Optional<String> getRegularOptionalNoDefault() {
+    public OptionalNullable<String> getRegularOptionalNoDefault() {
+        if (regularOptionalNoDefault == null) {
+            return OptionalNullable.absent();
+        }
         return regularOptionalNoDefault;
     }
 
@@ -136,6 +141,12 @@ public final class SearchRequest {
     @JsonProperty("optionalWithoutDefault")
     private OptionalNullable<String> _getOptionalWithoutDefault() {
         return optionalWithoutDefault;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("regularOptionalNoDefault")
+    private OptionalNullable<String> _getRegularOptionalNoDefault() {
+        return regularOptionalNoDefault;
     }
 
     @java.lang.Override
@@ -192,9 +203,9 @@ public final class SearchRequest {
 
         private OptionalNullable<String> optionalWithoutDefault = OptionalNullable.absent();
 
-        private Optional<String> regularOptional = Optional.empty();
+        private OptionalNullable<String> regularOptional = OptionalNullable.absent();
 
-        private Optional<String> regularOptionalNoDefault = Optional.empty();
+        private OptionalNullable<String> regularOptionalNoDefault = OptionalNullable.absent();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -383,30 +394,70 @@ public final class SearchRequest {
         }
 
         /**
-         * <p>Regular optional with default for comparison</p>
+         * <p>Another optional nullable with default for comparison</p>
          */
         @JsonSetter(value = "regularOptional", nulls = Nulls.SKIP)
-        public Builder regularOptional(Optional<String> regularOptional) {
+        public Builder regularOptional(OptionalNullable<String> regularOptional) {
             this.regularOptional = regularOptional;
             return this;
         }
 
         public Builder regularOptional(String regularOptional) {
-            this.regularOptional = Optional.ofNullable(regularOptional);
+            this.regularOptional = OptionalNullable.of(regularOptional);
+            return this;
+        }
+
+        public Builder regularOptional(Optional<String> regularOptional) {
+            if (regularOptional.isPresent()) {
+                this.regularOptional = OptionalNullable.of(regularOptional.get());
+            } else {
+                this.regularOptional = OptionalNullable.absent();
+            }
+            return this;
+        }
+
+        public Builder regularOptional(Nullable<String> regularOptional) {
+            if (regularOptional.isNull()) {
+                this.regularOptional = OptionalNullable.ofNull();
+            } else if (regularOptional.isEmpty()) {
+                this.regularOptional = OptionalNullable.absent();
+            } else {
+                this.regularOptional = OptionalNullable.of(regularOptional.get());
+            }
             return this;
         }
 
         /**
-         * <p>Regular optional without default for comparison</p>
+         * <p>Another optional nullable without default for comparison</p>
          */
         @JsonSetter(value = "regularOptionalNoDefault", nulls = Nulls.SKIP)
-        public Builder regularOptionalNoDefault(Optional<String> regularOptionalNoDefault) {
+        public Builder regularOptionalNoDefault(OptionalNullable<String> regularOptionalNoDefault) {
             this.regularOptionalNoDefault = regularOptionalNoDefault;
             return this;
         }
 
         public Builder regularOptionalNoDefault(String regularOptionalNoDefault) {
-            this.regularOptionalNoDefault = Optional.ofNullable(regularOptionalNoDefault);
+            this.regularOptionalNoDefault = OptionalNullable.of(regularOptionalNoDefault);
+            return this;
+        }
+
+        public Builder regularOptionalNoDefault(Optional<String> regularOptionalNoDefault) {
+            if (regularOptionalNoDefault.isPresent()) {
+                this.regularOptionalNoDefault = OptionalNullable.of(regularOptionalNoDefault.get());
+            } else {
+                this.regularOptionalNoDefault = OptionalNullable.absent();
+            }
+            return this;
+        }
+
+        public Builder regularOptionalNoDefault(Nullable<String> regularOptionalNoDefault) {
+            if (regularOptionalNoDefault.isNull()) {
+                this.regularOptionalNoDefault = OptionalNullable.ofNull();
+            } else if (regularOptionalNoDefault.isEmpty()) {
+                this.regularOptionalNoDefault = OptionalNullable.absent();
+            } else {
+                this.regularOptionalNoDefault = OptionalNullable.of(regularOptionalNoDefault.get());
+            }
             return this;
         }
 
