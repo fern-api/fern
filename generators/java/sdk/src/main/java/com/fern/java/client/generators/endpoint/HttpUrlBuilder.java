@@ -158,7 +158,9 @@ public final class HttpUrlBuilder {
             codeBlock.add(CodeBlock.of(";"));
         }
         queryParamProperties.forEach(queryParamProperty -> {
-            boolean isOptional = isTypeNameOptional(queryParamProperty.poetTypeName());
+            boolean isJavaOptional = isTypeNameJavaOptional(queryParamProperty.poetTypeName());
+            boolean isOptionalNullable = isTypeNameOptionalNullable(queryParamProperty.poetTypeName());
+            boolean isOptional = isJavaOptional || isOptionalNullable;
 
             // Check if this parameter has a default value
             Optional<CodeBlock> defaultValue = defaultValueExtractor.extractDefaultValue(
@@ -167,6 +169,7 @@ public final class HttpUrlBuilder {
             if (isOptional) {
                 if (defaultValue.isPresent()) {
                     // If optional and has default, use the value if present, otherwise use default
+                    // Both Optional and OptionalNullable support .orElse(default)
                     codeBlock.addStatement(
                             "$T.addQueryParameter($L, $S, $L.$N().orElse($L), $L)",
                             context.getPoetClassNameFactory().getQueryStringMapperClassName(),
@@ -177,17 +180,33 @@ public final class HttpUrlBuilder {
                             defaultValue.get(),
                             queryParamProperty.allowMultiple());
                 } else {
-                    // If optional but no default, only add if present
-                    codeBlock.beginControlFlow(
-                            "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
-                    codeBlock.addStatement(
-                            "$T.addQueryParameter($L, $S, $L, $L)",
-                            context.getPoetClassNameFactory().getQueryStringMapperClassName(),
-                            httpUrlname,
-                            queryParamProperty.wireKey().get(),
-                            CodeBlock.of("$L.$N().get()", requestName, queryParamProperty.getterProperty()),
-                            queryParamProperty.allowMultiple());
-                    codeBlock.endControlFlow();
+                    // If optional but no default, only add if present/specified
+                    if (isOptionalNullable) {
+                        // For OptionalNullable, use !isAbsent() to check if the value was specified
+                        // (either as a value or explicitly as null)
+                        codeBlock.beginControlFlow(
+                                "if (!$L.$N().isAbsent())", requestName, queryParamProperty.getterProperty());
+                        codeBlock.addStatement(
+                                "$T.addQueryParameter($L, $S, $L, $L)",
+                                context.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                                httpUrlname,
+                                queryParamProperty.wireKey().get(),
+                                CodeBlock.of("$L.$N().orElse(null)", requestName, queryParamProperty.getterProperty()),
+                                queryParamProperty.allowMultiple());
+                        codeBlock.endControlFlow();
+                    } else {
+                        // For regular Optional, use isPresent()
+                        codeBlock.beginControlFlow(
+                                "if ($L.$N().isPresent())", requestName, queryParamProperty.getterProperty());
+                        codeBlock.addStatement(
+                                "$T.addQueryParameter($L, $S, $L, $L)",
+                                context.getPoetClassNameFactory().getQueryStringMapperClassName(),
+                                httpUrlname,
+                                queryParamProperty.wireKey().get(),
+                                CodeBlock.of("$L.$N().get()", requestName, queryParamProperty.getterProperty()),
+                                queryParamProperty.allowMultiple());
+                        codeBlock.endControlFlow();
+                    }
                 }
             } else {
                 // Not optional, add directly
@@ -362,9 +381,15 @@ public final class HttpUrlBuilder {
         return result;
     }
 
-    private static boolean isTypeNameOptional(TypeName typeName) {
+    private static boolean isTypeNameJavaOptional(TypeName typeName) {
         return typeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
+    }
+
+    private boolean isTypeNameOptionalNullable(TypeName typeName) {
+        return typeName instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) typeName)
+                        .rawType.equals(context.getPoetClassNameFactory().getOptionalNullableClassName());
     }
 
     @Value.Immutable
