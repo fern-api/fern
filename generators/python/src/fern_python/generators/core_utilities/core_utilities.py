@@ -44,12 +44,12 @@ class CoreUtilities:
 
         self._copy_file_to_project(
             project=project,
-            relative_filepath_on_disk="fern_enum.py",
+            relative_filepath_on_disk="enum.py",
             filepath_in_project=Filepath(
                 directories=self.filepath,
-                file=Filepath.FilepathPart(module_name="fern_enum"),
+                file=Filepath.FilepathPart(module_name="enum"),
             ),
-            exports={"FernEnum"},
+            exports=set(),
         )
 
         utilities_path = (
@@ -132,9 +132,7 @@ class CoreUtilities:
     def get_fern_enum(self) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "fern_enum"), named_import="FernEnum"
-            ),
+            import_=AST.ReferenceImport(module=AST.Module.local(*self._module_path, "enum"), named_import="StrEnum"),
         )
 
     def get_field_metadata(self) -> FieldMetadata:

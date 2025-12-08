@@ -55,12 +55,12 @@ class CoreUtilities:
         )
         self._copy_file_to_project(
             project=project,
-            relative_filepath_on_disk="fern_enum.py",
+            relative_filepath_on_disk="enum.py",
             filepath_in_project=Filepath(
                 directories=self.filepath,
-                file=Filepath.FilepathPart(module_name="fern_enum"),
+                file=Filepath.FilepathPart(module_name="enum"),
             ),
-            exports={"FernEnum"} if not self._exclude_types_from_init_exports else set(),
+            exports=set(),
         )
         self._copy_file_to_project(
             project=project,

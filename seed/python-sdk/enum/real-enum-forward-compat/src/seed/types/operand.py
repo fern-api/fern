@@ -2,12 +2,12 @@
 
 import typing
 
-from ..core.fern_enum import FernEnum
+from ..core.enum import StrEnum
 
 T_Result = typing.TypeVar("T_Result")
 
 
-class Operand(FernEnum):
+class Operand(StrEnum):
     """
     Tests enum name and value can be
     different.

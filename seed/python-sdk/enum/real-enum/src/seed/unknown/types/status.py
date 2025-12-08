@@ -2,12 +2,12 @@
 
 import typing
 
-from ...core.fern_enum import FernEnum
+from ...core.enum import StrEnum
 
 T_Result = typing.TypeVar("T_Result")
 
 
-class Status(FernEnum):
+class Status(StrEnum):
     KNOWN = "Known"
     UNKNOWN = "Unknown"
 

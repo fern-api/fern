@@ -2,12 +2,12 @@
 
 import typing
 
-from ..core.fern_enum import FernEnum
+from ..core.enum import StrEnum
 
 T_Result = typing.TypeVar("T_Result")
 
 
-class SpecialEnum(FernEnum):
+class SpecialEnum(StrEnum):
     A = ""
     B = 'Hello \\"World\\"'
     C = "Hello 'World'"
