@@ -2,7 +2,7 @@
 - version: 3.37.2
   changelogEntry:
     - summary: |
-        Fix package.json metadata (name, version, repository, private) being lost during local generation when using non-self-hosted GitHub configuration with npm output. The generator now falls back to publishConfig when the output mode doesn't provide npm package info.
+        Make package.json generation more reliable.
       type: fix
   createdAt: "2025-12-08"
   irVersion: 62

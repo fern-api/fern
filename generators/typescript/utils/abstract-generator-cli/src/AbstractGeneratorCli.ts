@@ -17,6 +17,7 @@ import {
     constructNpmPackage,
     constructNpmPackageArgs,
     constructNpmPackageFromArgs,
+    getRepoUrlFromUrl,
     NpmPackage,
     PersistedTypescriptProject
 } from "@fern-typescript/commons";
@@ -84,17 +85,18 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 parse: serialization.IntermediateRepresentation.parse
             });
 
-            // First try to construct npmPackage from the output mode (github/publish modes)
-            // If that returns undefined (e.g., downloadFiles mode), fall back to publishConfig
-            const npmPackageFromOutputMode = constructNpmPackage({
-                generatorConfig: config,
-                isPackagePrivate: this.isPackagePrivate(customConfig)
-            });
-            const npmPackage =
-                npmPackageFromOutputMode ??
-                constructNpmPackageFromArgs(
-                    npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
-                );
+            const npmPackage = ir.selfHosted
+                ? (constructNpmPackageFromArgs(
+                      npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
+                  ) ??
+                  constructNpmPackage({
+                      generatorConfig: config,
+                      isPackagePrivate: this.isPackagePrivate(customConfig)
+                  }))
+                : constructNpmPackage({
+                      generatorConfig: config,
+                      isPackagePrivate: this.isPackagePrivate(customConfig)
+                  });
 
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
@@ -308,26 +310,13 @@ function npmPackageInfoFromPublishConfig(
     isPackagePrivate: boolean
 ): constructNpmPackageArgs {
     let args = {};
-    if (publishConfig?.type === "github") {
-        if (publishConfig.target?.type === "npm") {
-            const repoUrl =
-                publishConfig.repo != null && publishConfig.owner != null
-                    ? `https://github.com/${publishConfig.owner}/${publishConfig.repo}`
-                    : publishConfig.uri;
+    if (publishConfig?.type === "github" || publishConfig?.type === "direct" || publishConfig?.type === "filesystem") {
+        const target = publishConfig?.type === "filesystem" ? publishConfig.publishTarget : publishConfig.target;
+        if (target?.type === "npm") {
             args = {
-                packageName: publishConfig.target.packageName,
-                version: publishConfig.target.version,
-                repoUrl,
-                publishInfo: undefined,
-                licenseConfig: config.license
-            };
-        }
-    } else if (publishConfig?.type === "filesystem") {
-        if (publishConfig.publishTarget?.type === "npm") {
-            args = {
-                packageName: publishConfig.publishTarget.packageName,
-                version: publishConfig.publishTarget.version,
-                repoUrl: undefined,
+                packageName: target.packageName,
+                version: target.version,
+                repoUrl: getRepoUrl(publishConfig),
                 publishInfo: undefined,
                 licenseConfig: config.license
             };
@@ -337,6 +326,26 @@ function npmPackageInfoFromPublishConfig(
         ...args,
         isPackagePrivate
     };
+}
+
+function getRepoUrl(
+    publishConfig: FernIr.PublishingConfig.Github | FernIr.PublishingConfig.Direct | FernIr.PublishingConfig.Filesystem
+): string | undefined {
+    const url = publishConfig._visit<string | undefined>({
+        github: (value) => {
+            if (value.owner != null && value.repo != null) {
+                return `https://github.com/${value.owner}/${value.repo}`;
+            }
+            return value.uri;
+        },
+        direct: () => undefined,
+        filesystem: () => undefined,
+        _other: () => undefined
+    });
+    if (!url) {
+        return undefined;
+    }
+    return getRepoUrlFromUrl(url);
 }
 
 class GeneratorContextImpl implements GeneratorContext {

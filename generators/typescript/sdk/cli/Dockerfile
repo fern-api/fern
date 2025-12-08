@@ -15,7 +15,7 @@ RUN pnpm install -g oxfmt@0.9.0
 RUN pnpm install -g @biomejs/biome@2.3.1
 RUN pnpm install -g oxlint@1.25.0
 RUN pnpm install -g oxlint-tsgolint@0.4.0
-RUN pnpm install -f -g @fern-api/generator-cli@0.2.0
+RUN pnpm install -f -g @fern-api/generator-cli@0.5.0
 
 WORKDIR /tmp/cache-warm
 
