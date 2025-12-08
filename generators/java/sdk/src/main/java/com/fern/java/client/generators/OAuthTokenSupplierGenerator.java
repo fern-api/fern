@@ -365,7 +365,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         TypeDeclaration typeDeclaration = generatorContext
                                 .getTypeDeclarations()
                                 .get(requestBodyType.getNamed().get().getTypeId());
-                        if (typeDeclaration != null && typeDeclaration.getShape().isObject()) {
+                        if (typeDeclaration != null
+                                && typeDeclaration.getShape().isObject()) {
                             ObjectTypeDeclaration objectType =
                                     typeDeclaration.getShape().getObject().get();
                             for (ObjectProperty prop : objectType.getProperties()) {
