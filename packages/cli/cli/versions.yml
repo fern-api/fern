@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix parsing of `<Code>` components with `for` attribute for synced tabs. The `for` attribute is now properly preserved when converting `<Code>` components to markdown code blocks, allowing synced tabs to work correctly across multiple `<CodeGroup>` sections.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-08"
+  version: 3.4.5
+
+- changelogEntry:
+    - summary: |
         Fallback to variant type for display name if title and mapping are not present.
       type: fix
   irVersion: 63
