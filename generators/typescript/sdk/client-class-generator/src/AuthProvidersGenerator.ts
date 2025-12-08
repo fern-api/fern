@@ -8,6 +8,7 @@ import {
     AuthProviderGenerator,
     BasicAuthProviderGenerator,
     BearerAuthProviderGenerator,
+    DiscriminatedUnionAuthProviderGenerator,
     HeaderAuthProviderGenerator,
     InferredAuthProviderGenerator,
     OAuthAuthProviderGenerator
@@ -16,7 +17,7 @@ import {
 export declare namespace AuthProvidersGenerator {
     export interface Init {
         ir: IntermediateRepresentation;
-        authScheme: AuthScheme | { type: "any" };
+        authScheme: AuthScheme | { type: "any" } | { type: "discriminatedUnion" };
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
         oauthTokenOverride: boolean;
@@ -37,6 +38,13 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
                 case "any":
                     return new AnyAuthProviderGenerator({
                         ir
+                    });
+                case "discriminatedUnion":
+                    return new DiscriminatedUnionAuthProviderGenerator({
+                        ir,
+                        neverThrowErrors,
+                        includeSerdeLayer,
+                        oauthTokenOverride
                     });
                 case "inferred":
                     return new InferredAuthProviderGenerator({

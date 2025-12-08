@@ -1,0 +1,38 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAnyAuthClient } from \"@fern/any-auth\";\n\nconst client = new SeedAnyAuthClient({ environment: \"YOUR_BASE_URL\", auth: { type: \"Bearer\", token: \"YOUR_TOKEN\" } });\nawait client.auth.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_user.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAnyAuthClient } from \"@fern/any-auth\";\n\nconst client = new SeedAnyAuthClient({ environment: \"YOUR_BASE_URL\", auth: { type: \"Bearer\", token: \"YOUR_TOKEN\" } });\nawait client.user.get();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/admins",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getAdmins"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAnyAuthClient } from \"@fern/any-auth\";\n\nconst client = new SeedAnyAuthClient({ environment: \"YOUR_BASE_URL\", auth: { type: \"Bearer\", token: \"YOUR_TOKEN\" } });\nawait client.user.getAdmins();\n"
+            }
+        }
+    ],
+    "types": {}
+}

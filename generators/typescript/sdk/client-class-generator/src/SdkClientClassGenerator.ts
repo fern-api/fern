@@ -32,6 +32,7 @@ export declare namespace SdkClientClassGenerator {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
         oauthTokenOverride: boolean;
+        useDiscriminatedUnionAuth: boolean;
     }
 
     export namespace generateService {
@@ -70,6 +71,7 @@ export class SdkClientClassGenerator {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly offsetSemantics: "item-index" | "page-index";
     private readonly oauthTokenOverride: boolean;
+    private readonly useDiscriminatedUnionAuth: boolean;
 
     constructor({
         intermediateRepresentation,
@@ -96,7 +98,8 @@ export class SdkClientClassGenerator {
         generateEndpointMetadata,
         parameterNaming,
         offsetSemantics,
-        oauthTokenOverride
+        oauthTokenOverride,
+        useDiscriminatedUnionAuth
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -123,6 +126,7 @@ export class SdkClientClassGenerator {
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
         this.oauthTokenOverride = oauthTokenOverride;
+        this.useDiscriminatedUnionAuth = useDiscriminatedUnionAuth;
     }
 
     public generateService({
@@ -159,7 +163,8 @@ export class SdkClientClassGenerator {
             generateEndpointMetadata: this.generateEndpointMetadata,
             parameterNaming: this.parameterNaming,
             offsetSemantics: this.offsetSemantics,
-            oauthTokenOverride: this.oauthTokenOverride
+            oauthTokenOverride: this.oauthTokenOverride,
+            useDiscriminatedUnionAuth: this.useDiscriminatedUnionAuth
         });
     }
 }

@@ -61,4 +61,5 @@ export interface SdkCustomConfig {
     generateSubpackageExports: boolean | undefined;
     offsetSemantics: "item-index" | "page-index";
     oauthTokenOverride: boolean | undefined;
+    useDiscriminatedUnionAuth: boolean | undefined;
 }

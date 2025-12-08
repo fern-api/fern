@@ -1,4 +1,45 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.38.0
+  changelogEntry:
+    - summary: |
+        Add support for discriminated union auth configuration via the `useDiscriminatedUnionAuth` feature flag.
+        When enabled, users explicitly choose the auth type via a `type` field instead of the SDK trying each auth method.
+
+        To enable this feature, add the `useDiscriminatedUnionAuth` configuration to your _generators.yml_ file:
+        ```yaml
+        # In generators.yml
+        groups:
+          generators:
+            - name: fernapi/fern-typescript-sdk
+              config:
+                useDiscriminatedUnionAuth: true
+        ```
+
+        Users can then instantiate the client with explicit auth type selection:
+        ```ts
+        // Bearer token auth
+        const client = new Client({
+          auth: {
+            type: "Bearer",
+            token: "YOUR_BEARER_TOKEN"
+          }
+        });
+
+        // OAuth auth
+        const client = new Client({
+          auth: {
+            type: "OAuth",
+            clientId: "...",
+            clientSecret: "..."
+          }
+        });
+        ```
+
+        The `type` value is derived from the security scheme key in the API definition.
+      type: feat
+  createdAt: "2025-12-08"
+  irVersion: 62
+
 - version: 3.37.0
   changelogEntry:
     - summary: |

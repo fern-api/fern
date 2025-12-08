@@ -48,6 +48,7 @@ import {
     AuthProviderInstance,
     BasicAuthProviderInstance,
     BearerAuthProviderInstance,
+    DiscriminatedUnionAuthProviderInstance,
     HeaderAuthProviderInstance,
     InferredAuthProviderInstance,
     OAuthAuthProviderInstance
@@ -94,6 +95,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
         oauthTokenOverride: boolean;
+        useDiscriminatedUnionAuth: boolean;
     }
 }
 
@@ -165,7 +167,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         generateEndpointMetadata,
         parameterNaming,
         offsetSemantics,
-        oauthTokenOverride
+        oauthTokenOverride,
+        useDiscriminatedUnionAuth
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -436,19 +439,24 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             });
 
-        for (const authScheme of authSchemes) {
-            if (isAnyAuth) {
-                const authProvider = getAuthProvider(authScheme);
-                anyAuthProviders.push(authProvider);
-            } else {
-                this.authProvider = getAuthProvider(authScheme);
-                break;
+        // If useDiscriminatedUnionAuth is enabled, use the discriminated union auth provider
+        if (isAnyAuth && useDiscriminatedUnionAuth) {
+            this.authProvider = new DiscriminatedUnionAuthProviderInstance(intermediateRepresentation);
+        } else {
+            for (const authScheme of authSchemes) {
+                if (isAnyAuth) {
+                    const authProvider = getAuthProvider(authScheme);
+                    anyAuthProviders.push(authProvider);
+                } else {
+                    this.authProvider = getAuthProvider(authScheme);
+                    break;
+                }
             }
-        }
 
-        // After the loop, if isAnyAuth, create AnyAuthProviderInstance with all collected providers
-        if (isAnyAuth && anyAuthProviders.length > 0) {
-            this.authProvider = new AnyAuthProviderInstance(anyAuthProviders);
+            // After the loop, if isAnyAuth, create AnyAuthProviderInstance with all collected providers
+            if (isAnyAuth && anyAuthProviders.length > 0) {
+                this.authProvider = new AnyAuthProviderInstance(anyAuthProviders);
+            }
         }
     }
 
