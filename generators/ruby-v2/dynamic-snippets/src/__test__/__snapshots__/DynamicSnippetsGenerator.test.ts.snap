@@ -31,6 +31,10 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
 client.service.create_big_entity(
+  cast_member: {
+    id: 'john.doe',
+    name: 'John Doe'
+  },
   extended_movie: {
     cast: ['John Travolta', 'Samuel L. Jackson', 'Uma Thurman', 'Bruce Willis'],
     id: 'movie-sda231x',
@@ -43,7 +47,8 @@ client.service.create_big_entity(
     revenue: 1000000
   },
   migration: {
-    name: 'Migration 31 Aug'
+    name: 'Migration 31 Aug',
+    status: 'RUNNING'
   }
 );
 "
