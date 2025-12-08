@@ -306,7 +306,6 @@ allowedFailures:
   - exhaustive:publish-to
   - exhaustive:signed_publish
   - extends
-  - java-inline-types:no-wrapped-aliases
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
   - request-parameters
@@ -314,8 +313,6 @@ allowedFailures:
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
-  - java-inline-types:inline
-  - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - nullable:no-custom-config
   - pagination-custom

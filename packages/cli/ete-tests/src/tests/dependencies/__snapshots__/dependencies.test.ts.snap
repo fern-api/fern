@@ -660,7 +660,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                             }
                         ],
                         "file": null
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -731,7 +732,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                                 "safeName": "Y"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -841,7 +843,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                                 "safeName": "X"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -917,7 +920,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                             }
                         ],
                         "file": null
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "GET",
@@ -1249,4 +1253,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `5757723`;
+exports[`dependencies > file dependencies 1`] = `5762035`;

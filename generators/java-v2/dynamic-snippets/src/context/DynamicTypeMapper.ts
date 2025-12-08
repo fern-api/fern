@@ -30,11 +30,12 @@ export class DynamicTypeMapper {
                 );
             }
             case "named": {
-                const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
+                const typeId = args.typeReference.value;
+                const named = this.context.resolveNamedType({ typeId });
                 if (named == null) {
                     return this.convertUnknown();
                 }
-                return this.convertNamed({ named });
+                return this.convertNamed({ typeId, named });
             }
             case "optional":
             case "nullable": {
@@ -51,7 +52,7 @@ export class DynamicTypeMapper {
         }
     }
 
-    private convertNamed({ named }: { named: FernIr.dynamic.NamedType }): java.Type {
+    private convertNamed({ typeId, named }: { typeId: string; named: FernIr.dynamic.NamedType }): java.Type {
         switch (named.type) {
             case "alias":
                 return this.convert({ typeReference: named.typeReference });
@@ -60,9 +61,9 @@ export class DynamicTypeMapper {
             case "object":
             case "undiscriminatedUnion":
                 return java.Type.reference(
-                    java.classReference({
-                        name: this.context.getClassName(named.declaration.name),
-                        packageName: this.context.getTypesPackageName(named.declaration.fernFilepath)
+                    this.context.getJavaClassReferenceForNamedType({
+                        typeId,
+                        declaration: named.declaration
                     })
                 );
             default:

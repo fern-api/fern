@@ -455,7 +455,10 @@ export class DynamicSnippetsConverter {
     }
 
     private convertTypeDeclaration(typeDeclaration: TypeDeclaration): DynamicSnippets.NamedType {
-        const declaration = this.convertDeclaration(typeDeclaration.name);
+        const declaration = this.convertDeclaration({
+            ...typeDeclaration.name,
+            inline: typeDeclaration.inline
+        });
         switch (typeDeclaration.shape.type) {
             case "alias":
                 return this.convertAlias({ declaration, alias: typeDeclaration.shape });
@@ -744,14 +747,17 @@ export class DynamicSnippetsConverter {
 
     private convertDeclaration({
         name,
-        fernFilepath
+        fernFilepath,
+        inline
     }: {
         name: Name;
         fernFilepath: FernFilepath;
+        inline?: boolean;
     }): DynamicSnippets.Declaration {
         return {
             name,
-            fernFilepath
+            fernFilepath,
+            inline
         };
     }
 

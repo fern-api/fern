@@ -1285,7 +1285,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                 "safeName": "App"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -1415,7 +1416,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                 "safeName": "Commons"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -1486,7 +1488,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                                 "safeName": "Commons"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -2238,7 +2241,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                 "safeName": "FileUpload"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
@@ -2308,7 +2312,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                     "safeName": "FileUpload"
                                 }
                             }
-                        }
+                        },
+                        "inline": null
                     },
                     "pathParameters": [],
                     "queryParameters": [],
@@ -9642,7 +9647,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                                 "safeName": "EndpointUrls"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "GET",
@@ -9722,7 +9728,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                                 "safeName": "EndpointUrls"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
@@ -9802,7 +9809,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                                 "safeName": "ServiceUrl"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "GET",
@@ -12566,7 +12574,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                 "safeName": "Nested"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -12676,7 +12685,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                 "safeName": "Nested"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -12778,7 +12788,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                 "safeName": "Nested"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -12892,7 +12903,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                 "safeName": "Nested"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
@@ -13894,7 +13906,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                         "allParts": [],
                         "packagePath": [],
                         "file": null
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -13967,7 +13980,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                             }
                         ],
                         "file": null
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -14038,7 +14052,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                                 "safeName": "Importer"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -14207,7 +14222,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                                 "safeName": "A"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -14243,7 +14259,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                         "allParts": [],
                         "packagePath": [],
                         "file": null
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "GET",
@@ -16990,7 +17007,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                 "safeName": "Service"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -17090,7 +17108,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                 "safeName": "Service"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -17190,7 +17209,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                 "safeName": "Service"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -17323,7 +17343,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                 "safeName": "Service"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
@@ -17409,7 +17430,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                                 "safeName": "Service"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
@@ -19184,7 +19206,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                 "safeName": "Commons"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -19284,7 +19307,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -19420,7 +19444,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
@@ -23176,7 +23201,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                 "safeName": "Commons"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -23276,7 +23302,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -23347,7 +23374,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -23517,7 +23545,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
@@ -38161,7 +38190,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Commons"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -38261,7 +38291,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Commons"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -38361,7 +38392,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Commons"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "types": [
                     {
@@ -38455,7 +38487,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Director"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -38585,7 +38618,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Director"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -38656,7 +38690,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Director"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "literal",
@@ -38730,7 +38765,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Director"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "literal",
@@ -38804,7 +38840,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -38875,7 +38912,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -38946,7 +38984,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -39017,7 +39056,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -39177,7 +39217,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -39310,7 +39351,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -39410,7 +39452,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [],
                 "additionalProperties": false
@@ -39479,7 +39522,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "discriminant": {
                     "name": {
@@ -39681,7 +39725,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -39780,7 +39825,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "properties": [
                     {
@@ -39983,7 +40029,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
@@ -40069,7 +40116,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
@@ -40155,7 +40203,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "GET",
@@ -40225,7 +40274,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "safeName": "Imdb"
                                 }
                             }
-                        }
+                        },
+                        "inline": null
                     },
                     "pathParameters": [
                         {
@@ -40370,7 +40420,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "safeName": "Imdb"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "DELETE",
@@ -41367,7 +41418,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                                 "safeName": "Streaming"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
@@ -41447,7 +41499,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                                 "safeName": "Streaming"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
@@ -41517,7 +41570,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                                     "safeName": "Streaming"
                                 }
                             }
-                        }
+                        },
+                        "inline": null
                     },
                     "pathParameters": [],
                     "queryParameters": [],
@@ -42814,7 +42868,8 @@ exports[`ir > {"name":"variables"} 1`] = `
                                 "safeName": "Commons"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "typeReference": {
                     "type": "primitive",
@@ -42888,7 +42943,8 @@ exports[`ir > {"name":"variables"} 1`] = `
                                 "safeName": "Service"
                             }
                         }
-                    }
+                    },
+                    "inline": null
                 },
                 "location": {
                     "method": "POST",
