@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 4.45.1
+  changelogEntry:
+    - summary: Fix forward ref detection for complex circular type cycles.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
 - version: 4.45.0
   changelogEntry:
     - summary: |
@@ -92,13 +100,6 @@
         Fix wire test WireMock container lifecycle to be compatible with pytest-xdist parallelization.
         The container is now started/stopped using pytest_configure/pytest_unconfigure hooks instead of
         a session-scoped fixture, ensuring only the controller process manages the container.
-      type: fix
-  createdAt: "2025-12-04"
-  irVersion: 61
-
-- version: 4.41.9
-  changelogEntry:
-    - summary: Fix forward ref detection for complex circular type cycles.
       type: fix
   createdAt: "2025-12-04"
   irVersion: 61
