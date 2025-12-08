@@ -46,8 +46,8 @@ class SeedOauthClientCredentials:
     base_url : str
         The base url to use for requests from the client.
 
-    token : str
-        Authenticate by providing a pre-generated bearer token via 'token'. In this mode, OAuth client credentials are not required.
+    token : typing.Callable[[], str]
+        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
@@ -97,7 +97,7 @@ class SeedOauthClientCredentials:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
-        token: str,
+        token: typing.Callable[[], str],
     ): ...
     def __init__(
         self,
@@ -105,7 +105,7 @@ class SeedOauthClientCredentials:
         base_url: str,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
-        token: typing.Optional[str] = None,
+        token: typing.Optional[typing.Callable[[], str]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -123,7 +123,7 @@ class SeedOauthClientCredentials:
                 if follow_redirects is not None
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
-                token=_token_getter_override if _token_getter_override is not None else (lambda: token),
+                token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
             oauth_token_provider = OAuthTokenProvider(
@@ -219,8 +219,8 @@ class AsyncSeedOauthClientCredentials:
     base_url : str
         The base url to use for requests from the client.
 
-    token : str
-        Authenticate by providing a pre-generated bearer token via 'token'. In this mode, OAuth client credentials are not required.
+    token : typing.Callable[[], str]
+        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
@@ -270,7 +270,7 @@ class AsyncSeedOauthClientCredentials:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
-        token: str,
+        token: typing.Callable[[], str],
     ): ...
     def __init__(
         self,
@@ -278,7 +278,7 @@ class AsyncSeedOauthClientCredentials:
         base_url: str,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
-        token: typing.Optional[str] = None,
+        token: typing.Optional[typing.Callable[[], str]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -296,7 +296,7 @@ class AsyncSeedOauthClientCredentials:
                 if follow_redirects is not None
                 else httpx.AsyncClient(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
-                token=_token_getter_override if _token_getter_override is not None else (lambda: token),
+                token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
             oauth_token_provider = AsyncOAuthTokenProvider(
