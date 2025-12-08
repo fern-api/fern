@@ -37,10 +37,9 @@ import {
     InterfaceDeclarationStructure,
     MethodDeclarationStructure,
     ModuleDeclarationStructure,
-    OptionalKind,
-    PropertySignatureStructure,
     Scope,
     StructureKind,
+    TypeAliasDeclarationStructure,
     ts
 } from "ts-morph";
 import { Code, code } from "ts-poet";
@@ -94,6 +93,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
+        oauthTokenOverride: boolean;
     }
 }
 
@@ -137,6 +137,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
+    private readonly oauthTokenOverride: boolean;
 
     constructor({
         isRoot,
@@ -163,7 +164,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         formDataSupport,
         generateEndpointMetadata,
         parameterNaming,
-        offsetSemantics
+        offsetSemantics,
+        oauthTokenOverride
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -183,6 +185,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
+        this.oauthTokenOverride = oauthTokenOverride;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -679,11 +682,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             )
                         )
                     ),
-                    initializer:
-                        optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
-                        !context.baseClient.anyRequiredBaseClientOptions(context)
-                            ? "{}"
-                            : undefined
+                    initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
                 }
             ];
             const statements = code`
@@ -707,11 +706,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 )
                             )
                         ),
-                        initializer:
-                            optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
-                            !context.baseClient.anyRequiredBaseClientOptions(context)
-                                ? "{}"
-                                : undefined
+                        initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
                     }
                 ]
             });
@@ -996,14 +991,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return properties;
     }
 
-    private generateOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
-        const properties: OptionalKind<PropertySignatureStructure>[] = [];
-
+    private generateOptionsInterface(context: SdkContext): TypeAliasDeclarationStructure {
+        // Use type alias instead of interface because BaseClientOptions may include union types
+        // (e.g., AtLeastOneOf pattern for AnyAuthProvider.AuthOptions)
+        // TypeScript interfaces can only extend object types with statically known members
         return {
-            kind: StructureKind.Interface,
+            kind: StructureKind.TypeAlias,
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
-            properties,
-            extends: [getTextOfTsNode(context.sdkClientClass.getReferenceToBaseClientOptions().getTypeNode())],
+            type: getTextOfTsNode(context.sdkClientClass.getReferenceToBaseClientOptions().getTypeNode()),
             isExported: true
         };
     }

@@ -10,7 +10,7 @@ import type * as SeedMixedFileDirectory from "../../../../../index.js";
 import { MetadataClient } from "../resources/metadata/client/Client.js";
 
 export declare namespace EventsClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

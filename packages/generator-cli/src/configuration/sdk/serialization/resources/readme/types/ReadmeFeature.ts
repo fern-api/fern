@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernGeneratorCli from "../../../../api/index";
 import * as core from "../../../../core";
+import { Snippet } from "./Snippet";
 import { FeatureSpec } from "../../feature/types/FeatureSpec";
 
 export const ReadmeFeature: core.serialization.ObjectSchema<
@@ -12,14 +13,14 @@ export const ReadmeFeature: core.serialization.ObjectSchema<
     FernGeneratorCli.ReadmeFeature
 > = core.serialization
     .object({
-        snippets: core.serialization.list(core.serialization.string()).optional(),
+        snippets: core.serialization.list(Snippet).optional(),
         snippetsAreOptional: core.serialization.boolean(),
     })
     .extend(FeatureSpec);
 
 export declare namespace ReadmeFeature {
     interface Raw extends FeatureSpec.Raw {
-        snippets?: string[] | null;
+        snippets?: Snippet.Raw[] | null;
         snippetsAreOptional: boolean;
     }
 }

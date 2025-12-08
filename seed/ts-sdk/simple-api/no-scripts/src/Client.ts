@@ -7,8 +7,7 @@ import * as core from "./core/index.js";
 import { UserClient } from "./api/resources/user/client/Client.js";
 
 export declare namespace SeedSimpleApiClient {
-    export interface Options extends BaseClientOptions {
-    }
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {
     }

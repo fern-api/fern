@@ -10,7 +10,7 @@ import * as errors from "../../../../errors/index.js";
 import * as SeedApi from "../../../index.js";
 
 export declare namespace TestGroupClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

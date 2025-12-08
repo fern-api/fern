@@ -14,7 +14,7 @@ import { UnionClient } from "../resources/union/client/Client.js";
 import { UrlsClient } from "../resources/urls/client/Client.js";
 
 export declare namespace EndpointsClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 }
 
 export class EndpointsClient {

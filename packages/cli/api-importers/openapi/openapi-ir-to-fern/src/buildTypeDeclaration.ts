@@ -33,7 +33,7 @@ import { State } from "./State";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getTypeFromTypeReference, stripNullableWrapperForExtends } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -228,7 +228,7 @@ export function buildObjectTypeDeclaration({
             namespace,
             declarationDepth: declarationDepth + 1
         });
-        extendedSchemas.push(getTypeFromTypeReference(allOfTypeReference));
+        extendedSchemas.push(stripNullableWrapperForExtends(getTypeFromTypeReference(allOfTypeReference)));
     }
 
     for (const inlineSchemaId of schemasToInline) {
@@ -258,7 +258,7 @@ export function buildObjectTypeDeclaration({
                 namespace,
                 declarationDepth: declarationDepth + 1
             });
-            extendedSchemas.push(getTypeFromTypeReference(extendedSchemaTypeReference));
+            extendedSchemas.push(stripNullableWrapperForExtends(getTypeFromTypeReference(extendedSchemaTypeReference)));
         }
     }
 

@@ -6,7 +6,7 @@ import { BClient } from "../resources/b/client/Client.js";
 import { CClient } from "../resources/c/client/Client.js";
 
 export declare namespace AClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 }
 
 export class AClient {
