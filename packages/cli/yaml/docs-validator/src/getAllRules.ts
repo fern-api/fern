@@ -8,6 +8,7 @@ import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints";
 import { ValidFileTypes } from "./rules/valid-file-types";
 import { ValidFrontmatter } from "./rules/valid-frontmatter";
+import { ValidInstanceUrlRule } from "./rules/valid-instance-url";
 import { ValidLocalReferencesRule } from "./rules/valid-local-references";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link";
 import { ValidateProductFileRule } from "./rules/validate-product-file";
@@ -21,6 +22,7 @@ const allRules = [
     OnlyVersionedNavigation,
     ValidateVersionFileRule,
     ValidateProductFileRule,
+    ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
     AccentColorContrastRule,
     ValidMarkdownLinks,
     ValidFileTypes,

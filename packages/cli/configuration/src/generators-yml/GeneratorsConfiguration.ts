@@ -7,6 +7,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { generatorsYml } from "..";
 import { Audiences } from "../commons";
 import {
+    ApiConfigurationV2SpecsSchema,
     ApiDefinitionSettingsSchema,
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
@@ -18,6 +19,11 @@ import {
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
     defaultGroup: string | undefined;
+    /**
+     * Aliases that map to multiple groups. When running `fern generate <alias>`,
+     * all groups in the alias will be run.
+     */
+    groupAliases: Record<string, string[]>;
     reviewers: Reviewers | undefined;
     groups: GeneratorGroup[];
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
@@ -151,6 +157,15 @@ export interface GeneratorInvocation {
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
     readme: ReadmeSchema | undefined;
     settings: ApiDefinitionSettingsSchema | undefined;
+    /**
+     * Override the API configuration for this generator.
+     * When provided, these values take precedence over the top-level api configuration.
+     */
+    apiOverride?: {
+        specs?: ApiConfigurationV2SpecsSchema;
+        auth?: RawSchemas.ApiAuthSchema;
+        "auth-schemes"?: Record<string, RawSchemas.AuthSchemeDeclarationSchema>;
+    };
 }
 
 export const GenerationLanguage = {

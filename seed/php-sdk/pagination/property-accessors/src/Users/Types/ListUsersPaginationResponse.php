@@ -42,86 +42,63 @@ class ListUsersPaginationResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->hasNextPage = $values['hasNextPage'] ?? null;
-        $this->page = $values['page'] ?? null;
-        $this->totalCount = $values['totalCount'];
-        $this->data = $values['data'];
+    )
+    {
+        $this->hasNextPage = $values['hasNextPage'] ?? null;$this->page = $values['page'] ?? null;$this->totalCount = $values['totalCount'];$this->data = $values['data'];
     }
 
     /**
      * @return ?bool
      */
-    public function getHasNextPage(): ?bool
-    {
-        return $this->hasNextPage;
-    }
+    public function getHasNextPage(): ?bool {
+        return $this->hasNextPage;}
 
     /**
      * @param ?bool $value
      */
-    public function setHasNextPage(?bool $value = null): self
-    {
-        $this->hasNextPage = $value;
-        return $this;
-    }
+    public function setHasNextPage(?bool $value = null): self {
+        $this->hasNextPage = $value;return $this;}
 
     /**
      * @return ?Page
      */
-    public function getPage(): ?Page
-    {
-        return $this->page;
-    }
+    public function getPage(): ?Page {
+        return $this->page;}
 
     /**
      * @param ?Page $value
      */
-    public function setPage(?Page $value = null): self
-    {
-        $this->page = $value;
-        return $this;
-    }
+    public function setPage(?Page $value = null): self {
+        $this->page = $value;return $this;}
 
     /**
      * @return int
      */
-    public function getTotalCount(): int
-    {
-        return $this->totalCount;
-    }
+    public function getTotalCount(): int {
+        return $this->totalCount;}
 
     /**
      * @param int $value
      */
-    public function setTotalCount(int $value): self
-    {
-        $this->totalCount = $value;
-        return $this;
-    }
+    public function setTotalCount(int $value): self {
+        $this->totalCount = $value;return $this;}
 
     /**
      * @return array<User>
      */
-    public function getData(): array
-    {
-        return $this->data;
-    }
+    public function getData(): array {
+        return $this->data;}
 
     /**
      * @param array<User> $value
      */
-    public function setData(array $value): self
-    {
-        $this->data = $value;
-        return $this;
-    }
+    public function setData(array $value): self {
+        $this->data = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

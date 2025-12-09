@@ -24,8 +24,8 @@ class GetDirectThreadRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->ids = $values['ids'];
-        $this->tags = $values['tags'];
+    )
+    {
+        $this->ids = $values['ids'];$this->tags = $values['tags'];
     }
 }

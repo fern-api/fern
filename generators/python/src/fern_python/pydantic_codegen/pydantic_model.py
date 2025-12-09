@@ -44,6 +44,7 @@ class PydanticModel:
         extra_fields: Optional[Literal["allow", "forbid", "ignore"]] = None,
         pydantic_base_model: Optional[AST.ClassReference] = None,
         is_root_model: bool = False,
+        coerce_numbers_to_str: bool = False,
     ):
         self._source_file = source_file
 
@@ -75,6 +76,7 @@ class PydanticModel:
         self._universal_field_validator = universal_field_validator
 
         self._is_root_model = is_root_model
+        self._coerce_numbers_to_str = coerce_numbers_to_str
 
         self._update_forward_ref_function_reference = update_forward_ref_function_reference
         self._field_metadata_getter = field_metadata_getter
@@ -333,6 +335,8 @@ class PydanticModel:
     def _get_v2_model_config(self) -> Optional[AST.Expression]:
         extra_fields = self._extra_fields
         config_kwargs: List[Tuple[str, AST.Expression]] = []
+        if self._coerce_numbers_to_str:
+            config_kwargs.append(("coerce_numbers_to_str", AST.Expression("True")))
         if not self._is_root_model:
             if extra_fields in {"allow", "forbid", "extra"}:
                 config_kwargs.append(("extra", AST.Expression(f'"{extra_fields}"')))
@@ -487,18 +491,23 @@ class PydanticModel:
                 # Only write the function invocation, not the constraint refs
                 writer.write_node(self.func_invocation)
 
+        sorted_kwargs = sorted(
+            [
+                (
+                    get_named_import_or_throw(kwarg_ref),
+                    AST.Expression(kwarg_ref),
+                )
+                for kwarg_ref in kwarg_refs
+            ],
+            key=lambda x: x[0],
+        )
+
         update_node = UpdateForwardRefsNode(
             constraint_refs=constraint_refs,
             func_invocation=AST.FunctionInvocation(
                 function_definition=self._update_forward_ref_function_reference,
                 args=[AST.Expression(self._local_class_reference)],
-                kwargs=[
-                    (
-                        get_named_import_or_throw(kwarg_ref),
-                        AST.Expression(kwarg_ref),
-                    )
-                    for kwarg_ref in kwarg_refs
-                ],
+                kwargs=sorted_kwargs,
             ),
         )
 
@@ -506,6 +515,14 @@ class PydanticModel:
 
     def _get_v1_config_class(self) -> Optional[AST.ClassDeclaration]:
         config = AST.ClassDeclaration(name="Config")
+
+        if self._coerce_numbers_to_str:
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="coerce_numbers_to_str",
+                    initializer=AST.Expression("True"),
+                )
+            )
 
         if self._frozen:
             config.add_class_var(

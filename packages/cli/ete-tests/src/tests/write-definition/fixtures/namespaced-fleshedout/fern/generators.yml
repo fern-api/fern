@@ -17,4 +17,4 @@ groups:
         config: {}
         api:
           settings:
-            unions: v1
+            prefer-undiscriminated-unions-with-literals: true

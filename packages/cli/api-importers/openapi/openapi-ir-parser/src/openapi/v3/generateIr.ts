@@ -5,6 +5,7 @@ import {
     EndpointExample,
     EndpointWithExample,
     ErrorExample,
+    GlobalSecurity,
     HttpError,
     LiteralSchemaValue,
     ObjectPropertyWithExample,
@@ -86,6 +87,7 @@ export function generateIr({
             })
             .filter((entry): entry is [string, SecurityScheme] => entry !== null)
     );
+    const security: GlobalSecurity | undefined = openApi.security?.filter((requirement) => requirement != null);
     const authHeaders = new Set(
         ...Object.entries(securitySchemes).map(([_, securityScheme]) => {
             if (securityScheme.type === "basic" || securityScheme.type === "bearer") {
@@ -400,6 +402,7 @@ export function generateIr({
         channels: {},
         groupedSchemas: getSchemas(namespace, schemas),
         securitySchemes,
+        security,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
         nonRequestReferencedSchemas: context.getReferencedSchemas(),
         variables,

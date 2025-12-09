@@ -118,6 +118,8 @@
       "displayName": "BadRequestError",
       "docs": "Invalid user data",
       "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "CreateUserRequestBadRequestError",
         "fernFilepath": {
@@ -209,6 +211,8 @@
       "displayName": "ServiceUnavailableError",
       "docs": "Service is unhealthy",
       "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetHealthRequestServiceUnavailableError",
         "fernFilepath": {
@@ -300,6 +304,8 @@
       "displayName": "NotFoundError",
       "docs": "User not found",
       "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetUserRequestNotFoundError",
         "fernFilepath": {
@@ -552,6 +558,7 @@
                 },
               },
             },
+            "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
           "retries": undefined,
@@ -657,6 +664,7 @@
                     },
                   },
                 },
+                "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
             ],
@@ -957,6 +965,7 @@
                 },
               },
             },
+            "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
           "retries": undefined,
@@ -1070,6 +1079,7 @@
                     },
                   },
                 },
+                "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
             ],
@@ -1253,6 +1263,7 @@
                 },
               },
             },
+            "isWildcardStatusCode": undefined,
             "statusCode": 201,
           },
           "retries": undefined,
@@ -1413,6 +1424,7 @@
                     },
                   },
                 },
+                "isWildcardStatusCode": undefined,
                 "statusCode": 201,
               },
             ],

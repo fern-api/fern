@@ -9,6 +9,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 
 if typing.TYPE_CHECKING:
     from .bigunion.client import AsyncBigunionClient, BigunionClient
+    from .types.client import AsyncTypesClient, TypesClient
     from .union.client import AsyncUnionClient, UnionClient
 
 
@@ -65,6 +66,7 @@ class SeedUnions:
             timeout=_defaulted_timeout,
         )
         self._bigunion: typing.Optional[BigunionClient] = None
+        self._types: typing.Optional[TypesClient] = None
         self._union: typing.Optional[UnionClient] = None
 
     @property
@@ -74,6 +76,14 @@ class SeedUnions:
 
             self._bigunion = BigunionClient(client_wrapper=self._client_wrapper)
         return self._bigunion
+
+    @property
+    def types(self):
+        if self._types is None:
+            from .types.client import TypesClient  # noqa: E402
+
+            self._types = TypesClient(client_wrapper=self._client_wrapper)
+        return self._types
 
     @property
     def union(self):
@@ -137,6 +147,7 @@ class AsyncSeedUnions:
             timeout=_defaulted_timeout,
         )
         self._bigunion: typing.Optional[AsyncBigunionClient] = None
+        self._types: typing.Optional[AsyncTypesClient] = None
         self._union: typing.Optional[AsyncUnionClient] = None
 
     @property
@@ -146,6 +157,14 @@ class AsyncSeedUnions:
 
             self._bigunion = AsyncBigunionClient(client_wrapper=self._client_wrapper)
         return self._bigunion
+
+    @property
+    def types(self):
+        if self._types is None:
+            from .types.client import AsyncTypesClient  # noqa: E402
+
+            self._types = AsyncTypesClient(client_wrapper=self._client_wrapper)
+        return self._types
 
     @property
     def union(self):

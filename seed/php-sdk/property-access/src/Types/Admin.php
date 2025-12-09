@@ -30,19 +30,15 @@ class Admin extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->email = $values['email'];
-        $this->password = $values['password'];
-        $this->profile = $values['profile'];
-        $this->adminLevel = $values['adminLevel'];
+    )
+    {
+        $this->id = $values['id'];$this->email = $values['email'];$this->password = $values['password'];$this->profile = $values['profile'];$this->adminLevel = $values['adminLevel'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

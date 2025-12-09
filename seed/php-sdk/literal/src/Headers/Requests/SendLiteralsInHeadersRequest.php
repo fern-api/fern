@@ -32,9 +32,8 @@ class SendLiteralsInHeadersRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->endpointVersion = $values['endpointVersion'];
-        $this->async = $values['async'];
-        $this->query = $values['query'];
+    )
+    {
+        $this->endpointVersion = $values['endpointVersion'];$this->async = $values['async'];$this->query = $values['query'];
     }
 }

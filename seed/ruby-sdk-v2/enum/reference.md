@@ -14,9 +14,9 @@
 
 ```ruby
 client.headers.send_(
-  operand: ,
-  maybeOperand: ,
-  operandOrColor: 
+  operand: '>',
+  maybe_operand: '>',
+  operand_or_color: 'red'
 );
 ```
 </dd>
@@ -83,8 +83,8 @@ client.headers.send_(
 
 ```ruby
 client.inlined_request.send_(
-  operand: ,
-  operandOrColor: 
+  operand: '>',
+  operand_or_color: 'red'
 );
 ```
 </dd>
@@ -151,7 +151,10 @@ client.inlined_request.send_(
 <dd>
 
 ```ruby
-client.path_param.send_();
+client.path_param.send_(
+  operand: '>',
+  operand_or_color: 'red'
+);
 ```
 </dd>
 </dl>
@@ -201,8 +204,8 @@ client.path_param.send_();
 
 ```ruby
 client.query_param.send_(
-  operand: ,
-  operandOrColor: 
+  operand: '>',
+  operand_or_color: 'red'
 );
 ```
 </dd>
@@ -267,12 +270,7 @@ client.query_param.send_(
 <dd>
 
 ```ruby
-client.query_param.send_list(
-  operand: ,
-  maybeOperand: ,
-  operandOrColor: ,
-  maybeOperandOrColor: 
-);
+client.query_param.send_list();
 ```
 </dd>
 </dl>

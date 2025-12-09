@@ -51,7 +51,7 @@
         "@types/node": "^18.19.70",
         "typescript": "~5.7.2",
         "@biomejs/biome": "2.3.1",
-        "oxfmt": "0.9.0"
+        "oxfmt": "0.17.0"
     },
     "browser": {
         "fs": false,

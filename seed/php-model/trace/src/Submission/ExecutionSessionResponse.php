@@ -42,18 +42,15 @@ class ExecutionSessionResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->sessionId = $values['sessionId'];
-        $this->executionSessionUrl = $values['executionSessionUrl'] ?? null;
-        $this->language = $values['language'];
-        $this->status = $values['status'];
+    )
+    {
+        $this->sessionId = $values['sessionId'];$this->executionSessionUrl = $values['executionSessionUrl'] ?? null;$this->language = $values['language'];$this->status = $values['status'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

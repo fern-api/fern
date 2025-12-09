@@ -64,7 +64,11 @@ export abstract class AbstractAPIWorkspace<Settings> {
         this.changelog = changelog;
     }
 
-    public abstract toFernWorkspace({ context }: { context: TaskContext }, settings?: Settings): Promise<FernWorkspace>;
+    public abstract toFernWorkspace(
+        { context }: { context: TaskContext },
+        settings?: Settings,
+        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema
+    ): Promise<FernWorkspace>;
 
     /**
      * @returns The Fern Definition that corresponds to this workspace
@@ -104,7 +108,11 @@ export abstract class AbstractAPIWorkspaceSync<Settings> {
         this.changelog = changelog;
     }
 
-    public abstract toFernWorkspace({ context }: { context: TaskContext }, settings?: Settings): FernWorkspace;
+    public abstract toFernWorkspace(
+        { context }: { context: TaskContext },
+        settings?: Settings,
+        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema
+    ): FernWorkspace;
 
     /**
      * @returns The Fern Definition that corresponds to this workspace

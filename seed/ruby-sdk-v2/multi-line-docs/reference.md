@@ -28,7 +28,7 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```ruby
-client.user.get_user();
+client.user.get_user(user_id: 'userId');
 ```
 </dd>
 </dl>

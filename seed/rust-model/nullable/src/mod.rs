@@ -1,3 +1,13 @@
+//! Request and response types for the Nullable
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 3 types for API operations
+//! - **Model Types**: 6 types for data representation
+
 pub mod nullable_email;
 pub mod nullable_user_id;
 pub mod nullable_weird_number;

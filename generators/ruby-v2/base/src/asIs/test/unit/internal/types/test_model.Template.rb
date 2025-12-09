@@ -111,4 +111,44 @@ describe <%= gem_namespace %>::Internal::Types::Model do
       refute_respond_to example, :yearOfRelease
     end
   end
+
+  describe "#inspect" do
+    class SensitiveModel < <%= gem_namespace %>::Internal::Types::Model
+      field :username, String
+      field :password, String
+      field :client_secret, String
+      field :access_token, String
+      field :api_key, String
+    end
+
+    it "redacts sensitive fields" do
+      model = SensitiveModel.new(
+        username: "user123",
+        password: "secret123",
+        client_secret: "cs_abc",
+        access_token: "token_xyz",
+        api_key: "key_123"
+      )
+
+      inspect_output = model.inspect
+
+      assert_includes inspect_output, "username=\"user123\""
+      assert_includes inspect_output, "password=[REDACTED]"
+      assert_includes inspect_output, "client_secret=[REDACTED]"
+      assert_includes inspect_output, "access_token=[REDACTED]"
+      assert_includes inspect_output, "api_key=[REDACTED]"
+      refute_includes inspect_output, "secret123"
+      refute_includes inspect_output, "cs_abc"
+      refute_includes inspect_output, "token_xyz"
+      refute_includes inspect_output, "key_123"
+    end
+
+    it "does not redact non-sensitive fields" do
+      example = ExampleModel.new(name: "Inception", rating: 4)
+      inspect_output = example.inspect
+
+      assert_includes inspect_output, "name=\"Inception\""
+      assert_includes inspect_output, "rating=4"
+    end
+  end
 end

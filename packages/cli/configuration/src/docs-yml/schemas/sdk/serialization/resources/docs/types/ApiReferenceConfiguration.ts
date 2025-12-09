@@ -22,6 +22,10 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         openrpc: core.serialization.string().optional(),
         audiences: Audience.optional(),
         displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
+        tagDescriptionPages: core.serialization.property(
+            "tag-description-pages",
+            core.serialization.boolean().optional(),
+        ),
         snippets: SnippetsConfiguration.optional(),
         postman: core.serialization.string().optional(),
         summary: core.serialization.string().optional(),
@@ -47,6 +51,7 @@ export declare namespace ApiReferenceConfiguration {
         openrpc?: string | null;
         audiences?: Audience.Raw | null;
         "display-errors"?: boolean | null;
+        "tag-description-pages"?: boolean | null;
         snippets?: SnippetsConfiguration.Raw | null;
         postman?: string | null;
         summary?: string | null;

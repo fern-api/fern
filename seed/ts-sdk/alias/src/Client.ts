@@ -2,19 +2,20 @@
 
 import type * as SeedAlias from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedAliasClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedAliasClient {
-    protected readonly _options: SeedAliasClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedAliasClient.Options>;
 
     constructor(options: SeedAliasClient.Options) {
         this._options = normalizeClientOptions(options);
@@ -66,20 +67,6 @@ export class SeedAliasClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedAliasError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedAliasTimeoutError("Timeout exceeded when calling GET /{typeId}.");
-            case "unknown":
-                throw new errors.SeedAliasError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/{typeId}");
     }
 }

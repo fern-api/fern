@@ -2,19 +2,20 @@
 
 import type * as SeedObject from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedObjectClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedObjectClient {
-    protected readonly _options: SeedObjectClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedObjectClient.Options>;
 
     constructor(options: SeedObjectClient.Options) {
         this._options = normalizeClientOptions(options);
@@ -74,21 +75,7 @@ export class SeedObjectClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedObjectError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedObjectTimeoutError("Timeout exceeded when calling POST /root/root.");
-            case "unknown":
-                throw new errors.SeedObjectError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/root/root");
     }
 
     /**
@@ -155,23 +142,7 @@ export class SeedObjectClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedObjectError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedObjectTimeoutError(
-                    "Timeout exceeded when calling POST /root/discriminated-union.",
-                );
-            case "unknown":
-                throw new errors.SeedObjectError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/root/discriminated-union");
     }
 
     /**
@@ -237,22 +208,6 @@ export class SeedObjectClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedObjectError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedObjectTimeoutError(
-                    "Timeout exceeded when calling POST /root/undiscriminated-union.",
-                );
-            case "unknown":
-                throw new errors.SeedObjectError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/root/undiscriminated-union");
     }
 }

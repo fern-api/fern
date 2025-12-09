@@ -6,7 +6,7 @@ use Seed\NestedNoAuth\Api\ApiClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class NestedNoAuthClient
+class NestedNoAuthClient 
 {
     /**
      * @var ApiClient $api
@@ -20,7 +20,7 @@ class NestedNoAuthClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -39,10 +39,11 @@ class NestedNoAuthClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->api = new ApiClient($this->client, $this->options);

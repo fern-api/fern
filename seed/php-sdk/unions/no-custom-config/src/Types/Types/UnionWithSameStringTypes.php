@@ -42,17 +42,16 @@ class UnionWithSameStringTypes extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
      * @param string $customFormat
      * @return UnionWithSameStringTypes
      */
-    public static function customFormat(string $customFormat): UnionWithSameStringTypes
-    {
+    public static function customFormat(string $customFormat): UnionWithSameStringTypes {
         return new UnionWithSameStringTypes([
             'type' => 'customFormat',
             'value' => $customFormat,
@@ -63,8 +62,7 @@ class UnionWithSameStringTypes extends JsonSerializableType
      * @param string $regularString
      * @return UnionWithSameStringTypes
      */
-    public static function regularString(string $regularString): UnionWithSameStringTypes
-    {
+    public static function regularString(string $regularString): UnionWithSameStringTypes {
         return new UnionWithSameStringTypes([
             'type' => 'regularString',
             'value' => $regularString,
@@ -75,8 +73,7 @@ class UnionWithSameStringTypes extends JsonSerializableType
      * @param string $patternString
      * @return UnionWithSameStringTypes
      */
-    public static function patternString(string $patternString): UnionWithSameStringTypes
-    {
+    public static function patternString(string $patternString): UnionWithSameStringTypes {
         return new UnionWithSameStringTypes([
             'type' => 'patternString',
             'value' => $patternString,
@@ -86,89 +83,81 @@ class UnionWithSameStringTypes extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isCustomFormat(): bool
-    {
-        return is_string($this->value) && $this->type === 'customFormat';
+    public function isCustomFormat(): bool {
+        return is_string($this->value)&& $this->type === 'customFormat';
     }
 
     /**
      * @return string
      */
-    public function asCustomFormat(): string
-    {
-        if (!(is_string($this->value) && $this->type === 'customFormat')) {
+    public function asCustomFormat(): string {
+        if (!(is_string($this->value)&& $this->type === 'customFormat')){
             throw new Exception(
                 "Expected customFormat; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isRegularString(): bool
-    {
-        return is_string($this->value) && $this->type === 'regularString';
+    public function isRegularString(): bool {
+        return is_string($this->value)&& $this->type === 'regularString';
     }
 
     /**
      * @return string
      */
-    public function asRegularString(): string
-    {
-        if (!(is_string($this->value) && $this->type === 'regularString')) {
+    public function asRegularString(): string {
+        if (!(is_string($this->value)&& $this->type === 'regularString')){
             throw new Exception(
                 "Expected regularString; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isPatternString(): bool
-    {
-        return is_string($this->value) && $this->type === 'patternString';
+    public function isPatternString(): bool {
+        return is_string($this->value)&& $this->type === 'patternString';
     }
 
     /**
      * @return string
      */
-    public function asPatternString(): string
-    {
-        if (!(is_string($this->value) && $this->type === 'patternString')) {
+    public function asPatternString(): string {
+        if (!(is_string($this->value)&& $this->type === 'patternString')){
             throw new Exception(
                 "Expected patternString; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'customFormat':
                 $value = $this->value;
                 $result['customFormat'] = $value;
@@ -183,27 +172,26 @@ class UnionWithSameStringTypes extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -212,48 +200,47 @@ class UnionWithSameStringTypes extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('type', $data)) {
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'customFormat':
-                if (!array_key_exists('customFormat', $data)) {
+                if (!array_key_exists('customFormat', $data)){
                     throw new Exception(
                         "JSON data is missing property 'customFormat'",
                     );
                 }
-
+                
                 $args['value'] = $data['customFormat'];
                 break;
             case 'regularString':
-                if (!array_key_exists('regularString', $data)) {
+                if (!array_key_exists('regularString', $data)){
                     throw new Exception(
                         "JSON data is missing property 'regularString'",
                     );
                 }
-
+                
                 $args['value'] = $data['regularString'];
                 break;
             case 'patternString':
-                if (!array_key_exists('patternString', $data)) {
+                if (!array_key_exists('patternString', $data)){
                     throw new Exception(
                         "JSON data is missing property 'patternString'",
                     );
                 }
-
+                
                 $args['value'] = $data['patternString'];
                 break;
             case '_unknown':
@@ -261,7 +248,7 @@ class UnionWithSameStringTypes extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }

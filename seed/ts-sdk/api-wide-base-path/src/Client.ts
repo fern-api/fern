@@ -2,16 +2,16 @@
 
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedApiWideBasePathClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedApiWideBasePathClient {
-    protected readonly _options: SeedApiWideBasePathClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedApiWideBasePathClient.Options>;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedApiWideBasePathClient.Options) {

@@ -34,17 +34,15 @@ class GenericCreateProblemError extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->message = $values['message'];
-        $this->type = $values['type'];
-        $this->stacktrace = $values['stacktrace'];
+    )
+    {
+        $this->message = $values['message'];$this->type = $values['type'];$this->stacktrace = $values['stacktrace'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

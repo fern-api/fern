@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAnyAuthClient } from \"@fern/any-auth\";\n\nconst client = new SeedAnyAuthClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", token: \"YOUR_TOKEN\", apiKey: \"YOUR_API_KEY\" });\nawait client.auth.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
+                "client": "import { SeedAnyAuthClient } from \"@fern/any-auth\";\n\nconst client = new SeedAnyAuthClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\", apiKey: \"YOUR_API_KEY\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.auth.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAnyAuthClient } from \"@fern/any-auth\";\n\nconst client = new SeedAnyAuthClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", token: \"YOUR_TOKEN\", apiKey: \"YOUR_API_KEY\" });\nawait client.user.get();\n"
+                "client": "import { SeedAnyAuthClient } from \"@fern/any-auth\";\n\nconst client = new SeedAnyAuthClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\", apiKey: \"YOUR_API_KEY\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.user.get();\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedAnyAuthClient } from \"@fern/any-auth\";\n\nconst client = new SeedAnyAuthClient({ environment: \"YOUR_BASE_URL\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\", token: \"YOUR_TOKEN\", apiKey: \"YOUR_API_KEY\" });\nawait client.user.getAdmins();\n"
+                "client": "import { SeedAnyAuthClient } from \"@fern/any-auth\";\n\nconst client = new SeedAnyAuthClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\", apiKey: \"YOUR_API_KEY\", clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait client.user.getAdmins();\n"
             }
         }
     ],

@@ -651,6 +651,63 @@ class RawUsersClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def list_usernames_with_optional_response(
+        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> SyncPager[str, typing.Optional[UsernameCursor]]:
+        """
+        Parameters
+        ----------
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[str, typing.Optional[UsernameCursor]]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "users",
+            method="GET",
+            params={
+                "starting_after": starting_after,
+            },
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return SyncPager(has_next=False, items=[], get_next=None, response=None)
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    typing.Optional[UsernameCursor],
+                    parse_obj_as(
+                        type_=typing.Optional[UsernameCursor],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = (
+                    _parsed_response.cursor.data
+                    if _parsed_response is not None and _parsed_response.cursor is not None
+                    else []
+                )
+
+                _has_next = False
+                _get_next = None
+                if _parsed_response is not None and _parsed_response.cursor is not None:
+                    _parsed_next = _parsed_response.cursor.after
+                    _has_next = _parsed_next is not None and _parsed_next != ""
+                    _get_next = lambda: self.list_usernames_with_optional_response(
+                        starting_after=_parsed_next,
+                        request_options=request_options,
+                    )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncPager[str, UsernameContainer]:
@@ -1347,6 +1404,66 @@ class AsyncRawUsersClient:
 
                     async def _get_next():
                         return await self.list_usernames(
+                            starting_after=_parsed_next,
+                            request_options=request_options,
+                        )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_usernames_with_optional_response(
+        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncPager[str, typing.Optional[UsernameCursor]]:
+        """
+        Parameters
+        ----------
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[str, typing.Optional[UsernameCursor]]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "users",
+            method="GET",
+            params={
+                "starting_after": starting_after,
+            },
+            request_options=request_options,
+        )
+        try:
+            if _response is None or not _response.text.strip():
+                return AsyncPager(has_next=False, items=[], get_next=None, response=None)
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    typing.Optional[UsernameCursor],
+                    parse_obj_as(
+                        type_=typing.Optional[UsernameCursor],  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = (
+                    _parsed_response.cursor.data
+                    if _parsed_response is not None and _parsed_response.cursor is not None
+                    else []
+                )
+
+                _has_next = False
+                _get_next = None
+                if _parsed_response is not None and _parsed_response.cursor is not None:
+                    _parsed_next = _parsed_response.cursor.after
+                    _has_next = _parsed_next is not None and _parsed_next != ""
+
+                    async def _get_next():
+                        return await self.list_usernames_with_optional_response(
                             starting_after=_parsed_next,
                             request_options=request_options,
                         )

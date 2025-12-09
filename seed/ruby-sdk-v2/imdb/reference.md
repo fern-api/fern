@@ -27,10 +27,10 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```ruby
-client.imdb.create_movie({
+client.imdb.create_movie(
   title: 'title',
   rating: 1.1
-});
+);
 ```
 </dd>
 </dl>
@@ -70,7 +70,7 @@ client.imdb.create_movie({
 <dd>
 
 ```ruby
-client.imdb.get_movie();
+client.imdb.get_movie(movie_id: 'movieId');
 ```
 </dd>
 </dl>

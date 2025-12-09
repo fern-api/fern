@@ -1,5 +1,8 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-ruby-sdk-v2",
-  "generatorVersion": "latest"
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "customPagerName": "FooPager"
+  }
 }

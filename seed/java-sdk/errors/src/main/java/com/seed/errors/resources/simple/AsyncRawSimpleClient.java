@@ -177,11 +177,6 @@ public class AsyncRawSimpleClient {
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class),
                                         response));
                                 return;
-                            case 500:
-                                future.completeExceptionally(new InternalServerError(
-                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class),
-                                        response));
-                                return;
                         }
                     } catch (JsonProcessingException ignored) {
                         // unable to map error response, throwing generic error
@@ -261,11 +256,6 @@ public class AsyncRawSimpleClient {
                                 return;
                             case 500:
                                 future.completeExceptionally(new FooTooLittle(
-                                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class),
-                                        response));
-                                return;
-                            case 500:
-                                future.completeExceptionally(new InternalServerError(
                                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class),
                                         response));
                                 return;

@@ -12,6 +12,11 @@ export class UnauthorizedRequest extends errors.SeedBasicAuthError {
             body: body,
             rawResponse: rawResponse,
         });
-        Object.setPrototypeOf(this, UnauthorizedRequest.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 }

@@ -8,8 +8,16 @@ public partial class InlineUsersClient
 
     internal InlineUsersClient(RawClient client)
     {
-        _client = client;
-        InlineUsers = new InlineUsersClient_(_client);
+        try
+        {
+            _client = client;
+            InlineUsers = new InlineUsersClient_(_client);
+        }
+        catch (Exception ex)
+        {
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
     }
 
     public InlineUsersClient_ InlineUsers { get; }

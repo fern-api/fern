@@ -185,9 +185,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             rescue ${this.rootPackageClientName}::Errors::ServerError
                 puts "API returned some other 5xx status, this is probably a bug"
             rescue ${this.rootPackageClientName}::Errors::ResponseError => e
-                puts "API returned an unexpected status other than 5xx: #{e.code} {e.message}"
+                puts "API returned an unexpected status other than 5xx: #{e.code} #{e.message}"
             rescue ${this.rootPackageClientName}::Errors::ApiError => e
-                puts "Some other error occurred when calling the API: {e.message}"
+                puts "Some other error occurred when calling the API: #{e.message}"
             end
         `);
     }
@@ -235,6 +235,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
+        if (endpoint.endpoint.pagination?.type === "custom") {
+            return this.renderCustomPaginationSnippet(endpoint);
+        }
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
             # Loop over the items using the provided iterator.
@@ -253,6 +256,29 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 end
                 current_page = current_page.next_page
                 break if current_page.nil?
+            end
+
+        `);
+    }
+
+    private renderCustomPaginationSnippet(endpoint: EndpointWithFilepath): string {
+        const pagerClassName = this.context.customConfig.customPagerName ?? "CustomPager";
+        return this.writeCode(dedent`require "${this.rootPackageName}"
+
+            # For custom pagination, the response is returned directly.
+            response = ${this.getMethodCall(endpoint)}(
+                ...
+            )
+
+            pager = ${this.rootPackageClientName}::Internal::${pagerClassName}.new(
+                response,
+                has_next_proc: ->(page) { page.has_more },
+                get_next_proc: ->(page) { ${this.getMethodCall(endpoint)}(cursor: page.next_cursor) }
+            )
+
+            # Iterate over pages
+            pager.each_page do |page|
+                puts "Got page: #{page}"
             end
 
         `);
@@ -365,7 +391,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return undefined;
         }
 
-        return `${this.rootPackageClientName}::Environment::${defaultEnvironment.name.pascalCase.unsafeName}`;
+        return `${this.rootPackageClientName}::Environment::${defaultEnvironment.name.screamingSnakeCase.safeName}`;
     }
 
     private getRootPackageClientName(): string {

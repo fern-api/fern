@@ -1,3 +1,12 @@
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Auth**
+//! - **NestedNoAuth**
+//! - **Nested**
+//! - **Simple**
+
 use crate::{ApiError, ClientConfig};
 
 pub mod auth;

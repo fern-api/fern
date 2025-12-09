@@ -2,16 +2,16 @@
 
 import { PropertyBasedErrorClient } from "./api/resources/propertyBasedError/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedErrorPropertyClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedErrorPropertyClient {
-    protected readonly _options: SeedErrorPropertyClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedErrorPropertyClient.Options>;
     protected _propertyBasedError: PropertyBasedErrorClient | undefined;
 
     constructor(options: SeedErrorPropertyClient.Options) {

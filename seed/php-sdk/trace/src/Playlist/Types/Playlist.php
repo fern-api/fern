@@ -32,18 +32,15 @@ class Playlist extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->name = $values['name'];
-        $this->problems = $values['problems'];
-        $this->playlistId = $values['playlistId'];
-        $this->ownerId = $values['ownerId'];
+    )
+    {
+        $this->name = $values['name'];$this->problems = $values['problems'];$this->playlistId = $values['playlistId'];$this->ownerId = $values['ownerId'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -1,14 +1,14 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
+import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
 import type * as SeedExhaustive from "../../../../../index.mjs";
 export declare namespace ParamsClient {
-    interface Options extends BaseClientOptions {
-    }
+    type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }
 export declare class ParamsClient {
-    protected readonly _options: ParamsClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<ParamsClient.Options>;
     constructor(options: ParamsClient.Options);
     /**
      * GET with path param
@@ -116,5 +116,4 @@ export declare class ParamsClient {
      */
     modifyWithInlinePath(request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __modifyWithInlinePath;
-    protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

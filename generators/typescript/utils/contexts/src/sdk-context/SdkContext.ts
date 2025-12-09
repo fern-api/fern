@@ -11,6 +11,7 @@ import { BaseClientContext } from "./base-client/BaseClientContext";
 import { EndpointErrorUnionContext } from "./endpoint-error-union";
 import { EnvironmentsContext } from "./environments";
 import { GenericAPISdkErrorContext } from "./generic-api-sdk-error";
+import { NonStatusCodeErrorHandlerContext } from "./non-status-code-error-handler";
 import { RequestWrapperContext } from "./request-wrapper";
 import { SdkClientClassContext } from "./sdk-client-class";
 import { SdkEndpointTypeSchemasContext } from "./sdk-endpoint-type-schemas";
@@ -39,6 +40,7 @@ export interface SdkContext extends BaseContext {
     sdkErrorSchema: SdkErrorSchemaContext;
     sdkInlinedRequestBodySchema: SdkInlinedRequestBodySchemaContext;
     timeoutSdkError: TimeoutSdkErrorContext;
+    nonStatusCodeErrorHandler: NonStatusCodeErrorHandlerContext;
     requestWrapper: RequestWrapperContext;
     sdkClientClass: SdkClientClassContext;
     baseClient: BaseClientContext;

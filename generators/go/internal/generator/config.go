@@ -39,6 +39,7 @@ type Config struct {
 	PackagePath                  string
 	ExportedClientName           string
 	UnionVersion                 UnionVersion
+	CustomPagerName              string
 
 	// If not specified, a go.mod and go.sum will not be generated.
 	ModuleConfig *ModuleConfig
@@ -84,6 +85,7 @@ func NewConfig(
 	packagePath string,
 	exportedClientName string,
 	unionVersion string,
+	customPagerName string,
 	moduleConfig *ModuleConfig,
 ) (*Config, error) {
 	uv, err := parseUnionVersion(unionVersion)
@@ -113,6 +115,7 @@ func NewConfig(
 		PackagePath:                  packagePath,
 		ExportedClientName:           exportedClientName,
 		UnionVersion:                 uv,
+		CustomPagerName:              customPagerName,
 		ModuleConfig:                 moduleConfig,
 	}, nil
 }

@@ -5,5 +5,4 @@
 import * as FernDefinition from "../../../../../index";
 
 export interface AuthVariable
-    extends FernDefinition.fernDefinition.WithEnvironmentVariable,
-        FernDefinition.fernDefinition.WithName {}
+    extends FernDefinition.fernDefinition.WithEnvironmentVariable, FernDefinition.fernDefinition.WithName {}

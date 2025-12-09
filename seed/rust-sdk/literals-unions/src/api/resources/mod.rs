@@ -1,3 +1,9 @@
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Literals**
+
 use crate::{ApiError, ClientConfig};
 
 pub mod literals;

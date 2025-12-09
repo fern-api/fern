@@ -40,11 +40,13 @@ class Paginator:
         is_async: bool,
         pydantic_parse_expression: AST.Expression,
         config: PaginationSnippetConfig,
+        response_is_optional: bool = False,
     ):
         self._context = context
         self._is_async = is_async
         self._pydantic_parse_expression = pydantic_parse_expression
         self._config = config
+        self._response_is_optional = response_is_optional
 
     @abstractmethod
     def init_custom_vars_pre_next(self, *, writer: AST.NodeWriter) -> None: ...
@@ -77,13 +79,25 @@ class Paginator:
 
         items_non_safe_condition = self._get_none_safe_property_condition(self.get_results_property())
         results_property = f"{Paginator.PARSED_RESPONSE_VARIABLE}.{self.access_results_property_path()}"
-        if items_non_safe_condition is not None:
+
+        # Build the condition for items initialization
+        # Only include _parsed_response is not None check when response is optional
+        if self._response_is_optional:
+            parsed_response_not_none = f"{Paginator.PARSED_RESPONSE_VARIABLE} is not None"
+            if items_non_safe_condition is not None:
+                items_condition: Optional[str] = f"{parsed_response_not_none} and {items_non_safe_condition}"
+            else:
+                items_condition = parsed_response_not_none
+        else:
+            items_condition = items_non_safe_condition
+
+        if items_condition is not None:
             writer.write_node(
                 AST.VariableDeclaration(
                     name=Paginator.PAGINATION_ITEMS_VARIABLE,
                     initializer=AST.Expression(
                         AST.ConditionalExpression(
-                            test=AST.Expression(items_non_safe_condition),
+                            test=AST.Expression(items_condition),
                             left=AST.Expression(results_property),
                             right=AST.Expression("[]"),
                         )
@@ -109,9 +123,21 @@ class Paginator:
             self.init_get_next(writer=writer)
 
         next_none_safe_condition = self.get_next_none_safe_condition()
-        if next_none_safe_condition is not None:
+
+        # Build the condition for the next block
+        # Only include _parsed_response is not None check when response is optional
+        if self._response_is_optional:
+            parsed_response_not_none = f"{Paginator.PARSED_RESPONSE_VARIABLE} is not None"
+            if next_none_safe_condition is not None:
+                full_next_condition: Optional[str] = f"{parsed_response_not_none} and {next_none_safe_condition}"
+            else:
+                full_next_condition = parsed_response_not_none
+        else:
+            full_next_condition = next_none_safe_condition
+
+        if full_next_condition is not None:
             self.init_custom_vars_pre_next(writer=writer)
-            writer.write_line(f"if {next_none_safe_condition}:")
+            writer.write_line(f"if {full_next_condition}:")
             with writer.indent():
                 init_vars(writer=writer)
         else:

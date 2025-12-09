@@ -236,7 +236,7 @@ errors:
     status-code: 422
     type: unknown
 service:
-  auth: false
+  auth: true
   base-path: ''
   endpoints:
     chat:

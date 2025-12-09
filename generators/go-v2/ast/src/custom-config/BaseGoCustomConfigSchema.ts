@@ -23,7 +23,8 @@ export const baseGoCustomConfigSchema = z.object({
     gettersPassByValue: z.boolean().optional(),
     enableWireTests: z.boolean().optional(),
     exportAllRequestsAtRoot: z.boolean().optional(),
-    customReadmeSections: z.array(CustomReadmeSectionSchema).optional()
+    customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
+    customPagerName: z.string().optional()
 });
 
 export type BaseGoCustomConfigSchema = z.infer<typeof baseGoCustomConfigSchema>;

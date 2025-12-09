@@ -14,6 +14,7 @@ export const GithubPublish: core.serialization.ObjectSchema<serializers.GithubPu
         uri: core.serialization.string().optional(),
         token: core.serialization.string().optional(),
         mode: core.serialization.stringLiteral("pull-request").optional(),
+        branch: core.serialization.string().optional(),
         target: PublishTarget,
     });
 
@@ -24,6 +25,7 @@ export declare namespace GithubPublish {
         uri?: string | null;
         token?: string | null;
         mode?: "pull-request" | null;
+        branch?: string | null;
         target: PublishTarget.Raw;
     }
 }

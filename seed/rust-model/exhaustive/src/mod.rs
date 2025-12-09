@@ -1,3 +1,13 @@
+//! Request and response types for the Exhaustive
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 7 types for API operations
+//! - **Model Types**: 15 types for data representation
+
 pub mod endpoints_put_error;
 pub mod endpoints_put_error_category;
 pub mod endpoints_put_error_code;

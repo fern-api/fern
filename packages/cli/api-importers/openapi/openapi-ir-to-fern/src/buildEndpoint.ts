@@ -1,6 +1,7 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { HttpEndpointSecurity } from "@fern-api/fern-definition-schema/src/schemas";
 import { Endpoint, EndpointExample, Request, RetriesConfiguration, Schema, SchemaId } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { buildEndpointExample } from "./buildEndpointExample";
@@ -17,7 +18,11 @@ import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
-import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import {
+    getDocsFromTypeReference,
+    getTypeFromTypeReference,
+    stripNullableWrapperForExtends
+} from "./utils/getTypeFromTypeReference";
 import { isWriteMethod } from "./utils/isWriteMethod";
 
 export interface ConvertedEndpoint {
@@ -102,11 +107,10 @@ export function buildEndpoint({
                 assertNever(endpoint.pagination);
         }
     }
-
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
         path,
         method: convertToHttpMethod(endpoint.method),
-        auth: Object.keys(endpoint.security).length > 0 ? endpoint.security : undefined,
+        auth: convertEndpointAuth({ endpoint, context }),
         docs: endpoint.description ?? undefined,
         pagination,
         source: endpoint.source != null ? convertToSourceSchema(endpoint.source) : undefined
@@ -388,6 +392,44 @@ export function buildEndpoint({
     };
 }
 
+/**
+ * Returns security array, true, or undefined.
+ * Does not return false since false is the default for service and we want to inherit that.
+ */
+function convertEndpointAuth({
+    endpoint,
+    context
+}: {
+    endpoint: Endpoint;
+    context: OpenApiIrConverterContext;
+}): true | undefined | HttpEndpointSecurity {
+    if (endpoint.security == null) {
+        if (context.authOverrides?.auth != null) {
+            return true;
+        }
+
+        if (context.ir.security == null) {
+            return undefined;
+        }
+        if (context.ir.security.length > 0) {
+            return true;
+        }
+        return undefined;
+    }
+    // explicit empty array means no auth
+    if (endpoint.security.length === 0) {
+        return undefined;
+    }
+
+    // deep equality for endpoint and global security
+    if (JSON.stringify(endpoint.security) === JSON.stringify(context.ir.security)) {
+        // if same, use true to inherit auth from global security
+        return true;
+    }
+
+    return endpoint.security;
+}
+
 function convertEndpointExamples({
     endpointExamples,
     context
@@ -587,7 +629,7 @@ function getRequest({
                     namespace,
                     declarationDepth: 0
                 });
-                return getTypeFromTypeReference(allOfTypeReference);
+                return stripNullableWrapperForExtends(getTypeFromTypeReference(allOfTypeReference));
             })
             .filter((schema) => schema !== "unknown");
 

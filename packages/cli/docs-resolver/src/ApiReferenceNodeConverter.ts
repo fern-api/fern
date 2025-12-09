@@ -38,6 +38,7 @@ export class ApiReferenceNodeConverter {
     #idgen: NodeIdGenerator;
     private disableEndpointPairs;
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
+    #tagDescriptionContent: Map<AbsoluteFilePath, string>;
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
@@ -51,8 +52,10 @@ export class ApiReferenceNodeConverter {
         collectedFileIds: Map<AbsoluteFilePath, string>,
         private workspace?: FernWorkspace,
         private hideChildren?: boolean,
-        private parentAvailability?: docsYml.RawSchemas.Availability
+        private parentAvailability?: docsYml.RawSchemas.Availability,
+        private openApiTags?: Record<string, { id: string; description: string | undefined }>
     ) {
+        this.#tagDescriptionContent = new Map();
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
@@ -135,6 +138,46 @@ export class ApiReferenceNodeConverter {
             orphaned: this.apiSection.orphaned,
             featureFlags: this.apiSection.featureFlags
         };
+    }
+
+    public getTagDescriptionContent(): Map<AbsoluteFilePath, string> {
+        return this.#tagDescriptionContent;
+    }
+
+    private createTagDescriptionPageId(
+        subpackage: APIV1Read.ApiDefinitionPackage
+    ): FernNavigation.V1.PageId | undefined {
+        if (!this.apiSection.tagDescriptionPages || !this.openApiTags) {
+            return undefined;
+        }
+
+        // Get the subpackage name to match with tag
+        const subpackageName = isSubpackage(subpackage) ? subpackage.name : undefined;
+        if (!subpackageName) {
+            return undefined;
+        }
+
+        // Check if this subpackage corresponds to a tag with description
+        const tagInfo = this.openApiTags[subpackageName];
+        if (!tagInfo || !tagInfo.description) {
+            return undefined;
+        }
+
+        // Create a virtual file path for the tag description page
+        // The key here is to create it as a RelativeFilePath that will match the rawMarkdownFiles key
+        const relativeFilePath = `tag-${subpackageName}.md`;
+        const virtualAbsolutePath = AbsoluteFilePath.of(`/${relativeFilePath}`);
+        const pageId = FernNavigation.V1.PageId(relativeFilePath);
+
+        // Store the tag description content
+        const markdownContent = `# ${titleCase(tagInfo.id.replace(/[_-]/g, " "))}\n\n${tagInfo.description}`;
+        this.#tagDescriptionContent.set(virtualAbsolutePath, markdownContent);
+
+        // Add to markdown files collections for processing
+        this.markdownFilesToNoIndex.set(virtualAbsolutePath, false);
+        this.markdownFilesToTags.set(virtualAbsolutePath, [subpackageName]);
+
+        return pageId;
     }
 
     // Step 1
@@ -411,7 +454,7 @@ export class ApiReferenceNodeConverter {
                 slug: slug.get(),
                 icon: undefined,
                 hidden: this.hideChildren,
-                overviewPageId: undefined,
+                overviewPageId: this.createTagDescriptionPageId(subpackage),
                 availability: parentAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
@@ -766,7 +809,7 @@ export class ApiReferenceNodeConverter {
                     slug: slug.get(),
                     icon: undefined,
                     hidden: this.hideChildren,
-                    overviewPageId: undefined,
+                    overviewPageId: this.createTagDescriptionPageId(subpackage),
                     availability: parentAvailability,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,

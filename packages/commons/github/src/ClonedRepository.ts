@@ -113,14 +113,26 @@ export class ClonedRepository {
 
     public async push(): Promise<void> {
         await this.git.cwd(this.clonePath);
-        await this.git.push();
+        const currentBranch = await this.getCurrentBranch();
+        try {
+            await this.git.push();
+        } catch (err) {
+            const msg = String(err);
+            const isNoUpstream = msg.includes("has no upstream branch") || msg.includes("no upstream branch");
+            if (isNoUpstream) {
+                await this.pushUpstream(currentBranch);
+                return;
+            }
+            throw err;
+        }
     }
 
     public async pushWithMergingRemote(): Promise<void> {
         await this.git.cwd(this.clonePath);
         const currentBranch = await this.getCurrentBranch();
 
-        const isRemoteReject = (msg: string) => msg.includes("fetch first") || msg.includes("Updates were rejected");
+        const isRemoteReject = (msg: string) =>
+            msg.includes("fetch first") || msg.includes("Updates were rejected") || msg.includes("non-fast-forward");
         const isDivergent = (msg: string) =>
             msg.includes("divergent branches") || msg.includes("You have divergent branches");
 
@@ -157,7 +169,8 @@ export class ClonedRepository {
         await this.git.cwd(this.clonePath);
         const currentBranch = await this.getCurrentBranch();
 
-        const isRemoteReject = (msg: string) => msg.includes("fetch first") || msg.includes("Updates were rejected");
+        const isRemoteReject = (msg: string) =>
+            msg.includes("fetch first") || msg.includes("Updates were rejected") || msg.includes("non-fast-forward");
 
         try {
             await this.push();
@@ -169,7 +182,9 @@ export class ClonedRepository {
                     await this.push();
                     return;
                 } catch (pullErr) {
-                    throw err; // rethrow original push error
+                    throw new Error(
+                        `Push failed: ${errMsg}. Attempted to rebase but that also failed: ${String(pullErr)}`
+                    );
                 }
             } else {
                 throw err; // rethrow non-remote-reject errors
@@ -193,6 +208,23 @@ export class ClonedRepository {
             await this.git.checkout(branch);
         } catch (_error) {
             await this.git.checkoutLocalBranch(branch);
+        }
+    }
+
+    public async checkoutRemoteBranch(branch: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        try {
+            // First, try to checkout the branch directly (works if local tracking branch exists)
+            await this.git.checkout(branch);
+        } catch (_error) {
+            // Local branch doesn't exist, try to create it from the remote tracking branch
+            try {
+                await this.git.checkout(["-b", branch, `origin/${branch}`]);
+            } catch (_remoteError) {
+                // Remote branch doesn't exist either, create a new local branch
+                // (but don't push - let the caller decide when to push)
+                await this.git.checkoutLocalBranch(branch);
+            }
         }
     }
 

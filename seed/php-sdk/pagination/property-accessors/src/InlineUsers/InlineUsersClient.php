@@ -5,7 +5,7 @@ namespace Seed\InlineUsers;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class InlineUsersClient
+class InlineUsersClient 
 {
     /**
      * @var \Seed\InlineUsers\InlineUsers\InlineUsersClient $inlineUsers
@@ -19,7 +19,7 @@ class InlineUsersClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -38,10 +38,11 @@ class InlineUsersClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->inlineUsers = new \Seed\InlineUsers\InlineUsers\InlineUsersClient($this->client, $this->options);

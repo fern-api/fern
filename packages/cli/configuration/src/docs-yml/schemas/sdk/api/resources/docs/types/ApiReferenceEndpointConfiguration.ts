@@ -5,8 +5,7 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface ApiReferenceEndpointConfiguration
-    extends FernDocsConfig.WithPermissions,
-        FernDocsConfig.WithFeatureFlags {
+    extends FernDocsConfig.WithPermissions, FernDocsConfig.WithFeatureFlags {
     endpoint: string;
     title?: string;
     slug?: string;

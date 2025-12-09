@@ -95,11 +95,13 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
     private async writeAsIsFiles({
         filenames,
         getPackageName,
-        getImportPath
+        getImportPath,
+        templateVariables
     }: {
         filenames: string[];
         getPackageName: (dirname: string) => string;
         getImportPath: (dirname: string) => string;
+        templateVariables?: Record<string, string>;
     }): Promise<void> {
         for (const filename of filenames) {
             // Parse the directory path and filename from the full path
@@ -111,7 +113,8 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
                 filename,
                 templateVariables: {
                     PackageName: packageName,
-                    RootImportPath: this.getRootImportPath()
+                    RootImportPath: this.getRootImportPath(),
+                    ...templateVariables
                 }
             });
             const goFilename = basename.replace(".go_", ".go");
@@ -150,7 +153,10 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await this.writeAsIsFiles({
             filenames: this.context.getCoreAsIsFiles(),
             getPackageName: () => "core",
-            getImportPath: (dirname) => this.getImportPath(dirname)
+            getImportPath: (dirname) => this.getImportPath(dirname),
+            templateVariables: {
+                CustomPagerName: this.context.customConfig.customPagerName ?? "CustomPager"
+            }
         });
     }
 

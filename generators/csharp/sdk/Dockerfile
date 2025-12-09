@@ -18,10 +18,9 @@ RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 RUN dotnet tool install -g csharpier --version "1.2.1"
+RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 COPY generators/csharp/sdk/features.yml /assets/features.yml
 COPY generators/csharp/sdk/dist /dist
-
-RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "csharp-sdk"]

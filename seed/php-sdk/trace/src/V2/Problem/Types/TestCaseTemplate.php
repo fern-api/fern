@@ -34,17 +34,15 @@ class TestCaseTemplate extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->templateId = $values['templateId'];
-        $this->name = $values['name'];
-        $this->implementation = $values['implementation'];
+    )
+    {
+        $this->templateId = $values['templateId'];$this->name = $values['name'];$this->implementation = $values['implementation'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

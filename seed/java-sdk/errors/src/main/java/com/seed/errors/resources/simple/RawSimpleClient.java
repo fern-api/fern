@@ -141,9 +141,6 @@ public class RawSimpleClient {
                     case 500:
                         throw new FooTooLittle(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class), response);
-                    case 500:
-                        throw new InternalServerError(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class), response);
                 }
             } catch (JsonProcessingException ignored) {
                 // unable to map error response, throwing generic error
@@ -203,9 +200,6 @@ public class RawSimpleClient {
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class), response);
                     case 500:
                         throw new FooTooLittle(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class), response);
-                    case 500:
-                        throw new InternalServerError(
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ErrorBody.class), response);
                 }
             } catch (JsonProcessingException ignored) {

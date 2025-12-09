@@ -253,12 +253,27 @@ class ClientWrapperGenerator:
 
         return class_declaration
 
+    ASYNC_TOKEN_PARAMETER_NAME = "async_token"
+    ASYNC_TOKEN_MEMBER_NAME = "_async_token"
+    ASYNC_GET_HEADERS_METHOD_NAME = "async_get_headers"
+
     def _create_async_client_wrapper_class_declaration(
         self, *, constructor_parameters: typing.List[ConstructorParameter], literal_headers: typing.List[LiteralHeader]
     ) -> AST.ClassDeclaration:
         named_parameters = self._get_named_parameters(
             constructor_parameters=constructor_parameters,
             literal_headers=literal_headers,
+        )
+
+        # Add async_token parameter for async OAuth token providers
+        named_parameters.append(
+            AST.NamedFunctionParameter(
+                name=ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(
+                    AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.awaitable(AST.TypeHint.str_()))
+                ),
+                initializer=AST.Expression(AST.TypeHint.none()),
+            )
         )
 
         named_parameters.append(
@@ -276,16 +291,87 @@ class ClientWrapperGenerator:
                     named_parameters=named_parameters,
                 ),
                 body=AST.CodeWriter(
-                    self._get_write_derived_client_wrapper_constructor_body(
+                    self._get_write_async_client_wrapper_constructor_body(
                         constructor_parameters=constructor_parameters,
                         literal_headers=literal_headers,
-                        is_async=True,
                     )
                 ),
             ),
         )
 
+        # Add async_get_headers method
+        class_declaration.add_method(
+            AST.FunctionDeclaration(
+                name=ClientWrapperGenerator.ASYNC_GET_HEADERS_METHOD_NAME,
+                signature=AST.FunctionSignature(
+                    return_type=AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()),
+                ),
+                body=AST.CodeWriter(self._get_write_async_get_headers_body()),
+                is_async=True,
+            )
+        )
+
         return class_declaration
+
+    def _get_write_async_get_headers_body(self) -> CodeWriterFunction:
+        def _write_async_get_headers_body(writer: AST.NodeWriter) -> None:
+            writer.write_line("headers = self.get_headers()")
+            writer.write_line(f"if self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} is not None:")
+            with writer.indent():
+                writer.write_line(f"token = await self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME}()")
+                writer.write_line('headers["Authorization"] = f"Bearer {token}"')
+            writer.write_line("return headers")
+
+        return _write_async_get_headers_body
+
+    def _get_write_async_client_wrapper_constructor_body(
+        self,
+        *,
+        constructor_parameters: List[ConstructorParameter],
+        literal_headers: List[LiteralHeader],
+    ) -> CodeWriterFunction:
+        has_base_url = get_client_wrapper_url_type(ir=self._context.ir) == ClientWrapperUrlStorage.URL
+
+        def _write_async_client_wrapper_constructor_body(writer: AST.NodeWriter) -> None:
+            # Avoid repeating parameters by tracking names
+            seen_param_names = set()
+            param_assignments = []
+            for param in constructor_parameters:
+                if param.constructor_parameter_name not in seen_param_names:
+                    param_assignments.append(f"{param.constructor_parameter_name}={param.constructor_parameter_name}")
+                    seen_param_names.add(param.constructor_parameter_name)
+            writer.write_line(
+                "super().__init__("
+                + ", ".join(
+                    param_assignments
+                    + [
+                        f"{literal_header.constructor_parameter_name}={literal_header.constructor_parameter_name}"
+                        for literal_header in literal_headers
+                    ]
+                )
+                + ")"
+            )
+            # Store async_token
+            writer.write_line(
+                f"self.{ClientWrapperGenerator.ASYNC_TOKEN_MEMBER_NAME} = {ClientWrapperGenerator.ASYNC_TOKEN_PARAMETER_NAME}"
+            )
+            writer.write(f"self.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME} = ")
+            writer.write_node(
+                self._context.core_utilities.http_client(
+                    base_client=AST.Expression(ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME),
+                    base_url=(
+                        AST.Expression(f"self.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}")
+                        if has_base_url
+                        else None
+                    ),
+                    base_headers=AST.Expression(f"self.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}"),
+                    base_timeout=AST.Expression(f"self.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}"),
+                    is_async=True,
+                    async_base_headers=AST.Expression(f"self.{ClientWrapperGenerator.ASYNC_GET_HEADERS_METHOD_NAME}"),
+                )
+            )
+
+        return _write_async_client_wrapper_constructor_body
 
     def _get_write_derived_client_wrapper_constructor_body(
         self,
@@ -565,14 +651,18 @@ class ClientWrapperGenerator:
         bearer_auth_scheme = self._get_bearer_auth_scheme()
         if bearer_auth_scheme is not None:
             constructor_parameter_name = names.get_token_constructor_parameter_name(bearer_auth_scheme)
+            # For OAuth flows, the OAuthTokenProvider needs to create a SyncClientWrapper without a token
+            # to fetch the initial token. For plain bearer auth, use the is_auth_mandatory flag.
+            # This matches TypeScript's behavior where the auth client doesn't require a token.
+            is_token_optional = self._has_oauth() or not self._context.ir.sdk_config.is_auth_mandatory
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,
                     private_member_name=names.get_token_member_name(bearer_auth_scheme),
                     type_hint=(
-                        ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                        if self._context.ir.sdk_config.is_auth_mandatory
-                        else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                        AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                        if is_token_optional
+                        else ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                     ),
                     initializer=AST.Expression(
                         f'{constructor_parameter_name}="YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}"',
@@ -582,17 +672,15 @@ class ClientWrapperGenerator:
                         signature=AST.FunctionSignature(
                             parameters=[],
                             return_type=(
-                                AST.TypeHint.str_()
-                                if self._context.ir.sdk_config.is_auth_mandatory
-                                else AST.TypeHint.optional(AST.TypeHint.str_())
+                                AST.TypeHint.optional(AST.TypeHint.str_()) if is_token_optional else AST.TypeHint.str_()
                             ),
                         ),
                         body=AST.CodeWriter(
-                            self._get_required_getter_body_writer(
+                            self._get_optional_getter_body_writer(
                                 member_name=names.get_token_member_name(bearer_auth_scheme)
                             )
-                            if self._context.ir.sdk_config.is_auth_mandatory
-                            else self._get_optional_getter_body_writer(
+                            if is_token_optional
+                            else self._get_required_getter_body_writer(
                                 member_name=names.get_token_member_name(bearer_auth_scheme)
                             )
                         ),
@@ -806,6 +894,14 @@ class ClientWrapperGenerator:
                     ),
                 )
         return None
+
+    def _has_oauth(self) -> bool:
+        """Check if the API uses OAuth authentication."""
+        for scheme in self._context.ir.auth.schemes:
+            scheme_as_union = scheme.get_as_union()
+            if scheme_as_union.type == "oauth":
+                return True
+        return False
 
     def _has_basic_auth(self) -> bool:
         return self._get_basic_auth_scheme() is not None

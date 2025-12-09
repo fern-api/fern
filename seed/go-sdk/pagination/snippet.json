@@ -169,6 +169,17 @@
             "id": {
                 "path": "/users",
                 "method": "GET",
+                "identifier_override": "endpoint_users.listUsernamesWithOptionalResponse"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/pagination/fern\"\n\tfernclient \"github.com/pagination/fern/client\"\n\toption \"github.com/pagination/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Users.ListUsernamesWithOptionalResponse(\n\tcontext.TODO(),\n\t\u0026fern.ListUsernamesWithOptionalResponseRequest{\n\t\tStartingAfter: fern.String(\n\t\t\t\"starting_after\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
                 "identifier_override": "endpoint_users.listWithCursorPagination"
             },
             "snippet": {

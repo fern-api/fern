@@ -13227,6 +13227,211 @@
             },
             "examples": null
         },
+        "endpoint_users.listUsernamesWithOptionalResponse": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "listUsernamesWithOptionalResponse",
+                    "camelCase": {
+                        "unsafeName": "listUsernamesWithOptionalResponse",
+                        "safeName": "listUsernamesWithOptionalResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_usernames_with_optional_response",
+                        "safeName": "list_usernames_with_optional_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_USERNAMES_WITH_OPTIONAL_RESPONSE",
+                        "safeName": "LIST_USERNAMES_WITH_OPTIONAL_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListUsernamesWithOptionalResponse",
+                        "safeName": "ListUsernamesWithOptionalResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "users",
+                        "camelCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "users",
+                            "safeName": "users"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USERS",
+                            "safeName": "USERS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Users",
+                            "safeName": "Users"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/users"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ListUsernamesWithOptionalResponseRequest",
+                        "camelCase": {
+                            "unsafeName": "listUsernamesWithOptionalResponseRequest",
+                            "safeName": "listUsernamesWithOptionalResponseRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_usernames_with_optional_response_request",
+                            "safeName": "list_usernames_with_optional_response_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_USERNAMES_WITH_OPTIONAL_RESPONSE_REQUEST",
+                            "safeName": "LIST_USERNAMES_WITH_OPTIONAL_RESPONSE_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListUsernamesWithOptionalResponseRequest",
+                            "safeName": "ListUsernamesWithOptionalResponseRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "users",
+                                "camelCase": {
+                                    "unsafeName": "users",
+                                    "safeName": "users"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "users",
+                                    "safeName": "users"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USERS",
+                                    "safeName": "USERS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Users",
+                                    "safeName": "Users"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "users",
+                            "camelCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "users",
+                                "safeName": "users"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USERS",
+                                "safeName": "USERS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Users",
+                                "safeName": "Users"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "starting_after",
+                                "camelCase": {
+                                    "unsafeName": "startingAfter",
+                                    "safeName": "startingAfter"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "starting_after",
+                                    "safeName": "starting_after"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STARTING_AFTER",
+                                    "safeName": "STARTING_AFTER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "StartingAfter",
+                                    "safeName": "StartingAfter"
+                                }
+                            },
+                            "wireValue": "starting_after"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
         "endpoint_users.listWithGlobalConfig": {
             "auth": {
                 "type": "bearer",

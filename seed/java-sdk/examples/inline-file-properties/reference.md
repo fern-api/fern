@@ -395,7 +395,7 @@ client.service().getMetadata(
         .builder()
         .xApiVersion("0.0.1")
         .tag(
-            Arrays.asList(Optional.of("development"))
+            Arrays.asList("development")
         )
         .shallow(false)
         .build()
@@ -476,9 +476,6 @@ client.service().createBigEntity(
                 .rating(1.1)
                 .tag("tag")
                 .revenue(1000000L)
-                .cast(
-                    Arrays.asList("cast", "cast")
-                )
                 .prequel("prequel")
                 .book("book")
                 .metadata(
@@ -487,6 +484,9 @@ client.service().createBigEntity(
                         HashMap<String, Object>() {{put("key", "value");
                         }});
                     }}
+                )
+                .cast(
+                    Arrays.asList("cast", "cast")
                 )
                 .build()
         )
@@ -500,7 +500,7 @@ client.service().createBigEntity(
                 .build()
         )
         .metadata(
-            Metadata.html()
+            Metadata.html("metadata")
         )
         .commonMetadata(
             Metadata
@@ -529,7 +529,7 @@ client.service().createBigEntity(
             )
         )
         .data(
-            Data.string()
+            Data.string("data")
         )
         .migration(
             Migration
@@ -549,7 +549,7 @@ client.service().createBigEntity(
             )
         )
         .test(
-            Test.and()
+            Test.and(true)
         )
         .node(
             Node

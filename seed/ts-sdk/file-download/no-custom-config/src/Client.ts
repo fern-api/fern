@@ -2,16 +2,16 @@
 
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedFileDownloadClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedFileDownloadClient {
-    protected readonly _options: SeedFileDownloadClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedFileDownloadClient.Options>;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedFileDownloadClient.Options) {

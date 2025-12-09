@@ -20,15 +20,15 @@ class SubmissionIdNotFound extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->missingSubmissionId = $values['missingSubmissionId'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

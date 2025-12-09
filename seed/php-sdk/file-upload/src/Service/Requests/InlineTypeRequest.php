@@ -28,8 +28,8 @@ class InlineTypeRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->file = $values['file'];
-        $this->request = $values['request'];
+    )
+    {
+        $this->file = $values['file'];$this->request = $values['request'];
     }
 }

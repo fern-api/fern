@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.seed.nullableOptional.SeedNullableOptionalClient;
+import com.seed.nullableOptional.core.OptionalNullable;
 import com.seed.nullableOptional.resources.nullableoptional.requests.SearchUsersRequest;
 
 public class Example4 {
@@ -11,9 +12,9 @@ public class Example4 {
         client.nullableOptional()
                 .searchUsers(SearchUsersRequest.builder()
                         .query("query")
-                        .department("department")
-                        .role("role")
-                        .isActive(true)
+                        .department(OptionalNullable.of("department"))
+                        .role(OptionalNullable.of("role"))
+                        .isActive(OptionalNullable.of(true))
                         .build());
     }
 }

@@ -236,7 +236,12 @@
             }
           },
           "displayName": "Get plants (inherits global ApiKeyAuth)",
-          "auth": false,
+          "auth": true,
+          "security": [
+            {
+              "ApiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -590,7 +595,7 @@
     "hasEndpointsInTree": true
   },
   "sdkConfig": {
-    "isAuthMandatory": false,
+    "isAuthMandatory": true,
     "hasStreamingEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasFileDownloadEndpoints": false,

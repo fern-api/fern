@@ -3,19 +3,20 @@
 import type * as SeedPackageYml from "./api/index.js";
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedPackageYmlClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedPackageYmlClient {
-    protected readonly _options: SeedPackageYmlClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedPackageYmlClient.Options>;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedPackageYmlClient.Options) {
@@ -78,20 +79,6 @@ export class SeedPackageYmlClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPackageYmlError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPackageYmlTimeoutError("Timeout exceeded when calling POST /{id}/.");
-            case "unknown":
-                throw new errors.SeedPackageYmlError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/{id}/");
     }
 }

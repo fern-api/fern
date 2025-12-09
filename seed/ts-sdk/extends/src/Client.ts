@@ -2,19 +2,20 @@
 
 import type * as SeedExtends from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedExtendsClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedExtendsClient {
-    protected readonly _options: SeedExtendsClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedExtendsClient.Options>;
 
     constructor(options: SeedExtendsClient.Options) {
         this._options = normalizeClientOptions(options);
@@ -73,22 +74,11 @@ export class SeedExtendsClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExtendsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExtendsTimeoutError(
-                    "Timeout exceeded when calling POST /extends/extended-inline-request-body.",
-                );
-            case "unknown":
-                throw new errors.SeedExtendsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/extends/extended-inline-request-body",
+        );
     }
 }

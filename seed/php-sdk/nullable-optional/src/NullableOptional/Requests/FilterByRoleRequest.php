@@ -32,9 +32,8 @@ class FilterByRoleRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->role = $values['role'] ?? null;
-        $this->status = $values['status'] ?? null;
-        $this->secondaryRole = $values['secondaryRole'] ?? null;
+    )
+    {
+        $this->role = $values['role'] ?? null;$this->status = $values['status'] ?? null;$this->secondaryRole = $values['secondaryRole'] ?? null;
     }
 }

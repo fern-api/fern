@@ -5,6 +5,22 @@ info:
 paths: {}
 components:
   schemas:
+    NoAuthSendEvent:
+      title: NoAuthSendEvent
+      type: object
+      properties:
+        text:
+          type: string
+      required:
+        - text
+    NoAuthReceiveEvent:
+      title: NoAuthReceiveEvent
+      type: object
+      properties:
+        response:
+          type: string
+      required:
+        - response
     SendEvent:
       title: SendEvent
       type: object

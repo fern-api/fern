@@ -187,8 +187,8 @@ func newTestRetryServer(t *testing.T, tc *RetryTestCase) *httptest.Server {
 				if tc.giveResponse != nil && statusCode == http.StatusOK {
 					bytes, err = json.Marshal(tc.giveResponse)
 					require.NoError(t, err)
-					_, err = w.Write(bytes)
-					require.NoError(t, err)
+					_, writeErr := w.Write(bytes)
+					require.NoError(t, writeErr)
 				}
 
 				index++

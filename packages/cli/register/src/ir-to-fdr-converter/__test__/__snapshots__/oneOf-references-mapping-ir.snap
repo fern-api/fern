@@ -118,6 +118,8 @@
       "displayName": "BadRequestError",
       "docs": "Bad request",
       "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "CreateEventRequestBadRequestError",
         "fernFilepath": {
@@ -424,6 +426,7 @@
                 },
               },
             },
+            "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
           "retries": undefined,
@@ -592,6 +595,7 @@
                     },
                   },
                 },
+                "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
             ],
@@ -1349,66 +1353,19 @@
       },
       "shape": {
         "_visit": [Function],
-        "baseProperties": [],
-        "discriminant": {
-          "name": {
-            "camelCase": {
-              "safeName": "",
-              "unsafeName": "",
-            },
-            "originalName": undefined,
-            "pascalCase": {
-              "safeName": "",
-              "unsafeName": "",
-            },
-            "screamingSnakeCase": {
-              "safeName": "",
-              "unsafeName": "",
-            },
-            "snakeCase": {
-              "safeName": "",
-              "unsafeName": "",
-            },
-          },
-          "wireValue": undefined,
-        },
-        "extends": [],
-        "type": "union",
-        "types": [
+        "members": [
           {
-            "availability": undefined,
-            "discriminantValue": {
-              "name": {
-                "camelCase": {
-                  "safeName": "user",
-                  "unsafeName": "user",
-                },
-                "originalName": "user",
-                "pascalCase": {
-                  "safeName": "User",
-                  "unsafeName": "User",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "USER",
-                  "unsafeName": "USER",
-                },
-                "snakeCase": {
-                  "safeName": "user",
-                  "unsafeName": "user",
-                },
-              },
-              "wireValue": "user",
-            },
-            "displayName": "user",
             "docs": undefined,
-            "shape": {
+            "type": {
               "_visit": [Function],
+              "default": undefined,
               "displayName": "user",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
                 "packagePath": [],
               },
+              "inline": false,
               "name": {
                 "camelCase": {
                   "safeName": "userEvent",
@@ -1428,44 +1385,22 @@
                   "unsafeName": "user_event",
                 },
               },
-              "propertiesType": "samePropertiesAsObject",
+              "type": "named",
               "typeId": "UserEvent",
             },
           },
           {
-            "availability": undefined,
-            "discriminantValue": {
-              "name": {
-                "camelCase": {
-                  "safeName": "system",
-                  "unsafeName": "system",
-                },
-                "originalName": "system",
-                "pascalCase": {
-                  "safeName": "System",
-                  "unsafeName": "System",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "SYSTEM",
-                  "unsafeName": "SYSTEM",
-                },
-                "snakeCase": {
-                  "safeName": "system",
-                  "unsafeName": "system",
-                },
-              },
-              "wireValue": "system",
-            },
-            "displayName": "system",
             "docs": undefined,
-            "shape": {
+            "type": {
               "_visit": [Function],
+              "default": undefined,
               "displayName": "system",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
                 "packagePath": [],
               },
+              "inline": false,
               "name": {
                 "camelCase": {
                   "safeName": "systemEvent",
@@ -1485,44 +1420,22 @@
                   "unsafeName": "system_event",
                 },
               },
-              "propertiesType": "samePropertiesAsObject",
+              "type": "named",
               "typeId": "SystemEvent",
             },
           },
           {
-            "availability": undefined,
-            "discriminantValue": {
-              "name": {
-                "camelCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-                "originalName": "error",
-                "pascalCase": {
-                  "safeName": "Error_",
-                  "unsafeName": "Error",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ERROR",
-                  "unsafeName": "ERROR",
-                },
-                "snakeCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-              },
-              "wireValue": "error",
-            },
-            "displayName": "error",
             "docs": undefined,
-            "shape": {
+            "type": {
               "_visit": [Function],
+              "default": undefined,
               "displayName": "error",
               "fernFilepath": {
                 "allParts": [],
                 "file": undefined,
                 "packagePath": [],
               },
+              "inline": false,
               "name": {
                 "camelCase": {
                   "safeName": "errorEvent",
@@ -1542,11 +1455,12 @@
                   "unsafeName": "error_event",
                 },
               },
-              "propertiesType": "samePropertiesAsObject",
+              "type": "named",
               "typeId": "ErrorEvent",
             },
           },
         ],
+        "type": "undiscriminatedUnion",
       },
       "source": undefined,
       "userProvidedExamples": [],

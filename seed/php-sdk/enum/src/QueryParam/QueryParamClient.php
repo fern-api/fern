@@ -13,7 +13,7 @@ use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\QueryParam\Requests\SendEnumListAsQueryParamRequest;
 
-class QueryParamClient
+class QueryParamClient 
 {
     /**
      * @var array{
@@ -22,7 +22,7 @@ class QueryParamClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -41,10 +41,11 @@ class QueryParamClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -62,16 +63,15 @@ class QueryParamClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): void
-    {
+    public function send(SendEnumAsQueryParamRequest $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['operand'] = $request->operand;
         $query['operandOrColor'] = $request->operandOrColor;
-        if ($request->maybeOperand != null) {
+        if ($request->maybeOperand != null){
             $query['maybeOperand'] = $request->maybeOperand;
         }
-        if ($request->maybeOperandOrColor != null) {
+        if ($request->maybeOperandOrColor != null){
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
         }
         try {
@@ -85,12 +85,12 @@ class QueryParamClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -121,16 +121,15 @@ class QueryParamClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): void
-    {
+    public function sendList(SendEnumListAsQueryParamRequest $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['operand'] = $request->operand;
         $query['operandOrColor'] = $request->operandOrColor;
-        if ($request->maybeOperand != null) {
+        if ($request->maybeOperand != null){
             $query['maybeOperand'] = $request->maybeOperand;
         }
-        if ($request->maybeOperandOrColor != null) {
+        if ($request->maybeOperandOrColor != null){
             $query['maybeOperandOrColor'] = $request->maybeOperandOrColor;
         }
         try {
@@ -144,12 +143,12 @@ class QueryParamClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

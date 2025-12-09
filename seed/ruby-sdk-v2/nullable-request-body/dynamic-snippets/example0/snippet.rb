@@ -2,4 +2,4 @@ require "seed"
 
 client = Seed::Client.new(base_url: 'https://api.fern.com');
 
-client.test_group.test_method_name(pathParam: 'path_param');
+client.test_group.test_method_name(path_param: 'path_param');

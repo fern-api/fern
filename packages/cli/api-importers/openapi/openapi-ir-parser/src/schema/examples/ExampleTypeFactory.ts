@@ -616,6 +616,12 @@ export class ExampleTypeFactory {
             if (variantWithExample != null) {
                 return variantWithExample;
             }
+            // Check for variants that have inherent examples (literals and enums with values)
+            // These are preferred over primitive types that would fall back to using the parameter name
+            const variantWithInherentExample = schema.schemas.find((variant) => this.hasInherentExample(variant));
+            if (variantWithInherentExample != null) {
+                return variantWithInherentExample;
+            }
             // Fall back to first variant if no variant has an example
             return schema.schemas[0];
         }
@@ -780,6 +786,30 @@ export class ExampleTypeFactory {
                 return Object.values(schema.value.schemas).some((schema) =>
                     this.hasExample(schema, depth, visitedSchemaIds, options)
                 );
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Checks if a schema has an "inherent" example value that can be used without
+     * falling back to generic placeholder values like the parameter name.
+     * This is used to prefer literal and enum variants in undiscriminated unions
+     * over primitive types that would generate placeholder examples.
+     */
+    private hasInherentExample(schema: SchemaWithExample): boolean {
+        switch (schema.type) {
+            case "literal":
+                return true;
+            case "enum":
+                return schema.values.length > 0;
+            case "optional":
+            case "nullable":
+                return this.hasInherentExample(schema.value);
+            case "reference": {
+                const resolvedSchema = this.schemas[schema.schema];
+                return resolvedSchema != null ? this.hasInherentExample(resolvedSchema) : false;
+            }
             default:
                 return false;
         }

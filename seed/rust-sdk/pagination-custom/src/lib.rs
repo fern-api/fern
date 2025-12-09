@@ -1,3 +1,40 @@
+//! # Pagination SDK
+//!
+//! The official Rust SDK for the Pagination.
+//!
+//! ## Getting Started
+//!
+//! ```rust
+//! use seed_pagination::prelude::*;
+//!
+//! #[tokio::main]
+//! async fn main() {
+//!     let config = ClientConfig {
+//!         token: Some("<token>".to_string()),
+//!         ..Default::default()
+//!     };
+//!     let client = PaginationClient::new(config).expect("Failed to build client");
+//!     client
+//!         .users
+//!         .list_usernames_custom(
+//!             &ListUsernamesCustomQueryRequest {
+//!                 starting_after: Some("starting_after".to_string()),
+//!             },
+//!             None,
+//!         )
+//!         .await;
+//! }
+//! ```
+//!
+//! ## Modules
+//!
+//! - [`api`] - Core API types and models
+//! - [`client`] - Client implementations
+//! - [`config`] - Configuration options
+//! - [`core`] - Core utilities and infrastructure
+//! - [`error`] - Error types and handling
+//! - [`prelude`] - Common imports for convenience
+
 pub mod api;
 pub mod client;
 pub mod config;

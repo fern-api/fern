@@ -55,7 +55,7 @@
         "unknown",
         "client-side-params",
         "trace",
-        "custom-auth",
+        "header-auth",
         "literals-unions",
         "variables",
         "imdb",
@@ -125,7 +125,7 @@
     },
     {
       "fixtures": [
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "bytes-download",
         "cross-package-type-names",
         "simple-api",

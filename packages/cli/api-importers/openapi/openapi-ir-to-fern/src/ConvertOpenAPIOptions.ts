@@ -55,6 +55,11 @@ export interface ConvertOpenAPIOptions {
     auth?: RawSchemas.ApiAuthSchema;
 
     /**
+     * Overrides the auth schemes that would be detected from the OpenAPI spec.
+     */
+    authSchemes?: Record<string, RawSchemas.AuthSchemeDeclarationSchema>;
+
+    /**
      * If true, the converter will convert nullable schemas to optional nullable.
      * If false, the converter will convert nullable schemas to required nullable.
      * Defaults to true.

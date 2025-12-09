@@ -2,16 +2,16 @@
 
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedExtraPropertiesClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedExtraPropertiesClient {
-    protected readonly _options: SeedExtraPropertiesClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedExtraPropertiesClient.Options>;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedExtraPropertiesClient.Options) {

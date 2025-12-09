@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { validateAgainstJsonSchema } from "@fern-api/core-utils";
+import { sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
 
 import * as DocsYmlJsonSchema from "./versions-yml.schema.json";
 
@@ -19,9 +19,13 @@ export async function validateVersionConfigFileSchema({ value }: { value: unknow
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const result = validateAgainstJsonSchema(value, DocsYmlJsonSchema as any);
     if (result.success) {
+        // Sanitize null/undefined values before parsing
+        const removedPaths: string[][] = [];
+        const sanitizedValue = sanitizeNullValues(value, [], removedPaths);
+
         return {
             type: "success",
-            contents: docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(value)
+            contents: docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(sanitizedValue)
         };
     }
 

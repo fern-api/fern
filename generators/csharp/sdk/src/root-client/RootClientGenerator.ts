@@ -268,114 +268,155 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             access: ast.Access.Public,
             parameters,
             body: this.csharp.codeblock((writer) => {
-                for (const param of optionalParameters) {
-                    if (param.environmentVariable != null) {
-                        writer.writeLine(`${param.name} ??= ${GetFromEnvironmentOrThrow}(`);
-                        writer.indent();
-                        writer.writeNode(this.csharp.string_({ string: param.environmentVariable }));
-                        writer.writeLine(",");
-                        writer.writeLine(
-                            `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
-                        );
-                        writer.dedent();
-                        writer.writeLine(");");
-                    }
-                }
-                writer.write("var defaultHeaders = ");
-                writer.writeNodeStatement(
-                    this.csharp.instantiateClass({
-                        classReference: this.generation.Types.Headers,
-                        arguments_: [headerDictionary]
-                    })
-                );
-
-                writer.write("clientOptions ??= ");
-                writer.writeNodeStatement(
-                    this.csharp.instantiateClass({
-                        classReference: this.generation.Types.ClientOptions,
-                        arguments_: []
-                    })
-                );
-
-                for (const param of literalParameters) {
-                    if (param.header != null) {
-                        writer.controlFlow("if", this.csharp.codeblock(`clientOptions.${param.name} != null`));
-                        writer.write(`defaultHeaders["${param.header.name}"] = `);
-                        if (param.value.type === "string") {
-                            writer.write(`clientOptions.${param.name}`);
-                        } else {
-                            writer.write(`clientOptions.${param.name}.ToString()!`);
-                        }
-                        writer.writeLine(";");
-                        writer.endControlFlow();
-                    }
-                }
-
-                writer.controlFlow("foreach", this.csharp.codeblock("var header in defaultHeaders"));
-                writer.controlFlow("if", this.csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)"));
-                writer.writeLine("clientOptions.Headers[header.Key] = header.Value;");
-                writer.endControlFlow();
-                writer.endControlFlow();
-
-                if (this.oauth != null) {
-                    const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
-                        this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
-                    );
-
-                    const arguments_ = [
-                        this.generation.Types.RawClient.new({
-                            arguments_: [this.csharp.codeblock("clientOptions.Clone()")]
-                        })
-                    ];
-                    writer.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
-                    writer.writeNode(
-                        this.csharp.instantiateClass({
-                            classReference: authClientClassReference,
-                            arguments_,
-                            forceUseConstructor: true
-                        })
-                    );
-                    writer.writeTextStatement(")");
-
-                    writer.writeNode(
-                        this.csharp.codeblock((writer) => {
-                            writer.write(
-                                `clientOptions.Headers["Authorization"] = new Func<string>( () => tokenProvider.${this.names.methods.getAccessTokenAsync}().Result );`
+                const writeConstructorBody = (innerWriter: typeof writer) => {
+                    for (const param of optionalParameters) {
+                        if (param.environmentVariable != null) {
+                            innerWriter.writeLine(`${param.name} ??= ${GetFromEnvironmentOrThrow}(`);
+                            innerWriter.indent();
+                            innerWriter.writeNode(this.csharp.string_({ string: param.environmentVariable }));
+                            innerWriter.writeLine(",");
+                            innerWriter.writeLine(
+                                `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
                             );
-                        })
-                    );
-                }
-
-                writer.writeLine(`${this.members.clientName} = `);
-                writer.writeNodeStatement(
-                    this.csharp.instantiateClass({
-                        classReference: this.generation.Types.RawClient,
-                        arguments_: [this.csharp.codeblock("clientOptions")]
-                    })
-                );
-                if (this.grpcClientInfo != null) {
-                    writer.writeLine("_grpc = _client.Grpc");
-                    writer.write(this.grpcClientInfo.privatePropertyName);
-                    writer.write(" = ");
-                    writer.writeNodeStatement(
+                            innerWriter.dedent();
+                            innerWriter.writeLine(");");
+                        }
+                    }
+                    innerWriter.write("var defaultHeaders = ");
+                    innerWriter.writeNodeStatement(
                         this.csharp.instantiateClass({
-                            classReference: this.grpcClientInfo.classReference,
-                            arguments_: [this.csharp.codeblock("_grpc.Channel")]
+                            classReference: this.generation.Types.Headers,
+                            arguments_: [headerDictionary]
                         })
                     );
-                }
-                const arguments_ = [this.csharp.codeblock("_client")];
-                for (const subpackage of this.getSubpackages()) {
-                    // skip subpackages that have no endpoints (recursively)
-                    if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
-                        writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
-                        writer.writeNodeStatement(
+
+                    innerWriter.write("clientOptions ??= ");
+                    innerWriter.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.generation.Types.ClientOptions,
+                            arguments_: []
+                        })
+                    );
+
+                    // Initialize the exception handler with the custom interceptor if enabled
+                    if (this.settings.includeExceptionHandler) {
+                        innerWriter.write("clientOptions.ExceptionHandler = ");
+                        innerWriter.writeNodeStatement(
                             this.csharp.instantiateClass({
-                                classReference: this.context.getSubpackageClassReference(subpackage),
-                                arguments_
+                                classReference: this.generation.Types.ExceptionHandler,
+                                arguments_: [
+                                    this.csharp.instantiateClass({
+                                        classReference: this.generation.Types.CustomExceptionInterceptor,
+                                        arguments_: []
+                                    })
+                                ]
                             })
                         );
                     }
+
+                    for (const param of literalParameters) {
+                        if (param.header != null) {
+                            innerWriter.controlFlow("if", this.csharp.codeblock(`clientOptions.${param.name} != null`));
+                            innerWriter.write(`defaultHeaders["${param.header.name}"] = `);
+                            if (param.value.type === "string") {
+                                innerWriter.write(`clientOptions.${param.name}`);
+                            } else {
+                                innerWriter.write(`clientOptions.${param.name}.ToString()!`);
+                            }
+                            innerWriter.writeLine(";");
+                            innerWriter.endControlFlow();
+                        }
+                    }
+
+                    innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in defaultHeaders"));
+                    innerWriter.controlFlow(
+                        "if",
+                        this.csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)")
+                    );
+                    innerWriter.writeLine("clientOptions.Headers[header.Key] = header.Value;");
+                    innerWriter.endControlFlow();
+                    innerWriter.endControlFlow();
+
+                    if (this.oauth != null) {
+                        const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
+                            this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
+                        );
+
+                        const arguments_ = [
+                            this.generation.Types.RawClient.new({
+                                arguments_: [this.csharp.codeblock("clientOptions.Clone()")]
+                            })
+                        ];
+                        innerWriter.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
+                        innerWriter.writeNode(
+                            this.csharp.instantiateClass({
+                                classReference: authClientClassReference,
+                                arguments_,
+                                forceUseConstructor: true
+                            })
+                        );
+                        innerWriter.writeTextStatement(")");
+
+                        innerWriter.writeNode(
+                            this.csharp.codeblock((writer) => {
+                                writer.write(
+                                    `clientOptions.Headers["Authorization"] = new Func<string>( () => tokenProvider.${this.names.methods.getAccessTokenAsync}().Result );`
+                                );
+                            })
+                        );
+                    }
+
+                    innerWriter.writeLine(`${this.members.clientName} = `);
+                    innerWriter.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.generation.Types.RawClient,
+                            arguments_: [this.csharp.codeblock("clientOptions")]
+                        })
+                    );
+                    if (this.grpcClientInfo != null) {
+                        innerWriter.writeLine("_grpc = _client.Grpc");
+                        innerWriter.write(this.grpcClientInfo.privatePropertyName);
+                        innerWriter.write(" = ");
+                        innerWriter.writeNodeStatement(
+                            this.csharp.instantiateClass({
+                                classReference: this.grpcClientInfo.classReference,
+                                arguments_: [this.csharp.codeblock("_grpc.Channel")]
+                            })
+                        );
+                    }
+                    const arguments_ = [this.csharp.codeblock("_client")];
+                    for (const subpackage of this.getSubpackages()) {
+                        // skip subpackages that have no endpoints (recursively)
+                        if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
+                            innerWriter.writeLine(`${subpackage.name.pascalCase.safeName} = `);
+                            innerWriter.writeNodeStatement(
+                                this.csharp.instantiateClass({
+                                    classReference: this.context.getSubpackageClassReference(subpackage),
+                                    arguments_
+                                })
+                            );
+                        }
+                    }
+                };
+
+                if (this.settings.includeExceptionHandler) {
+                    writer.controlFlowWithoutStatement("try");
+                    writeConstructorBody(writer);
+                    writer.endControlFlow();
+                    writer.controlFlow("catch", this.csharp.codeblock("Exception ex"));
+                    // Create a temporary interceptor to capture the exception since clientOptions may not be initialized
+                    writer.write("var interceptor = ");
+                    writer.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.generation.Types.CustomExceptionInterceptor,
+                            arguments_: []
+                        })
+                    );
+                    writer.writeLine("interceptor.Intercept(ex);");
+                    writer.writeLine("throw;");
+                    writer.endControlFlow();
+                } else {
+                    writeConstructorBody(writer);
                 }
             })
         };

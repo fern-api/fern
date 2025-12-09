@@ -27,16 +27,15 @@ class SendEvent2 extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->sendText2 = $values['sendText2'];
-        $this->sendParam2 = $values['sendParam2'];
+    )
+    {
+        $this->sendText2 = $values['sendText2'];$this->sendParam2 = $values['sendParam2'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

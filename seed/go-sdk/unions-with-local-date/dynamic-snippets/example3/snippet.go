@@ -12,8 +12,8 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Bigunion.Get(
+    client.Types.Get(
         context.TODO(),
-        "id",
+        "date-example",
     )
 }

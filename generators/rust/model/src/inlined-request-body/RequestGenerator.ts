@@ -47,11 +47,26 @@ export class RequestGenerator {
         // Add regular properties (mix of ObjectProperty and InlinedRequestBodyProperty)
         fields.push(...this.properties.map((property) => this.generateRustFieldForProperty(property)));
 
+        // Build documentation for the request type
+        let docs = undefined;
+        if (this.docsContent) {
+            docs = rust.docComment({
+                summary: this.docsContent,
+                description: `Request type for the ${this.name} operation.`
+            });
+        } else {
+            // Fallback documentation
+            docs = rust.docComment({
+                summary: `Request type for API operation`
+            });
+        }
+
         return rust.struct({
             name: this.name,
             visibility: PUBLIC,
             attributes: this.generateStructAttributes(),
-            fields
+            fields,
+            docs
         });
     }
 
@@ -143,11 +158,20 @@ export class RequestGenerator {
         const fieldAttributes = generateFieldAttributes(property);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
+        // Add field documentation if available
+        let docs = undefined;
+        if (property.docs) {
+            docs = rust.docComment({
+                summary: property.docs
+            });
+        }
+
         return rust.field({
             name: fieldName,
             type: fieldType,
             visibility: PUBLIC,
-            attributes: fieldAttributes
+            attributes: fieldAttributes,
+            docs
         });
     }
 

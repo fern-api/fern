@@ -9,6 +9,7 @@ import (
 	"path"
 	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/ir"
@@ -40,6 +41,7 @@ type fileWriter struct {
 	gettersPassByValue           bool
 	exportAllRequestsAtRoot      bool
 	unionVersion                 UnionVersion
+	customPagerName              string
 	scope                        *gospec.Scope
 	types                        map[common.TypeId]*ir.TypeDeclaration
 	errors                       map[ir.ErrorId]*ir.ErrorDeclaration
@@ -61,6 +63,7 @@ func newFileWriter(
 	gettersPassByValue bool,
 	exportAllRequestsAtRoot bool,
 	unionVersion UnionVersion,
+	customPagerName string,
 	types map[common.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
 	coordinator *coordinator.Client,
@@ -107,6 +110,7 @@ func newFileWriter(
 		gettersPassByValue:           gettersPassByValue,
 		exportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		unionVersion:                 unionVersion,
+		customPagerName:              customPagerName,
 		scope:                        scope,
 		types:                        types,
 		errors:                       errors,
@@ -213,6 +217,19 @@ func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string,
 		paramName := propertySafeNames[i]
 		propertyType := propertyTypes[i]
 
+		// If the safe name is empty (e.g., for "_" or numeric keys), derive from the property name
+		if paramName == "" {
+			// Convert the exported property name to an unexported parameter name
+			// e.g., "Underscore" -> "underscore", "Field1" -> "field1"
+			if len(propertyName) > 0 {
+				runes := []rune(propertyName)
+				runes[0] = unicode.ToLower(runes[0])
+				paramName = string(runes)
+			} else {
+				paramName = "value"
+			}
+		}
+
 		if receiver == paramName {
 			receiver = fmt.Sprintf("_%s", setterName)
 		}
@@ -260,6 +277,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.gettersPassByValue,
 		f.exportAllRequestsAtRoot,
 		f.unionVersion,
+		f.customPagerName,
 		f.types,
 		f.errors,
 		f.coordinator,

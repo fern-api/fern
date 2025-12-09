@@ -147,12 +147,14 @@
                 "wireValue": "NotFoundError"
             },
             "statusCode": 404,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "unknown"
             },
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": "Admin not found"
         }
     },
@@ -269,7 +271,8 @@
                     "sdkRequest": null,
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [

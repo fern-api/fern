@@ -21,7 +21,7 @@ use Seed\Core\Types\Union;
  * )> $relatedResources
  * @property Memo $memo
  */
-trait BaseResource
+trait BaseResource 
 {
     /**
      * @var string $id

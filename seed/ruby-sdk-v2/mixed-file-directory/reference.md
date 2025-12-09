@@ -27,9 +27,7 @@ Create a new organization.
 <dd>
 
 ```ruby
-client.organization.create({
-  name: 'name'
-});
+client.organization.create(name: 'name');
 ```
 </dd>
 </dl>

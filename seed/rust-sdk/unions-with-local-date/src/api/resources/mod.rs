@@ -1,3 +1,11 @@
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Bigunion**
+//! - **Types**
+//! - **Union**
+
 use crate::{ApiError, ClientConfig};
 
 pub mod bigunion;
@@ -6,6 +14,7 @@ pub mod union_;
 pub struct UnionsClient {
     pub config: ClientConfig,
     pub bigunion: BigunionClient,
+    pub types: TypesClient,
     pub union_: UnionClient,
 }
 
@@ -14,6 +23,7 @@ impl UnionsClient {
         Ok(Self {
             config: config.clone(),
             bigunion: BigunionClient::new(config.clone())?,
+            types: TypesClient::new(config.clone())?,
             union_: UnionClient::new(config.clone())?,
         })
     }

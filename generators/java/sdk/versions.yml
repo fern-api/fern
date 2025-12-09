@@ -1,3 +1,214 @@
+- version: 3.23.4
+  changelogEntry:
+    - summary: |
+        OAuth token override is now always enabled for APIs with OAuth client credentials authentication.
+        The `oauth-token-override` config flag has been removed - SDK users can always choose between
+        providing a pre-generated bearer token directly or using the OAuth client credentials flow.
+
+        Generated usage:
+        ```java
+        // Option 1: Direct bearer token (bypass OAuth flow)
+        SeedApiClient client = SeedApiClient.withToken("my-pre-generated-bearer-token")
+            .url("https://api.example.com")
+            .build();
+
+        // Option 2: OAuth client credentials flow (automatic token management)
+        SeedApiClient client = SeedApiClient.withCredentials("your-client-id", "your-client-secret")
+            .url("https://api.example.com")
+            .build();
+        ```
+      type: chore
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 3.23.3
+  changelogEntry:
+    - summary: |
+        Fix OptionalNullable query parameters to correctly apply .orElse(default) for parameters with
+        default values. Previously, only java.util.Optional was recognized for default value handling,
+        causing OptionalNullable parameters to be passed directly without unwrapping. Now both Optional
+        and OptionalNullable types are handled correctly: parameters with defaults use .orElse(default),
+        and parameters without defaults use appropriate presence checks (!isAbsent() for OptionalNullable,
+        isPresent() for Optional).
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 61
+
+- version: 3.23.2
+  changelogEntry:
+    - summary: |
+        Revert OAuth staged builder compatibility changes.
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 61
+
+- version: 3.23.1
+  changelogEntry:
+    - summary: |
+        Fix duplicate case label compilation errors when multiple error types map to the same HTTP
+        status code. The generator now deduplicates errors by status code, keeping the first error
+        declaration for each code. This prevents Java compilation errors in generated switch statements.
+      type: fix
+  createdAt: "2025-12-06"
+  irVersion: 61
+
+- version: 3.23.0
+  changelogEntry:
+    - summary: |
+        Add OAuth token override support with compile-time safe staged builder pattern. When
+        `oauth-token-override: true` is configured, SDK users can choose between the OAuth client
+        credentials flow or providing a pre-generated bearer token directly.
+
+        Configuration example:
+        ```yaml
+        config:
+          oauth-token-override: true
+        ```
+
+        Generated usage:
+        ```java
+        // Option 1: Direct bearer token (bypass OAuth flow)
+        SeedApiClient client = SeedApiClient.withToken("my-pre-generated-bearer-token")
+            .url("https://api.example.com")
+            .build();
+
+        // Option 2: OAuth client credentials flow (automatic token management)
+        SeedApiClient client = SeedApiClient.withCredentials("your-client-id", "your-client-secret")
+            .url("https://api.example.com")
+            .build();
+        ```
+      type: feat
+  createdAt: "2025-12-05"
+  irVersion: 61
+
+- version: 3.22.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred authentication schemes. Inferred auth allows SDKs to automatically
+        fetch tokens from custom (non-OAuth) token endpoints using `scheme: bearer` with `get-token`
+        configuration. The generated `InferredAuthTokenSupplier` class handles token caching and
+        automatic refresh with a 2-minute buffer before expiry.
+
+        Configuration example:
+        ```yaml
+        auth:
+          scheme: bearer
+          get-token:
+            endpoint: POST auth.retrieveToken
+        ```
+
+        Generated usage:
+        ```java
+        SeedApiClient client = SeedApiClient.builder()
+            .apiKey("your-api-key")
+            .build();
+        // Token is automatically fetched and refreshed as needed
+        ```
+      type: feat
+  createdAt: "2025-12-05"
+  irVersion: 61
+
+- version: 3.21.1
+  changelogEntry:
+    - summary: |
+        Fix header parameters with `x-fern-parameter-name` to use the correct HTTP header name (wire value) instead of the SDK parameter name.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 3.21.0
+  changelogEntry:
+    - summary: |
+        Remove unused kotlin-stdlib from Gradle base image to address CVE-2020-29582 in container.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 3.20.2
+  changelogEntry:
+    - summary: |
+        Improve generator logging by removing verbose "java v2 generator" status messages and adding per-file logging. Each generated file is now logged individually, matching the C# generator pattern.
+      type: fix
+  createdAt: "2025-12-02"
+  irVersion: 61
+
+- version: 3.20.1
+  changelogEntry:
+    - summary: |
+        Fix StreamTest generator to use Java 8 compatible constructs. Replaced List.of() and Map.of() (Java 9+) with Arrays.asList() and a createMap() helper method using HashMap.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 61
+
+- version: 3.20.0
+  changelogEntry:
+    - summary: |
+        Update vulnerable dependencies.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 61
+
+- version: 3.19.0
+  changelogEntry:
+    - summary: |
+        Add wire test support for OAuth APIs and multi-URL environments. Wire tests now:
+        - Properly mock OAuth token endpoints with per-test token enqueuing
+        - Use `.clientId()/.clientSecret()` for OAuth-authenticated APIs
+        - Support custom OAuth headers (e.g., `apiKey`) required by token endpoints
+        - Configure `Environment.custom()` builder for multi-URL environment APIs
+        - Handle flexible JSON comparison allowing extra default fields in responses
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.13
+  changelogEntry:
+    - summary: |
+        Skip wire test generation for OAuth and multi-URL environment APIs temporarily.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.12
+  changelogEntry:
+    - summary: |
+        Fix Java dynamic snippets for query parameters with `allow-multiple: true` and optional types. Snippets now generate `List<T>` instead of `List<Optional<T>>`, which matches the SDK builder's convenience overload.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.11
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to preserve schema parameter order for staged builders.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.10
+  changelogEntry:
+    - summary: |
+        Fix Java dynamic snippets when use-local-date-for-dates is enabled. Snippets for date fields now generate LocalDate.parse(...) instead of string literals, matching SDKs configured to use LocalDate for dates. This fixes compilation errors in generated dynamic snippets for Java v2 when the use-local-date-for-dates flag is true.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
+- version: 3.18.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to use OptionalNullable when collapse-optional-nullable is enabled. Wire tests now correctly generate OptionalNullable.absent() and OptionalNullable.of() instead of Optional.empty() and Optional.of() for optional request bodies and method arguments when collapse-optional-nullable: true is configured. This includes support for nested optional/nullable types which collapse into a single `OptionalNullable<T>`.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
+- version: 3.18.8
+  changelogEntry:
+    - summary: |
+        Skip InputStream overload generation for file upload endpoints with inline path parameters. This prevents compilation errors where InputStream methods would reference non-existent request parameters when path parameters are inlined.
+      type: fix
+  createdAt: "2025-11-23"
+  irVersion: 61
+
 - version: 3.18.7
   changelogEntry:
     - summary: |
@@ -215,7 +426,7 @@
 - version: 3.14.3
   changelogEntry:
     - summary: |
-        Skip empty object validation in wire tests for optional request bodies. When request bodies are optional(nullable(T)) where T has only optional properties, wire tests now correctly skip {} validation when Optional.empty() is passed, matching actual SDK behavior.
+        Skip empty object validation in wire tests for optional request bodies. When request bodies are optional(nullable(T)) where T has only optional properties, wire tests now correctly skip `{}` validation when Optional.empty() is passed, matching actual SDK behavior.
       type: fix
   createdAt: "2025-11-11"
   irVersion: 61
@@ -301,7 +512,7 @@
 - version: 3.11.6
   changelogEntry:
     - summary: |
-        Fix path parameter prefixes (e.g., v{version}) being split into separate segments, producing URLs like .../v/1 instead of .../v1.
+        Fix path parameter prefixes (e.g., `v{version}`) being split into separate segments, producing URLs like .../v/1 instead of .../v1.
       type: fix
   createdAt: "2025-11-04"
   irVersion: 61

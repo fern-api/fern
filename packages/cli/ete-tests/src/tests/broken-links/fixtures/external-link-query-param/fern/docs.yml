@@ -1,0 +1,6 @@
+instances:
+  - url: docs.conduit.xyz
+
+navigation:
+  - page: Test
+    path: test.md

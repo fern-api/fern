@@ -179,6 +179,126 @@ client.bigunion.update_many(
 </dl>
 </details>
 
+## Types
+<details><summary><code>client.types.<a href="src/seed/types/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedUnions
+
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.types.get(
+    id="datetime-example",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.types.<a href="src/seed/types/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import datetime
+
+from seed import SeedUnions
+from seed.types import UnionWithTime_Datetime
+
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.types.update(
+    request=UnionWithTime_Datetime(
+        value=datetime.datetime.fromisoformat(
+            "1994-01-01 01:01:01+00:00",
+        )
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UnionWithTime` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Union
 <details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...)</code></summary>
 <dl>
