@@ -77,7 +77,7 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
-    static ImmutableJavaSdkCustomConfig.Builder builder(){
+    static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }
 }

@@ -378,7 +378,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     }
                 }));
 
-        // Always use staged builder pattern when OAuth client credentials are present (token override is always enabled)
+        // Always use staged builder pattern when OAuth client credentials are present (token override is always
+        // enabled)
         boolean useStagedBuilder = hasOAuthClientCredentials && !isExtensible;
 
         TypeSpec.Builder clientBuilder;
