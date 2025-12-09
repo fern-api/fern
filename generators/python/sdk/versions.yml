@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.45.0
+- version: 4.44.1
   changelogEntry:
     - summary: |
         Fix enum-typed headers to use `.value` instead of `str()` for consistent wire format across
