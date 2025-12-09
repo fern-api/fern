@@ -1,0 +1,386 @@
+import { ts } from "ts-morph";
+
+import { Reference } from "../referencing";
+
+/**
+ * The main serialization format protocol. Describes how an object goes from the internal Fern format to generated ASTs.
+ * To add new supported serialization options, conform to this protocol.
+ */
+export interface SerializationFormat {
+    /**
+     * Unique identifier for this format
+     */
+    readonly name: "zurg" | "zod" | "none";
+
+    // ==================== Schema Builders ====================
+
+    /**
+     * Create an object schema with the given properties
+     */
+    object: (properties: SerializationFormat.Property[]) => SerializationFormat.ObjectSchema;
+
+    /**
+     * Create an object schema where all properties are required (no optionals)
+     */
+    objectWithoutOptionalProperties: (properties: SerializationFormat.Property[]) => SerializationFormat.ObjectSchema;
+
+    /**
+     * Create a discriminated union schema
+     */
+    union: (args: SerializationFormat.UnionArgs) => SerializationFormat.ObjectLikeSchema;
+
+    /**
+     * Create an undiscriminated union schema
+     */
+    undiscriminatedUnion: (schemas: SerializationFormat.Schema[]) => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create an array/list schema
+     */
+    list: (itemSchema: SerializationFormat.Schema) => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create a Set schema
+     */
+    set: (itemSchema: SerializationFormat.Schema) => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create a Record/Map schema
+     */
+    record: (args: {
+        keySchema: SerializationFormat.Schema;
+        valueSchema: SerializationFormat.Schema;
+    }) => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create an enum schema
+     */
+    enum: (values: string[]) => SerializationFormat.SchemaWithUtils;
+
+    // ==================== Primitive Schemas ====================
+
+    /**
+     * Create a string schema
+     */
+    string: () => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create a string literal schema
+     */
+    stringLiteral: (literal: string) => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create a boolean literal schema
+     */
+    booleanLiteral: (literal: boolean) => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create a date schema (parses ISO strings to Date objects)
+     */
+    date: () => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create a number schema
+     */
+    number: () => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create a bigint schema
+     */
+    bigint: () => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create a boolean schema
+     */
+    boolean: () => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create an any schema (allows any value)
+     */
+    any: () => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create an unknown schema
+     */
+    unknown: () => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create a never schema (always fails validation)
+     */
+    never: () => SerializationFormat.SchemaWithUtils;
+
+    // ==================== Schema Wrappers ====================
+
+    /**
+     * Create a lazy schema for recursive types
+     */
+    lazy: (schema: SerializationFormat.Schema) => SerializationFormat.SchemaWithUtils;
+
+    /**
+     * Create a lazy object schema for recursive object types
+     */
+    lazyObject: (schema: SerializationFormat.Schema) => SerializationFormat.ObjectSchema;
+
+    // ==================== Type Utilities ====================
+
+    /**
+     * Schema type utilities
+     */
+    Schema: {
+        /**
+         * Get the TypeScript type reference for a schema type
+         */
+        _getReferenceToType: (args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => ts.TypeNode;
+
+        /**
+         * Create a schema from a raw expression
+         */
+        _fromExpression: (
+            expression: ts.Expression,
+            opts?: { isObject: boolean }
+        ) => SerializationFormat.SchemaWithUtils;
+
+        /**
+         * Generate if/else statements for handling MaybeValid results
+         */
+        _visitMaybeValid: (
+            referenceToMaybeValid: ts.Expression,
+            visitor: {
+                valid: (referenceToValue: ts.Expression) => ts.Statement[];
+                invalid: (referenceToErrors: ts.Expression) => ts.Statement[];
+            }
+        ) => ts.Statement[];
+    };
+
+    /**
+     * ObjectSchema type utilities
+     */
+    ObjectSchema: {
+        /**
+         * Get the TypeScript type reference for an object schema type
+         */
+        _getReferenceToType: (args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => ts.TypeNode;
+    };
+
+    /**
+     * MaybeValid result type field names
+     */
+    MaybeValid: {
+        ok: string;
+        Valid: {
+            value: string;
+        };
+        Invalid: {
+            errors: string;
+        };
+    };
+
+    /**
+     * ValidationError field names
+     */
+    ValidationError: {
+        path: string;
+        message: string;
+    };
+
+    // ==================== Runtime Configuration ====================
+
+    /**
+     * Get npm dependencies required by this format's runtime
+     * Returns empty object if no npm dependencies needed
+     */
+    getRuntimeDependencies: () => Record<string, string>;
+
+    /**
+     * Get file patterns for runtime files to copy into generated SDK
+     * Returns null if using npm dependency instead of bundled files
+     */
+    getRuntimeFilePatterns: () => { patterns: string[]; ignore?: string[] } | null;
+}
+
+/**
+ * Namespace containing all types related to SerializationFormat.
+ * Use these types like: SerializationFormat.Schema, SerializationFormat.Property, etc.
+ */
+export namespace SerializationFormat {
+    /**
+     * Options passed to schema parse/json operations
+     */
+    export interface SchemaOptions {
+        unrecognizedObjectKeys?: "fail" | "passthrough" | "strip";
+        allowUnrecognizedUnionMembers?: boolean;
+        allowUnrecognizedEnumValues?: boolean;
+        skipValidation?: boolean;
+        omitUndefined?: boolean;
+        breadcrumbsPrefix?: string[];
+    }
+
+    /**
+     * Base schema interface that all format-specific schemas must implement.
+     * This represents a schema that can generate TypeScript AST expressions.
+     */
+    export interface Schema {
+        /**
+         * Generates the TypeScript AST expression for this schema definition
+         */
+        toExpression: () => ts.Expression;
+
+        /**
+         * Whether this schema represents an optional value
+         */
+        isOptional: boolean;
+
+        /**
+         * Whether this schema represents a nullable value
+         */
+        isNullable: boolean;
+
+        /**
+         * Optional: Generate expression to serialize parsed value to JSON.
+         * If not provided, value passes through unchanged.
+         * Used for types that need transformation during serialization (Set → Array, etc.)
+         */
+        toJsonExpression?: (parsed: ts.Expression) => ts.Expression;
+    }
+
+    /**
+     * Extended schema interface with utility methods for transformations
+     */
+    export interface SchemaWithUtils extends Schema {
+        /**
+         * Generate parse expression: raw JSON -> parsed type
+         */
+        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+
+        /**
+         * Generate json expression: parsed type -> raw JSON
+         */
+        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+
+        /**
+         * Generate parseOrThrow expression
+         */
+        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+
+        /**
+         * Generate jsonOrThrow expression
+         */
+        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
+
+        /**
+         * Wrap schema to allow null values
+         */
+        nullable: () => SchemaWithUtils;
+
+        /**
+         * Wrap schema to allow undefined values
+         */
+        optional: () => SchemaWithUtils;
+
+        /**
+         * Wrap schema to allow both null and undefined values
+         */
+        optionalNullable: () => SchemaWithUtils;
+
+        /**
+         * Apply a transform to the schema
+         */
+        transform: (args: {
+            newShape: ts.TypeNode | undefined;
+            transform: ts.Expression;
+            untransform: ts.Expression;
+        }) => SchemaWithUtils;
+    }
+
+    /**
+     * Additional property to be added during parsing
+     */
+    export interface AdditionalProperty {
+        key: string;
+        getValue: (args: { getReferenceToParsed: () => ts.Expression }) => ts.Expression;
+    }
+
+    /**
+     * Schema interface for object-like types (objects, unions)
+     */
+    export interface ObjectLikeSchema extends SchemaWithUtils {
+        /**
+         * Add computed properties to the parsed output
+         */
+        withParsedProperties: (properties: AdditionalProperty[]) => ObjectLikeSchema;
+    }
+
+    /**
+     * Schema interface for object types with extend/passthrough capabilities
+     */
+    export interface ObjectSchema extends ObjectLikeSchema {
+        /**
+         * Extend this object schema with another schema's properties
+         */
+        extend: (extension: Schema) => ObjectSchema;
+
+        /**
+         * Allow unknown properties to pass through
+         */
+        passthrough: () => ObjectSchema;
+    }
+
+    /**
+     * Property definition for object schemas
+     */
+    export interface Property {
+        key: {
+            /** The property name in the parsed TypeScript type */
+            parsed: string;
+            /** The property name in the raw JSON */
+            raw: string;
+        };
+        value: Schema;
+    }
+
+    /**
+     * A single variant of a discriminated union
+     */
+    export interface SingleUnionType {
+        /** The discriminant value that identifies this variant */
+        discriminantValue: string;
+        /** Schema for the non-discriminant properties */
+        nonDiscriminantProperties: ObjectSchema;
+    }
+
+    /**
+     * Arguments for creating a discriminated union schema
+     */
+    export interface UnionArgs {
+        /** The discriminant property name in the parsed type */
+        parsedDiscriminant: string;
+        /** The discriminant property name in the raw JSON */
+        rawDiscriminant: string;
+        /** The union member types */
+        singleUnionTypes: SingleUnionType[];
+    }
+
+    /**
+     * Runtime dependencies required by the serialization format.
+     * Note this is required for the legacy zurg integration until it can be fully refactored.
+     */
+    export interface RuntimeDependency {
+        name: string;
+        version: string;
+    }
+
+    /**
+     * Configuration for creating a serialization format
+     */
+    export interface Config {
+        /**
+         * Function to get a reference to an exported name from the format's module
+         */
+        getReferenceToExport: (args: { manifest: any; exportedName: string }) => Reference;
+
+        /**
+         * Whether to generate endpoint metadata
+         */
+        generateEndpointMetadata: boolean;
+    }
+}

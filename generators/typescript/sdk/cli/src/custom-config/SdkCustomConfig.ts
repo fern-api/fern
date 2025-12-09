@@ -1,3 +1,5 @@
+import { SerializationFormatType } from "@fern-typescript/commons";
+
 // this is the parsed config shape. to view the allowed options for generators.yml,
 // see SdkCustomConfigSchema.ts
 export interface SdkCustomConfig {
@@ -24,6 +26,7 @@ export interface SdkCustomConfig {
     treatUnknownAsAny: boolean;
     includeContentHeadersOnFileDownloadResponse: boolean;
     noSerdeLayer: boolean;
+    serializationFormat: SerializationFormatType;
     noOptionalProperties: boolean;
     includeApiReference: boolean | undefined;
     tolerateRepublish: boolean;

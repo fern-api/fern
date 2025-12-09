@@ -27,6 +27,7 @@ import {
     NpmPackage,
     PackageId,
     PublicExportsManager,
+    SerializationFormatType,
     SimpleTypescriptProject,
     TypescriptProject
 } from "@fern-typescript/commons";
@@ -124,6 +125,7 @@ export declare namespace SdkGenerator {
         treatUnknownAsAny: boolean;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
+        serializationFormat: SerializationFormatType;
         noOptionalProperties: boolean;
         tolerateRepublish: boolean;
         retainOriginalCasing: boolean;
@@ -289,7 +291,8 @@ export class SdkGenerator {
             fetchSupport: this.config.fetchSupport,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
-            generateEndpointMetadata: this.config.generateEndpointMetadata
+            generateEndpointMetadata: this.config.generateEndpointMetadata,
+            serializationFormat: this.config.serializationFormat
         });
 
         const apiDirectory: ExportedDirectory[] = [
