@@ -1,0 +1,90 @@
+openapi: 3.0.3
+info:
+  title: Webhook OpenAPI Responses Test
+  version: 1.0.0
+  description: Test OpenAPI spec for webhook endpoints with responses
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths: {}
+
+webhooks:
+  paymentsessioncompleted:
+    post:
+      operationId: paymentSessionCompletedWebhook
+      summary: Payment session completed webhook
+      description: Webhook triggered when a payment session is completed
+      tags:
+        - Payment Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentSessionCompletedEvent"
+      responses:
+        "204":
+          description: Webhook received successfully (HTTP 204 No Content)
+        "400":
+          description: Invalid payload or authentication failure
+        "500":
+          description: Server error processing webhook
+
+components:
+  schemas:
+    PaymentSession:
+      type: object
+      required:
+        - id
+        - status
+        - amount
+        - currency
+        - createdAt
+      properties:
+        id:
+          type: string
+          description: Unique payment session identifier
+          example: "ps_abc123"
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+          description: Current status of the payment session
+        amount:
+          type: number
+          format: double
+          description: Payment amount
+        currency:
+          type: string
+          description: Currency code
+        customerId:
+          type: string
+          description: Customer identifier
+        createdAt:
+          type: string
+          format: date-time
+          description: When the session was created
+
+    PaymentSessionCompletedEvent:
+      type: object
+      required:
+        - eventId
+        - eventType
+        - paymentSession
+        - timestamp
+      properties:
+        eventId:
+          type: string
+          description: Unique event identifier
+          example: "evt_xyz789"
+        eventType:
+          type: string
+          enum: [payment_session.completed]
+          description: Type of the event
+        paymentSession:
+          $ref: "#/components/schemas/PaymentSession"
+        timestamp:
+          type: string
+          format: date-time
+          description: When the event occurred
