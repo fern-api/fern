@@ -87,6 +87,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedMultiLineDocsClient } from "@fern/multi-line-docs";
+
+const client = new SeedMultiLineDocsClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.user.createUser(..., {
     headers: {
         'X-Custom-Header': 'custom value'

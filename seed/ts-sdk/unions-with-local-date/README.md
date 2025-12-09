@@ -70,6 +70,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedUnionsClient } from "@fern/unions-with-local-date";
+
+const client = new SeedUnionsClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.bigunion.get(..., {
     headers: {
         'X-Custom-Header': 'custom value'

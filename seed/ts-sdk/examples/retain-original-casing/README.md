@@ -84,6 +84,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedExamplesClient } from "@fern/examples";
+
+const client = new SeedExamplesClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.echo(..., {
     headers: {
         'X-Custom-Header': 'custom value'

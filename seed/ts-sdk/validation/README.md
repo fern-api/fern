@@ -89,6 +89,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedValidationClient } from "@fern/validation";
+
+const client = new SeedValidationClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.create(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -70,6 +70,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedHeaderTokenClient } from "@fern/header-auth";
+
+const client = new SeedHeaderTokenClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.service.getWithBearerToken(..., {
     headers: {
         'X-Custom-Header': 'custom value'
