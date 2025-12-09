@@ -12,7 +12,7 @@ import {
 
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
-import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
+import { ExampleGenerationCache, generateTypeReferenceExample } from "./generateTypeReferenceExample";
 
 /**
  * Checks if a union member is "simple" (primitive, literal, or enum).
@@ -52,6 +52,8 @@ export declare namespace generateTypeDeclarationExample {
         currentDepth: number;
 
         skipOptionalProperties: boolean;
+
+        cache?: ExampleGenerationCache;
     }
 }
 
@@ -61,7 +63,8 @@ export function generateTypeDeclarationExample({
     typeDeclaration,
     maxDepth,
     currentDepth,
-    skipOptionalProperties
+    skipOptionalProperties,
+    cache
 }: generateTypeDeclarationExample.Args): ExampleGenerationResult<ExampleTypeShape> | undefined {
     switch (typeDeclaration.shape.type) {
         case "alias": {
@@ -71,7 +74,8 @@ export function generateTypeDeclarationExample({
                 typeReference: typeDeclaration.shape.aliasOf,
                 maxDepth,
                 currentDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                cache
             });
             if (generatedExample.type === "failure") {
                 return generatedExample;
@@ -121,7 +125,8 @@ export function generateTypeDeclarationExample({
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        cache
                     });
                     if (extendedExample == null) {
                         continue;
@@ -139,7 +144,8 @@ export function generateTypeDeclarationExample({
                 typeDeclarations,
                 currentDepth,
                 maxDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                cache
             });
             if (objectExample.type === "failure") {
                 return objectExample;
@@ -218,7 +224,8 @@ export function generateTypeDeclarationExample({
                     typeDeclarations,
                     currentDepth: currentDepth + 1,
                     maxDepth,
-                    skipOptionalProperties
+                    skipOptionalProperties,
+                    cache
                 });
                 if (variantExample.type === "failure") {
                     ++i;
@@ -247,7 +254,8 @@ export function generateTypeDeclarationExample({
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        cache
                     });
                     if (basePropertyExample.type === "success") {
                         basePropertyExamples[baseProperty.name.wireValue] = basePropertyExample.jsonExample;
@@ -262,7 +270,8 @@ export function generateTypeDeclarationExample({
                     typeDeclarations,
                     currentDepth: currentDepth + 1,
                     maxDepth,
-                    skipOptionalProperties
+                    skipOptionalProperties,
+                    cache
                 });
                 if (propertyExample.type === "failure") {
                     throw new Error(`Failed to generate example for union base property ${property.name.wireValue}`);
@@ -287,7 +296,8 @@ export function generateTypeDeclarationExample({
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        cache
                     });
                     if (extendedExample == null || extendedExample.type === "failure") {
                         throw new Error(
@@ -337,7 +347,8 @@ export function generateTypeDeclarationExample({
                             fieldName,
                             typeDeclaration,
                             typeDeclarations,
-                            skipOptionalProperties
+                            skipOptionalProperties,
+                            cache
                         });
                         if (typeDeclarationExample == null) {
                             return { type: "failure", message: "Failed to generate example for type reference" };
@@ -379,7 +390,8 @@ export function generateTypeDeclarationExample({
                             fieldName,
                             typeReference: value.type,
                             typeDeclarations,
-                            skipOptionalProperties
+                            skipOptionalProperties,
+                            cache
                         });
                         if (singlePropertyExample.type === "failure") {
                             return singlePropertyExample;
@@ -424,7 +436,8 @@ function generateObjectDeclarationExample({
     typeDeclarations,
     maxDepth,
     currentDepth,
-    skipOptionalProperties
+    skipOptionalProperties,
+    cache
 }: {
     fieldName?: string;
     typeDeclaration: TypeDeclaration;
@@ -433,6 +446,7 @@ function generateObjectDeclarationExample({
     maxDepth: number;
     currentDepth: number;
     skipOptionalProperties: boolean;
+    cache?: ExampleGenerationCache;
 }): ExampleGenerationResult<ExampleObjectType> {
     const jsonExample: Record<string, unknown> = {};
     const properties: ExampleObjectProperty[] = [];
@@ -446,7 +460,8 @@ function generateObjectDeclarationExample({
             typeDeclarations,
             currentDepth: currentDepth + 1,
             maxDepth,
-            skipOptionalProperties
+            skipOptionalProperties,
+            cache
         });
         if (
             propertyExample.type === "failure" &&
