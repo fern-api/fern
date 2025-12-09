@@ -1012,12 +1012,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .endControlFlow()
                 .beginControlFlow("else")
                 .addCode(
-                        "$L.callTimeout(this.$L.orElse(60), $T.SECONDS)"
+                        "$L.callTimeout(this.$L.orElse($L), $T.SECONDS)"
                                 + ".connectTimeout(0, $T.SECONDS)"
                                 + ".writeTimeout(0, $T.SECONDS)"
                                 + ".readTimeout(0, $T.SECONDS)",
                         OKHTTP_CLIENT_FIELD.name + "Builder",
                         TIMEOUT_FIELD.name,
+                        getDefaultTimeoutInSeconds(),
                         TimeUnit.class,
                         TimeUnit.class,
                         TimeUnit.class,
@@ -1050,5 +1051,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             return builder.addStatement(returnString + ", " + combinedArgs + ")", args)
                     .build();
         }
+    }
+
+    private int getDefaultTimeoutInSeconds() {
+        return clientGeneratorContext.getCustomConfig().defaultTimeoutInSeconds().orElse(60);
     }
 }
