@@ -48,7 +48,8 @@ def get_json_body_for_inlined_request(
                         )
                         reference = (
                             context.core_utilities.convert_and_respect_annotation_metadata(
-                                object_=AST.Expression(property_name), annotation=type_hint
+                                object_=AST.Expression(property_name),
+                                annotation=type_hint,
                             )
                             if can_tr_be_fern_model(property.raw_type, context.get_types())
                             else AST.Expression(property_name)
