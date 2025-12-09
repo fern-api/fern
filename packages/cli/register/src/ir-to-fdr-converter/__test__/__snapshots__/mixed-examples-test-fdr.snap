@@ -1,0 +1,565 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/user",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "email": "user@example.com",
+              "name": "John Doe",
+              "role": "user",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "email": "user@example.com",
+                "name": "John Doe",
+                "role": "user",
+              },
+            },
+            "responseBody": {
+              "email": "alice@example.com",
+              "id": "user-42",
+              "name": "Alice Johnson",
+              "role": "admin",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "email": "alice@example.com",
+                "id": "user-42",
+                "name": "Alice Johnson",
+                "role": "admin",
+              },
+            },
+            "responseStatusCode": 201,
+          },
+        ],
+        "headers": [],
+        "id": "createUser",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Create User",
+        "originalEndpointId": "endpoint_.createUser",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/user",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "User",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "User",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "User created successfully",
+          "isWildcard": undefined,
+          "statusCode": 201,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "User",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "User created successfully",
+              "isWildcard": undefined,
+              "statusCode": 201,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "User",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/product/productId",
+            "pathParameters": {
+              "productId": "productId",
+            },
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "category": "Electronics",
+              "description": "A useful widget",
+              "id": "prod-456",
+              "name": "Widget",
+              "price": 29.99,
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "category": "Electronics",
+                "description": "A useful widget",
+                "id": "prod-456",
+                "name": "Widget",
+                "price": 29.99,
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getProduct",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": undefined,
+        "name": "Get Product",
+        "originalEndpointId": "endpoint_.getProduct",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/product/",
+            },
+            {
+              "type": "pathParameter",
+              "value": "productId",
+            },
+            {
+              "type": "literal",
+              "value": "",
+            },
+          ],
+          "pathParameters": [
+            {
+              "availability": undefined,
+              "description": undefined,
+              "explode": undefined,
+              "key": "productId",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          ],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Product retrieved",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Product",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Product retrieved",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Product",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "User",
+      "Product",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "Product": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Product",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "price",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "double",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "description",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "nullable",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "category",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "nullable",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "User": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "User",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "email",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": "email",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "role",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "UserRole",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "bio",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "nullable",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "avatar",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "nullable",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "UserRole": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "UserRole",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "user",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "admin",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "moderator",
+          },
+        ],
+      },
+    },
+  },
+}
