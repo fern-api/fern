@@ -74,7 +74,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         this.cachedHeadersField = this.cls.addField({
             origin: this.cls.explicit("_cachedHeaders"),
             access: ast.Access.Private,
-            type: this.Collection.dictionary(this.Primitive.string, this.Primitive.string).asOptional()
+            type: this.Collection.idictionary(this.Primitive.string, this.Primitive.string).asOptional()
         });
 
         this.expiresAtField =
@@ -104,7 +104,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             isAsync: true,
             name: this.names.methods.getAuthHeadersAsync,
             body: this.getAuthHeadersBody(),
-            return_: this.Collection.dictionary(this.Primitive.string, this.Primitive.string)
+            return_: this.Collection.idictionary(this.Primitive.string, this.Primitive.string)
         });
     }
 
@@ -253,12 +253,13 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         });
     }
 
-    private buildRequestArguments(): ast.AstNode[] {
+    private buildRequestArguments(): { name: string; assignment: ast.CodeBlock }[] {
         const arguments_: { name: string; assignment: ast.CodeBlock }[] = [];
 
-        for (const [fieldName, field] of this.credentialFields.entries()) {
+        for (const [, field] of this.credentialFields.entries()) {
+            const origin = field.origin ?? fail("Expected field.origin to be defined for credential field");
             arguments_.push({
-                name: this.model.getPropertyNameFor(field.origin),
+                name: this.model.getPropertyNameFor(origin),
                 assignment: this.csharp.codeblock(field.name)
             });
         }

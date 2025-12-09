@@ -8,7 +8,12 @@ public partial class SeedInferredAuthImplicitNoExpiryClient
 {
     private readonly RawClient _client;
 
-    public SeedInferredAuthImplicitNoExpiryClient(ClientOptions? clientOptions = null)
+    public SeedInferredAuthImplicitNoExpiryClient(
+        string xApiKey,
+        string clientId,
+        string clientSecret,
+        ClientOptions? clientOptions = null
+    )
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
@@ -26,6 +31,17 @@ public partial class SeedInferredAuthImplicitNoExpiryClient
             {
                 clientOptions.Headers[header.Key] = header.Value;
             }
+        }
+        var inferredAuthProvider = new InferredAuthTokenProvider(
+            xApiKey,
+            clientId,
+            clientSecret,
+            new AuthClient(new RawClient(clientOptions.Clone()))
+        );
+        var inferredHeaders = inferredAuthProvider.GetAuthHeadersAsync().Result;
+        foreach (var header in inferredHeaders)
+        {
+            clientOptions.Headers[header.Key] = header.Value;
         }
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
