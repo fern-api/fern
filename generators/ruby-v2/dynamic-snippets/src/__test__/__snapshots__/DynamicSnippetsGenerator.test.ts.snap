@@ -114,30 +114,43 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
 "[
   {
     "severity": "CRITICAL",
-    "path": [],
-    "message": "Expected object with key, value pairs but got: array"
+    "path": [
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "string"
+    ],
+    "message": "Expected string, got number"
   }
 ]"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [],
-    "message": "Expected object with key, value pairs but got: array"
-  }
-]"
+"require "acme"
+
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
+
+client.endpoints.container.get_and_return_list_of_objects(request: [{
+  string: 'one'
+}, {
+  string: 'two'
+}, {
+  string: 'three'
+}]);
+"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [],
-    "message": "Expected object with key, value pairs but got: array"
-  }
-]"
+"require "acme"
+
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
+
+client.endpoints.container.get_and_return_list_of_primitives(request: ['one', 'two', 'three']);
+"
 `;
 
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `

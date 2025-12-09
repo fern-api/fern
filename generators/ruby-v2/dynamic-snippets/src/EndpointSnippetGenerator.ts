@@ -553,7 +553,7 @@ export class EndpointSnippetGenerator {
         );
 
         // Add body fields as keyword arguments
-        if (request.body != null) {
+        if (request.body != null && snippet.requestBody != null) {
             switch (request.body.type) {
                 case "bytes":
                     // Not supported in Ruby snippets yet
@@ -563,22 +563,45 @@ export class EndpointSnippetGenerator {
                     });
                     break;
                 case "typeReference": {
-                    // For typeReference bodies, we need to flatten the body fields into keyword arguments
-                    // The Ruby SDK expects keyword args that get wrapped into the type by the method
-                    const bodyRecord = this.context.getRecord(snippet.requestBody);
-                    if (bodyRecord != null) {
-                        // Get the type definition to understand the field names
-                        const typeRef = request.body.value;
-                        if (typeRef.type === "named") {
-                            const namedType = this.context.resolveNamedType({ typeId: typeRef.value });
-                            if (namedType != null) {
-                                // Convert the body record fields to keyword arguments
+                    const typeRef = request.body.value;
+
+                    // Check if this is a named type that we can resolve
+                    if (typeRef.type === "named") {
+                        const namedType = this.context.resolveNamedType({ typeId: typeRef.value });
+                        if (namedType != null && namedType.type === "object") {
+                            // For objects, flatten the body fields into keyword arguments
+                            const bodyRecord = this.context.getRecord(snippet.requestBody);
+                            if (bodyRecord != null) {
                                 const bodyFields = this.getBodyFieldsAsKeywordArgs({
                                     namedType,
                                     bodyRecord
                                 });
                                 args.push(...bodyFields);
                             }
+                        } else if (namedType != null) {
+                            // For non-object named types (undiscriminated unions, aliases, etc.),
+                            // convert the entire body value and pass as a single 'request' keyword argument
+                            const bodyArgs = this.getBodyArgsForNonObjectType({
+                                namedType,
+                                typeRef,
+                                bodyValue: snippet.requestBody
+                            });
+                            args.push(...bodyArgs);
+                        }
+                    } else {
+                        // For non-named type references (containers, primitives, etc.),
+                        // convert the body value directly
+                        const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
+                            typeReference: typeRef,
+                            value: snippet.requestBody
+                        });
+                        if (!ruby.TypeLiteral.isNop(convertedValue)) {
+                            args.push(
+                                ruby.keywordArgument({
+                                    name: "request",
+                                    value: convertedValue
+                                })
+                            );
                         }
                     }
                     break;
@@ -586,6 +609,119 @@ export class EndpointSnippetGenerator {
                 default:
                     assertNever(request.body);
             }
+        }
+
+        return args;
+    }
+
+    private getBodyArgsForNonObjectType({
+        namedType,
+        typeRef,
+        bodyValue
+    }: {
+        namedType: FernIr.dynamic.NamedType;
+        typeRef: FernIr.dynamic.TypeReference;
+        bodyValue: unknown;
+    }): ruby.KeywordArgument[] {
+        const args: ruby.KeywordArgument[] = [];
+
+        switch (namedType.type) {
+            case "undiscriminatedUnion": {
+                // For undiscriminated unions, the body value should match one of the variants
+                // Try to convert it and extract the fields as keyword arguments
+                const bodyRecord = this.context.getRecord(bodyValue);
+                if (bodyRecord != null) {
+                    // The body is an object - try to find a matching variant and extract its fields
+                    for (const variant of namedType.types) {
+                        if (variant.type === "named") {
+                            const variantType = this.context.resolveNamedType({ typeId: variant.value });
+                            if (variantType != null && variantType.type === "object") {
+                                // Check if the body matches this variant's properties
+                                const variantProps = new Set(variantType.properties.map((p) => p.name.wireValue));
+                                const bodyKeys = Object.keys(bodyRecord);
+                                const allKeysMatch = bodyKeys.every((key) => variantProps.has(key));
+                                if (allKeysMatch && bodyKeys.length > 0) {
+                                    // This variant matches - flatten its fields
+                                    const bodyFields = this.getBodyFieldsAsKeywordArgs({
+                                        namedType: variantType,
+                                        bodyRecord
+                                    });
+                                    args.push(...bodyFields);
+                                    return args;
+                                }
+                            }
+                        }
+                    }
+                }
+                // If we couldn't match a variant or extract fields, convert the whole value
+                const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: typeRef,
+                    value: bodyValue
+                });
+                if (!ruby.TypeLiteral.isNop(convertedValue)) {
+                    args.push(
+                        ruby.keywordArgument({
+                            name: "request",
+                            value: convertedValue
+                        })
+                    );
+                }
+                break;
+            }
+            case "alias": {
+                // For aliases, check if the underlying type is an object we can flatten
+                const aliasedType = namedType.typeReference;
+                if (aliasedType.type === "named") {
+                    const resolvedAliasType = this.context.resolveNamedType({ typeId: aliasedType.value });
+                    if (resolvedAliasType != null && resolvedAliasType.type === "object") {
+                        const bodyRecord = this.context.getRecord(bodyValue);
+                        if (bodyRecord != null) {
+                            const bodyFields = this.getBodyFieldsAsKeywordArgs({
+                                namedType: resolvedAliasType,
+                                bodyRecord
+                            });
+                            args.push(...bodyFields);
+                            return args;
+                        }
+                    }
+                }
+                // For non-object aliases (arrays, primitives, etc.), convert the whole value
+                const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: typeRef,
+                    value: bodyValue
+                });
+                if (!ruby.TypeLiteral.isNop(convertedValue)) {
+                    args.push(
+                        ruby.keywordArgument({
+                            name: "request",
+                            value: convertedValue
+                        })
+                    );
+                }
+                break;
+            }
+            case "discriminatedUnion":
+            case "enum": {
+                // For discriminated unions and enums, convert the whole value
+                const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
+                    typeReference: typeRef,
+                    value: bodyValue
+                });
+                if (!ruby.TypeLiteral.isNop(convertedValue)) {
+                    args.push(
+                        ruby.keywordArgument({
+                            name: "request",
+                            value: convertedValue
+                        })
+                    );
+                }
+                break;
+            }
+            case "object":
+                // This shouldn't happen as objects are handled separately
+                break;
+            default:
+                assertNever(namedType);
         }
 
         return args;
