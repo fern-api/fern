@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { Availability, PrimitiveSchemaValueWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir";
 
 import { wrapPrimitive } from "./convertSchemas";
@@ -19,7 +20,8 @@ export function convertInteger({
     wrapAsNullable,
     example,
     namespace,
-    groupName
+    groupName,
+    defaultIntegerFormat = generatorsYml.DefaultIntegerFormat.Int32
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -38,69 +40,36 @@ export function convertInteger({
     example: number | undefined;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
+    defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
 }): SchemaWithExample {
-    if (format === "int64") {
-        return wrapPrimitive({
-            nameOverride,
-            generatedName,
-            title,
-            primitive: PrimitiveSchemaValueWithExample.int64({
-                default: _default,
-                example
-            }),
-            wrapAsOptional,
-            wrapAsNullable,
-            description,
-            availability,
-            namespace,
-            groupName
-        });
-    } else if (format === "uint32") {
-        return wrapPrimitive({
-            nameOverride,
-            generatedName,
-            title,
-            primitive: PrimitiveSchemaValueWithExample.uint({
-                default: _default,
-                example
-            }),
-            wrapAsOptional,
-            wrapAsNullable,
-            description,
-            availability,
-            namespace,
-            groupName
-        });
-    } else if (format === "uint64") {
-        return wrapPrimitive({
-            nameOverride,
-            generatedName,
-            title,
-            primitive: PrimitiveSchemaValueWithExample.uint64({
-                default: _default,
-                example
-            }),
-            wrapAsOptional,
-            wrapAsNullable,
-            description,
-            availability,
-            namespace,
-            groupName
-        });
-    }
+    const effectiveFormat = format ?? defaultIntegerFormat;
+
+    const primitive: PrimitiveSchemaValueWithExample = (() => {
+        switch (effectiveFormat) {
+            case generatorsYml.DefaultIntegerFormat.Int64:
+                return PrimitiveSchemaValueWithExample.int64({ default: _default, example });
+            case generatorsYml.DefaultIntegerFormat.Uint32:
+                return PrimitiveSchemaValueWithExample.uint({ default: _default, example });
+            case generatorsYml.DefaultIntegerFormat.Uint64:
+                return PrimitiveSchemaValueWithExample.uint64({ default: _default, example });
+            default:
+                return PrimitiveSchemaValueWithExample.int({
+                    default: _default,
+                    minimum,
+                    maximum,
+                    exclusiveMinimum,
+                    exclusiveMaximum,
+                    multipleOf,
+                    example
+                });
+        }
+    })();
+
     return wrapPrimitive({
         nameOverride,
         generatedName,
         title,
-        primitive: PrimitiveSchemaValueWithExample.int({
-            default: _default,
-            minimum,
-            maximum,
-            exclusiveMinimum,
-            exclusiveMaximum,
-            multipleOf,
-            example
-        }),
+        primitive,
         wrapAsOptional,
         wrapAsNullable,
         description,

@@ -35,7 +35,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined,
     removeDiscriminantsFromSchemas: undefined,
-    pathParameterOrder: undefined
+    pathParameterOrder: undefined,
+    defaultIntegerFormat: undefined
 };
 
 export async function convertGeneratorsConfiguration({
