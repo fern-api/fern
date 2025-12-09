@@ -295,16 +295,28 @@ export class DocsDefinitionResolver {
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
         this.taskContext.logger.debug("Replacing referenced markdown files...");
         const refMdStart = performance.now();
+        // Create a cache for snippet content to avoid re-reading the same files multiple times
+        const snippetCache = new Map<AbsoluteFilePath, string>();
+        const cachedMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
+            const cached = snippetCache.get(filepath);
+            if (cached != null) {
+                return cached;
+            }
+            const { content } = matter(await readFile(filepath));
+            snippetCache.set(filepath, content);
+            return content;
+        };
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                context: this.taskContext
+                context: this.taskContext,
+                markdownLoader: cachedMarkdownLoader
             });
         }
         const refMdTime = performance.now() - refMdStart;
-        this.taskContext.logger.debug(`Replaced referenced markdown in ${refMdTime.toFixed(0)}ms`);
+        this.taskContext.logger.debug(`Replaced referenced markdown in ${refMdTime.toFixed(0)}ms (${snippetCache.size} unique snippets cached)`);
 
         // replaces all instances of <Code src="path/to/file.js" /> with the content of the referenced code file
         this.taskContext.logger.debug("Replacing referenced code files...");
