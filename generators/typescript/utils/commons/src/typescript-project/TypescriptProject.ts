@@ -361,14 +361,14 @@ export abstract class TypescriptProject {
             deps["@biomejs/biome"] = "2.3.1";
         }
         if (this.linter === "oxlint") {
-            deps["oxlint"] = "1.25.0";
-            deps["oxlint-tsgolint"] = "0.4.0";
+            deps["oxlint"] = "1.32.0";
+            deps["oxlint-tsgolint"] = "0.8.4";
         }
         if (this.formatter === "prettier") {
             deps["prettier"] = "3.4.2";
         }
         if (this.formatter === "oxfmt") {
-            deps["oxfmt"] = "0.9.0";
+            deps["oxfmt"] = "0.17.0";
         }
         return deps;
     }
