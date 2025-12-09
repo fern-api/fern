@@ -98,6 +98,22 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             );
         }
 
+        const inferredAuth = this.context.getInferredAuth();
+        if (inferredAuth != null) {
+            class_.addField(
+                php.field({
+                    name: "$inferredAuthProvider",
+                    access: "private",
+                    type: php.Type.reference(
+                        php.classReference({
+                            name: "InferredAuthProvider",
+                            namespace: this.context.getCoreNamespace()
+                        })
+                    )
+                })
+            );
+        }
+
         const subpackages = this.getRootSubpackages();
         const constructorParameters = this.getConstructorParameters();
         class_.addConstructor(
@@ -365,10 +381,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     writer.writeLine("$defaultHeaders['Authorization'] = \"Bearer $token\";");
                 }
 
-                const inferredAuthScheme = this.context.getInferredAuth();
-                if (inferredAuthScheme != null) {
-                    writer.writeLine("$defaultHeaders = array_merge($defaultHeaders, $authHeaders);");
-                }
+                // Note: For inferred auth, headers are now fetched dynamically on each request
+                // via the authHeadersProvider callable passed to RawClient
 
                 // Update client options with the updated headers
                 writer.write(
@@ -389,17 +403,27 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 writer.writeLine();
 
                 writer.write("$this->client = ");
+                const rawClientArguments: { name: string; assignment: php.AstNode }[] = [
+                    {
+                        name: "options",
+                        assignment: php.codeblock((writer) => {
+                            const clientOptions = `$this->${this.context.getClientOptionsName()}`;
+                            writer.write(clientOptions);
+                        })
+                    }
+                ];
+
+                const inferredAuthForRawClient = this.context.getInferredAuth();
+                if (inferredAuthForRawClient != null) {
+                    rawClientArguments.push({
+                        name: "authHeadersProvider",
+                        assignment: php.codeblock("fn () => $this->inferredAuthProvider->getAuthHeaders()")
+                    });
+                }
+
                 writer.writeNodeStatement(
                     this.context.rawClient.instantiate({
-                        arguments_: [
-                            {
-                                name: "options",
-                                assignment: php.codeblock((writer) => {
-                                    const clientOptions = `$this->${this.context.getClientOptionsName()}`;
-                                    writer.write(clientOptions);
-                                })
-                            }
-                        ]
+                        arguments_: rawClientArguments
                     })
                 );
 
@@ -879,11 +903,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         writer.dedent();
         writer.writeLine("];");
 
-        writer.write("$inferredAuthProvider = new ");
+        writer.write("$this->inferredAuthProvider = new ");
         writer.writeNode(inferredAuthProviderClassReference);
         writer.writeLine("($authClient, $inferredAuthOptions);");
-
-        writer.writeLine("$authHeaders = $inferredAuthProvider->getAuthHeaders();");
         writer.writeLine();
     }
 

@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.25.1
+  changelogEntry:
+    - summary: |
+        Fix inferred auth token refresh logic. Previously, the InferredAuthProvider's getAuthHeaders() was only called once during client initialization, causing tokens to never refresh even when expired. The RawClient now accepts an optional auth headers provider callable that is invoked on every request, ensuring proper token expiry checking and automatic refresh.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 62
+
 - version: 1.25.0
   changelogEntry:
     - summary: |
