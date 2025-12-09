@@ -96,7 +96,6 @@ class GeneratorCli:
         github_installation_token: Optional[str] = None,
         pagination_enabled: Union[bool, None] = False,
         websocket_enabled: bool = False,
-        oauth_token_override: bool = False,
     ) -> str:
         readme_snippet_builder = ReadmeSnippetBuilder(
             ir=self._ir,
@@ -104,7 +103,6 @@ class GeneratorCli:
             snippets=snippets,
             pagination_enabled=pagination_enabled,
             websocket_enabled=websocket_enabled,
-            oauth_token_override=oauth_token_override,
             generated_root_client=generated_root_client,
             api_error_reference=self._context.core_utilities.get_reference_to_api_error(as_snippet=True),
             endpoint_metadata=self._endpoint_metadata,

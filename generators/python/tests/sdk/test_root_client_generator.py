@@ -92,7 +92,7 @@ def test_generated_root_client_builder_instantiations_list() -> None:
     builder = _create_test_builder()
     generated_root_client = builder.build()
 
-    # Without oauth_token_override, there should be exactly one instantiation
+    # Without OAuth client credentials, there should be exactly one instantiation
     assert len(generated_root_client.sync_instantiations) == 1
     assert len(generated_root_client.async_instantiations) == 1
 
@@ -106,12 +106,12 @@ def test_generated_root_client_builder_instantiations_list() -> None:
     assert snippet_from_property.to_str() == snippet_from_list.to_str()
 
 
-def test_generated_root_client_builder_with_oauth_token_override() -> None:
-    """Test that oauth_token_override adds a second token-based instantiation."""
+def test_generated_root_client_builder_with_oauth_client_credentials() -> None:
+    """Test that OAuth client credentials adds a second token-based instantiation."""
     builder = _create_test_builder(oauth_token_override=True)
     generated_root_client = builder.build()
 
-    # With oauth_token_override, there should be two instantiations
+    # With OAuth client credentials, there should be two instantiations
     assert len(generated_root_client.sync_instantiations) == 2
     assert len(generated_root_client.async_instantiations) == 2
 

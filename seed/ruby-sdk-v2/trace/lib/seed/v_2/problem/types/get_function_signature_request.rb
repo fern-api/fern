@@ -5,9 +5,7 @@ module Seed
     module Problem
       module Types
         class GetFunctionSignatureRequest < Internal::Types::Model
-          field :function_signature, -> {
-            Seed::V2::Problem::Types::FunctionSignature
-          }, optional: false, nullable: false, api_name: "functionSignature"
+          field :function_signature, -> { Seed::V2::Problem::Types::FunctionSignature }, optional: false, nullable: false, api_name: "functionSignature"
         end
       end
     end
