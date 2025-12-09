@@ -424,6 +424,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             );
             if (paginationInfo.type === "custom") {
                 // For custom pagination, use CustomPager.create with a default parser
+                // Note: We don't need the initial _dataWithRawResponse call here since
+                // CustomPager.create will make the first request itself
                 const contextExpr = ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment(
@@ -437,6 +439,19 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     ],
                     true
                 );
+
+                // Create a lambda that extracts items from the response
+                // paginationInfo.getItems expects a variable named "response" of type TResponse
+                // but the parser receives WithRawResponse<TResponse>, so we need to pass response.data
+                const getItemsLambda = this.createLambdaWithResponse({ body: paginationInfo.getItems });
+
+                // Create the items expression that calls the lambda with response.data
+                const itemsExpr = ts.factory.createCallExpression(getItemsLambda, undefined, [
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier("response"),
+                        ts.factory.createIdentifier("data")
+                    )
+                ]);
 
                 // Create a default parser that extracts items but sets hasNextPage to false
                 const parserExpr = ts.factory.createArrowFunction(
@@ -475,21 +490,17 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                     ts.factory.createIdentifier("hasPreviousPage"),
                                     ts.factory.createFalse()
                                 ),
-                                ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier("items"),
-                                    ts.factory.createBinaryExpression(
-                                        paginationInfo.getItems,
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                        ts.factory.createArrayLiteralExpression([], false)
-                                    )
-                                )
+                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("items"), itemsExpr)
                             ],
                             true
                         )
                     )
                 );
 
-                statements.push(
+                // For custom pagination, we skip the initial _dataWithRawResponse call
+                // and just return CustomPager.create directly (it makes the first request)
+                return [
+                    ts.factory.createVariableStatement(undefined, listFn),
                     ts.factory.createReturnStatement(
                         context.coreUtilities.pagination.CustomPager._create({
                             itemType: paginationInfo.itemType,
@@ -499,7 +510,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             parser: parserExpr
                         })
                     )
-                );
+                ];
             } else {
                 statements.push(
                     ts.factory.createReturnStatement(
