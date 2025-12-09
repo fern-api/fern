@@ -9,11 +9,13 @@ import {
 
 /**
  * Python-specific casing options.
- * Uses Python reserved keywords and smart casing for proper name generation.
+ * Uses Python reserved keywords for proper name generation.
+ * Note: smartCasing is disabled to match the behavior of the IR's pre-computed Name values,
+ * which are generated without smartCasing by default.
  */
 const PYTHON_CASING_OPTIONS: CasingOptions = {
     generationLanguage: "python",
-    smartCasing: true
+    smartCasing: false
 };
 
 /**

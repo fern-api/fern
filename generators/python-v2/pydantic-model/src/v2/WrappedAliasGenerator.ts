@@ -10,7 +10,7 @@ import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
 
 const PYTHON_CASING_OPTIONS = {
     generationLanguage: "python" as const,
-    smartCasing: true
+    smartCasing: false
 };
 
 export class WrappedAliasGenerator {

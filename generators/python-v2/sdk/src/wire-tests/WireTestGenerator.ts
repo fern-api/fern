@@ -18,7 +18,7 @@ import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
 const PYTHON_CASING_OPTIONS = {
     generationLanguage: "python" as const,
-    smartCasing: true
+    smartCasing: false
 };
 
 /**

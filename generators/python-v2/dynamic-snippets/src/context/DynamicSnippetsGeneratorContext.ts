@@ -14,7 +14,7 @@ import { FilePropertyMapper } from "./FilePropertyMapper";
 
 const PYTHON_CASING_OPTIONS = {
     generationLanguage: "python" as const,
-    smartCasing: true
+    smartCasing: false
 };
 
 const ALLOWED_RESERVED_METHOD_NAMES = ["list", "set"];

@@ -7,7 +7,7 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 const PYTHON_CASING_OPTIONS = {
     generationLanguage: "python" as const,
-    smartCasing: true
+    smartCasing: false
 };
 
 /**
