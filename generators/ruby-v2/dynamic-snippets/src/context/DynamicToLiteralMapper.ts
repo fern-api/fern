@@ -342,9 +342,10 @@ export class DynamicTypeLiteralMapper {
             const clonedContext = this.context.clone();
             const clonedMapper = new DynamicTypeLiteralMapper({ context: clonedContext });
             const result = clonedMapper.convert({ typeReference, value });
-            // If no errors were added, this type matched
+            // If no errors were added, this type matched - return the already-converted result
+            // to avoid duplicate errors from calling convert() again on the main context
             if (clonedContext.errors.empty()) {
-                return this.convert({ typeReference, value });
+                return result;
             }
         }
         this.context.errors.add({
