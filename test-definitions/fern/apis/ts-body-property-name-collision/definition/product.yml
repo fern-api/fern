@@ -1,0 +1,41 @@
+types:
+  ProductVariantOption:
+    properties:
+      id: integer
+      display_name: string
+      product_id: integer
+
+service:
+  base-path: /products
+  auth: false
+  endpoints:
+    createProductVariantOption:
+      docs: |
+        Creates a product variant option. This endpoint tests the case where
+        a path parameter and body property have the same wire value but the
+        body property has an explicit name to disambiguate.
+      path: "/{product_id}/options"
+      method: POST
+      request:
+        body:
+          properties:
+            product_id:
+              docs: |
+                The unique numerical ID of the product to which the option belongs.
+              name: createProductVariantOptionRequestProductId
+              type: optional<integer>
+            display_name:
+              docs: |
+                The name of the option shown on the storefront.
+              type: optional<string>
+            sort_order:
+              docs: Order in which the option is displayed on the storefront.
+              type: optional<integer>
+        content-type: application/json
+        name: CreateProductVariantOptionRequest
+        path-parameters:
+          product_id:
+            docs: |
+              The ID of the Product to which the resource belongs.
+            type: integer
+      response: ProductVariantOption

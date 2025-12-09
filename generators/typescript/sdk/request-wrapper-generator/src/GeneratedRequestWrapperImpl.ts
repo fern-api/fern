@@ -591,9 +591,13 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getInlinedRequestBodyPropertyKeyFromName(name: NameAndWireValue): RequestWrapperBodyProperty {
+        const hasExplicitName = name.name.originalName !== name.wireValue;
         return {
-            propertyName:
-                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue,
+            propertyName: hasExplicitName
+                ? name.name.camelCase.unsafeName
+                : this.includeSerdeLayer && !this.retainOriginalCasing
+                  ? name.name.camelCase.unsafeName
+                  : name.wireValue,
             safeName: name.name.camelCase.safeName
         };
     }

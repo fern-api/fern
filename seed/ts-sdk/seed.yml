@@ -441,6 +441,15 @@ fixtures:
     - outputFolder: page-index-semantics
       customConfig:
         offsetSemantics: "page-index"
+  ts-body-property-name-collision:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: retain-original-casing
+      customConfig:
+        retainOriginalCasing: true
+    - outputFolder: inline-path-parameters
+      customConfig:
+        inlinePathParameters: true
 scripts:
   - image: fernapi/ts-seed
     commands:
