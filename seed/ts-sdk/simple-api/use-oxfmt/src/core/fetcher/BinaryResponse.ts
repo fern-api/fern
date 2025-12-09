@@ -24,7 +24,7 @@ export function getBinaryResponse(response: Response): BinaryResponse {
         },
         stream: () => response.body,
         arrayBuffer: response.arrayBuffer.bind(response),
-        blob: response.blob.bind(response),
+        blob: response.blob.bind(response)
     };
     if ("bytes" in response && typeof response.bytes === "function") {
         binaryResponse.bytes = response.bytes.bind(response);

@@ -24,8 +24,8 @@ describe("BasicAuth", () => {
             {
                 description: "correctly converts to header",
                 input: { username: "username", password: "password" },
-                expected: "Basic dXNlcm5hbWU6cGFzc3dvcmQ=",
-            },
+                expected: "Basic dXNlcm5hbWU6cGFzc3dvcmQ="
+            }
         ];
 
         toHeaderTests.forEach(({ description, input, expected }) => {
@@ -40,28 +40,28 @@ describe("BasicAuth", () => {
             {
                 description: "correctly parses header",
                 input: "Basic dXNlcm5hbWU6cGFzc3dvcmQ=",
-                expected: { username: "username", password: "password" },
+                expected: { username: "username", password: "password" }
             },
             {
                 description: "handles password with colons",
                 input: "Basic dXNlcjpwYXNzOndvcmQ=",
-                expected: { username: "user", password: "pass:word" },
+                expected: { username: "user", password: "pass:word" }
             },
             {
                 description: "handles empty username and password (just colon)",
                 input: "Basic Og==",
-                expected: { username: "", password: "" },
+                expected: { username: "", password: "" }
             },
             {
                 description: "handles empty username",
                 input: "Basic OnBhc3N3b3Jk",
-                expected: { username: "", password: "password" },
+                expected: { username: "", password: "password" }
             },
             {
                 description: "handles empty password",
                 input: "Basic dXNlcm5hbWU6",
-                expected: { username: "username", password: "" },
-            },
+                expected: { username: "username", password: "" }
+            }
         ];
 
         fromHeaderTests.forEach(({ description, input, expected }) => {
@@ -74,13 +74,13 @@ describe("BasicAuth", () => {
             {
                 description: "throws error for completely empty credentials",
                 input: "Basic ",
-                expectedError: "Invalid basic auth",
+                expectedError: "Invalid basic auth"
             },
             {
                 description: "throws error for credentials without colon",
                 input: "Basic dXNlcm5hbWU=",
-                expectedError: "Invalid basic auth",
-            },
+                expectedError: "Invalid basic auth"
+            }
         ];
 
         errorTests.forEach(({ description, input, expectedError }) => {

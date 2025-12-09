@@ -37,7 +37,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedSimpleApiEnvironment, SeedSimpleApiClient } from "@fern/simple-api";
+import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from "@fern/simple-api";
 
 const client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: "YOUR_TOKEN" });
 await client.user.get("id");

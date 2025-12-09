@@ -1,5 +1,5 @@
 import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
-import type { Mock, MockInstance } from "vitest";
+import { Mock, MockInstance } from "vitest";
 
 describe("requestWithRetries", () => {
     let mockFetch: Mock;
@@ -13,20 +13,20 @@ describe("requestWithRetries", () => {
         Math.random = vi.fn(() => 0.5);
 
         vi.useFakeTimers({
-            toFake: [
-                "setTimeout",
-                "clearTimeout",
-                "setInterval",
-                "clearInterval",
-                "setImmediate",
-                "clearImmediate",
-                "Date",
-                "performance",
-                "requestAnimationFrame",
-                "cancelAnimationFrame",
-                "requestIdleCallback",
-                "cancelIdleCallback",
-            ],
+        	toFake: [
+        		"setTimeout",
+        		"clearTimeout",
+        		"setInterval",
+        		"clearInterval",
+        		"setImmediate",
+        		"clearImmediate",
+        		"Date",
+        		"performance",
+        		"requestAnimationFrame",
+        		"cancelAnimationFrame",
+        		"requestIdleCallback",
+        		"cancelIdleCallback"
+        	]
         });
     });
 
@@ -113,22 +113,22 @@ describe("requestWithRetries", () => {
             headerName: "retry-after",
             headerValue: "5",
             expectedDelayMin: 4000,
-            expectedDelayMax: 6000,
+            expectedDelayMax: 6000
         },
         {
             description: "should respect retry-after header with HTTP date value",
             headerName: "retry-after",
             headerValue: () => new Date(Date.now() + 3000).toUTCString(),
             expectedDelayMin: 2000,
-            expectedDelayMax: 4000,
+            expectedDelayMax: 4000
         },
         {
             description: "should respect x-ratelimit-reset header",
             headerName: "x-ratelimit-reset",
             headerValue: () => Math.floor((Date.now() + 4000) / 1000).toString(),
             expectedDelayMin: 3000,
-            expectedDelayMax: 6000,
-        },
+            expectedDelayMax: 6000
+        }
     ];
 
     retryHeaderTests.forEach(({ description, headerName, headerValue, expectedDelayMin, expectedDelayMax }) => {
@@ -143,8 +143,8 @@ describe("requestWithRetries", () => {
                 .mockResolvedValueOnce(
                     new Response("", {
                         status: 429,
-                        headers: new Headers({ [headerName]: value }),
-                    }),
+                        headers: new Headers({ [headerName]: value })
+                    })
                 )
                 .mockResolvedValueOnce(new Response("", { status: 200 }));
 
@@ -215,8 +215,8 @@ describe("requestWithRetries", () => {
             .mockResolvedValueOnce(
                 new Response("", {
                     status: 429,
-                    headers: new Headers({ "retry-after": "120" }), // 120 seconds = 120000ms > MAX_RETRY_DELAY (60000ms)
-                }),
+                    headers: new Headers({ "retry-after": "120" }) // 120 seconds = 120000ms > MAX_RETRY_DELAY (60000ms)
+                })
             )
             .mockResolvedValueOnce(new Response("", { status: 200 }));
 
