@@ -45,15 +45,15 @@ export function constructCasingsGenerator({
                 camelCase: opts?.casingOverrides?.camel
                     ? generateSafeAndUnsafeString(opts.casingOverrides.camel)
                     : camelCaseResult,
-                pascalCase: opts?.casingOverrides?.pascal
-                    ? generateSafeAndUnsafeString(opts.casingOverrides.pascal)
-                    : pascalCaseResult,
                 snakeCase: opts?.casingOverrides?.snake
                     ? generateSafeAndUnsafeString(opts.casingOverrides.snake)
                     : snakeCaseResult,
                 screamingSnakeCase: opts?.casingOverrides?.["screaming-snake"]
                     ? generateSafeAndUnsafeString(opts.casingOverrides["screaming-snake"])
-                    : screamingSnakeCaseResult
+                    : screamingSnakeCaseResult,
+                pascalCase: opts?.casingOverrides?.pascal
+                    ? generateSafeAndUnsafeString(opts.casingOverrides.pascal)
+                    : pascalCaseResult
             };
         },
         generateNameAndWireValue: ({ name, wireValue, opts }) => ({
