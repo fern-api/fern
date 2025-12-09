@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.43.1
+  changelogEntry:
+    - summary: |
+        Fix file upload conditional check using wire_value instead of snake_case parameter name,
+        which caused mypy "name not defined" errors when the API field name differed from the
+        Python parameter name (e.g., `MyFile` vs `my_file`).
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 61
+
 - version: 4.43.0
   changelogEntry:
     - summary: |
