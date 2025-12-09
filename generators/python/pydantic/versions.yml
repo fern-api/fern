@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.11.0
+  changelogEntry:
+    - summary: |
+        Add `coerce_numbers_to_str` option to `pydantic_config`. When enabled, numeric types (int, float, Decimal)
+        will be coerced to strings during validation. This is useful for APIs that return numeric values as strings.
+      type: feat
+  createdAt: "2025-12-09"
+  irVersion: 61
+
 - version: 1.10.2
   changelogEntry:
     - summary: |
