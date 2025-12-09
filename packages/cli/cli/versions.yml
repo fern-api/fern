@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add `fern overrides compare` command to generate OpenAPI overrides by diffing two specs. This enables a new workflow where you can copy your OpenAPI spec, edit the copy directly, and compile the differences into an overrides file.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-09"
+  version: 3.6.0
+
+- changelogEntry:
+    - summary: |
         Add support for vendor-specific JSON content types in example validation. Content types like `application/vnd.bc.v1+json` are now accepted as valid JSON content types when validating examples against `literal<"application/json">` types.
       type: feat
   irVersion: 63

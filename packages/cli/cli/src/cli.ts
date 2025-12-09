@@ -38,6 +38,7 @@ import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/g
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
+import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
@@ -185,7 +186,8 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDefinitionCommand(cli, cliContext);
     addDocsCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
-    addWriteOverridesCommand(cli, cliContext);
+    addOverridesCommand(cli, cliContext);
+    addWriteOverridesCommand(cli, cliContext); // Deprecated: use `fern overrides write` instead
     addTestCommand(cli, cliContext);
     addUpdateApiSpecCommand(cli, cliContext);
     addSelfUpdateCommand(cli, cliContext);
@@ -1308,9 +1310,55 @@ function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
-function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("overrides", "Commands for managing OpenAPI overrides", (yargs) => {
+        addOverridesCompareCommand(yargs, cliContext);
+        addOverridesWriteCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addOverridesCompareCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "write-overrides",
+        "compare <original> <modified>",
+        "Compare two OpenAPI specs and generate an overrides file from the differences.",
+        (yargs) =>
+            yargs
+                .positional("original", {
+                    type: "string",
+                    description: "Path to the original OpenAPI spec",
+                    demandOption: true
+                })
+                .positional("modified", {
+                    type: "string",
+                    description: "Path to the modified OpenAPI spec",
+                    demandOption: true
+                })
+                .option("output", {
+                    type: "string",
+                    alias: "o",
+                    description: "Path to write the overrides file (defaults to <original>-overrides.yml)"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern overrides compare"
+            });
+            const originalPath = resolve(cwd(), argv.original as string);
+            const modifiedPath = resolve(cwd(), argv.modified as string);
+            const outputPath = argv.output != null ? resolve(cwd(), argv.output) : undefined;
+            await compareOpenAPISpecs({
+                originalPath: AbsoluteFilePath.of(originalPath),
+                modifiedPath: AbsoluteFilePath.of(modifiedPath),
+                outputPath: outputPath != null ? AbsoluteFilePath.of(outputPath) : undefined,
+                cliContext
+            });
+        }
+    );
+}
+
+function addOverridesWriteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write",
         "Generate a basic openapi overrides file.",
         (yargs) => [
             yargs.option("api", {
@@ -1326,7 +1374,43 @@ function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
         ],
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
-                command: "fern generate-overrides"
+                command: "fern overrides write"
+            });
+            await writeOverridesForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api as string,
+                    defaultToAllApiWorkspaces: true
+                }),
+                includeModels: !(argv.excludeModels as boolean),
+                cliContext
+            });
+        }
+    );
+}
+
+/**
+ * @deprecated Use `fern overrides write` instead
+ */
+function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write-overrides",
+        false, // Hidden from help - deprecated in favor of `fern overrides write`
+        (yargs) => [
+            yargs.option("api", {
+                string: true,
+                description: "Only run the command on the provided API"
+            }),
+            yargs.option("exclude-models", {
+                boolean: true,
+                description:
+                    "When generating the initial overrides, also stub the models (in addition to the endpoints)",
+                default: false
+            })
+        ],
+        async (argv) => {
+            cliContext.logger.warn("The 'write-overrides' command is deprecated. Use 'fern overrides write' instead.");
+            await cliContext.instrumentPostHogEvent({
+                command: "fern write-overrides"
             });
             await writeOverridesForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
