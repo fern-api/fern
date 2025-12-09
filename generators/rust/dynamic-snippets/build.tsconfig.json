@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/__test__"],
+  "compilerOptions": {
+    "composite": false
+  },
+  "references": [
+    {
+      "path": "../codegen"
+    },
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../browser-compatible-base"
+    },
+    {
+      "path": "../../../packages/commons/path-utils"
+    }
+  ]
+}

@@ -22,9 +22,10 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "depcheck": "depcheck",
+    "dist": "node build.mjs",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "test": "vitest run --passWithNoTests",
     "test:update": "vitest run -u --passWithNoTests"
