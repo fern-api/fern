@@ -141,8 +141,7 @@ SeedJavaDefaultTimeoutClient client = SeedJavaDefaultTimeoutClient
 
 ### Timeouts
 
-The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
+The SDK defaults to a 120 second timeout. You can configure this with a timeout option at the client or request level.
 ```java
 import com.seed.javaDefaultTimeout.SeedJavaDefaultTimeoutClient;
 import com.seed.javaDefaultTimeout.core.RequestOptions;
