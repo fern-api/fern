@@ -7,6 +7,8 @@ client.nullable_optional.test_deserialization(
   nullable_string: 'nullableString',
   optional_string: 'optionalString',
   optional_nullable_string: 'optionalNullableString',
+  nullable_enum: 'ADMIN',
+  optional_enum: 'active',
   nullable_list: ['nullableList', 'nullableList'],
   nullable_map: {
     nullableMap: 1

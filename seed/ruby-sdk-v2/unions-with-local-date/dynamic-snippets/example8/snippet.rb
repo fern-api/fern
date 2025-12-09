@@ -2,4 +2,6 @@ require "seed"
 
 client = Seed::Client.new(base_url: 'https://api.fern.com');
 
-client.types.update();
+client.types.update(request: {
+  value: 1
+});

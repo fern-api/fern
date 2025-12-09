@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_list_of_primitives();
+client.endpoints.container.get_and_return_list_of_primitives(request: ['string', 'string']);
 ```
 </dd>
 </dl>
@@ -53,7 +53,11 @@ client.endpoints.container.get_and_return_list_of_primitives();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_list_of_objects();
+client.endpoints.container.get_and_return_list_of_objects(request: [{
+  string: 'string'
+}, {
+  string: 'string'
+}]);
 ```
 </dd>
 </dl>
@@ -93,7 +97,7 @@ client.endpoints.container.get_and_return_list_of_objects();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_set_of_primitives();
+client.endpoints.container.get_and_return_set_of_primitives(request: Set.new(['string']));
 ```
 </dd>
 </dl>
@@ -133,7 +137,9 @@ client.endpoints.container.get_and_return_set_of_primitives();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_set_of_objects();
+client.endpoints.container.get_and_return_set_of_objects(request: Set.new([{
+  string: 'string'
+}]));
 ```
 </dd>
 </dl>
@@ -173,7 +179,9 @@ client.endpoints.container.get_and_return_set_of_objects();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_map_prim_to_prim();
+client.endpoints.container.get_and_return_map_prim_to_prim(request: {
+  string: 'string'
+});
 ```
 </dd>
 </dl>
@@ -213,7 +221,11 @@ client.endpoints.container.get_and_return_map_prim_to_prim();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_map_of_prim_to_object();
+client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
+  string: {
+    string: 'string'
+  }
+});
 ```
 </dd>
 </dl>
@@ -253,7 +265,9 @@ client.endpoints.container.get_and_return_map_of_prim_to_object();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_optional();
+client.endpoints.container.get_and_return_optional(request: {
+  string: 'string'
+});
 ```
 </dd>
 </dl>
@@ -407,7 +421,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 <dd>
 
 ```ruby
-client.endpoints.enum.get_and_return_enum();
+client.endpoints.enum.get_and_return_enum(request: 'SUNNY');
 ```
 </dd>
 </dl>
@@ -952,7 +966,45 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_nested_with_required_field_as_list();
+client.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{
+  string: 'string',
+  nested_object: {
+    string: 'string',
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: '2024-01-15T09:30:00Z',
+    date: '2023-01-15',
+    uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    base_64: 'SGVsbG8gd29ybGQh',
+    list: ['list', 'list'],
+    set: Set.new(['set']),
+    map: {
+      1 => 'map'
+    },
+    bigint: '1000000'
+  }
+}, {
+  string: 'string',
+  nested_object: {
+    string: 'string',
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: '2024-01-15T09:30:00Z',
+    date: '2023-01-15',
+    uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    base_64: 'SGVsbG8gd29ybGQh',
+    list: ['list', 'list'],
+    set: Set.new(['set']),
+    map: {
+      1 => 'map'
+    },
+    bigint: '1000000'
+  }
+}]);
 ```
 </dd>
 </dl>
@@ -1375,7 +1427,10 @@ PUT to update with path param
 <dd>
 
 ```ruby
-client.endpoints.params.modify_with_inline_path(param: 'param');
+client.endpoints.params.modify_with_path(
+  param: 'param',
+  request: 'string'
+);
 ```
 </dd>
 </dl>
@@ -1437,7 +1492,10 @@ PUT to update with path param
 <dd>
 
 ```ruby
-client.endpoints.params.modify_with_inline_path(param: 'param');
+client.endpoints.params.modify_with_path(
+  param: 'param',
+  request: 'string'
+);
 ```
 </dd>
 </dl>
@@ -1486,7 +1544,7 @@ client.endpoints.params.modify_with_inline_path(param: 'param');
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_string();
+client.endpoints.primitive.get_and_return_string(request: 'string');
 ```
 </dd>
 </dl>
@@ -1526,7 +1584,7 @@ client.endpoints.primitive.get_and_return_string();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_int();
+client.endpoints.primitive.get_and_return_int(request: 1);
 ```
 </dd>
 </dl>
@@ -1566,7 +1624,7 @@ client.endpoints.primitive.get_and_return_int();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_long();
+client.endpoints.primitive.get_and_return_long(request: 1000000);
 ```
 </dd>
 </dl>
@@ -1606,7 +1664,7 @@ client.endpoints.primitive.get_and_return_long();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_double();
+client.endpoints.primitive.get_and_return_double(request: 1.1);
 ```
 </dd>
 </dl>
@@ -1646,7 +1704,7 @@ client.endpoints.primitive.get_and_return_double();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_bool();
+client.endpoints.primitive.get_and_return_bool(request: true);
 ```
 </dd>
 </dl>
@@ -1686,7 +1744,7 @@ client.endpoints.primitive.get_and_return_bool();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_datetime();
+client.endpoints.primitive.get_and_return_datetime(request: '2024-01-15T09:30:00Z');
 ```
 </dd>
 </dl>
@@ -1726,7 +1784,7 @@ client.endpoints.primitive.get_and_return_datetime();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_date();
+client.endpoints.primitive.get_and_return_date(request: '2023-01-15');
 ```
 </dd>
 </dl>
@@ -1766,7 +1824,7 @@ client.endpoints.primitive.get_and_return_date();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_uuid();
+client.endpoints.primitive.get_and_return_uuid(request: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32');
 ```
 </dd>
 </dl>
@@ -1806,7 +1864,7 @@ client.endpoints.primitive.get_and_return_uuid();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_base_64();
+client.endpoints.primitive.get_and_return_base_64(request: 'SGVsbG8gd29ybGQh');
 ```
 </dd>
 </dl>

@@ -100,6 +100,14 @@ module Seed
 
           Utils.coerce(type, value, strict: strict)
         end
+
+        # Parse JSON string and coerce to the correct union member type
+        #
+        # @param str [String] JSON string to parse
+        # @return [Object] Coerced value matching a union member
+        def load(str)
+          coerce(::JSON.parse(str, symbolize_names: true))
+        end
       end
     end
   end
