@@ -5,6 +5,24 @@
 
 The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Aborting Requests](#aborting-requests)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Logging](#logging)
+  - [Runtime Compatibility](#runtime-compatibility)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -30,38 +48,7 @@ await client.auth.getTokenWithClientCredentials({
 });
 ```
 
-## Authentication
-
-The SDK supports OAuth authentication with two options:
-
-**Option 1: OAuth Client Credentials Flow**
-
-Use this when you want the SDK to automatically handle OAuth token retrieval and refreshing:
-
-```typescript
-import { SeedOauthClientCredentialsMandatoryAuthClient } from "@fern/oauth-client-credentials-mandatory-auth";
-
-const client = new SeedOauthClientCredentialsMandatoryAuthClient({
-    clientId: "YOUR_CLIENT_ID",
-    clientSecret: "YOUR_CLIENT_SECRET",
-    ...
-});
-```
-
-**Option 2: Token Override**
-
-Use this when you already have a valid bearer token and want to skip the OAuth flow:
-
-```typescript
-import { SeedOauthClientCredentialsMandatoryAuthClient } from "@fern/oauth-client-credentials-mandatory-auth";
-
-const client = new SeedOauthClientCredentialsMandatoryAuthClient({
-    token: "my-pre-generated-bearer-token",
-    ...
-});
-```
-
-## Request And Response Types
+## Request and Response Types
 
 The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
 following namespace:

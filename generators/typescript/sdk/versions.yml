@@ -9,18 +9,23 @@
   createdAt: "2025-12-09"
   irVersion: 62
 
+- version: 3.37.3
+  changelogEntry:
+    - summary: Update generator-cli to 0.5.0.
+      type: chore
+  createdAt: "2025-12-08"
+  irVersion: 62
+
 - version: 3.37.2
   changelogEntry:
-    - summary: |
-        Update oxfmt to 0.17.0, oxlint to 1.32.0, and oxlint-tsgolint to 0.8.4.
+    - summary: Update oxfmt to 0.17.0, oxlint to 1.32.0, and oxlint-tsgolint to 0.8.4.
       type: chore
   createdAt: "2025-12-08"
   irVersion: 62
 
 - version: 3.37.1
   changelogEntry:
-    - summary: |
-        Fixed a possible type issue in Fetcher.test.ts.
+    - summary: Fixed a possible type issue in Fetcher.test.ts.
       type: fix
   createdAt: "2025-12-08"
   irVersion: 62
