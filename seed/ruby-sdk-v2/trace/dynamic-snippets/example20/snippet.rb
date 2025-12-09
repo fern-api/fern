@@ -8,24 +8,43 @@ client = Seed::Client.new(
 client.problem.create_problem(
   problem_name: 'problemName',
   problem_description: {
-    boards: []
+    boards: [{}, {}]
   },
-  files: {},
+  files: {
+    JAVA: {
+      solution_file: {
+        filename: 'filename',
+        contents: 'contents'
+      },
+      read_only_files: [{
+        filename: 'filename',
+        contents: 'contents'
+      }, {
+        filename: 'filename',
+        contents: 'contents'
+      }]
+    }
+  },
   input_params: [{
+    variable_type: {},
     name: 'name'
   }, {
+    variable_type: {},
     name: 'name'
   }],
+  output_type: {},
   testcases: [{
     test_case: {
       id: 'id',
-      params: []
-    }
+      params: [{}, {}]
+    },
+    expected_result: {}
   }, {
     test_case: {
       id: 'id',
-      params: []
-    }
+      params: [{}, {}]
+    },
+    expected_result: {}
   }],
   method_name: 'methodName'
 );

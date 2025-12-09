@@ -5,9 +5,7 @@ module Seed
     module Problem
       module Types
         class GetFunctionSignatureResponse < Internal::Types::Model
-          field :function_by_language, -> {
-            Internal::Types::Hash[Seed::Commons::Types::Language, String]
-          }, optional: false, nullable: false, api_name: "functionByLanguage"
+          field :function_by_language, -> { Internal::Types::Hash[Seed::Commons::Types::Language, String] }, optional: false, nullable: false, api_name: "functionByLanguage"
         end
       end
     end
