@@ -1,0 +1,393 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/book",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "author": "F. Scott Fitzgerald",
+              "title": "The Great Gatsby",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "author": "F. Scott Fitzgerald",
+                "title": "The Great Gatsby",
+              },
+            },
+            "responseBody": {
+              "addedDate": "2024-01-15",
+              "author": "F. Scott Fitzgerald",
+              "genre": "Fiction",
+              "id": "book-123",
+              "status": "available",
+              "title": "The Great Gatsby",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "addedDate": "2024-01-15",
+                "author": "F. Scott Fitzgerald",
+                "genre": "Fiction",
+                "id": "book-123",
+                "status": "available",
+                "title": "The Great Gatsby",
+              },
+            },
+            "responseStatusCode": 201,
+          },
+        ],
+        "headers": [],
+        "id": "createBook",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Create Book",
+        "originalEndpointId": "endpoint_.createBook",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/book",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "BookRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "BookRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Book created successfully",
+          "isWildcard": undefined,
+          "statusCode": 201,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "Book",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Book created successfully",
+              "isWildcard": undefined,
+              "statusCode": 201,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Book",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "BookRequest",
+      "Book",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "Book": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Book",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "title",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "author",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "genre",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "nullable",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "status",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "BookStatus",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "addedDate",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "type": "date",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "BookRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "BookRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "title",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "author",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "genre",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "nullable",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "BookStatus": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "BookStatus",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "available",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "checked_out",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "reserved",
+          },
+        ],
+      },
+    },
+  },
+}

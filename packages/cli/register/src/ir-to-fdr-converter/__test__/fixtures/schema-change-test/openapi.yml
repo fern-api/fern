@@ -1,0 +1,73 @@
+openapi: 3.1.0
+info:
+  title: Schema Change Test - AI Examples Don't Update
+  version: 1.0.0
+paths:
+  /book:
+    post:
+      operationId: createBook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookRequest"
+      responses:
+        "201":
+          description: Book created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+              # No examples here - this endpoint gets AI-generated examples
+components:
+  schemas:
+    BookRequest:
+      type: object
+      required:
+        - title
+        - author
+      properties:
+        title:
+          type: string
+          example: "The Great Gatsby"
+        author:
+          type: string
+          example: "F. Scott Fitzgerald"
+        # Note: 'isbn' and 'publishedYear' properties have been REMOVED
+        # The AI override file will still contain these old properties
+        genre:
+          type: string
+          nullable: true
+          example: "Fiction"
+    Book:
+      type: object
+      required:
+        - id
+        - title
+        - author
+      properties:
+        id:
+          type: string
+          example: "book-123"
+        title:
+          type: string
+          example: "The Great Gatsby"
+        author:
+          type: string
+          example: "F. Scott Fitzgerald"
+        # REMOVED: isbn property (was in old schema)
+        # REMOVED: publishedYear property (was in old schema)
+        genre:
+          type: string
+          nullable: true
+          example: "Fiction"
+        status:
+          type: string
+          enum: [available, checked_out, reserved]
+          example: "available"
+        # NEW: addedDate property (wasn't in old schema)
+        addedDate:
+          type: string
+          format: date
+          example: "2024-01-15"

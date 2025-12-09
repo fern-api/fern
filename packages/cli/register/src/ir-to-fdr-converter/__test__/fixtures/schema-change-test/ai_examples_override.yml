@@ -1,0 +1,35 @@
+# This file simulates AI-generated examples that were created BEFORE the schema change
+# It contains properties that NO LONGER EXIST in the current OpenAPI spec:
+# - isbn (removed from both request and response)
+# - publishedYear (removed from both request and response)
+#
+# And it's MISSING new properties that were added:
+# - addedDate (new in response)
+# - status (new in response)
+#
+# This demonstrates the problem: AI examples don't auto-update when schema changes
+
+paths:
+  "/book":
+    post:
+      x-fern-examples:
+        createBook:
+          name: "Creating a new book"
+          description: "Example showing how to create a book with detailed information"
+          request:
+            title: "To Kill a Mockingbird"
+            author: "Harper Lee"
+            isbn: "978-0-06-112008-4" # PROBLEM: This property was removed from schema
+            publishedYear: 1960 # PROBLEM: This property was removed from schema
+            genre: "Historical Fiction"
+          response:
+            status-code: 201
+            body:
+              id: "book-tkm-001"
+              title: "To Kill a Mockingbird"
+              author: "Harper Lee"
+              isbn: "978-0-06-112008-4" # PROBLEM: This property was removed from schema
+              publishedYear: 1960 # PROBLEM: This property was removed from schema
+              genre: "Historical Fiction"
+              # MISSING: status property (new in schema)
+              # MISSING: addedDate property (new in schema)

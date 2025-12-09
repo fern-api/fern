@@ -1,0 +1,5 @@
+instances:
+  - url: https://example-docs.com
+
+experimental:
+  ai-examples: true
