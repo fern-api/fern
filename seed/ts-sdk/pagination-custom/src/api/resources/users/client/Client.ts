@@ -32,11 +32,6 @@ export class UsersClient {
      */
     public async listUsernamesCustom(
         request: SeedPagination.ListUsernamesRequestCustom = {},
-        parser?: core.CustomPagerParser<
-            string,
-            SeedPagination.ListUsernamesRequestCustom,
-            SeedPagination.UsernameCursor
-        >,
         requestOptions?: UsersClient.RequestOptions,
     ): Promise<core.CustomPager<string, SeedPagination.ListUsernamesRequestCustom, SeedPagination.UsernameCursor>> {
         const list = core.HttpResponsePromise.interceptFunction(
@@ -92,13 +87,11 @@ export class UsersClient {
                 sendRequest: list,
                 initialRequest: request,
             },
-            parser:
-                parser ??
-                (async (_request, response) => ({
-                    hasNextPage: false,
-                    hasPreviousPage: false,
-                    items: ((response) => response?.cursor.data ?? [])(response.data),
-                })),
+            parser: async (_request, response) => ({
+                hasNextPage: false,
+                hasPreviousPage: false,
+                items: ((response) => response?.cursor.data ?? [])(response.data),
+            }),
         });
     }
 }

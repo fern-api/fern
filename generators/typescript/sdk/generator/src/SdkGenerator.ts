@@ -160,6 +160,7 @@ export declare namespace SdkGenerator {
         formatter: "prettier" | "biome" | "oxfmt";
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
+        customPagerName: string | undefined;
     }
 }
 
@@ -289,7 +290,8 @@ export class SdkGenerator {
             fetchSupport: this.config.fetchSupport,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
-            generateEndpointMetadata: this.config.generateEndpointMetadata
+            generateEndpointMetadata: this.config.generateEndpointMetadata,
+            customPagerName: this.config.customPagerName
         });
 
         const apiDirectory: ExportedDirectory[] = [

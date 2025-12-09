@@ -51,6 +51,7 @@ export class CoreUtilitiesManager {
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly generateEndpointMetadata: boolean;
+    private readonly customPagerName: string | undefined;
 
     constructor({
         streamType,
@@ -58,7 +59,8 @@ export class CoreUtilitiesManager {
         fetchSupport,
         relativePackagePath = DEFAULT_PACKAGE_PATH,
         relativeTestPath = DEFAULT_TEST_PATH,
-        generateEndpointMetadata
+        generateEndpointMetadata,
+        customPagerName
     }: {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
@@ -66,6 +68,7 @@ export class CoreUtilitiesManager {
         relativePackagePath?: string;
         relativeTestPath?: string;
         generateEndpointMetadata: boolean;
+        customPagerName?: string;
     }) {
         this.streamType = streamType;
         this.formDataSupport = formDataSupport;
@@ -73,6 +76,7 @@ export class CoreUtilitiesManager {
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
         this.generateEndpointMetadata = generateEndpointMetadata;
+        this.customPagerName = customPagerName;
     }
 
     public getCoreUtilities({
@@ -106,7 +110,8 @@ export class CoreUtilitiesManager {
             runtime: new RuntimeImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
             pagination: new PaginationImpl({
                 getReferenceToExport,
-                generateEndpointMetadata: this.generateEndpointMetadata
+                generateEndpointMetadata: this.generateEndpointMetadata,
+                customPagerName: this.customPagerName
             }),
             utils: new UtilsImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
             websocket: new WebsocketImpl({
@@ -230,6 +235,20 @@ export class CoreUtilitiesManager {
                     await writeFile(destPath, content);
                 })
             );
+        }
+
+        // Generate custom pager alias file if customPagerName is set
+        if (
+            this.referencedCoreUtilities["pagination"] != null &&
+            this.customPagerName != null &&
+            this.customPagerName !== "CustomPager"
+        ) {
+            const aliasFilePath = path.join(pathToSrc, "core", "pagination", "CustomPagerAlias.ts");
+            const aliasContent = [
+                `export { CustomPager as ${this.customPagerName}, type CustomPagerParser as ${this.customPagerName}Parser, type CustomPagerContext as ${this.customPagerName}Context } from "./CustomPager";`,
+                ""
+            ].join("\n");
+            await writeFile(aliasFilePath, aliasContent);
         }
     }
 

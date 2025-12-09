@@ -1,5 +1,5 @@
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { Fetcher, GetReferenceOpts, getExampleEndpointCalls, getTextOfTsNode } from "@fern-typescript/commons";
+import { Fetcher, GetReferenceOpts, getExampleEndpointCalls } from "@fern-typescript/commons";
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
@@ -93,19 +93,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     requestParameter,
                     paginationInfo.responseType
                 );
-                // Add optional parser parameter for custom pagination
-                // This allows SDK authors to provide their own pagination logic
-                parameters.push({
-                    name: "parser",
-                    hasQuestionToken: true,
-                    type: getTextOfTsNode(
-                        context.coreUtilities.pagination.CustomPager._getParserType(
-                            paginationInfo.itemType,
-                            requestParameter,
-                            paginationInfo.responseType
-                        )
-                    )
-                });
             } else {
                 mainReturnType = context.coreUtilities.pagination.Page._getReferenceToType(
                     paginationInfo.itemType,
@@ -514,14 +501,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     )
                 );
 
-                // Use the provided parser if available, otherwise use the default parser
-                // This allows SDK authors to provide their own pagination logic
-                const parserExpr = ts.factory.createBinaryExpression(
-                    ts.factory.createIdentifier("parser"),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                    defaultParserExpr
-                );
-
                 // For custom pagination, we skip the initial _dataWithRawResponse call
                 // and just return CustomPager.create directly (it makes the first request)
                 return [
@@ -532,7 +511,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             requestType: requestParameter,
                             responseType: paginationInfo.responseType,
                             context: contextExpr,
-                            parser: parserExpr
+                            parser: defaultParserExpr
                         })
                     )
                 ];

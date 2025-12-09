@@ -57,6 +57,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     useBigInt: z.optional(z.boolean()),
     useBrandedStringAliases: z.optional(z.boolean()),
     offsetSemantics: z.optional(z.enum(["item-index", "page-index"])),
+    customPagerName: z.optional(z.string()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),

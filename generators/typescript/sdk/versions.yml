@@ -9,10 +9,10 @@
         - `AsyncIterable` implementation for ergonomic consumption with `for await...of`
         - Access to raw response data via `response` and `rawResponse` properties
         
-        The generated endpoint accepts an optional `parser` parameter, allowing SDK authors to provide their
-        own `CustomPagerParser` implementation for full control over pagination logic. If no parser is provided,
-        a default parser extracts items from the configured results property and sets `hasNextPage`/`hasPreviousPage`
-        to `false`.
+        The generated endpoint returns a `CustomPager` with a default parser that extracts items from the
+        configured results property and sets `hasNextPage`/`hasPreviousPage` to `false`. SDK authors who need
+        custom pagination logic can create their own wrapper/factory that calls `CustomPager.create()` with
+        their own `CustomPagerParser` implementation.
       type: feat
   createdAt: "2025-12-09"
   irVersion: 62
