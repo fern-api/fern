@@ -132,7 +132,7 @@ allowedFailures:
   - streaming
   - literal
   # enum fixture fails due to union header parameter handling, not enum.py helper
-  - enum
+  - enum:no-custom-config
   - server-sent-events
   - server-sent-event-examples
   - streaming-parameter
