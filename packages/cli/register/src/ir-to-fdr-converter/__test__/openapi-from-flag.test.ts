@@ -1417,4 +1417,68 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-ir.snap");
     });
+
+    it("should handle OpenAPI with segment ID nested objects and examples", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/segment-id-example")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "segment-id-example"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        expect(intermediateRepresentation.types).toBeDefined();
+        expect(Object.keys(intermediateRepresentation.types)).toContain("SegmentId");
+        expect(Object.keys(intermediateRepresentation.types)).toContain("ActionRequest");
+
+        const segmentIdType = Object.values(intermediateRepresentation.types).find(
+            (type) => type.name.name.originalName === "SegmentId"
+        );
+        expect(segmentIdType).toBeDefined();
+
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/segment-id-example-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/segment-id-example-ir.snap");
+    });
 });

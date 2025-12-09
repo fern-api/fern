@@ -1,0 +1,521 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "Production server",
+        "description": "Execute an action with segment targeting",
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "Production server",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {
+              "X-Agent-Id": "support",
+              "X-Organization-Id": "acme",
+            },
+            "name": undefined,
+            "path": "/actions/get-balance",
+            "pathParameters": {
+              "actionReferenceId": "get-balance",
+            },
+            "queryParameters": {},
+            "requestBody": {
+              "instructions": "Use this action when the user asks about their balance",
+              "llmInclusionStatus": "WHEN_RELEVANT",
+              "segmentId": {
+                "agentId": "support",
+                "appId": "my-billing-system",
+                "organizationId": "acme",
+                "referenceId": "premium-users",
+                "type": "SEGMENT",
+              },
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "instructions": "Use this action when the user asks about their balance",
+                "llmInclusionStatus": "WHEN_RELEVANT",
+                "segmentId": {
+                  "agentId": "support",
+                  "appId": "my-billing-system",
+                  "organizationId": "acme",
+                  "referenceId": "premium-users",
+                  "type": "SEGMENT",
+                },
+              },
+            },
+            "responseBody": {
+              "actionId": "action-12345",
+              "result": {},
+              "success": true,
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "actionId": "action-12345",
+                "result": {},
+                "success": true,
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [
+          {
+            "availability": undefined,
+            "description": "Organization identifier",
+            "key": "X-Organization-Id",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Agent identifier",
+            "key": "X-Agent-Id",
+            "type": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "id": "executeAction",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Execute an action",
+        "originalEndpointId": "endpoint_.executeAction",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/actions/",
+            },
+            {
+              "type": "pathParameter",
+              "value": "actionReferenceId",
+            },
+            {
+              "type": "literal",
+              "value": "",
+            },
+          ],
+          "pathParameters": [
+            {
+              "availability": undefined,
+              "description": "The action reference identifier",
+              "explode": undefined,
+              "key": "actionReferenceId",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          ],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "ActionRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "ActionRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Action executed successfully",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "ActionResponse",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Action executed successfully",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "ActionResponse",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "ActionRequest",
+      "SegmentId",
+      "ActionResponse",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "ActionRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ActionRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Instructions for when to use this action",
+            "key": "instructions",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "When to include this action for LLM processing",
+            "key": "llmInclusionStatus",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "ActionRequestLlmInclusionStatus",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "segmentId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "SegmentId",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ActionRequestLlmInclusionStatus": {
+      "availability": undefined,
+      "description": "When to include this action for LLM processing",
+      "displayName": undefined,
+      "name": "ActionRequestLlmInclusionStatus",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "ALWAYS",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "WHEN_RELEVANT",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "NEVER",
+          },
+        ],
+      },
+    },
+    "ActionResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ActionResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Whether the action was executed successfully",
+            "key": "success",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "type": "boolean",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Unique identifier for the executed action",
+            "key": "actionId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Result data from the action execution",
+            "key": "result",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "keyType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "map",
+                "valueType": {
+                  "type": "unknown",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "SegmentId": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "SegmentId",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Reference identifier for the segment",
+            "key": "referenceId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Application identifier",
+            "key": "appId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Organization identifier",
+            "key": "organizationId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Agent identifier",
+            "key": "agentId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Type of the segment identifier",
+            "key": "type",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "SegmentIdType",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "SegmentIdType": {
+      "availability": undefined,
+      "description": "Type of the segment identifier",
+      "displayName": undefined,
+      "name": "SegmentIdType",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "SEGMENT",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "USER",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "GROUP",
+          },
+        ],
+      },
+    },
+  },
+}

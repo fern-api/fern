@@ -1,0 +1,148 @@
+openapi: 3.0.3
+info:
+  title: Segment ID Example API
+  version: 1.0.0
+  description: API for testing segment ID with nested objects and examples
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths:
+  /actions/{actionReferenceId}:
+    post:
+      operationId: executeAction
+      summary: Execute an action
+      description: Execute an action with segment targeting
+      parameters:
+        - name: actionReferenceId
+          in: path
+          required: true
+          description: The action reference identifier
+          schema:
+            type: string
+          example: get-balance
+        - name: X-Organization-Id
+          in: header
+          required: true
+          description: Organization identifier
+          schema:
+            type: string
+          example: acme
+        - name: X-Agent-Id
+          in: header
+          required: true
+          description: Agent identifier
+          schema:
+            type: string
+          example: support
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ActionRequest"
+            example:
+              instructions: Use this action when the user asks about their balance
+              llmInclusionStatus: WHEN_RELEVANT
+              segmentId:
+                referenceId: premium-users
+                appId: my-billing-system
+                organizationId: acme
+                agentId: support
+                type: SEGMENT
+      responses:
+        "200":
+          description: Action executed successfully
+          headers:
+            X-Organization-Id:
+              description: Organization identifier
+              schema:
+                type: string
+              example: acme
+            X-Agent-Id:
+              description: Agent identifier
+              schema:
+                type: string
+              example: support
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionResponse"
+
+components:
+  schemas:
+    ActionRequest:
+      type: object
+      required:
+        - instructions
+        - llmInclusionStatus
+        - segmentId
+      properties:
+        instructions:
+          type: string
+          description: Instructions for when to use this action
+          example: Use this action when the user asks about their balance
+        llmInclusionStatus:
+          type: string
+          enum:
+            - ALWAYS
+            - WHEN_RELEVANT
+            - NEVER
+          description: When to include this action for LLM processing
+          example: WHEN_RELEVANT
+        segmentId:
+          $ref: "#/components/schemas/SegmentId"
+
+    SegmentId:
+      type: object
+      required:
+        - referenceId
+        - appId
+        - organizationId
+        - agentId
+        - type
+      properties:
+        referenceId:
+          type: string
+          description: Reference identifier for the segment
+          example: premium-users
+        appId:
+          type: string
+          description: Application identifier
+          example: my-billing-system
+        organizationId:
+          type: string
+          description: Organization identifier
+          example: acme
+        agentId:
+          type: string
+          description: Agent identifier
+          example: support
+        type:
+          type: string
+          enum:
+            - SEGMENT
+            - USER
+            - GROUP
+          description: Type of the segment identifier
+          example: SEGMENT
+
+    ActionResponse:
+      type: object
+      required:
+        - success
+        - actionId
+      properties:
+        success:
+          type: boolean
+          description: Whether the action was executed successfully
+          example: true
+        actionId:
+          type: string
+          description: Unique identifier for the executed action
+          example: action-12345
+        result:
+          type: object
+          description: Result data from the action execution
+          additionalProperties: true
