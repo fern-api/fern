@@ -134,6 +134,15 @@ class CoreUtilities:
             ),
             exports={"serialize_datetime"},
         )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="enum.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="enum"),
+            ),
+            exports=set(),
+        )
 
         is_v1_on_v2 = self._pydantic_compatibility == PydanticVersionCompatibility.V1_ON_V2
         utilities_path = (
