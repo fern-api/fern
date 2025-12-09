@@ -1391,8 +1391,7 @@ export class SdkGenerator {
                     ir: this.intermediateRepresentation,
                     authScheme,
                     neverThrowErrors: this.config.neverThrowErrors,
-                    includeSerdeLayer: this.config.includeSerdeLayer,
-                    oauthTokenOverride: this.config.oauthTokenOverride
+                    includeSerdeLayer: this.config.includeSerdeLayer
                 });
                 if (!authProvidersGenerator.shouldWriteFile()) {
                     continue;
@@ -1411,8 +1410,7 @@ export class SdkGenerator {
                 ir: this.intermediateRepresentation,
                 authScheme: { type: "any" },
                 neverThrowErrors: this.config.neverThrowErrors,
-                includeSerdeLayer: this.config.includeSerdeLayer,
-                oauthTokenOverride: this.config.oauthTokenOverride
+                includeSerdeLayer: this.config.includeSerdeLayer
             });
             this.withSourceFile({
                 filepath: anyAuthProvidersGenerator.getFilePath(),
@@ -1428,8 +1426,7 @@ export class SdkGenerator {
                     ir: this.intermediateRepresentation,
                     authScheme,
                     neverThrowErrors: this.config.neverThrowErrors,
-                    includeSerdeLayer: this.config.includeSerdeLayer,
-                    oauthTokenOverride: this.config.oauthTokenOverride
+                    includeSerdeLayer: this.config.includeSerdeLayer
                 });
                 if (!authProvidersGenerator.shouldWriteFile()) {
                     continue;
