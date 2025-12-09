@@ -816,11 +816,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         client_secret_param: AST.NamedFunctionParameter
 
         if oauth.client_id_env_var is not None:
-            # Even when there is an environment variable default, model client_id
-            # as a required str at the overload level for clearer typing.
+            # When there is an environment variable default, model client_id
+            # as optional to match os.getenv() return type for mypy compatibility.
             client_id_param = AST.NamedFunctionParameter(
                 name="client_id",
-                type_hint=AST.TypeHint.str_(),
+                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                 initializer=AST.Expression(
                     AST.FunctionInvocation(
                         function_definition=AST.Reference(
@@ -838,11 +838,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
 
         if oauth.client_secret_env_var is not None:
-            # Same idea as client_id: keep the type required in the overload,
-            # even if there is a default from the environment.
+            # Same idea as client_id: use optional type to match os.getenv()
+            # return type for mypy compatibility.
             client_secret_param = AST.NamedFunctionParameter(
                 name="client_secret",
-                type_hint=AST.TypeHint.str_(),
+                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                 initializer=AST.Expression(
                     AST.FunctionInvocation(
                         function_definition=AST.Reference(
