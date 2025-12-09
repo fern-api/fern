@@ -264,7 +264,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     }
                 }));
 
-        // Always use staged builder pattern when OAuth client credentials are present (unless extensible builders are enabled)
+        // Always use staged builder pattern when OAuth client credentials are present (unless extensible builders are
+        // enabled)
         boolean useStagedBuilder = hasOAuthClientCredentials && !isExtensible;
 
         if (isExtensible) {
@@ -378,7 +379,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     }
                 }));
 
-        // Always use staged builder pattern when OAuth client credentials are present (unless extensible builders are enabled)
+        // Always use staged builder pattern when OAuth client credentials are present (unless extensible builders are
+        // enabled)
         boolean useStagedBuilder = hasOAuthClientCredentials && !isExtensible;
 
         TypeSpec.Builder clientBuilder;
