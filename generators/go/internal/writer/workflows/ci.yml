@@ -23,16 +23,6 @@ jobs:
       - name: Set up go
         uses: actions/setup-go@v4
 
-      - name: Log in to Docker Hub
-        if: ${{ env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != '' }}
-        uses: docker/login-action@v3
-        with:
-          username: ${{ env.DOCKER_USERNAME }}
-          password: ${{ env.DOCKER_PASSWORD }}
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
       - name: Setup wiremock server
         run: |
           if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi

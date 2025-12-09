@@ -39,16 +39,6 @@ jobs:
         with:
           php-version: "8.1"
 
-      - name: Log in to Docker Hub
-        if: ${{ env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != '' }}
-        uses: docker/login-action@v3
-        with:
-          username: ${{ env.DOCKER_USERNAME }}
-          password: ${{ env.DOCKER_PASSWORD }}
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
       - name: Install tools
         run: |
           composer install
