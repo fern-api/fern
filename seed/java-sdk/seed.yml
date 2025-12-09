@@ -265,8 +265,7 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: oauth-client-credentials
-    - customConfig:
-        oauth-token-override: true
+    - customConfig: null
       outputFolder: token-override
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
