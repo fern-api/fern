@@ -31,6 +31,10 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
 client.service.create_big_entity(
+  cast_member: {
+    id: 'john.doe',
+    name: 'John Doe'
+  },
   extended_movie: {
     cast: ['John Travolta', 'Samuel L. Jackson', 'Uma Thurman', 'Bruce Willis'],
     id: 'movie-sda231x',
@@ -43,7 +47,8 @@ client.service.create_big_entity(
     revenue: 1000000
   },
   migration: {
-    name: 'Migration 31 Aug'
+    name: 'Migration 31 Aug',
+    status: 'RUNNING'
   }
 );
 "
@@ -109,30 +114,43 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
 "[
   {
     "severity": "CRITICAL",
-    "path": [],
-    "message": "Expected object with key, value pairs but got: array"
+    "path": [
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "string"
+    ],
+    "message": "Expected string, got number"
   }
 ]"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [],
-    "message": "Expected object with key, value pairs but got: array"
-  }
-]"
+"require "acme"
+
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
+
+client.endpoints.container.get_and_return_list_of_objects(request: [{
+  string: 'one'
+}, {
+  string: 'two'
+}, {
+  string: 'three'
+}]);
+"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [],
-    "message": "Expected object with key, value pairs but got: array"
-  }
-]"
+"require "acme"
+
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
+
+client.endpoints.container.get_and_return_list_of_primitives(request: ['one', 'two', 'three']);
+"
 `;
 
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `

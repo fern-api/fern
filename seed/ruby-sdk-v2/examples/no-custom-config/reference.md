@@ -12,7 +12,7 @@
 <dd>
 
 ```ruby
-client.create_type();
+client.echo(request: 'Hello world!\n\nwith\n\tnewlines');
 ```
 </dd>
 </dl>
@@ -52,7 +52,7 @@ client.create_type();
 <dd>
 
 ```ruby
-client.create_type();
+client.echo(request: 'primitive');
 ```
 </dd>
 </dl>
@@ -436,6 +436,10 @@ client.service.get_metadata(
 
 ```ruby
 client.service.create_big_entity(
+  cast_member: {
+    name: 'name',
+    id: 'id'
+  },
   extended_movie: {
     cast: ['cast', 'cast'],
     id: 'id',
@@ -450,8 +454,10 @@ client.service.create_big_entity(
     revenue: 1000000
   },
   entity: {
+    type: 'primitive',
     name: 'name'
   },
+  metadata: {},
   common_metadata: {
     id: 'id',
     data: {
@@ -459,9 +465,12 @@ client.service.create_big_entity(
     },
     json_string: 'jsonString'
   },
+  data: {},
   migration: {
-    name: 'name'
+    name: 'name',
+    status: 'RUNNING'
   },
+  test: {},
   node: {
     name: 'name',
     nodes: [{

@@ -37,6 +37,14 @@ client.search(
   optional_user: {
     name: 'name',
     tags: ['tags', 'tags']
+  },
+  neighbor: {
+    name: 'name',
+    tags: ['tags', 'tags']
+  },
+  neighbor_required: {
+    name: 'name',
+    tags: ['tags', 'tags']
   }
 );
 ```

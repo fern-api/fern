@@ -24,7 +24,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/resource/#{params[:resource_id]}"
+          path: "/resource/#{params[:resource_id]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -63,7 +64,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/resource",
-          query: query_params
+          query: query_params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
