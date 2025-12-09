@@ -76,9 +76,7 @@ const client = new SeedNurseryApiClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.package.test(..., {
     headers: {
         'X-Custom-Header': 'custom value'

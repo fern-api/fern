@@ -96,9 +96,7 @@ const client = new SeedServerSentEventsClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.completions.stream(..., {
     headers: {
         'X-Custom-Header': 'custom value'

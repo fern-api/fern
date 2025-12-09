@@ -74,9 +74,7 @@ const client = new SeedExamplesClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.echo(..., {
     headers: {
         'X-Custom-Header': 'custom value'

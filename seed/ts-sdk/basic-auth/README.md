@@ -63,9 +63,7 @@ const client = new SeedBasicAuthClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.basicAuth.postWithBasicAuth(..., {
     headers: {
         'X-Custom-Header': 'custom value'

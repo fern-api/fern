@@ -68,9 +68,7 @@ const client = new SeedPropertyAccessClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.createUser(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -117,9 +117,7 @@ const client = new SeedApiClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.search(..., {
     headers: {
         'X-Custom-Header': 'custom value'

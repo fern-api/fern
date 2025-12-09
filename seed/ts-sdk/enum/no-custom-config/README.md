@@ -79,9 +79,7 @@ const client = new SeedEnumClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.headers.send(..., {
     headers: {
         'X-Custom-Header': 'custom value'

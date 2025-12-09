@@ -61,9 +61,7 @@ const client = new SeedNoRetriesClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.retries.getUsers(..., {
     headers: {
         'X-Custom-Header': 'custom value'

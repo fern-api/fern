@@ -77,9 +77,7 @@ const client = new SeedIdempotencyHeadersClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.payment.create(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -74,9 +74,7 @@ const client = new SeedMixedCaseClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.service.getResource(..., {
     headers: {
         'X-Custom-Header': 'custom value'

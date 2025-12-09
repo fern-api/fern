@@ -76,9 +76,7 @@ const client = new SeedMultiUrlEnvironmentNoDefaultClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.ec2.bootInstance(..., {
     headers: {
         'X-Custom-Header': 'custom value'

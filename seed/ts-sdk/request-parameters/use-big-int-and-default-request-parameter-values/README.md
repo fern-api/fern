@@ -79,9 +79,7 @@ const client = new SeedRequestParametersClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.user.createUsername(..., {
     headers: {
         'X-Custom-Header': 'custom value'

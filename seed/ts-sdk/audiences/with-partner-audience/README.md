@@ -61,9 +61,7 @@ const client = new SeedAudiencesClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.folderD.service.getDirectThread(..., {
     headers: {
         'X-Custom-Header': 'custom value'

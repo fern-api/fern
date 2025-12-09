@@ -64,9 +64,7 @@ const client = new SeedApiClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.imdb.createMovie(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -65,9 +65,7 @@ const client = new SeedObjectsWithImportsClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.optional.sendOptionalBody(..., {
     headers: {
         'X-Custom-Header': 'custom value'

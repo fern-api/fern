@@ -78,9 +78,7 @@ const client = new SeedExtraPropertiesClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.user.createUser(..., {
     headers: {
         'X-Custom-Header': 'custom value'

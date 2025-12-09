@@ -112,9 +112,7 @@ const client = new SeedQueryParametersClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.user.getUsername(..., {
     headers: {
         'X-Custom-Header': 'custom value'

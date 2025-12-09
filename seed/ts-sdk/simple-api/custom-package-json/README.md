@@ -61,9 +61,7 @@ const client = new SeedSimpleApiClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.user.get(..., {
     headers: {
         'X-Custom-Header': 'custom value'

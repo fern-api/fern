@@ -84,9 +84,7 @@ const client = new SeedExhaustiveClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.endpoints.container.getAndReturnListOfPrimitives(..., {
     headers: {
         'X-Custom-Header': 'custom value'

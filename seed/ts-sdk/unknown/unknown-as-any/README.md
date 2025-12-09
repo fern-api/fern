@@ -63,9 +63,7 @@ const client = new SeedUnknownAsAnyClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.unknown.post(..., {
     headers: {
         'X-Custom-Header': 'custom value'

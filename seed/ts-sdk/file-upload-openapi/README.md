@@ -120,9 +120,7 @@ const client = new SeedApiClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.fileUploadExample.uploadFile(..., {
     headers: {
         'X-Custom-Header': 'custom value'

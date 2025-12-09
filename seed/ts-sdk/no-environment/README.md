@@ -61,9 +61,7 @@ const client = new SeedNoEnvironmentClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.dummy.getDummy(..., {
     headers: {
         'X-Custom-Header': 'custom value'

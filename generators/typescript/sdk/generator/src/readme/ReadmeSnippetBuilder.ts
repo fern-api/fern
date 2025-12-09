@@ -267,6 +267,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
     private buildAdditionalHeadersSnippets(): string[] {
         const headerEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID);
+        const firstEndpoint = headerEndpoints[0];
+        if (firstEndpoint == null) {
+            return [];
+        }
         return [
             this.writeCode(
                 code`
@@ -278,18 +282,13 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         'X-Custom-Header': 'custom value'
     }
 });
-`
-            ),
-            ...headerEndpoints.map((headerEndpoint) =>
-                this.writeCode(
-                    code`
-const response = await ${this.getMethodCall(headerEndpoint)}(..., {
+
+const response = await ${this.getMethodCall(firstEndpoint)}(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
 });
 `
-                )
             )
         ];
     }

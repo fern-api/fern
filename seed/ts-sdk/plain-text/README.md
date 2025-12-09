@@ -61,9 +61,7 @@ const client = new SeedPlainTextClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.service.getText(..., {
     headers: {
         'X-Custom-Header': 'custom value'

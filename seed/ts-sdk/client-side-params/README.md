@@ -83,9 +83,7 @@ const client = new SeedClientSideParamsClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.service.searchResources(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -79,9 +79,7 @@ const client = new SeedObjectClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.getRoot(..., {
     headers: {
         'X-Custom-Header': 'custom value'

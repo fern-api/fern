@@ -61,9 +61,7 @@ const client = new SeedAcceptClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.service.endpoint(..., {
     headers: {
         'X-Custom-Header': 'custom value'

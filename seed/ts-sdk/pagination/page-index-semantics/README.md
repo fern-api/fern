@@ -149,9 +149,7 @@ const client = new SeedPaginationClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.complex.search(..., {
     headers: {
         'X-Custom-Header': 'custom value'

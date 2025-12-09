@@ -61,9 +61,7 @@ const client = new SeedAliasClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.get(..., {
     headers: {
         'X-Custom-Header': 'custom value'

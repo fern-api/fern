@@ -96,9 +96,7 @@ const client = new SeedStreamingClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.dummy.generateStream(..., {
     headers: {
         'X-Custom-Header': 'custom value'

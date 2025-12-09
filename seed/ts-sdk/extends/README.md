@@ -78,9 +78,7 @@ const client = new SeedExtendsClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.extendedInlineRequestBody(..., {
     headers: {
         'X-Custom-Header': 'custom value'

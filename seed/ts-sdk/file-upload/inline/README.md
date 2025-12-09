@@ -122,9 +122,7 @@ const client = new SeedFileUploadClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.service.justFile(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -61,9 +61,7 @@ const client = new SeedResponsePropertyClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.service.getMovie(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -61,9 +61,7 @@ const client = new SeedUnionsClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.bigunion.get(..., {
     headers: {
         'X-Custom-Header': 'custom value'

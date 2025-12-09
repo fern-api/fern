@@ -61,9 +61,7 @@ const client = new SeedFileDownloadClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.service.simple(..., {
     headers: {
         'X-Custom-Header': 'custom value'

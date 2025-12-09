@@ -61,9 +61,7 @@ const client = new SeedUndiscriminatedUnionWithResponsePropertyClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.getUnion(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -61,9 +61,7 @@ const client = new SeedHeaderTokenClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.service.getWithBearerToken(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -61,9 +61,7 @@ const client = new SeedApiWideBasePathClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.service.post(..., {
     headers: {
         'X-Custom-Header': 'custom value'

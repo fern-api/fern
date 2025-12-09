@@ -61,9 +61,7 @@ const client = new SeedErrorPropertyClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.propertyBasedError.throwError(..., {
     headers: {
         'X-Custom-Header': 'custom value'

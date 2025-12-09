@@ -63,9 +63,7 @@ const client = new SeedErrorsClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.simple.fooWithoutEndpointError(..., {
     headers: {
         'X-Custom-Header': 'custom value'

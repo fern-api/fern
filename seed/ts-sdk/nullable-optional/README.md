@@ -87,9 +87,7 @@ const client = new SeedNullableOptionalClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.nullableOptional.createUser(..., {
     headers: {
         'X-Custom-Header': 'custom value'

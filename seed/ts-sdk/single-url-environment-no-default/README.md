@@ -61,9 +61,7 @@ const client = new SeedSingleUrlEnvironmentNoDefaultClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.dummy.getDummy(..., {
     headers: {
         'X-Custom-Header': 'custom value'

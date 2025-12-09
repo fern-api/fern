@@ -74,9 +74,7 @@ const client = new SeedHttpHeadClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.user.head(..., {
     headers: {
         'X-Custom-Header': 'custom value'

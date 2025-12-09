@@ -90,9 +90,7 @@ const client = new SeedNullableClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.nullable.createUser(..., {
     headers: {
         'X-Custom-Header': 'custom value'

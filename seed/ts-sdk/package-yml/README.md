@@ -64,9 +64,7 @@ const client = new SeedPackageYmlClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.echo(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -79,9 +79,7 @@ const client = new SeedValidationClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.create(..., {
     headers: {
         'X-Custom-Header': 'custom value'

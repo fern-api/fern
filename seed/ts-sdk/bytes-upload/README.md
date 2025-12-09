@@ -107,9 +107,7 @@ const client = new SeedBytesUploadClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.service.upload(..., {
     headers: {
         'X-Custom-Header': 'custom value'

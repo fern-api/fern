@@ -78,9 +78,7 @@ const client = new SeedCrossPackageTypeNamesClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.foo.find(..., {
     headers: {
         'X-Custom-Header': 'custom value'

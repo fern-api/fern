@@ -78,9 +78,7 @@ const client = new SeedOauthClientCredentialsWithVariablesClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.auth.getTokenWithClientCredentials(..., {
     headers: {
         'X-Custom-Header': 'custom value'

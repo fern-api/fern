@@ -76,9 +76,7 @@ const client = new SeedMixedFileDirectoryClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.organization.create(..., {
     headers: {
         'X-Custom-Header': 'custom value'

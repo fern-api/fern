@@ -76,9 +76,7 @@ const client = new SeedTraceClient({
         'X-Custom-Header': 'custom value'
     }
 });
-```
 
-```typescript
 const response = await client.admin.updateTestSubmissionStatus(..., {
     headers: {
         'X-Custom-Header': 'custom value'
