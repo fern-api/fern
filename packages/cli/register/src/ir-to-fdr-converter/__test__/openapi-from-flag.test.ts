@@ -1471,8 +1471,9 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             console.log("✓ v2Examples contains human example:", hasV2HumanExamples);
 
             if (hasV2HumanExamples && endpointAny.v2Examples?.userSpecifiedExamples) {
-                const humanExampleKey = Object.keys(endpointAny.v2Examples.userSpecifiedExamples)[0];
-                const humanExample = endpointAny.v2Examples.userSpecifiedExamples[humanExampleKey];
+                const humanExampleKeys = Object.keys(endpointAny.v2Examples.userSpecifiedExamples);
+                const humanExampleKey = humanExampleKeys[0];
+                const humanExample = humanExampleKey ? endpointAny.v2Examples.userSpecifiedExamples[humanExampleKey] : undefined;
 
                 expect(humanExample.response?.body?.value?.id).toBe("550e8400-e29b-41d4-a716-446655440002");
                 expect(humanExample.response?.body?.value?.price).toBe(24.99);
@@ -1737,7 +1738,8 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
                         console.log(`  Human example keys: ${humanExampleKeys.join(", ")}`);
 
                         // Check if human example has our expected values
-                        const humanExample = endpointAny.v2Examples.userSpecifiedExamples[humanExampleKeys[0]];
+                        const firstKey = humanExampleKeys[0];
+                        const humanExample = firstKey ? endpointAny.v2Examples.userSpecifiedExamples[firstKey] : undefined;
                         if (humanExample?.response?.body?.value?.email === "alice@example.com") {
                             console.log("  ✅ Original human example preserved: alice@example.com");
                         }
@@ -1863,7 +1865,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
             console.log("=== SCHEMA CHANGE ISSUE ANALYSIS ===");
 
-            const endpoint = serviceWithEndpoints.endpoints[0];
+            const endpoint = serviceWithEndpoints.endpoints?.[0];
             const endpointAny = endpoint as any;
 
             console.log(`Endpoint: ${endpointAny?.method} ${endpointAny?.fullPath?.head || endpointAny?.path}`);
@@ -1972,7 +1974,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
                 console.log(`Human examples present: ${hasV2HumanExamples}`);
 
                 if (hasV2HumanExamples) {
-                    const humanExample = Object.values(endpointAny.v2Examples.userSpecifiedExamples)[0];
+                    const humanExample = Object.values(endpointAny.v2Examples.userSpecifiedExamples)[0] as any;
                     const responseBody = humanExample?.response?.body?.value;
 
                     console.log("Human example response body:", JSON.stringify(responseBody, null, 2));
