@@ -1,7 +1,18 @@
-import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
+
+export interface ReferencedMarkdownFile {
+    absoluteFilePath: AbsoluteFilePath;
+    relativeFilePath: RelativeFilePath;
+    content: string;
+}
+
+export interface ReplaceReferencedMarkdownResult {
+    markdown: string;
+    referencedFiles: ReferencedMarkdownFile[];
+}
 
 async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
     // strip frontmatter from the referenced markdown
@@ -63,7 +74,9 @@ export async function replaceReferencedMarkdown({
     // allow for custom markdown loader for testing
     markdownLoader = defaultMarkdownLoader,
     // track ancestor files to detect circular references
-    ancestorFiles = new Set<string>()
+    ancestorFiles = new Set<string>(),
+    // collect referenced files for tracking
+    collectedFiles = new Map<AbsoluteFilePath, ReferencedMarkdownFile>()
 }: {
     markdown: string;
     absolutePathToFernFolder: AbsoluteFilePath;
@@ -71,9 +84,10 @@ export async function replaceReferencedMarkdown({
     context: TaskContext;
     markdownLoader?: (filepath: AbsoluteFilePath) => Promise<string>;
     ancestorFiles?: Set<string>;
-}): Promise<string> {
+    collectedFiles?: Map<AbsoluteFilePath, ReferencedMarkdownFile>;
+}): Promise<ReplaceReferencedMarkdownResult> {
     if (!markdown.includes("<Markdown")) {
-        return markdown;
+        return { markdown, referencedFiles: Array.from(collectedFiles.values()) };
     }
 
     const regex = /([ \t]*)<Markdown\s+([^>]+)\/>/g;
@@ -114,7 +128,18 @@ export async function replaceReferencedMarkdown({
         }
 
         try {
-            let replaceString = await markdownLoader(filepath);
+            const rawContent = await markdownLoader(filepath);
+
+            // Store the referenced file with its raw content (before variable substitution)
+            if (!collectedFiles.has(filepath)) {
+                collectedFiles.set(filepath, {
+                    absoluteFilePath: filepath,
+                    relativeFilePath: relative(absolutePathToFernFolder, filepath),
+                    content: rawContent
+                });
+            }
+
+            let replaceString = rawContent;
 
             const { src: _, ...variables } = attributes;
 
@@ -138,14 +163,16 @@ export async function replaceReferencedMarkdown({
             // Recursively replace referenced markdown in the loaded content
             const newAncestorFiles = new Set(ancestorFiles);
             newAncestorFiles.add(filepath);
-            replaceString = await replaceReferencedMarkdown({
+            const result = await replaceReferencedMarkdown({
                 markdown: replaceString,
                 absolutePathToFernFolder,
                 absolutePathToMarkdownFile: filepath,
                 context,
                 markdownLoader,
-                ancestorFiles: newAncestorFiles
+                ancestorFiles: newAncestorFiles,
+                collectedFiles
             });
+            replaceString = result.markdown;
 
             replaceString = replaceString
                 .split("\n")
@@ -158,5 +185,5 @@ export async function replaceReferencedMarkdown({
         }
     }
 
-    return newMarkdown;
+    return { markdown: newMarkdown, referencedFiles: Array.from(collectedFiles.values()) };
 }
