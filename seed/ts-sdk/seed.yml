@@ -441,6 +441,10 @@ fixtures:
     - outputFolder: page-index-semantics
       customConfig:
         offsetSemantics: "page-index"
+  pagination-custom:
+    - outputFolder: .
+      customConfig:
+        customPagerName: "MyPager"
 scripts:
   - image: fernapi/ts-seed
     commands:

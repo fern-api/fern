@@ -33,7 +33,7 @@ export class UsersClient {
     public async listUsernamesCustom(
         request: SeedPagination.ListUsernamesRequestCustom = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.CustomPager<string, SeedPagination.ListUsernamesRequestCustom, SeedPagination.UsernameCursor>> {
+    ): Promise<core.MyPager<string, SeedPagination.ListUsernamesRequestCustom, SeedPagination.UsernameCursor>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsernamesRequestCustom,
@@ -78,11 +78,7 @@ export class UsersClient {
                 return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
-        return core.CustomPager.create<
-            string,
-            SeedPagination.ListUsernamesRequestCustom,
-            SeedPagination.UsernameCursor
-        >({
+        return core.MyPager.create<string, SeedPagination.ListUsernamesRequestCustom, SeedPagination.UsernameCursor>({
             context: {
                 sendRequest: list,
                 initialRequest: request,
