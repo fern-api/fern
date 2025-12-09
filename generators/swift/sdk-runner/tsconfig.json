@@ -1,0 +1,39 @@
+{
+  "extends": "@fern-api/configs/tsconfig/main.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "types": ["node", "vitest/globals"]
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../../packages/commons/test-utils"
+    },
+    {
+      "path": "../model"
+    },
+    {
+      "path": "../dynamic-snippets"
+    },
+    {
+      "path": "../codegen"
+    },
+    {
+      "path": "../base"
+    },
+    {
+      "path": "../../../packages/cli/logger"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../base"
+    }
+  ]
+}
