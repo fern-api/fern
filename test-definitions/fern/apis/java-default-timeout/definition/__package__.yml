@@ -1,0 +1,14 @@
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    getUser:
+      path: /user
+      method: GET
+      response: User
+
+types:
+  User:
+    properties:
+      id: string
+      name: string
