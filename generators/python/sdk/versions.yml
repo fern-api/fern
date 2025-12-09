@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.44.1
+  changelogEntry:
+    - summary: |
+        Remove `oauth-token-override` config flag. OAuth token override is now always enabled for OAuth client
+        credentials flows, allowing users to authenticate with either client_id/client_secret OR a pre-generated
+        bearer token directly via the `token` parameter without any configuration.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 61
+
 - version: 4.44.0
   changelogEntry:
     - summary: |
