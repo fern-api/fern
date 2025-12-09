@@ -291,10 +291,10 @@ export class DocsDefinitionResolver {
         const mapTime = performance.now() - mapStart;
         this.taskContext.logger.debug(`Built markdown file maps in ${mapTime.toFixed(0)}ms`);
 
-        // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
-        // this should happen before we parse image paths, as the referenced markdown files may contain images.
-        this.taskContext.logger.debug("Replacing referenced markdown files...");
-        const refMdStart = performance.now();
+        // Replace all instances of <Markdown src="..."/> and <Code src="..."/> with their content
+        // This should happen before we parse image paths, as the referenced files may contain images.
+        this.taskContext.logger.debug("Replacing referenced markdown and code files...");
+        const refStart = performance.now();
         // Create a cache for snippet content to avoid re-reading the same files multiple times
         const snippetCache = new Map<AbsoluteFilePath, string>();
         const cachedMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
@@ -307,32 +307,26 @@ export class DocsDefinitionResolver {
             return content;
         };
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
+            // First replace markdown includes, then code includes (order matters: snippets can contain code)
+            let newMarkdown = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext,
                 markdownLoader: cachedMarkdownLoader
             });
-        }
-        const refMdTime = performance.now() - refMdStart;
-        this.taskContext.logger.debug(
-            `Replaced referenced markdown in ${refMdTime.toFixed(0)}ms (${snippetCache.size} unique snippets cached)`
-        );
-
-        // replaces all instances of <Code src="path/to/file.js" /> with the content of the referenced code file
-        this.taskContext.logger.debug("Replacing referenced code files...");
-        const refCodeStart = performance.now();
-        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
-                markdown,
+            newMarkdown = await replaceReferencedCode({
+                markdown: newMarkdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
+            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
         }
-        const refCodeTime = performance.now() - refCodeStart;
-        this.taskContext.logger.debug(`Replaced referenced code in ${refCodeTime.toFixed(0)}ms`);
+        const refTime = performance.now() - refStart;
+        this.taskContext.logger.debug(
+            `Replaced referenced content in ${refTime.toFixed(0)}ms (${snippetCache.size} unique snippets cached)`
+        );
 
         this.taskContext.logger.debug("Collecting files from docs config...");
         const collectStart = performance.now();
