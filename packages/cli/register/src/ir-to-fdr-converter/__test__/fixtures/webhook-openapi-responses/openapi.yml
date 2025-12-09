@@ -8,33 +8,7 @@ servers:
   - url: https://api.example.com/v1
     description: Production server
 
-paths:
-  /payment-sessions:
-    post:
-      operationId: createPaymentSession
-      summary: Create a payment session
-      description: Creates a new payment session for processing
-      tags:
-        - Payment Sessions
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreatePaymentSessionRequest"
-      responses:
-        "201":
-          description: Payment session created successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/PaymentSession"
-        "400":
-          description: Invalid request data
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
+paths: {}
 
 webhooks:
   paymentsessioncompleted:
@@ -60,30 +34,6 @@ webhooks:
 
 components:
   schemas:
-    CreatePaymentSessionRequest:
-      type: object
-      required:
-        - amount
-        - currency
-      properties:
-        amount:
-          type: number
-          format: double
-          description: Payment amount
-          example: 99.99
-        currency:
-          type: string
-          description: Currency code (ISO 4217)
-          example: "USD"
-        customerId:
-          type: string
-          description: Optional customer identifier
-          example: "cust_123"
-        metadata:
-          type: object
-          description: Additional metadata
-          additionalProperties: true
-
     PaymentSession:
       type: object
       required:
@@ -138,22 +88,3 @@ components:
           type: string
           format: date-time
           description: When the event occurred
-
-    Error:
-      type: object
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: string
-          description: Error code
-          example: "INVALID_REQUEST"
-        message:
-          type: string
-          description: Human-readable error message
-          example: "The request payload is invalid"
-        details:
-          type: object
-          description: Additional error details
-          additionalProperties: true
