@@ -44,5 +44,8 @@
     "lodash-es": "^4.17.21",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
+  },
+  "dependencies": {
+    "@fern-api/casings-generator": "workspace:^"
   }
 }
