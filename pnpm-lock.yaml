@@ -1170,9 +1170,6 @@ importers:
       '@fern-fern/ir-sdk':
         specifier: ^61.7.0
         version: 61.7.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
       zod:
         specifier: ^3.22.4
         version: 3.25.76
@@ -1180,9 +1177,6 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
