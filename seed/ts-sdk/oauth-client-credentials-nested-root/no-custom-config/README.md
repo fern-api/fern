@@ -30,6 +30,37 @@ await client.auth.getToken({
 });
 ```
 
+## Authentication
+
+The SDK supports OAuth authentication with two options:
+
+**Option 1: OAuth Client Credentials Flow**
+
+Use this when you want the SDK to automatically handle OAuth token retrieval and refreshing:
+
+```typescript
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials-nested-root";
+
+const client = new SeedOauthClientCredentialsClient({
+    clientId: "YOUR_CLIENT_ID",
+    clientSecret: "YOUR_CLIENT_SECRET",
+    ...
+});
+```
+
+**Option 2: Token Override**
+
+Use this when you already have a valid bearer token and want to skip the OAuth flow:
+
+```typescript
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials-nested-root";
+
+const client = new SeedOauthClientCredentialsClient({
+    token: "my-pre-generated-bearer-token",
+    ...
+});
+```
+
 ## Request And Response Types
 
 The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
