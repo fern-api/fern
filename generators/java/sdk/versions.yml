@@ -9,9 +9,6 @@
         config:
           default-timeout-in-seconds: 120
         ```
-
-        The configured value will be used as the default timeout for all HTTP requests and will be
-        reflected in the generated README documentation.
       type: feat
   createdAt: "2025-12-09"
   irVersion: 61

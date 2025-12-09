@@ -1054,6 +1054,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     }
 
     private int getDefaultTimeoutInSeconds() {
-        return clientGeneratorContext.getCustomConfig().defaultTimeoutInSeconds().orElse(60);
+        return clientGeneratorContext
+                .getCustomConfig()
+                .defaultTimeoutInSeconds()
+                .orElse(60);
     }
 }
