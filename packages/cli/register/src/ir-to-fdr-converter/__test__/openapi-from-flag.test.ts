@@ -609,4 +609,102 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/x-code-samples-override-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/x-code-samples-override-ir.snap");
     });
+
+    it("should prioritize property-level examples over referenced schema examples", async () => {
+        // Test that property-level examples take precedence over schema-level examples
+        // This validates the fix for https://github.com/fern-api/fern/issues/7932
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/property-level-examples")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "property-level-examples"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that Company type exists with logo property
+        expect(intermediateRepresentation.types).toBeDefined();
+        const companyType = Object.values(intermediateRepresentation.types).find(
+            (type) => type.name.name.originalName === "Company"
+        );
+        expect(companyType).toBeDefined();
+
+        // Validate that logo property has property-level examples, not File schema examples
+        if (companyType && "shape" in companyType && companyType.shape.type === "object") {
+            const objectShape = companyType.shape as { properties?: Array<{ name: { name: { originalName: string } }; v2Examples?: { userSpecifiedExamples?: Record<string, { url?: string }> } }> };
+            const logoProperty = objectShape.properties?.find(
+                (prop) => prop.name.name.originalName === "logo"
+            );
+            expect(logoProperty).toBeDefined();
+
+            // Verify property-level examples are used (logo.png, not invoice.pdf)
+            const examples = logoProperty?.v2Examples?.userSpecifiedExamples;
+            expect(examples).toBeDefined();
+            
+            if (examples) {
+                const exampleValues = Object.values(examples);
+                expect(exampleValues.length).toBeGreaterThan(0);
+                
+                // Should contain property-level example URL (logo.png)
+                const hasLogoExample = exampleValues.some(
+                    (ex) => ex.url && ex.url.includes("logo.png")
+                );
+                expect(hasLogoExample).toBe(true);
+                
+                // Should NOT contain File schema example URL (invoice.pdf)
+                const hasInvoiceExample = exampleValues.some(
+                    (ex) => ex.url && ex.url.includes("invoice.pdf")
+                );
+                expect(hasInvoiceExample).toBe(false);
+            }
+        }
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/property-level-examples-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/property-level-examples-ir.snap");
+    });
 });
