@@ -160,7 +160,6 @@ export declare namespace SdkGenerator {
         formatter: "prettier" | "biome" | "oxfmt";
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
-        oauthTokenOverride: boolean;
     }
 }
 
@@ -378,8 +377,7 @@ export class SdkGenerator {
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
-            baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
-            oauthTokenOverride: config.oauthTokenOverride
+            baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
@@ -473,14 +471,12 @@ export class SdkGenerator {
             useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming,
-            offsetSemantics: config.offsetSemantics,
-            oauthTokenOverride: config.oauthTokenOverride
+            offsetSemantics: config.offsetSemantics
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
-            omitFernHeaders: config.omitFernHeaders,
-            oauthTokenOverride: config.oauthTokenOverride
+            omitFernHeaders: config.omitFernHeaders
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
@@ -528,8 +524,7 @@ export class SdkGenerator {
                 endpointSnippets: this.endpointSnippets,
                 fileResponseType: this.config.fileResponseType,
                 fetchSupport: this.config.fetchSupport,
-                generateSubpackageExports: this.config.generateSubpackageExports,
-                oauthTokenOverride: this.config.oauthTokenOverride
+                generateSubpackageExports: this.config.generateSubpackageExports
             }),
             ir: intermediateRepresentation
         });
