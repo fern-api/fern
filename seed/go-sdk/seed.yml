@@ -223,6 +223,9 @@ fixtures:
   nullable-request-body:
     - outputFolder: dynamic-snippets-disabled
       disableDynamicSnippetTests: true
+  oauth-client-credentials-mandatory-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
   pagination-custom:
     - outputFolder: .
       customConfig:

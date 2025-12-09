@@ -269,6 +269,9 @@ fixtures:
     - outputFolder: token-override
       customConfig:
         oauthTokenOverride: true  
+  oauth-client-credentials-mandatory-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
   oauth-client-credentials-environment-variables:
     - outputFolder: no-custom-config
       customConfig: null

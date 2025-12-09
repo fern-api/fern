@@ -268,6 +268,9 @@ fixtures:
     - customConfig:
         oauth-token-override: true
       outputFolder: token-override
+  oauth-client-credentials-mandatory-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
   header-auth:
     - customConfig:
         enable-wire-tests: true
@@ -319,6 +322,7 @@ allowedFailures:
   - oauth-client-credentials-custom
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-mandatory-auth:no-custom-config
   - oauth-client-credentials-nested-root
   - oauth-client-credentials-with-variables
   - request-parameters
