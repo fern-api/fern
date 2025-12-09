@@ -158,7 +158,7 @@
         "simple-api:no-scripts",
         "inferred-auth-implicit",
         "multiple-request-bodies",
-        "pagination-custom",
+        "pagination-custom:.",
         "imdb:omit-undefined",
         "websocket-inferred-auth:websockets",
         "any-auth:no-custom-config",
