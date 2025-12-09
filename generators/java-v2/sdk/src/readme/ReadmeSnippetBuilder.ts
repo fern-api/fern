@@ -134,8 +134,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] = this.getOptionalNullableDocumentation();
         }
 
-        // Check if OAuth token override is enabled with OAuth client credentials
-        if (customConfig != null && customConfig["oauth-token-override"] === true && this.hasOAuthClientCredentials()) {
+        // Always show OAuth token override documentation when OAuth client credentials are present
+        if (this.hasOAuthClientCredentials()) {
             const oauthDoc = this.getOAuthTokenOverrideDocumentation();
             // Append to existing Usage addendum or create new one
             if (addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage]) {

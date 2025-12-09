@@ -1,3 +1,26 @@
+- version: 3.23.4
+  changelogEntry:
+    - summary: |
+        OAuth token override is now always enabled for APIs with OAuth client credentials authentication.
+        The `oauth-token-override` config flag has been removed - SDK users can always choose between
+        providing a pre-generated bearer token directly or using the OAuth client credentials flow.
+
+        Generated usage:
+        ```java
+        // Option 1: Direct bearer token (bypass OAuth flow)
+        SeedApiClient client = SeedApiClient.withToken("my-pre-generated-bearer-token")
+            .url("https://api.example.com")
+            .build();
+
+        // Option 2: OAuth client credentials flow (automatic token management)
+        SeedApiClient client = SeedApiClient.withCredentials("your-client-id", "your-client-secret")
+            .url("https://api.example.com")
+            .build();
+        ```
+      type: chore
+  createdAt: "2025-12-09"
+  irVersion: 61
+
 - version: 3.23.3
   changelogEntry:
     - summary: |

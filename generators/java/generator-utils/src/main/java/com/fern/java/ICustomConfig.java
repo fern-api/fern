@@ -114,12 +114,6 @@ public interface ICustomConfig {
     Optional<String> customPagerName();
 
     @Value.Default
-    @JsonProperty("oauth-token-override")
-    default Boolean oauthTokenOverride() {
-        return false;
-    }
-
-    @Value.Default
     @JsonProperty("package-layout")
     default PackageLayout packageLayout() {
         return PackageLayout.NESTED;
