@@ -22,9 +22,10 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "depcheck": "depcheck",
+    "dist": "node build.mjs",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "test": "vitest run --passWithNoTests",
     "test:update": "vitest run -u --passWithNoTests"
@@ -41,6 +42,8 @@
     "@fern-api/path-utils": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
+    "esbuild-plugin-polyfill-node": "^0.3.0",
+    "tsup": "^8.5.0",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }
