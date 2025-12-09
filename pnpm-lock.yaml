@@ -293,15 +293,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      esbuild-plugin-polyfill-node:
-        specifier: ^0.3.0
-        version: 0.3.0(esbuild@0.25.12)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -537,12 +531,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      esbuild-plugin-polyfill-node:
-        specifier: ^0.3.0
-        version: 0.3.0(esbuild@0.25.12)
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -758,15 +746,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      esbuild-plugin-polyfill-node:
-        specifier: ^0.3.0
-        version: 0.3.0(esbuild@0.25.12)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -984,15 +966,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      esbuild-plugin-polyfill-node:
-        specifier: ^0.3.0
-        version: 0.3.0(esbuild@0.25.12)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -1270,15 +1246,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      esbuild-plugin-polyfill-node:
-        specifier: ^0.3.0
-        version: 0.3.0(esbuild@0.25.12)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -1538,15 +1508,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      esbuild-plugin-polyfill-node:
-        specifier: ^0.3.0
-        version: 0.3.0(esbuild@0.25.12)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -1924,12 +1888,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      esbuild-plugin-polyfill-node:
-        specifier: ^0.3.0
-        version: 0.3.0(esbuild@0.25.12)
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2145,15 +2103,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      esbuild-plugin-polyfill-node:
-        specifier: ^0.3.0
-        version: 0.3.0(esbuild@0.25.12)
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.2)(yaml@2.3.3)
       typescript:
         specifier: 5.9.2
         version: 5.9.2
@@ -2495,12 +2447,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      esbuild-plugin-polyfill-node:
-        specifier: ^0.3.0
-        version: 0.3.0(esbuild@0.25.12)
-      tsup:
-        specifier: ^8.5.0
-        version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -7773,6 +7719,9 @@ importers:
 
   packages/configs:
     devDependencies:
+      esbuild-plugin-polyfill-node:
+        specifier: ^0.3.0
+        version: 0.3.0(esbuild@0.25.12)
       tsup:
         specifier: ^8.5.0
         version: 8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3)
@@ -24347,34 +24296,6 @@ snapshots:
   tslib@2.6.3: {}
 
   tslib@2.8.1: {}
-
-  tsup@8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.2)(yaml@2.3.3):
-    dependencies:
-      bundle-require: 5.1.0(esbuild@0.25.12)
-      cac: 6.7.14
-      chokidar: 4.0.3
-      consola: 3.4.2
-      debug: 4.4.3
-      esbuild: 0.25.12
-      fix-dts-default-cjs-exports: 1.0.1
-      joycon: 3.1.1
-      picocolors: 1.1.1
-      postcss-load-config: 6.0.1(postcss@8.5.6)(tsx@4.20.6)(yaml@2.3.3)
-      resolve-from: 5.0.0
-      rollup: 4.53.2
-      source-map: 0.8.0-beta.0
-      sucrase: 3.35.0
-      tinyexec: 0.3.2
-      tinyglobby: 0.2.15
-      tree-kill: 1.2.2
-    optionalDependencies:
-      postcss: 8.5.6
-      typescript: 5.9.2
-    transitivePeerDependencies:
-      - jiti
-      - supports-color
-      - tsx
-      - yaml
 
   tsup@8.5.0(postcss@8.5.6)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.3.3):
     dependencies:
