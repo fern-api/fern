@@ -15,26 +15,22 @@ export class ReadmeConfigBuilder {
     private readonly fileResponseType: "stream" | "binary-response";
     private readonly fetchSupport: "node-fetch" | "native";
     private readonly generateSubpackageExports: boolean;
-    private readonly oauthTokenOverride: boolean;
 
     constructor({
         endpointSnippets,
         fileResponseType,
         fetchSupport,
-        generateSubpackageExports,
-        oauthTokenOverride
+        generateSubpackageExports
     }: {
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
         fetchSupport: "node-fetch" | "native";
         generateSubpackageExports: boolean;
-        oauthTokenOverride: boolean;
     }) {
         this.endpointSnippets = endpointSnippets;
         this.fileResponseType = fileResponseType;
         this.fetchSupport = fetchSupport;
         this.generateSubpackageExports = generateSubpackageExports;
-        this.oauthTokenOverride = oauthTokenOverride;
     }
 
     public build({
@@ -50,8 +46,7 @@ export class ReadmeConfigBuilder {
             context,
             endpointSnippets: this.endpointSnippets,
             fileResponseType: this.fileResponseType,
-            generateSubpackageExports: this.generateSubpackageExports,
-            oauthTokenOverride: this.oauthTokenOverride
+            generateSubpackageExports: this.generateSubpackageExports
         });
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
         const addendums = readmeSnippetBuilder.buildReadmeAddendums();

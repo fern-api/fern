@@ -11,7 +11,6 @@ export declare namespace OAuthAuthProviderGenerator {
         authScheme: FernIr.OAuthScheme;
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
-        oauthTokenOverride: boolean;
     }
 }
 
@@ -42,14 +41,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     private readonly authScheme: FernIr.OAuthScheme;
     private readonly neverThrowErrors: boolean;
     private readonly includeSerdeLayer: boolean;
-    private readonly oauthTokenOverride: boolean;
 
     constructor(init: OAuthAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
         this.includeSerdeLayer = init.includeSerdeLayer;
-        this.oauthTokenOverride = init.oauthTokenOverride;
     }
 
     public getFilePath(): ExportedFilePath {
@@ -134,7 +131,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
-        const hasTokenOverride = this.oauthTokenOverride;
+        const hasTokenOverride = true;
         if (hasTokenOverride) {
             return ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(CLASS_NAME), "createInstance"),
@@ -146,7 +143,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
-        const hasTokenOverride = this.oauthTokenOverride;
+        const hasTokenOverride = true;
         this.writeClass(context);
         if (hasTokenOverride) {
             this.writeTokenOverrideClass(context);
@@ -219,7 +216,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
-        const hasTokenOverride = this.oauthTokenOverride;
+        const hasTokenOverride = true;
 
         const constructorOptionsType = hasTokenOverride
             ? `${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.ClientCredentials`
@@ -800,7 +797,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             return;
         }
 
-        const hasTokenOverride = this.oauthTokenOverride;
+        const hasTokenOverride = true;
 
         // Import BaseClientOptions for Options to extend
         // OAuthAuthProvider.Options needs to extend BaseClientOptions because it creates an AuthClient
