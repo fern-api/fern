@@ -61,7 +61,10 @@ export class ProductClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: (({ createProductVariantOptionRequestProductId, ..._rest }) => ({
+                ..._rest,
+                product_id: createProductVariantOptionRequestProductId,
+            }))(_body),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

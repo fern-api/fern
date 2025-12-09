@@ -57,6 +57,12 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
 
     public serializeRequest(referenceToParsedRequest: ts.Expression, context: SdkContext): ts.Expression {
         if (!this.includeSerdeLayer) {
+            // When there's no serde layer, we need to check if any body properties have explicit names
+            // that differ from their wire values. If so, we need to map them back to wire values.
+            const propertiesWithExplicitNames = this.getPropertiesWithExplicitNames(context);
+            if (propertiesWithExplicitNames.length > 0) {
+                return this.buildNoSerdeBodyWithExplicitNames(referenceToParsedRequest, propertiesWithExplicitNames);
+            }
             return referenceToParsedRequest;
         }
         return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest, {
@@ -65,6 +71,82 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
                 omitUndefined: this.omitUndefined
             })
         });
+    }
+
+    private getPropertiesWithExplicitNames(
+        context: SdkContext
+    ): Array<{ tsPropertyName: string; wireValue: string }> {
+        const generatedRequestWrapper = context.requestWrapper.getGeneratedRequestWrapper(
+            this.packageId,
+            this.endpoint.name
+        );
+        const result: Array<{ tsPropertyName: string; wireValue: string }> = [];
+        for (const property of this.inlinedRequestBody.properties) {
+            const resolvedType = context.type.resolveTypeReference(property.valueType);
+            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
+            if (isLiteral) {
+                continue;
+            }
+            const tsPropertyName = generatedRequestWrapper.getInlinedRequestBodyPropertyKey(property).propertyName;
+            if (tsPropertyName !== property.name.wireValue) {
+                result.push({ tsPropertyName, wireValue: property.name.wireValue });
+            }
+        }
+        return result;
+    }
+
+    private buildNoSerdeBodyWithExplicitNames(
+        referenceToParsedRequest: ts.Expression,
+        propertiesWithExplicitNames: Array<{ tsPropertyName: string; wireValue: string }>
+    ): ts.Expression {
+        // Generate an IIFE that destructures the TS property names, spreads the rest,
+        // and rebuilds the object with wire values as keys:
+        // (({ createProductVariantOptionRequestProductId, ...rest }) =>
+        //   ({ ...rest, product_id: createProductVariantOptionRequestProductId }))(body)
+        const bindingElements: ts.BindingElement[] = [
+            ...propertiesWithExplicitNames.map(({ tsPropertyName }) =>
+                ts.factory.createBindingElement(undefined, undefined, ts.factory.createIdentifier(tsPropertyName))
+            ),
+            ts.factory.createBindingElement(
+                ts.factory.createToken(ts.SyntaxKind.DotDotDotToken),
+                undefined,
+                ts.factory.createIdentifier("_rest")
+            )
+        ];
+
+        const returnObjectProperties: ts.ObjectLiteralElementLike[] = [
+            ts.factory.createSpreadAssignment(ts.factory.createIdentifier("_rest")),
+            ...propertiesWithExplicitNames.map(({ tsPropertyName, wireValue }) =>
+                ts.factory.createPropertyAssignment(
+                    getPropertyKey(wireValue),
+                    ts.factory.createIdentifier(tsPropertyName)
+                )
+            )
+        ];
+
+        return ts.factory.createCallExpression(
+            ts.factory.createParenthesizedExpression(
+                ts.factory.createArrowFunction(
+                    undefined,
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            undefined,
+                            ts.factory.createObjectBindingPattern(bindingElements)
+                        )
+                    ],
+                    undefined,
+                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                    ts.factory.createParenthesizedExpression(
+                        ts.factory.createObjectLiteralExpression(returnObjectProperties, false)
+                    )
+                )
+            ),
+            undefined,
+            [referenceToParsedRequest]
+        );
     }
 
     protected getReferenceToSchema(context: SdkContext): Reference {
