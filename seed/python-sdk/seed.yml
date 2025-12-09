@@ -15,7 +15,7 @@ buildScripts:
 publish:
   workingDirectory: generators/python
   preBuildCommands:
-    - pnpm --filter @fern-api/python-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/python-sdk
     - pip install poetry
     - poetry config virtualenvs.in-project true
     - poetry install
@@ -26,7 +26,7 @@ publish:
 test:
   docker:
     image: fernapi/fern-python-sdk:latest
-    command: pnpm --filter @fern-api/python-sdk dist:cli && docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/python-sdk && docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
   local:
     workingDirectory: generators/python
     buildCommand:

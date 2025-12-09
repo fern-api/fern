@@ -4,7 +4,7 @@ image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/php-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/php-sdk
   docker:
     file: ./generators/php/sdk/Dockerfile
     image: fernapi/fern-php-sdk
@@ -12,14 +12,14 @@ publish:
 test:
   docker:
     image: fernapi/fern-php-sdk:latest
-    command: pnpm --filter @fern-api/php-sdk dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/php-sdk
   podman:
     image: fernapi/fern-php-sdk:latest
-    command: pnpm --filter @fern-api/php-sdk podmanTagLatest
+    command: pnpm turbo run podmanTagLatest --filter @fern-api/php-sdk
   local:
     workingDirectory: generators/php
     buildCommand:
-      - pnpm --filter @fern-api/php-sdk dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/php-sdk
     runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 language: php
 generatorType: SDK
