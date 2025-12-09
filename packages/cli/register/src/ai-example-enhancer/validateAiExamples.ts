@@ -4,9 +4,10 @@ import { Logger } from "@fern-api/logger";
 import { OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { TaskContext } from "@fern-api/task-context";
 import {
-    AiExampleOverride,
+    type AiExampleOverride,
+    type APIError,
     ErrorCollector,
-    ExampleValidationResult,
+    type ExampleValidationResult,
     ExampleValidator
 } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
@@ -147,7 +148,7 @@ export async function validateAiExamplesFromFile({
         );
         for (const { example, validationResult } of invalidExamples) {
             context.logger.debug(
-                `Stale AI example: ${example.method} ${example.endpointPath} - ${validationResult.errors.map((e) => e.message).join(", ")}`
+                `Stale AI example: ${example.method} ${example.endpointPath} - ${validationResult.errors.map((e: APIError) => e.message).join(", ")}`
             );
         }
     }
