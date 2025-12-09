@@ -131,8 +131,8 @@ class CoreUtilities:
 
     def get_fern_enum(self) -> AST.ClassReference:
         return AST.ClassReference(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(module=AST.Module.local(*self._module_path, "enum"), named_import="StrEnum"),
+            qualified_name_excluding_import=("StrEnum",),
+            import_=AST.ReferenceImport(module=AST.Module.local(*self._module_path), named_import="enum"),
         )
 
     def get_field_metadata(self) -> FieldMetadata:

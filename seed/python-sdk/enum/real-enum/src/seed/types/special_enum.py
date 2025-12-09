@@ -2,12 +2,12 @@
 
 import typing
 
-from ..core.enum import StrEnum
+from ..core import enum
 
 T_Result = typing.TypeVar("T_Result")
 
 
-class SpecialEnum(StrEnum):
+class SpecialEnum(enum.StrEnum):
     A = ""
     B = 'Hello \\"World\\"'
     C = "Hello 'World'"

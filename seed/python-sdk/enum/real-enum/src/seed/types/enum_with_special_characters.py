@@ -2,12 +2,12 @@
 
 import typing
 
-from ..core.enum import StrEnum
+from ..core import enum
 
 T_Result = typing.TypeVar("T_Result")
 
 
-class EnumWithSpecialCharacters(StrEnum):
+class EnumWithSpecialCharacters(enum.StrEnum):
     BLA = "\\$bla"
     YO = "\\$yo"
 

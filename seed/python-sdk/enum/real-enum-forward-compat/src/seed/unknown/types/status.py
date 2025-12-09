@@ -2,12 +2,12 @@
 
 import typing
 
-from ...core.enum import StrEnum
+from ...core import enum
 
 T_Result = typing.TypeVar("T_Result")
 
 
-class Status(StrEnum):
+class Status(enum.StrEnum):
     KNOWN = "Known"
     UNKNOWN = "Unknown"
     _UNKNOWN = "__STATUS_UNKNOWN__"
