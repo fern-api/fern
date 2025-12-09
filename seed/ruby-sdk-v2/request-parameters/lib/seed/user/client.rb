@@ -35,7 +35,8 @@ module Seed
           method: "POST",
           path: "/user/username",
           query: query_params,
-          body: Seed::User::Types::CreateUsernameRequest.new(body_bag).to_h
+          body: Seed::User::Types::CreateUsernameRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -71,7 +72,8 @@ module Seed
           method: "POST",
           path: "/user/username-referenced",
           query: query_params,
-          body: Seed::User::Types::CreateUsernameBody.new(params).to_h
+          body: Seed::User::Types::CreateUsernameBody.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -99,7 +101,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/user/username-optional",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -140,8 +143,7 @@ module Seed
       # @return [Seed::User::Types::User]
       def get_username(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        query_param_names = %i[limit id date deadline bytes user user_list optional_deadline key_value optional_string
-                               nested_user optional_user exclude_user filter long_param big_int_param]
+        query_param_names = %i[limit id date deadline bytes user user_list optional_deadline key_value optional_string nested_user optional_user exclude_user filter long_param big_int_param]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
         query_params["id"] = params[:id] if params.key?(:id)
@@ -165,7 +167,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/user",
-          query: query_params
+          query: query_params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.optional.send_optional_body();
+client.optional.send_optional_body(request: {});
 ```
 </dd>
 </dl>
@@ -53,7 +53,9 @@ client.optional.send_optional_body();
 <dd>
 
 ```ruby
-client.optional.send_optional_typed_body();
+client.optional.send_optional_typed_body(request: {
+  message: 'message'
+});
 ```
 </dd>
 </dl>
@@ -110,7 +112,10 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 ```ruby
 client.optional.send_optional_nullable_with_all_optional_properties(
   action_id: 'actionId',
-  id: 'id'
+  id: 'id',
+  request: {
+    update_draft: true
+  }
 );
 ```
 </dd>

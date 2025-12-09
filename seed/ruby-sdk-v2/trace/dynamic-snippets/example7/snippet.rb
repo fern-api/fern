@@ -18,6 +18,7 @@ client.admin.store_traced_workspace(
   trace_responses: [{
     submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     line_number: 1,
+    return_value: {},
     expression_location: {
       start: 1,
       offset: 1
@@ -28,9 +29,13 @@ client.admin.store_traced_workspace(
         method_name: 'methodName',
         line_number: 1,
         scopes: [{
-          variables: {}
+          variables: {
+            variables: {}
+          }
         }, {
-          variables: {}
+          variables: {
+            variables: {}
+          }
         }]
       }
     },
@@ -38,6 +43,7 @@ client.admin.store_traced_workspace(
   }, {
     submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     line_number: 1,
+    return_value: {},
     expression_location: {
       start: 1,
       offset: 1
@@ -48,9 +54,13 @@ client.admin.store_traced_workspace(
         method_name: 'methodName',
         line_number: 1,
         scopes: [{
-          variables: {}
+          variables: {
+            variables: {}
+          }
         }, {
-          variables: {}
+          variables: {
+            variables: {}
+          }
         }]
       }
     },
