@@ -79,7 +79,8 @@ export class ImportsManager {
     public writeImportsToSourceFile(sourceFile: SourceFile): void {
         const sourceFileDirPath = sourceFile.getDirectoryPath();
         const sourcePathSegments = sourceFileDirPath.split("/").filter((segment) => segment.length > 0);
-        for (const [originalModuleSpecifier, combinedImportDeclarations] of Object.entries(this.imports)) {
+        const sortedImports = Object.entries(this.imports).sort(([a], [b]) => a.localeCompare(b));
+        for (const [originalModuleSpecifier, combinedImportDeclarations] of sortedImports) {
             let moduleSpecifier = originalModuleSpecifier;
             if (moduleSpecifier.startsWith("@root/")) {
                 const targetPath = moduleSpecifier.replace("@root/", "");
@@ -140,13 +141,15 @@ export class ImportsManager {
                     isTypeOnly: isRootTypeOnly,
                     moduleSpecifier,
                     defaultImport,
-                    namedImports: [...combinedImportDeclarations.namedImports].sort().map((namedImport) => ({
-                        name:
-                            !isRootTypeOnly && NamedImport.isTypeImport(namedImport)
-                                ? `type ${namedImport.name}`
-                                : namedImport.name,
-                        alias: namedImport.alias
-                    }))
+                    namedImports: [...combinedImportDeclarations.namedImports]
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((namedImport) => ({
+                            name:
+                                !isRootTypeOnly && NamedImport.isTypeImport(namedImport)
+                                    ? `type ${namedImport.name}`
+                                    : namedImport.name,
+                            alias: namedImport.alias
+                        }))
                 });
             }
         }
