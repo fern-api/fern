@@ -33,7 +33,7 @@ export class UsersClient {
     public async listUsernamesCustom(
         request: SeedPagination.ListUsernamesRequestCustom = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<string, SeedPagination.UsernameCursor>> {
+    ): Promise<core.CustomPager<string, SeedPagination.ListUsernamesRequestCustom, SeedPagination.UsernameCursor>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: SeedPagination.ListUsernamesRequestCustom,
@@ -78,17 +78,21 @@ export class UsersClient {
                 return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<string, SeedPagination.UsernameCursor>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (_response) => false,
-            getItems: (response) => response?.cursor.data ?? [],
-            loadPage: (_response) => {
-                throw new Error(
-                    "Custom pagination requires manual implementation. Override the loadPage method to implement pagination.",
-                );
+        const _dataWithRawResponse = await list(request).withRawResponse();
+        return core.CustomPager.create<
+            string,
+            SeedPagination.ListUsernamesRequestCustom,
+            SeedPagination.UsernameCursor
+        >({
+            context: {
+                sendRequest: list,
+                initialRequest: request,
             },
+            parser: async (_request, response) => ({
+                hasNextPage: false,
+                hasPreviousPage: false,
+                items: response?.cursor.data ?? [] ?? [],
+            }),
         });
     }
 }

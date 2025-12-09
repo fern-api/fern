@@ -16,6 +16,21 @@ export interface Pagination {
         }) => ts.Expression;
         _getReferenceToType: (responseType: ts.TypeNode, itemType: ts.TypeNode) => ts.TypeNode;
     };
+    readonly CustomPager: {
+        _create: (args: {
+            itemType: ts.TypeNode;
+            requestType: ts.TypeNode;
+            responseType: ts.TypeNode;
+            context: ts.Expression;
+            parser: ts.Expression;
+        }) => ts.Expression;
+        _getReferenceToType: (
+            itemType: ts.TypeNode,
+            requestType: ts.TypeNode,
+            responseType: ts.TypeNode
+        ) => ts.TypeNode;
+        _getParserType: (itemType: ts.TypeNode, requestType: ts.TypeNode, responseType: ts.TypeNode) => ts.TypeNode;
+    };
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
@@ -90,6 +105,60 @@ export class PaginationImpl extends CoreUtility implements Pagination {
             "Page",
             (APIResponse) => (itemType: ts.TypeNode, responseType: ts.TypeNode) =>
                 ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [itemType, responseType])
+        )
+    };
+
+    public CustomPager = {
+        _create: this.withExportedName(
+            "CustomPager",
+            (CustomPager) =>
+                ({
+                    itemType,
+                    requestType,
+                    responseType,
+                    context,
+                    parser
+                }: {
+                    itemType: ts.TypeNode;
+                    requestType: ts.TypeNode;
+                    responseType: ts.TypeNode;
+                    context: ts.Expression;
+                    parser: ts.Expression;
+                }): ts.Expression => {
+                    return ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            CustomPager.getExpression(),
+                            ts.factory.createIdentifier("create")
+                        ),
+                        [itemType, requestType, responseType],
+                        [
+                            ts.factory.createObjectLiteralExpression(
+                                [
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("context"),
+                                        context
+                                    ),
+                                    ts.factory.createPropertyAssignment(ts.factory.createIdentifier("parser"), parser)
+                                ],
+                                true
+                            )
+                        ]
+                    );
+                }
+        ),
+        _getReferenceToType: this.withExportedName(
+            "CustomPager",
+            (CustomPager) => (itemType: ts.TypeNode, requestType: ts.TypeNode, responseType: ts.TypeNode) =>
+                ts.factory.createTypeReferenceNode(CustomPager.getEntityName(), [itemType, requestType, responseType])
+        ),
+        _getParserType: this.withExportedName(
+            "CustomPagerParser",
+            (CustomPagerParser) => (itemType: ts.TypeNode, requestType: ts.TypeNode, responseType: ts.TypeNode) =>
+                ts.factory.createTypeReferenceNode(CustomPagerParser.getEntityName(), [
+                    itemType,
+                    requestType,
+                    responseType
+                ])
         )
     };
 }

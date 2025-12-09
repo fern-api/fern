@@ -82,13 +82,24 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
     public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
         const paginationInfo = this.response.getPaginationInfo(context);
-        const mainReturnType =
-            paginationInfo != null
-                ? context.coreUtilities.pagination.Page._getReferenceToType(
-                      paginationInfo.itemType,
-                      paginationInfo.responseType
-                  )
-                : this.response.getReturnType(context);
+        const requestParameter = this.request.getRequestParameter(context);
+        let mainReturnType: ts.TypeNode;
+        if (paginationInfo != null) {
+            if (paginationInfo.type === "custom" && requestParameter != null) {
+                mainReturnType = context.coreUtilities.pagination.CustomPager._getReferenceToType(
+                    paginationInfo.itemType,
+                    requestParameter,
+                    paginationInfo.responseType
+                );
+            } else {
+                mainReturnType = context.coreUtilities.pagination.Page._getReferenceToType(
+                    paginationInfo.itemType,
+                    paginationInfo.responseType
+                );
+            }
+        } else {
+            mainReturnType = this.response.getReturnType(context);
+        }
         return {
             parameters: [
                 ...this.request.getEndpointParameters(context),
@@ -411,22 +422,102 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     )
                 )
             );
-            statements.push(
-                ts.factory.createReturnStatement(
-                    context.coreUtilities.pagination.Page._construct({
-                        itemType: paginationInfo.itemType,
-                        responseType: paginationInfo.responseType,
-                        response: ts.factory.createPropertyAccessExpression(initialResponseVar, "data"),
-                        rawResponse: ts.factory.createPropertyAccessExpression(initialResponseVar, "rawResponse"),
-                        hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
-                        getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
-                        loadPage: this.createLambdaWithResponse({
-                            body: ts.factory.createBlock(paginationInfo.loadPage),
-                            ignoreResponse: paginationInfo.type === "offset"
+            if (paginationInfo.type === "custom") {
+                // For custom pagination, use CustomPager.create with a default parser
+                const contextExpr = ts.factory.createObjectLiteralExpression(
+                    [
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier("sendRequest"),
+                            ts.factory.createIdentifier(listFnName)
+                        ),
+                        ts.factory.createPropertyAssignment(
+                            ts.factory.createIdentifier("initialRequest"),
+                            ts.factory.createIdentifier("request")
+                        )
+                    ],
+                    true
+                );
+
+                // Create a default parser that extracts items but sets hasNextPage to false
+                const parserExpr = ts.factory.createArrowFunction(
+                    [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                    undefined,
+                    [
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            undefined,
+                            ts.factory.createIdentifier("_request"),
+                            undefined,
+                            undefined,
+                            undefined
+                        ),
+                        ts.factory.createParameterDeclaration(
+                            undefined,
+                            undefined,
+                            undefined,
+                            ts.factory.createIdentifier("response"),
+                            undefined,
+                            undefined,
+                            undefined
+                        )
+                    ],
+                    undefined,
+                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                    ts.factory.createParenthesizedExpression(
+                        ts.factory.createObjectLiteralExpression(
+                            [
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("hasNextPage"),
+                                    ts.factory.createFalse()
+                                ),
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("hasPreviousPage"),
+                                    ts.factory.createFalse()
+                                ),
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("items"),
+                                    ts.factory.createBinaryExpression(
+                                        paginationInfo.getItems,
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                        ts.factory.createArrayLiteralExpression([], false)
+                                    )
+                                )
+                            ],
+                            true
+                        )
+                    )
+                );
+
+                statements.push(
+                    ts.factory.createReturnStatement(
+                        context.coreUtilities.pagination.CustomPager._create({
+                            itemType: paginationInfo.itemType,
+                            requestType: requestParameter,
+                            responseType: paginationInfo.responseType,
+                            context: contextExpr,
+                            parser: parserExpr
                         })
-                    })
-                )
-            );
+                    )
+                );
+            } else {
+                statements.push(
+                    ts.factory.createReturnStatement(
+                        context.coreUtilities.pagination.Page._construct({
+                            itemType: paginationInfo.itemType,
+                            responseType: paginationInfo.responseType,
+                            response: ts.factory.createPropertyAccessExpression(initialResponseVar, "data"),
+                            rawResponse: ts.factory.createPropertyAccessExpression(initialResponseVar, "rawResponse"),
+                            hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
+                            getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
+                            loadPage: this.createLambdaWithResponse({
+                                body: ts.factory.createBlock(paginationInfo.loadPage),
+                                ignoreResponse: paginationInfo.type === "offset"
+                            })
+                        })
+                    )
+                );
+            }
             return statements;
         }
         return body;

@@ -2,9 +2,16 @@
 - version: 3.39.0
   changelogEntry:
     - summary: |
-        Add support for custom pagination. When using custom pagination, the SDK generates a `Page` object
-        with stub implementations for `hasNextPage` (returns `false`) and `loadPage` (throws an error).
-        The SDK author is responsible for implementing the actual pagination logic by overriding these methods.
+        Add support for custom pagination with a dedicated `CustomPager` class, similar to the C# SDK generator.
+        The `CustomPager` class provides:
+        - A `CustomPagerParser` callback type that SDK authors implement to define pagination logic
+        - Support for both forward (`getNextPage`) and backward (`getPreviousPage`) pagination
+        - `AsyncIterable` implementation for ergonomic consumption with `for await...of`
+        - Access to raw response data via `response` and `rawResponse` properties
+        
+        The generated endpoint returns a `CustomPager` with a default parser that extracts items from the
+        configured results property and sets `hasNextPage`/`hasPreviousPage` to `false`. SDK authors can
+        provide a custom parser to implement full pagination logic.
       type: feat
   createdAt: "2025-12-09"
   irVersion: 62
