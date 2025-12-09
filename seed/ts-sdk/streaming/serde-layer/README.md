@@ -88,6 +88,17 @@ for await (const item of response) {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedStreamingClient } from "@fern/streaming";
+
+const client = new SeedStreamingClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.dummy.generateStream(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -53,6 +53,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedVariablesClient } from "@fern/variables";
+
+const client = new SeedVariablesClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.service.post(..., {
     headers: {
         'X-Custom-Header': 'custom value'

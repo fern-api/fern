@@ -56,6 +56,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedPackageYmlClient } from "@fern/package-yml";
+
+const client = new SeedPackageYmlClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.echo(..., {
     headers: {
         'X-Custom-Header': 'custom value'

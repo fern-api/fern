@@ -68,6 +68,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedMultiUrlEnvironmentNoDefaultClient } from "@fern/multi-url-environment-no-default";
+
+const client = new SeedMultiUrlEnvironmentNoDefaultClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.ec2.bootInstance(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -53,6 +53,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedAudiencesClient } from "@fern/audiences";
+
+const client = new SeedAudiencesClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.folderD.service.getDirectThread(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -88,6 +88,17 @@ for await (const item of response) {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedServerSentEventsClient } from "@fern/server-sent-events";
+
+const client = new SeedServerSentEventsClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.completions.stream(..., {
     headers: {
         'X-Custom-Header': 'custom value'

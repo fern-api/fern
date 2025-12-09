@@ -71,6 +71,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedObjectClient } from "@fern/ts-inline-types";
+
+const client = new SeedObjectClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.getRoot(..., {
     headers: {
         'X-Custom-Header': 'custom value'

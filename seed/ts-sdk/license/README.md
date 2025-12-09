@@ -53,6 +53,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedLicenseClient } from "@fern/license";
+
+const client = new SeedLicenseClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.get(..., {
     headers: {
         'X-Custom-Header': 'custom value'

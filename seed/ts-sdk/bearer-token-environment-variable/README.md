@@ -53,6 +53,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedBearerTokenEnvironmentVariableClient } from "@fern/bearer-token-environment-variable";
+
+const client = new SeedBearerTokenEnvironmentVariableClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.service.getWithBearerToken(..., {
     headers: {
         'X-Custom-Header': 'custom value'

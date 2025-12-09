@@ -79,6 +79,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedNullableOptionalClient } from "@fern/nullable-optional";
+
+const client = new SeedNullableOptionalClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.nullableOptional.createUser(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -70,6 +70,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedCrossPackageTypeNamesClient } from "@fern/cross-package-type-names";
+
+const client = new SeedCrossPackageTypeNamesClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.foo.find(..., {
     headers: {
         'X-Custom-Header': 'custom value'

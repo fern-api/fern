@@ -112,6 +112,17 @@ For example, `fs.ReadStream` has a `path` property which the SDK uses to retriev
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedApiClient } from "@fern/file-upload-openapi";
+
+const client = new SeedApiClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.fileUploadExample.uploadFile(..., {
     headers: {
         'X-Custom-Header': 'custom value'

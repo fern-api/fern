@@ -55,6 +55,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedUnknownAsAnyClient } from "@fern/unknown";
+
+const client = new SeedUnknownAsAnyClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.unknown.post(..., {
     headers: {
         'X-Custom-Header': 'custom value'

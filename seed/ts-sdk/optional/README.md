@@ -57,6 +57,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedObjectsWithImportsClient } from "@fern/optional";
+
+const client = new SeedObjectsWithImportsClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.optional.sendOptionalBody(..., {
     headers: {
         'X-Custom-Header': 'custom value'

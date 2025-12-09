@@ -75,6 +75,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedClientSideParamsClient } from "@fern/client-side-params";
+
+const client = new SeedClientSideParamsClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.service.searchResources(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -76,6 +76,17 @@ const client = new EndpointsClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedExhaustiveClient } from "@fern/exhaustive";
+
+const client = new SeedExhaustiveClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.endpoints.container.getAndReturnListOfPrimitives(..., {
     headers: {
         'X-Custom-Header': 'custom value'

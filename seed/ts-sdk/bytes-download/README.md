@@ -442,6 +442,17 @@ const text = new TextDecoder().decode(bytes);
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedBytesDownloadClient } from "@fern/bytes-download";
+
+const client = new SeedBytesDownloadClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.service.simple(..., {
     headers: {
         'X-Custom-Header': 'custom value'

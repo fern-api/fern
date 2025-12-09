@@ -69,6 +69,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedAliasExtendsClient } from "@fern/alias-extends";
+
+const client = new SeedAliasExtendsClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.extendedInlineRequestBody(..., {
     headers: {
         'X-Custom-Header': 'custom value'

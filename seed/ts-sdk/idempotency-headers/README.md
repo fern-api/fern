@@ -69,6 +69,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedIdempotencyHeadersClient } from "@fern/idempotency-headers";
+
+const client = new SeedIdempotencyHeadersClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.payment.create(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -53,6 +53,17 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedApiWideBasePathClient } from "@fern/api-wide-base-path";
+
+const client = new SeedApiWideBasePathClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+```
+
+```typescript
 const response = await client.service.post(..., {
     headers: {
         'X-Custom-Header': 'custom value'
