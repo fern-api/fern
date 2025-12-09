@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/products/{product_id}/options",
+                "method": "POST",
+                "identifier_override": "endpoint_product.createProductVariantOption"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsBodyPropertyNameCollisionClient } from \"@fern/ts-body-property-name-collision\";\n\nconst client = new SeedTsBodyPropertyNameCollisionClient({ environment: \"YOUR_BASE_URL\" });\nawait client.product.createProductVariantOption({\n    product_id: 1,\n    createProductVariantOptionRequestProductId: 1,\n    display_name: \"display_name\",\n    sort_order: 1\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups:
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/ts-sdk-tests
+          branch: ts-body-property-name-collision
