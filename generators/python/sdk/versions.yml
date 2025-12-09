@@ -9,6 +9,16 @@
   createdAt: "2025-12-09"
   irVersion: 61
 
+- version: 4.44.2
+  changelogEntry:
+    - summary: |
+        Fix enum-typed headers to use `.value` instead of `str()` for consistent wire format across
+        all Python versions. Previously, `str(enum)` returned the enum name (e.g., `Operand.GREATER_THAN`)
+        on Python `< 3.11`, but the wire value (e.g., `>`) on Python `>= 3.11` with StrEnum.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 61
+
 - version: 4.44.1
   changelogEntry:
     - summary: |
