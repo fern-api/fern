@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.38.1
+  changelogEntry:
+    - summary: |
+        `hasNextPage` employs the default for the `step` attribute on offset-based pagination endpoints if it's set.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 62
+
 - version: 3.38.0
   changelogEntry:
     - summary: |
