@@ -86,6 +86,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedTraceClient } from "@fern/trace";
+
+const client = new SeedTraceClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.admin.updateTestSubmissionStatus(..., {
     headers: {
         'X-Custom-Header': 'custom value'

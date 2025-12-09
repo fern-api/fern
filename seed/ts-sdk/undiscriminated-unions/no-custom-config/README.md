@@ -84,6 +84,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedUndiscriminatedUnionsClient } from "@fern/undiscriminated-unions";
+
+const client = new SeedUndiscriminatedUnionsClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.union.get(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -70,6 +70,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedAcceptClient } from "@fern/accept-header";
+
+const client = new SeedAcceptClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.service.endpoint(..., {
     headers: {
         'X-Custom-Header': 'custom value'

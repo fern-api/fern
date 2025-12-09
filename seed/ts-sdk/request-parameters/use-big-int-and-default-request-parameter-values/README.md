@@ -89,6 +89,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedRequestParametersClient } from "@fern/request-parameters";
+
+const client = new SeedRequestParametersClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.user.createUsername(..., {
     headers: {
         'X-Custom-Header': 'custom value'
