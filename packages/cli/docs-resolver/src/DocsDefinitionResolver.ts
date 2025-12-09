@@ -316,7 +316,9 @@ export class DocsDefinitionResolver {
             });
         }
         const refMdTime = performance.now() - refMdStart;
-        this.taskContext.logger.debug(`Replaced referenced markdown in ${refMdTime.toFixed(0)}ms (${snippetCache.size} unique snippets cached)`);
+        this.taskContext.logger.debug(
+            `Replaced referenced markdown in ${refMdTime.toFixed(0)}ms (${snippetCache.size} unique snippets cached)`
+        );
 
         // replaces all instances of <Code src="path/to/file.js" /> with the content of the referenced code file
         this.taskContext.logger.debug("Replacing referenced code files...");
