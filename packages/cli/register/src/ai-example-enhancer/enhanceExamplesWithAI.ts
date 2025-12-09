@@ -751,6 +751,7 @@ function hasGenericValues(obj: unknown): boolean {
 function hasUserSpecifiedV2Examples(endpointV3: EndpointV3): boolean {
     try {
         // Cast to any to access v2Examples properties that aren't in the type definition
+        // biome-ignore lint/suspicious/noExplicitAny: accessing v2Examples properties not in type definition
         const endpoint = endpointV3 as any;
 
         // Check if endpoint has v2Examples structure with user-specified examples
