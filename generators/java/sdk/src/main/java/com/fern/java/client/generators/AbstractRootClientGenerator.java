@@ -333,7 +333,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     private TypeSpec getClientBuilder() {
         boolean isExtensible = clientGeneratorContext.getCustomConfig().enableExtensibleBuilders();
-        boolean hasOAuthTokenOverride = clientGeneratorContext.getCustomConfig().oauthTokenOverride();
 
         // Check if we have OAuth client credentials auth scheme
         boolean hasOAuthClientCredentials = generatorContext.getResolvedAuthSchemes().stream()
