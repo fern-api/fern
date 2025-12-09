@@ -257,6 +257,11 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 case "oauth":
                     // TODO: OAuth is not supported yet.
                     break;
+                case "inferred":
+                    // Inferred auth uses an auth provider that handles token acquisition
+                    // and refresh automatically. No environment variables are needed here
+                    // as the auth provider will be configured separately.
+                    break;
             }
         }
     }

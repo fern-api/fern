@@ -76,7 +76,30 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.Stream);
         }
 
+        if (this.hasInferredAuth()) {
+            files.push(AsIsFiles.Auth);
+        }
+
         return files;
+    }
+
+    public hasInferredAuth(): boolean {
+        if (this.ir.auth == null) {
+            return false;
+        }
+        return this.ir.auth.schemes.some((scheme) => scheme.type === "inferred");
+    }
+
+    public getInferredAuthScheme(): import("@fern-fern/ir-sdk/api").InferredAuthScheme | undefined {
+        if (this.ir.auth == null) {
+            return undefined;
+        }
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "inferred") {
+                return scheme;
+            }
+        }
+        return undefined;
     }
 
     public getRootAsIsFiles(): string[] {
