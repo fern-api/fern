@@ -45,10 +45,7 @@ export function toCamelCase(str: string, options?: CasingOptions): SafeAndUnsafe
 
     return {
         unsafeName: camelCaseName,
-        safeName: sanitizeName({
-            name: camelCaseName,
-            keywords: getKeywords(options)
-        })
+        safeName: sanitizeName(camelCaseName, options)
     };
 }
 
@@ -85,10 +82,7 @@ export function toPascalCase(str: string, options?: CasingOptions): SafeAndUnsaf
 
     return {
         unsafeName: pascalCaseName,
-        safeName: sanitizeName({
-            name: pascalCaseName,
-            keywords: getKeywords(options)
-        })
+        safeName: sanitizeName(pascalCaseName, options)
     };
 }
 
@@ -105,10 +99,7 @@ export function toSnakeCase(str: string, options?: CasingOptions): SafeAndUnsafe
 
     return {
         unsafeName: snakeCaseName,
-        safeName: sanitizeName({
-            name: snakeCaseName,
-            keywords: getKeywords(options)
-        })
+        safeName: sanitizeName(snakeCaseName, options)
     };
 }
 
@@ -116,14 +107,12 @@ export function toScreamingSnakeCase(str: string, options?: CasingOptions): Safe
     const snakeCaseResult = toSnakeCase(str, options);
     return {
         unsafeName: snakeCaseResult.unsafeName.toUpperCase(),
-        safeName: sanitizeName({
-            name: snakeCaseResult.unsafeName.toUpperCase(),
-            keywords: getKeywords(options)
-        })
+        safeName: sanitizeName(snakeCaseResult.unsafeName.toUpperCase(), options)
     };
 }
 
-function sanitizeName({ name, keywords }: { name: string; keywords: Set<string> | undefined }): string {
+export function sanitizeName(name: string, options?: CasingOptions): string {
+    const keywords = getKeywords(options);
     if (keywords == null) {
         return name;
     }

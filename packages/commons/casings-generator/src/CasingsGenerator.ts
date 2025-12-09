@@ -2,7 +2,7 @@ import { generatorsYml } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 
-import { CasingOptions, toCamelCase, toPascalCase, toScreamingSnakeCase, toSnakeCase } from "./casings";
+import { CasingOptions, sanitizeName, toCamelCase, toPascalCase, toScreamingSnakeCase, toSnakeCase } from "./casings";
 
 export interface CasingsGenerator {
     generateName(name: string, opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }): Name;
@@ -35,27 +35,24 @@ export function constructCasingsGenerator({
             const snakeCaseResult = toSnakeCase(inputName, casingOptions);
             const screamingSnakeCaseResult = toScreamingSnakeCase(inputName, casingOptions);
 
-            const generateSafeAndUnsafeString = (
-                unsafeString: string,
-                defaultResult: { safeName: string; unsafeName: string }
-            ): SafeAndUnsafeString => ({
+            const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
-                safeName: unsafeString === defaultResult.unsafeName ? defaultResult.safeName : unsafeString
+                safeName: sanitizeName(unsafeString, casingOptions)
             });
 
             return {
                 originalName: inputName,
                 camelCase: opts?.casingOverrides?.camel
-                    ? generateSafeAndUnsafeString(opts.casingOverrides.camel, camelCaseResult)
+                    ? generateSafeAndUnsafeString(opts.casingOverrides.camel)
                     : camelCaseResult,
                 pascalCase: opts?.casingOverrides?.pascal
-                    ? generateSafeAndUnsafeString(opts.casingOverrides.pascal, pascalCaseResult)
+                    ? generateSafeAndUnsafeString(opts.casingOverrides.pascal)
                     : pascalCaseResult,
                 snakeCase: opts?.casingOverrides?.snake
-                    ? generateSafeAndUnsafeString(opts.casingOverrides.snake, snakeCaseResult)
+                    ? generateSafeAndUnsafeString(opts.casingOverrides.snake)
                     : snakeCaseResult,
                 screamingSnakeCase: opts?.casingOverrides?.["screaming-snake"]
-                    ? generateSafeAndUnsafeString(opts.casingOverrides["screaming-snake"], screamingSnakeCaseResult)
+                    ? generateSafeAndUnsafeString(opts.casingOverrides["screaming-snake"])
                     : screamingSnakeCaseResult
             };
         },
