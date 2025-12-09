@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.43.0
+  changelogEntry:
+    - summary: |
+        Add OAuth token override support. When `oauth-token-override: true` is configured, users can authenticate
+        with either OAuth client credentials or a pre-generated bearer token directly via the `token` parameter.
+      type: feat
+  createdAt: "2025-12-06"
+  irVersion: 61
+
 - version: 4.42.1
   changelogEntry:
     - summary: |

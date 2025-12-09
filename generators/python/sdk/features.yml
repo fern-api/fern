@@ -53,3 +53,7 @@ features:
     description: |
       The SDK supports both sync and async websocket connections for real-time, low-latency communication. Sockets can be created using the `connect` method, which returns a context manager. 
       You can either iterate through the returned `SocketClient` to process messages as they arrive, or attach handlers to respond to specific events.
+
+  - id: OAUTH_TOKEN_OVERRIDE
+    description: |
+      This SDK supports two authentication methods: OAuth client credentials flow (automatic token management) or direct bearer token authentication. You can choose between these options when initializing the client:
