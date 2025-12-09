@@ -26,6 +26,40 @@ interface CombinedImportDeclarations {
     defaultImports: Set<string>;
 }
 
+/**
+ * Returns the import group for a module specifier following Biome's sorting rules:
+ * 1. Node built-ins with protocol (node:fs)
+ * 2. External packages (react, lodash)
+ * 3. Aliased paths (@/, #, ~, $)
+ * 4. Relative imports (./, ../)
+ */
+function getImportGroup(moduleSpecifier: string): number {
+    if (moduleSpecifier.startsWith("node:")) {
+        return 1;
+    }
+    if (moduleSpecifier.startsWith("./") || moduleSpecifier.startsWith("../") || moduleSpecifier === ".") {
+        return 4;
+    }
+    if (/^[@#~$]/.test(moduleSpecifier)) {
+        return 3;
+    }
+    return 2; // External packages
+}
+
+/**
+ * Compares two module specifiers following Biome's sorting rules:
+ * - First by group (node built-ins, external packages, aliased paths, relative imports)
+ * - Then alphabetically within each group
+ */
+function compareModuleSpecifiers(a: string, b: string): number {
+    const groupA = getImportGroup(a);
+    const groupB = getImportGroup(b);
+    if (groupA !== groupB) {
+        return groupA - groupB;
+    }
+    return a.localeCompare(b);
+}
+
 export class ImportsManager {
     private packagePath: string | undefined;
 
@@ -76,42 +110,57 @@ export class ImportsManager {
         }
     }
 
+    private resolveModuleSpecifier(originalModuleSpecifier: string, sourcePathSegments: string[]): string {
+        if (!originalModuleSpecifier.startsWith("@root/")) {
+            return originalModuleSpecifier;
+        }
+
+        const targetPath = originalModuleSpecifier.replace("@root/", "");
+        const targetPathSegments = targetPath.split("/").filter((segment) => segment.length > 0);
+
+        // Find common prefix
+        let commonPrefixLength = 0;
+        const minLength = Math.min(sourcePathSegments.length, targetPathSegments.length);
+        while (
+            commonPrefixLength < minLength &&
+            sourcePathSegments[commonPrefixLength] === targetPathSegments[commonPrefixLength]
+        ) {
+            commonPrefixLength++;
+        }
+
+        const upSteps = sourcePathSegments.length - commonPrefixLength;
+        if (upSteps === 0 && targetPathSegments.slice(commonPrefixLength).length === 0) {
+            // Same directory
+            return ".";
+        }
+
+        let relativePath = [...Array(upSteps).fill(".."), ...targetPathSegments.slice(commonPrefixLength)].join("/");
+
+        // If there are no ".." segments, add a "./" prefix
+        if (!relativePath.startsWith("..") && upSteps === 0) {
+            relativePath = "./" + relativePath;
+        }
+
+        return relativePath;
+    }
+
     public writeImportsToSourceFile(sourceFile: SourceFile): void {
         const sourceFileDirPath = sourceFile.getDirectoryPath();
         const sourcePathSegments = sourceFileDirPath.split("/").filter((segment) => segment.length > 0);
-        const sortedImports = Object.entries(this.imports).sort(([a], [b]) => a.localeCompare(b));
-        for (const [originalModuleSpecifier, combinedImportDeclarations] of sortedImports) {
-            let moduleSpecifier = originalModuleSpecifier;
-            if (moduleSpecifier.startsWith("@root/")) {
-                const targetPath = moduleSpecifier.replace("@root/", "");
-                const targetPathSegments = targetPath.split("/").filter((segment) => segment.length > 0);
-                // Find common prefix
-                let commonPrefixLength = 0;
-                const minLength = Math.min(sourcePathSegments.length, targetPathSegments.length);
-                while (
-                    commonPrefixLength < minLength &&
-                    sourcePathSegments[commonPrefixLength] === targetPathSegments[commonPrefixLength]
-                ) {
-                    commonPrefixLength++;
-                }
-                const upSteps = sourcePathSegments.length - commonPrefixLength;
-                let relativePath;
-                if (upSteps === 0 && targetPathSegments.slice(commonPrefixLength).length === 0) {
-                    // Same directory
-                    relativePath = ".";
-                } else {
-                    relativePath = [...Array(upSteps).fill(".."), ...targetPathSegments.slice(commonPrefixLength)].join(
-                        "/"
-                    );
 
-                    // If there are no ".." segments, add a "./" prefix
-                    if (!relativePath.startsWith("..") && upSteps === 0) {
-                        relativePath = "./" + relativePath;
-                    }
-                }
-                moduleSpecifier = relativePath;
-            }
+        // Pre-compute final module specifiers and sort using Biome's rules
+        const importsWithResolvedSpecifiers = Object.entries(this.imports).map(
+            ([originalModuleSpecifier, combinedImportDeclarations]) => ({
+                moduleSpecifier: this.resolveModuleSpecifier(originalModuleSpecifier, sourcePathSegments),
+                combinedImportDeclarations
+            })
+        );
 
+        const sortedImports = importsWithResolvedSpecifiers.sort((a, b) =>
+            compareModuleSpecifiers(a.moduleSpecifier, b.moduleSpecifier)
+        );
+
+        for (const { moduleSpecifier, combinedImportDeclarations } of sortedImports) {
             const namespaceImports = [...combinedImportDeclarations.namespaceImports];
             if (namespaceImports.length > 1) {
                 throw new Error(
