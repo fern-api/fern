@@ -63,9 +63,11 @@ func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 	}
 }
 
-// WithOAuthTokenProvider sets the OAuth token provider for automatic token refresh.
-func WithOAuthTokenProvider(tokenProvider *core.OAuthTokenProvider) *core.OAuthTokenProviderOption {
-	return &core.OAuthTokenProviderOption{
-		OAuthTokenProvider: tokenProvider,
+// WithClientCredentials sets the client credentials for OAuth authentication.
+// The SDK will automatically handle token refresh when the token expires.
+func WithClientCredentials(clientID, clientSecret string) *core.ClientCredentialsOption {
+	return &core.ClientCredentialsOption{
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
 	}
 }

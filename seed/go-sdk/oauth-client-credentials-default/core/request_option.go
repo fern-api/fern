@@ -3,7 +3,6 @@
 package core
 
 import (
-	context "context"
 	http "net/http"
 	url "net/url"
 )
@@ -24,7 +23,9 @@ type RequestOptions struct {
 	BodyProperties     map[string]interface{}
 	QueryParameters    url.Values
 	MaxAttempts        uint
-	OAuthTokenProvider *OAuthTokenProvider
+	ClientID           string
+	ClientSecret       string
+	OAuthTokenProvider *OAuthTokenProvider // internal: constructed in client constructor
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -48,20 +49,6 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
 	return header
-}
-
-// ToHeaderWithContext maps the configured request options into a http.Header used
-// for the request(s). It handles OAuth token refresh if an OAuthTokenProvider is set.
-func (r *RequestOptions) ToHeaderWithContext(ctx context.Context) (http.Header, error) {
-	header := r.ToHeader()
-	if r.OAuthTokenProvider != nil {
-		token, err := r.OAuthTokenProvider.GetToken(ctx)
-		if err != nil {
-			return nil, err
-		}
-		header.Set("Authorization", "Bearer "+token)
-	}
-	return header, nil
 }
 
 func (r *RequestOptions) cloneHeader() http.Header {
@@ -127,11 +114,13 @@ func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxAttempts = m.MaxAttempts
 }
 
-// OAuthTokenProviderOption implements the RequestOption interface.
-type OAuthTokenProviderOption struct {
-	OAuthTokenProvider *OAuthTokenProvider
+// ClientCredentialsOption implements the RequestOption interface.
+type ClientCredentialsOption struct {
+	ClientID     string
+	ClientSecret string
 }
 
-func (o *OAuthTokenProviderOption) applyRequestOptions(opts *RequestOptions) {
-	opts.OAuthTokenProvider = o.OAuthTokenProvider
+func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientID = c.ClientID
+	opts.ClientSecret = c.ClientSecret
 }

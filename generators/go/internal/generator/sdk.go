@@ -334,9 +334,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			)
 		}
 		if authScheme.Oauth != nil {
-			hasOAuth = true
-			f.P("OAuthTokenProvider *OAuthTokenProvider")
-		}
+				hasOAuth = true
+				f.P("ClientID string")
+				f.P("ClientSecret string")
+				f.P("OAuthTokenProvider *OAuthTokenProvider // internal: constructed in client constructor")
+			}
 	}
 	for _, header := range headers {
 		if !shouldGenerateHeader(header, f.types) {
@@ -457,23 +459,9 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("}")
 	f.P()
 
-	// Generate the ToHeaderWithContext method if OAuth is used.
-	if hasOAuth {
-		f.P("// ToHeaderWithContext maps the configured request options into a http.Header used")
-		f.P("// for the request(s). It handles OAuth token refresh if an OAuthTokenProvider is set.")
-		f.P("func (r *RequestOptions) ToHeaderWithContext(ctx context.Context) (http.Header, error) {")
-		f.P("header := r.ToHeader()")
-		f.P("if r.OAuthTokenProvider != nil {")
-		f.P("token, err := r.OAuthTokenProvider.GetToken(ctx)")
-		f.P("if err != nil {")
-		f.P("return nil, err")
-		f.P("}")
-		f.P(`header.Set("Authorization", "Bearer " + token)`)
-		f.P("}")
-		f.P("return header, nil")
-		f.P("}")
-		f.P()
-	}
+	// Note: OAuth token refresh is handled in the client constructor, not here.
+	// The client will create an OAuthTokenProvider internally when ClientID and ClientSecret are set.
+	_ = hasOAuth // Suppress unused variable warning
 
 	if err := f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion); err != nil {
 		return err
@@ -584,10 +572,21 @@ func (f *fileWriter) writeRequestOptionStructs(
 				}
 			}
 			if authScheme.Oauth != nil {
-				if err := f.writeOptionStruct("OAuthTokenProvider", "*OAuthTokenProvider", true, asIdempotentRequestOption); err != nil {
-					return err
+					// The client credentials option requires special care because it requires
+					// two parameters (similar to basic auth).
+					f.P("// ClientCredentialsOption implements the RequestOption interface.")
+					f.P("type ClientCredentialsOption struct {")
+					f.P("ClientID string")
+					f.P("ClientSecret string")
+					f.P("}")
+					f.P()
+
+					f.P("func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {")
+					f.P("opts.ClientID = c.ClientID")
+					f.P("opts.ClientSecret = c.ClientSecret")
+					f.P("}")
+					f.P()
 				}
-			}
 		}
 	}
 
@@ -867,38 +866,41 @@ func (f *fileWriter) WriteRequestOptions(
 			f.P()
 		}
 		if authScheme.Oauth != nil {
-			if i == 0 {
-				option = ast.NewCallExpr(
-					ast.NewImportedReference(
-						"WithOAuthTokenProvider",
-						importPath,
-					),
-					[]ast.Expr{
-						ast.NewBasicLit(`oauthTokenProvider`),
-					},
-				)
-				if authScheme.Oauth.Configuration != nil && authScheme.Oauth.Configuration.ClientCredentials != nil {
-					cc := authScheme.Oauth.Configuration.ClientCredentials
-					if cc.ClientIdEnvVar != nil {
-						environmentVars = append(environmentVars, string(*cc.ClientIdEnvVar))
-					}
-					if cc.ClientSecretEnvVar != nil {
-						environmentVars = append(environmentVars, string(*cc.ClientSecretEnvVar))
+				if i == 0 {
+					option = ast.NewCallExpr(
+						ast.NewImportedReference(
+							"WithClientCredentials",
+							importPath,
+						),
+						[]ast.Expr{
+							ast.NewBasicLit(`"<YOUR_CLIENT_ID>"`),
+							ast.NewBasicLit(`"<YOUR_CLIENT_SECRET>"`),
+						},
+					)
+					if authScheme.Oauth.Configuration != nil && authScheme.Oauth.Configuration.ClientCredentials != nil {
+						cc := authScheme.Oauth.Configuration.ClientCredentials
+						if cc.ClientIdEnvVar != nil {
+							environmentVars = append(environmentVars, string(*cc.ClientIdEnvVar))
+						}
+						if cc.ClientSecretEnvVar != nil {
+							environmentVars = append(environmentVars, string(*cc.ClientSecretEnvVar))
+						}
 					}
 				}
+				f.P("// WithClientCredentials sets the client credentials for OAuth authentication.")
+				f.P("// The SDK will automatically handle token refresh when the token expires.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				f.P("func WithClientCredentials(clientID, clientSecret string) *core.ClientCredentialsOption {")
+				f.P("return &core.ClientCredentialsOption{")
+				f.P("ClientID: clientID,")
+				f.P("ClientSecret: clientSecret,")
+				f.P("}")
+				f.P("}")
+				f.P()
 			}
-			f.P("// WithOAuthTokenProvider sets the OAuth token provider for automatic token refresh.")
-			if includeCustomAuthDocs {
-				f.P("//")
-				f.WriteDocs(auth.Docs)
-			}
-			f.P("func WithOAuthTokenProvider(tokenProvider *core.OAuthTokenProvider) *core.OAuthTokenProviderOption {")
-			f.P("return &core.OAuthTokenProviderOption{")
-			f.P("OAuthTokenProvider: tokenProvider,")
-			f.P("}")
-			f.P("}")
-			f.P()
-		}
 	}
 
 	for _, header := range headers {

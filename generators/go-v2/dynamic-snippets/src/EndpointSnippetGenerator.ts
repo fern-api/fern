@@ -493,21 +493,12 @@ export class EndpointSnippetGenerator {
             writer.writeNode(
                 go.invokeFunc({
                     func: go.typeReference({
-                        name: "WithOAuthTokenProvider",
+                        name: "WithClientCredentials",
                         importPath: this.context.getOptionImportPath()
                     }),
                     arguments_: [
-                        go.invokeFunc({
-                            func: go.typeReference({
-                                name: "NewOAuthTokenProvider",
-                                importPath: `${this.context.rootImportPath}/core`
-                            }),
-                            arguments_: [
-                                go.TypeInstantiation.string(values.clientId),
-                                go.TypeInstantiation.string(values.clientSecret),
-                                go.codeblock("nil") // refreshFunc will be set by the SDK internally
-                            ]
-                        })
+                        go.TypeInstantiation.string(values.clientId),
+                        go.TypeInstantiation.string(values.clientSecret)
                     ]
                 })
             );
