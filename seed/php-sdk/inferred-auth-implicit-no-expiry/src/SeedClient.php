@@ -10,7 +10,7 @@ use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Core\InferredAuthProvider;
 
-class SeedClient 
+class SeedClient
 {
     /**
      * @var AuthClient $auth
@@ -49,6 +49,11 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @var InferredAuthProvider $inferredAuthProvider
+     */
+    private InferredAuthProvider $inferredAuthProvider;
+
+    /**
      * @param ?string $clientId
      * @param ?string $clientSecret
      * @param ?string $scope
@@ -67,20 +72,19 @@ class SeedClient
         ?string $scope = null,
         ?string $xApiKey = null,
         ?array $options = null,
-    )
-    {
+    ) {
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($xApiKey != null){
+        if ($xApiKey != null) {
             $defaultHeaders['X-Api-Key'] = $xApiKey;
         }
-        
+
         $this->options = $options ?? [];
-        
+
         $authRawClient = new RawClient(['headers' => []]);
         $authClient = new AuthClient($authRawClient);
         $inferredAuthOptions = [
@@ -91,19 +95,18 @@ class SeedClient
             'scope' => $scope ?? '',
             'xApiKey' => $xApiKey ?? '',
         ];
-        $inferredAuthProvider = new InferredAuthProvider($authClient, $inferredAuthOptions);
-        $authHeaders = $inferredAuthProvider->getAuthHeaders();
-        
-        $defaultHeaders = array_merge($defaultHeaders, $authHeaders);
+        $this->inferredAuthProvider = new InferredAuthProvider($authClient, $inferredAuthOptions);
+
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-        
+
         $this->client = new RawClient(
             options: $this->options,
+            authHeadersProvider: fn () => $this->inferredAuthProvider->getAuthHeaders(),
         );
-        
+
         $this->auth = new AuthClient($this->client, $this->options);
         $this->nestedNoAuth = new NestedNoAuthClient($this->client, $this->options);
         $this->nested = new NestedClient($this->client, $this->options);
