@@ -111,7 +111,12 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                 if (itemType == null) {
                     return undefined;
                 }
-                return FernIr.TypeReference.container(FernIr.ContainerType.list(itemType));
+                return FernIr.TypeReference.container(
+                    FernIr.ContainerType.list({
+                        itemType,
+                        validation: undefined
+                    })
+                );
             },
             optional: (itemType) => {
                 if (itemType == null) {

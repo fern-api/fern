@@ -1,4 +1,4 @@
-import { ContainerType, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { ContainerType, ListType, ListValidationRules, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext } from "../..";
@@ -21,7 +21,12 @@ export class ArraySchemaConverter extends AbstractConverter<
     AbstractConverterContext<object>,
     ArraySchemaConverter.Output
 > {
-    private static LIST_UNKNOWN = TypeReference.container(ContainerType.list(TypeReference.unknown()));
+    private static LIST_UNKNOWN = TypeReference.container(
+        ContainerType.list({
+            itemType: TypeReference.unknown(),
+            validation: undefined
+        })
+    );
 
     private readonly schema: OpenAPIV3_1.ArraySchemaObject;
 
@@ -56,8 +61,14 @@ export class ArraySchemaConverter extends AbstractConverter<
                         });
                     });
                 }
+
+                const listType: ListType = {
+                    itemType: convertedSchema.type,
+                    validation: this.getListValidation(this.schema)
+                };
+
                 return {
-                    typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),
+                    typeReference: TypeReference.container(ContainerType.list(listType)),
                     referencedTypes,
                     inlinedTypes: convertedSchema.inlinedTypes
                 };
@@ -65,5 +76,15 @@ export class ArraySchemaConverter extends AbstractConverter<
         }
 
         return { typeReference: ArraySchemaConverter.LIST_UNKNOWN, referencedTypes: new Set(), inlinedTypes: {} };
+    }
+
+    private getListValidation(schema: OpenAPIV3_1.ArraySchemaObject): ListValidationRules | undefined {
+        if (schema.minItems == null && schema.maxItems == null) {
+            return undefined;
+        }
+        return {
+            minItems: schema.minItems,
+            maxItems: schema.maxItems
+        };
     }
 }

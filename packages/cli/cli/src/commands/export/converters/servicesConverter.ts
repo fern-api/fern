@@ -646,7 +646,14 @@ function convertQueryParameter({
         description: queryParameter.docs ?? undefined,
         required: isTypeReferenceRequired({ typeReference: queryParameter.valueType, typesByName }),
         schema: queryParameter.allowMultiple
-            ? convertTypeReference(TypeReference.container(ContainerType.list(queryParameter.valueType)))
+            ? convertTypeReference(
+                  TypeReference.container(
+                      ContainerType.list({
+                          itemType: queryParameter.valueType,
+                          validation: undefined
+                      })
+                  )
+              )
             : convertTypeReference(queryParameter.valueType)
     };
 
