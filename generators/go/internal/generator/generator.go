@@ -769,6 +769,7 @@ func (g *Generator) generateRootService(
 		ir.Errors,
 		g.coordinator,
 	)
+	oauthConfig := computeOAuthClientCredentialsConfig(ir, g.config.FullImportPath)
 	generatedClient, err := writer.WriteClient(
 		ir.Auth,
 		irService.Endpoints,
@@ -784,6 +785,7 @@ func (g *Generator) generateRootService(
 		g.config.InlineFileProperties,
 		g.config.ClientName,
 		g.config.ClientConstructorName,
+		oauthConfig,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -835,6 +837,7 @@ func (g *Generator) generateService(
 		g.config.InlineFileProperties,
 		"",
 		"",
+		nil, // OAuth config is only for root client
 	)
 	if err != nil {
 		return nil, nil, err
@@ -889,6 +892,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.InlineFileProperties,
 		"",
 		"",
+		nil, // OAuth config is only for root client
 	); err != nil {
 		return nil, err
 	}
@@ -923,6 +927,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		ir.Errors,
 		g.coordinator,
 	)
+	oauthConfig := computeOAuthClientCredentialsConfig(ir, g.config.FullImportPath)
 	generatedClient, err := writer.WriteClient(
 		ir.Auth,
 		nil,
@@ -938,6 +943,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.InlineFileProperties,
 		g.config.ClientName,
 		g.config.ClientConstructorName,
+		oauthConfig,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -1922,6 +1928,132 @@ func needsOAuthHelpers(ir *fernir.IntermediateRepresentation) bool {
 		}
 	}
 	return false
+}
+
+// computeOAuthClientCredentialsConfig extracts the OAuth client credentials configuration
+// from the IR and returns a config struct that can be used to generate the token refresh code.
+func computeOAuthClientCredentialsConfig(
+	ir *fernir.IntermediateRepresentation,
+	baseImportPath string,
+) *OAuthClientCredentialsConfig {
+	if ir.Auth == nil {
+		return nil
+	}
+
+	// Find the OAuth client credentials scheme
+	var oauthScheme *fernir.OAuthScheme
+	for _, authScheme := range ir.Auth.Schemes {
+		if authScheme.Oauth != nil {
+			oauthScheme = authScheme.Oauth
+			break
+		}
+	}
+	if oauthScheme == nil || oauthScheme.Configuration == nil {
+		return nil
+	}
+
+	// Only support client credentials for now
+	clientCreds := oauthScheme.Configuration.ClientCredentials
+	if clientCreds == nil || clientCreds.TokenEndpoint == nil {
+		return nil
+	}
+
+	tokenEndpoint := clientCreds.TokenEndpoint
+	endpointRef := tokenEndpoint.EndpointReference
+	if endpointRef == nil {
+		return nil
+	}
+
+	// Find the endpoint by ID to get the method name
+	var endpoint *fernir.HttpEndpoint
+	for _, service := range ir.Services {
+		for _, ep := range service.Endpoints {
+			if ep.Id == endpointRef.EndpointId {
+				endpoint = ep
+				break
+			}
+		}
+		if endpoint != nil {
+			break
+		}
+	}
+	if endpoint == nil {
+		return nil
+	}
+
+	// Determine the token client import path based on the subpackage
+	var tokenClientImportPath string
+	if endpointRef.SubpackageId != nil {
+		subpackage := ir.Subpackages[*endpointRef.SubpackageId]
+		if subpackage != nil {
+			tokenClientImportPath = packagePathToImportPath(baseImportPath, packagePathForClient(subpackage.FernFilepath))
+		}
+	}
+	if tokenClientImportPath == "" {
+		// Token endpoint is in the root package - use the client package
+		tokenClientImportPath = baseImportPath + "/client"
+	}
+
+	// Get the endpoint method name
+	tokenEndpointMethod := endpoint.Name.PascalCase.UnsafeName
+
+	// Get the request type info
+	// The request type is typically in the root package (fern)
+	requestImportPath := baseImportPath
+	var requestType string
+	if endpoint.SdkRequest != nil && endpoint.SdkRequest.Shape != nil {
+		if wrapper := endpoint.SdkRequest.Shape.Wrapper; wrapper != nil {
+			requestType = wrapper.WrapperName.PascalCase.UnsafeName
+		}
+	}
+	if requestType == "" {
+		// Fallback: construct from endpoint name
+		requestType = endpoint.Name.PascalCase.UnsafeName + "Request"
+	}
+
+	// Get request property field names
+	reqProps := tokenEndpoint.RequestProperties
+	if reqProps == nil || reqProps.ClientId == nil || reqProps.ClientSecret == nil {
+		return nil
+	}
+
+	clientIDFieldName := "ClientId"
+	clientSecretFieldName := "ClientSecret"
+	if reqProps.ClientId.Property != nil && reqProps.ClientId.Property.Body != nil {
+		clientIDFieldName = reqProps.ClientId.Property.Body.Name.Name.PascalCase.UnsafeName
+	}
+	if reqProps.ClientSecret.Property != nil && reqProps.ClientSecret.Property.Body != nil {
+		clientSecretFieldName = reqProps.ClientSecret.Property.Body.Name.Name.PascalCase.UnsafeName
+	}
+
+	// Get response property field names
+	respProps := tokenEndpoint.ResponseProperties
+	if respProps == nil || respProps.AccessToken == nil {
+		return nil
+	}
+
+	accessTokenFieldName := "AccessToken"
+	if respProps.AccessToken.Property != nil {
+		accessTokenFieldName = respProps.AccessToken.Property.Name.Name.PascalCase.UnsafeName
+	}
+
+	hasExpiresIn := respProps.ExpiresIn != nil
+	expiresInFieldName := "ExpiresIn"
+	if hasExpiresIn && respProps.ExpiresIn.Property != nil {
+		expiresInFieldName = respProps.ExpiresIn.Property.Name.Name.PascalCase.UnsafeName
+	}
+
+	return &OAuthClientCredentialsConfig{
+		TokenClientImportPath: tokenClientImportPath,
+		TokenEndpointMethod:   tokenEndpointMethod,
+		RequestImportPath:     requestImportPath,
+		RequestType:           requestType,
+		ClientIDFieldName:     clientIDFieldName,
+		ClientSecretFieldName: clientSecretFieldName,
+		AccessTokenFieldName:  accessTokenFieldName,
+		ExpiresInFieldName:    expiresInFieldName,
+		HasExpiresIn:          hasExpiresIn,
+	}
 }
 
 func isReservedFilename(filename string) bool {

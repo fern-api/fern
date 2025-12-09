@@ -949,6 +949,45 @@ type GeneratedEndpoint struct {
 	Snippet    ast.Expr
 }
 
+// OAuthClientCredentialsConfig contains the configuration needed to generate
+// OAuth client credentials token refresh code in the client constructor.
+type OAuthClientCredentialsConfig struct {
+	// TokenClientImportPath is the import path for the auth client package
+	// e.g. "github.com/oauth-client-credentials-default/fern/auth"
+	TokenClientImportPath string
+
+	// TokenEndpointMethod is the name of the method on the auth client to call
+	// e.g. "GetToken"
+	TokenEndpointMethod string
+
+	// RequestImportPath is the import path for the request type package
+	// e.g. "github.com/oauth-client-credentials-default/fern"
+	RequestImportPath string
+
+	// RequestType is the name of the request type
+	// e.g. "GetTokenRequest"
+	RequestType string
+
+	// ClientIDFieldName is the field name for client ID in the request
+	// e.g. "ClientId"
+	ClientIDFieldName string
+
+	// ClientSecretFieldName is the field name for client secret in the request
+	// e.g. "ClientSecret"
+	ClientSecretFieldName string
+
+	// AccessTokenFieldName is the field name for access token in the response
+	// e.g. "AccessToken"
+	AccessTokenFieldName string
+
+	// ExpiresInFieldName is the field name for expires_in in the response (optional)
+	// e.g. "ExpiresIn"
+	ExpiresInFieldName string
+
+	// HasExpiresIn indicates whether the response has an expires_in field
+	HasExpiresIn bool
+}
+
 // WriteClient writes a client for interacting with the given service.
 func (f *fileWriter) WriteClient(
 	irAuth *ir.ApiAuth,
@@ -965,6 +1004,7 @@ func (f *fileWriter) WriteClient(
 	inlineFileProperties bool,
 	clientNameOverride string,
 	clientConstructorNameOverride string,
+	oauthConfig *OAuthClientCredentialsConfig,
 ) (*GeneratedClient, error) {
 	var errorDiscriminationByPropertyStrategy *ir.ErrorDiscriminationByPropertyStrategy
 	if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property != nil {
@@ -1052,6 +1092,53 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			continue
 		}
+	}
+	// Generate OAuth token provider initialization if OAuth is configured
+	if oauthConfig != nil {
+		f.P(`if options.ClientID != "" && options.ClientSecret != "" && options.OAuthTokenProvider == nil {`)
+		// Create a no-auth copy of options for the token client to avoid circular auth
+		f.P("noAuthOptions := core.NewRequestOptions(opts...)")
+		f.P("noAuthOptions.ClientID = \"\"")
+		f.P("noAuthOptions.ClientSecret = \"\"")
+		f.P("noAuthOptions.OAuthTokenProvider = nil")
+		// Instantiate the auth client using noAuthOptions
+		tokenClientAlias := f.scope.AddImport(oauthConfig.TokenClientImportPath)
+		f.P("tokenClient := ", tokenClientAlias, ".NewClient(")
+		f.P("option.WithRequestOptions(noAuthOptions),")
+		f.P(")")
+		// Build the refresh closure
+		f.P("options.OAuthTokenProvider = core.NewOAuthTokenProvider(")
+		f.P("options.ClientID,")
+		f.P("options.ClientSecret,")
+		f.P("func(ctx ", f.scope.AddImport("context"), ".Context, clientID, clientSecret string) (*core.OAuthTokenResponse, error) {")
+		// Request type import + construction
+		reqAlias := f.scope.AddImport(oauthConfig.RequestImportPath)
+		f.P("resp, err := tokenClient.", oauthConfig.TokenEndpointMethod, "(ctx, &", reqAlias, ".", oauthConfig.RequestType, "{")
+		f.P(oauthConfig.ClientIDFieldName, ": clientID,")
+		f.P(oauthConfig.ClientSecretFieldName, ": clientSecret,")
+		f.P("})")
+		f.P("if err != nil {")
+		f.P("return nil, err")
+		f.P("}")
+		// Map response to OAuthTokenResponse
+		if oauthConfig.HasExpiresIn {
+			f.P("var expiresInPtr *int")
+			f.P("if resp.", oauthConfig.ExpiresInFieldName, " != 0 {")
+			f.P("expiresIn := int(resp.", oauthConfig.ExpiresInFieldName, ")")
+			f.P("expiresInPtr = &expiresIn")
+			f.P("}")
+			f.P("return &core.OAuthTokenResponse{")
+			f.P("AccessToken: resp.", oauthConfig.AccessTokenFieldName, ",")
+			f.P("ExpiresIn: expiresInPtr,")
+			f.P("}, nil")
+		} else {
+			f.P("return &core.OAuthTokenResponse{")
+			f.P("AccessToken: resp.", oauthConfig.AccessTokenFieldName, ",")
+			f.P("}, nil")
+		}
+		f.P("},")
+		f.P(")")
+		f.P("}")
 	}
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
