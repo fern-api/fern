@@ -8,11 +8,6 @@
         Add support for discriminated unions, enums, and undiscriminated unions in dynamic snippets.
         This fixes issues where snippet examples were showing empty arrays or missing values for
         complex types like union recipients in email/message send operations.
-    - type: fix
-      summary: |
-        Fix dynamic snippet generation for non-object request body types (arrays, undiscriminated unions).
-        Endpoints with array or undiscriminated union request bodies now correctly generate snippets
-        with a `request:` keyword argument containing the converted body value.
   irVersion: 61
 
 - version: 1.0.0-rc61
