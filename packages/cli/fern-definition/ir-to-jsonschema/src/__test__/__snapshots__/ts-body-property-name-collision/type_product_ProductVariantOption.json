@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "product_id": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "display_name",
+    "product_id"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
