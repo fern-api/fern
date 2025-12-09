@@ -3,10 +3,10 @@
 - version: 1.12.2
   changelogEntry:
     - summary: |
-        Add Python 3.11+ StrEnum compatibility. Generated enums now use StrEnum for Python >= 3.11
-        and the (str, Enum) mixin for older versions, fixing compatibility issues with Python 3.11's
-        stricter enum mixin handling.
-      type: feat
+        Fix Python 3.11+ enum compatibility by using StrEnum for Python >= 3.11 and the (str, Enum)
+        mixin for older versions. This resolves compatibility issues with Python 3.11's stricter
+        enum mixin handling.
+      type: fix
   createdAt: "2025-12-08"
   irVersion: 61
 
