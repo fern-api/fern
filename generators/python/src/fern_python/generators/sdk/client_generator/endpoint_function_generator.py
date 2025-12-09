@@ -1569,8 +1569,10 @@ class EndpointFunctionGenerator:
             container=lambda container: container.visit(
                 list_=lambda _lt: False,
                 set_=lambda _st: False,
-                optional=lambda item_type: allow_optional and self._is_enum_type_with_value(item_type, allow_optional=True),
-                nullable=lambda item_type: allow_optional and self._is_enum_type_with_value(item_type, allow_optional=True),
+                optional=lambda item_type: allow_optional
+                and self._is_enum_type_with_value(item_type, allow_optional=True),
+                nullable=lambda item_type: allow_optional
+                and self._is_enum_type_with_value(item_type, allow_optional=True),
                 map_=lambda _mt: False,
                 literal=lambda _lit: False,
             ),
