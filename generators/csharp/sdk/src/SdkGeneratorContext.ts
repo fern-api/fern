@@ -13,6 +13,7 @@ import {
     FernFilepath,
     HttpEndpoint,
     HttpService,
+    InferredAuthScheme,
     IntermediateRepresentation,
     Name,
     NameAndWireValue,
@@ -319,6 +320,15 @@ export class SdkGeneratorContext extends GeneratorContext {
             this.config.generateOauthClients
         ) {
             return this.ir.auth.schemes[0];
+        }
+        return undefined;
+    }
+
+    public getInferredAuth(): InferredAuthScheme | undefined {
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "inferred") {
+                return scheme;
+            }
         }
         return undefined;
     }

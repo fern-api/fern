@@ -6,6 +6,7 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AuthScheme,
     HttpHeader,
+    InferredAuthScheme,
     Literal,
     OAuthScheme,
     PrimitiveTypeV1,
@@ -49,10 +50,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     private serviceId: ServiceId | undefined;
     private grpcClientInfo: GrpcClientInfo | undefined;
     private oauth: OAuthScheme | undefined;
+    private inferred: InferredAuthScheme | undefined;
 
     constructor(context: SdkGeneratorContext) {
         super(context);
         this.oauth = context.getOauth();
+        this.inferred = context.getInferredAuth();
         this.rawClient = new RawClient(context);
         this.serviceId = this.context.ir.rootPackage.service;
         this.grpcClientInfo =
@@ -366,6 +369,48 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                     }
 
+                    if (this.inferred != null) {
+                        const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
+                            this.inferred.tokenEndpoint.endpoint.serviceId
+                        );
+
+                        // Get credential parameters for the inferred auth token provider
+                        const credentialParams = this.getInferredAuthCredentialParams();
+
+                        const arguments_ = [
+                            this.generation.Types.RawClient.new({
+                                arguments_: [this.csharp.codeblock("clientOptions.Clone()")]
+                            })
+                        ];
+
+                        // Build the token provider instantiation with credential parameters
+                        innerWriter.write("var inferredAuthProvider = new InferredAuthTokenProvider(");
+                        for (const param of credentialParams) {
+                            innerWriter.write(`${param}, `);
+                        }
+                        innerWriter.writeNode(
+                            this.csharp.instantiateClass({
+                                classReference: authClientClassReference,
+                                arguments_,
+                                forceUseConstructor: true
+                            })
+                        );
+                        innerWriter.writeTextStatement(")");
+
+                        // Set up headers from the inferred auth provider
+                        innerWriter.writeNode(
+                            this.csharp.codeblock((writer) => {
+                                writer.write(
+                                    `var inferredHeaders = inferredAuthProvider.${this.names.methods.getAuthHeadersAsync}().Result;`
+                                );
+                            })
+                        );
+                        innerWriter.writeLine("");
+                        innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in inferredHeaders"));
+                        innerWriter.writeLine("clientOptions.Headers[header.Key] = header.Value;");
+                        innerWriter.endControlFlow();
+                    }
+
                     innerWriter.writeLine(`${this.members.clientName} = `);
                     innerWriter.writeNodeStatement(
                         this.csharp.instantiateClass({
@@ -631,8 +676,91 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 return [];
             }
         } else if (scheme.type === "inferred") {
-            this.context.logger.warn("Inferred auth scheme is not supported for C# SDK");
-            return [];
+            if (this.inferred != null) {
+                const parameters: ConstructorParameter[] = [];
+                const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
+                const tokenEndpointHttpService = this.context.getHttpService(tokenEndpointReference.serviceId);
+                if (tokenEndpointHttpService == null) {
+                    this.context.logger.warn(
+                        `Service with id ${tokenEndpointReference.serviceId} not found for inferred auth`
+                    );
+                    return [];
+                }
+                const tokenEndpoint = this.context.resolveEndpoint(
+                    tokenEndpointHttpService,
+                    tokenEndpointReference.endpointId
+                );
+
+                // Collect headers from the token endpoint
+                for (const header of tokenEndpoint.headers) {
+                    // Skip literal types - they are hardcoded in the request
+                    if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
+                        continue;
+                    }
+                    // Skip optional types for simplicity
+                    const typeRef = this.context.csharpTypeMapper.convert({ reference: header.valueType });
+                    if (!typeRef.isOptional) {
+                        parameters.push({
+                            name: header.name.name.camelCase.unsafeName,
+                            docs: header.docs ?? `The ${header.name.name.camelCase.unsafeName} for authentication.`,
+                            isOptional,
+                            typeReference: header.valueType,
+                            type: typeRef
+                        });
+                    }
+                }
+
+                // Collect body properties from the token endpoint
+                if (tokenEndpoint.requestBody != null) {
+                    tokenEndpoint.requestBody._visit({
+                        inlinedRequestBody: (inlinedRequestBody) => {
+                            for (const prop of inlinedRequestBody.properties) {
+                                // Skip literal types - they are hardcoded in the request
+                                if (
+                                    prop.valueType.type === "container" &&
+                                    prop.valueType.container.type === "literal"
+                                ) {
+                                    continue;
+                                }
+                                const typeRef = this.context.csharpTypeMapper.convert({ reference: prop.valueType });
+                                // Skip optional types and already added parameters
+                                if (
+                                    !typeRef.isOptional &&
+                                    !parameters.some((p) => p.name === prop.name.name.camelCase.unsafeName)
+                                ) {
+                                    parameters.push({
+                                        name: prop.name.name.camelCase.unsafeName,
+                                        docs:
+                                            prop.docs ??
+                                            `The ${prop.name.name.camelCase.unsafeName} for authentication.`,
+                                        isOptional,
+                                        typeReference: prop.valueType,
+                                        type: typeRef
+                                    });
+                                }
+                            }
+                        },
+                        reference: () => {
+                            // For referenced types, we would need to resolve the type
+                            // For now, skip - most inferred auth uses inline bodies
+                        },
+                        fileUpload: () => {
+                            // File uploads are not supported for token endpoints
+                        },
+                        bytes: () => {
+                            // Bytes are not supported for token endpoints
+                        },
+                        _other: () => {
+                            // Other request body types are not supported
+                        }
+                    });
+                }
+
+                return parameters;
+            } else {
+                this.context.logger.warn("Auth scheme is set to inferred, but no inferred configuration is provided");
+                return [];
+            }
         } else {
             assertNever(scheme);
         }
@@ -681,5 +809,65 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private getSubpackages(): Subpackage[] {
         return this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
+    }
+
+    private getInferredAuthCredentialParams(): string[] {
+        if (this.inferred == null) {
+            return [];
+        }
+
+        const params: string[] = [];
+        const tokenEndpointReference = this.inferred.tokenEndpoint.endpoint;
+        const tokenEndpointHttpService = this.context.getHttpService(tokenEndpointReference.serviceId);
+        if (tokenEndpointHttpService == null) {
+            return [];
+        }
+        const tokenEndpoint = this.context.resolveEndpoint(tokenEndpointHttpService, tokenEndpointReference.endpointId);
+
+        // Collect headers from the token endpoint
+        for (const header of tokenEndpoint.headers) {
+            // Skip literal types - they are hardcoded in the request
+            if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
+                continue;
+            }
+            // Skip optional types for simplicity
+            const typeRef = this.context.csharpTypeMapper.convert({ reference: header.valueType });
+            if (!typeRef.isOptional) {
+                params.push(header.name.name.camelCase.unsafeName);
+            }
+        }
+
+        // Collect body properties from the token endpoint
+        if (tokenEndpoint.requestBody != null) {
+            tokenEndpoint.requestBody._visit({
+                inlinedRequestBody: (inlinedRequestBody) => {
+                    for (const prop of inlinedRequestBody.properties) {
+                        // Skip literal types - they are hardcoded in the request
+                        if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
+                            continue;
+                        }
+                        const typeRef = this.context.csharpTypeMapper.convert({ reference: prop.valueType });
+                        // Skip optional types and already added parameters
+                        if (!typeRef.isOptional && !params.includes(prop.name.name.camelCase.unsafeName)) {
+                            params.push(prop.name.name.camelCase.unsafeName);
+                        }
+                    }
+                },
+                reference: () => {
+                    // Referenced types are not supported for token endpoints
+                },
+                fileUpload: () => {
+                    // File uploads are not supported for token endpoints
+                },
+                bytes: () => {
+                    // Bytes are not supported for token endpoints
+                },
+                _other: () => {
+                    // Other request body types are not supported
+                }
+            });
+        }
+
+        return params;
     }
 }

@@ -384,7 +384,8 @@ export class Generation {
         }),
         methods: lazy({
             mockOauth: () => "MockOAuthEndpoint",
-            getAccessTokenAsync: () => "GetAccessTokenAsync"
+            getAccessTokenAsync: () => "GetAccessTokenAsync",
+            getAuthHeadersAsync: () => "GetAuthHeadersAsync"
         }),
         variables: lazy({
             client: () => "client",
@@ -684,6 +685,12 @@ export class Generation {
         OAuthTokenProvider: () =>
             this.csharp.classReference({
                 origin: this.model.staticExplicit("OAuthTokenProvider"),
+                namespace: this.namespaces.core
+            }),
+        /** Inferred auth token provider for authentication */
+        InferredAuthTokenProvider: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("InferredAuthTokenProvider"),
                 namespace: this.namespaces.core
             }),
         /** Converter for Protocol Buffer types */
