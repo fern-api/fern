@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.12.2
+  changelogEntry:
+    - summary: |
+        Fix Python 3.11+ enum compatibility by using StrEnum for Python >= 3.11 and the (str, Enum)
+        mixin for older versions. This resolves compatibility issues with Python 3.11's stricter
+        enum mixin handling.
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 61
+
 - version: 1.12.1
   changelogEntry:
     - summary: Fix discriminated union Field(discriminator=...) and UnionMetadata(discriminant=...) to use Python field names instead of JSON aliases for Pydantic v2 compatibility.
