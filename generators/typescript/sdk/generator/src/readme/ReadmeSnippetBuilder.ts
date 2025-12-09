@@ -41,7 +41,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
     private readonly generateSubpackageExports: boolean;
-    private readonly oauthTokenOverride: boolean;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
@@ -55,21 +54,18 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         context,
         endpointSnippets,
         fileResponseType,
-        generateSubpackageExports,
-        oauthTokenOverride
+        generateSubpackageExports
     }: {
         context: SdkContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
         generateSubpackageExports: boolean;
-        oauthTokenOverride: boolean;
     }) {
         super({ endpointSnippets });
         this.context = context;
         this.fileResponseType = fileResponseType;
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
         this.generateSubpackageExports = generateSubpackageExports;
-        this.oauthTokenOverride = oauthTokenOverride;
 
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
@@ -490,11 +486,6 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     }
 
     public buildAuthenticationDescription(): string | undefined {
-        // Only show authentication section when OAuth token override is enabled
-        if (!this.oauthTokenOverride) {
-            return undefined;
-        }
-
         const oauthScheme = this.context.ir.auth.schemes.find((scheme) => scheme.type === "oauth");
         if (oauthScheme == null) {
             return undefined;
