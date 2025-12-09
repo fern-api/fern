@@ -2,14 +2,20 @@ import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
+import { toPascalCase, toScreamingSnakeCase, toSnakeCase } from "@fern-api/casings-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
 import { BasePythonCustomConfigSchema } from "@fern-api/python-browser-compatible-base";
-import { camelCase, snakeCase } from "lodash-es";
+import { snakeCase } from "lodash-es";
 
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
+
+const PYTHON_CASING_OPTIONS = {
+    generationLanguage: "python" as const,
+    smartCasing: true
+};
 
 const ALLOWED_RESERVED_METHOD_NAMES = ["list", "set"];
 
@@ -41,7 +47,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getClassName(name: FernIr.Name): string {
-        const result = name.pascalCase.safeName;
+        const result = toPascalCase(name.originalName, PYTHON_CASING_OPTIONS).safeName;
         const rootClientName = this.getRootClientClassName();
         if (result === rootClientName) {
             return `${rootClientName}Model`;
@@ -54,8 +60,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getPropertyName(name: FernIr.Name): string {
-        const snakeCase = name.snakeCase.safeName;
-        if (snakeCase.startsWith("_")) {
+        const snakeCaseResult = toSnakeCase(name.originalName, PYTHON_CASING_OPTIONS);
+        if (snakeCaseResult.safeName.startsWith("_")) {
             // These are public fields so they should not start with an underscore.
             //
             // The Fern CLI will automatically add the underscore in the beginning for
@@ -65,16 +71,17 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             // This isn't just nice to have, Pydantic V2 also disallows underscore prefixes
             // and Python also does not allow fields to start with a number, so we need a
             // new prefix.
-            return "f_" + snakeCase.substring(snakeCase.lastIndexOf("_") + 1);
+            return "f_" + snakeCaseResult.safeName.substring(snakeCaseResult.safeName.lastIndexOf("_") + 1);
         }
-        return snakeCase;
+        return snakeCaseResult.safeName;
     }
 
     public getMethodName(name: FernIr.Name): string {
-        if (ALLOWED_RESERVED_METHOD_NAMES.includes(name.snakeCase.unsafeName)) {
-            return name.snakeCase.unsafeName;
+        const snakeCaseResult = toSnakeCase(name.originalName, PYTHON_CASING_OPTIONS);
+        if (ALLOWED_RESERVED_METHOD_NAMES.includes(snakeCaseResult.unsafeName)) {
+            return snakeCaseResult.unsafeName;
         }
-        return name.snakeCase.safeName;
+        return snakeCaseResult.safeName;
     }
 
     public getRootClientClassReference(): python.Reference {
@@ -120,7 +127,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getEnvironmentEnumName(name: FernIr.Name): string {
-        return name.screamingSnakeCase.safeName;
+        return toScreamingSnakeCase(name.originalName, PYTHON_CASING_OPTIONS).safeName;
     }
 
     public isPrimitive(typeReference: FernIr.dynamic.TypeReference): boolean {
@@ -196,7 +203,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     private pascalCase(name: string): string {
-        const value = camelCase(name);
-        return value.charAt(0).toUpperCase() + value.slice(1);
+        return toPascalCase(name, PYTHON_CASING_OPTIONS).unsafeName;
     }
 }

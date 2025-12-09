@@ -1,4 +1,5 @@
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { toCamelCase, toSnakeCase } from "@fern-api/casings-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
@@ -14,6 +15,11 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
+
+const PYTHON_CASING_OPTIONS = {
+    generationLanguage: "python" as const,
+    smartCasing: true
+};
 
 /**
  * Local interface for wire test examples.
@@ -331,8 +337,10 @@ export class WireTestGenerator {
      * This ensures test IDs are unique per test and deterministic across regenerations.
      */
     private buildDeterministicTestId(service: HttpService, endpoint: HttpEndpoint, exampleIndex: number): string {
-        const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const servicePathParts = service.name.fernFilepath.allParts.map(
+            (part) => toSnakeCase(part.originalName, PYTHON_CASING_OPTIONS).safeName
+        );
+        const endpointName = toSnakeCase(endpoint.name.originalName, PYTHON_CASING_OPTIONS).safeName;
 
         const segments: string[] = [];
         if (servicePathParts.length > 0) {
@@ -435,7 +443,7 @@ export class WireTestGenerator {
     // =============================================================================
 
     private getTestFunctionName(serviceName: string, endpoint: HttpEndpoint): string {
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const endpointName = toSnakeCase(endpoint.name.originalName, PYTHON_CASING_OPTIONS).safeName;
         return `test_${serviceName}_${endpointName}`;
     }
 
@@ -536,6 +544,8 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: HttpService): string {
-        return service.name.fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join("_");
+        return service.name.fernFilepath.allParts
+            .map((part) => toCamelCase(part.originalName, PYTHON_CASING_OPTIONS).unsafeName)
+            .join("_");
     }
 }

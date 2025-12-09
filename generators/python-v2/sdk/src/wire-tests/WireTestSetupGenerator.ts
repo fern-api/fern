@@ -1,8 +1,14 @@
 import { File } from "@fern-api/base-generator";
+import { toSnakeCase } from "@fern-api/casings-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock } from "@fern-api/mock-utils";
 import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+
+const PYTHON_CASING_OPTIONS = {
+    generationLanguage: "python" as const,
+    smartCasing: true
+};
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration
@@ -295,7 +301,7 @@ def verify_request_count(
         // Process global headers that might require values
         if (this.ir.headers) {
             for (const header of this.ir.headers) {
-                const paramName = header.name.name.snakeCase.safeName;
+                const paramName = toSnakeCase(header.name.name.originalName, PYTHON_CASING_OPTIONS).safeName;
                 // Only add if not already added by auth schemes
                 if (!params.some((p) => p.startsWith(`        ${paramName}=`))) {
                     params.push(`        ${paramName}="test_${paramName}",`);
@@ -315,21 +321,27 @@ def verify_request_count(
         switch (scheme.type) {
             case "bearer":
                 // Bearer auth uses a token parameter
-                params.push(`        ${scheme.token.snakeCase.safeName}="test_token",`);
+                params.push(
+                    `        ${toSnakeCase(scheme.token.originalName, PYTHON_CASING_OPTIONS).safeName}="test_token",`
+                );
                 break;
 
             case "basic":
                 // Basic auth uses username and password parameters
-                params.push(`        ${scheme.username.snakeCase.safeName}="test_username",`);
-                params.push(`        ${scheme.password.snakeCase.safeName}="test_password",`);
-                break;
-
-            case "header":
-                // Header auth uses a custom header parameter
                 params.push(
-                    `        ${scheme.name.name.snakeCase.safeName}="test_${scheme.name.name.snakeCase.safeName}",`
+                    `        ${toSnakeCase(scheme.username.originalName, PYTHON_CASING_OPTIONS).safeName}="test_username",`
+                );
+                params.push(
+                    `        ${toSnakeCase(scheme.password.originalName, PYTHON_CASING_OPTIONS).safeName}="test_password",`
                 );
                 break;
+
+            case "header": {
+                // Header auth uses a custom header parameter
+                const headerParamName = toSnakeCase(scheme.name.name.originalName, PYTHON_CASING_OPTIONS).safeName;
+                params.push(`        ${headerParamName}="test_${headerParamName}",`);
+                break;
+            }
 
             case "oauth":
                 // OAuth typically uses client credentials

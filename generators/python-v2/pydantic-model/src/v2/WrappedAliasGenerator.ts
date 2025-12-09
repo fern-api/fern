@@ -1,3 +1,4 @@
+import { toSnakeCase } from "@fern-api/casings-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { python } from "@fern-api/python-ast";
@@ -6,6 +7,11 @@ import { core, dt, pydantic, WriteablePythonFile } from "@fern-api/python-base";
 import { AliasTypeDeclaration, PrimitiveTypeV1, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { PydanticModelGeneratorContext } from "../ModelGeneratorContext";
+
+const PYTHON_CASING_OPTIONS = {
+    generationLanguage: "python" as const,
+    smartCasing: true
+};
 
 export class WrappedAliasGenerator {
     private readonly className: string;
@@ -111,7 +117,7 @@ export class WrappedAliasGenerator {
                     literal: () => "get_as_string",
                     _other: () => "get_value"
                 }),
-            named: (typeName) => "get_as_" + typeName.name.snakeCase.unsafeName,
+            named: (typeName) => "get_as_" + toSnakeCase(typeName.name.originalName, PYTHON_CASING_OPTIONS).unsafeName,
             primitive: (primitive) => {
                 if (primitive.v2 != null) {
                     return primitive.v2?._visit({
@@ -203,7 +209,7 @@ export class WrappedAliasGenerator {
                     literal: () => "from_string",
                     _other: () => "from_value"
                 }),
-            named: (typeName) => "from_" + typeName.name.snakeCase.unsafeName,
+            named: (typeName) => "from_" + toSnakeCase(typeName.name.originalName, PYTHON_CASING_OPTIONS).unsafeName,
             primitive: (primitive) => {
                 if (primitive.v2 != null) {
                     return primitive.v2?._visit({

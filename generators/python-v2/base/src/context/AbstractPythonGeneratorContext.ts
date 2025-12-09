@@ -1,9 +1,9 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { IntermediateRepresentation, Name, TypeDeclaration, TypeId, TypeReference } from "@fern-fern/ir-sdk/api";
-import { snakeCase } from "lodash-es";
 
 import { BasePythonCustomConfigSchema } from "../custom-config/BasePythonCustomConfigSchema";
 import { PythonProject } from "../project";
+import { pythonToPascalCase, pythonToSnakeCase } from "./PythonCasing";
 import { PythonTypeMapper } from "./PythonTypeMapper";
 
 export abstract class AbstractPythonGeneratorContext<
@@ -20,7 +20,9 @@ export abstract class AbstractPythonGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
-        this.packageName = snakeCase(`${this.config.organization}_${this.ir.apiName.snakeCase.unsafeName}`);
+        this.packageName = pythonToSnakeCase(
+            `${this.config.organization}_${pythonToSnakeCase(this.ir.apiName.originalName).unsafeName}`
+        ).unsafeName;
         this.pythonTypeMapper = new PythonTypeMapper(this);
         this.project = new PythonProject({ context: this });
     }
@@ -47,15 +49,15 @@ export abstract class AbstractPythonGeneratorContext<
     }
 
     public getClassName(name: Name): string {
-        return name.pascalCase.safeName;
+        return pythonToPascalCase(name.originalName).safeName;
     }
 
     public getPascalCaseSafeName(name: Name): string {
-        return name.pascalCase.safeName;
+        return pythonToPascalCase(name.originalName).safeName;
     }
 
     public getSnakeCaseSafeName(name: Name): string {
-        return name.snakeCase.safeName;
+        return pythonToSnakeCase(name.originalName).safeName;
     }
 
     public getModulePathForId(typeId: string): string[] {

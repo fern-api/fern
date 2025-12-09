@@ -1149,6 +1149,9 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/casings-generator':
+        specifier: workspace:^
+        version: link:../../../packages/commons/casings-generator
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
@@ -1219,6 +1222,9 @@ importers:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
+      '@fern-api/casings-generator':
+        specifier: workspace:^
+        version: link:../../../packages/commons/casings-generator
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
@@ -1303,6 +1309,9 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/casings-generator':
+        specifier: workspace:^
+        version: link:../../../packages/commons/casings-generator
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
@@ -1348,6 +1357,9 @@ importers:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
+      '@fern-api/casings-generator':
+        specifier: workspace:^
+        version: link:../../../packages/commons/casings-generator
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
