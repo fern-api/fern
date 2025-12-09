@@ -1473,7 +1473,9 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             if (hasV2HumanExamples && endpointAny.v2Examples?.userSpecifiedExamples) {
                 const humanExampleKeys = Object.keys(endpointAny.v2Examples.userSpecifiedExamples);
                 const humanExampleKey = humanExampleKeys[0];
-                const humanExample = humanExampleKey ? endpointAny.v2Examples.userSpecifiedExamples[humanExampleKey] : undefined;
+                const humanExample = humanExampleKey
+                    ? endpointAny.v2Examples.userSpecifiedExamples[humanExampleKey]
+                    : undefined;
 
                 expect(humanExample.response?.body?.value?.id).toBe("550e8400-e29b-41d4-a716-446655440002");
                 expect(humanExample.response?.body?.value?.price).toBe(24.99);
@@ -1739,7 +1741,9 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
                         // Check if human example has our expected values
                         const firstKey = humanExampleKeys[0];
-                        const humanExample = firstKey ? endpointAny.v2Examples.userSpecifiedExamples[firstKey] : undefined;
+                        const humanExample = firstKey
+                            ? endpointAny.v2Examples.userSpecifiedExamples[firstKey]
+                            : undefined;
                         if (humanExample?.response?.body?.value?.email === "alice@example.com") {
                             console.log("  ✅ Original human example preserved: alice@example.com");
                         }
