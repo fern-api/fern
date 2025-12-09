@@ -70,6 +70,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedApiClient } from "@fern/nullable-allof-extends";
+
+const client = new SeedApiClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.createTest(..., {
     headers: {
         'X-Custom-Header': 'custom value'

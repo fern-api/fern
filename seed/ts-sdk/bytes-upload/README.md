@@ -117,6 +117,15 @@ For example, `fs.ReadStream` has a `path` property which the SDK uses to retriev
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedBytesUploadClient } from "@fern/bytes-upload";
+
+const client = new SeedBytesUploadClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.service.upload(..., {
     headers: {
         'X-Custom-Header': 'custom value'

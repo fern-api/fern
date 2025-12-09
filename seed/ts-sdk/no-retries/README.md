@@ -70,6 +70,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedNoRetriesClient } from "@fern/no-retries";
+
+const client = new SeedNoRetriesClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.retries.getUsers(..., {
     headers: {
         'X-Custom-Header': 'custom value'

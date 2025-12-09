@@ -460,6 +460,15 @@ const text = new TextDecoder().decode(bytes);
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedFileDownloadClient } from "@fern/file-download";
+
+const client = new SeedFileDownloadClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.service.simple(..., {
     headers: {
         'X-Custom-Header': 'custom value'
