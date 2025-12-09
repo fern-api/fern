@@ -1480,10 +1480,6 @@ importers:
         version: 4.0.8(@types/debug@4.1.12)(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
 
   generators/ruby-v2/dynamic-snippets:
-    dependencies:
-      '@fern-api/casings-generator':
-        specifier: workspace:^
-        version: link:../../../packages/commons/casings-generator
     devDependencies:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*

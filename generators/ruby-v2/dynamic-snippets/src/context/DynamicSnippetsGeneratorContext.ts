@@ -2,7 +2,6 @@ import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec
 } from "@fern-api/browser-compatible-base-generator";
-import { CasingOptions, toScreamingSnakeCase, toSnakeCase } from "@fern-api/casings-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { upperFirst } from "lodash-es";
@@ -13,7 +12,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     public customConfig: BaseRubyCustomConfigSchema | undefined;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
-    private casingOptions: CasingOptions;
 
     constructor({
         ir,
@@ -27,10 +25,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         this.customConfig =
             config.customConfig != null ? (config.customConfig as BaseRubyCustomConfigSchema) : undefined;
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
-        this.casingOptions = {
-            generationLanguage: "ruby",
-            smartCasing: true
-        };
     }
 
     public clone(): DynamicSnippetsGeneratorContext {
@@ -87,14 +81,18 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getEnumName(name: FernIr.Name): string {
-        return toScreamingSnakeCase(name.originalName, this.casingOptions).safeName;
+        return this.getName(name.screamingSnakeCase.safeName);
     }
 
     public getMethodName(name: FernIr.Name): string {
-        return toSnakeCase(name.originalName, this.casingOptions).safeName;
+        return this.getName(name.snakeCase.safeName);
     }
 
     public getPropertyName(name: FernIr.Name): string {
-        return toSnakeCase(name.originalName, this.casingOptions).safeName;
+        return this.getName(name.snakeCase.safeName);
+    }
+
+    private getName(name: string): string {
+        return name;
     }
 }
