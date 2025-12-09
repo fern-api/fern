@@ -1,0 +1,15 @@
+changelog:
+  - version: 0.0.1
+    createdAt: "2025-10-23"
+    irVersion: 60
+    changelogEntry:
+      - type: feat
+        summary: Initial release of Kotlin SDK generator
+      - type: feat
+        summary: Support for data classes, enums, and sealed classes
+      - type: feat
+        summary: HTTP client generation with Ktor
+      - type: feat
+        summary: kotlinx.serialization support
+      - type: feat
+        summary: Gradle build configuration
