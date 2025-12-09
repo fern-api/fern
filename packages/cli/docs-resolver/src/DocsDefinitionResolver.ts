@@ -283,20 +283,11 @@ export class DocsDefinitionResolver {
             this.taskContext.logger.debug(`Visited navigation AST in ${navTime.toFixed(0)}ms`);
         }
 
-        // create a map of markdown files to their URL pathnames
+        // create maps of markdown files to their frontmatter values
         // this will be used to resolve relative markdown links to their final URLs
         this.taskContext.logger.debug("Building markdown file maps...");
         const mapStart = performance.now();
-        this.markdownFilesToFullSlugs = await this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
-
-        // create a map of markdown files to their sidebar titles
-        this.markdownFilesToSidebarTitle = await this.getMarkdownFilesToSidebarTitle(this.parsedDocsConfig.pages);
-
-        // create a map of markdown files to their noindex values
-        this.markdownFilesToNoIndex = await this.getMarkdownFilesToNoIndex(this.parsedDocsConfig.pages);
-
-        // create a map of markdown files to their tags
-        this.markdownFilesToTags = await this.getMarkdownFilesToTags(this.parsedDocsConfig.pages);
+        this.extractAllFrontmatterData(this.parsedDocsConfig.pages);
         const mapTime = performance.now() - mapStart;
         this.taskContext.logger.debug(`Built markdown file maps in ${mapTime.toFixed(0)}ms`);
 
@@ -507,94 +498,54 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Creates a map of markdown files to their full slugs specified in the frontmatter only
-     * @param pages - the pages to convert to slugs
-     * @returns a map of markdown files to their full slugs
+     * Extracts all frontmatter data (slug, sidebar-title, noindex, tags) from pages in a single pass.
+     * This is more efficient than parsing frontmatter multiple times for each field.
+     * @param pages - the pages to extract frontmatter from
      */
-    private async getMarkdownFilesToFullSlugs(
-        pages: Record<RelativeFilePath, string>
-    ): Promise<Map<AbsoluteFilePath, string>> {
-        const mdxFilePathToSlug = new Map<AbsoluteFilePath, string>();
+    private extractAllFrontmatterData(pages: Record<RelativeFilePath, string>): void {
         for (const [relativePath, markdown] of Object.entries(pages)) {
             const frontmatter = matter(markdown);
+            const absolutePath = this.resolveFilepath(relativePath);
+
+            // Extract slug
             const slug = frontmatter.data.slug;
             if (typeof slug === "string" && slug.trim().length > 0) {
                 const trimmedSlug = slug.trim();
                 if (isValidRelativeSlug(trimmedSlug)) {
-                    mdxFilePathToSlug.set(this.resolveFilepath(relativePath), trimmedSlug);
+                    this.markdownFilesToFullSlugs.set(absolutePath, trimmedSlug);
                 } else {
                     this.taskContext.logger.warn(
                         `Ignoring absolute URL slug "${trimmedSlug}" in ${relativePath}. Absolute URLs are not allowed for frontmatter slugs.`
                     );
                 }
             }
-        }
-        return mdxFilePathToSlug;
-    }
 
-    /**
-     * Creates a map of markdown files to their sidebar titles specified in the frontmatter only
-     * @param pages - the pages to convert to sidebar titles
-     * @returns a map of markdown files to their sidebar titles
-     */
-    private async getMarkdownFilesToSidebarTitle(
-        pages: Record<RelativeFilePath, string>
-    ): Promise<Map<AbsoluteFilePath, string>> {
-        const mdxFilePathToSidebarTitle = new Map<AbsoluteFilePath, string>();
-        for (const [relativePath, markdown] of Object.entries(pages)) {
-            const frontmatter = matter(markdown);
+            // Extract sidebar-title
             const sidebarTitle = frontmatter.data["sidebar-title"];
             if (typeof sidebarTitle === "string" && sidebarTitle.trim().length > 0) {
-                mdxFilePathToSidebarTitle.set(this.resolveFilepath(relativePath), sidebarTitle.trim());
+                this.markdownFilesToSidebarTitle.set(absolutePath, sidebarTitle.trim());
             }
-        }
-        return mdxFilePathToSidebarTitle;
-    }
 
-    /**
-     * Creates a list of markdown files that have noindex:true specified in the frontmatter
-     * @param pages - the pages to check
-     * @returns a map of markdown files to their noindex value
-     */
-    private async getMarkdownFilesToNoIndex(
-        pages: Record<RelativeFilePath, string>
-    ): Promise<Map<AbsoluteFilePath, boolean>> {
-        const mdxFilePathToNoIndex = new Map<AbsoluteFilePath, boolean>();
-        for (const [relativePath, markdown] of Object.entries(pages)) {
-            const frontmatter = matter(markdown);
+            // Extract noindex
             const noindex = frontmatter.data.noindex;
             if (typeof noindex === "boolean") {
-                mdxFilePathToNoIndex.set(this.resolveFilepath(relativePath), noindex);
+                this.markdownFilesToNoIndex.set(absolutePath, noindex);
             }
-        }
-        return mdxFilePathToNoIndex;
-    }
 
-    /**
-     * Creates a map of markdown files to their tags specified in the frontmatter
-     * @param pages - the pages to check
-     * @returns a map of markdown files to their tags
-     */
-    private async getMarkdownFilesToTags(
-        pages: Record<RelativeFilePath, string>
-    ): Promise<Map<AbsoluteFilePath, string[]>> {
-        const mdxFilePathToTags = new Map<AbsoluteFilePath, string[]>();
-        for (const [relativePath, markdown] of Object.entries(pages)) {
-            const frontmatter = matter(markdown);
+            // Extract tags
             const tags = frontmatter.data.tags;
             if (typeof tags === "string") {
-                mdxFilePathToTags.set(
-                    this.resolveFilepath(relativePath),
+                this.markdownFilesToTags.set(
+                    absolutePath,
                     tags
                         .split(",")
                         .map((item) => item.trim())
                         .filter((item) => item.length > 0)
                 );
             } else if (Array.isArray(tags)) {
-                mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags);
+                this.markdownFilesToTags.set(absolutePath, tags);
             }
         }
-        return mdxFilePathToTags;
     }
 
     /**
