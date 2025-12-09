@@ -46,8 +46,8 @@ class RawHeadersClient:
             "headers",
             method="POST",
             headers={
-                "operand": str(operand) if operand is not None else None,
-                "maybeOperand": str(maybe_operand) if maybe_operand is not None else None,
+                "operand": operand.value if operand is not None else None,
+                "maybeOperand": maybe_operand.value if maybe_operand is not None else None,
                 "operandOrColor": str(operand_or_color) if operand_or_color is not None else None,
                 "maybeOperandOrColor": str(maybe_operand_or_color) if maybe_operand_or_color is not None else None,
             },
@@ -97,8 +97,8 @@ class AsyncRawHeadersClient:
             "headers",
             method="POST",
             headers={
-                "operand": str(operand) if operand is not None else None,
-                "maybeOperand": str(maybe_operand) if maybe_operand is not None else None,
+                "operand": operand.value if operand is not None else None,
+                "maybeOperand": maybe_operand.value if maybe_operand is not None else None,
                 "operandOrColor": str(operand_or_color) if operand_or_color is not None else None,
                 "maybeOperandOrColor": str(maybe_operand_or_color) if maybe_operand_or_color is not None else None,
             },

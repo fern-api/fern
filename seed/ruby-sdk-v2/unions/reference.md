@@ -93,7 +93,7 @@ client.bigunion.update();
 <dd>
 
 ```ruby
-client.bigunion.update_many();
+client.bigunion.update_many(request: []);
 ```
 </dd>
 </dl>
@@ -174,7 +174,7 @@ client.bigunion.get(id: 'id');
 <dd>
 
 ```ruby
-client.bigunion.update();
+client.union.update();
 ```
 </dd>
 </dl>
