@@ -78,7 +78,6 @@ export class UsersClient {
                 return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
-        const _dataWithRawResponse = await list(request).withRawResponse();
         return core.CustomPager.create<
             string,
             SeedPagination.ListUsernamesRequestCustom,
@@ -91,7 +90,7 @@ export class UsersClient {
             parser: async (_request, response) => ({
                 hasNextPage: false,
                 hasPreviousPage: false,
-                items: response?.cursor.data ?? [] ?? [],
+                items: ((response) => response?.cursor.data ?? [])(response.data),
             }),
         });
     }
