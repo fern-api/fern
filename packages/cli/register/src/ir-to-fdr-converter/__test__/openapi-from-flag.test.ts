@@ -670,30 +670,29 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         // Validate that logo property has property-level examples, not File schema examples
         if (companyType && "shape" in companyType && companyType.shape.type === "object") {
-            const objectShape = companyType.shape as { properties?: Array<{ name: { name: { originalName: string } }; v2Examples?: { userSpecifiedExamples?: Record<string, { url?: string }> } }> };
-            const logoProperty = objectShape.properties?.find(
-                (prop) => prop.name.name.originalName === "logo"
-            );
+            const objectShape = companyType.shape as {
+                properties?: Array<{
+                    name: { name: { originalName: string } };
+                    v2Examples?: { userSpecifiedExamples?: Record<string, { url?: string }> };
+                }>;
+            };
+            const logoProperty = objectShape.properties?.find((prop) => prop.name.name.originalName === "logo");
             expect(logoProperty).toBeDefined();
 
             // Verify property-level examples are used (logo.png, not invoice.pdf)
             const examples = logoProperty?.v2Examples?.userSpecifiedExamples;
             expect(examples).toBeDefined();
-            
+
             if (examples) {
                 const exampleValues = Object.values(examples);
                 expect(exampleValues.length).toBeGreaterThan(0);
-                
+
                 // Should contain property-level example URL (logo.png)
-                const hasLogoExample = exampleValues.some(
-                    (ex) => ex.url && ex.url.includes("logo.png")
-                );
+                const hasLogoExample = exampleValues.some((ex) => ex.url && ex.url.includes("logo.png"));
                 expect(hasLogoExample).toBe(true);
-                
+
                 // Should NOT contain File schema example URL (invoice.pdf)
-                const hasInvoiceExample = exampleValues.some(
-                    (ex) => ex.url && ex.url.includes("invoice.pdf")
-                );
+                const hasInvoiceExample = exampleValues.some((ex) => ex.url && ex.url.includes("invoice.pdf"));
                 expect(hasInvoiceExample).toBe(false);
             }
         }
@@ -1457,5 +1456,4 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/anyOf-titled-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/anyOf-titled-ir.snap");
     });
->>>>>>> origin/main
 });
