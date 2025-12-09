@@ -73,9 +73,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         });
     }
 
-    private getPropertiesWithExplicitNames(
-        context: SdkContext
-    ): Array<{ tsPropertyName: string; wireValue: string }> {
+    private getPropertiesWithExplicitNames(context: SdkContext): Array<{ tsPropertyName: string; wireValue: string }> {
         const generatedRequestWrapper = context.requestWrapper.getGeneratedRequestWrapper(
             this.packageId,
             this.endpoint.name
