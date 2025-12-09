@@ -18,6 +18,11 @@ client.complex.search(
   pagination: {
     per_page: 1,
     starting_after: 'starting_after'
+  },
+  query: {
+    field: 'field',
+    operator: '=',
+    value: 'value'
   }
 );
 ```
@@ -71,6 +76,7 @@ client.complex.search(
 client.inline_users.inline_users.list_with_cursor_pagination(
   page: 1,
   per_page: 1,
+  order: 'asc',
   starting_after: 'starting_after'
 );
 ```
@@ -225,6 +231,7 @@ in order to fetch the next page of results.
 client.inline_users.inline_users.list_with_cursor_pagination(
   page: 1,
   per_page: 1,
+  order: 'asc',
   starting_after: 'starting_after'
 );
 ```
@@ -296,6 +303,7 @@ the next page of results.
 client.inline_users.inline_users.list_with_cursor_pagination(
   page: 1.1,
   per_page: 1.1,
+  order: 'asc',
   starting_after: 'starting_after'
 );
 ```
@@ -407,7 +415,10 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(page: 1);
+client.inline_users.inline_users.list_with_cursor_pagination(
+  page: 1,
+  order: 'asc'
+);
 ```
 </dd>
 </dl>
@@ -467,7 +478,10 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination(page: 1);
+client.inline_users.inline_users.list_with_cursor_pagination(
+  page: 1,
+  order: 'asc'
+);
 ```
 </dd>
 </dl>
@@ -694,6 +708,7 @@ client.inline_users.inline_users.list_with_cursor_pagination();
 client.users.list_with_cursor_pagination(
   page: 1,
   per_page: 1,
+  order: 'asc',
   starting_after: 'starting_after'
 );
 ```
@@ -848,6 +863,7 @@ in order to fetch the next page of results.
 client.users.list_with_cursor_pagination(
   page: 1,
   per_page: 1,
+  order: 'asc',
   starting_after: 'starting_after'
 );
 ```
@@ -919,6 +935,7 @@ the next page of results.
 client.users.list_with_cursor_pagination(
   page: 1.1,
   per_page: 1.1,
+  order: 'asc',
   starting_after: 'starting_after'
 );
 ```
@@ -1030,7 +1047,10 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(page: 1);
+client.users.list_with_cursor_pagination(
+  page: 1,
+  order: 'asc'
+);
 ```
 </dd>
 </dl>
@@ -1090,7 +1110,10 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination(page: 1);
+client.users.list_with_cursor_pagination(
+  page: 1,
+  order: 'asc'
+);
 ```
 </dd>
 </dl>
