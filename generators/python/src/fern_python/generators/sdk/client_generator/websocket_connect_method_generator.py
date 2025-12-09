@@ -640,19 +640,22 @@ class WebsocketConnectMethodGenerator:
         *,
         websocket: ir_types.WebSocketChannel,
     ) -> Optional[AST.Expression]:
-        headers: List[Tuple[str, AST.Expression]] = []
+        headers: List[Tuple[str, AST.Expression, bool]] = []
 
         for header in websocket.headers:
             literal_header_value = self._context.get_literal_header_value(header)
             if literal_header_value is not None and type(literal_header_value) is str:
-                headers.append((header.name.wire_value, AST.Expression(f'"{literal_header_value}"')))
+                headers.append((header.name.wire_value, AST.Expression(f'"{literal_header_value}"'), False))
             elif literal_header_value is not None and type(literal_header_value) is bool:
-                headers.append((header.name.wire_value, AST.Expression(f'"{str(literal_header_value).lower()}"')))
+                headers.append(
+                    (header.name.wire_value, AST.Expression(f'"{str(literal_header_value).lower()}"'), False)
+                )
             else:
                 headers.append(
                     (
                         header.name.wire_value,
                         AST.Expression(get_parameter_name(header.name.name)),
+                        self._is_enum_type(header.value_type, allow_optional=True),
                     )
                 )
 
@@ -660,14 +663,19 @@ class WebsocketConnectMethodGenerator:
             return None
 
         def write_headers_dict(writer: AST.NodeWriter) -> None:
-            for _, (header_key, header_value) in enumerate(headers):
+            for _, (header_key, header_value, is_enum) in enumerate(headers):
                 writer.write("if ")
                 writer.write_node(header_value)
                 writer.write_line(" is not None:")
                 with writer.indent():
-                    writer.write(f'headers["{header_key}"] = str(')
-                    writer.write_node(header_value)
-                    writer.write(")")
+                    writer.write(f'headers["{header_key}"] = ')
+                    if is_enum:
+                        writer.write_node(header_value)
+                        writer.write(".value")
+                    else:
+                        writer.write("str(")
+                        writer.write_node(header_value)
+                        writer.write(")")
                     writer.write_line()
 
         return AST.Expression(AST.CodeWriter(write_headers_dict))
@@ -710,6 +718,36 @@ class WebsocketConnectMethodGenerator:
 
     def _is_header_literal(self, header: ir_types.HttpHeader) -> bool:
         return self._context.get_literal_header_value(header) is not None
+
+    def _is_enum_type(
+        self,
+        type_reference: ir_types.TypeReference,
+        *,
+        allow_optional: bool,
+    ) -> bool:
+        def visit_named_type(type_name: ir_types.NamedType) -> bool:
+            type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(type_name.type_id)
+            return type_declaration.shape.visit(
+                alias=lambda alias: self._is_enum_type(alias.alias_of, allow_optional=allow_optional),
+                enum=lambda _enum: True,
+                object=lambda _obj: False,
+                union=lambda _union: False,
+                undiscriminated_union=lambda _union: False,
+            )
+
+        return type_reference.visit(
+            container=lambda container: container.visit(
+                list_=lambda _lt: False,
+                set_=lambda _st: False,
+                optional=lambda item_type: allow_optional and self._is_enum_type(item_type, allow_optional=True),
+                nullable=lambda item_type: allow_optional and self._is_enum_type(item_type, allow_optional=True),
+                map_=lambda _mt: False,
+                literal=lambda _lit: False,
+            ),
+            named=visit_named_type,
+            primitive=lambda _primitive: False,
+            unknown=lambda: False,
+        )
 
     def _is_datetime(
         self,
