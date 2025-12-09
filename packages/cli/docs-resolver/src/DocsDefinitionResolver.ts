@@ -295,25 +295,13 @@ export class DocsDefinitionResolver {
         // This should happen before we parse image paths, as the referenced files may contain images.
         this.taskContext.logger.debug("Replacing referenced markdown and code files...");
         const refStart = performance.now();
-        // Create a cache for snippet content to avoid re-reading the same files multiple times
-        const snippetCache = new Map<AbsoluteFilePath, string>();
-        const cachedMarkdownLoader = async (filepath: AbsoluteFilePath): Promise<string> => {
-            const cached = snippetCache.get(filepath);
-            if (cached != null) {
-                return cached;
-            }
-            const { content } = matter(await readFile(filepath));
-            snippetCache.set(filepath, content);
-            return content;
-        };
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             // First replace markdown includes, then code includes (order matters: snippets can contain code)
             let newMarkdown = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                context: this.taskContext,
-                markdownLoader: cachedMarkdownLoader
+                context: this.taskContext
             });
             newMarkdown = await replaceReferencedCode({
                 markdown: newMarkdown,
@@ -324,9 +312,7 @@ export class DocsDefinitionResolver {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
         }
         const refTime = performance.now() - refStart;
-        this.taskContext.logger.debug(
-            `Replaced referenced content in ${refTime.toFixed(0)}ms (${snippetCache.size} unique snippets cached)`
-        );
+        this.taskContext.logger.debug(`Replaced referenced content in ${refTime.toFixed(0)}ms`);
 
         this.taskContext.logger.debug("Collecting files from docs config...");
         const collectStart = performance.now();
