@@ -1,4 +1,4 @@
-import { V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
+import { V2WebhookExample, Webhook, WebhookPayload, WebhookResponse } from "@fern-api/ir-sdk";
 
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
@@ -75,6 +75,8 @@ export class WebhookConverter extends AbstractOperationConverter {
             return undefined;
         }
 
+        const responses = this.convertWebhookResponses();
+
         return {
             audiences:
                 this.context.getAudiences({
@@ -89,6 +91,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 method: httpMethod,
                 headers,
                 payload,
+                responses: responses.length > 0 ? responses : undefined,
                 examples: [],
                 availability: this.context.getAvailability({
                     node: this.operation,
@@ -106,6 +109,33 @@ export class WebhookConverter extends AbstractOperationConverter {
             },
             inlinedTypes: this.inlinedTypes
         };
+    }
+
+    private convertWebhookResponses(): WebhookResponse[] {
+        const responses: WebhookResponse[] = [];
+
+        if (this.operation.responses == null) {
+            return responses;
+        }
+
+        for (const [statusCode, response] of Object.entries(this.operation.responses)) {
+            const statusCodeNum = parseInt(statusCode);
+            if (isNaN(statusCodeNum)) {
+                continue;
+            }
+
+            const resolvedResponse = this.context.resolveMaybeReference({
+                schemaOrReference: response,
+                breadcrumbs: [...this.breadcrumbs, "responses", statusCode]
+            });
+
+            responses.push({
+                statusCode: statusCodeNum,
+                docs: resolvedResponse?.description
+            });
+        }
+
+        return responses;
     }
 
     private getWebhookV2ExamplesFromRequestBodyV2Examples(
