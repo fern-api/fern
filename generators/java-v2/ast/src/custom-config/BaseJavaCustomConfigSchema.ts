@@ -27,9 +27,6 @@ export const BaseJavaCustomConfigSchema = z.object({
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "custom-pager-name": z.string().optional(),
 
-    // OAuth token override configuration
-    "oauth-token-override": z.boolean().optional(),
-
     // Deprecated.
     "wrapped-aliases": z.boolean().optional()
 });
