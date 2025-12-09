@@ -171,13 +171,13 @@ jobs:
 
       - name: Build PHP SDK generator
         if: ${{ inputs.language == 'php' || github.event_name == 'pull_request' || github.event_name == 'push' }}
-        run: pnpm --filter @fern-api/php-sdk dist:cli
+        run: pnpm turbo run dist:cli --filter @fern-api/php-sdk
 
       - name: Build Go SDK generator
         if: ${{ inputs.language == 'go' }}
         run: |
           cd generators/go && go build ./...
-          pnpm --filter @fern-api/go-sdk dist:cli
+          pnpm turbo run dist:cli --filter @fern-api/go-sdk
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3

@@ -127,6 +127,10 @@ class SDKCustomConfig(pydantic.BaseModel):
 
     custom_pager_name: Optional[str] = None
 
+    # When enabled for OAuth client credentials, allows users to provide
+    # either client_id/client_secret OR a pre-generated token directly.
+    oauth_token_override: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 
@@ -136,6 +140,8 @@ class SDKCustomConfig(pydantic.BaseModel):
             obj = obj.copy()
             if "custom-pager-name" in obj and "custom_pager_name" not in obj:
                 obj["custom_pager_name"] = obj.pop("custom-pager-name")
+            if "oauth-token-override" in obj and "oauth_token_override" not in obj:
+                obj["oauth_token_override"] = obj.pop("oauth-token-override")
 
         obj = super().parse_obj(obj)
 
