@@ -1,5 +1,5 @@
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { Fetcher, GetReferenceOpts, getExampleEndpointCalls } from "@fern-typescript/commons";
+import { Fetcher, GetReferenceOpts, getExampleEndpointCalls, getTextOfTsNode } from "@fern-typescript/commons";
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
@@ -84,6 +84,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         const paginationInfo = this.response.getPaginationInfo(context);
         const requestParameter = this.request.getRequestParameter(context);
         let mainReturnType: ts.TypeNode;
+        const parameters = [...this.request.getEndpointParameters(context)];
+
         if (paginationInfo != null) {
             if (paginationInfo.type === "custom" && requestParameter != null) {
                 mainReturnType = context.coreUtilities.pagination.CustomPager._getReferenceToType(
@@ -91,6 +93,19 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     requestParameter,
                     paginationInfo.responseType
                 );
+                // Add optional parser parameter for custom pagination
+                // This allows SDK authors to provide their own pagination logic
+                parameters.push({
+                    name: "parser",
+                    hasQuestionToken: true,
+                    type: getTextOfTsNode(
+                        context.coreUtilities.pagination.CustomPager._getParserType(
+                            paginationInfo.itemType,
+                            requestParameter,
+                            paginationInfo.responseType
+                        )
+                    )
+                });
             } else {
                 mainReturnType = context.coreUtilities.pagination.Page._getReferenceToType(
                     paginationInfo.itemType,
@@ -100,13 +115,15 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         } else {
             mainReturnType = this.response.getReturnType(context);
         }
+
+        parameters.push(
+            getRequestOptionsParameter({
+                requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint)
+            })
+        );
+
         return {
-            parameters: [
-                ...this.request.getEndpointParameters(context),
-                getRequestOptionsParameter({
-                    requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint)
-                })
-            ],
+            parameters,
             returnTypeWithoutPromise: mainReturnType
         };
     }
@@ -454,7 +471,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 ]);
 
                 // Create a default parser that extracts items but sets hasNextPage to false
-                const parserExpr = ts.factory.createArrowFunction(
+                const defaultParserExpr = ts.factory.createArrowFunction(
                     [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
                     undefined,
                     [
@@ -495,6 +512,14 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             true
                         )
                     )
+                );
+
+                // Use the provided parser if available, otherwise use the default parser
+                // This allows SDK authors to provide their own pagination logic
+                const parserExpr = ts.factory.createBinaryExpression(
+                    ts.factory.createIdentifier("parser"),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                    defaultParserExpr
                 );
 
                 // For custom pagination, we skip the initial _dataWithRawResponse call

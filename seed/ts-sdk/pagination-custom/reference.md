@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernamesCustom</a>({ ...params }) -> core.CustomPager<string, SeedPagination.ListUsernamesRequestCustom, SeedPagination.UsernameCursor></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernamesCustom</a>({ ...params }, parser) -> core.CustomPager<string, SeedPagination.ListUsernamesRequestCustom, SeedPagination.UsernameCursor></code></summary>
 <dl>
 <dd>
 
@@ -46,6 +46,14 @@ const response = page.response;
 <dd>
 
 **request:** `SeedPagination.ListUsernamesRequestCustom` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parser:** `core.CustomPagerParser<string, SeedPagination.ListUsernamesRequestCustom, SeedPagination.UsernameCursor>` 
     
 </dd>
 </dl>
