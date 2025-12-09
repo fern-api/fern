@@ -32,7 +32,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     private expiresAtField: ast.Field | undefined;
     private expiryProperty: ResponseProperty | undefined;
     private requestType: ast.ClassReference;
-    private credentialFields = new Map<string, ast.Field>();
+    private credentialFields = new Map<string, { field: ast.Field; propertyName: string }>();
 
     constructor({ context, scheme }: InferredAuthTokenProviderGenerator.Args) {
         super(context);
@@ -92,7 +92,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         const ctor = this.cls.addConstructor({});
 
         // Add credential fields as constructor parameters
-        for (const [parameter, field] of this.credentialFields.entries()) {
+        for (const [parameter, { field }] of this.credentialFields.entries()) {
             ctor.body.assign(field, ctor.addParameter({ name: parameter, type: field.type }));
         }
 
@@ -136,14 +136,14 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
 
             // Skip optional types for simplicity (they can be added later if needed)
             if (!typeRef.isOptional) {
-                this.credentialFields.set(
-                    fieldName,
-                    this.cls.addField({
-                        origin: this.cls.explicit(this.format.private(fieldName)),
-                        access: ast.Access.Private,
-                        type: typeRef
-                    })
-                );
+                const field = this.cls.addField({
+                    origin: this.cls.explicit(this.format.private(fieldName)),
+                    access: ast.Access.Private,
+                    type: typeRef
+                });
+                // Use PascalCase property name for the request object initializer
+                const propertyName = header.name.name.pascalCase.safeName;
+                this.credentialFields.set(fieldName, { field, propertyName });
             }
         }
 
@@ -162,14 +162,14 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
 
                         // Skip optional types for simplicity
                         if (!typeRef.isOptional && !this.credentialFields.has(fieldName)) {
-                            this.credentialFields.set(
-                                fieldName,
-                                this.cls.addField({
-                                    origin: this.cls.explicit(this.format.private(fieldName)),
-                                    access: ast.Access.Private,
-                                    type: typeRef
-                                })
-                            );
+                            const field = this.cls.addField({
+                                origin: this.cls.explicit(this.format.private(fieldName)),
+                                access: ast.Access.Private,
+                                type: typeRef
+                            });
+                            // Use PascalCase property name for the request object initializer
+                            const propertyName = prop.name.name.pascalCase.safeName;
+                            this.credentialFields.set(fieldName, { field, propertyName });
                         }
                     }
                 },
@@ -256,10 +256,9 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     private buildRequestArguments(): { name: string; assignment: ast.CodeBlock }[] {
         const arguments_: { name: string; assignment: ast.CodeBlock }[] = [];
 
-        for (const [, field] of this.credentialFields.entries()) {
-            const origin = field.origin ?? fail("Expected field.origin to be defined for credential field");
+        for (const { field, propertyName } of this.credentialFields.values()) {
             arguments_.push({
-                name: this.model.getPropertyNameFor(origin),
+                name: propertyName,
                 assignment: this.csharp.codeblock(field.name)
             });
         }

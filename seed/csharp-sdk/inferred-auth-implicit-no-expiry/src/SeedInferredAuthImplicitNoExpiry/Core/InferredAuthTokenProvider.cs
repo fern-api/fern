@@ -37,9 +37,9 @@ public partial class InferredAuthTokenProvider
                 .GetTokenWithClientCredentialsAsync(
                     new GetTokenRequest
                     {
-                        _xApiKey = _xApiKey,
-                        _clientId = _clientId,
-                        _clientSecret = _clientSecret,
+                        XApiKey = _xApiKey,
+                        ClientId = _clientId,
+                        ClientSecret = _clientSecret,
                     }
                 )
                 .ConfigureAwait(false);
