@@ -9,13 +9,10 @@ describe("UsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
-            hasNextPage: true,
-            page: { page: 1, next: { page: 1, starting_after: "starting_after" }, per_page: 1, total_page: 1 },
+            hasNextPage: false,
+            page: { page: 1, per_page: 1, total_page: 1 },
             total_count: 1,
-            data: [
-                { name: "name", id: 1 },
-                { name: "name", id: 1 },
-            ],
+            data: [{ name: "user", id: 1 }],
         };
         server
             .mockEndpoint({ once: false })
@@ -26,37 +23,26 @@ describe("UsersClient", () => {
             .build();
 
         const expected = {
-            hasNextPage: true,
+            hasNextPage: false,
             page: {
                 page: 1,
-                next: {
-                    page: 1,
-                    starting_after: "starting_after",
-                },
                 per_page: 1,
                 total_page: 1,
             },
             total_count: 1,
             data: [
                 {
-                    name: "name",
-                    id: 1,
-                },
-                {
-                    name: "name",
+                    name: "user",
                     id: 1,
                 },
             ],
         };
         const page = await client.users.listWithCursorPagination({
-            page: 1,
-            per_page: 1,
-            order: "asc",
-            starting_after: "starting_after",
+            starting_after: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
 
         expect(expected.data).toEqual(page.data);
-        expect(page.hasNextPage()).toBe(true);
+        expect(page.hasNextPage()).toBe(false);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
     });

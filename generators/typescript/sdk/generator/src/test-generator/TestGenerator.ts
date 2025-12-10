@@ -16,7 +16,10 @@ import {
     IntermediateRepresentation,
     Name,
     OAuthTokenEndpoint,
-    ObjectPropertyAccess
+    ObjectPropertyAccess,
+    Pagination,
+    RequestProperty,
+    ResponseProperty
 } from "@fern-fern/ir-sdk/api";
 import {
     DependencyManager,
@@ -1158,6 +1161,20 @@ describe("${serviceName}", () => {
         // (via getItems), so we don't need to traverse the response path
         const pageName = "page";
         const nextPageName = "nextPage";
+
+        // Calculate expected hasNextPage value based on pagination type and example data
+        const expectedHasNextPage =
+            endpoint.pagination !== undefined && endpoint.pagination.type !== "custom"
+                ? calculateExpectedHasNextPage({
+                      pagination: endpoint.pagination,
+                      responseJson:
+                          example.response.type === "ok" && example.response.value.type === "body"
+                              ? example.response.value.value?.jsonExample
+                              : undefined,
+                      requestJson: example.request?.jsonExample
+                  })
+                : false;
+
         const paginationBlock =
             endpoint.pagination !== undefined
                 ? code`
@@ -1167,7 +1184,7 @@ describe("${serviceName}", () => {
                     endpoint.pagination.type !== "custom"
                         ? code`
                             expect(${expectedName}).toEqual(${pageName}.data);
-                            expect(${pageName}.hasNextPage()).toBe(true);
+                            expect(${pageName}.hasNextPage()).toBe(${expectedHasNextPage});
                             const nextPage = await ${pageName}.getNextPage();
                             expect(${expectedName}).toEqual(${nextPageName}.data);
                         `
@@ -1787,6 +1804,133 @@ function isCodeUndefined(code: Code): boolean {
 function isCodeEmptyObject(code: Code): boolean {
     const rawCode = code.toString().trim();
     return rawCode === "{}" || rawCode === "{ }";
+}
+
+/**
+ * Extracts a property value from a JSON object using a ResponseProperty path.
+ * The property path defines the nested path to traverse in the JSON object.
+ */
+function getPropertyValueFromJson({ json, property }: { json: unknown; property: ResponseProperty }): unknown {
+    if (json == null || typeof json !== "object") {
+        return undefined;
+    }
+
+    let current: unknown = json;
+
+    // Traverse the property path if it exists
+    if (property.propertyPath != null) {
+        for (const pathItem of property.propertyPath) {
+            if (current == null || typeof current !== "object") {
+                return undefined;
+            }
+            // Use originalName for Name types (wire format for nested path segments)
+            current = (current as Record<string, unknown>)[pathItem.name.originalName];
+        }
+    }
+
+    // Get the final property value
+    if (current == null || typeof current !== "object") {
+        return undefined;
+    }
+    // Use wireValue for NameAndWireValue types (the actual wire name)
+    return (current as Record<string, unknown>)[property.property.name.wireValue];
+}
+
+/**
+ * Extracts a property value from a JSON object using a RequestProperty path.
+ */
+function getRequestPropertyValueFromJson({ json, property }: { json: unknown; property: RequestProperty }): unknown {
+    if (json == null || typeof json !== "object") {
+        return undefined;
+    }
+
+    let current: unknown = json;
+
+    // Traverse the property path if it exists
+    if (property.propertyPath != null) {
+        for (const pathItem of property.propertyPath) {
+            if (current == null || typeof current !== "object") {
+                return undefined;
+            }
+            // Use originalName for Name types (wire format for nested path segments)
+            current = (current as Record<string, unknown>)[pathItem.name.originalName];
+        }
+    }
+
+    // Get the final property value
+    if (current == null || typeof current !== "object") {
+        return undefined;
+    }
+    // Use wireValue for NameAndWireValue types (the actual wire name)
+    return (current as Record<string, unknown>)[property.property.name.wireValue];
+}
+
+/**
+ * Calculates the expected hasNextPage value based on pagination type and example data.
+ * This mirrors the SDK's actual pagination logic:
+ * - Cursor pagination: hasNextPage = next != null && next !== ""
+ * - Offset pagination: hasNextPage = results.length >= step (or > 0 if no step)
+ */
+function calculateExpectedHasNextPage({
+    pagination,
+    responseJson,
+    requestJson
+}: {
+    pagination: Pagination;
+    responseJson: unknown;
+    requestJson: unknown;
+}): boolean {
+    switch (pagination.type) {
+        case "cursor": {
+            // For cursor pagination, hasNextPage is true when next property is non-null and non-empty string
+            const nextValue = getPropertyValueFromJson({
+                json: responseJson,
+                property: pagination.next
+            });
+            if (nextValue == null) {
+                return false;
+            }
+            if (typeof nextValue === "string" && nextValue === "") {
+                return false;
+            }
+            return true;
+        }
+        case "offset": {
+            // For offset pagination, hasNextPage is true when results.length >= step
+            const resultsValue = getPropertyValueFromJson({
+                json: responseJson,
+                property: pagination.results
+            });
+
+            if (!Array.isArray(resultsValue)) {
+                return false;
+            }
+
+            const resultsLength = resultsValue.length;
+
+            // If step is defined, try to get the step value from the request
+            if (pagination.step != null) {
+                const stepValue = getRequestPropertyValueFromJson({
+                    json: requestJson,
+                    property: pagination.step
+                });
+                // Only use the step comparison if we can actually find the step value
+                // (step may be in query params which aren't in jsonExample for GET requests)
+                if (typeof stepValue === "number") {
+                    return resultsLength >= Math.floor(stepValue);
+                }
+            }
+
+            // Fallback: if we can't determine the step value, use resultsLength > 0
+            // This matches the SDK's behavior when there are results
+            return resultsLength > 0;
+        }
+        case "custom":
+            // Custom pagination doesn't use hasNextPage in tests
+            return false;
+        default:
+            assertNever(pagination);
+    }
 }
 
 /**
