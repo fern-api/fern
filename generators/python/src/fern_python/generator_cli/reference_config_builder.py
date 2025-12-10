@@ -32,18 +32,22 @@ class ReferenceSectionBuilder:
     def _convert_endpoint_metadata_to_title(
         self, endpoint_metadata: EndpointMetadata, has_parameters: bool
     ) -> generatorcli.reference.MethodInvocationSnippet:
-        return generatorcli.reference.MethodInvocationSnippet(
-            snippet_parts=[
-                generatorcli.reference.LinkedText(text="client."),
-                generatorcli.reference.LinkedText(text=endpoint_metadata.endpoint_package_path),
-                generatorcli.reference.LinkedText(
-                    text=endpoint_metadata.method_name,
-                    location=generatorcli.reference.RelativeLocation(path=self.package_location),
-                ),
-                # Consider a compact way to list parameters here, omitting for now to not create a massively long title.
-                generatorcli.reference.LinkedText(text="(...)" if has_parameters else "()"),
-            ]
-        )
+        snippet_parts = [
+            generatorcli.reference.LinkedText(text="client."),
+            generatorcli.reference.LinkedText(text=endpoint_metadata.endpoint_package_path),
+            generatorcli.reference.LinkedText(
+                text=endpoint_metadata.method_name,
+                location=generatorcli.reference.RelativeLocation(path=self.package_location),
+            ),
+            # Consider a compact way to list parameters here, omitting for now to not create a massively long title.
+            generatorcli.reference.LinkedText(text="(...)" if has_parameters else "()"),
+        ]
+
+        if endpoint_metadata.return_type is not None:
+            return_type_str = self._convert_type_hint_to_name(endpoint_metadata.return_type)
+            snippet_parts.append(generatorcli.reference.LinkedText(text=f" -> {return_type_str}"))
+
+        return generatorcli.reference.MethodInvocationSnippet(snippet_parts=snippet_parts)
 
     def _visit_type_reference(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeId]:
         return type_reference.visit(

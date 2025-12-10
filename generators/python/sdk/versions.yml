@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.45.3
+  changelogEntry:
+    - summary: Add return types to reference.md method signatures for consistency with other SDK generators.
+      type: feat
+  createdAt: "2025-12-10"
+  irVersion: 61
+
 - version: 4.45.2
   changelogEntry:
     - summary: Fix Python wire test generation by schema-based path/body name deconfliction and aligning client class resolution with the SDK's custom config rules.
