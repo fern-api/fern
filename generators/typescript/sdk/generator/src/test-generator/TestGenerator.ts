@@ -1908,18 +1908,21 @@ function calculateExpectedHasNextPage({
 
             const resultsLength = resultsValue.length;
 
-            // If step is defined, check if results.length >= step
+            // If step is defined, try to get the step value from the request
             if (pagination.step != null) {
                 const stepValue = getRequestPropertyValueFromJson({
                     json: requestJson,
                     property: pagination.step
                 });
-                // Use the step value from request, or default to 100 if not provided
-                const step = typeof stepValue === "number" ? stepValue : 100;
-                return resultsLength >= Math.floor(step);
+                // Only use the step comparison if we can actually find the step value
+                // (step may be in query params which aren't in jsonExample for GET requests)
+                if (typeof stepValue === "number") {
+                    return resultsLength >= Math.floor(stepValue);
+                }
             }
 
-            // Fallback: check if results.length > 0
+            // Fallback: if we can't determine the step value, use resultsLength > 0
+            // This matches the SDK's behavior when there are results
             return resultsLength > 0;
         }
         case "custom":
