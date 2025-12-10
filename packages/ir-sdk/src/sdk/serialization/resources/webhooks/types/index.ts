@@ -1,6 +1,5 @@
 export * from "./WebhookGroup";
 export * from "./Webhook";
-export * from "./WebhookResponse";
 export * from "./WebhookName";
 export * from "./WebhookPayload";
 export * from "./WebhookPayloadReference";

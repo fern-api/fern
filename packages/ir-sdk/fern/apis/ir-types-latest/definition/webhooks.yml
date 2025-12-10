@@ -16,17 +16,9 @@ types:
       method: WebhookHttpMethod
       headers: list<http.HttpHeader>
       payload: WebhookPayload
-      responses: optional<list<WebhookResponse>>
+      responses: optional<list<http.HttpResponse>>
       examples: optional<list<ExampleWebhookCall>>
       v2Examples: optional<examples.V2WebhookExamples>
-
-  WebhookResponse:
-    docs: |
-      A response that a webhook endpoint can return.
-      Typically used to indicate success (2xx), client errors (4xx), or server errors (5xx).
-    extends: commons.WithDocs
-    properties:
-      statusCode: integer
 
   WebhookName: commons.Name
 

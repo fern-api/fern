@@ -240,8 +240,7 @@
         },
         "responses": [
           {
-            "statusCode": 200,
-            "docs": "Return a 200 status to indicate that the data was received successfully"
+            "statusCode": 200
           }
         ],
         "examples": [],

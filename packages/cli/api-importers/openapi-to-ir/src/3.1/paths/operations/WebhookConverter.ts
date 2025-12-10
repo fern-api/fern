@@ -1,4 +1,4 @@
-import { V2WebhookExample, Webhook, WebhookPayload, WebhookResponse } from "@fern-api/ir-sdk";
+import { HttpResponse, V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
 
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
@@ -111,27 +111,38 @@ export class WebhookConverter extends AbstractOperationConverter {
         };
     }
 
-    private convertWebhookResponses(): WebhookResponse[] {
-        const responses: WebhookResponse[] = [];
+    private convertWebhookResponses(): HttpResponse[] {
+        const responses: HttpResponse[] = [];
 
         if (this.operation.responses == null) {
             return responses;
         }
 
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
-            const statusCodeNum = parseInt(statusCode);
-            if (isNaN(statusCodeNum)) {
-                continue;
+            // Check for wildcard status codes like 4XX or 5XX
+            const isWildcard = /^\d[Xx]{2}$/.test(statusCode);
+            let statusCodeNum: number;
+
+            if (isWildcard) {
+                // Convert wildcard to base value (e.g., "4XX" -> 400, "5XX" -> 500)
+                // We know statusCode[0] exists because the regex matched
+                statusCodeNum = parseInt(statusCode.charAt(0)) * 100;
+            } else {
+                statusCodeNum = parseInt(statusCode);
+                if (isNaN(statusCodeNum)) {
+                    continue;
+                }
             }
 
-            const resolvedResponse = this.context.resolveMaybeReference({
+            this.context.resolveMaybeReference({
                 schemaOrReference: response,
                 breadcrumbs: [...this.breadcrumbs, "responses", statusCode]
             });
 
             responses.push({
                 statusCode: statusCodeNum,
-                docs: resolvedResponse?.description
+                isWildcardStatusCode: isWildcard ? true : undefined,
+                body: undefined
             });
         }
 

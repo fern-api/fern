@@ -1195,15 +1195,18 @@
         },
         "responses": [
           {
-            "docs": "Webhook received successfully (HTTP 204 No Content)",
+            "body": undefined,
+            "isWildcardStatusCode": undefined,
             "statusCode": 204,
           },
           {
-            "docs": "Invalid payload or authentication failure",
+            "body": undefined,
+            "isWildcardStatusCode": undefined,
             "statusCode": 400,
           },
           {
-            "docs": "Server error processing webhook",
+            "body": undefined,
+            "isWildcardStatusCode": undefined,
             "statusCode": 500,
           },
         ],
