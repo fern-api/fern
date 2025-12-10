@@ -237,24 +237,26 @@ export class CoreUtilitiesManager {
             );
         }
 
-        // Generate custom pager alias file if customPagerName is set
+        // Generate custom pager file if customPagerName is set
+        // The file is named after the custom pager (e.g., MyPager.ts, PayrocPager.ts)
         if (
             this.referencedCoreUtilities["pagination"] != null &&
             this.customPagerName != null &&
             this.customPagerName !== "CustomPager"
         ) {
-            const aliasFilePath = path.join(pathToSrc, "core", "pagination", "CustomPagerAlias.ts");
-            const aliasContent = [
-                `export { CustomPager as ${this.customPagerName}, type CustomPagerParser as ${this.customPagerName}Parser, type CustomPagerContext as ${this.customPagerName}Context } from "./CustomPager";`,
+            const pagerFileName = this.customPagerName;
+            const pagerFilePath = path.join(pathToSrc, "core", "pagination", `${pagerFileName}.ts`);
+            const pagerContent = [
+                `export { CustomPager as ${pagerFileName}, type CustomPagerParser as ${pagerFileName}Parser, type CustomPagerContext as ${pagerFileName}Context } from "./CustomPager";`,
                 ""
             ].join("\n");
-            await writeFile(aliasFilePath, aliasContent);
+            await writeFile(pagerFilePath, pagerContent);
 
-            // Update pagination/index.ts to export from the alias file
+            // Update pagination/index.ts to export from the custom pager file
             const paginationIndexPath = path.join(pathToSrc, "core", "pagination", "index.ts");
             const paginationIndexContent = await readFile(paginationIndexPath, "utf8");
             const updatedPaginationIndexContent =
-                paginationIndexContent.trimEnd() + '\nexport * from "./CustomPagerAlias";\n';
+                paginationIndexContent.trimEnd() + `\nexport * from "./${pagerFileName}";\n`;
             await writeFile(paginationIndexPath, updatedPaginationIndexContent);
         }
     }
