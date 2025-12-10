@@ -1,22 +1,20 @@
 {
     "extends": ["//"],
     "tasks": {
-        "dist": {
-            "with": [],
+        "dist:cli": {
             "outputs": ["dist/**"],
             "dependsOn": ["^compile", "compile"],
-            "cache": true,
             "inputs": [
                 "$TURBO_ARGS",
                 "src/**",
+                "tests/**",
                 "package.json",
                 "tsconfig.json",
-                "build.tsconfig.json",
                 "build.mjs",
+                "$TURBO_ROOT$/packages/configs/**",
                 "$TURBO_ROOT$/shared/.prettierignore",
                 "$TURBO_ROOT$/shared/stylelintrc.shared.json",
-                "$TURBO_ROOT$/tsconfig.eslint.json",
-                "$TURBO_ROOT$/packages/configs/**"
+                "$TURBO_ROOT$/tsconfig.eslint.json"
             ]
         }
     }
