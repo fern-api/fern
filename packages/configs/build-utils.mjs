@@ -1,5 +1,5 @@
 import tsup from 'tsup';
-import { cp } from 'fs/promises';
+import { cp, rm, mkdir, writeFile } from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -68,4 +68,76 @@ export async function buildGenerator(dirname, options = {}) {
  */
 export function getDirname(importMetaUrl) {
     return path.dirname(fileURLToPath(importMetaUrl));
+}
+
+/**
+ * Build function for dynamic snippets packages
+ * Creates both CJS and ESM outputs with proper package.json exports
+ * @param {string} dirname - The __dirname of the calling build.mjs file
+ * @param {Object} packageJson - The package.json contents
+ * @param {string} [versionOverride] - Optional version override from CLI args
+ */
+export async function buildDynamicSnippets(dirname, packageJson, versionOverride) {
+    const distDir = path.join(dirname, "dist");
+    const srcDir = path.join(dirname, "src");
+    const tsconfigPath = path.join(dirname, "build.tsconfig.json");
+
+    await rm(distDir, { recursive: true, force: true });
+    await mkdir(distDir, { recursive: true });
+
+    // Import polyfillNode dynamically
+    const { polyfillNode } = await import('esbuild-plugin-polyfill-node');
+
+    await tsup.build({
+        entry: [path.join(srcDir, "index.ts")],
+        target: "es2020",
+        minify: true,
+        dts: true,
+        sourcemap: true,
+        esbuildPlugins: [
+            polyfillNode({
+                globals: {
+                    buffer: true,
+                    process: true
+                },
+                polyfills: {
+                    fs: false,
+                    crypto: false
+                }
+            })
+        ],
+        tsconfig: tsconfigPath,
+        format: ["cjs", "esm"],
+        outDir: path.join(distDir, "dist"), // yes, this is intentional to have dist/dist
+        clean: false,
+    });
+
+    // Write package.json to dist directory
+    await writeFile(
+        path.join(distDir, "package.json"),
+        JSON.stringify(
+            {
+                name: packageJson.name,
+                version: versionOverride || packageJson.version,
+                repository: packageJson.repository,
+                type: "module",
+                exports: {
+                    import: {
+                        types: "./dist/index.d.ts",
+                        default: "./dist/index.js"
+                    },
+                    require: {
+                        types: "./dist/index.d.cts",
+                        default: "./dist/index.cjs"
+                    }
+                },
+                main: "./dist/index.cjs",
+                module: "./dist/index.js",
+                types: "./dist/index.d.cts",
+                files: ["dist"]
+            },
+            undefined,
+            2
+        )
+    );
 }

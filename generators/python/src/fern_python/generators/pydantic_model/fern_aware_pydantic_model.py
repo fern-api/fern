@@ -99,6 +99,7 @@ class FernAwarePydanticModel:
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
             field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
             use_pydantic_field_aliases=self._custom_config.use_pydantic_field_aliases,
+            coerce_numbers_to_str=custom_config.coerce_numbers_to_str,
         )
 
         self._force_update_forward_refs = force_update_forward_refs

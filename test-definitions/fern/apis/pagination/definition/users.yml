@@ -228,6 +228,7 @@ service:
             docs: Defaults to first page
           limit:
             type: optional<integer>
+            default: 123
             docs: |
               The maximum number of elements to return.
               This is also used as the step size in this
