@@ -1823,7 +1823,8 @@ function getPropertyValueFromJson({ json, property }: { json: unknown; property:
             if (current == null || typeof current !== "object") {
                 return undefined;
             }
-            current = (current as Record<string, unknown>)[pathItem.name.wireValue];
+            // Use originalName for Name types (wire format for nested path segments)
+            current = (current as Record<string, unknown>)[pathItem.name.originalName];
         }
     }
 
@@ -1831,6 +1832,7 @@ function getPropertyValueFromJson({ json, property }: { json: unknown; property:
     if (current == null || typeof current !== "object") {
         return undefined;
     }
+    // Use wireValue for NameAndWireValue types (the actual wire name)
     return (current as Record<string, unknown>)[property.property.name.wireValue];
 }
 
@@ -1850,7 +1852,8 @@ function getRequestPropertyValueFromJson({ json, property }: { json: unknown; pr
             if (current == null || typeof current !== "object") {
                 return undefined;
             }
-            current = (current as Record<string, unknown>)[pathItem.name.wireValue];
+            // Use originalName for Name types (wire format for nested path segments)
+            current = (current as Record<string, unknown>)[pathItem.name.originalName];
         }
     }
 
@@ -1858,6 +1861,7 @@ function getRequestPropertyValueFromJson({ json, property }: { json: unknown; pr
     if (current == null || typeof current !== "object") {
         return undefined;
     }
+    // Use wireValue for NameAndWireValue types (the actual wire name)
     return (current as Record<string, unknown>)[property.property.name.wireValue];
 }
 
