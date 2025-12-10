@@ -1158,20 +1158,52 @@ describe("${serviceName}", () => {
         // (via getItems), so we don't need to traverse the response path
         const pageName = "page";
         const nextPageName = "nextPage";
+
+        // Check if the pagination results path is missing in the example
+        const isResultsPathMissing =
+            endpoint.pagination !== undefined &&
+            isPaginationResultsPathMissingInExample({
+                example,
+                endpoint,
+                retainOriginalCasing: context.retainOriginalCasing,
+                includeSerdeLayer: context.includeSerdeLayer
+            });
+
+        // Get the path segments for building nested spread syntax
+        const paginationPathSegments =
+            endpoint.pagination !== undefined
+                ? getPaginationResultsPathSegments({
+                      endpoint,
+                      retainOriginalCasing: context.retainOriginalCasing,
+                      includeSerdeLayer: context.includeSerdeLayer
+                  })
+                : [];
+
+        // Build the expected declaration based on whether the path is missing
+        const expectedDeclaration = isResultsPathMissing
+            ? code`
+                const baseExpected = ${expected};
+                const expected = ${buildNestedSpreadForUndefinedPath({ baseVar: "baseExpected", segments: paginationPathSegments })};
+            `
+            : code`const expected = ${expected};`;
+
+        // Build the assertion - only use ?? [] when the path is missing
+        const expectedItemsAssertion = isResultsPathMissing ? `${expectedName} ?? []` : expectedName;
+
         const paginationBlock =
             endpoint.pagination !== undefined
                 ? code`
-                const expected = ${expected} as any
+                ${expectedDeclaration}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
                     endpoint.pagination.type !== "custom"
                         ? code`
-                            expect(${expectedName} ?? []).toEqual(${pageName}.data);
+                            expect(${expectedItemsAssertion}).toEqual(${pageName}.data);
                             expect(${pageName}.hasNextPage()).toBe(true);
                             const nextPage = await ${pageName}.getNextPage();
-                            expect(${expectedName} ?? []).toEqual(${nextPageName}.data);
+                            expect(${expectedItemsAssertion}).toEqual(${nextPageName}.data);
                         `
-                        : code`expect(${expectedName} ?? []).toEqual(${pageName}.data);`
+                        : code`expect(${expectedItemsAssertion}).toEqual(${pageName}.data);`
                 }
                 `
                 : "";
@@ -1803,4 +1835,134 @@ function getParameterNameForVariable({
         return variableName.originalName;
     }
     return variableName.camelCase.safeName;
+}
+
+/**
+ * Extracts the raw JSON example from an ExampleResponse.
+ * Returns undefined if the response has no body.
+ */
+function getResponseBodyJsonExample(response: ExampleResponse): unknown | undefined {
+    return response._visit({
+        ok: (okResp) =>
+            okResp._visit({
+                body: (body) => (body ? body.jsonExample : undefined),
+                stream: () => undefined,
+                sse: () => undefined,
+                _other: () => undefined
+            }),
+        error: (err) => (err.body ? err.body.jsonExample : undefined),
+        _other: () => undefined
+    });
+}
+
+/**
+ * Checks if the pagination results path is missing in the example response.
+ * Uses wire values to walk the JSON example since JSON uses wire format.
+ */
+function isPaginationResultsPathMissingInExample({
+    example,
+    endpoint,
+    retainOriginalCasing,
+    includeSerdeLayer
+}: {
+    example: ExampleEndpointCall;
+    endpoint: HttpEndpoint;
+    retainOriginalCasing: boolean;
+    includeSerdeLayer: boolean;
+}): boolean {
+    const pagination = endpoint.pagination;
+    if (pagination == null || pagination.results == null) {
+        return false;
+    }
+
+    const responseJson = getResponseBodyJsonExample(example.response);
+    if (responseJson == null) {
+        return true;
+    }
+
+    const resultsProperty = pagination.results;
+
+    // Build the path segments using wire values for JSON walking
+    // When retainOriginalCasing is true or includeSerdeLayer is false, use wire values
+    // Otherwise use camelCase names (which match the serialized JSON)
+    const useWireValue = retainOriginalCasing || !includeSerdeLayer;
+    const segments = [
+        ...(resultsProperty.propertyPath ?? []).map((item) =>
+            useWireValue ? item.name.originalName : item.name.camelCase.safeName
+        ),
+        useWireValue ? resultsProperty.property.name.wireValue : resultsProperty.property.name.name.camelCase.safeName
+    ];
+
+    let cursor: unknown = responseJson;
+    for (const key of segments) {
+        if (cursor == null || typeof cursor !== "object" || !(key in cursor)) {
+            return true;
+        }
+        cursor = (cursor as Record<string, unknown>)[key];
+    }
+
+    // If the leaf is explicitly undefined, treat it as "missing" for pagination purposes
+    return cursor === undefined;
+}
+
+/**
+ * Builds nested spread syntax to add an undefined property at the given path.
+ * For simple path like ["data"]: { ...baseVar, data: undefined }
+ * For nested path like ["cursor", "data"]: { ...baseVar, cursor: { ...(baseVar.cursor ?? {}), data: undefined } }
+ */
+function buildNestedSpreadForUndefinedPath({ baseVar, segments }: { baseVar: string; segments: string[] }): string {
+    if (segments.length === 0) {
+        return baseVar;
+    }
+
+    function buildValue(parentVar: string, remaining: string[]): string {
+        const [head, ...tail] = remaining;
+        if (head === undefined) {
+            return "";
+        }
+
+        if (tail.length === 0) {
+            // Leaf: e.g. "data: undefined"
+            return `${head}: undefined`;
+        }
+
+        const childParentVar = `${parentVar}.${head}`;
+        const inner = buildValue(childParentVar, tail);
+        // e.g. "cursor: { ...(baseExpected.cursor ?? {}), data: undefined }"
+        return `${head}: { ...(${childParentVar} ?? {}), ${inner} }`;
+    }
+
+    const inner = buildValue(baseVar, segments);
+    return `{ ...${baseVar}, ${inner} }`;
+}
+
+/**
+ * Gets the property path segments for the pagination results property.
+ * Returns the TS property names (respecting retainOriginalCasing and includeSerdeLayer).
+ */
+function getPaginationResultsPathSegments({
+    endpoint,
+    retainOriginalCasing,
+    includeSerdeLayer
+}: {
+    endpoint: HttpEndpoint;
+    retainOriginalCasing: boolean;
+    includeSerdeLayer: boolean;
+}): string[] {
+    const pagination = endpoint.pagination;
+    if (pagination == null || pagination.results == null) {
+        return [];
+    }
+
+    const resultsProperty = pagination.results;
+    const useOriginalName = retainOriginalCasing || !includeSerdeLayer;
+
+    return [
+        ...(resultsProperty.propertyPath ?? []).map((item) =>
+            useOriginalName ? item.name.originalName : item.name.camelCase.safeName
+        ),
+        useOriginalName
+            ? resultsProperty.property.name.wireValue
+            : resultsProperty.property.name.name.camelCase.safeName
+    ];
 }
