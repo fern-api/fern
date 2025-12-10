@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.45.1
+  changelogEntry:
+    - summary: |
+        Refactor Python generators to use centralized casing utility functions instead of pre-computed
+        Name case variations. This is an internal change with no impact on generated SDK output.
+      type: chore
+  createdAt: "2025-12-09"
+  irVersion: 61
+
 - version: 4.45.0
   changelogEntry:
     - summary: |
