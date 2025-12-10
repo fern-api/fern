@@ -1179,17 +1179,9 @@ describe("${serviceName}", () => {
                   })
                 : [];
 
-        // Build the expected declaration based on whether the path is missing
-        // For simple top-level paths (e.g., "data"), use a cleaner inline spread
-        // For nested paths (e.g., "cursor.data"), use the two-step baseExpected pattern
-        const expectedDeclaration = !isResultsPathMissing
-            ? code`const expected = ${expected};`
-            : paginationPathSegments.length === 1
-              ? code`const expected = { ...${expected}, ${paginationPathSegments[0]}: undefined };`
-              : code`
-                const baseExpected = ${expected};
-                const expected = ${buildNestedSpreadForUndefinedPath({ baseVar: "baseExpected", segments: paginationPathSegments })};
-            `;
+        // Build the expected declaration - only needed when the path is present
+        // When the path is missing, we don't need the expected variable since we just assert page.data equals []
+        const expectedDeclaration = code`const expected = ${expected};`;
 
         // Build the assertion based on whether the path is missing
         // When the path is missing, we only assert that page.data equals [] (no hasNextPage/getNextPage assertions
@@ -1197,24 +1189,23 @@ describe("${serviceName}", () => {
         // When the path is present, we compare against the expected items from the example
         const paginationBlock =
             endpoint.pagination !== undefined
-                ? code`
+                ? isResultsPathMissing
+                    ? code`
+                const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                expect(${pageName}.data).toEqual([]);
+                `
+                    : code`
                 ${expectedDeclaration}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
                     endpoint.pagination.type !== "custom"
-                        ? isResultsPathMissing
-                            ? code`
-                            expect(${pageName}.data).toEqual([]);
-                        `
-                            : code`
+                        ? code`
                             expect(${expectedName}).toEqual(${pageName}.data);
                             expect(${pageName}.hasNextPage()).toBe(true);
                             const nextPage = await ${pageName}.getNextPage();
                             expect(${expectedName}).toEqual(${nextPageName}.data);
                         `
-                        : isResultsPathMissing
-                          ? code`expect(${pageName}.data).toEqual([]);`
-                          : code`expect(${expectedName}).toEqual(${pageName}.data);`
+                        : code`expect(${expectedName}).toEqual(${pageName}.data);`
                 }
                 `
                 : "";

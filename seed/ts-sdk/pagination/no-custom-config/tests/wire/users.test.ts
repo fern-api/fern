@@ -694,26 +694,9 @@ describe("UsersClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const _expected = {
-            ...{
-                hasNextPage: false,
-                page: {
-                    page: 1,
-                    next: {
-                        page: 2,
-                        starting_after: "next_cursor",
-                    },
-                    per_page: 10,
-                    total_page: 1,
-                },
-                total_count: 0,
-            },
-            data: undefined,
-        };
         const page = await client.users.listWithOptionalData({
             page: 1,
         });
-
         expect(page.data).toEqual([]);
     });
 });
