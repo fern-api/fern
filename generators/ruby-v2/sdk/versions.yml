@@ -9,6 +9,12 @@
         The shouldGenerateReadme method was incorrectly requiring snippetFilepath to be set
         for GitHub and direct publish configs. README generation now always occurs for these
         output modes when generating a full SDK.
+    - type: fix
+      summary: |
+        Fix snippet generation to use auto-generated examples when no explicit examples are defined.
+        Previously, generateSnippets only looked at explicit examples in the dynamic IR, causing
+        empty snippet.json files for APIs without user-specified examples. Now it uses the same
+        approach as reference.md generation, falling back to auto-generated examples.
   irVersion: 61
 
 - version: 1.0.0-rc62

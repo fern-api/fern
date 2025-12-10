@@ -2,7 +2,6 @@ import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
-import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
@@ -15,8 +14,6 @@ import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
-import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
-import { convertIr } from "./utils/convertIr";
 import { WireTestGenerator } from "./wire-tests";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
@@ -218,30 +215,34 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {
         const endpointSnippets: Endpoint[] = [];
 
-        const dynamicIr = context.ir.dynamic;
-        if (dynamicIr == null) {
-            throw new Error("Cannot generate dynamic snippets without dynamic IR");
-        }
+        // Iterate over all services and endpoints to generate snippets
+        // This uses maybeGetExampleEndpointCall which falls back to auto-generated examples
+        for (const [_, service] of Object.entries(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                const exampleCall = context.maybeGetExampleEndpointCall(endpoint);
+                if (exampleCall == null) {
+                    continue;
+                }
 
-        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: convertIr(dynamicIr),
-            config: context.config
-        });
+                const singleEndpointSnippet = context.snippetGenerator.getSingleEndpointSnippet({
+                    endpoint,
+                    example: exampleCall
+                });
 
-        for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
-            const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-            for (const endpointExample of endpoint.examples ?? []) {
+                if (singleEndpointSnippet == null) {
+                    continue;
+                }
+
+                const path = FernGeneratorExec.EndpointPath(endpoint.path.head);
                 endpointSnippets.push({
-                    exampleIdentifier: endpointExample.id,
+                    exampleIdentifier: exampleCall.id,
                     id: {
-                        method: endpoint.location.method,
+                        method: endpoint.method,
                         path,
-                        identifierOverride: endpointId
+                        identifierOverride: endpoint.id
                     },
                     snippet: FernGeneratorExec.EndpointSnippet.ruby({
-                        client: dynamicSnippetsGenerator.generateSync(
-                            convertDynamicEndpointSnippetRequest(endpointExample)
-                        ).snippet
+                        client: singleEndpointSnippet.endpointCall
                     })
                 });
             }
