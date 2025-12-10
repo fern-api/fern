@@ -418,12 +418,14 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 // Fetch a new token from the auth endpoint
                 // Get the request type reference from the endpoint
                 const serviceId = oauthScheme.configuration.tokenEndpoint.endpointReference.serviceId;
-                const requestWrapperName = tokenEndpoint.sdkRequest?.shape.type === "wrapper" 
-                    ? tokenEndpoint.sdkRequest.shape.wrapperName 
-                    : tokenEndpoint.sdkRequest?.requestParameterName;
-                const requestTypeRef = requestWrapperName != null 
-                    ? this.context.getRequestWrapperTypeReference(serviceId, requestWrapperName)
-                    : go.typeReference({ name: "GetTokenRequest", importPath: this.context.getRootImportPath() });
+                const requestWrapperName =
+                    tokenEndpoint.sdkRequest?.shape.type === "wrapper"
+                        ? tokenEndpoint.sdkRequest.shape.wrapperName
+                        : tokenEndpoint.sdkRequest?.requestParameterName;
+                const requestTypeRef =
+                    requestWrapperName != null
+                        ? this.context.getRequestWrapperTypeReference(serviceId, requestWrapperName)
+                        : go.typeReference({ name: "GetTokenRequest", importPath: this.context.getRootImportPath() });
                 w.write(`response, err := authClient.${methodName}(`);
                 w.writeNode(
                     go.invokeFunc({
@@ -468,7 +470,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         return service.endpoints.find((ep) => ep.id === endpointId);
     }
 
-    private getRequestPropertyFieldName(requestProperty: { property: { type: string; name?: { name: Name } } }): string {
+    private getRequestPropertyFieldName(requestProperty: {
+        property: { type: string; name?: { name: Name } };
+    }): string {
         // The property can be either "query" or "body" type
         // Both have a name field that contains the Name object
         if (requestProperty.property.type === "body" && requestProperty.property.name != null) {
