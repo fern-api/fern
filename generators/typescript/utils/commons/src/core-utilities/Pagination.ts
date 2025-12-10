@@ -153,10 +153,7 @@ export class PaginationImpl extends CoreUtility implements Pagination {
                                             ts.factory.createIdentifier("initialRequest"),
                                             initialRequest
                                         ),
-                                        ts.factory.createPropertyAssignment(
-                                            ts.factory.createIdentifier("parse"),
-                                            parse
-                                        )
+                                        ts.factory.createPropertyAssignment(ts.factory.createIdentifier("parse"), parse)
                                     ],
                                     true
                                 )

@@ -505,7 +505,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                         })
                     )
                 ];
-            }else {
+            } else {
                 statements.push(
                     ts.factory.createReturnStatement(
                         context.coreUtilities.pagination.Page._construct({
