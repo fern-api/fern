@@ -1087,6 +1087,12 @@ function addUpgradeCommand({
                 .option("from-git", {
                     boolean: true,
                     hidden: true
+                })
+                .option("yes", {
+                    alias: "y",
+                    boolean: true,
+                    default: false,
+                    description: "Automatically answer yes to migration prompts."
                 }),
         async (argv) => {
             await upgrade({
@@ -1094,7 +1100,8 @@ function addUpgradeCommand({
                 includePreReleases: argv.rc,
                 targetVersion: argv.to ?? argv.version,
                 fromVersion: argv.from,
-                fromGit: argv["from-git"]
+                fromGit: argv["from-git"],
+                yes: argv.yes
             });
             onRun();
         }

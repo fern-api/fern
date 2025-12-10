@@ -298,13 +298,15 @@ export async function upgrade({
     includePreReleases,
     targetVersion,
     fromVersion,
-    fromGit
+    fromGit,
+    yes
 }: {
     cliContext: CliContext;
     includePreReleases: boolean;
     targetVersion: string | undefined;
     fromVersion: string | undefined;
     fromGit?: boolean;
+    yes?: boolean;
 }): Promise<void> {
     const isLocalDev = cliContext.environment.packageVersion === "0.0.0";
 
@@ -389,7 +391,8 @@ export async function upgrade({
             await runMigrations({
                 fromVersion: resolvedFromVersion,
                 toVersion: resolvedTargetVersion,
-                context
+                context,
+                yes: yes ?? false
             });
         });
         await cliContext.exitIfFailed();
@@ -437,6 +440,10 @@ export async function upgrade({
     // Filter out upgrade-specific flags and build args for rerun
     const otherArgs = filterUpgradeFlags(process.argv.slice(2));
     const rerunArgs = ["upgrade", "--from", resolvedFromVersion, "--to", resolvedTargetVersion, ...otherArgs];
+
+    if (yes && !otherArgs.some((arg) => arg === "--yes" || arg === "-y")) {
+        rerunArgs.push("--yes");
+    }
 
     try {
         await rerunFernCliAtVersion({

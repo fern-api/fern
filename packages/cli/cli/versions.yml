@@ -9,6 +9,14 @@
 
 - changelogEntry:
     - summary: |
+        Include -y flag for the upgrade for non-interactive environments.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.8.0
+
+- changelogEntry:
+    - summary: |
         Add API flag `default-integer-format` to configure which format is assumed for `type: "integer"`
         properties in OpenAPI that do not specify a format.
 
