@@ -549,7 +549,9 @@ class OAuthTokenProviderGenerator:
 
     def _get_expires_at_function_declaration(self) -> AST.FunctionDeclaration:
         """
-        def _get_expires_at(expires_in_seconds: int, buffer_in_minutes: int):
+        def _get_expires_at(expires_in_seconds: typing.Optional[int], buffer_in_minutes: int):
+            if expires_in_seconds is None:
+                return dt.datetime.max
             return (
                 dt.datetime.now()
                 + dt.timedelta(seconds=expires_in_seconds)
@@ -560,7 +562,7 @@ class OAuthTokenProviderGenerator:
         named_parameters = [
             AST.NamedFunctionParameter(
                 name="expires_in_seconds",
-                type_hint=AST.TypeHint.int_(),
+                type_hint=AST.TypeHint.optional(AST.TypeHint.int_()),
             ),
             AST.NamedFunctionParameter(
                 name="buffer_in_minutes",
@@ -569,6 +571,11 @@ class OAuthTokenProviderGenerator:
         ]
 
         def _write_get_expires_at_body(writer: AST.NodeWriter) -> None:
+            writer.write_line("if expires_in_seconds is None:")
+            with writer.indent():
+                writer.write("return ")
+                writer.write_node(self._get_datetime_max_reference())
+                writer.write_line()
             writer.write_line("return (")
             with writer.indent():
                 writer.write_node(self._get_datetime_now_invocation())
@@ -603,6 +610,14 @@ class OAuthTokenProviderGenerator:
             function_definition=AST.Reference(
                 import_=AST.ReferenceImport(module=AST.Module.built_in(("datetime",)), alias="dt"),
                 qualified_name_excluding_import=("datetime", "now"),
+            )
+        )
+
+    def _get_datetime_max_reference(self) -> AST.Expression:
+        return AST.Expression(
+            AST.Reference(
+                import_=AST.ReferenceImport(module=AST.Module.built_in(("datetime",)), alias="dt"),
+                qualified_name_excluding_import=("datetime", "max"),
             )
         )
 

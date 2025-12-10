@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.45.3
+  changelogEntry:
+    - summary: |
+        Make `expires_in_seconds` optional in `OAuthTokenProvider._get_expires_at()`. When the API response
+        does not include an expiration time, the token is now treated as valid indefinitely (until explicitly
+        refreshed) instead of causing a runtime error.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
 - version: 4.45.2
   changelogEntry:
     - summary: Fix Python wire test generation by schema-based path/body name deconfliction and aligning client class resolution with the SDK's custom config rules.

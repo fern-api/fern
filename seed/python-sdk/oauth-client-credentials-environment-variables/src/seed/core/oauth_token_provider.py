@@ -40,7 +40,9 @@ class OAuthTokenProvider:
         )
         return self._access_token
 
-    def _get_expires_at(self, *, expires_in_seconds: int, buffer_in_minutes: int):
+    def _get_expires_at(self, *, expires_in_seconds: typing.Optional[int] = None, buffer_in_minutes: int):
+        if expires_in_seconds is None:
+            return dt.datetime.max
         return dt.datetime.now() + dt.timedelta(seconds=expires_in_seconds) - dt.timedelta(minutes=buffer_in_minutes)
 
 
@@ -73,5 +75,7 @@ class AsyncOAuthTokenProvider:
         )
         return self._access_token
 
-    def _get_expires_at(self, *, expires_in_seconds: int, buffer_in_minutes: int):
+    def _get_expires_at(self, *, expires_in_seconds: typing.Optional[int] = None, buffer_in_minutes: int):
+        if expires_in_seconds is None:
+            return dt.datetime.max
         return dt.datetime.now() + dt.timedelta(seconds=expires_in_seconds) - dt.timedelta(minutes=buffer_in_minutes)
