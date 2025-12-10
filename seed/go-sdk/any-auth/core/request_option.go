@@ -26,6 +26,9 @@ type RequestOptions struct {
 	MaxAttempts     uint
 	Token           string
 	ApiKey          string
+	ClientID        string
+	ClientSecret    string
+	Token           string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -53,6 +56,9 @@ func (r *RequestOptions) ToHeader() http.Header {
 	}
 	if r.ApiKey != "" {
 		header.Set("X-API-Key", fmt.Sprintf("%v", r.ApiKey))
+	}
+	if r.Token != "" {
+		header.Set("Authorization", "Bearer "+r.Token)
 	}
 	return header
 }
@@ -136,4 +142,42 @@ type ApiKeyOption struct {
 
 func (a *ApiKeyOption) applyRequestOptions(opts *RequestOptions) {
 	opts.ApiKey = a.ApiKey
+}
+
+// ClientIDOption implements the RequestOption interface.
+type ClientIDOption struct {
+	ClientID string
+}
+
+func (c *ClientIDOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientID = c.ClientID
+}
+
+// ClientSecretOption implements the RequestOption interface.
+type ClientSecretOption struct {
+	ClientSecret string
+}
+
+func (c *ClientSecretOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientSecret = c.ClientSecret
+}
+
+// ClientCredentialsOption implements the RequestOption interface.
+type ClientCredentialsOption struct {
+	ClientID     string
+	ClientSecret string
+}
+
+func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientID = c.ClientID
+	opts.ClientSecret = c.ClientSecret
+}
+
+// TokenOption implements the RequestOption interface.
+type TokenOption struct {
+	Token string
+}
+
+func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Token = t.Token
 }
