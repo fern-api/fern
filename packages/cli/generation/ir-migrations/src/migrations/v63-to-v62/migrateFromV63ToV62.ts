@@ -49,7 +49,8 @@ export const V63_TO_V62_MIGRATION: IrMigration<
     migrateBackwards: (v63: IntermediateRepresentation): IrVersions.V62.ir.IntermediateRepresentation => {
         return {
             ...v63,
-            errors: stripHeadersFromErrors(v63.errors)
+            errors: stripHeadersFromErrors(v63.errors),
+            webhookGroups: stripResponsesFromWebhooks(v63.webhookGroups)
         };
     }
 };
@@ -62,6 +63,21 @@ function stripHeadersFromErrors(
     for (const [errorId, errorDeclaration] of Object.entries(errors)) {
         const { headers, ...v62ErrorDeclaration } = errorDeclaration;
         result[errorId] = v62ErrorDeclaration as IrVersions.V62.errors.ErrorDeclaration;
+    }
+
+    return result;
+}
+
+function stripResponsesFromWebhooks(
+    webhookGroups: IntermediateRepresentation["webhookGroups"]
+): Record<string, IrVersions.V62.webhooks.WebhookGroup> {
+    const result: Record<string, IrVersions.V62.webhooks.WebhookGroup> = {};
+
+    for (const [groupId, webhookGroup] of Object.entries(webhookGroups)) {
+        result[groupId] = webhookGroup.map((webhook) => {
+            const { responses, ...v62Webhook } = webhook;
+            return v62Webhook as IrVersions.V62.webhooks.Webhook;
+        });
     }
 
     return result;
