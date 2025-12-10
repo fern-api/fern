@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";

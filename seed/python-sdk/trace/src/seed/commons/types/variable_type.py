@@ -159,5 +159,8 @@ VariableType = typing_extensions.Annotated[
     ],
     pydantic.Field(discriminator="type"),
 ]
-update_forward_refs(VariableType_ListType)
-update_forward_refs(VariableType_MapType)
+from .map_type import MapType  # noqa: E402, I001
+from .list_type import ListType  # noqa: E402, I001
+
+update_forward_refs(VariableType_ListType, MapType=MapType, VariableType=VariableType)
+update_forward_refs(VariableType_MapType, ListType=ListType, VariableType=VariableType)

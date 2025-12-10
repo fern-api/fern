@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedApiClient, SeedApi } from \"@fern/nullable-allof-extends\";\n\nconst client = new SeedApiClient;\nawait client.createTest({});\n"
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/nullable-allof-extends\";\n\nconst client = new SeedApiClient;\nawait client.createTest({});\n"
             }
         }
     ],
