@@ -46,6 +46,16 @@ func (r *RawClient) GetToken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	if r.options.OAuthTokenProvider != nil {
+		token, err := r.options.OAuthTokenProvider.GetToken(ctx, r.options.Token)
+		if err != nil {
+			return nil, err
+		}
+		if token != "" {
+			headers.Set("Authorization", "Bearer "+token)
+		}
+	}
+
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

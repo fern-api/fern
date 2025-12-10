@@ -769,6 +769,7 @@ func (g *Generator) generateRootService(
 		ir.Errors,
 		g.coordinator,
 	)
+	oauthEndpointInfo := getOAuthEndpointInfo(ir.Auth, ir.Services, g.config.FullImportPath)
 	generatedClient, err := writer.WriteClient(
 		ir.Auth,
 		irService.Endpoints,
@@ -784,6 +785,7 @@ func (g *Generator) generateRootService(
 		g.config.InlineFileProperties,
 		g.config.ClientName,
 		g.config.ClientConstructorName,
+		oauthEndpointInfo,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -835,6 +837,7 @@ func (g *Generator) generateService(
 		g.config.InlineFileProperties,
 		"",
 		"",
+		nil, // Sub-clients don't need OAuth endpoint info
 	)
 	if err != nil {
 		return nil, nil, err
@@ -889,6 +892,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.InlineFileProperties,
 		"",
 		"",
+		nil, // Sub-clients don't need OAuth endpoint info
 	); err != nil {
 		return nil, err
 	}
@@ -923,6 +927,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		ir.Errors,
 		g.coordinator,
 	)
+	oauthEndpointInfo := getOAuthEndpointInfo(ir.Auth, ir.Services, g.config.FullImportPath)
 	generatedClient, err := writer.WriteClient(
 		ir.Auth,
 		nil,
@@ -938,6 +943,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.InlineFileProperties,
 		g.config.ClientName,
 		g.config.ClientConstructorName,
+		oauthEndpointInfo,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -1222,6 +1228,31 @@ func newOAuthFile(coordinator *coordinator.Client) *File {
 		"core/oauth.go",
 		[]byte(oauthFile),
 	)
+}
+
+// generateOAuthFile generates the oauth.go file dynamically with token fetching logic.
+func (g *Generator) generateOAuthFile(oauthEndpointInfo *OAuthEndpointInfo) (*File, error) {
+	writer := newFileWriter(
+		"core/oauth.go",
+		"core",
+		g.config.FullImportPath,
+		g.config.Whitelabel,
+		g.config.AlwaysSendRequiredProperties,
+		g.config.InlinePathParameters,
+		g.config.InlineFileProperties,
+		g.config.UseReaderForBytesRequest,
+		g.config.GettersPassByValue,
+		g.config.ExportAllRequestsAtRoot,
+		g.config.UnionVersion,
+		g.config.CustomPagerName,
+		nil, // types
+		nil, // errors
+		g.coordinator,
+	)
+	if err := writer.WriteOAuthFile(oauthEndpointInfo); err != nil {
+		return nil, err
+	}
+	return writer.File()
 }
 
 // func newErrorDecoderFile(coordinator *coordinator.Client, baseImportPath string) *File {

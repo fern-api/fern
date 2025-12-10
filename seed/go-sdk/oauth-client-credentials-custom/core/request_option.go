@@ -17,14 +17,16 @@ type RequestOption interface {
 // This type is primarily used by the generated code and is not meant
 // to be used directly; use the option package instead.
 type RequestOptions struct {
-	BaseURL         string
-	HTTPClient      HTTPClient
-	HTTPHeader      http.Header
-	BodyProperties  map[string]interface{}
-	QueryParameters url.Values
-	MaxAttempts     uint
-	ClientID        string
-	ClientSecret    string
+	BaseURL            string
+	HTTPClient         HTTPClient
+	HTTPHeader         http.Header
+	BodyProperties     map[string]interface{}
+	QueryParameters    url.Values
+	MaxAttempts        uint
+	OAuthTokenProvider *OAuthTokenProvider
+	ClientID           string
+	ClientSecret       string
+	Token              string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -47,6 +49,9 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
+	if r.Token != "" {
+		header.Set("Authorization", "Bearer "+r.Token)
+	}
 	return header
 }
 
@@ -140,4 +145,13 @@ type ClientCredentialsOption struct {
 func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {
 	opts.ClientID = c.ClientID
 	opts.ClientSecret = c.ClientSecret
+}
+
+// TokenOption implements the RequestOption interface.
+type TokenOption struct {
+	Token string
+}
+
+func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Token = t.Token
 }

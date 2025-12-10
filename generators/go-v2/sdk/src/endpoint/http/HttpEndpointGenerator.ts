@@ -795,6 +795,30 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     go.codeblock("options.ToHeader()")
                 ])
             );
+
+            // Add OAuth token injection if OAuth is configured
+            if (this.hasOAuthScheme()) {
+                writer.writeNewLineIfLastLineNot();
+                const receiver = rawClient ? this.getRawClientReceiver() : this.getClientReceiver({ subpackage });
+                writer.writeLine(
+                    `if ${receiver}.options.OAuthTokenProvider != nil {`
+                );
+                writer.indent();
+                writer.writeLine(`token, err := ${receiver}.options.OAuthTokenProvider.GetToken(ctx, ${receiver}.options.Token)`);
+                writer.writeLine(`if err != nil {`);
+                writer.indent();
+                writer.writeLine(`return nil, err`);
+                writer.dedent();
+                writer.writeLine(`}`);
+                writer.writeLine(`if token != "" {`);
+                writer.indent();
+                writer.writeLine(`headers.Set("Authorization", "Bearer " + token)`);
+                writer.dedent();
+                writer.writeLine(`}`);
+                writer.dedent();
+                writer.writeLine(`}`);
+            }
+
             for (const header of endpoint.headers) {
                 const literal = this.context.maybeLiteral(header.valueType);
                 if (literal != null) {
@@ -1248,5 +1272,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getRawClientReceiver(): string {
         return "r";
+    }
+
+    private hasOAuthScheme(): boolean {
+        if (this.context.ir.auth == null) {
+            return false;
+        }
+        return this.context.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
     }
 }

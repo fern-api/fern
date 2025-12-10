@@ -3,6 +3,9 @@
 package client
 
 import (
+	bytes "bytes"
+	context "context"
+	json "encoding/json"
 	auth "github.com/oauth-client-credentials-environment-variables/fern/auth"
 	core "github.com/oauth-client-credentials-environment-variables/fern/core"
 	internal "github.com/oauth-client-credentials-environment-variables/fern/internal"
@@ -10,6 +13,7 @@ import (
 	client "github.com/oauth-client-credentials-environment-variables/fern/nestednoauth/client"
 	option "github.com/oauth-client-credentials-environment-variables/fern/option"
 	simple "github.com/oauth-client-credentials-environment-variables/fern/simple"
+	http "net/http"
 	os "os"
 )
 
@@ -19,9 +23,10 @@ type Client struct {
 	Nested       *nestedclient.Client
 	Simple       *simple.Client
 
-	options *core.RequestOptions
-	baseURL string
-	caller  *internal.Caller
+	options            *core.RequestOptions
+	oauthTokenProvider *core.OAuthTokenProvider
+	baseURL            string
+	caller             *internal.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -32,13 +37,66 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.ClientSecret == "" {
 		options.ClientSecret = os.Getenv("CLIENT_SECRET")
 	}
+	tokenFetcher := func(ctx context.Context) (*core.OAuthTokenResponse, error) {
+		requestBody := map[string]interface{}{
+			"client_id":     options.ClientID,
+			"client_secret": options.ClientSecret,
+			"grant_type":    "client_credentials",
+		}
+
+		jsonBody, err := json.Marshal(requestBody)
+		if err != nil {
+			return nil, err
+		}
+
+		url := options.BaseURL + "//token"
+
+		req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(jsonBody))
+		if err != nil {
+			return nil, err
+		}
+		req.Header.Set("Content-Type", "application/json")
+
+		httpClient := options.HTTPClient
+		if httpClient == nil {
+			httpClient = http.DefaultClient
+		}
+		resp, err := httpClient.Do(req)
+		if err != nil {
+			return nil, err
+		}
+		defer resp.Body.Close()
+
+		if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+			return nil, core.NewAPIError(resp.StatusCode, resp.Header, nil)
+		}
+
+		var rawResponse map[string]interface{}
+		if err := json.NewDecoder(resp.Body).Decode(&rawResponse); err != nil {
+			return nil, err
+		}
+
+		tokenResp := &core.OAuthTokenResponse{}
+		if accessToken, ok := rawResponse["access_token"].(string); ok {
+			tokenResp.AccessToken = accessToken
+		}
+		if expiresIn, ok := rawResponse["expires_in"].(float64); ok {
+			tokenResp.ExpiresIn = int(expiresIn)
+		}
+		return tokenResp, nil
+	}
+
+	oauthTokenProvider := core.NewOAuthTokenProvider(tokenFetcher)
+	options.OAuthTokenProvider = oauthTokenProvider
+
 	return &Client{
-		Auth:         auth.NewClient(options),
-		NestedNoAuth: client.NewClient(options),
-		Nested:       nestedclient.NewClient(options),
-		Simple:       simple.NewClient(options),
-		options:      options,
-		baseURL:      options.BaseURL,
+		Auth:               auth.NewClient(options),
+		NestedNoAuth:       client.NewClient(options),
+		Nested:             nestedclient.NewClient(options),
+		Simple:             simple.NewClient(options),
+		oauthTokenProvider: oauthTokenProvider,
+		options:            options,
+		baseURL:            options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

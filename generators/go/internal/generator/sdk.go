@@ -70,6 +70,230 @@ var (
 	oauthFile string
 )
 
+// WriteOAuthFile generates the oauth.go file with OAuth token fetching logic.
+func (f *fileWriter) WriteOAuthFile(oauthEndpointInfo *OAuthEndpointInfo) error {
+	// Note: Don't write package or import statements here - fileWriter.File() handles that.
+	// We just need to add the imports we need to the scope.
+	f.scope.AddImport("bytes")
+	f.scope.AddImport("context")
+	f.scope.AddImport("encoding/json")
+	f.scope.AddImport("net/http")
+	f.scope.AddImport("sync")
+	f.scope.AddImport("time")
+
+	f.P("const (")
+	f.P("// expirationBufferMinutes is subtracted from the token expiration time")
+	f.P("// to ensure we refresh the token before it actually expires.")
+	f.P("expirationBufferMinutes = 2")
+	f.P(")")
+	f.P()
+
+	// Define the token response struct for parsing
+	f.P("// oauthTokenResponse is used internally to parse the OAuth token response.")
+	f.P("type oauthTokenResponse struct {")
+	f.P("AccessToken  string `json:\"", oauthEndpointInfo.AccessTokenProperty, "\"`")
+	f.P("ExpiresIn    int    `json:\"", oauthEndpointInfo.ExpiresInProperty, "\"`")
+	if oauthEndpointInfo.RefreshTokenProperty != "" {
+		f.P("RefreshToken string `json:\"", oauthEndpointInfo.RefreshTokenProperty, "\"`")
+	}
+	f.P("}")
+	f.P()
+
+	// Define the OAuthTokenProvider struct
+	f.P("// OAuthTokenProvider manages OAuth access tokens, including caching and automatic refresh.")
+	f.P("type OAuthTokenProvider struct {")
+	f.P("clientID     string")
+	f.P("clientSecret string")
+	f.P("baseURL      string")
+	f.P("httpClient   HTTPClient")
+	f.P()
+	f.P("mu           sync.Mutex")
+	f.P("accessToken  string")
+	f.P("refreshToken string")
+	f.P("expiresAt    time.Time")
+	f.P("}")
+	f.P()
+
+	// Constructor
+	f.P("// NewOAuthTokenProvider creates a new OAuthTokenProvider with the given credentials.")
+	f.P("func NewOAuthTokenProvider(clientID, clientSecret, baseURL string, httpClient HTTPClient) *OAuthTokenProvider {")
+	f.P("if httpClient == nil {")
+	f.P("httpClient = http.DefaultClient")
+	f.P("}")
+	f.P("return &OAuthTokenProvider{")
+	f.P("clientID:     clientID,")
+	f.P("clientSecret: clientSecret,")
+	f.P("baseURL:      baseURL,")
+	f.P("httpClient:   httpClient,")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	// Getter methods
+	f.P("// ClientID returns the client ID.")
+	f.P("func (o *OAuthTokenProvider) ClientID() string {")
+	f.P("return o.clientID")
+	f.P("}")
+	f.P()
+	f.P("// ClientSecret returns the client secret.")
+	f.P("func (o *OAuthTokenProvider) ClientSecret() string {")
+	f.P("return o.clientSecret")
+	f.P("}")
+	f.P()
+
+	// setToken method
+	f.P("// setToken sets the cached access token and its expiration time (must be called with lock held).")
+	f.P("func (o *OAuthTokenProvider) setToken(resp *oauthTokenResponse) {")
+	f.P("o.accessToken = resp.AccessToken")
+	if oauthEndpointInfo.RefreshTokenProperty != "" {
+		f.P("if resp.RefreshToken != \"\" {")
+		f.P("o.refreshToken = resp.RefreshToken")
+		f.P("}")
+	}
+	f.P("if resp.ExpiresIn > 0 {")
+	f.P("// Apply buffer to refresh before actual expiration")
+	f.P("bufferSeconds := expirationBufferMinutes * 60")
+	f.P("effectiveExpiresIn := resp.ExpiresIn - bufferSeconds")
+	f.P("if effectiveExpiresIn < 0 {")
+	f.P("effectiveExpiresIn = 0")
+	f.P("}")
+	f.P("o.expiresAt = time.Now().Add(time.Duration(effectiveExpiresIn) * time.Second)")
+	f.P("} else {")
+	f.P("// No expiration info, token won't auto-refresh based on time")
+	f.P("o.expiresAt = time.Time{}")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	// needsRefresh method
+	f.P("// needsRefresh returns true if the token needs to be refreshed (must be called with lock held).")
+	f.P("func (o *OAuthTokenProvider) needsRefresh() bool {")
+	f.P("if o.accessToken == \"\" {")
+	f.P("return true")
+	f.P("}")
+	f.P("if !o.expiresAt.IsZero() && time.Now().After(o.expiresAt) {")
+	f.P("return true")
+	f.P("}")
+	f.P("return false")
+	f.P("}")
+	f.P()
+
+	// fetchToken method - calls the OAuth token endpoint
+	f.P("// fetchToken fetches a new access token using client credentials.")
+	f.P("func (o *OAuthTokenProvider) fetchToken(ctx context.Context) (*oauthTokenResponse, error) {")
+	f.P("requestBody := map[string]interface{}{")
+	f.P(`"client_id":     o.clientID,`)
+	f.P(`"client_secret": o.clientSecret,`)
+	f.P(`"grant_type":    "client_credentials",`)
+	f.P("}")
+	f.P("return o.doTokenRequest(ctx, requestBody)")
+	f.P("}")
+	f.P()
+
+	// refreshTokenRequest method - calls the refresh token endpoint (if supported)
+	if oauthEndpointInfo.HasRefreshEndpoint {
+		f.P("// refreshTokenRequest refreshes the access token using the refresh token.")
+		f.P("func (o *OAuthTokenProvider) refreshTokenRequest(ctx context.Context, refreshToken string) (*oauthTokenResponse, error) {")
+		f.P("requestBody := map[string]interface{}{")
+		f.P(`"client_id":     o.clientID,`)
+		f.P(`"client_secret": o.clientSecret,`)
+		f.P(`"refresh_token": refreshToken,`)
+		f.P(`"grant_type":    "refresh_token",`)
+		f.P("}")
+		f.P("return o.doTokenRequest(ctx, requestBody)")
+		f.P("}")
+		f.P()
+	}
+
+	// doTokenRequest method - shared HTTP request logic
+	f.P("// doTokenRequest makes an HTTP request to the token endpoint.")
+	f.P("func (o *OAuthTokenProvider) doTokenRequest(ctx context.Context, body map[string]interface{}) (*oauthTokenResponse, error) {")
+	f.P("jsonBody, err := json.Marshal(body)")
+	f.P("if err != nil {")
+	f.P("return nil, err")
+	f.P("}")
+	f.P()
+	f.P(`url := o.baseURL + "`, oauthEndpointInfo.TokenEndpointURL, `"`)
+	f.P(`req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(jsonBody))`)
+	f.P("if err != nil {")
+	f.P("return nil, err")
+	f.P("}")
+	f.P(`req.Header.Set("Content-Type", "application/json")`)
+	f.P()
+	f.P("resp, err := o.httpClient.Do(req)")
+	f.P("if err != nil {")
+	f.P("return nil, err")
+	f.P("}")
+	f.P("defer resp.Body.Close()")
+	f.P()
+	f.P("if resp.StatusCode < 200 || resp.StatusCode >= 300 {")
+	f.P("return nil, NewAPIError(resp.StatusCode, resp.Header, nil)")
+	f.P("}")
+	f.P()
+	f.P("var tokenResp oauthTokenResponse")
+	f.P("if err := json.NewDecoder(resp.Body).Decode(&tokenResp); err != nil {")
+	f.P("return nil, err")
+	f.P("}")
+	f.P("return &tokenResp, nil")
+	f.P("}")
+	f.P()
+
+	// GetToken method - the main method used by the SDK
+	f.P("// GetToken returns a valid access token, fetching or refreshing if necessary.")
+	f.P("// If a token override is provided (non-empty string), it will be returned directly without fetching.")
+	f.P("func (o *OAuthTokenProvider) GetToken(ctx context.Context, tokenOverride string) (string, error) {")
+	f.P("// If a token override is provided, use it directly")
+	f.P("if tokenOverride != \"\" {")
+	f.P("return tokenOverride, nil")
+	f.P("}")
+	f.P()
+	f.P("o.mu.Lock()")
+	f.P("defer o.mu.Unlock()")
+	f.P()
+	f.P("// Return cached token if still valid")
+	f.P("if !o.needsRefresh() {")
+	f.P("return o.accessToken, nil")
+	f.P("}")
+	f.P()
+
+	// Try refresh token if available
+	if oauthEndpointInfo.HasRefreshEndpoint {
+		f.P("// Try to refresh using refresh token if available")
+		f.P("if o.refreshToken != \"\" {")
+		f.P("tokenResp, err := o.refreshTokenRequest(ctx, o.refreshToken)")
+		f.P("if err == nil {")
+		f.P("o.setToken(tokenResp)")
+		f.P("return o.accessToken, nil")
+		f.P("}")
+		f.P("// If refresh fails, fall through to fetch a new token")
+		f.P("}")
+		f.P()
+	}
+
+	f.P("// Fetch a new token using client credentials")
+	f.P("tokenResp, err := o.fetchToken(ctx)")
+	f.P("if err != nil {")
+	f.P("return \"\", err")
+	f.P("}")
+	f.P()
+	f.P("o.setToken(tokenResp)")
+	f.P("return o.accessToken, nil")
+	f.P("}")
+	f.P()
+
+	// Reset method
+	f.P("// Reset clears the cached token.")
+	f.P("func (o *OAuthTokenProvider) Reset() {")
+	f.P("o.mu.Lock()")
+	f.P("defer o.mu.Unlock()")
+	f.P("o.accessToken = \"\"")
+	f.P("o.refreshToken = \"\"")
+	f.P("o.expiresAt = time.Time{}")
+	f.P("}")
+
+	return nil
+}
+
 // WriteOptionalHelpers writes the Optional[T] helper functions.
 // The name of the helpers will change if the functions are
 // generated in the core package (to avoid naming collisions).
@@ -312,6 +536,10 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("BodyProperties map[string]interface{}")
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
+	// Add OAuthTokenProvider field if OAuth is configured
+	if hasOAuthScheme(auth) {
+		f.P("OAuthTokenProvider *OAuthTokenProvider")
+	}
 
 	// Generate the exported RequestOptions type that all clients can act upon.
 	for _, authScheme := range auth.Schemes {
@@ -1022,6 +1250,7 @@ func (f *fileWriter) WriteClient(
 	inlineFileProperties bool,
 	clientNameOverride string,
 	clientConstructorNameOverride string,
+	oauthEndpointInfo *OAuthEndpointInfo,
 ) (*GeneratedClient, error) {
 	var errorDiscriminationByPropertyStrategy *ir.ErrorDiscriminationByPropertyStrategy
 	if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property != nil {
@@ -1130,8 +1359,60 @@ func (f *fileWriter) WriteClient(
 			continue
 		}
 	}
-	if oauthClientCredentials != nil {
-		f.P("oauthTokenProvider := core.NewOAuthTokenProvider(options.ClientID, options.ClientSecret)")
+	if oauthClientCredentials != nil && oauthEndpointInfo != nil {
+		// Root client with OAuth endpoint info - create token fetcher closure
+		f.P("tokenFetcher := func(ctx context.Context) (*core.OAuthTokenResponse, error) {")
+		f.P("requestBody := map[string]interface{}{")
+		f.P(`"client_id":     options.ClientID,`)
+		f.P(`"client_secret": options.ClientSecret,`)
+		f.P(`"grant_type":    "client_credentials",`)
+		f.P("}")
+		f.P("jsonBody, err := json.Marshal(requestBody)")
+		f.P("if err != nil {")
+		f.P("return nil, err")
+		f.P("}")
+		f.P()
+		f.P(`url := options.BaseURL + "`, oauthEndpointInfo.TokenEndpointURL, `"`)
+		f.P("req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(jsonBody))")
+		f.P("if err != nil {")
+		f.P("return nil, err")
+		f.P("}")
+		f.P(`req.Header.Set("Content-Type", "application/json")`)
+		f.P()
+		f.P("httpClient := options.HTTPClient")
+		f.P("if httpClient == nil {")
+		f.P("httpClient = http.DefaultClient")
+		f.P("}")
+		f.P("resp, err := httpClient.Do(req)")
+		f.P("if err != nil {")
+		f.P("return nil, err")
+		f.P("}")
+		f.P("defer resp.Body.Close()")
+		f.P()
+		f.P("if resp.StatusCode < 200 || resp.StatusCode >= 300 {")
+		f.P("return nil, core.NewAPIError(resp.StatusCode, resp.Header, nil)")
+		f.P("}")
+		f.P()
+		f.P("var tokenResp struct {")
+		f.P("AccessToken  string `json:\"", oauthEndpointInfo.AccessTokenProperty, "\"`")
+		f.P("ExpiresIn    int    `json:\"", oauthEndpointInfo.ExpiresInProperty, "\"`")
+		if oauthEndpointInfo.RefreshTokenProperty != "" {
+			f.P("RefreshToken string `json:\"", oauthEndpointInfo.RefreshTokenProperty, "\"`")
+		}
+		f.P("}")
+		f.P("if err := json.NewDecoder(resp.Body).Decode(&tokenResp); err != nil {")
+		f.P("return nil, err")
+		f.P("}")
+		f.P("return &core.OAuthTokenResponse{")
+		f.P("AccessToken:  tokenResp.AccessToken,")
+		f.P("ExpiresIn:    tokenResp.ExpiresIn,")
+		if oauthEndpointInfo.RefreshTokenProperty != "" {
+			f.P("RefreshToken: tokenResp.RefreshToken,")
+		}
+		f.P("}, nil")
+		f.P("}")
+		f.P("oauthTokenProvider := core.NewOAuthTokenProvider(tokenFetcher)")
+		f.P("options.OAuthTokenProvider = oauthTokenProvider")
 	}
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
@@ -1210,6 +1491,19 @@ func (f *fileWriter) WriteClient(
 		f.P(receiver, ".header.Clone(),")
 		f.P("options.ToHeader(),")
 		f.P(")")
+
+		// Add OAuth token to Authorization header if configured
+		if oauthClientCredentials != nil && oauthEndpointInfo != nil {
+			f.P("// Get OAuth token (either from override or by fetching)")
+			f.P("oauthToken, err := ", receiver, ".oauthTokenProvider.GetToken(ctx, options.Token)")
+			f.P("if err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			f.P("if oauthToken != \"\" {")
+			f.P(`headers.Set("Authorization", "Bearer " + oauthToken)`)
+			f.P("}")
+		}
+
 		if len(endpoint.Headers) > 0 {
 			// Add endpoint-specific headers from the request, if any.
 			for _, header := range endpoint.Headers {
@@ -3930,4 +4224,116 @@ func getOAuthClientCredentials(auth *ir.ApiAuth) *ir.OAuthClientCredentials {
 		return nil
 	}
 	return oauth.Configuration.ClientCredentials
+}
+
+// OAuthEndpointInfo contains information about an OAuth token endpoint.
+type OAuthEndpointInfo struct {
+	// TokenEndpointURL is the full URL path to the token endpoint (e.g., "/token")
+	TokenEndpointURL string
+	// TokenRequestType is the Go type name for the token request (e.g., "fern.GetTokenRequest")
+	TokenRequestType string
+	// TokenResponseType is the Go type name for the token response (e.g., "fern.TokenResponse")
+	TokenResponseType string
+	// RefreshEndpointURL is the URL path to the refresh endpoint (empty if not supported)
+	RefreshEndpointURL string
+	// RefreshRequestType is the Go type name for the refresh request
+	RefreshRequestType string
+	// AccessTokenProperty is the JSON property name for the access token in the response
+	AccessTokenProperty string
+	// ExpiresInProperty is the JSON property name for expires_in in the response
+	ExpiresInProperty string
+	// RefreshTokenProperty is the JSON property name for the refresh token in the response (empty if not applicable)
+	RefreshTokenProperty string
+	// HasRefreshEndpoint indicates whether a refresh endpoint is configured
+	HasRefreshEndpoint bool
+}
+
+// getOAuthEndpointInfo extracts OAuth endpoint information from the IR.
+func getOAuthEndpointInfo(
+	auth *ir.ApiAuth,
+	services map[ir.ServiceId]*ir.HttpService,
+	baseImportPath string,
+) *OAuthEndpointInfo {
+	oauthCreds := getOAuthClientCredentials(auth)
+	if oauthCreds == nil || oauthCreds.TokenEndpoint == nil {
+		return nil
+	}
+
+	info := &OAuthEndpointInfo{}
+
+	// Get token endpoint info
+	tokenEndpoint := oauthCreds.TokenEndpoint
+	if tokenEndpoint.EndpointReference != nil {
+		service := services[tokenEndpoint.EndpointReference.ServiceId]
+		if service != nil {
+			for _, endpoint := range service.Endpoints {
+				if endpoint.Id == tokenEndpoint.EndpointReference.EndpointId {
+					info.TokenEndpointURL = buildEndpointPath(service.BasePath, endpoint.Path)
+					if endpoint.SdkRequest != nil && endpoint.SdkRequest.Shape != nil {
+						if wrapper := endpoint.SdkRequest.Shape.Wrapper; wrapper != nil {
+							info.TokenRequestType = wrapper.WrapperName.PascalCase.UnsafeName
+						}
+					}
+					break
+				}
+			}
+		}
+	}
+
+	// Get response property names from the token endpoint response properties
+	if tokenEndpoint.ResponseProperties != nil {
+		if tokenEndpoint.ResponseProperties.AccessToken != nil && tokenEndpoint.ResponseProperties.AccessToken.Property != nil {
+			info.AccessTokenProperty = tokenEndpoint.ResponseProperties.AccessToken.Property.Name.WireValue
+		} else {
+			info.AccessTokenProperty = "access_token"
+		}
+		if tokenEndpoint.ResponseProperties.ExpiresIn != nil && tokenEndpoint.ResponseProperties.ExpiresIn.Property != nil {
+			info.ExpiresInProperty = tokenEndpoint.ResponseProperties.ExpiresIn.Property.Name.WireValue
+		} else {
+			info.ExpiresInProperty = "expires_in"
+		}
+		if tokenEndpoint.ResponseProperties.RefreshToken != nil && tokenEndpoint.ResponseProperties.RefreshToken.Property != nil {
+			info.RefreshTokenProperty = tokenEndpoint.ResponseProperties.RefreshToken.Property.Name.WireValue
+		}
+	}
+
+	// Get refresh endpoint info if present
+	if oauthCreds.RefreshEndpoint != nil && oauthCreds.RefreshEndpoint.EndpointReference != nil {
+		info.HasRefreshEndpoint = true
+		refreshEndpoint := oauthCreds.RefreshEndpoint
+		service := services[refreshEndpoint.EndpointReference.ServiceId]
+		if service != nil {
+			for _, endpoint := range service.Endpoints {
+				if endpoint.Id == refreshEndpoint.EndpointReference.EndpointId {
+					info.RefreshEndpointURL = buildEndpointPath(service.BasePath, endpoint.Path)
+					if endpoint.SdkRequest != nil && endpoint.SdkRequest.Shape != nil {
+						if wrapper := endpoint.SdkRequest.Shape.Wrapper; wrapper != nil {
+							info.RefreshRequestType = wrapper.WrapperName.PascalCase.UnsafeName
+						}
+					}
+					break
+				}
+			}
+		}
+	}
+
+	return info
+}
+
+// buildEndpointPath combines the service base path and endpoint path.
+func buildEndpointPath(basePath *ir.HttpPath, endpointPath *ir.HttpPath) string {
+	result := ""
+	if basePath != nil {
+		result = basePath.Head
+		for _, part := range basePath.Parts {
+			result += "/" + part.PathParameter + part.Tail
+		}
+	}
+	if endpointPath != nil {
+		result += endpointPath.Head
+		for _, part := range endpointPath.Parts {
+			result += "/" + part.PathParameter + part.Tail
+		}
+	}
+	return result
 }

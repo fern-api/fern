@@ -7,8 +7,10 @@ import {
     BearerAuthScheme,
     FernFilepath,
     HeaderAuthScheme,
+    HttpEndpoint,
     HttpService,
     Name,
+    OAuthClientCredentials,
     OAuthScheme,
     ServiceId,
     Subpackage,
@@ -119,6 +121,23 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             );
         }
 
+        // Add oauthTokenProvider field if OAuth is configured (root client only)
+        if (this.isRootClient && this.getOAuthClientCredentials() != null) {
+            struct.addField(
+                go.field({
+                    name: "oauthTokenProvider",
+                    type: go.Type.pointer(
+                        go.Type.reference(
+                            go.typeReference({
+                                name: "OAuthTokenProvider",
+                                importPath: this.context.getCoreImportPath()
+                            })
+                        )
+                    )
+                })
+            );
+        }
+
         struct.addField(
             go.field({
                 name: "baseURL",
@@ -160,6 +179,15 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 value: this.instantiateRawClient()
             });
         }
+        // Add oauthTokenProvider field if OAuth is configured (root client only)
+        const oauthEndpointInfo = this.isRootClient ? this.getOAuthTokenEndpointInfo() : undefined;
+        if (this.isRootClient && oauthEndpointInfo != null) {
+            fields.push({
+                name: "oauthTokenProvider",
+                value: go.TypeInstantiation.reference(go.codeblock("oauthTokenProvider"))
+            });
+        }
+
         fields.push(
             {
                 name: "options",
@@ -208,6 +236,10 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     writer.newLine();
                 }
                 this.writeEnvironmentVariables({ writer });
+                // Write OAuth token fetcher closure if OAuth is configured (root client only)
+                if (oauthEndpointInfo != null) {
+                    this.writeOAuthTokenFetcher({ writer, oauthEndpointInfo });
+                }
                 writer.write("return ");
                 writer.writeNode(
                     go.TypeInstantiation.structPointer({
@@ -338,6 +370,125 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         }
     }
 
+    private writeOAuthTokenFetcher({
+        writer,
+        oauthEndpointInfo
+    }: {
+        writer: go.Writer;
+        oauthEndpointInfo: OAuthTokenEndpointInfo;
+    }): void {
+        const coreAlias = writer.addImport(this.context.getCoreImportPath());
+        writer.addImport("context");
+        const jsonAlias = writer.addImport("encoding/json");
+        const httpAlias = writer.addImport("net/http");
+        const bytesAlias = writer.addImport("bytes");
+
+        // Generate the token fetcher closure
+        writer.writeLine(
+            `tokenFetcher := func(ctx context.Context) (*${coreAlias}.OAuthTokenResponse, error) {`
+        );
+        writer.indent();
+
+        // Build request body
+        writer.writeLine(`requestBody := map[string]interface{}{`);
+        writer.indent();
+        writer.writeLine(`"client_id":     options.ClientID,`);
+        writer.writeLine(`"client_secret": options.ClientSecret,`);
+        writer.writeLine(`"grant_type":    "client_credentials",`);
+        writer.dedent();
+        writer.writeLine(`}`);
+        writer.newLine();
+
+        // Marshal request body
+        writer.writeLine(`jsonBody, err := ${jsonAlias}.Marshal(requestBody)`);
+        writer.writeLine(`if err != nil {`);
+        writer.indent();
+        writer.writeLine(`return nil, err`);
+        writer.dedent();
+        writer.writeLine(`}`);
+        writer.newLine();
+
+        // Build URL
+        writer.writeLine(`url := options.BaseURL + "${oauthEndpointInfo.tokenEndpointURL}"`);
+        writer.newLine();
+
+        // Create HTTP request
+        writer.writeLine(
+            `req, err := ${httpAlias}.NewRequestWithContext(ctx, ${httpAlias}.MethodPost, url, ${bytesAlias}.NewReader(jsonBody))`
+        );
+        writer.writeLine(`if err != nil {`);
+        writer.indent();
+        writer.writeLine(`return nil, err`);
+        writer.dedent();
+        writer.writeLine(`}`);
+        writer.writeLine(`req.Header.Set("Content-Type", "application/json")`);
+        writer.newLine();
+
+        // Execute request
+        writer.writeLine(`httpClient := options.HTTPClient`);
+        writer.writeLine(`if httpClient == nil {`);
+        writer.indent();
+        writer.writeLine(`httpClient = ${httpAlias}.DefaultClient`);
+        writer.dedent();
+        writer.writeLine(`}`);
+        writer.writeLine(`resp, err := httpClient.Do(req)`);
+        writer.writeLine(`if err != nil {`);
+        writer.indent();
+        writer.writeLine(`return nil, err`);
+        writer.dedent();
+        writer.writeLine(`}`);
+        writer.writeLine(`defer resp.Body.Close()`);
+        writer.newLine();
+
+        // Check response status
+        writer.writeLine(`if resp.StatusCode < 200 || resp.StatusCode >= 300 {`);
+        writer.indent();
+        writer.writeLine(`return nil, ${coreAlias}.NewAPIError(resp.StatusCode, resp.Header, nil)`);
+        writer.dedent();
+        writer.writeLine(`}`);
+        writer.newLine();
+
+        // Decode response - use a generic map to handle different property names
+        writer.writeLine(`var rawResponse map[string]interface{}`);
+        writer.writeLine(`if err := ${jsonAlias}.NewDecoder(resp.Body).Decode(&rawResponse); err != nil {`);
+        writer.indent();
+        writer.writeLine(`return nil, err`);
+        writer.dedent();
+        writer.writeLine(`}`);
+        writer.newLine();
+
+        // Extract token response fields
+        writer.writeLine(`tokenResp := &${coreAlias}.OAuthTokenResponse{}`);
+        writer.writeLine(`if accessToken, ok := rawResponse["${oauthEndpointInfo.accessTokenProperty}"].(string); ok {`);
+        writer.indent();
+        writer.writeLine(`tokenResp.AccessToken = accessToken`);
+        writer.dedent();
+        writer.writeLine(`}`);
+        writer.writeLine(`if expiresIn, ok := rawResponse["${oauthEndpointInfo.expiresInProperty}"].(float64); ok {`);
+        writer.indent();
+        writer.writeLine(`tokenResp.ExpiresIn = int(expiresIn)`);
+        writer.dedent();
+        writer.writeLine(`}`);
+        if (oauthEndpointInfo.refreshTokenProperty != null) {
+            writer.writeLine(
+                `if refreshToken, ok := rawResponse["${oauthEndpointInfo.refreshTokenProperty}"].(string); ok {`
+            );
+            writer.indent();
+            writer.writeLine(`tokenResp.RefreshToken = refreshToken`);
+            writer.dedent();
+            writer.writeLine(`}`);
+        }
+        writer.writeLine(`return tokenResp, nil`);
+        writer.dedent();
+        writer.writeLine(`}`);
+        writer.newLine();
+
+        // Create the OAuthTokenProvider
+        writer.writeLine(`oauthTokenProvider := ${coreAlias}.NewOAuthTokenProvider(tokenFetcher)`);
+        writer.writeLine(`options.OAuthTokenProvider = oauthTokenProvider`);
+        writer.newLine();
+    }
+
     private writeEnvConditional({
         writer,
         propertyReference,
@@ -410,4 +561,99 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         return this.context.getClientFileLocation({ fernFilepath: this.fernFilepath, subpackage: this.subpackage })
             .importPath;
     }
+
+    private getOAuthClientCredentials(): OAuthClientCredentials | undefined {
+        if (this.context.ir.auth == null) {
+            return undefined;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth" && scheme.configuration?.type === "clientCredentials") {
+                return scheme.configuration;
+            }
+        }
+        return undefined;
+    }
+
+    private getOAuthTokenEndpointInfo(): OAuthTokenEndpointInfo | undefined {
+        const oauthCreds = this.getOAuthClientCredentials();
+        if (oauthCreds == null || oauthCreds.tokenEndpoint == null) {
+            return undefined;
+        }
+
+        const tokenEndpoint = oauthCreds.tokenEndpoint;
+        if (tokenEndpoint.endpointReference == null) {
+            return undefined;
+        }
+
+        const service = this.context.ir.services[tokenEndpoint.endpointReference.serviceId];
+        if (service == null) {
+            return undefined;
+        }
+
+        let endpoint: HttpEndpoint | undefined;
+        for (const ep of service.endpoints) {
+            if (ep.id === tokenEndpoint.endpointReference.endpointId) {
+                endpoint = ep;
+                break;
+            }
+        }
+        if (endpoint == null) {
+            return undefined;
+        }
+
+        // Build endpoint path
+        let tokenEndpointURL = "";
+        if (service.basePath != null) {
+            tokenEndpointURL = this.buildHttpPath(service.basePath);
+        }
+        tokenEndpointURL += this.buildHttpPath(endpoint.path);
+
+        // Get response property names
+        let accessTokenProperty = "access_token";
+        let expiresInProperty = "expires_in";
+        let refreshTokenProperty: string | undefined;
+
+        if (tokenEndpoint.responseProperties != null) {
+            if (
+                tokenEndpoint.responseProperties.accessToken?.property != null &&
+                tokenEndpoint.responseProperties.accessToken.property.name != null
+            ) {
+                accessTokenProperty = tokenEndpoint.responseProperties.accessToken.property.name.wireValue;
+            }
+            if (
+                tokenEndpoint.responseProperties.expiresIn?.property != null &&
+                tokenEndpoint.responseProperties.expiresIn.property.name != null
+            ) {
+                expiresInProperty = tokenEndpoint.responseProperties.expiresIn.property.name.wireValue;
+            }
+            if (
+                tokenEndpoint.responseProperties.refreshToken?.property != null &&
+                tokenEndpoint.responseProperties.refreshToken.property.name != null
+            ) {
+                refreshTokenProperty = tokenEndpoint.responseProperties.refreshToken.property.name.wireValue;
+            }
+        }
+
+        return {
+            tokenEndpointURL,
+            accessTokenProperty,
+            expiresInProperty,
+            refreshTokenProperty
+        };
+    }
+
+    private buildHttpPath(httpPath: { head: string; parts: Array<{ pathParameter: string; tail: string }> }): string {
+        let path = httpPath.head;
+        for (const part of httpPath.parts) {
+            path += `{${part.pathParameter}}${part.tail}`;
+        }
+        return path;
+    }
+}
+
+interface OAuthTokenEndpointInfo {
+    tokenEndpointURL: string;
+    accessTokenProperty: string;
+    expiresInProperty: string;
+    refreshTokenProperty?: string;
 }
