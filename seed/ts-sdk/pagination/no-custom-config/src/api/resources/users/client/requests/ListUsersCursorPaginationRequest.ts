@@ -5,10 +5,7 @@ import type * as SeedPagination from "../../../../index.js";
 /**
  * @example
  *     {
- *         page: 1,
- *         per_page: 1,
- *         order: "asc",
- *         starting_after: "starting_after"
+ *         starting_after: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
  *     }
  */
 export interface ListUsersCursorPaginationRequest {

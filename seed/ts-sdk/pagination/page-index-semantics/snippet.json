@@ -151,8 +151,9 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithCursorPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithCursorPagination({\n    page: 1,\n    per_page: 1,\n    order: \"asc\",\n    starting_after: \"starting_after\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
-            }
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithCursorPagination({\n    starting_after: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithCursorPagination({\n    starting_after: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            },
+            "example_identifier": "Last page"
         },
         {
             "id": {

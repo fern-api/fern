@@ -919,10 +919,7 @@ const response = page.response;
 
 ```typescript
 const pageableResponse = await client.users.listWithCursorPagination({
-    page: 1,
-    per_page: 1,
-    order: "asc",
-    starting_after: "starting_after"
+    starting_after: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 });
 for await (const item of pageableResponse) {
     console.log(item);
@@ -930,10 +927,7 @@ for await (const item of pageableResponse) {
 
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithCursorPagination({
-    page: 1,
-    per_page: 1,
-    order: "asc",
-    starting_after: "starting_after"
+    starting_after: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 });
 while (page.hasNextPage()) {
     page = page.getNextPage();
