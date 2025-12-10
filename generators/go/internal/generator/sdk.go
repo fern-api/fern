@@ -335,7 +335,10 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		if authScheme.Oauth != nil {
 			f.P("ClientID string")
 			f.P("ClientSecret string")
-			f.P("Token string")
+			// Only add Token field if there's no Bearer auth (which already provides Token)
+			if !hasBearerAuth(auth) {
+				f.P("Token string")
+			}
 		}
 	}
 	for _, header := range headers {
@@ -425,8 +428,9 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
 			f.P("}")
 		}
-		if authScheme.Oauth != nil {
+		if authScheme.Oauth != nil && !hasBearerAuth(auth) {
 			// When Token is provided directly, use it for Authorization header
+			// Skip if Bearer auth exists, as it already handles the Token field
 			f.P(`if r.Token != "" {`)
 			f.P(`header.Set("Authorization", "Bearer " + r.Token)`)
 			f.P("}")
@@ -594,8 +598,11 @@ func (f *fileWriter) writeRequestOptionStructs(
 				f.P()
 
 				// Add TokenOption struct for direct token usage.
-				if err := f.writeOptionStruct("Token", "string", true, asIdempotentRequestOption); err != nil {
-					return err
+				// Skip if Bearer auth exists, as it already provides TokenOption.
+				if !hasBearerAuth(auth) {
+					if err := f.writeOptionStruct("Token", "string", true, asIdempotentRequestOption); err != nil {
+						return err
+					}
 				}
 			}
 		}
@@ -935,18 +942,21 @@ func (f *fileWriter) WriteRequestOptions(
 			f.P("}")
 			f.P()
 
-			f.P("// WithToken sets the OAuth token directly, bypassing the client credentials flow.")
-			f.P("// Use this when you already have an access token.")
-			if includeCustomAuthDocs {
-				f.P("//")
-				f.WriteDocs(auth.Docs)
+			// Only add WithToken if there's no Bearer auth (which already provides WithToken)
+			if !hasBearerAuth(auth) {
+				f.P("// WithToken sets the OAuth token directly, bypassing the client credentials flow.")
+				f.P("// Use this when you already have an access token.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				f.P("func WithToken(token string) *core.TokenOption {")
+				f.P("return &core.TokenOption{")
+				f.P("Token: token,")
+				f.P("}")
+				f.P("}")
+				f.P()
 			}
-			f.P("func WithToken(token string) *core.TokenOption {")
-			f.P("return &core.TokenOption{")
-			f.P("Token: token,")
-			f.P("}")
-			f.P("}")
-			f.P()
 		}
 	}
 
@@ -3898,6 +3908,19 @@ func getOAuthScheme(auth *ir.ApiAuth) *ir.OAuthScheme {
 		}
 	}
 	return nil
+}
+
+// hasBearerAuth returns true if the auth configuration has a bearer auth scheme.
+func hasBearerAuth(auth *ir.ApiAuth) bool {
+	if auth == nil {
+		return false
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Bearer != nil {
+			return true
+		}
+	}
+	return false
 }
 
 // getOAuthClientCredentials returns the OAuth client credentials configuration, or nil if not present.
