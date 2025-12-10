@@ -335,6 +335,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		if authScheme.Oauth != nil {
 			f.P("ClientID string")
 			f.P("ClientSecret string")
+			f.P("Token string")
 		}
 	}
 	for _, header := range headers {
@@ -422,6 +423,12 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+			f.P("}")
+		}
+		if authScheme.Oauth != nil {
+			// When Token is provided directly, use it for Authorization header
+			f.P(`if r.Token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + r.Token)`)
 			f.P("}")
 		}
 	}
@@ -585,6 +592,11 @@ func (f *fileWriter) writeRequestOptionStructs(
 				f.P("opts.ClientSecret = c.ClientSecret")
 				f.P("}")
 				f.P()
+
+				// Add TokenOption struct for direct token usage.
+				if err := f.writeOptionStruct("Token", "string", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
 			}
 		}
 	}
@@ -919,6 +931,19 @@ func (f *fileWriter) WriteRequestOptions(
 			f.P("return &core.ClientCredentialsOption{")
 			f.P("ClientID: clientID,")
 			f.P("ClientSecret: clientSecret,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			f.P("// WithToken sets the OAuth token directly, bypassing the client credentials flow.")
+			f.P("// Use this when you already have an access token.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithToken(token string) *core.TokenOption {")
+			f.P("return &core.TokenOption{")
+			f.P("Token: token,")
 			f.P("}")
 			f.P("}")
 			f.P()

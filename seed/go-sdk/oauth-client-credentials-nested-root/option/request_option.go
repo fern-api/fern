@@ -84,3 +84,11 @@ func WithClientCredentials(clientID string, clientSecret string) *core.ClientCre
 		ClientSecret: clientSecret,
 	}
 }
+
+// WithToken sets the OAuth token directly, bypassing the client credentials flow.
+// Use this when you already have an access token.
+func WithToken(token string) *core.TokenOption {
+	return &core.TokenOption{
+		Token: token,
+	}
+}
