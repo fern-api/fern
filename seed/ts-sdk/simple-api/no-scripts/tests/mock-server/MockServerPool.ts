@@ -22,7 +22,7 @@ async function formatHttpRequest(request: Request, id?: string): Promise<string>
             } else if (clone.body) {
                 body = await clone.text();
             }
-        } catch (e) {
+        } catch (_e) {
             body = "(unable to parse body)";
         }
 
@@ -48,7 +48,7 @@ async function formatHttpResponse(response: Response, id?: string): Promise<stri
             } else if (clone.body) {
                 body = await clone.text();
             }
-        } catch (e) {
+        } catch (_e) {
             body = "(unable to parse body)";
         }
 
@@ -82,17 +82,17 @@ class MockServerPool {
         if (process.env.LOG_LEVEL === "debug") {
             mswServer.events.on("request:start", async ({ request, requestId }) => {
                 const formattedRequest = await formatHttpRequest(request, requestId);
-                console.debug("request:start\n" + formattedRequest);
+                console.debug(`request:start\n${formattedRequest}`);
             });
 
             mswServer.events.on("request:unhandled", async ({ request, requestId }) => {
                 const formattedRequest = await formatHttpRequest(request, requestId);
-                console.debug("request:unhandled\n" + formattedRequest);
+                console.debug(`request:unhandled\n${formattedRequest}`);
             });
 
             mswServer.events.on("response:mocked", async ({ request, response, requestId }) => {
                 const formattedResponse = await formatHttpResponse(response, requestId);
-                console.debug("response:mocked\n" + formattedResponse);
+                console.debug(`response:mocked\n${formattedResponse}`);
             });
         }
     }

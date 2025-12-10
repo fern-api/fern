@@ -14,7 +14,7 @@ export namespace AsIsManager {
         relativePackagePath: string;
         relativeTestPath: string;
         generatorType: "sdk" | "model" | "express";
-        formatter: "prettier" | "biome" | "oxfmt";
+        formatter: "prettier" | "biome" | "oxfmt" | "none";
         linter: "biome" | "oxlint" | "none";
     }
 }
@@ -25,7 +25,7 @@ export class AsIsManager {
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly generatorType: "sdk" | "model" | "express";
-    private readonly formatter: "prettier" | "biome" | "oxfmt";
+    private readonly formatter: "prettier" | "biome" | "oxfmt" | "none";
     private readonly linter: "biome" | "oxlint" | "none";
 
     constructor({

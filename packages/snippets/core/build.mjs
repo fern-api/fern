@@ -1,9 +1,9 @@
-import { polyfillNode } from 'esbuild-plugin-polyfill-node';
-import packageJson from "./package.json" with { type: "json" };
-import tsup from 'tsup';
-import { writeFile, mkdir, rm } from "fs/promises";
+import { polyfillNode } from "esbuild-plugin-polyfill-node";
+import { mkdir, rm, writeFile } from "fs/promises";
 import path from "path";
-import { fileURLToPath } from 'url';
+import tsup from "tsup";
+import { fileURLToPath } from "url";
+import packageJson from "./package.json" with { type: "json" };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -17,7 +17,7 @@ async function main() {
     await rm(path.join(__dirname, "dist"), { recursive: true, force: true });
 
     const config = {
-        entry: ['src/**/*.ts', '!src/__test__'],
+        entry: ["src/**/*.ts", "!src/__test__"],
         target: "es2020",
         minify: true,
         dts: true,
@@ -42,16 +42,16 @@ async function main() {
 
     await tsup.build({
         ...config,
-        format: ['cjs'],
-        outDir: 'dist/cjs',
-        clean: false,
+        format: ["cjs"],
+        outDir: "dist/cjs",
+        clean: false
     });
 
     await tsup.build({
         ...config,
-        format: ['esm'],
-        outDir: 'dist/esm',
-        clean: false,
+        format: ["esm"],
+        outDir: "dist/esm",
+        clean: false
     });
 
     await mkdir(path.join(__dirname, "dist"), { recursive: true });
@@ -67,23 +67,20 @@ async function main() {
                 type: "module",
                 exports: {
                     // Conditional exports for ESM and CJS.
-                    "import": {
-                        "types": "./esm/index.d.ts",
-                        "default": "./esm/index.js"
+                    import: {
+                        types: "./esm/index.d.ts",
+                        default: "./esm/index.js"
                     },
-                    "require": {
-                        "types": "./cjs/index.d.cts",
-                        "default": "./cjs/index.cjs"
+                    require: {
+                        types: "./cjs/index.d.cts",
+                        default: "./cjs/index.cjs"
                     }
                 },
                 // Fallback for older tooling or direct imports.
                 main: "./cjs/index.cjs",
                 module: "./esm/index.js",
                 types: "./cjs/index.d.cts",
-                files: [
-                    "cjs",
-                    "esm"
-                ]
+                files: ["cjs", "esm"]
             },
             undefined,
             2

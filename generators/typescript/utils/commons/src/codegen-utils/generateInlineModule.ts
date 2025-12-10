@@ -233,7 +233,7 @@ function getNamedType(typeReference: TypeReference): NamedType | undefined {
                 case "literal":
                     return undefined;
                 default:
-                    assertNever(typeReference.container);
+                    return assertNever(typeReference.container);
             }
         // fallthrough
         case "primitive":
@@ -241,6 +241,6 @@ function getNamedType(typeReference: TypeReference): NamedType | undefined {
         case "unknown":
             return undefined;
         default:
-            assertNever(typeReference);
+            return assertNever(typeReference);
     }
 }

@@ -6,26 +6,26 @@ describe("union", () => {
     itSchemaIdentity(
         union("type", {
             lion: object({
-                meows: boolean()
+                meows: boolean(),
             }),
             giraffe: object({
-                heightInInches: number()
-            })
+                heightInInches: number(),
+            }),
         }),
         { type: "lion", meows: true },
-        { title: "doesn't transform discriminant when it's a string" }
+        { title: "doesn't transform discriminant when it's a string" },
     );
 
     itSchema(
         "transforms discriminant when it's a discriminant()",
         union(discriminant("type", "_type"), {
             lion: object({ meows: boolean() }),
-            giraffe: object({ heightInInches: number() })
+            giraffe: object({ heightInInches: number() }),
         }),
         {
             raw: { _type: "lion", meows: true },
-            parsed: { type: "lion", meows: true }
-        }
+            parsed: { type: "lion", meows: true },
+        },
     );
 
     describe("allowUnrecognizedUnionMembers", () => {
@@ -33,7 +33,7 @@ describe("union", () => {
             "transforms discriminant & passes through values when discriminant value is unrecognized",
             union(discriminant("type", "_type"), {
                 lion: object({ meows: boolean() }),
-                giraffe: object({ heightInInches: number() })
+                giraffe: object({ heightInInches: number() }),
             }),
             {
                 // @ts-expect-error
@@ -41,9 +41,9 @@ describe("union", () => {
                 // @ts-expect-error
                 parsed: { type: "moose", isAMoose: true },
                 opts: {
-                    allowUnrecognizedUnionMembers: true
-                }
-            }
+                    allowUnrecognizedUnionMembers: true,
+                },
+            },
         );
     });
 
@@ -51,9 +51,9 @@ describe("union", () => {
         it("Added property is included on parsed object", async () => {
             const schema = union("type", {
                 lion: object({}),
-                tiger: object({ value: string() })
+                tiger: object({ value: string() }),
             }).withParsedProperties({
-                printType: (parsed) => () => parsed.type
+                printType: (parsed) => () => parsed.type,
             });
 
             const parsed = await schema.parse({ type: "lion" });
@@ -68,46 +68,46 @@ describe("union", () => {
         "non-object",
         union("type", {
             lion: object({}),
-            tiger: object({ value: string() })
+            tiger: object({ value: string() }),
         }),
         [],
         [
             {
                 path: [],
-                message: "Expected object. Received list."
-            }
-        ]
+                message: "Expected object. Received list.",
+            },
+        ],
     );
 
     itValidate(
         "missing discriminant",
         union("type", {
             lion: object({}),
-            tiger: object({ value: string() })
+            tiger: object({ value: string() }),
         }),
         {},
         [
             {
                 path: [],
-                message: 'Missing discriminant ("type")'
-            }
-        ]
+                message: 'Missing discriminant ("type")',
+            },
+        ],
     );
 
     itValidate(
         "unrecognized discriminant value",
         union("type", {
             lion: object({}),
-            tiger: object({ value: string() })
+            tiger: object({ value: string() }),
         }),
         {
-            type: "bear"
+            type: "bear",
         },
         [
             {
                 path: ["type"],
-                message: 'Expected enum. Received "bear".'
-            }
-        ]
+                message: 'Expected enum. Received "bear".',
+            },
+        ],
     );
 });
