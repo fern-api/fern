@@ -560,7 +560,8 @@ export function convertSchemaObject(
                 wrapAsNullable,
                 example: getExampleAsNumber({ schema, logger: context.logger, fallback }),
                 namespace,
-                groupName
+                groupName,
+                defaultIntegerFormat: context.options.defaultIntegerFormat
             });
         }
 
