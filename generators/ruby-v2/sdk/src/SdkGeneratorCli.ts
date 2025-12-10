@@ -188,6 +188,9 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 return publishConfig.generateFullProject || hasSnippetFilepath;
             case "github":
             case "direct":
+                // For GitHub/self-hosted or direct publish, we're generating a real SDK;
+                // README should always be present regardless of snippetFilepath.
+                return true;
             default:
                 return hasSnippetFilepath;
         }

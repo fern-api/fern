@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc63
+  createdAt: "2025-12-10"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix README.md not being generated for GitHub and direct publish modes.
+        The shouldGenerateReadme method was incorrectly requiring snippetFilepath to be set
+        for GitHub and direct publish configs. README generation now always occurs for these
+        output modes when generating a full SDK.
+  irVersion: 61
+
 - version: 1.0.0-rc62
   createdAt: "2025-12-08"
   changelogEntry:
