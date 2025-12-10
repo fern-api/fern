@@ -32,6 +32,7 @@ package example
 
 import (
     client "github.com/oauth-client-credentials-nested-root/fern/client"
+    option "github.com/oauth-client-credentials-nested-root/fern/option"
     auth "github.com/oauth-client-credentials-nested-root/fern/auth"
     fern "github.com/oauth-client-credentials-nested-root/fern"
     context "context"
@@ -39,7 +40,10 @@ import (
 
 func do() {
     client := client.NewClient(
-        nil,
+        option.WithClientCredentials(
+            "<clientId>",
+            "<clientSecret>",
+        ),
     )
     request := &auth.GetTokenRequest{
         ClientId: "client_id",

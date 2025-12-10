@@ -32,13 +32,17 @@ package example
 
 import (
     client "github.com/oauth-client-credentials-default/fern/client"
+    option "github.com/oauth-client-credentials-default/fern/option"
     fern "github.com/oauth-client-credentials-default/fern"
     context "context"
 )
 
 func do() {
     client := client.NewClient(
-        nil,
+        option.WithClientCredentials(
+            "<clientId>",
+            "<clientSecret>",
+        ),
     )
     request := &fern.GetTokenRequest{
         ClientId: "client_id",
