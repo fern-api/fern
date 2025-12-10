@@ -1180,12 +1180,16 @@ describe("${serviceName}", () => {
                 : [];
 
         // Build the expected declaration based on whether the path is missing
-        const expectedDeclaration = isResultsPathMissing
-            ? code`
+        // For simple top-level paths (e.g., "data"), use a cleaner inline spread
+        // For nested paths (e.g., "cursor.data"), use the two-step baseExpected pattern
+        const expectedDeclaration = !isResultsPathMissing
+            ? code`const expected = ${expected};`
+            : paginationPathSegments.length === 1
+              ? code`const expected = { ...${expected}, ${paginationPathSegments[0]}: undefined };`
+              : code`
                 const baseExpected = ${expected};
                 const expected = ${buildNestedSpreadForUndefinedPath({ baseVar: "baseExpected", segments: paginationPathSegments })};
-            `
-            : code`const expected = ${expected};`;
+            `;
 
         // Build the assertion - only use ?? [] when the path is missing
         const expectedItemsAssertion = isResultsPathMissing ? `${expectedName} ?? []` : expectedName;

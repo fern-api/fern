@@ -612,8 +612,7 @@ describe("UsersClient", () => {
 
         
                     
-                
-                const baseExpected = {
+                const expected = { ...{
     hasNextPage: false,
     page: {
         page: 1,
@@ -625,9 +624,7 @@ describe("UsersClient", () => {
         total_page: 1
     },
     total_count: 0
-};
-                const expected = { ...baseExpected, data: undefined };
-            
+}, data: undefined };
                 const page = await client.users.listWithOptionalData({
     page: 1
 });
