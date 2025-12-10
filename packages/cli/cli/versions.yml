@@ -3,9 +3,9 @@
     - summary: |
         Propagate webhook responses (e.g., 204, 400, 500 status codes) from OpenAPI specs to the IR. Webhook endpoints can now define expected response status codes and descriptions, which are captured in the IR for use by generators and documentation.
       type: feat
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-10"
-  version: 3.8.0
+  version: 3.8.1
 
 - changelogEntry:
     - summary: |
