@@ -5,10 +5,10 @@
   changelogEntry:
     - type: fix
       summary: |
-        Fix README.md not being generated for GitHub and direct publish modes.
-        The shouldGenerateReadme method was incorrectly requiring snippetFilepath to be set
-        for GitHub and direct publish configs. README generation now always occurs for these
-        output modes when generating a full SDK.
+        Fix README.md generation for GitHub, direct publish, and seed test modes.
+        - Updated shouldGenerateReadme to return true by default instead of requiring snippetFilepath
+        - Fixed getGitHubConfig to return undefined for uri/token instead of placeholder values
+          that caused invalid git clone attempts
   irVersion: 61
 
 - version: 1.0.0-rc62
