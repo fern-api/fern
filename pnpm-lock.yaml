@@ -7190,6 +7190,9 @@ importers:
 
   packages/cli/yaml/docs-validator:
     dependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../../workspace/commons
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../../configuration-loader
@@ -7220,12 +7223,18 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
+      '@fern-api/openapi-to-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi-to-ir
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../../project-loader
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@fern-api/v3-importer-commons':
+        specifier: workspace:*
+        version: link:../../api-importers/v3-importer-commons
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace/loader
@@ -7259,6 +7268,9 @@ importers:
       next-mdx-remote:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@19.2.2)(react@19.2.0)
+      openapi-types:
+        specifier: ^12.0.0
+        version: 12.1.3
       path-to-regexp:
         specifier: 6.3.0
         version: 6.3.0

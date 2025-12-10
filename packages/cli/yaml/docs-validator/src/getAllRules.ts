@@ -11,12 +11,14 @@ import { ValidFrontmatter } from "./rules/valid-frontmatter";
 import { ValidInstanceUrlRule } from "./rules/valid-instance-url";
 import { ValidLocalReferencesRule } from "./rules/valid-local-references";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link";
+import { ValidOpenApiExamples } from "./rules/valid-openapi-examples";
 import { ValidateProductFileRule } from "./rules/validate-product-file";
 import { ValidateVersionFileRule } from "./rules/validate-version-file";
 
 const allRules = [
     FilepathsExistRule,
     NoOpenApiV2InDocsRule, // Check OpenAPI v2 first (more fundamental issue)
+    ValidOpenApiExamples, // Validate human examples in OpenAPI specs
     NoNonComponentRefsRule, // Check non-component references (will skip v2 files)
     ValidLocalReferencesRule, // Validate that local references actually exist
     OnlyVersionedNavigation,
