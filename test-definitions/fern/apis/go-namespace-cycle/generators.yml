@@ -1,8 +1,9 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
   specs:
+    - openapi: ./openapi-root.yml
     - namespace: mysubpackage
-      openapi: ./openapi.yml
+      openapi: ./openapi-subpackage.yml
 groups:
   go-sdk:
     generators:

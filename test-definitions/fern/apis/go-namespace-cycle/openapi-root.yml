@@ -1,12 +1,12 @@
 openapi: 3.0.3
 info:
-  title: API with Namespace
+  title: Root API
   version: 1.0.0
 paths:
-  /orders:
+  /users:
     get:
-      operationId: getOrders
-      summary: Get all orders
+      operationId: getUsers
+      summary: Get all users
       responses:
         '200':
           description: Successful response
@@ -15,19 +15,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Order'
+                  $ref: '#/components/schemas/User'
 components:
   schemas:
-    Order:
-      type: object
-      properties:
-        id:
-          type: string
-        user:
-          $ref: '#/components/schemas/User'
-      required:
-        - id
-        - user
     User:
       type: object
       properties:
