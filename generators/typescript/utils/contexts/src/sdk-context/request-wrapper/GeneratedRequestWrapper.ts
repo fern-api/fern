@@ -1,16 +1,14 @@
 import {
     ExampleEndpointCall,
     FileProperty,
-    FileUploadBodyProperty,
     HttpHeader,
-    HttpRequestBodyReference,
     InlinedRequestBodyProperty,
     Name,
     NameAndWireValue,
     PathParameter,
     QueryParameter
 } from "@fern-fern/ir-sdk/api";
-import { InterfaceDeclarationStructure, PropertySignatureStructure, ts } from "ts-morph";
+import { ts } from "ts-morph";
 
 import { GeneratedFile } from "../../commons/GeneratedFile";
 import { SdkContext } from "../SdkContext";

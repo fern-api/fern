@@ -121,6 +121,9 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+  enum:
+    - customConfig: null
+      outputFolder: no-custom-config
 allowedFailures:
   - header-auth-environment-variable
   - bearer-token-environment-variable
@@ -128,7 +131,8 @@ allowedFailures:
   - response-property
   - streaming
   - literal
-  - enum
+  # enum fixture fails due to union header parameter handling, not enum.py helper
+  - enum:no-custom-config
   - server-sent-events
   - server-sent-event-examples
   - streaming-parameter

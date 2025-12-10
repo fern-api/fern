@@ -16,7 +16,7 @@ import type {
     inferRawObjectFromPropertySchemas,
     ObjectSchema,
     ObjectUtils,
-    PropertySchemas
+    PropertySchemas,
 } from "./types";
 
 interface ObjectPropertyWithRawKey {
@@ -26,7 +26,7 @@ interface ObjectPropertyWithRawKey {
 }
 
 export function object<ParsedKeys extends string, T extends PropertySchemas<ParsedKeys>>(
-    schemas: T
+    schemas: T,
 ): inferObjectSchemaFromPropertySchemas<T> {
     const baseSchema: BaseObjectSchema<
         inferRawObjectFromPropertySchemas<T>,
@@ -34,7 +34,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
     > = {
         _getRawProperties: () =>
             Object.entries(schemas).map(([parsedKey, propertySchema]) =>
-                isProperty(propertySchema) ? propertySchema.rawKey : parsedKey
+                isProperty(propertySchema) ? propertySchema.rawKey : parsedKey,
             ) as unknown as (keyof inferRawObjectFromPropertySchemas<T>)[],
         _getParsedProperties: () => keys(schemas) as unknown as (keyof inferParsedObjectFromPropertySchemas<T>)[],
 
@@ -51,7 +51,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 const property: ObjectPropertyWithRawKey = {
                     rawKey,
                     parsedKey: parsedKey as string,
-                    valueSchema
+                    valueSchema,
                 };
 
                 rawKeyToProperty[rawKey] = property;
@@ -74,14 +74,14 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                         transform: (propertyValue) =>
                             property.valueSchema.parse(propertyValue, {
                                 ...opts,
-                                breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), rawKey]
-                            })
+                                breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), rawKey],
+                            }),
                     };
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
                 skipValidation: opts?.skipValidation,
                 breadcrumbsPrefix: opts?.breadcrumbsPrefix,
-                omitUndefined: opts?.omitUndefined
+                omitUndefined: opts?.omitUndefined,
             });
         },
 
@@ -102,7 +102,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 value: parsed,
                 requiredKeys,
                 getProperty: (
-                    parsedKey
+                    parsedKey,
                 ): { transformedKey: string; transform: (propertyValue: object) => MaybeValid<any> } | undefined => {
                     const property = schemas[parsedKey as keyof T];
 
@@ -117,8 +117,8 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                             transform: (propertyValue) =>
                                 property.valueSchema.json(propertyValue, {
                                     ...opts,
-                                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedKey]
-                                })
+                                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedKey],
+                                }),
                         };
                     } else {
                         return {
@@ -126,26 +126,26 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                             transform: (propertyValue) =>
                                 property.json(propertyValue, {
                                     ...opts,
-                                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedKey]
-                                })
+                                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedKey],
+                                }),
                         };
                     }
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
                 skipValidation: opts?.skipValidation,
                 breadcrumbsPrefix: opts?.breadcrumbsPrefix,
-                omitUndefined: opts?.omitUndefined
+                omitUndefined: opts?.omitUndefined,
             });
         },
 
-        getType: () => SchemaType.OBJECT
+        getType: () => SchemaType.OBJECT,
     };
 
     return {
         ...maybeSkipValidation(baseSchema),
         ...getSchemaUtils(baseSchema),
         ...getObjectLikeUtils(baseSchema),
-        ...getObjectUtils(baseSchema)
+        ...getObjectUtils(baseSchema),
     };
 }
 
@@ -155,12 +155,12 @@ function validateAndTransformObject<Transformed>({
     getProperty,
     unrecognizedObjectKeys = "fail",
     skipValidation = false,
-    breadcrumbsPrefix = []
+    breadcrumbsPrefix = [],
 }: {
     value: unknown;
     requiredKeys: string[];
     getProperty: (
-        preTransformedKey: string
+        preTransformedKey: string,
     ) => { transformedKey: string; transform: (propertyValue: object) => MaybeValid<any> } | undefined;
     unrecognizedObjectKeys: "fail" | "passthrough" | "strip" | undefined;
     skipValidation: boolean | undefined;
@@ -173,9 +173,9 @@ function validateAndTransformObject<Transformed>({
             errors: [
                 {
                     path: breadcrumbsPrefix,
-                    message: getErrorMessageForIncorrectType(value, "object")
-                }
-            ]
+                    message: getErrorMessageForIncorrectType(value, "object"),
+                },
+            ],
         };
     }
 
@@ -201,7 +201,7 @@ function validateAndTransformObject<Transformed>({
                 case "fail":
                     errors.push({
                         path: [...breadcrumbsPrefix, preTransformedKey],
-                        message: `Unexpected key "${preTransformedKey}"`
+                        message: `Unexpected key "${preTransformedKey}"`,
                     });
                     break;
                 case "strip":
@@ -218,19 +218,19 @@ function validateAndTransformObject<Transformed>({
             .filter((key) => missingRequiredKeys.has(key))
             .map((key) => ({
                 path: breadcrumbsPrefix,
-                message: `Missing required key "${key}"`
-            }))
+                message: `Missing required key "${key}"`,
+            })),
     );
 
     if (errors.length === 0 || skipValidation) {
         return {
             ok: true,
-            value: transformed as Transformed
+            value: transformed as Transformed,
         };
     } else {
         return {
             ok: false,
-            errors
+            errors,
         };
     }
 }
@@ -247,7 +247,7 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         value: raw,
                         transformBase: (rawBase) => schema.parse(rawBase, opts),
                         transformExtension: (rawExtension) => extension.parse(rawExtension, opts),
-                        breadcrumbsPrefix: opts?.breadcrumbsPrefix
+                        breadcrumbsPrefix: opts?.breadcrumbsPrefix,
                     });
                 },
                 json: (parsed, opts) => {
@@ -256,17 +256,17 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         value: parsed,
                         transformBase: (parsedBase) => schema.json(parsedBase, opts),
                         transformExtension: (parsedExtension) => extension.json(parsedExtension, opts),
-                        breadcrumbsPrefix: opts?.breadcrumbsPrefix
+                        breadcrumbsPrefix: opts?.breadcrumbsPrefix,
                     });
                 },
-                getType: () => SchemaType.OBJECT
+                getType: () => SchemaType.OBJECT,
             };
 
             return {
                 ...baseSchema,
                 ...getSchemaUtils(baseSchema),
                 ...getObjectLikeUtils(baseSchema),
-                ...getObjectUtils(baseSchema)
+                ...getObjectUtils(baseSchema),
             };
         },
         passthrough: () => {
@@ -283,8 +283,8 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                             ok: true,
                             value: {
                                 ...(raw as any),
-                                ...transformed.value
-                            }
+                                ...transformed.value,
+                            },
                         };
                     },
                     json: (parsed, opts) => {
@@ -296,20 +296,20 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                             ok: true,
                             value: {
                                 ...(parsed as any),
-                                ...transformed.value
-                            }
+                                ...transformed.value,
+                            },
                         };
                     },
-                    getType: () => SchemaType.OBJECT
+                    getType: () => SchemaType.OBJECT,
                 };
 
             return {
                 ...baseSchema,
                 ...getSchemaUtils(baseSchema),
                 ...getObjectLikeUtils(baseSchema),
-                ...getObjectUtils(baseSchema)
+                ...getObjectUtils(baseSchema),
             };
-        }
+        },
     };
 }
 
@@ -318,7 +318,7 @@ function validateAndTransformExtendedObject<PreTransformedExtension, Transformed
     value,
     transformBase,
     transformExtension,
-    breadcrumbsPrefix = []
+    breadcrumbsPrefix = [],
 }: {
     extensionKeys: (keyof PreTransformedExtension)[];
     value: unknown;
@@ -332,15 +332,15 @@ function validateAndTransformExtendedObject<PreTransformedExtension, Transformed
             errors: [
                 {
                     path: breadcrumbsPrefix,
-                    message: getErrorMessageForIncorrectType(value, "object")
-                }
-            ]
+                    message: getErrorMessageForIncorrectType(value, "object"),
+                },
+            ],
         };
     }
 
     const extensionPropertiesSet = new Set(extensionKeys);
     const [extensionProperties, baseProperties] = partition(keys(value), (key) =>
-        extensionPropertiesSet.has(key as keyof PreTransformedExtension)
+        extensionPropertiesSet.has(key as keyof PreTransformedExtension),
     );
 
     const transformedBase = transformBase(filterObject(value, baseProperties));
@@ -351,16 +351,16 @@ function validateAndTransformExtendedObject<PreTransformedExtension, Transformed
             ok: true,
             value: {
                 ...transformedBase.value,
-                ...transformedExtension.value
-            }
+                ...transformedExtension.value,
+            },
         };
     } else {
         return {
             ok: false,
             errors: [
                 ...(transformedBase.ok ? [] : transformedBase.errors),
-                ...(transformedExtension.ok ? [] : transformedExtension.errors)
-            ]
+                ...(transformedExtension.ok ? [] : transformedExtension.errors),
+            ],
         };
     }
 }

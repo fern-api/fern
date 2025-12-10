@@ -65,6 +65,9 @@ var (
 
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
+
+	//go:embed sdk/core/oauth.go
+	oauthFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -329,6 +332,14 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
 			)
 		}
+		if authScheme.Oauth != nil {
+			f.P("ClientID string")
+			f.P("ClientSecret string")
+			// Only add Token field if there's no Bearer auth (which already provides Token)
+			if !hasBearerAuth(auth) {
+				f.P("Token string")
+			}
+		}
 	}
 	for _, header := range headers {
 		if !shouldGenerateHeader(header, f.types) {
@@ -415,6 +426,13 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+			f.P("}")
+		}
+		if authScheme.Oauth != nil && !hasBearerAuth(auth) {
+			// When Token is provided directly, use it for Authorization header
+			// Skip if Bearer auth exists, as it already handles the Token field
+			f.P(`if r.Token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + r.Token)`)
 			f.P("}")
 		}
 	}
@@ -555,6 +573,36 @@ func (f *fileWriter) writeRequestOptionStructs(
 				)
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
+				}
+			}
+			if authScheme.Oauth != nil {
+				if err := f.writeOptionStruct("ClientID", "string", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+				if err := f.writeOptionStruct("ClientSecret", "string", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+				// The client credentials option requires special care because it sets
+				// two parameters.
+				f.P("// ClientCredentialsOption implements the RequestOption interface.")
+				f.P("type ClientCredentialsOption struct {")
+				f.P("ClientID string")
+				f.P("ClientSecret string")
+				f.P("}")
+				f.P()
+
+				f.P("func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {")
+				f.P("opts.ClientID = c.ClientID")
+				f.P("opts.ClientSecret = c.ClientSecret")
+				f.P("}")
+				f.P()
+
+				// Add TokenOption struct for direct token usage.
+				// Skip if Bearer auth exists, as it already provides TokenOption.
+				if !hasBearerAuth(auth) {
+					if err := f.writeOptionStruct("Token", "string", true, asIdempotentRequestOption); err != nil {
+						return err
+					}
 				}
 			}
 		}
@@ -835,6 +883,81 @@ func (f *fileWriter) WriteRequestOptions(
 			f.P("}")
 			f.P()
 		}
+		if authScheme.Oauth != nil {
+			if i == 0 {
+				option = ast.NewCallExpr(
+					ast.NewImportedReference(
+						"WithClientCredentials",
+						importPath,
+					),
+					[]ast.Expr{
+						ast.NewBasicLit(`"<YOUR_CLIENT_ID>"`),
+						ast.NewBasicLit(`"<YOUR_CLIENT_SECRET>"`),
+					},
+				)
+				oauthConfig := authScheme.Oauth.Configuration.ClientCredentials
+				if oauthConfig != nil {
+					if oauthConfig.ClientIdEnvVar != nil {
+						environmentVars = append(environmentVars, *oauthConfig.ClientIdEnvVar)
+					}
+					if oauthConfig.ClientSecretEnvVar != nil {
+						environmentVars = append(environmentVars, *oauthConfig.ClientSecretEnvVar)
+					}
+				}
+			}
+			f.P("// WithClientID sets the clientID auth request parameter.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientID(clientID string) *core.ClientIDOption {")
+			f.P("return &core.ClientIDOption{")
+			f.P("ClientID: clientID,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			f.P("// WithClientSecret sets the clientSecret auth request parameter.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientSecret(clientSecret string) *core.ClientSecretOption {")
+			f.P("return &core.ClientSecretOption{")
+			f.P("ClientSecret: clientSecret,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			f.P("// WithClientCredentials sets both the clientID and clientSecret auth request parameters.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientCredentials(clientID string, clientSecret string) *core.ClientCredentialsOption {")
+			f.P("return &core.ClientCredentialsOption{")
+			f.P("ClientID: clientID,")
+			f.P("ClientSecret: clientSecret,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			// Only add WithToken if there's no Bearer auth (which already provides WithToken)
+			if !hasBearerAuth(auth) {
+				f.P("// WithToken sets the OAuth token directly, bypassing the client credentials flow.")
+				f.P("// Use this when you already have an access token.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				f.P("func WithToken(token string) *core.TokenOption {")
+				f.P("return &core.TokenOption{")
+				f.P("Token: token,")
+				f.P("}")
+				f.P("}")
+				f.P()
+			}
+		}
 	}
 
 	for _, header := range headers {
@@ -934,11 +1057,17 @@ func (f *fileWriter) WriteClient(
 
 	receiver := typeNameToReceiver(clientName)
 
+	// Check if OAuth is configured
+	oauthClientCredentials := getOAuthClientCredentials(irAuth)
+
 	// Generate the client implementation.
 	f.P("type ", clientName, " struct {")
 	f.P("baseURL string")
 	f.P("caller *internal.Caller")
 	f.P("header http.Header")
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider *core.OAuthTokenProvider")
+	}
 	f.P()
 	if len(endpoints) > 0 {
 		f.P("WithRawResponse *", rawClientName)
@@ -978,6 +1107,20 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			continue
 		}
+		if authScheme.Oauth != nil && authScheme.Oauth.Configuration != nil && authScheme.Oauth.Configuration.ClientCredentials != nil {
+			oauthConfig := authScheme.Oauth.Configuration.ClientCredentials
+			if oauthConfig.ClientIdEnvVar != nil {
+				f.P(`if options.ClientID == "" {`)
+				f.P(`options.ClientID = os.Getenv("`, *oauthConfig.ClientIdEnvVar, `")`)
+				f.P("}")
+			}
+			if oauthConfig.ClientSecretEnvVar != nil {
+				f.P(`if options.ClientSecret == "" {`)
+				f.P(`options.ClientSecret = os.Getenv("`, *oauthConfig.ClientSecretEnvVar, `")`)
+				f.P("}")
+			}
+			continue
+		}
 	}
 	for _, header := range headers {
 		if header.Env != nil {
@@ -986,6 +1129,9 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			continue
 		}
+	}
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider := core.NewOAuthTokenProvider(options.ClientID, options.ClientSecret)")
 	}
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
@@ -996,6 +1142,9 @@ func (f *fileWriter) WriteClient(
 	f.P("},")
 	f.P("),")
 	f.P("header: options.ToHeader(),")
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider: oauthTokenProvider,")
+	}
 	if len(endpoints) > 0 {
 		f.P(" WithRawResponse: ", rawClientConstructorName, "(options),")
 	}
@@ -3746,4 +3895,39 @@ func shouldGenerateHeader(header *ir.HttpHeader, types map[common.TypeId]*ir.Typ
 // shouldGenerateHeaderAuthScheme returns true if the given header auth scheme should be generated.
 func shouldGenerateHeaderAuthScheme(auth *ir.HeaderAuthScheme, types map[common.TypeId]*ir.TypeDeclaration) bool {
 	return auth.HeaderEnvVar != nil || !isLiteralType(auth.ValueType, types)
+}
+
+// getOAuthScheme returns the OAuth scheme from the auth configuration, or nil if not present.
+func getOAuthScheme(auth *ir.ApiAuth) *ir.OAuthScheme {
+	if auth == nil {
+		return nil
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Oauth != nil {
+			return scheme.Oauth
+		}
+	}
+	return nil
+}
+
+// hasBearerAuth returns true if the auth configuration has a bearer auth scheme.
+func hasBearerAuth(auth *ir.ApiAuth) bool {
+	if auth == nil {
+		return false
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Bearer != nil {
+			return true
+		}
+	}
+	return false
+}
+
+// getOAuthClientCredentials returns the OAuth client credentials configuration, or nil if not present.
+func getOAuthClientCredentials(auth *ir.ApiAuth) *ir.OAuthClientCredentials {
+	oauth := getOAuthScheme(auth)
+	if oauth == nil || oauth.Configuration == nil {
+		return nil
+	}
+	return oauth.Configuration.ClientCredentials
 }
