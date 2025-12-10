@@ -1,6 +1,7 @@
 import { getOpenAPISettings } from "@fern-api/api-workspace-commons";
 import { relative } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { Logger } from "@fern-api/logger";
 import { OpenAPIConverterContext3_1 } from "@fern-api/openapi-to-ir";
 import { ErrorCollector, ExampleValidator, type SpecExampleValidationResult } from "@fern-api/v3-importer-commons";
 import { readFile } from "fs/promises";
@@ -8,6 +9,14 @@ import yaml from "js-yaml";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { Rule, RuleViolation } from "../../Rule";
+
+/**
+ * Interface for validation errors from the ExampleValidator
+ */
+interface ValidationError {
+    message?: string;
+    path?: string[];
+}
 
 export const ValidOpenApiExamples: Rule = {
     name: "valid-openapi-examples",
@@ -42,7 +51,7 @@ export const ValidOpenApiExamples: Rule = {
                                     // Group errors by endpoint for cleaner reporting
                                     const errorsByEndpoint = new Map<
                                         string,
-                                        Array<{ exampleName?: string; errors: any[] }>
+                                        Array<{ exampleName?: string; errors: ValidationError[] }>
                                     >();
 
                                     for (const invalidExample of validationResult.invalidHumanExamples) {
@@ -50,18 +59,19 @@ export const ValidOpenApiExamples: Rule = {
                                         if (!errorsByEndpoint.has(endpointKey)) {
                                             errorsByEndpoint.set(endpointKey, []);
                                         }
-                                        errorsByEndpoint.get(endpointKey)!.push({
-                                            exampleName: invalidExample.exampleName,
-                                            errors: invalidExample.errors
-                                        });
+                                        const endpointErrors = errorsByEndpoint.get(endpointKey);
+                                        if (endpointErrors) {
+                                            endpointErrors.push({
+                                                exampleName: invalidExample.exampleName,
+                                                errors: invalidExample.errors
+                                            });
+                                        }
                                     }
 
                                     // Create user-friendly error messages grouped by endpoint
-                                    const endpointKeys = Array.from(errorsByEndpoint.keys());
-                                    for (let i = 0; i < endpointKeys.length; i++) {
-                                        const endpointKey = endpointKeys[i]!;
-                                        const examples = errorsByEndpoint.get(endpointKey);
-                                        if (!examples) continue;
+                                    let endpointIndex = 0;
+                                    const totalEndpoints = errorsByEndpoint.size;
+                                    for (const [endpointKey, examples] of errorsByEndpoint) {
                                         let errorMessage = `Errors for ${endpointKey}:\n`;
                                         let errorCount = 0;
 
@@ -87,9 +97,10 @@ export const ValidOpenApiExamples: Rule = {
                                         }
 
                                         // Add extra spacing between endpoints (but not after the last one)
-                                        if (i < endpointKeys.length - 1) {
+                                        if (endpointIndex < totalEndpoints - 1) {
                                             errorMessage += "\n\n";
                                         }
+                                        endpointIndex++;
 
                                         violations.push({
                                             severity: "warning",
@@ -143,7 +154,7 @@ async function validateOpenApiExamples({
     logger
 }: {
     specPath: string;
-    logger: any;
+    logger: Logger;
 }): Promise<SpecExampleValidationResult | null> {
     try {
         // Read and parse the OpenAPI spec
@@ -213,8 +224,7 @@ function wrapMessage(message: string, indent: string, maxLength: number): string
     const lines: string[] = [];
     let currentLine = "";
 
-    for (let i = 0; i < words.length; i++) {
-        const word = words[i]!;
+    for (const word of words) {
         const isFirstWord = currentLine === "";
         const separator = isFirstWord ? "" : " ";
         const testLine = currentLine + separator + word;
@@ -244,7 +254,7 @@ function wrapMessage(message: string, indent: string, maxLength: number): string
 /**
  * Converts technical validation errors into user-friendly messages
  */
-function createFriendlyErrorMessage(error: any): string {
+function createFriendlyErrorMessage(error: ValidationError): string {
     let message = error.message || "";
     const path = error.path || [];
 
@@ -269,7 +279,7 @@ function createFriendlyErrorMessage(error: any): string {
         const enumMatch = message.match(/\[\s*([\s\S]*?)\s*\]/);
         if (enumMatch) {
             // Parse the allowed values, handling multi-line format
-            const allowedValuesText = enumMatch[1];
+            const allowedValuesText = enumMatch[1] ?? "";
             const values = allowedValuesText
                 .split(/[,\n]/)
                 .map((v: string) => v.trim().replace(/^"(.*)"$/, "$1"))

@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 
+import type { RuleContext } from "../../../Rule";
 import { ValidOpenApiExamples } from "../valid-openapi-examples";
 
 describe("ValidOpenApiExamples", () => {
@@ -13,14 +14,19 @@ describe("ValidOpenApiExamples", () => {
         const mockContext = {
             ossWorkspaces: [],
             logger: {
+                disable: vi.fn(),
+                enable: vi.fn(),
+                trace: vi.fn(),
                 debug: vi.fn(),
+                info: vi.fn(),
                 warn: vi.fn(),
-                info: vi.fn()
+                error: vi.fn(),
+                log: vi.fn()
             },
             workspace: {
                 absoluteFilePath: "/test/path"
             }
-        } as any;
+        } as unknown as RuleContext;
 
         const ruleVisitor = await ValidOpenApiExamples.create(mockContext);
         expect(ruleVisitor).toBeDefined();
