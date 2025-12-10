@@ -1,6 +1,6 @@
 # Reference
 ## Package
-<details><summary><code>client.package.test() -> </code></summary>
+<details><summary><code>client.package.<a href="/lib/seed/package/client.rb">test</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -29,6 +29,14 @@ client.package.test(for_: 'for');
 <dd>
 
 **for_:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Package::RequestOptions` 
     
 </dd>
 </dl>

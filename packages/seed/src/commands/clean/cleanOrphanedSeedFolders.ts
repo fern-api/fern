@@ -47,7 +47,12 @@ function getExpectedFixtures(generator: GeneratorWorkspace, testDefinitions: Set
 function getExpectedOutputFoldersForFixture(generator: GeneratorWorkspace, fixture: string): Set<string> | null {
     const fixtureConfig = generator.workspaceConfig.fixtures?.[fixture];
     if (fixtureConfig != null && fixtureConfig.length > 0) {
-        return new Set(fixtureConfig.map((config) => config.outputFolder));
+        const outputFolders = new Set(fixtureConfig.map((config) => config.outputFolder));
+        // If outputFolder is ".", the fixture outputs to the root, so all subfolders are valid
+        if (outputFolders.has(".")) {
+            return null;
+        }
+        return outputFolders;
     }
     return null;
 }

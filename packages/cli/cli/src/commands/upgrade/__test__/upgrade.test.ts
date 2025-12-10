@@ -121,6 +121,29 @@ describe("upgrade", () => {
             expect(writeFile).not.toHaveBeenCalled();
         });
 
+        it("should forward --yes when rerunning programmatically", async () => {
+            process.argv = ["node", "cli.js", "upgrade", "--version", "1.2.0"];
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined,
+                yes: true
+            });
+
+            expect(rerunFernCliAtVersion).toHaveBeenCalledWith({
+                version: "1.2.0",
+                cliContext: mockCliContext,
+                env: {
+                    [PREVIOUS_VERSION_ENV_VAR]: "1.0.0"
+                },
+                args: ["upgrade", "--from", "1.0.0", "--to", "1.2.0", "--yes"],
+                throwOnError: true
+            });
+            expect(runMigrations).not.toHaveBeenCalled();
+        });
+
         it("should use explicit --from flag when provided", async () => {
             process.argv = ["node", "cli.js", "upgrade", "--version", "1.2.0", "--from", "0.84.1"];
 
@@ -251,7 +274,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "1.0.0",
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
             expect(writeFile).toHaveBeenCalled();
         });
@@ -275,12 +299,30 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "1.0.0",
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
             expect(writeFile).toHaveBeenCalledWith(
                 "/test/fern/fern.config.json",
                 expect.stringContaining('"version": "1.2.0"')
             );
+        });
+
+        it("should skip migration prompt when yes flag is provided", async () => {
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: "1.0.0",
+                yes: true
+            });
+
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "1.0.0",
+                toVersion: "1.2.0",
+                context: {},
+                yes: true
+            });
         });
 
         it("should use PREVIOUS_VERSION_ENV_VAR if --from not provided", async () => {
@@ -296,7 +338,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "0.84.1",
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -311,7 +354,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "1.0.0",
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -415,7 +459,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "0.84.1",
                 toVersion: "1.3.0-rc0",
-                context: {}
+                context: {},
+                yes: false
             });
             expect(writeFile).toHaveBeenCalledWith(
                 "/test/fern/fern.config.json",
@@ -670,7 +715,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "0.84.1",
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -692,7 +738,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "0.80.0",
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -717,7 +764,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "1.0.0", // Falls back to projectConfig.version
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -872,7 +920,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "0.75.0",
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -894,7 +943,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "1.0.0",
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -916,7 +966,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "0.90.0",
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -939,7 +990,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "1.0.0", // Uses projectConfig.version
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -1003,7 +1055,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "0.84.1", // Should use git history, not env var
                 toVersion: "1.3.0-rc0",
-                context: {}
+                context: {},
+                yes: false
             });
             expect(writeFile).toHaveBeenCalled();
         });
@@ -1044,7 +1097,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "1.3.0-rc0", // Falls back to config version (same as target, but migrations should still run)
                 toVersion: "1.3.0-rc0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
     });
@@ -1071,7 +1125,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "0.85.0",
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -1111,7 +1166,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "0.85.0", // From git, not from env var
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -1137,7 +1193,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "1.0.0", // Falls back to projectConfig.version
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
 
@@ -1157,7 +1214,8 @@ describe("upgrade", () => {
             expect(runMigrations).toHaveBeenCalledWith({
                 fromVersion: "0.80.0", // Uses explicit --from, not git
                 toVersion: "1.2.0",
-                context: {}
+                context: {},
+                yes: false
             });
         });
     });

@@ -29,7 +29,7 @@
     "dist:cli": "node build.mjs",
     "dockerTagLatest": "docker build -f ./Dockerfile -t fernapi/fern-typescript-mcp-model:latest ../../..",
     "podmanTagLatest": "podman build -f ./Dockerfile -t fernapi/fern-typescript-mcp-model:latest ../../..",
-    "publish:cli": "pnpm dist:cli && cd dist && npm publish",
+    "publish:cli": "turbo run dist:cli --filter . && npm publish ./dist",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"

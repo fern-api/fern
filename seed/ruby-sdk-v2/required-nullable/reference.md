@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.get_foo() -> Seed::Types::Foo</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_foo</a>() -> Seed::Types::Foo</code></summary>
 <dl>
 <dd>
 
@@ -58,6 +58,14 @@ client.get_foo(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -66,7 +74,7 @@ client.get_foo(
 </dl>
 </details>
 
-<details><summary><code>client.update_foo(id, request) -> Seed::Types::Foo</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">update_foo</a>(id, request) -> Seed::Types::Foo</code></summary>
 <dl>
 <dd>
 
@@ -133,6 +141,14 @@ client.update_foo(
 <dd>
 
 **non_nullable_text:** `String` — Regular non-nullable field
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>
