@@ -7,6 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubLicenseSchema } from "../../license/types/GithubLicenseSchema";
 import { ReviewersSchema } from "../../reviewers/types/ReviewersSchema";
+import { GithubPullRequestState } from "./GithubPullRequestState";
 
 export const GithubPullRequestSchema: core.serialization.ObjectSchema<
     serializers.GithubPullRequestSchema.Raw,
@@ -17,6 +18,7 @@ export const GithubPullRequestSchema: core.serialization.ObjectSchema<
     license: GithubLicenseSchema.optional(),
     mode: core.serialization.stringLiteral("pull-request"),
     reviewers: ReviewersSchema.optional(),
+    "pr-state": GithubPullRequestState.optional(),
 });
 
 export declare namespace GithubPullRequestSchema {
@@ -26,5 +28,6 @@ export declare namespace GithubPullRequestSchema {
         license?: GithubLicenseSchema.Raw | null;
         mode: "pull-request";
         reviewers?: ReviewersSchema.Raw | null;
+        "pr-state"?: GithubPullRequestState.Raw | null;
     }
 }

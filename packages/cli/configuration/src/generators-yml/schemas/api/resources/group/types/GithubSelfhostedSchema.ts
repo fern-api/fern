@@ -10,4 +10,6 @@ export interface GithubSelfhostedSchema {
     mode?: FernDefinition.GithubSelfhostedMode;
     branch?: string;
     license?: FernDefinition.GithubLicenseSchema;
+    /** The state of the pull request when created (draft or ready). Only applies when mode is pull-request. */
+    "pr-state"?: FernDefinition.GithubPullRequestState;
 }

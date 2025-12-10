@@ -3270,6 +3270,13 @@
         }
       ]
     },
+    "group.GithubPullRequestState": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready"
+      ]
+    },
     "group.GithubSelfhostedSchema": {
       "type": "object",
       "properties": {
@@ -3303,6 +3310,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/license.GithubLicenseSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pr-state": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GithubPullRequestState"
             },
             {
               "type": "null"
@@ -3432,6 +3449,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/reviewers.ReviewersSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pr-state": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/group.GithubPullRequestState"
             },
             {
               "type": "null"

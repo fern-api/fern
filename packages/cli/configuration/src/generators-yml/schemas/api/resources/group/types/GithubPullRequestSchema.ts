@@ -10,4 +10,6 @@ export interface GithubPullRequestSchema {
     license?: FernDefinition.GithubLicenseSchema;
     mode: "pull-request";
     reviewers?: FernDefinition.ReviewersSchema;
+    /** The state of the pull request when created (draft or ready). Defaults to ready. */
+    "pr-state"?: FernDefinition.GithubPullRequestState;
 }
