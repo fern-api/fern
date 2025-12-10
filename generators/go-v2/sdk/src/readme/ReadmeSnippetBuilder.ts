@@ -18,6 +18,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
     private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS";
     private static EXPLICIT_NULL_FEATURE_ID: FernGeneratorCli.FeatureId = "EXPLICIT_NULL";
+    private static OAUTH_FEATURE_ID: FernGeneratorCli.FeatureId = "OAUTH";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
@@ -78,6 +79,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [FernGeneratorCli.StructuredFeatureId.Errors]: { renderer: this.renderErrorsSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
+            ...(this.hasOAuthScheme()
+                ? {
+                      [ReadmeSnippetBuilder.OAUTH_FEATURE_ID]: {
+                          renderer: this.renderOAuthSnippet.bind(this)
+                      }
+                  }
+                : undefined),
             ...(this.isPaginationEnabled
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
@@ -292,6 +300,30 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
             // Access individual fields from the pagination object
             nextCursor := page.RawResponse.Next
+        `);
+    }
+
+    private hasOAuthScheme(): boolean {
+        if (this.context.ir.auth == null) {
+            return false;
+        }
+        return this.context.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
+    }
+
+    private renderOAuthSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`
+            // Option 1: Use client credentials (SDK will handle token fetching and refresh)
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+                option.WithClientCredentials(
+                    "<YOUR_CLIENT_ID>",
+                    "<YOUR_CLIENT_SECRET>",
+                ),
+            )
+
+            // Option 2: Use a pre-fetched token directly
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} := ${this.rootPackageClientName}.NewClient(
+                option.WithToken("<YOUR_ACCESS_TOKEN>"),
+            )
         `);
     }
 

@@ -105,6 +105,10 @@ class CoreUtilities:
         self.exceptions = Exceptions(filepath=self.filepath)
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
         self._pydantic_compatibility = custom_config.pydantic_config.version
+        # Mirrors enum handling logic from SDK enum_generator: use string enums if either
+        # use_str_enums is True OR enum_type is "literals"
+        self._enum_type = custom_config.pydantic_config.enum_type
+        self._use_str_enums = custom_config.pydantic_config.use_str_enums or self._enum_type == "literals"
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -134,6 +138,17 @@ class CoreUtilities:
             ),
             exports={"serialize_datetime"},
         )
+        # Only copy enum.py when generating actual enum classes (not string literals)
+        if not self._use_str_enums:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="enum.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="enum"),
+                ),
+                exports=set(),
+            )
 
         is_v1_on_v2 = self._pydantic_compatibility == PydanticVersionCompatibility.V1_ON_V2
         utilities_path = (

@@ -5,7 +5,15 @@
       type: feat
   irVersion: 63
   createdAt: "2025-12-10"
-  version: 3.5.1
+  version: 3.6.1
+
+- changelogEntry:
+    - summary: |
+        Validate examples in `fern check` against OpenAPI schemas.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-10"
+  version: 3.6.0
 
 - changelogEntry:
     - summary: |

@@ -23,7 +23,7 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
@@ -43,9 +43,7 @@
     "@fern-api/task-context": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "esbuild-plugin-polyfill-node": "^0.3.0",
     "openapi-types": "^12.1.3",
-    "tsup": "^8.5.0",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

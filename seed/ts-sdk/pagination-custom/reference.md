@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernamesCustom</a>({ ...params }) -> SeedPagination.UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernamesCustom</a>({ ...params }) -> core.MyPager<string, SeedPagination.ListUsernamesRequestCustom, SeedPagination.UsernameCursor></code></summary>
 <dl>
 <dd>
 

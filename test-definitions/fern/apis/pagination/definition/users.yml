@@ -61,6 +61,15 @@ types:
         docs: The totall number of /users
       data: list<User>
 
+  ListUsersOptionalDataPaginationResponse:
+    properties:
+      hasNextPage: optional<boolean>
+      page: optional<Page>
+      total_count:
+        type: integer
+        docs: The totall number of /users
+      data: optional<list<User>>
+
   ListUsersMixedTypePaginationResponse:
     properties:
       next: string
@@ -331,3 +340,52 @@ service:
           offset:
             type: optional<integer>
       response: UsernameContainer
+
+    listWithOptionalData:
+      pagination:
+        offset: $request.page
+        results: $response.data
+      method: GET
+      path: /optional-data
+      request:
+        name: ListUsersOptionalDataRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: Defaults to first page
+            default: 0
+      response: ListUsersOptionalDataPaginationResponse
+      examples:
+        - name: WithData
+          query-parameters:
+            page: 1
+          response:
+            body:
+              hasNextPage: true
+              page:
+                page: 1
+                next:
+                  page: 2
+                  starting_after: "next_cursor"
+                per_page: 10
+                total_page: 5
+              total_count: 50
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+        - name: WithoutData
+          query-parameters:
+            page: 1
+          response:
+            body:
+              hasNextPage: false
+              page:
+                page: 1
+                next:
+                  page: 2
+                  starting_after: "next_cursor"
+                per_page: 10
+                total_page: 1
+              total_count: 0

@@ -1,4 +1,48 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.39.1
+  changelogEntry:
+    - summary: |
+        Fix wire tests for paginated endpoints to expect an empty array `[]` instead of `undefined` when `response.data` is not present.
+        This aligns with the paginator's behavior which uses `?? []` to return an empty array when the data property is undefined.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 62
+
+- version: 3.39.0
+  changelogEntry:
+    - summary: |
+        Add support for custom pagination with a dedicated `CustomPager` class, similar to the C# SDK generator.
+        The `CustomPager` class provides:
+        - A `CustomPagerParser` callback type that SDK authors implement to define pagination logic
+        - Support for both forward (`getNextPage`) and backward (`getPreviousPage`) pagination
+        - `AsyncIterable` implementation for ergonomic consumption with `for await...of`
+        - Access to raw response data via `response` and `rawResponse` properties
+        
+        The generated endpoint returns a `CustomPager` with a default parser that extracts items from the
+        configured results property and sets `hasNextPage`/`hasPreviousPage` to `false`. SDK authors who need
+        custom pagination logic can create their own wrapper/factory that calls `CustomPager.create()` with
+        their own `CustomPagerParser` implementation.
+      type: feat
+  createdAt: "2025-12-09"
+  irVersion: 62
+
+- version: 3.38.3
+  changelogEntry:
+    - summary: |
+        Sort imports and exports in generated TypeScript SDK files for consistent, deterministic output.
+        This eliminates the need to rely on formatters like prettier, biome, or oxfmt to order imports and exports.
+      type: chore
+  createdAt: "2025-12-09"
+  irVersion: 62
+
+- version: 3.38.2
+  changelogEntry:
+    - summary: |
+        Pre format and lint as is files and core utilities.
+      type: chore
+  createdAt: "2025-12-09"
+  irVersion: 62
+
 - version: 3.38.1
   changelogEntry:
     - summary: |
