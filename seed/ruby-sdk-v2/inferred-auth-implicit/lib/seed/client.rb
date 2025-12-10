@@ -28,8 +28,7 @@ module Seed
       # Create the auth provider with the auth client and credentials
       @auth_provider = Seed::Internal::InferredAuthProvider.new(
         auth_client: auth_client,
-        options: { base_url: base_url, client_id: client_id, client_secret: client_secret, scope: scope,
-                   x_api_key: x_api_key }
+        options: { base_url: base_url, client_id: client_id, client_secret: client_secret, scope: scope, x_api_key: x_api_key }
       )
 
       @raw_client = Seed::Internal::Http::RawClient.new(
@@ -37,7 +36,7 @@ module Seed
         headers: {
           "User-Agent" => "fern_inferred-auth-implicit/0.0.1",
           "X-Fern-Language" => "Ruby"
-        }.merge(@auth_provider.get_auth_headers)
+        }.merge(@auth_provider.auth_headers)
       )
     end
 

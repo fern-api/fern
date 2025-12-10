@@ -222,6 +222,10 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
         context.sourceFile.addStatements(typesCode);
     }
 
+    private hasOAuthScheme(): boolean {
+        return this.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
+    }
+
     private generateNormalizeClientOptionsWithAuthFunction(context: SdkContext): void {
         let authProviderCreation = "";
         const isAnyAuth = this.ir.auth.requirement === "ANY";
@@ -269,9 +273,9 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                         namedImports: ["OAuthAuthProvider"]
                     });
                     providerImports.push("OAuthAuthProvider");
-                    providerInstantiations.push(
-                        "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider)); }"
-                    );
+                    const oauthCreation =
+                        "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)); }";
+                    providerInstantiations.push(oauthCreation);
                 }
             }
 
@@ -308,7 +312,7 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                         moduleSpecifier: "./auth/OAuthAuthProvider.js",
                         namedImports: ["OAuthAuthProvider"]
                     });
-                    authProviderCreation = "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
+                    authProviderCreation = "OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)";
                     break;
                 } else if (authScheme.type === "inferred") {
                     context.sourceFile.addImportDeclaration({

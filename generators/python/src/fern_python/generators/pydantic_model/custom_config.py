@@ -15,6 +15,7 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
     orm_mode: bool = False
     smart_union: bool = False
     require_optional_fields: bool = False
+    coerce_numbers_to_str: bool = False
     use_str_enums: bool = True
     """
     use_str_enums is deprecated, prefer `enum_type` instead (default: 'literals', which is the equivalent of `use_str_enums=True`)

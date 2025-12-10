@@ -1,0 +1,22 @@
+{
+    "extends": ["//"],
+    "tasks": {
+        "dist:cli": {
+            "inputs": [
+                "../features.yml",
+                "../../asIs/**",
+                "../../utils/core-utilities/**",
+                /** same as global task **/
+                "src/**",
+                "tests/**",
+                "package.json",
+                "tsconfig.json",
+                "build.mjs",
+                "$TURBO_ROOT$/packages/configs/**",
+                "$TURBO_ROOT$/shared/.prettierignore",
+                "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+                "$TURBO_ROOT$/tsconfig.eslint.json"
+            ]
+        }
+    }
+}

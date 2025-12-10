@@ -79,7 +79,7 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
             authProviders.push(new HeaderAuthProvider(normalizedWithNoOpAuthProvider));
         }
         if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
-            authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider));
+            authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider));
         }
         return new AnyAuthProvider(authProviders);
     })();

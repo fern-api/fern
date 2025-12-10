@@ -1,4 +1,86 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.38.1
+  changelogEntry:
+    - summary: |
+        `hasNextPage` employs the default for the `step` attribute on offset-based pagination endpoints if it's set.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 62
+
+- version: 3.38.0
+  changelogEntry:
+    - summary: |
+        The `oauthTokenOverride` feature flag has been removed and is now always enabled.
+        OAuth token override allows users to skip the OAuth flow by providing a pre-generated bearer token directly.
+        This feature is now the default behavior and no longer requires configuration.
+      type: feat
+  createdAt: "2025-12-09"
+  irVersion: 62
+
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        The README now demonstrates how to pass custom headers to both the client constructor and individual endpoint invocations.
+      type: chore
+  createdAt: "2025-12-08"
+  irVersion: 62
+
+- version: 3.37.3
+  changelogEntry:
+    - summary: Update generator-cli to 0.5.0.
+      type: chore
+  createdAt: "2025-12-08"
+  irVersion: 62
+
+- version: 3.37.2
+  changelogEntry:
+    - summary: Update oxfmt to 0.17.0, oxlint to 1.32.0, and oxlint-tsgolint to 0.8.4.
+      type: chore
+  createdAt: "2025-12-08"
+  irVersion: 62
+
+- version: 3.37.1
+  changelogEntry:
+    - summary: Fixed a possible type issue in Fetcher.test.ts.
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 62
+
+- version: 3.37.0
+  changelogEntry:
+    - summary: |
+        Add support for OAuth token override, allowing users to skip the OAuth flow by providing a pre-generated bearer token directly.
+        This is useful when users already have a valid token and don't need to go through the OAuth client credentials flow.
+
+        To enable this feature, add the `oauthTokenOverride` configuration to your _generators.yml_ file:
+        ```yaml
+        # In generators.yml
+        groups:
+          generators:
+            - name: fernapi/fern-typescript-sdk
+              config:
+                oauthTokenOverride: true
+        ```
+
+        Users can then instantiate the client with either OAuth credentials or a pre-generated token:
+        ```ts
+        // Option 1: OAuth flow (existing behavior)
+        const client = new Client({
+          clientId: "YOUR_CLIENT_ID",
+          clientSecret: "YOUR_CLIENT_SECRET",
+          ...
+        });
+
+        // Option 2: Direct bearer token override (new capability)
+        const client = new Client({
+          token: "my-pre-generated-bearer-token",
+          ...
+        });
+        ```
+      type: feat
+  createdAt: "2025-12-04"
+  irVersion: 62
+
 - version: 3.36.0
   changelogEntry:
     - summary: |
@@ -211,7 +293,7 @@
 - version: 3.31.0
   changelogEntry:
     - summary: |
-        Add `generateSubpackageExports` configuration option to enable direct imports of subpackage clients. 
+        Add `generateSubpackageExports` configuration option to enable direct imports of subpackage clients.
         This allows JavaScript bundlers to tree-shake and include only the imported subpackage code, resulting in much smaller bundle sizes.
 
         Example:

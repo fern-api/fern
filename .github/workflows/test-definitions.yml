@@ -47,7 +47,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm --filter @fern-api/cli dist:cli:dev
+          pnpm turbo run dist:cli:dev --filter @fern-api/cli
           cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs" 
           cd test-definitions
           FERN_NO_VERSION_REDIRECTION=true node $cli_path check

@@ -1,5 +1,63 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.45.0
+  changelogEntry:
+    - summary: |
+        Add `coerce_numbers_to_str` option to `pydantic_config`. When enabled, numeric types (int, float, Decimal)
+        will be coerced to strings during validation. This is useful for APIs that return numeric values as strings.
+      type: feat
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 4.44.2
+  changelogEntry:
+    - summary: |
+        Fix enum-typed headers to use `.value` instead of `str()` for consistent wire format across
+        all Python versions. Previously, `str(enum)` returned the enum name (e.g., `Operand.GREATER_THAN`)
+        on Python `< 3.11`, but the wire value (e.g., `>`) on Python `>= 3.11` with StrEnum.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 4.44.1
+  changelogEntry:
+    - summary: |
+        Remove `oauth-token-override` config flag. OAuth token override is now always enabled for OAuth client
+        credentials flows, allowing users to authenticate with either client_id/client_secret OR a pre-generated
+        bearer token directly via the `token` parameter without any configuration.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 4.44.0
+  changelogEntry:
+    - summary: |
+        Add Python 3.11+ StrEnum compatibility. Generated enums now use StrEnum for Python >= 3.11
+        and the (str, Enum) mixin for older versions, fixing compatibility issues with Python 3.11's
+        stricter enum mixin handling.
+      type: feat
+  createdAt: "2025-12-08"
+  irVersion: 61
+
+- version: 4.43.0
+  changelogEntry:
+    - summary: |
+        Add OAuth token override support. When `oauth-token-override: true` is configured, users can authenticate
+        with either OAuth client credentials or a pre-generated bearer token directly via the `token` parameter.
+      type: feat
+  createdAt: "2025-12-06"
+  irVersion: 61
+
+- version: 4.42.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth flow regression where `SyncClientWrapper` and `AsyncClientWrapper` required a `token` parameter.
+        The token parameter is now optional only for OAuth flows (matching TypeScript's behavior), while plain
+        bearer auth continues to require a token when `isAuthMandatory` is true.
+      type: fix
+  createdAt: "2025-12-05"
+  irVersion: 61
+
 - version: 4.42.0
   changelogEntry:
     - summary: |
@@ -137,7 +195,7 @@
 
 - version: 4.39.0
   changelogEntry:
-    - summary: Add environment_class_name config option to customize the environment class name. Default remains {ClientName}Environment.
+    - summary: Add environment_class_name config option to customize the environment class name. Default remains `{ClientName}Environment`.
       type: feat
   createdAt: "2025-11-25"
   irVersion: 61

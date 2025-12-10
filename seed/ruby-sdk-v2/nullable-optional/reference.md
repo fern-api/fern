@@ -392,6 +392,12 @@ Create a complex profile to test nullable enums and unions
 ```ruby
 client.nullable_optional.create_complex_profile(
   id: 'id',
+  nullable_role: 'ADMIN',
+  optional_role: 'ADMIN',
+  optional_nullable_role: 'ADMIN',
+  nullable_status: 'active',
+  optional_status: 'active',
+  optional_nullable_status: 'active',
   nullable_array: ['nullableArray', 'nullableArray'],
   optional_array: ['optionalArray', 'optionalArray'],
   optional_nullable_array: ['optionalNullableArray', 'optionalNullableArray'],
@@ -408,7 +414,9 @@ client.nullable_optional.create_complex_profile(
     }
   },
   nullable_list_of_unions: [],
-  optional_map_of_enums: {}
+  optional_map_of_enums: {
+    optionalMapOfEnums: 'ADMIN'
+  }
 );
 ```
 </dd>
@@ -519,6 +527,8 @@ Update complex profile to test nullable field updates
 ```ruby
 client.nullable_optional.update_complex_profile(
   profile_id: 'profileId',
+  nullable_role: 'ADMIN',
+  nullable_status: 'active',
   nullable_array: ['nullableArray', 'nullableArray']
 );
 ```
@@ -619,6 +629,8 @@ client.nullable_optional.test_deserialization(
   nullable_string: 'nullableString',
   optional_string: 'optionalString',
   optional_nullable_string: 'optionalNullableString',
+  nullable_enum: 'ADMIN',
+  optional_enum: 'active',
   nullable_list: ['nullableList', 'nullableList'],
   nullable_map: {
     nullableMap: 1
@@ -692,7 +704,11 @@ Filter users by role with nullable enum
 <dd>
 
 ```ruby
-client.nullable_optional.filter_by_role();
+client.nullable_optional.filter_by_role(
+  role: 'ADMIN',
+  status: 'active',
+  secondary_role: 'ADMIN'
+);
 ```
 </dd>
 </dl>

@@ -1,0 +1,411 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_anyOfExamples",
+    ],
+    "types": [
+      "AnyOfVariantA",
+      "AnyOfVariantB",
+      "AnyOfErrorA",
+      "AnyOfErrorB",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {
+    "subpackage_anyOfExamples": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "authV2": undefined,
+          "availability": undefined,
+          "defaultEnvironment": "https://api.example.com/v1",
+          "description": "Demonstrates anyOf without title fields.",
+          "environments": [
+            {
+              "baseUrl": "https://api.example.com/v1",
+              "id": "https://api.example.com/v1",
+            },
+          ],
+          "errors": undefined,
+          "errorsV2": [
+            {
+              "availability": undefined,
+              "description": "Bad request error",
+              "examples": [],
+              "headers": undefined,
+              "isWildcard": undefined,
+              "name": "BadRequestError",
+              "statusCode": 400,
+              "type": {
+                "type": "alias",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "AnyOfExampleNoTitlesRequestBadRequestError",
+                },
+              },
+            },
+          ],
+          "examples": [
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": undefined,
+              "path": "/anyOf/no-titles",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": {
+                "optionA": "string",
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "optionA": "string",
+                },
+              },
+              "responseBody": {
+                "success": true,
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "success": true,
+                },
+              },
+              "responseStatusCode": 200,
+            },
+          ],
+          "headers": [],
+          "id": "anyOfExampleNoTitles",
+          "includeInApiExplorer": undefined,
+          "method": "POST",
+          "multiAuth": undefined,
+          "name": "Example endpoint using anyOf without titles",
+          "originalEndpointId": "endpoint_anyOfExamples.anyOfExampleNoTitles",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/anyOf/no-titles",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "protocol": {
+            "type": "rest",
+          },
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "type": {
+              "contentType": "application/json",
+              "description": undefined,
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "anyOf Examples_anyOfExampleNoTitles_Request",
+                },
+              },
+              "type": "json",
+            },
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "description": undefined,
+                "type": {
+                  "contentType": "application/json",
+                  "description": undefined,
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "default": undefined,
+                      "type": "id",
+                      "value": "anyOf Examples_anyOfExampleNoTitles_Request",
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+            ],
+          },
+          "response": {
+            "description": "Success",
+            "isWildcard": undefined,
+            "statusCode": 200,
+            "type": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "anyOf Examples_anyOfExampleNoTitles_Response_200",
+              },
+            },
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "description": "Success",
+                "isWildcard": undefined,
+                "statusCode": 200,
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "anyOf Examples_anyOfExampleNoTitles_Response_200",
+                  },
+                },
+              },
+            ],
+          },
+          "slug": undefined,
+        },
+      ],
+      "name": "anyOfExamples",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_anyOfExamples",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "AnyOfErrorA": {
+      "availability": undefined,
+      "description": "AnyOf error variant A",
+      "displayName": undefined,
+      "name": "AnyOfErrorA",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "fieldError",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "AnyOfErrorB": {
+      "availability": undefined,
+      "description": "AnyOf error variant B",
+      "displayName": undefined,
+      "name": "AnyOfErrorB",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "formatError",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "type": "boolean",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "AnyOfExampleNoTitlesRequestBadRequestError": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "AnyOfExampleNoTitlesRequestBadRequestError",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "displayName": "AnyOfErrorA",
+            "type": {
+              "default": undefined,
+              "type": "id",
+              "value": "AnyOfErrorA",
+            },
+            "typeName": "AnyOfErrorA",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "displayName": "AnyOfErrorB",
+            "type": {
+              "default": undefined,
+              "type": "id",
+              "value": "AnyOfErrorB",
+            },
+            "typeName": "AnyOfErrorB",
+          },
+        ],
+      },
+    },
+    "AnyOfVariantA": {
+      "availability": undefined,
+      "description": "First variant for anyOf without title",
+      "displayName": undefined,
+      "name": "AnyOfVariantA",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "optionA",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "AnyOfVariantB": {
+      "availability": undefined,
+      "description": "Second variant for anyOf without title",
+      "displayName": undefined,
+      "name": "AnyOfVariantB",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "optionB",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "type": "boolean",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "anyOf Examples_anyOfExampleNoTitles_Request": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "anyOf Examples_anyOfExampleNoTitles_Request",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "displayName": "AnyOfVariantA",
+            "type": {
+              "default": undefined,
+              "type": "id",
+              "value": "AnyOfVariantA",
+            },
+            "typeName": "AnyOfVariantA",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "displayName": "AnyOfVariantB",
+            "type": {
+              "default": undefined,
+              "type": "id",
+              "value": "AnyOfVariantB",
+            },
+            "typeName": "AnyOfVariantB",
+          },
+        ],
+      },
+    },
+    "anyOf Examples_anyOfExampleNoTitles_Response_200": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "anyOf Examples_anyOfExampleNoTitles_Response_200",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "success",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "type": "boolean",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
