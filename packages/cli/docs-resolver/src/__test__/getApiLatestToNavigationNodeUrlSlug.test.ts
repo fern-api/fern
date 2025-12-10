@@ -84,6 +84,7 @@ it.skip("generates slug for webhook", () => {
         availability: undefined,
         headers: [],
         payloads: [],
+        responses: [],
         description: undefined
     };
     expect(
