@@ -90,7 +90,12 @@ client.user.create_username(
 <dd>
 
 ```ruby
-client.user.create_username_with_referenced_type(tags: ['tags', 'tags']);
+client.user.create_username_with_referenced_type(
+  tags: ['tags', 'tags'],
+  username: 'username',
+  password: 'password',
+  name: 'test'
+);
 ```
 </dd>
 </dl>
