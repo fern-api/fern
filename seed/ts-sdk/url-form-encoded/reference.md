@@ -50,5 +50,3 @@ await client.submitFormData({
 </dd>
 </dl>
 </details>
-
-## 

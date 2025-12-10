@@ -1,0 +1,96 @@
+openapi: 3.1.0
+info:
+  title: AI Examples Issue Test
+  version: 1.0.0
+paths:
+  /plant:
+    post:
+      operationId: addPlant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+      responses:
+        "200":
+          description: Plant successfully added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantResponse"
+              examples:
+                plantCreated:
+                  summary: Successfully created plant
+                  value:
+                    responseType: "detailed"
+                    id: "550e8400-e29b-41d4-a716-446655440002"
+                    name: "Kenny"
+                    status: "available"
+                    tags: ["normal_delivery"]
+                    category: "Indoor"
+                    price: 24.99
+                    inventory: 50
+                    # Note: nullable properties like description omitted
+components:
+  schemas:
+    Plant:
+      type: object
+      required:
+        - name
+        - status
+      properties:
+        name:
+          type: string
+          example: "Fiddle Leaf Fig"
+        category:
+          type: string
+          example: "Indoor Plants"
+        tags:
+          type: array
+          items:
+            type: string
+          example: ["leafy", "green"]
+        status:
+          type: string
+          enum: [available, pending, sold]
+        price:
+          type: number
+          format: float
+          example: 29.99
+        description:
+          type: string
+          nullable: true
+          example: "A beautiful indoor plant"
+    PlantResponse:
+      type: object
+      properties:
+        responseType:
+          type: string
+          enum: [basic, detailed]
+        id:
+          type: string
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        name:
+          type: string
+          example: "Fiddle Leaf Fig"
+        status:
+          type: string
+          enum: [available, pending, sold]
+        tags:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+          nullable: true
+        price:
+          type: number
+          format: float
+          nullable: true
+        inventory:
+          type: integer
+          nullable: true
+        description:
+          type: string
+          nullable: true

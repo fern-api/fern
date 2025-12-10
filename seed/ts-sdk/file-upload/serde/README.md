@@ -40,8 +40,8 @@ Instantiate and use the client with the following:
 
 ```typescript
 import { createReadStream } from "fs";
-import { SeedFileUploadClient } from "@fern/file-upload";
 import * as fs from "fs";
+import { SeedFileUploadClient } from "@fern/file-upload";
 
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
 await client.service.justFile({
@@ -88,8 +88,8 @@ You can upload files using the client:
 
 ```typescript
 import { createReadStream } from "fs";
-import { SeedFileUploadClient } from "@fern/file-upload";
 import * as fs from "fs";
+import { SeedFileUploadClient } from "@fern/file-upload";
 
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
 await client.service.justFile({

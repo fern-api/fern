@@ -10,6 +10,7 @@ import (
 	client "github.com/oauth-client-credentials-environment-variables/fern/nestednoauth/client"
 	option "github.com/oauth-client-credentials-environment-variables/fern/option"
 	simple "github.com/oauth-client-credentials-environment-variables/fern/simple"
+	os "os"
 )
 
 type Client struct {
@@ -25,6 +26,12 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	if options.ClientID == "" {
+		options.ClientID = os.Getenv("CLIENT_ID")
+	}
+	if options.ClientSecret == "" {
+		options.ClientSecret = os.Getenv("CLIENT_SECRET")
+	}
 	return &Client{
 		Auth:         auth.NewClient(options),
 		NestedNoAuth: client.NewClient(options),

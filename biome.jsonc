@@ -1,0 +1,359 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.3.1/schema.json",
+    "root": true,
+    "vcs": {
+        "enabled": false,
+        "clientKind": "git",
+        "useIgnoreFile": false
+    },
+    "files": {
+        "includes": [
+            "**",
+            "!**/.pnp*",
+            "!**/.yarn",
+            "!**/{build,generated,out,lib,node_modules}/**",
+            "!**/*.d.ts",
+            "!**/tsconfig.tsbuildinfo",
+            "!**/node_modules/**",
+            "!packages/cli/ai/src/baml_client/**",
+            "!packages/cli/api-importers/conjure/conjure-sdk/**",
+            "!packages/cli/api-importers/openapi/openapi-ir/src/sdk/**",
+            "!!.claude",
+            "!!.cursor",
+            "!!.cursorindexignore",
+            "!!.cursorindexingignore",
+            "!!.DS_Store",
+            "!!.env*.local",
+            "!!.git-blame-ignore-revs",
+            "!!.gitattributes",
+            "!!.github/**",
+            "!!.husky/**",
+            "!!.npmrc",
+            "!!.nvmrc",
+            "!!.nx",
+            "!!.php-cs-fixer.cache",
+            "!!.pnpm-cache",
+            "!!.prettierignore",
+            "!!.prettierrc",
+            "!!.python-version",
+            "!!.vale.ini",
+            "!!.vercel",
+            "!!.vercel",
+            "!!.yarn-cache",
+            "!!*.swp",
+            "!!**/__snapshots__",
+            "!!**/tests/**/fixtures/**",
+            "!!**/tests/**/*.json",
+            "!!**/test/**/*.json",
+            "!!**/__test__/**/*.json",
+            "!!**/__test__/**/fixtures/**",
+            "!!**/__test__/**/snapshots/**",
+            "!!**/__test__/**/outputs/**",
+            "!!**/__test__/**/test-definitions/**",
+            "!!**/.depcheckrc",
+            "!!**/.fernignore",
+            "!!**/.idea/*",
+            "!!**/.mypy_cache/**",
+            "!!**/.next/**",
+            "!!**/.preview/",
+            "!!**/.turbo",
+            "!!**/.venv/**",
+            "!!**/*.{yaml,yml,mdx,md,proto,sh,ps1,bat,java,py,rb,php,cs,txt,svg,jpg,jpeg,png,zip,woff2,baml,snap,props,lock,gradle}",
+            "!!**/*.schema.json",
+            "!!**/asIs/**",
+            "!!**/bin/**",
+            "!!**/bin/**",
+            "!!**/dist",
+            "!!**/dist",
+            "!!**/Dockerfile",
+            "!!**/Dockerfile*",
+            "!!**/gradlew.bat",
+            "!!**/gradlew",
+            "!!**/LICENSE",
+            "!!**/obj/**",
+            "!!**/protoc-gen-fern",
+            "!!CLAUDE.md",
+            "!!cspell-words.txt",
+            "!!fern/**",
+            "!!generators/**/*.tempate.*",
+            "!!generators/go/**",
+            "!!generators/java/**",
+            "!!generators/python/**",
+            "!!generators/ruby/**",
+            "!!generators/rust/**",
+            "!!generators/swift/base/src/template/**",
+            "!!generators/typescript/utils/core-utilities/**",
+            "!!lerna-debug.log*",
+            "!!npm-debug.log*",
+            "!!packages/cli/api-importers/conjure/conjure-sdk/**",
+            "!!packages/cli/api-importers/openapi/openapi-ir/**",
+            "!!packages/cli/configuration/src/docs-yml/schemas/**",
+            "!!packages/cli/configuration/src/generators-yml/schemas/**",
+            "!!packages/cli/ete-tests/src/tests/generate/fixtures/basic/sdks/**",
+            "!!packages/cli/fern-definition/schema/src/schemas/**",
+            "!!packages/cli/openapi-ir-sdk/**",
+            "!!packages/generator-cli/src/configuration/sdk/**",
+            "!!packages/ir-sdk/**",
+            "!!packages/seed/src/config/**",
+            "!!seed-remote-local",
+            "!!seed",
+            "!!test-definitions-openapi/**",
+            "!!test-definitions/**",
+            "!!yarn-debug.log*",
+            "!!yarn-error.log*"
+        ],
+        "ignoreUnknown": false,
+        "maxSize": 80000000
+    },
+    "formatter": {
+        "enabled": true,
+        "formatWithErrors": false,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineEnding": "lf",
+        "lineWidth": 120,
+        "attributePosition": "auto",
+        "bracketSameLine": false,
+        "bracketSpacing": true,
+        "expand": "auto"
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": false,
+            "complexity": {
+                "noAdjacentSpacesInRegex": "error",
+                "noBannedTypes": "error",
+                "noExtraBooleanCast": "error",
+                "noStaticOnlyClass": "error",
+                "noUselessCatch": "error",
+                "noUselessConstructor": "error",
+                "noUselessEscapeInRegex": "error",
+                "noUselessThisAlias": "error",
+                "noUselessTypeConstraint": "error",
+                "useOptionalChain": "off"
+            },
+            "correctness": {
+                "noChildrenProp": "error",
+                "noConstAssign": "error",
+                "noConstantCondition": "error",
+                "noEmptyCharacterClassInRegex": "error",
+                "noEmptyPattern": "error",
+                "noGlobalObjectCalls": "error",
+                "noInnerDeclarations": "error",
+                "noInvalidConstructorSuper": "error",
+                "noNonoctalDecimalEscape": "error",
+                "noPrecisionLoss": "error",
+                "noSelfAssign": "error",
+                "noSetterReturn": "error",
+                "noSwitchDeclarations": "error",
+                "noUndeclaredVariables": "error",
+                "noUnreachable": "error",
+                "noUnreachableSuper": "error",
+                "noUnsafeFinally": "error",
+                "noUnsafeOptionalChaining": "error",
+                "noUnusedImports": "error",
+                "noUnusedLabels": "error",
+                "noUnusedVariables": "off",
+                "useExhaustiveDependencies": "warn",
+                "useHookAtTopLevel": "error",
+                "useIsNan": "error",
+                "useJsxKeyInIterable": "error",
+                "useValidForDirection": "error",
+                "useValidTypeof": "error",
+                "useYield": "error"
+            },
+            "security": {
+                "noBlankTarget": "error",
+                "noDangerouslySetInnerHtmlWithChildren": "error"
+            },
+            "style": {
+                "noDoneCallback": "error",
+                "noNamespace": "off",
+                "noNonNullAssertion": "error",
+                "useArrayLiterals": "error",
+                "useAsConstAssertion": "error",
+                "useBlockStatements": "error",
+                "useLiteralEnumMembers": "error"
+            },
+            "suspicious": {
+                "noAssignInExpressions": "off",
+                "noAsyncPromiseExecutor": "error",
+                "noCatchAssign": "error",
+                "noClassAssign": "error",
+                "noCommentText": "error",
+                "noCompareNegZero": "error",
+                "noConfusingVoidType": "off",
+                "noConsole": "error",
+                "noControlCharactersInRegex": "error",
+                "noDebugger": "error",
+                "noDoubleEquals": "off",
+                "noDuplicateCase": "error",
+                "noDuplicateClassMembers": "error",
+                "noDuplicateElseIf": "error",
+                "noDuplicateJsxProps": "error",
+                "noDuplicateObjectKeys": "error",
+                "noDuplicateParameters": "error",
+                "noEmptyBlockStatements": "error",
+                "noEmptyInterface": "off",
+                "noExplicitAny": "error",
+                "noExportsInTest": "error",
+                "noExtraNonNullAssertion": "error",
+                "noFallthroughSwitchClause": "error",
+                "noFocusedTests": "error",
+                "noFunctionAssign": "error",
+                "noGlobalAssign": "error",
+                "noImportAssign": "error",
+                "noIrregularWhitespace": "error",
+                "noMisleadingCharacterClass": "error",
+                "noMisleadingInstantiator": "error",
+                "noMisplacedAssertion": "error",
+                "noPrototypeBuiltins": "error",
+                "noRedeclare": "error",
+                "noShadowRestrictedNames": "off",
+                "noSkippedTests": "warn",
+                "noSparseArray": "error",
+                "noUnsafeDeclarationMerging": "error",
+                "noUnsafeNegation": "error",
+                "noWith": "error",
+                "useGetterReturn": "error"
+            }
+        },
+        "includes": ["**", "!docker/seed/**", "!packages/ir-sdk/**", "!packages/seed/*/**"]
+    },
+    "javascript": {
+        "globals": ["expect", "describe", "it", "beforeEach", "test", "beforeAll"],
+        "formatter": {
+            "jsxQuoteStyle": "double",
+            "quoteProperties": "asNeeded",
+            "trailingCommas": "none",
+            "semicolons": "always",
+            "arrowParentheses": "always",
+            "bracketSameLine": false,
+            "quoteStyle": "double",
+            "attributePosition": "auto",
+            "bracketSpacing": true
+        }
+    },
+    "html": {
+        "formatter": {
+            "selfCloseVoidElements": "always"
+        }
+    },
+    "overrides": [
+        {
+            "includes": [
+                "**/*.test.ts",
+                "**/*.spec.ts",
+                "**/example-code.js",
+                "generators/base/src/AbstractGeneratorCli.ts",
+                "packages/cli/docs-resolver/src/__test__/fixtures/dry/fern/fibonacci.js",
+                "packages/cli/ete-tests/src/tests/generate/fixtures/docs/fern/js/custom.js",
+                "packages/generator-cli/src/**/*.ts",
+                "packages/commons/github/src/**/*.ts"
+            ],
+            "linter": {
+                "rules": {
+                    "suspicious": {
+                        "noConsole": "off"
+                    }
+                }
+            }
+        },
+        {
+            "includes": [
+                "packages/cli/init/src/__test__/initializeWithMintlify.test.ts",
+                "packages/generator-cli/src/**/*.ts"
+            ],
+            "linter": {
+                "rules": {
+                    "suspicious": {
+                        "noExplicitAny": "off"
+                    }
+                }
+            }
+        },
+        {
+            "includes": [
+                "packages/cli/docs-markdown-utils/src/__test__/parseImagePaths.test.ts",
+                "packages/cli/fern-definition/validator/src/rules/valid-oauth/__test__/valid-oauth.test.ts",
+                "packages/generator-cli/src/__test__/testGenerateReadme.ts"
+            ],
+            "linter": {
+                "rules": {
+                    "suspicious": {
+                        "noMisplacedAssertion": "off"
+                    }
+                }
+            }
+        },
+        {
+            "includes": [
+                "packages/cli/docs-resolver/src/__test__/ApiDefinitionHolderLatest.test.ts",
+                "packages/cli/docs-resolver/src/__test__/getApiLatestToNavigationNodeUrlSlug.test.ts",
+                "packages/cli/ete-tests/src/tests/protoc-gen-fern/protoc-gen-fern.test.ts",
+                "packages/cli/ete-tests/src/tests/upgrade-generator/upgrade-generator.test.ts",
+                "packages/cli/generation/ir-generator-tests/src/ir/__test__/breakingChangeDetector.test.ts",
+                "packages/cli/generation/ir-generator-tests/src/ir/__test__/generateIntermediateRepresentation.test.ts",
+                "packages/generator-cli/src/__test__/pr.test.ts",
+                "packages/commons/github/src/__test__/getLatestTag.test.ts"
+            ],
+            "linter": {
+                "rules": {
+                    "suspicious": {
+                        "noSkippedTests": "off"
+                    }
+                }
+            }
+        },
+        {
+            "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+            "linter": {
+                "rules": {
+                    "complexity": {
+                        "noArguments": "error"
+                    },
+                    "correctness": {
+                        "noConstAssign": "off",
+                        "noGlobalObjectCalls": "off",
+                        "noInvalidBuiltinInstantiation": "off",
+                        "noInvalidConstructorSuper": "off",
+                        "noSetterReturn": "off",
+                        "noUndeclaredVariables": "off",
+                        "noUnreachable": "off",
+                        "noUnreachableSuper": "off"
+                    },
+                    "style": {
+                        "useConst": "error"
+                    },
+                    "suspicious": {
+                        "noDuplicateClassMembers": "off",
+                        "noDuplicateObjectKeys": "off",
+                        "noDuplicateParameters": "off",
+                        "noFunctionAssign": "off",
+                        "noImportAssign": "off",
+                        "noRedeclare": "off",
+                        "noUnsafeNegation": "off",
+                        "noVar": "error",
+                        "useGetterReturn": "off"
+                    }
+                }
+            }
+        },
+        {
+            "includes": ["**/*.json", "**/*.md", "**/*.css", "**/*.mdx"],
+            "formatter": {
+                "indentStyle": "space",
+                "indentWidth": 2
+            }
+        }
+    ],
+    "assist": {
+        "enabled": true,
+        "actions": {
+            "source": {
+                "organizeImports": "on"
+            }
+        }
+    }
+}

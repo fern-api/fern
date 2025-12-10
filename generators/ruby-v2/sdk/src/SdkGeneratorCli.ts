@@ -181,16 +181,13 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     }
 
     private shouldGenerateReadme(context: SdkGeneratorContext): boolean {
-        const hasSnippetFilepath = context.config.output.snippetFilepath != null;
         const publishConfig = context.ir.publishConfig;
-        switch (publishConfig?.type) {
-            case "filesystem":
-                return publishConfig.generateFullProject || hasSnippetFilepath;
-            case "github":
-            case "direct":
-            default:
-                return hasSnippetFilepath;
+        // Only skip README for filesystem output when generateFullProject is false
+        if (publishConfig?.type === "filesystem" && !publishConfig.generateFullProject) {
+            return context.config.output.snippetFilepath != null;
         }
+        // For all other cases (github, direct, or undefined/seed tests), generate README
+        return true;
     }
 
     private async generateReadme({

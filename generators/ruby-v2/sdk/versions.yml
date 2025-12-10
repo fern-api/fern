@@ -1,5 +1,30 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc64
+  createdAt: "2025-12-10"
+  changelogEntry:
+    - type: chore
+      summary: |
+        Improve reference.md generation for parity with TypeScript SDK generator:
+        - Add request_options parameter documentation to all endpoints
+        - Add source file links (hyperlinks) to method names in the reference
+        - Prefer examples with request body data for detailed code snippets, ensuring
+          endpoints show full request bodies with nested objects and arrays instead of
+          minimal one-line examples
+        - Synthesize requestBody from structured properties when jsonExample is null/empty
+  irVersion: 61
+
+- version: 1.0.0-rc63
+  createdAt: "2025-12-10"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix README.md generation for GitHub, direct publish, and seed test modes.
+        - Updated shouldGenerateReadme to return true by default instead of requiring snippetFilepath
+        - Fixed getGitHubConfig to return undefined for uri/token instead of placeholder values
+          that caused invalid git clone attempts
+  irVersion: 61
+
 - version: 1.0.0-rc62
   createdAt: "2025-12-08"
   changelogEntry:

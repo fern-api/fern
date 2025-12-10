@@ -91,6 +91,12 @@ export interface ParseOpenAPIOptions {
      * Defaults to `always`.
      */
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas;
+
+    /**
+     * The default format to use for integer types when no format is specified.
+     * Defaults to 'int32' for backward compatibility.
+     */
+    defaultIntegerFormat: generatorsYml.DefaultIntegerFormat;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -123,7 +129,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     groupEnvironmentsByHost: false,
     wrapReferencesToNullableInOptional: false,
     coerceOptionalSchemasToNullable: false,
-    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
+    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
+    defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32
 };
 
 function mergeOptions<T extends object>(params: {

@@ -1618,6 +1618,15 @@
         }
       ]
     },
+    "generators.DefaultIntegerFormat": {
+      "type": "string",
+      "enum": [
+        "int32",
+        "int64",
+        "uint32",
+        "uint64"
+      ]
+    },
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
@@ -1875,6 +1884,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-integer-format": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.DefaultIntegerFormat"
             },
             {
               "type": "null"
@@ -2346,6 +2365,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-integer-format": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.DefaultIntegerFormat"
             },
             {
               "type": "null"

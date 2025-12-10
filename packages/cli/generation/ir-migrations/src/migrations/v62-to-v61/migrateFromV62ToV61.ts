@@ -53,7 +53,8 @@ export const V62_TO_V61_MIGRATION: IrMigration<
             errors: resolveErrorDeclarationConflicts(v62.errors),
             services: Object.fromEntries(
                 Object.entries(v62.services).map(([key, service]) => [key, convertHttpService(service)])
-            )
+            ),
+            webhookGroups: stripResponsesFromWebhooks(v62.webhookGroups)
         };
     }
 };
@@ -67,8 +68,8 @@ function resolveErrorDeclarationConflicts(
         const isWildcard = errorDeclaration.isWildcardStatusCode === true;
 
         if (!isWildcard) {
-            // For non-wildcard errors, set isWildcardStatusCode to undefined since v61 didn't use it
-            const { isWildcardStatusCode, ...v61ErrorDeclaration } = errorDeclaration;
+            // For non-wildcard errors, strip headers and isWildcardStatusCode since v61 didn't have them
+            const { isWildcardStatusCode, headers, ...v61ErrorDeclaration } = errorDeclaration;
             resolvedErrors[errorId] = {
                 ...v61ErrorDeclaration,
                 isWildcardStatusCode: undefined
@@ -94,4 +95,19 @@ function convertHttpEndpoint(
         ...endpoint,
         errors: endpoint.errors
     } as IrVersions.V61.http.HttpEndpoint;
+}
+
+function stripResponsesFromWebhooks(
+    webhookGroups: IntermediateRepresentation["webhookGroups"]
+): Record<string, IrVersions.V61.webhooks.WebhookGroup> {
+    const result: Record<string, IrVersions.V61.webhooks.WebhookGroup> = {};
+
+    for (const [groupId, webhookGroup] of Object.entries(webhookGroups)) {
+        result[groupId] = webhookGroup.map((webhook) => {
+            const { responses, ...v61Webhook } = webhook;
+            return v61Webhook as IrVersions.V61.webhooks.Webhook;
+        });
+    }
+
+    return result;
 }

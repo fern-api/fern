@@ -1,6 +1,5 @@
 import { SetRequired } from "@fern-api/core-utils";
-import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
-import { InterfaceDeclarationStructure, SourceFile } from "ts-morph";
+import { InterfaceDeclarationStructure } from "ts-morph";
 import { SdkContext } from "../SdkContext";
 
 export interface BaseClientContext {

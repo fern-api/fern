@@ -103,7 +103,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 return { except: excepts };
             })(),
             exampleGeneration: specs[0]?.settings?.exampleGeneration,
-            groupEnvironmentsByHost: specs.some((spec) => spec.settings?.groupEnvironmentsByHost)
+            groupEnvironmentsByHost: specs.some((spec) => spec.settings?.groupEnvironmentsByHost),
+            defaultIntegerFormat: specs[0]?.settings?.defaultIntegerFormat
         });
         this.specs = specs;
         this.allSpecs = allSpecs;
@@ -125,7 +126,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             resolveAliases: this.resolveAliases,
             removeDiscriminantsFromSchemas: this.removeDiscriminantsFromSchemas,
             groupMultiApiEnvironments: this.groupMultiApiEnvironments,
-            groupEnvironmentsByHost: this.groupEnvironmentsByHost
+            groupEnvironmentsByHost: this.groupEnvironmentsByHost,
+            defaultIntegerFormat: this.defaultIntegerFormat
         };
     }
 

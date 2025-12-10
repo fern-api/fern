@@ -135,7 +135,7 @@ function filterExampleTypeReference({
                         ExampleContainer.map({
                             ...m,
                             map: m.map
-                                .map((v) => {
+                                .map((v: ExampleKeyValuePair) => {
                                     const filteredKey = filterExampleTypeReference({
                                         filteredIr,
                                         exampleTypeReference: v.key
@@ -148,7 +148,9 @@ function filterExampleTypeReference({
                                         ? { key: filteredKey, value: filteredValue }
                                         : undefined;
                                 })
-                                .filter((t): t is ExampleKeyValuePair => t !== undefined)
+                                .filter(
+                                    (t: ExampleKeyValuePair | undefined): t is ExampleKeyValuePair => t !== undefined
+                                )
                         })
                     )
                 }),

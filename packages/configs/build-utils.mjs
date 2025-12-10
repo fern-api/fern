@@ -1,7 +1,11 @@
-import tsup from 'tsup';
-import { cp, rm, mkdir, writeFile } from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { exec } from "child_process";
+import { cp, mkdir, rm, writeFile } from "fs/promises";
+import path from "path";
+import tsup from "tsup";
+import { fileURLToPath } from "url";
+import { promisify } from "util";
+
+const execAsync = promisify(exec);
 
 /**
  * Standard build function for Fern generators
@@ -17,24 +21,20 @@ import { fileURLToPath } from 'url';
  *   - array of objects: [{ from: '...', to: '...' }, ...]
  */
 export async function buildGenerator(dirname, options = {}) {
-    const {
-        entry = 'src/cli.ts',
-        tsupOptions = {},
-        copy = null
-    } = options;
+    const { entry = "src/cli.ts", tsupOptions = {}, copy = null } = options;
 
     // Build with tsup (merge default options with custom ones)
     const defaultTsupOptions = {
         entry: [entry],
-        format: ['cjs'],
+        format: ["cjs"],
         sourcemap: true,
         clean: true,
-        outDir: 'dist',
+        outDir: "dist"
     };
 
     await tsup.build({
         ...defaultTsupOptions,
-        ...tsupOptions,
+        ...tsupOptions
     });
 
     // Copy additional files if needed
@@ -42,20 +42,15 @@ export async function buildGenerator(dirname, options = {}) {
         const copyOperations = Array.isArray(copy) ? copy : [copy];
 
         for (const copyOp of copyOperations) {
-            if (typeof copyOp === 'string') {
+            if (typeof copyOp === "string") {
                 // Simple string: copy to dist/
-                await cp(
-                    path.join(dirname, copyOp),
-                    path.join(dirname, 'dist'),
-                    { recursive: true }
-                );
-            } else if (typeof copyOp === 'object' && copyOp.from) {
+                await cp(path.join(dirname, copyOp), path.join(dirname, "dist"), { recursive: true });
+            } else if (typeof copyOp === "object" && copyOp.from) {
                 // Object with from/to: custom destination
-                await cp(
-                    path.join(dirname, copyOp.from),
-                    path.join(dirname, copyOp.to),
-                    { recursive: true, force: true }
-                );
+                await cp(path.join(dirname, copyOp.from), path.join(dirname, copyOp.to), {
+                    recursive: true,
+                    force: true
+                });
             }
         }
     }
@@ -86,7 +81,7 @@ export async function buildDynamicSnippets(dirname, packageJson, versionOverride
     await mkdir(distDir, { recursive: true });
 
     // Import polyfillNode dynamically
-    const { polyfillNode } = await import('esbuild-plugin-polyfill-node');
+    const { polyfillNode } = await import("esbuild-plugin-polyfill-node");
 
     await tsup.build({
         entry: [path.join(srcDir, "index.ts")],
@@ -109,7 +104,7 @@ export async function buildDynamicSnippets(dirname, packageJson, versionOverride
         tsconfig: tsconfigPath,
         format: ["cjs", "esm"],
         outDir: path.join(distDir, "dist"), // yes, this is intentional to have dist/dist
-        clean: false,
+        clean: false
     });
 
     // Write package.json to dist directory
@@ -140,4 +135,7 @@ export async function buildDynamicSnippets(dirname, packageJson, versionOverride
             2
         )
     );
+
+    // Run npm pkg fix to format and fix the package.json
+    await execAsync("npm pkg fix", { cwd: distDir });
 }

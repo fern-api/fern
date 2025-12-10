@@ -91,6 +91,7 @@ export interface APIDefinitionSettings {
     coerceOptionalSchemasToNullable: boolean | undefined;
     removeDiscriminantsFromSchemas: RemoveDiscriminantsFromSchemas | undefined;
     pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
+    defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
 }
 
 export interface APIDefinitionLocation {

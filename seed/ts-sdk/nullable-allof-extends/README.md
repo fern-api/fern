@@ -37,7 +37,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient, SeedApi } from "@fern/nullable-allof-extends";
+import { SeedApi, SeedApiClient } from "@fern/nullable-allof-extends";
 
 const client = new SeedApiClient;
 await client.createTest({});

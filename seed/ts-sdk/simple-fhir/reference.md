@@ -47,5 +47,3 @@ await client.getAccount("account_id");
 </dd>
 </dl>
 </details>
-
-## 
