@@ -854,9 +854,59 @@ export class DynamicSnippetsConverter {
                         return [parameter.name.wireValue, parameter.value.jsonExample];
                     })
                 ),
-                requestBody: example.example?.request?.jsonExample
+                requestBody: this.getRequestBodyJsonExample(example.example?.request)
             });
         }
         return requests;
+    }
+
+    /**
+     * Extracts the JSON example from an ExampleRequestBody.
+     * For inlined request bodies, synthesizes the JSON from properties if jsonExample is null/empty.
+     * For reference request bodies, uses the jsonExample directly.
+     */
+    private getRequestBodyJsonExample(request: unknown): unknown {
+        if (request == null) {
+            return undefined;
+        }
+
+        // Type guard to check if request has the expected structure
+        const typedRequest = request as { type?: string; jsonExample?: unknown; properties?: unknown[] };
+
+        // If jsonExample is already populated and non-empty, use it
+        if (typedRequest.jsonExample != null) {
+            // Check if it's a non-empty object or non-empty array
+            if (typeof typedRequest.jsonExample === "object") {
+                if (Array.isArray(typedRequest.jsonExample)) {
+                    if (typedRequest.jsonExample.length > 0) {
+                        return typedRequest.jsonExample;
+                    }
+                } else if (Object.keys(typedRequest.jsonExample as object).length > 0) {
+                    return typedRequest.jsonExample;
+                }
+            } else {
+                // For primitives, return as-is
+                return typedRequest.jsonExample;
+            }
+        }
+
+        // For inlined request bodies, synthesize JSON from properties if available
+        if (typedRequest.type === "inlinedRequestBody" && Array.isArray(typedRequest.properties)) {
+            const synthesized: Record<string, unknown> = {};
+            for (const prop of typedRequest.properties as Array<{
+                name?: { wireValue?: string };
+                value?: { jsonExample?: unknown };
+            }>) {
+                if (prop.name?.wireValue != null && prop.value?.jsonExample !== undefined) {
+                    synthesized[prop.name.wireValue] = prop.value.jsonExample;
+                }
+            }
+            if (Object.keys(synthesized).length > 0) {
+                return synthesized;
+            }
+        }
+
+        // Fallback to the original jsonExample (even if empty)
+        return typedRequest.jsonExample;
     }
 }
