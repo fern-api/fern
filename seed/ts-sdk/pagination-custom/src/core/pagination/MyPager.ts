@@ -28,8 +28,8 @@ type MyPagerParser<TItem, TRequest, TResponse> = (
  * A custom pager for paginated API responses where the pagination logic
  * must be implemented by the SDK author.
  *
- * This is similar to C#'s MyPager<TItem> which provides a ParseHttpCallAsync
- * method that SDK authors must implement.
+ * SDK authors provide a parser callback to extract items and determine
+ * pagination state from responses.
  *
  * @template TItem The type of the items in the page.
  * @template TRequest The type of the request object.
