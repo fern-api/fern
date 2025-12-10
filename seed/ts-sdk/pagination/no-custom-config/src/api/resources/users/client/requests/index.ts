@@ -9,5 +9,6 @@ export type { ListUsersExtendedRequestForOptionalData } from "./ListUsersExtende
 export type { ListUsersMixedTypeCursorPaginationRequest } from "./ListUsersMixedTypeCursorPaginationRequest.js";
 export type { ListUsersOffsetPaginationRequest } from "./ListUsersOffsetPaginationRequest.js";
 export type { ListUsersOffsetStepPaginationRequest } from "./ListUsersOffsetStepPaginationRequest.js";
+export type { ListUsersOptionalDataRequest } from "./ListUsersOptionalDataRequest.js";
 export type { ListWithGlobalConfigRequest } from "./ListWithGlobalConfigRequest.js";
 export type { ListWithOffsetPaginationHasNextPageRequest } from "./ListWithOffsetPaginationHasNextPageRequest.js";
