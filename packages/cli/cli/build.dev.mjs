@@ -1,7 +1,7 @@
-import { buildCli, PRODUCTION_TSUP_OVERRIDES } from './build-utils.mjs';
+import { buildCli, PRODUCTION_TSUP_OVERRIDES } from "./build-utils.mjs";
 
 buildCli({
-    outDir: 'dist/dev',
+    outDir: "dist/dev",
     minify: false,
     env: {
         AUTH0_DOMAIN: "fern-dev.us.auth0.com",
@@ -14,16 +14,16 @@ buildCli({
         LOCAL_STORAGE_FOLDER: ".fern-dev",
         POSTHOG_API_KEY: null,
         DOCS_DOMAIN_SUFFIX: "docs.dev.buildwithfern.com",
-        DOCS_PREVIEW_BUCKET: 'https://dev2-local-preview-bundle2.s3.amazonaws.com/',
-        APP_DOCS_TAR_PREVIEW_BUCKET: 'https://dev2-local-preview-bundle4.s3.amazonaws.com/',
-        APP_DOCS_PREVIEW_BUCKET: 'https://dev2-local-preview-bundle3.s3.amazonaws.com/',
+        DOCS_PREVIEW_BUCKET: "https://dev2-local-preview-bundle2.s3.amazonaws.com/",
+        APP_DOCS_TAR_PREVIEW_BUCKET: "https://dev2-local-preview-bundle4.s3.amazonaws.com/",
+        APP_DOCS_PREVIEW_BUCKET: "https://dev2-local-preview-bundle3.s3.amazonaws.com/",
         CLI_NAME: "fern-dev",
-        CLI_PACKAGE_NAME: "@fern-api/fern-api-dev",
+        CLI_PACKAGE_NAME: "@fern-api/fern-api-dev"
     },
-    runtimeDependencies: ['@boundaryml/baml'],
+    runtimeDependencies: ["@boundaryml/baml"],
     packageJsonOverrides: {
         name: "@fern-api/fern-api-dev",
-        bin: { "fern-dev": "cli.cjs" },
+        bin: { "fern-dev": "cli.cjs" }
     },
     tsupOverrides: PRODUCTION_TSUP_OVERRIDES
 });

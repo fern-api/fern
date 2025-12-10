@@ -1,5 +1,5 @@
-import { getBinaryResponse } from "./BinaryResponse";
 import { fromJson } from "../json";
+import { getBinaryResponse } from "./BinaryResponse";
 <% if (streamType === "wrapper") { %>
 import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper";
 <% } %>
@@ -48,7 +48,7 @@ export async function getResponseBody(response: Response, responseType?: string)
         try {
             const responseBody = fromJson(text);
             return responseBody;
-        } catch (err) {
+        } catch (_err) {
             return {
                 ok: false,
                 error: {

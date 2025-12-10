@@ -8,7 +8,7 @@ describe("boolean", () => {
     itValidate("non-boolean", boolean(), {}, [
         {
             path: [],
-            message: "Expected boolean. Received object."
-        }
+            message: "Expected boolean. Received object.",
+        },
     ]);
 });
