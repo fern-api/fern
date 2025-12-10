@@ -78,9 +78,19 @@ export class UsersClient {
                 return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
-        return core.MyPager.create({
-            sendRequest: list,
-            initialRequest: request,
+        return core.MyPager.create<string, SeedPagination.ListUsernamesRequestCustom, SeedPagination.UsernameCursor>({
+            context: {
+                sendRequest: list,
+                initialRequest: request,
+            },
+            parser: async (
+                _request: SeedPagination.ListUsernamesRequestCustom,
+                response: core.WithRawResponse<SeedPagination.UsernameCursor>,
+            ) => ({
+                hasNextPage: false,
+                hasPreviousPage: false,
+                items: ((response) => response?.cursor.data ?? [])(response.data),
+            }),
         });
     }
 }
