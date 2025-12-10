@@ -1,5 +1,5 @@
 import { ExampleEndpointCall, HttpHeader, InlinedRequestBodyProperty, QueryParameter } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts } from "@fern-typescript/commons";
+import { GetReferenceOpts, isValidIdentifier } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -112,16 +112,12 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
 
     private getReferenceToProperty(propertyName: string): ts.Expression {
         const requestIdentifier = ts.factory.createIdentifier(this.getRequestParameterName());
-        if (!this.isValidIdentifier(propertyName)) {
+        if (!isValidIdentifier(propertyName)) {
             return ts.factory.createElementAccessExpression(
                 requestIdentifier,
                 ts.factory.createStringLiteral(propertyName)
             );
         }
         return ts.factory.createPropertyAccessExpression(requestIdentifier, propertyName);
-    }
-
-    private isValidIdentifier(name: string): boolean {
-        return /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(name);
     }
 }
