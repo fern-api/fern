@@ -1,0 +1,989 @@
+{
+  "title": "Default Integer Format Test API",
+  "description": "Test API for validating defaultIntegerFormat feature with int64 default",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Get integers with parameters",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "Query parameter with unformatted integer (should use int64 default)",
+          "name": "unformattedParam",
+          "schema": {
+            "generatedName": "GetIntegersRequestUnformattedParam",
+            "value": {
+              "schema": {
+                "type": "int64"
+              },
+              "generatedName": "GetIntegersRequestUnformattedParam",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Query parameter with explicit int32 format (should override default)",
+          "name": "explicitInt32Param",
+          "schema": {
+            "generatedName": "GetIntegersRequestExplicitInt32Param",
+            "value": {
+              "schema": {
+                "type": "int"
+              },
+              "generatedName": "GetIntegersRequestExplicitInt32Param",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Query parameter with explicit int64 format (same as default)",
+          "name": "explicitInt64Param",
+          "schema": {
+            "generatedName": "GetIntegersRequestExplicitInt64Param",
+            "value": {
+              "schema": {
+                "type": "int64"
+              },
+              "generatedName": "GetIntegersRequestExplicitInt64Param",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Query parameter with explicit uint32 format (should override default)",
+          "name": "explicitUint32Param",
+          "schema": {
+            "generatedName": "GetIntegersRequestExplicitUint32Param",
+            "value": {
+              "schema": {
+                "type": "uint"
+              },
+              "generatedName": "GetIntegersRequestExplicitUint32Param",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Query parameter with explicit uint64 format (should override default)",
+          "name": "explicitUint64Param",
+          "schema": {
+            "generatedName": "GetIntegersRequestExplicitUint64Param",
+            "value": {
+              "schema": {
+                "type": "uint64"
+              },
+              "generatedName": "GetIntegersRequestExplicitUint64Param",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "GetIntegersRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "GetIntegersResponse",
+          "schema": "IntegerResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Test unformatted integers in query/path parameters using int64 default",
+      "authed": false,
+      "method": "GET",
+      "path": "/integers",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "responseInteger": {
+                  "value": {
+                    "value": 9223372036854776000,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "metadata": {
+                  "properties": {
+                    "count": {
+                      "value": {
+                        "value": 1000000000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "maxValue": {
+                      "value": {
+                        "value": 9223372036854776000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "minValue": {
+                      "value": {
+                        "value": -2147483648,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "results": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": 9223372036854776000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    {
+                      "value": {
+                        "value": 1000000000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    {
+                      "value": {
+                        "value": 500000000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Create integer resource",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostIntegersRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostIntegersRequest",
+          "schema": "IntegerRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "PostIntegersResponse",
+          "schema": "IntegerResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Test unformatted integers in request body using int64 default",
+      "authed": false,
+      "method": "POST",
+      "path": "/integers",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "unformattedInteger": {
+                "value": {
+                  "value": 9223372036854776000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              },
+              "explicitInt32": {
+                "value": {
+                  "value": 2147483647,
+                  "type": "int"
+                },
+                "type": "primitive"
+              },
+              "explicitInt64": {
+                "value": {
+                  "value": 9223372036854776000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              },
+              "integerArray": {
+                "value": [
+                  {
+                    "value": {
+                      "value": 1,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  },
+                  {
+                    "value": {
+                      "value": 2,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  },
+                  {
+                    "value": {
+                      "value": 3,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  },
+                  {
+                    "value": {
+                      "value": 9223372036854776000,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "responseInteger": {
+                  "value": {
+                    "value": 9223372036854776000,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "metadata": {
+                  "properties": {
+                    "count": {
+                      "value": {
+                        "value": 1000000000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "maxValue": {
+                      "value": {
+                        "value": 9223372036854776000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "minValue": {
+                      "value": {
+                        "value": -2147483648,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "results": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": 9223372036854776000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    {
+                      "value": {
+                        "value": 1000000000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    {
+                      "value": {
+                        "value": 500000000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get integer by ID",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [
+        {
+          "description": "Path parameter with unformatted integer (should use int64 default)",
+          "name": "integerId",
+          "schema": {
+            "schema": {
+              "type": "int64"
+            },
+            "generatedName": "GetIntegersIntegerIdRequestIntegerId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetIntegersIntegerIdRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "GetIntegersIntegerIdResponse",
+          "schema": "IntegerResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Test unformatted integer in path parameter using int64 default",
+      "authed": false,
+      "method": "GET",
+      "path": "/integers/{integerId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "integerId",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "responseInteger": {
+                  "value": {
+                    "value": 9223372036854776000,
+                    "type": "int64"
+                  },
+                  "type": "primitive"
+                },
+                "metadata": {
+                  "properties": {
+                    "count": {
+                      "value": {
+                        "value": 1000000000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "maxValue": {
+                      "value": {
+                        "value": 9223372036854776000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    "minValue": {
+                      "value": {
+                        "value": -2147483648,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "results": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": 9223372036854776000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    {
+                      "value": {
+                        "value": 1000000000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    },
+                    {
+                      "value": {
+                        "value": 500000000000,
+                        "type": "int64"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "IntegerRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "integerRequestUnformattedInteger",
+            "key": "unformattedInteger",
+            "schema": {
+              "description": "Unformatted integer property (should use int64 default)",
+              "schema": {
+                "example": 9223372036854776000,
+                "type": "int64"
+              },
+              "generatedName": "IntegerRequestUnformattedInteger",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "integerRequestExplicitInt32",
+            "key": "explicitInt32",
+            "schema": {
+              "description": "Explicit int32 format (should override default)",
+              "schema": {
+                "example": 2147483647,
+                "type": "int"
+              },
+              "generatedName": "IntegerRequestExplicitInt32",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "integerRequestExplicitInt64",
+            "key": "explicitInt64",
+            "schema": {
+              "description": "Explicit int64 format (same as default)",
+              "schema": {
+                "example": 9223372036854776000,
+                "type": "int64"
+              },
+              "generatedName": "IntegerRequestExplicitInt64",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "integerRequestExplicitUint32",
+            "key": "explicitUint32",
+            "schema": {
+              "generatedName": "IntegerRequestExplicitUint32",
+              "description": "Explicit uint32 format (should override default)",
+              "value": {
+                "description": "Explicit uint32 format (should override default)",
+                "schema": {
+                  "type": "uint"
+                },
+                "generatedName": "IntegerRequestExplicitUint32",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "integerRequestExplicitUint64",
+            "key": "explicitUint64",
+            "schema": {
+              "generatedName": "IntegerRequestExplicitUint64",
+              "description": "Explicit uint64 format (should override default)",
+              "value": {
+                "description": "Explicit uint64 format (should override default)",
+                "schema": {
+                  "type": "uint64"
+                },
+                "generatedName": "IntegerRequestExplicitUint64",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "integerRequestIntegerArray",
+            "key": "integerArray",
+            "schema": {
+              "description": "Array of unformatted integers (should use int64 default)",
+              "value": {
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "IntegerRequestIntegerArrayItem",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "generatedName": "IntegerRequestIntegerArray",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "integerRequestMixedFormatArray",
+            "key": "mixedFormatArray",
+            "schema": {
+              "generatedName": "IntegerRequestMixedFormatArray",
+              "description": "Array with mixed explicit formats",
+              "value": {
+                "description": "Array with mixed explicit formats",
+                "value": {
+                  "value": {
+                    "generatedName": "IntegerRequestMixedFormatArrayItem",
+                    "schemas": [
+                      {
+                        "schema": {
+                          "type": "int"
+                        },
+                        "generatedName": "IntegerRequestMixedFormatArrayItemZero",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      {
+                        "schema": {
+                          "type": "int64"
+                        },
+                        "generatedName": "IntegerRequestMixedFormatArrayItemOne",
+                        "groupName": [],
+                        "type": "primitive"
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "undiscriminated"
+                  },
+                  "type": "oneOf"
+                },
+                "generatedName": "IntegerRequestMixedFormatArray",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "integerRequestNestedObject",
+            "key": "nestedObject",
+            "schema": {
+              "generatedName": "IntegerRequestNestedObject",
+              "description": "Nested object with integer properties",
+              "value": {
+                "allOf": [],
+                "properties": [
+                  {
+                    "conflict": {},
+                    "generatedName": "integerRequestNestedObjectNestedUnformatted",
+                    "key": "nestedUnformatted",
+                    "schema": {
+                      "generatedName": "IntegerRequestNestedObjectNestedUnformatted",
+                      "description": "Nested unformatted integer (should use int64 default)",
+                      "value": {
+                        "description": "Nested unformatted integer (should use int64 default)",
+                        "schema": {
+                          "example": 9223372036854776000,
+                          "type": "int64"
+                        },
+                        "generatedName": "IntegerRequestNestedObjectNestedUnformatted",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  },
+                  {
+                    "conflict": {},
+                    "generatedName": "integerRequestNestedObjectNestedExplicit",
+                    "key": "nestedExplicit",
+                    "schema": {
+                      "generatedName": "IntegerRequestNestedObjectNestedExplicit",
+                      "description": "Nested explicit format (should override default)",
+                      "value": {
+                        "description": "Nested explicit format (should override default)",
+                        "schema": {
+                          "example": 2147483647,
+                          "type": "int"
+                        },
+                        "generatedName": "IntegerRequestNestedObjectNestedExplicit",
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": []
+                  }
+                ],
+                "allOfPropertyConflicts": [],
+                "description": "Nested object with integer properties",
+                "generatedName": "IntegerRequestNestedObject",
+                "groupName": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "integerRequestOptionalInteger",
+            "key": "optionalInteger",
+            "schema": {
+              "generatedName": "IntegerRequestOptionalInteger",
+              "description": "Optional unformatted integer (should use int64 default)",
+              "value": {
+                "generatedName": "IntegerRequestOptionalInteger",
+                "description": "Optional unformatted integer (should use int64 default)",
+                "value": {
+                  "description": "Optional unformatted integer (should use int64 default)",
+                  "schema": {
+                    "example": 9223372036854776000,
+                    "type": "int64"
+                  },
+                  "generatedName": "IntegerRequestOptionalInteger",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Request schema testing various integer scenarios",
+        "generatedName": "IntegerRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "IntegerResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "integerResponseResponseInteger",
+            "key": "responseInteger",
+            "schema": {
+              "description": "Response unformatted integer (should use int64 default)",
+              "schema": {
+                "example": 9223372036854776000,
+                "type": "int64"
+              },
+              "generatedName": "IntegerResponseResponseInteger",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "integerResponseMetadata",
+            "key": "metadata",
+            "schema": {
+              "allOf": [],
+              "properties": [
+                {
+                  "conflict": {},
+                  "generatedName": "integerResponseMetadataCount",
+                  "key": "count",
+                  "schema": {
+                    "generatedName": "IntegerResponseMetadataCount",
+                    "description": "Count as unformatted integer (should use int64 default)",
+                    "value": {
+                      "description": "Count as unformatted integer (should use int64 default)",
+                      "schema": {
+                        "example": 1000000000000,
+                        "type": "int64"
+                      },
+                      "generatedName": "IntegerResponseMetadataCount",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "integerResponseMetadataMaxValue",
+                  "key": "maxValue",
+                  "schema": {
+                    "generatedName": "IntegerResponseMetadataMaxValue",
+                    "description": "Max value as explicit int64 (same as default)",
+                    "value": {
+                      "description": "Max value as explicit int64 (same as default)",
+                      "schema": {
+                        "example": 9223372036854776000,
+                        "type": "int64"
+                      },
+                      "generatedName": "IntegerResponseMetadataMaxValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                },
+                {
+                  "conflict": {},
+                  "generatedName": "integerResponseMetadataMinValue",
+                  "key": "minValue",
+                  "schema": {
+                    "generatedName": "IntegerResponseMetadataMinValue",
+                    "description": "Min value as explicit int32 (should override default)",
+                    "value": {
+                      "description": "Min value as explicit int32 (should override default)",
+                      "schema": {
+                        "example": -2147483648,
+                        "type": "int"
+                      },
+                      "generatedName": "IntegerResponseMetadataMinValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "groupName": [],
+                    "type": "optional"
+                  },
+                  "audiences": []
+                }
+              ],
+              "allOfPropertyConflicts": [],
+              "description": "Metadata with integer properties",
+              "generatedName": "IntegerResponseMetadata",
+              "groupName": [],
+              "additionalProperties": false,
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "object"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "integerResponseResults",
+            "key": "results",
+            "schema": {
+              "description": "Array of unformatted integer results (should use int64 default)",
+              "value": {
+                "schema": {
+                  "type": "int64"
+                },
+                "generatedName": "IntegerResponseResultsItem",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "generatedName": "IntegerResponseResults",
+              "groupName": [],
+              "type": "array"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Response schema testing integer scenarios",
+        "generatedName": "IntegerResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -5,6 +5,26 @@
       type: feat
   irVersion: 63
   createdAt: "2025-12-10"
+  version: 3.8.0
+
+- changelogEntry:
+    - summary: |
+        Add API flag `default-integer-format` to configure which format is assumed for `type: "integer"`
+        properties in OpenAPI that do not specify a format.
+
+        ```yml
+        # generators.yml
+        api:
+          specs:
+            - openapi: openapi.yml
+              settings:
+                default-integer-format: int64
+        ```
+
+        Possible values are `int32`, `int64`, `uint32`, and `uint64`; defaults to `int32`.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-10"
   version: 3.7.0
 
 - changelogEntry:
