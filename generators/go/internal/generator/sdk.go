@@ -301,6 +301,16 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("}")
 	f.P()
 
+	// Check if OAuth is configured
+	hasOAuth := getOAuthClientCredentials(auth) != nil
+
+	// Generate TokenGetter type if OAuth is configured
+	if hasOAuth {
+		f.P("// TokenGetter is a function that returns an access token.")
+		f.P("type TokenGetter func() (string, error)")
+		f.P()
+	}
+
 	f.P("// RequestOptions defines all of the possible request options.")
 	f.P("//")
 	f.P("// This type is primarily used by the generated code and is not meant")
@@ -312,6 +322,9 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("BodyProperties map[string]interface{}")
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
+	if hasOAuth {
+		f.P("tokenGetter TokenGetter")
+	}
 
 	// Generate the exported RequestOptions type that all clients can act upon.
 	for _, authScheme := range auth.Schemes {
@@ -433,6 +446,12 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			// Skip if Bearer auth exists, as it already handles the Token field
 			f.P(`if r.Token != "" {`)
 			f.P(`header.Set("Authorization", "Bearer " + r.Token)`)
+			f.P("}")
+			// If no token is set but tokenGetter is configured, use it to get the token
+			f.P(`if header.Get("Authorization") == "" && r.tokenGetter != nil {`)
+			f.P(`if token, err := r.tokenGetter(); err == nil && token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + token)`)
+			f.P("}")
 			f.P("}")
 		}
 	}
@@ -604,6 +623,14 @@ func (f *fileWriter) writeRequestOptionStructs(
 						return err
 					}
 				}
+
+				// Add SetTokenGetter method for internal use
+				f.P("// SetTokenGetter sets the token getter function for OAuth.")
+				f.P("// This is an internal method and should not be called directly.")
+				f.P("func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {")
+				f.P("r.tokenGetter = getter")
+				f.P("}")
+				f.P()
 			}
 		}
 	}
@@ -1132,6 +1159,33 @@ func (f *fileWriter) WriteClient(
 	}
 	if oauthClientCredentials != nil {
 		f.P("oauthTokenProvider := core.NewOAuthTokenProvider(options.ClientID, options.ClientSecret)")
+		// Create an auth client to fetch tokens
+		// We need to create a separate RequestOptions without the token getter to avoid infinite recursion
+		f.P("authOptions := core.NewRequestOptions()")
+		f.P("authOptions.BaseURL = options.BaseURL")
+		f.P("authOptions.HTTPClient = options.HTTPClient")
+		// Import the auth package
+		authImportPath := packagePathToImportPath(f.baseImportPath, []string{"auth"})
+		authPackage := f.scope.AddImport(authImportPath)
+		f.P("authClient := ", authPackage, ".NewClient(authOptions)")
+		// Set up the token getter function that will be called by ToHeader()
+		f.P("options.SetTokenGetter(func() (string, error) {")
+		f.P("if token := oauthTokenProvider.GetToken(); token != \"\" {")
+		f.P("return token, nil")
+		f.P("}")
+		// Fetch a new token from the auth endpoint
+		fernImportPath := f.baseImportPath
+		fernPackage := f.scope.AddImport(fernImportPath)
+		f.P("response, err := authClient.GetTokenWithClientCredentials(context.Background(), &", fernPackage, ".GetTokenRequest{")
+		f.P("ClientId: options.ClientID,")
+		f.P("ClientSecret: options.ClientSecret,")
+		f.P("})")
+		f.P("if err != nil {")
+		f.P("return \"\", err")
+		f.P("}")
+		f.P("oauthTokenProvider.SetToken(response.AccessToken, response.ExpiresIn)")
+		f.P("return response.AccessToken, nil")
+		f.P("})")
 	}
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
