@@ -468,7 +468,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             undefined,
                             ts.factory.createIdentifier("_request"),
                             undefined,
-                            undefined,
+                            requestParameter,
                             undefined
                         ),
                         ts.factory.createParameterDeclaration(
@@ -477,7 +477,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             undefined,
                             ts.factory.createIdentifier("response"),
                             undefined,
-                            undefined,
+                            context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
+                                responseReturnType
+                            ),
                             undefined
                         )
                     ],

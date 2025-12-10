@@ -83,7 +83,10 @@ export class UsersClient {
                 sendRequest: list,
                 initialRequest: request,
             },
-            parser: async (_request, response) => ({
+            parser: async (
+                _request: SeedPagination.ListUsernamesRequestCustom,
+                response: core.WithRawResponse<SeedPagination.UsernameCursor>,
+            ) => ({
                 hasNextPage: false,
                 hasPreviousPage: false,
                 items: ((response) => response?.cursor.data ?? [])(response.data),

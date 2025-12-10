@@ -249,6 +249,13 @@ export class CoreUtilitiesManager {
                 ""
             ].join("\n");
             await writeFile(aliasFilePath, aliasContent);
+
+            // Update pagination/index.ts to export from the alias file
+            const paginationIndexPath = path.join(pathToSrc, "core", "pagination", "index.ts");
+            const paginationIndexContent = await readFile(paginationIndexPath, "utf8");
+            const updatedPaginationIndexContent =
+                paginationIndexContent.trimEnd() + '\nexport * from "./CustomPagerAlias";\n';
+            await writeFile(paginationIndexPath, updatedPaginationIndexContent);
         }
     }
 
