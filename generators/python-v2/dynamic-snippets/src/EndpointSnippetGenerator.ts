@@ -668,6 +668,51 @@ export class EndpointSnippetGenerator {
         return python.TypeInstantiation.bytes(value);
     }
 
+    private getBodyPropertyNamesForInlinedRequest(request: FernIr.dynamic.InlinedRequest): Set<string> {
+        if (request.body == null) {
+            return new Set();
+        }
+
+        switch (request.body.type) {
+            case "referenced": {
+                const bodyType = request.body.bodyType;
+                if (bodyType.type !== "typeReference") {
+                    return new Set();
+                }
+                const typeReference = bodyType.value;
+                if (typeReference.type !== "named") {
+                    return new Set();
+                }
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null || named.type !== "object") {
+                    return new Set();
+                }
+                const result = new Set<string>();
+                for (const property of named.properties) {
+                    if (this.resolvesToLiteralType(property.typeReference)) {
+                        continue;
+                    }
+                    result.add(this.context.getPropertyName(property.name.name));
+                }
+                return result;
+            }
+            case "properties":
+                return new Set(
+                    request.body.value
+                        .filter((parameter) => !this.resolvesToLiteralType(parameter.typeReference))
+                        .map((parameter) => this.context.getPropertyName(parameter.name.name))
+                );
+            case "fileUpload":
+                return new Set(
+                    request.body.properties
+                        .filter((property) => property.type === "bodyProperty")
+                        .map((property) => this.context.getPropertyName(property.name.name))
+                );
+            default:
+                assertNever(request.body);
+        }
+    }
+
     private getMethodArgsForInlinedRequest({
         request,
         snippet
@@ -690,13 +735,18 @@ export class EndpointSnippetGenerator {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
+        const bodyPropertyNames = this.getBodyPropertyNamesForInlinedRequest(request);
+        const disambiguatedPathParamFields = pathParameterFields.map((field) =>
+            bodyPropertyNames.has(field.name) ? { ...field, name: `${field.name}_` } : field
+        );
+
         if (
             !this.context.includePathParametersInWrappedRequest({
                 request,
                 inlinePathParameters
             })
         ) {
-            args.push(...pathParameterFields);
+            args.push(...disambiguatedPathParamFields);
         }
 
         if (
@@ -714,7 +764,7 @@ export class EndpointSnippetGenerator {
                         request,
                         inlinePathParameters
                     })
-                        ? pathParameterFields
+                        ? disambiguatedPathParamFields
                         : [],
                     filePropertyInfo
                 })
