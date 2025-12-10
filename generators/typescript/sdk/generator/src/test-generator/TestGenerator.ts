@@ -1154,20 +1154,10 @@ describe("${serviceName}", () => {
                       variable: "expected"
                   })
                 : "expected";
-        const pageName =
-            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
-                ? context.type.generateGetterForResponsePropertyAsString({
-                      property: endpoint.pagination.results,
-                      variable: "page"
-                  })
-                : "page";
-        const nextPageName =
-            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
-                ? context.type.generateGetterForResponsePropertyAsString({
-                      property: endpoint.pagination.results,
-                      variable: "nextPage"
-                  })
-                : "nextPage";
+        // For custom pagination, the page object's .data property already contains the items
+        // (via getItems), so we don't need to traverse the response path
+        const pageName = "page";
+        const nextPageName = "nextPage";
         const paginationBlock =
             endpoint.pagination !== undefined
                 ? code`
@@ -1181,7 +1171,7 @@ describe("${serviceName}", () => {
                             const nextPage = await ${pageName}.getNextPage();
                             expect(${expectedName}).toEqual(${nextPageName}.data);
                         `
-                        : code`expect(${expectedName}).toEqual(${pageName});`
+                        : code`expect(${expectedName}).toEqual(${pageName}.data);`
                 }
                 `
                 : "";
