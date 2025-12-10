@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "properties": {
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "totalCount": {
+      "type": "integer"
+    },
+    "query": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "limit": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "includeArchived": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "sortOrder": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/SortOrder"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "results",
+    "totalCount"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "SortOrder": {
+      "type": "string",
+      "enum": [
+        "ASC",
+        "DESC"
+      ]
+    }
+  }
+}

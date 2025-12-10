@@ -5,7 +5,7 @@ import { type NormalizedClientOptions, normalizeClientOptions } from "../../../.
 import { ProblemClient } from "../resources/problem/client/Client.js";
 
 export declare namespace V3Client {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 }
 
 export class V3Client {

@@ -1,6 +1,46 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for vendor-specific JSON content types in example validation. Content types like `application/vnd.bc.v1+json` are now accepted as valid JSON content types when validating examples against `literal<"application/json">` types.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-09"
+  version: 3.5.0
+
+- changelogEntry:
+    - summary: |
+        Fix parsing of `<Code>` components with `for` attribute for synced tabs. The `for` attribute is now properly preserved when converting `<Code>` components to markdown code blocks, allowing synced tabs to work correctly across multiple `<CodeGroup>` sections.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-08"
+  version: 3.4.5
+
+- changelogEntry:
+    - summary: |
+        Fallback to variant type for display name if title and mapping are not present.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-08"
+  version: 3.4.4
+
+- changelogEntry:
+    - summary: |
+        Disallow absolute URLs as redirects in frontmatter slug definitions. `links` should be used in the navigation instead.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-08"
+  version: 3.4.3
+
+- changelogEntry:
+    - summary: |
+        Fix `fern generate` crash when inheriting from a schema with top-level `nullable: true` via `allOf`. The OpenAPI importer now correctly strips nullable wrappers from type references in extends lists.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-06"
+  version: 3.4.2
+
+- changelogEntry:
+    - summary: |
         Map error response headers from IR to FDR for docs display.
       type: fix
   irVersion: 63
@@ -141,7 +181,7 @@
         Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`,
         environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
         including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
-        Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
+        Use `\$\{VAR\}` to escape and output literal `${VAR}` without substitution.
       type: feat
   irVersion: 62
   createdAt: "2025-12-02"
@@ -4351,7 +4391,7 @@
 - changelogEntry:
     - summary: |
         Improve server handling in OpenAPI imports by exploding servers with enum variables into multiple servers,
-        one for each enum value. For example, a server with URL "https://{region}.example.com" where region
+        one for each enum value. For example, a server with URL `https://{region}.example.com` where region
         is an enum ["us", "eu"] will be exploded into two servers: "https://us.example.com" and "https://eu.example.com".
       type: feat
   irVersion: 57

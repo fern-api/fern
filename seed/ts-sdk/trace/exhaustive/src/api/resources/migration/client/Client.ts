@@ -8,7 +8,7 @@ import * as environments from "../../../../environments.js";
 import * as SeedTrace from "../../../index.js";
 
 export declare namespace MigrationClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

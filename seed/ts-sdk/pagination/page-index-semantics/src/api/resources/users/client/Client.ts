@@ -9,7 +9,7 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedPagination from "../../../index.js";
 
 export declare namespace UsersClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
@@ -558,7 +558,7 @@ export class UsersClient {
         return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data ?? []).length >= Math.floor(request?.limit ?? 1),
+            hasNextPage: (response) => (response?.data ?? []).length >= Math.floor(request?.limit ?? 123),
             getItems: (response) => response?.data ?? [],
             loadPage: (_response) => {
                 _offset += 1;

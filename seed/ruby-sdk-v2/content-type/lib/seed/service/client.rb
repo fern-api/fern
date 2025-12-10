@@ -27,7 +27,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "",
-          body: Seed::Service::Types::PatchProxyRequest.new(body_bag).to_h
+          body: Seed::Service::Types::PatchProxyRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -66,7 +67,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "complex/#{params[:id]}",
-          body: Seed::Service::Types::PatchComplexRequest.new(body_bag).to_h
+          body: Seed::Service::Types::PatchComplexRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -103,7 +105,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "named-mixed/#{params[:id]}",
-          body: Seed::Service::Types::NamedMixedPatchRequest.new(body_bag).to_h
+          body: Seed::Service::Types::NamedMixedPatchRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -139,7 +142,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "optional-merge-patch-test",
-          body: Seed::Service::Types::OptionalMergePatchRequest.new(body_bag).to_h
+          body: Seed::Service::Types::OptionalMergePatchRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -175,7 +179,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "regular/#{params[:id]}",
-          body: Seed::Service::Types::RegularPatchRequest.new(body_bag).to_h
+          body: Seed::Service::Types::RegularPatchRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

@@ -1,0 +1,78 @@
+openapi: 3.0.3
+info:
+  title: AnyOf No Titles Test API
+  version: 1.0.0
+  description: Test API for anyOf without title fields
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /anyOf/no-titles:
+    post:
+      tags:
+        - anyOf Examples
+      summary: Example endpoint using anyOf without titles
+      description: Demonstrates anyOf without title fields.
+      operationId: anyOfExampleNoTitles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+                - $ref: "#/components/schemas/AnyOfVariantA"
+                - $ref: "#/components/schemas/AnyOfVariantB"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        "400":
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                anyOf:
+                  - $ref: "#/components/schemas/AnyOfErrorA"
+                  - $ref: "#/components/schemas/AnyOfErrorB"
+
+components:
+  schemas:
+    AnyOfVariantA:
+      type: object
+      description: First variant for anyOf without title
+      required:
+        - optionA
+      properties:
+        optionA:
+          type: string
+    AnyOfVariantB:
+      type: object
+      description: Second variant for anyOf without title
+      required:
+        - optionB
+      properties:
+        optionB:
+          type: boolean
+    AnyOfErrorA:
+      type: object
+      description: AnyOf error variant A
+      required:
+        - fieldError
+      properties:
+        fieldError:
+          type: string
+    AnyOfErrorB:
+      type: object
+      description: AnyOf error variant B
+      required:
+        - formatError
+      properties:
+        formatError:
+          type: boolean

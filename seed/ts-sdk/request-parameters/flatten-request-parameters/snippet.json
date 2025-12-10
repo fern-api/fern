@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedRequestParametersClient, SeedRequestParameters } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUsernameOptional();\n"
+                "client": "import { SeedRequestParameters, SeedRequestParametersClient } from \"@fern/request-parameters\";\n\nconst client = new SeedRequestParametersClient({ environment: \"YOUR_BASE_URL\" });\nawait client.user.createUsernameOptional();\n"
             },
             "example_identifier": "empty-object"
         },
