@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
@@ -33,7 +35,7 @@
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "podmanTagLatest": "podman build -f ./Dockerfile -t fernapi/fern-rust-model:latest ../../..",
-    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
+    "publish:cli": "turbo run dist:cli && npm publish ./dist",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
