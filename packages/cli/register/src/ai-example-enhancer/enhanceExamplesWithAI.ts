@@ -12,6 +12,7 @@ import { join } from "path";
 import { LambdaExampleEnhancer } from "./lambdaClient";
 import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator";
 import { AIExampleEnhancerConfig } from "./types";
+import { removeInvalidAiExamples, validateAiExamplesFromFile } from "./validateAiExamples";
 import {
     EnhancedExampleRecord,
     loadExistingOverrideCoverage,
@@ -277,10 +278,9 @@ export async function enhanceExamplesWithAI(
     const enhancer = new LambdaExampleEnhancer(config, context, token);
     const circuitBreaker = new CircuitBreaker();
 
-    const coveredEndpoints =
-        sourceFilePath != null ? await loadExistingOverrideCoverage(sourceFilePath, context) : new Set<string>();
-
     let openApiSpec: string | undefined;
+    let endpointsNeedingRegeneration = new Set<string>();
+
     if (sourceFilePath != null) {
         try {
             const specContent = await readFile(sourceFilePath, "utf-8");
@@ -293,8 +293,59 @@ export async function enhanceExamplesWithAI(
 
             openApiSpec = specContent;
             context.logger.debug(`Loaded OpenAPI spec (${specContent.length} characters) for AI enhancement`);
+
+            // Load original coverage before cleanup to know which endpoints to preserve
+            const originalCoveredEndpoints = await loadExistingOverrideCoverage(sourceFilePath, context);
+
+            // Clean up stale AI examples before processing
+            try {
+                const validationResult = await validateAiExamplesFromFile({
+                    sourceFilePath,
+                    context
+                });
+
+                if (validationResult.invalidCount > 0) {
+                    // Track which endpoints had invalid examples removed
+                    for (const { example } of validationResult.invalidExamples) {
+                        const endpointKey = `${example.method.toLowerCase()}:${example.endpointPath}`;
+                        endpointsNeedingRegeneration.add(endpointKey);
+                    }
+
+                    const cleanupResult = await removeInvalidAiExamples({
+                        sourceFilePath,
+                        context
+                    });
+
+                    context.logger.info(
+                        `Removed ${cleanupResult.removedCount} stale AI examples, ${endpointsNeedingRegeneration.size} endpoints will be regenerated`
+                    );
+                } else {
+                    context.logger.debug("No stale AI examples found to remove");
+                }
+            } catch (error) {
+                context.logger.debug(`Failed to clean up stale AI examples: ${error}`);
+            }
         } catch (error) {
             context.logger.debug(`Failed to read OpenAPI spec file: ${error}`);
+        }
+    }
+
+    // Create final coverage set: exclude endpoints that need regeneration from original coverage
+    let coveredEndpoints = new Set<string>();
+    if (sourceFilePath != null) {
+        const currentCoveredEndpoints = await loadExistingOverrideCoverage(sourceFilePath, context);
+
+        // Only include endpoints in coverage if they weren't removed due to being stale
+        for (const endpoint of currentCoveredEndpoints) {
+            if (!endpointsNeedingRegeneration.has(endpoint)) {
+                coveredEndpoints.add(endpoint);
+            }
+        }
+
+        if (endpointsNeedingRegeneration.size > 0) {
+            context.logger.debug(
+                `Coverage adjusted: ${currentCoveredEndpoints.size} total, ${coveredEndpoints.size} preserved, ${endpointsNeedingRegeneration.size} marked for regeneration`
+            );
         }
     }
 
@@ -309,6 +360,7 @@ export async function enhanceExamplesWithAI(
         examplesEnhanced,
         enhancedExampleRecords,
         coveredEndpoints,
+        endpointsNeedingRegeneration,
         openApiSpec,
         sourceFilePath,
         apiName,
@@ -338,6 +390,7 @@ async function enhancePackageExamples(
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
     coveredEndpoints: Set<string>,
+    endpointsNeedingRegeneration: Set<string>,
     openApiSpec?: string,
     sourceFilePath?: AbsoluteFilePath,
     apiName?: string,
@@ -350,13 +403,14 @@ async function enhancePackageExamples(
     for (const [packageId, subpackage] of Object.entries(apiDefinition.subpackages)) {
         const packageWorkItems = collectWorkItems(
             subpackage as unknown as FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
-            coveredEndpoints
+            coveredEndpoints,
+            endpointsNeedingRegeneration
         );
         allWorkItems.push(...packageWorkItems.map((item) => ({ ...item, packageId })));
     }
 
     // Collect from root package
-    const rootWorkItems = collectWorkItems(apiDefinition.rootPackage, coveredEndpoints);
+    const rootWorkItems = collectWorkItems(apiDefinition.rootPackage, coveredEndpoints, endpointsNeedingRegeneration);
     allWorkItems.push(...rootWorkItems.map((item) => ({ ...item, packageId: "root" })));
 
     stats.total += allWorkItems.length;
@@ -406,9 +460,11 @@ async function enhancePackageExamples(
 
 function collectWorkItems(
     pkg: FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
-    coveredEndpoints: Set<string>
+    coveredEndpoints: Set<string>,
+    endpointsNeedingRegeneration?: Set<string>
 ): EndpointWorkItem[] {
     const workItems: EndpointWorkItem[] = [];
+    const processedEndpoints = new Set<string>();
 
     for (const endpoint of pkg.endpoints) {
         const endpointV3 = endpoint as unknown as EndpointV3;
@@ -416,17 +472,27 @@ function collectWorkItems(
         for (const example of endpointV3.examples) {
             const endpointKey = `${endpointV3.method.toLowerCase()}:${example.path}`;
 
-            if (coveredEndpoints.has(endpointKey)) {
+            // Skip if we already processed this endpoint
+            if (processedEndpoints.has(endpointKey)) {
                 continue;
             }
 
-            if (!isExampleAutogenerated(example)) {
+            // Force regeneration for stale endpoints, even if they have coverage
+            const needsRegeneration = endpointsNeedingRegeneration?.has(endpointKey);
+
+            if (!needsRegeneration && coveredEndpoints.has(endpointKey)) {
+                continue;
+            }
+
+            if (!needsRegeneration && !isExampleAutogenerated(example)) {
                 continue;
             }
 
             const originalRequestExample = extractExampleValue(example.requestBodyV3);
             const originalResponseExample = extractExampleValue(example.responseBodyV3);
-            if (!originalRequestExample && !originalResponseExample) {
+
+            // For stale endpoints, we allow regeneration even without existing examples
+            if (!needsRegeneration && !originalRequestExample && !originalResponseExample) {
                 continue;
             }
 
@@ -435,7 +501,9 @@ function collectWorkItems(
                 example,
                 endpointKey
             });
-            break; // Only process first autogenerated example per endpoint
+
+            processedEndpoints.add(endpointKey);
+            break; // Only process first example per endpoint
         }
     }
 
