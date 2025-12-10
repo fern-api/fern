@@ -7,6 +7,7 @@ import {
     BearerAuthScheme,
     FernFilepath,
     HeaderAuthScheme,
+    HttpEndpoint,
     HttpService,
     Name,
     OAuthScheme,
@@ -343,7 +344,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
     private writeOAuthTokenFetching({ writer }: { writer: go.Writer }): void {
         const oauthScheme = this.getOAuthClientCredentialsScheme();
-        if (oauthScheme == null) {
+        if (oauthScheme == null || oauthScheme.configuration?.type !== "clientCredentials") {
             return;
         }
 
@@ -351,6 +352,20 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         if (authServiceFernFilepath == null) {
             return;
         }
+
+        // Get the token endpoint from the IR
+        const tokenEndpoint = this.getOAuthTokenEndpoint();
+        if (tokenEndpoint == null) {
+            return;
+        }
+
+        // Get the method name from the endpoint
+        const methodName = this.context.getMethodName(tokenEndpoint.name);
+
+        // Get the request field names from the IR
+        const requestProperties = oauthScheme.configuration.tokenEndpoint.requestProperties;
+        const clientIdFieldName = this.getRequestPropertyFieldName(requestProperties.clientId);
+        const clientSecretFieldName = this.getRequestPropertyFieldName(requestProperties.clientSecret);
 
         // Create the OAuthTokenProvider
         writer.writeNode(
@@ -370,10 +385,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 );
                 w.newLine();
 
-                // Create a separate RequestOptions for the auth client to avoid infinite recursion
-                w.writeLine("authOptions := core.NewRequestOptions()");
-                w.writeLine("authOptions.BaseURL = options.BaseURL");
-                w.writeLine("authOptions.HTTPClient = options.HTTPClient");
+                // Clone options for the auth client to avoid infinite recursion
+                // This is done before SetTokenGetter so authOptions won't have the token getter
+                w.writeLine("authOptions := *options");
 
                 // Create the auth client
                 const authClientImportPath = this.context.getClientFileLocation({
@@ -387,7 +401,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                             name: "NewClient",
                             importPath: authClientImportPath
                         }),
-                        arguments_: [go.codeblock("authOptions")]
+                        arguments_: [go.codeblock("&authOptions")]
                     })
                 );
                 w.newLine();
@@ -402,7 +416,15 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeLine("}");
 
                 // Fetch a new token from the auth endpoint
-                w.write("response, err := authClient.GetTokenWithClientCredentials(");
+                // Get the request type reference from the endpoint
+                const serviceId = oauthScheme.configuration.tokenEndpoint.endpointReference.serviceId;
+                const requestWrapperName = tokenEndpoint.sdkRequest?.shape.type === "wrapper" 
+                    ? tokenEndpoint.sdkRequest.shape.wrapperName 
+                    : tokenEndpoint.sdkRequest?.requestParameterName;
+                const requestTypeRef = requestWrapperName != null 
+                    ? this.context.getRequestWrapperTypeReference(serviceId, requestWrapperName)
+                    : go.typeReference({ name: "GetTokenRequest", importPath: this.context.getRootImportPath() });
+                w.write(`response, err := authClient.${methodName}(`);
                 w.writeNode(
                     go.invokeFunc({
                         func: go.typeReference({
@@ -413,16 +435,11 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     })
                 );
                 w.write(", &");
-                w.writeNode(
-                    go.typeReference({
-                        name: "GetTokenRequest",
-                        importPath: this.context.getRootImportPath()
-                    })
-                );
+                w.writeNode(requestTypeRef);
                 w.writeLine("{");
                 w.indent();
-                w.writeLine("ClientId: options.ClientID,");
-                w.writeLine("ClientSecret: options.ClientSecret,");
+                w.writeLine(`${clientIdFieldName}: options.ClientID,`);
+                w.writeLine(`${clientSecretFieldName}: options.ClientSecret,`);
                 w.dedent();
                 w.writeLine("})");
                 w.writeLine("if err != nil {");
@@ -436,6 +453,32 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeLine("})");
             })
         );
+    }
+
+    private getOAuthTokenEndpoint(): HttpEndpoint | undefined {
+        const oauthScheme = this.getOAuthClientCredentialsScheme();
+        if (oauthScheme?.configuration?.type !== "clientCredentials") {
+            return undefined;
+        }
+        const { endpointId, serviceId } = oauthScheme.configuration.tokenEndpoint.endpointReference;
+        const service = this.context.ir.services[serviceId];
+        if (service == null) {
+            return undefined;
+        }
+        return service.endpoints.find((ep) => ep.id === endpointId);
+    }
+
+    private getRequestPropertyFieldName(requestProperty: { property: { type: string; name?: { name: Name } } }): string {
+        // The property can be either "query" or "body" type
+        // Both have a name field that contains the Name object
+        if (requestProperty.property.type === "body" && requestProperty.property.name != null) {
+            return this.context.getFieldName(requestProperty.property.name.name);
+        }
+        if (requestProperty.property.type === "query" && requestProperty.property.name != null) {
+            return this.context.getFieldName(requestProperty.property.name.name);
+        }
+        // Fallback to default names if we can't extract from IR
+        return "ClientId";
     }
 
     private getOAuthClientCredentialsScheme(): OAuthScheme | undefined {

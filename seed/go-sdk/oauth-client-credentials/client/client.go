@@ -31,11 +31,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 		options.ClientID,
 		options.ClientSecret,
 	)
-	authOptions := core.NewRequestOptions()
-	authOptions.BaseURL = options.BaseURL
-	authOptions.HTTPClient = options.HTTPClient
+	authOptions := *options
 	authClient := auth.NewClient(
-		authOptions,
+		&authOptions,
 	)
 	options.SetTokenGetter(func() (string, error) {
 		if token := oauthTokenProvider.GetToken(); token != "" {
