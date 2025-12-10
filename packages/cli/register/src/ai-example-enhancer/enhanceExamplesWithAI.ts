@@ -469,6 +469,13 @@ function collectWorkItems(
     for (const endpoint of pkg.endpoints) {
         const endpointV3 = endpoint as unknown as EndpointV3;
 
+        // Check if endpoint already has human-specified examples in v2Examples
+        const hasHumanExamples = hasUserSpecifiedV2Examples(endpointV3);
+        if (hasHumanExamples) {
+            // Skip this endpoint - it already has human examples that shouldn't be overridden
+            continue;
+        }
+
         for (const example of endpointV3.examples) {
             const endpointKey = `${endpointV3.method.toLowerCase()}:${example.path}`;
 
@@ -803,6 +810,47 @@ function hasGenericValues(obj: unknown): boolean {
     }
 
     return false;
+}
+
+/**
+ * Check if an endpoint has user-specified examples in v2Examples structure.
+ * This prevents AI enhancement from overriding human-provided OpenAPI examples.
+ */
+function hasUserSpecifiedV2Examples(endpointV3: EndpointV3): boolean {
+    try {
+        // Cast to any to access v2Examples properties that aren't in the type definition
+        // biome-ignore lint/suspicious/noExplicitAny: accessing v2Examples properties not in type definition
+        const endpoint = endpointV3 as any;
+
+        // Check if endpoint has v2Examples structure with user-specified examples
+        if (
+            endpoint.v2Examples?.userSpecifiedExamples &&
+            typeof endpoint.v2Examples.userSpecifiedExamples === "object"
+        ) {
+            const userExamples = endpoint.v2Examples.userSpecifiedExamples;
+            return Object.keys(userExamples).length > 0;
+        }
+
+        // Also check v2Responses for user-specified examples (response-specific examples)
+        if (endpoint.v2Responses?.responses) {
+            for (const response of endpoint.v2Responses.responses) {
+                if (
+                    response.body?.v2Examples?.userSpecifiedExamples &&
+                    typeof response.body.v2Examples.userSpecifiedExamples === "object"
+                ) {
+                    const responseUserExamples = response.body.v2Examples.userSpecifiedExamples;
+                    if (Object.keys(responseUserExamples).length > 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    } catch (error) {
+        // If there's any error checking the structure, default to false (allow AI enhancement)
+        return false;
+    }
 }
 
 function extractExampleValue(bodyV3: BodyV3 | undefined): unknown {
