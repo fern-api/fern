@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Balance Max Null Test API
+  version: 1.0.0
+  description: Tests handling of nullable balance_max in tiered rate structures
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths:
+  /rates:
+    get:
+      operationId: getRates
+      summary: Get tiered rates
+      description: Returns tiered rate information with nullable balance_max
+      responses:
+        "200":
+          description: Tiered rates retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RateResponse"
+
+components:
+  schemas:
+    RateResponse:
+      type: object
+      required:
+        - rate_type
+        - fixed_rate
+      properties:
+        rate_type:
+          type: string
+          enum: [fixed, variable]
+          description: The type of rate structure
+        fixed_rate:
+          $ref: "#/components/schemas/FixedRate"
+
+    FixedRate:
+      type: object
+      required:
+        - tiers
+      properties:
+        tiers:
+          type: array
+          items:
+            $ref: "#/components/schemas/RateTier"
+          description: List of rate tiers
+
+    RateTier:
+      type: object
+      required:
+        - balance_min
+        - rate_bps
+      properties:
+        balance_min:
+          type: string
+          description: Minimum balance for this tier
+          example: "0"
+        balance_max:
+          type: string
+          nullable: true
+          description: Maximum balance for this tier (null means no upper limit)
+          example: "100000000"
+        rate_bps:
+          type: integer
+          description: Rate in basis points
+          example: 200

@@ -1417,4 +1417,66 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-ir.snap");
     });
+
+    it("should handle OpenAPI with nullable balance_max in tiered rates", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/balance-max-null")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "balance-max-null"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that the RateTier type with nullable balance_max was processed
+        expect(intermediateRepresentation.types).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+
+        // Check that RateTier type exists and has the expected structure
+        const rateTierType = Object.values(intermediateRepresentation.types).find(
+            (type) => type.name.name.originalName === "RateTier"
+        );
+        expect(rateTierType).toBeDefined();
+
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/balance-max-null-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/balance-max-null-ir.snap");
+    });
 });
