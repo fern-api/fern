@@ -30,7 +30,7 @@
     "depcheck": "depcheck",
     "dist:cli": "node build.mjs",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "publish:cli": "turbo run dist:cli && npm publish ./dist",
+    "publish:cli": "turbo run dist:cli --filter . && npm publish ./dist",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
