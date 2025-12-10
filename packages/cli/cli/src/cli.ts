@@ -560,6 +560,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     choices: Object.values(GenerationMode),
                     description: "Defaults to the mode specified in generators.yml"
                 })
+                .option("pr-state", {
+                    choices: ["draft", "ready"] as const,
+                    description:
+                        "The state of the pull request when created (draft or ready). Only applies when --mode pull-request is used."
+                })
                 .option("version", {
                     type: "string",
                     description: "The version for the generated packages"
@@ -645,6 +650,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
                 );
             }
+            if (argv.prState != null && argv.mode !== GenerationMode.PullRequest) {
+                return cliContext.failWithoutThrowing("The --pr-state flag can only be used with --mode pull-request.");
+            }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -659,6 +667,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     useLocalDocker: argv.local || argv.runner != null,
                     preview: argv.preview,
                     mode: argv.mode,
+                    prState: argv.prState,
                     force: argv.force,
                     runner: argv.runner as ContainerRunner,
                     inspect: false,
@@ -706,6 +715,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 useLocalDocker: argv.local,
                 preview: argv.preview,
                 mode: argv.mode,
+                prState: argv.prState,
                 force: argv.force,
                 runner: argv.runner as ContainerRunner,
                 inspect: false,

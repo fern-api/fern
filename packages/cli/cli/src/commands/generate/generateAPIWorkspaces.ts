@@ -16,6 +16,8 @@ export const GenerationMode = {
 
 export type GenerationMode = Values<typeof GenerationMode>;
 
+export type PullRequestState = "draft" | "ready";
+
 export async function generateAPIWorkspaces({
     project,
     cliContext,
@@ -26,6 +28,7 @@ export async function generateAPIWorkspaces({
     useLocalDocker,
     preview,
     mode,
+    prState,
     force,
     runner,
     inspect,
@@ -41,6 +44,7 @@ export async function generateAPIWorkspaces({
     keepDocker: boolean;
     preview: boolean;
     mode: GenerationMode | undefined;
+    prState: PullRequestState | undefined;
     force: boolean;
     runner: ContainerRunner | undefined;
     inspect: boolean;
@@ -131,6 +135,7 @@ export async function generateAPIWorkspaces({
                     keepDocker,
                     absolutePathToPreview,
                     mode,
+                    prState,
                     runner,
                     inspect,
                     lfsOverride,

@@ -24,6 +24,8 @@ import tmp from "tmp-promise";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 import { isAutoVersion } from "./VersionUtils";
 
+export type PullRequestState = "draft" | "ready";
+
 export async function runLocalGenerationForWorkspace({
     token,
     projectConfig,
@@ -35,7 +37,8 @@ export async function runLocalGenerationForWorkspace({
     context,
     absolutePathToPreview,
     runner,
-    ai
+    ai,
+    prState
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -48,6 +51,7 @@ export async function runLocalGenerationForWorkspace({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     ai: generatorsYml.AiServicesSchema | undefined;
+    prState: PullRequestState | undefined;
 }): Promise<void> {
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
@@ -251,7 +255,8 @@ export async function runLocalGenerationForWorkspace({
                         interactiveTaskContext,
                         selfhostedGithubConfig,
                         absolutePathToLocalOutput,
-                        autoVersioningCommitMessage
+                        autoVersioningCommitMessage,
+                        prState
                     );
                 }
             });
@@ -311,7 +316,8 @@ async function postProcessGithubSelfHosted(
     context: TaskContext,
     selfhostedGithubConfig: SelhostedGithubConfig,
     absolutePathToLocalOutput: AbsoluteFilePath,
-    commitMessage?: string
+    commitMessage?: string,
+    prState?: PullRequestState
 ): Promise<void> {
     try {
         context.logger.debug("Starting GitHub self-hosted flow in directory: " + absolutePathToLocalOutput);
@@ -373,6 +379,12 @@ async function postProcessGithubSelfHosted(
                 const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
 
                 try {
+                    // Determine if PR should be created as draft
+                    // CLI --pr-state takes precedence, then generators.yml pr-state, then default to ready (not draft)
+                    const configPrState = selfhostedGithubConfig["pr-state"];
+                    const effectivePrState = prState ?? configPrState ?? "ready";
+                    const isDraft = effectivePrState === "draft";
+
                     const { data: pullRequest } = await octokit.pulls.create({
                         owner,
                         repo,
@@ -380,7 +392,7 @@ async function postProcessGithubSelfHosted(
                         body: prBody,
                         head,
                         base: baseBranch,
-                        draft: false
+                        draft: isDraft
                     });
 
                     context.logger.info(`Created pull request: ${pullRequest.html_url}`);

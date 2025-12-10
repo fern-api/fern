@@ -87,12 +87,24 @@ types:
       mode: optional<GithubSelfhostedMode>
       branch: optional<string>
       license: optional<license.GithubLicenseSchema>
+      pr-state:
+        type: optional<GithubPullRequestState>
+        docs: The state of the pull request when created (draft or ready). Only applies when mode is pull-request.
 
   GithubSelfhostedMode:
     enum:
       - name: pullRequest
         value: pull-request
       - push
+
+  GithubPullRequestState:
+    docs: |
+      The state of the pull request when created.
+      - draft: Create the PR as a draft
+      - ready: Create the PR as ready for review (default)
+    enum:
+      - draft
+      - ready
 
   GeneratorSnippetsSchema:
     properties:
@@ -127,7 +139,9 @@ types:
       license: optional<license.GithubLicenseSchema>
       mode: literal<"pull-request">
       reviewers: optional<reviewers.ReviewersSchema>
-      # Add properties for pull request configuration
+      pr-state:
+        type: optional<GithubPullRequestState>
+        docs: The state of the pull request when created (draft or ready). Defaults to ready.
 
   GithubPushSchema:
     properties:

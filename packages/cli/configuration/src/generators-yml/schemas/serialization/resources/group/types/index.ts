@@ -5,6 +5,7 @@ export * from "./GeneratorOutputSchema";
 export * from "./GithubConfigurationSchema";
 export * from "./GithubSelfhostedSchema";
 export * from "./GithubSelfhostedMode";
+export * from "./GithubPullRequestState";
 export * from "./GeneratorSnippetsSchema";
 export * from "./GeneratorPublishMetadataSchema";
 export * from "./GithubCommitAndReleaseSchema";

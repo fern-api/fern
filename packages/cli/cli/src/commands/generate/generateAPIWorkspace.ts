@@ -15,7 +15,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { GROUP_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
-import { GenerationMode } from "./generateAPIWorkspaces";
+import { GenerationMode, PullRequestState } from "./generateAPIWorkspaces";
 
 export async function generateWorkspace({
     organization,
@@ -30,6 +30,7 @@ export async function generateWorkspace({
     keepDocker,
     absolutePathToPreview,
     mode,
+    prState,
     runner,
     inspect,
     lfsOverride,
@@ -47,6 +48,7 @@ export async function generateWorkspace({
     keepDocker: boolean;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: GenerationMode | undefined;
+    prState: PullRequestState | undefined;
     runner: ContainerRunner | undefined;
     inspect: boolean;
     lfsOverride: string | undefined;
@@ -122,7 +124,8 @@ export async function generateWorkspace({
                     runner,
                     absolutePathToPreview,
                     inspect,
-                    ai
+                    ai,
+                    prState
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({
@@ -137,6 +140,7 @@ export async function generateWorkspace({
                     whitelabel: workspace.generatorsConfiguration?.whitelabel,
                     absolutePathToPreview,
                     mode,
+                    prState,
                     fernignorePath
                 });
             }

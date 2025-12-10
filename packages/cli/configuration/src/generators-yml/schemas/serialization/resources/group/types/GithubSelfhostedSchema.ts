@@ -7,6 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubSelfhostedMode } from "./GithubSelfhostedMode";
 import { GithubLicenseSchema } from "../../license/types/GithubLicenseSchema";
+import { GithubPullRequestState } from "./GithubPullRequestState";
 
 export const GithubSelfhostedSchema: core.serialization.ObjectSchema<
     serializers.GithubSelfhostedSchema.Raw,
@@ -17,6 +18,7 @@ export const GithubSelfhostedSchema: core.serialization.ObjectSchema<
     mode: GithubSelfhostedMode.optional(),
     branch: core.serialization.string().optional(),
     license: GithubLicenseSchema.optional(),
+    "pr-state": GithubPullRequestState.optional(),
 });
 
 export declare namespace GithubSelfhostedSchema {
@@ -26,5 +28,6 @@ export declare namespace GithubSelfhostedSchema {
         mode?: GithubSelfhostedMode.Raw | null;
         branch?: string | null;
         license?: GithubLicenseSchema.Raw | null;
+        "pr-state"?: GithubPullRequestState.Raw | null;
     }
 }
