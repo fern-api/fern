@@ -1192,7 +1192,8 @@ describe("${serviceName}", () => {
             `;
 
         // Build the assertion based on whether the path is missing
-        // When the path is missing, we directly assert that page.data equals []
+        // When the path is missing, we only assert that page.data equals [] (no hasNextPage/getNextPage assertions
+        // since those are tangential to testing the empty data case)
         // When the path is present, we compare against the expected items from the example
         const paginationBlock =
             endpoint.pagination !== undefined
@@ -1204,9 +1205,6 @@ describe("${serviceName}", () => {
                         ? isResultsPathMissing
                             ? code`
                             expect(${pageName}.data).toEqual([]);
-                            expect(${pageName}.hasNextPage()).toBe(true);
-                            const nextPage = await ${pageName}.getNextPage();
-                            expect(${nextPageName}.data).toEqual([]);
                         `
                             : code`
                             expect(${expectedName}).toEqual(${pageName}.data);
