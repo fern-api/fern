@@ -1159,7 +1159,6 @@ describe("${serviceName}", () => {
         const pageName = "page";
         const nextPageName = "nextPage";
 
-        // Check if the pagination results path is missing in the example
         const isResultsPathMissing =
             endpoint.pagination !== undefined &&
             isPaginationResultsPathMissingInExample({
@@ -1169,24 +1168,8 @@ describe("${serviceName}", () => {
                 includeSerdeLayer: context.includeSerdeLayer
             });
 
-        // Get the path segments for building nested spread syntax
-        const paginationPathSegments =
-            endpoint.pagination !== undefined
-                ? getPaginationResultsPathSegments({
-                      endpoint,
-                      retainOriginalCasing: context.retainOriginalCasing,
-                      includeSerdeLayer: context.includeSerdeLayer
-                  })
-                : [];
-
-        // Build the expected declaration - only needed when the path is present
-        // When the path is missing, we don't need the expected variable since we just assert page.data equals []
         const expectedDeclaration = code`const expected = ${expected};`;
 
-        // Build the assertion based on whether the path is missing
-        // When the path is missing, we only assert that page.data equals [] (no hasNextPage/getNextPage assertions
-        // since those are tangential to testing the empty data case)
-        // When the path is present, we compare against the expected items from the example
         const paginationBlock =
             endpoint.pagination !== undefined
                 ? isResultsPathMissing
@@ -1839,10 +1822,6 @@ function getParameterNameForVariable({
     return variableName.camelCase.safeName;
 }
 
-/**
- * Extracts the raw JSON example from an ExampleResponse.
- * Returns undefined if the response has no body.
- */
 function getResponseBodyJsonExample(response: ExampleResponse): unknown | undefined {
     return response._visit({
         ok: (okResp) =>
@@ -1857,10 +1836,6 @@ function getResponseBodyJsonExample(response: ExampleResponse): unknown | undefi
     });
 }
 
-/**
- * Checks if the pagination results path is missing in the example response.
- * Uses wire values to walk the JSON example since JSON uses wire format.
- */
 function isPaginationResultsPathMissingInExample({
     example,
     endpoint,
@@ -1905,66 +1880,4 @@ function isPaginationResultsPathMissingInExample({
 
     // If the leaf is explicitly undefined, treat it as "missing" for pagination purposes
     return cursor === undefined;
-}
-
-/**
- * Builds nested spread syntax to add an undefined property at the given path.
- * For simple path like ["data"]: { ...baseVar, data: undefined }
- * For nested path like ["cursor", "data"]: { ...baseVar, cursor: { ...(baseVar.cursor ?? {}), data: undefined } }
- */
-function buildNestedSpreadForUndefinedPath({ baseVar, segments }: { baseVar: string; segments: string[] }): string {
-    if (segments.length === 0) {
-        return baseVar;
-    }
-
-    function buildValue(parentVar: string, remaining: string[]): string {
-        const [head, ...tail] = remaining;
-        if (head === undefined) {
-            return "";
-        }
-
-        if (tail.length === 0) {
-            // Leaf: e.g. "data: undefined"
-            return `${head}: undefined`;
-        }
-
-        const childParentVar = `${parentVar}.${head}`;
-        const inner = buildValue(childParentVar, tail);
-        // e.g. "cursor: { ...(baseExpected.cursor ?? {}), data: undefined }"
-        return `${head}: { ...(${childParentVar} ?? {}), ${inner} }`;
-    }
-
-    const inner = buildValue(baseVar, segments);
-    return `{ ...${baseVar}, ${inner} }`;
-}
-
-/**
- * Gets the property path segments for the pagination results property.
- * Returns the TS property names (respecting retainOriginalCasing and includeSerdeLayer).
- */
-function getPaginationResultsPathSegments({
-    endpoint,
-    retainOriginalCasing,
-    includeSerdeLayer
-}: {
-    endpoint: HttpEndpoint;
-    retainOriginalCasing: boolean;
-    includeSerdeLayer: boolean;
-}): string[] {
-    const pagination = endpoint.pagination;
-    if (pagination == null || pagination.results == null) {
-        return [];
-    }
-
-    const resultsProperty = pagination.results;
-    const useOriginalName = retainOriginalCasing || !includeSerdeLayer;
-
-    return [
-        ...(resultsProperty.propertyPath ?? []).map((item) =>
-            useOriginalName ? item.name.originalName : item.name.camelCase.safeName
-        ),
-        useOriginalName
-            ? resultsProperty.property.name.wireValue
-            : resultsProperty.property.name.name.camelCase.safeName
-    ];
 }
