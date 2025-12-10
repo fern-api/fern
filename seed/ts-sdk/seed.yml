@@ -367,9 +367,14 @@ fixtures:
     - outputFolder: use-oxlint
       customConfig:
         linter: oxlint
-    - outputFolder: no-linter
+    - outputFolder: use-oxc
+      customConfig:
+        linter: oxlint
+        formatter: oxfmt
+    - outputFolder: no-linter-and-formatter
       customConfig:
         linter: none
+        formatter: none
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true

@@ -8,6 +8,6 @@ export function filterObject<T extends object, K extends keyof T>(obj: T, keysTo
             return acc;
             // eslint-disable-next-line @typescript-eslint/prefer-reduce-type-parameter
         },
-        {} as Pick<T, K>
+        {} as Pick<T, K>,
     );
 }
