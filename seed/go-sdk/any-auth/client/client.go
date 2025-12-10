@@ -28,6 +28,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.ApiKey == "" {
 		options.ApiKey = os.Getenv("MY_API_KEY")
 	}
+	if options.ClientID == "" {
+		options.ClientID = os.Getenv("MY_CLIENT_ID")
+	}
+	if options.ClientSecret == "" {
+		options.ClientSecret = os.Getenv("MY_CLIENT_SECRET")
+	}
 	return &Client{
 		Auth:    auth.NewClient(options),
 		User:    user.NewClient(options),
