@@ -1191,9 +1191,9 @@ describe("${serviceName}", () => {
                 const expected = ${buildNestedSpreadForUndefinedPath({ baseVar: "baseExpected", segments: paginationPathSegments })};
             `;
 
-        // Build the assertion - only use ?? [] when the path is missing
-        const expectedItemsAssertion = isResultsPathMissing ? `${expectedName} ?? []` : expectedName;
-
+        // Build the assertion based on whether the path is missing
+        // When the path is missing, we directly assert that page.data equals []
+        // When the path is present, we compare against the expected items from the example
         const paginationBlock =
             endpoint.pagination !== undefined
                 ? code`
@@ -1201,13 +1201,22 @@ describe("${serviceName}", () => {
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
                     endpoint.pagination.type !== "custom"
-                        ? code`
-                            expect(${expectedItemsAssertion}).toEqual(${pageName}.data);
+                        ? isResultsPathMissing
+                            ? code`
+                            expect(${pageName}.data).toEqual([]);
                             expect(${pageName}.hasNextPage()).toBe(true);
                             const nextPage = await ${pageName}.getNextPage();
-                            expect(${expectedItemsAssertion}).toEqual(${nextPageName}.data);
+                            expect(${nextPageName}.data).toEqual([]);
                         `
-                        : code`expect(${expectedItemsAssertion}).toEqual(${pageName}.data);`
+                            : code`
+                            expect(${expectedName}).toEqual(${pageName}.data);
+                            expect(${pageName}.hasNextPage()).toBe(true);
+                            const nextPage = await ${pageName}.getNextPage();
+                            expect(${expectedName}).toEqual(${nextPageName}.data);
+                        `
+                        : isResultsPathMissing
+                          ? code`expect(${pageName}.data).toEqual([]);`
+                          : code`expect(${expectedName}).toEqual(${pageName}.data);`
                 }
                 `
                 : "";
