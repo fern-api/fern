@@ -227,14 +227,21 @@ export class ExportsManager {
     }
 
     public writeExportsToProject(rootDirectory: Directory): void {
-        for (const [pathToDirectory, moduleSpecifierToExports] of Object.entries(this.exports)) {
+        const sortedExports = Object.entries(this.exports).sort(([a], [b]) => a.localeCompare(b));
+        for (const [pathToDirectory, moduleSpecifierToExports] of sortedExports) {
             const exportsFile = getExportsFileForDirectory({
                 pathToDirectory,
                 rootDirectory
             });
 
-            for (const [moduleSpecifier, combinedExportDeclarations] of Object.entries(moduleSpecifierToExports)) {
-                for (const namespaceExport of combinedExportDeclarations.namespaceExports) {
+            const sortedModuleSpecifiers = Object.entries(moduleSpecifierToExports).sort(([a], [b]) =>
+                a.localeCompare(b)
+            );
+            for (const [moduleSpecifier, combinedExportDeclarations] of sortedModuleSpecifiers) {
+                const sortedNamespaceExports = [...combinedExportDeclarations.namespaceExports].sort((a, b) =>
+                    a.localeCompare(b)
+                );
+                for (const namespaceExport of sortedNamespaceExports) {
                     exportsFile.addExportDeclaration({
                         moduleSpecifier,
                         namespaceExport
@@ -246,17 +253,16 @@ export class ExportsManager {
                         moduleSpecifier
                     });
                 } else if (combinedExportDeclarations.namedExports.size > 0) {
+                    const sortedNamedExports = [...combinedExportDeclarations.namedExports.entries()]
+                        .sort(([a], [b]) => a.localeCompare(b))
+                        .map(([, namedExport]) => namedExport);
                     exportsFile.addExportDeclaration({
                         moduleSpecifier,
-                        namedExports: [
-                            ...combinedExportDeclarations.namedExports
-                                .values()
-                                .map<ExportSpecifierStructure>((namedExport) => ({
-                                    kind: StructureKind.ExportSpecifier,
-                                    name: NamedExport.getName(namedExport),
-                                    leadingTrivia: NamedExport.isTypeExport(namedExport) ? "type " : undefined
-                                }))
-                        ]
+                        namedExports: sortedNamedExports.map<ExportSpecifierStructure>((namedExport) => ({
+                            kind: StructureKind.ExportSpecifier,
+                            name: NamedExport.getName(namedExport),
+                            leadingTrivia: NamedExport.isTypeExport(namedExport) ? "type " : undefined
+                        }))
                     });
                 }
             }
