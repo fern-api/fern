@@ -26,6 +26,6 @@ describe("UsersClient", () => {
         const page = await client.users.listUsernamesCustom({
             starting_after: "starting_after",
         });
-        expect(expected.cursor.data).toEqual(page.cursor.data);
+        expect(expected.cursor.data).toEqual(page.data);
     });
 });

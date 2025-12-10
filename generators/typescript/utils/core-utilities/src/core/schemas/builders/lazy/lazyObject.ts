@@ -8,13 +8,13 @@ export function lazyObject<Raw, Parsed>(getter: SchemaGetter<ObjectSchema<Raw, P
     const baseSchema: BaseObjectSchema<Raw, Parsed> = {
         ...constructLazyBaseSchema(getter),
         _getRawProperties: () => getMemoizedSchema(getter)._getRawProperties(),
-        _getParsedProperties: () => getMemoizedSchema(getter)._getParsedProperties()
+        _getParsedProperties: () => getMemoizedSchema(getter)._getParsedProperties(),
     };
 
     return {
         ...baseSchema,
         ...getSchemaUtils(baseSchema),
         ...getObjectLikeUtils(baseSchema),
-        ...getObjectUtils(baseSchema)
+        ...getObjectUtils(baseSchema),
     };
 }

@@ -89,7 +89,9 @@ export class PublicExportsManager {
             // If no child exports found, add empty export to create valid TypeScript file
             parentExportsFile.addExportDeclaration({});
         } else {
-            for (const childDir of childDirs) {
+            // Sort child directories alphabetically for consistent output
+            const sortedChildDirs = [...childDirs].sort((a, b) => a.localeCompare(b));
+            for (const childDir of sortedChildDirs) {
                 const relativePath = path.relative(directoryPath, path.join(childDir, "exports.ts"));
                 const moduleSpecifier = "./" + relativePath.replace(/\.ts$/, "").replace(/\\/g, "/");
 

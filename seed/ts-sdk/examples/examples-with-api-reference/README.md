@@ -59,7 +59,7 @@ Generator Invocation Custom Content for @fern/examples
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedExamplesEnvironment, SeedExamplesClient } from "@fern/examples";
+import { SeedExamplesClient, SeedExamplesEnvironment } from "@fern/examples";
 
 const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });
 await client.service.createMovie({
