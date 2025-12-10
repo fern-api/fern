@@ -4,7 +4,7 @@
 - version: 4.45.3
   changelogEntry:
     - summary: Add return types to reference.md method signatures for consistency with other SDK generators.
-      type: feat
+      type: fix
   createdAt: "2025-12-10"
   irVersion: 61
 
