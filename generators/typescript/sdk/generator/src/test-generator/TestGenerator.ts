@@ -1166,12 +1166,12 @@ describe("${serviceName}", () => {
                 ${
                     endpoint.pagination.type !== "custom"
                         ? code`
-                            expect(${expectedName}).toEqual(${pageName}.data);
+                            expect(${expectedName} ?? []).toEqual(${pageName}.data);
                             expect(${pageName}.hasNextPage()).toBe(true);
                             const nextPage = await ${pageName}.getNextPage();
-                            expect(${expectedName}).toEqual(${nextPageName}.data);
+                            expect(${expectedName} ?? []).toEqual(${nextPageName}.data);
                         `
-                        : code`expect(${expectedName}).toEqual(${pageName}.data);`
+                        : code`expect(${expectedName} ?? []).toEqual(${pageName}.data);`
                 }
                 `
                 : "";
