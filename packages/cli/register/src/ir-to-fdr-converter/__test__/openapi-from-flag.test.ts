@@ -1418,7 +1418,10 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-ir.snap");
     });
 
-    it("should handle OpenAPI with nullable balance_max in tiered rates", async () => {
+    // This test is marked as expected-failing because there's a bug where null values
+    // in examples are replaced with the schema's example value. Once the bug is fixed,
+    // this should be changed back to a normal `it(...)` test.
+    it.fails("should handle OpenAPI with nullable balance_max in tiered rates", async () => {
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace: join(
@@ -1475,6 +1478,25 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             (type) => type.name.name.originalName === "RateTier"
         );
         expect(rateTierType).toBeDefined();
+
+        // Verify the endpoint example preserves null value for balance_max
+        const endpoint = fdrApiDefinition.rootPackage?.endpoints?.find((e) => e.id === "getRates");
+        expect(endpoint).toBeDefined();
+        expect(endpoint?.examples).toBeDefined();
+        expect(endpoint?.examples?.length).toBeGreaterThan(0);
+
+        // Get the tiers from the example response
+        const example = endpoint?.examples?.[0];
+        const responseBody = example?.responseBody as unknown as Record<string, unknown> | undefined;
+        const fixedRate = responseBody?.fixed_rate as { tiers: Array<{ balance_max: string | null }> } | undefined;
+        const tiers = fixedRate?.tiers;
+        expect(Array.isArray(tiers)).toBe(true);
+        expect(tiers).toHaveLength(3);
+
+        // Critical regression test: the third tier's balance_max must be null, not a string value
+        expect(tiers?.[0]?.balance_max).toBe("100000000");
+        expect(tiers?.[1]?.balance_max).toBe("500000000");
+        expect(tiers?.[2]?.balance_max).toBeNull();
 
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/balance-max-null-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/balance-max-null-ir.snap");

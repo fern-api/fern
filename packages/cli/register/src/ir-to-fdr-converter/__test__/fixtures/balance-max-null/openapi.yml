@@ -21,6 +21,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/RateResponse"
+              example:
+                rate_type: "fixed"
+                fixed_rate:
+                  tiers:
+                    - balance_min: "0"
+                      balance_max: "100000000"
+                      rate_bps: 200
+                    - balance_min: "100000000"
+                      balance_max: "500000000"
+                      rate_bps: 350
+                    - balance_min: "500000000"
+                      balance_max: null
+                      rate_bps: 450
 
 components:
   schemas:
