@@ -73,6 +73,7 @@
               },
             },
           },
+          "responses": undefined,
         },
       ],
       "websockets": [],
