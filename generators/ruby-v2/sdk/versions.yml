@@ -3,7 +3,7 @@
 - version: 1.0.0-rc64
   createdAt: "2025-12-10"
   changelogEntry:
-    - type: feat
+    - type: chore
       summary: |
         Improve reference.md generation for parity with TypeScript SDK generator:
         - Add request_options parameter documentation to all endpoints
