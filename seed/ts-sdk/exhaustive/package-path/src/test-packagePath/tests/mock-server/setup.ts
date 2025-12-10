@@ -1,4 +1,4 @@
-import { afterAll, beforeAll } from "@jest/globals";
+import { afterAll, beforeAll } from "vitest";
 
 import { mockServerPool } from "./MockServerPool";
 

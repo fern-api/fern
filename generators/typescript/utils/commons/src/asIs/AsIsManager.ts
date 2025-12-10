@@ -109,8 +109,9 @@ export class AsIsManager {
 
                 for (const match of matches) {
                     const sourceFilePath = path.join(asIsFilePath, match);
-                    const relativePath = path.relative(asIsFilePath, match);
-                    const targetFilePath = path.join(targetPattern, relativePath);
+                    // Extract just the filename from the match to append to the target pattern
+                    const fileName = path.basename(match);
+                    const targetFilePath = path.join(targetPattern, fileName);
                     let fileContent = await fs.readFile(sourceFilePath, "utf-8");
 
                     // Transform import paths in test files
