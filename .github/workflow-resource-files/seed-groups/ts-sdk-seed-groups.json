@@ -13,7 +13,7 @@
         "oauth-client-credentials-nested-root:no-custom-config",
         "path-parameters:inline-path-parameters",
         "variables",
-        "simple-api:no-linter",
+        "simple-api:no-linter-and-formatter",
         "property-access:no-custom-config",
         "simple-api:oidc-token",
         "objects-with-imports",

@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.25.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth and InferredAuth token refresh to work on every request. Previously, tokens were fetched once during client initialization and stored statically in headers, causing authentication failures when tokens expired for long-lived client instances. Now the auth provider's getToken()/getAuthHeaders() method is called on every request via a callback, properly refreshing tokens when needed.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 62
+
 - version: 1.25.0
   changelogEntry:
     - summary: |
