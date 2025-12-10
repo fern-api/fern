@@ -126,7 +126,8 @@ function parseOpenApiDefinitionSettingsSchema(
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
-        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        defaultIntegerFormat: settings?.["default-integer-format"]
     };
 }
 
