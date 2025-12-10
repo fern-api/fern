@@ -641,6 +641,7 @@ export class DocsDefinitionResolver {
             title: this.parsedDocsConfig.title,
             logoHeight: this.parsedDocsConfig.logo?.height,
             logoHref: this.parsedDocsConfig.logo?.href ? DocsV1Write.Url(this.parsedDocsConfig.logo?.href) : undefined,
+            logoRightText: this.parsedDocsConfig.logo?.rightText,
             favicon: this.getFileId(this.parsedDocsConfig.favicon),
             navigation: undefined, // <-- this is now deprecated
             root,

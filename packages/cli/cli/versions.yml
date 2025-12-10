@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add `right-text` field to logo configuration in docs.yml. This allows users to display custom text to the right of the logo image, similar to Cohere's documentation style but fully configurable.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-10"
+  version: 3.5.0
+
+- changelogEntry:
+    - summary: |
         Map error response headers from IR to FDR for docs display.
       type: fix
   irVersion: 63
