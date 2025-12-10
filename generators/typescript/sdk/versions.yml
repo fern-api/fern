@@ -17,7 +17,7 @@
         - Support for both forward (`getNextPage`) and backward (`getPreviousPage`) pagination
         - `AsyncIterable` implementation for ergonomic consumption with `for await...of`
         - Access to raw response data via `response` and `rawResponse` properties
-        
+
         The generated endpoint returns a `CustomPager` with a default parser that extracts items from the
         configured results property and sets `hasNextPage`/`hasPreviousPage` to `false`. SDK authors who need
         custom pagination logic can create their own wrapper/factory that calls `CustomPager.create()` with

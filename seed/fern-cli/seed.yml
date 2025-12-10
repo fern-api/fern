@@ -3,7 +3,6 @@ publishGa:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION
   command:
-    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - pnpm install
     - pnpm turbo run dist:cli:prod --filter @fern-api/cli -- $VERSION
     - pnpm --filter @fern-api/cli publish:cli:prod --tag latest
@@ -11,7 +10,6 @@ publishRc:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION
   command:
-    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - pnpm install
     - pnpm turbo run dist:cli:prod --filter @fern-api/cli -- $VERSION
     - pnpm --filter @fern-api/cli publish:cli:prod --tag prerelease
