@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.get_movie(request) -> Seed::Service::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie</a>(request) -> Seed::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -32,6 +32,14 @@ client.service.get_movie(request: 'string');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -40,7 +48,7 @@ client.service.get_movie(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.service.get_movie_docs(request) -> Seed::Service::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie_docs</a>(request) -> Seed::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -72,6 +80,14 @@ client.service.get_movie(request: 'string');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -80,7 +96,7 @@ client.service.get_movie(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.service.get_movie_name(request) -> Seed::Types::StringResponse</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie_name</a>(request) -> Seed::Types::StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -112,6 +128,14 @@ client.service.get_movie(request: 'string');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -120,7 +144,7 @@ client.service.get_movie(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.service.get_movie_metadata(request) -> Seed::Service::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie_metadata</a>(request) -> Seed::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -152,6 +176,14 @@ client.service.get_movie(request: 'string');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -160,7 +192,7 @@ client.service.get_movie(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.service.get_optional_movie(request) -> Seed::Service::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_optional_movie</a>(request) -> Seed::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -192,6 +224,14 @@ client.service.get_movie(request: 'string');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -200,7 +240,7 @@ client.service.get_movie(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.service.get_optional_movie_docs(request) -> Seed::Service::Types::WithDocs</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_optional_movie_docs</a>(request) -> Seed::Service::Types::WithDocs</code></summary>
 <dl>
 <dd>
 
@@ -232,6 +272,14 @@ client.service.get_movie(request: 'string');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -240,7 +288,7 @@ client.service.get_movie(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.service.get_optional_movie_name(request) -> Seed::Types::StringResponse</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_optional_movie_name</a>(request) -> Seed::Types::StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -269,6 +317,14 @@ client.service.get_movie(request: 'string');
 <dd>
 
 **request:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>
