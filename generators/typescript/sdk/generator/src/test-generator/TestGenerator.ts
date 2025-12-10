@@ -1154,6 +1154,13 @@ describe("${serviceName}", () => {
                       variable: "expected"
                   })
                 : "expected";
+        // Get the property path without the "expected." prefix for adding undefined to the expected object
+        const paginationResultsPropertyPath =
+            endpoint.pagination !== undefined
+                ? context.type.generateGetterForResponsePropertyAsString({
+                      property: endpoint.pagination.results
+                  })
+                : undefined;
         // For custom pagination, the page object's .data property already contains the items
         // (via getItems), so we don't need to traverse the response path
         const pageName = "page";
@@ -1161,7 +1168,7 @@ describe("${serviceName}", () => {
         const paginationBlock =
             endpoint.pagination !== undefined
                 ? code`
-                const expected = ${expected}
+                const expected = { ...${expected}, ${paginationResultsPropertyPath}: undefined }
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
                     endpoint.pagination.type !== "custom"
