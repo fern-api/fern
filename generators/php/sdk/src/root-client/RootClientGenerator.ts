@@ -416,11 +416,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const hasInferredAuth = inferredAuth != null;
 
                 if (hasOAuth || hasInferredAuth) {
-                    writer.writeLine(
-                        `$this->${this.context.getClientOptionsName()}['getAuthHeaders'] = fn () => `
-                    );
+                    writer.writeLine(`$this->${this.context.getClientOptionsName()}['getAuthHeaders'] = fn () => `);
                     if (hasOAuth) {
-                        writer.writeLine("    ['Authorization' => \"Bearer \" . $this->oauthTokenProvider->getToken()];");
+                        writer.writeLine(
+                            "    ['Authorization' => \"Bearer \" . $this->oauthTokenProvider->getToken()];"
+                        );
                     } else if (hasInferredAuth) {
                         writer.writeLine("    $this->inferredAuthProvider->getAuthHeaders();");
                     }
