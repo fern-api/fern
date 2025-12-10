@@ -47,7 +47,7 @@ describe("UsersClient", () => {
                     id: 1,
                 },
             ],
-        };
+        } as any;
         const page = await client.users.listWithCursorPagination({
             page: 1,
             per_page: 1,
@@ -55,10 +55,10 @@ describe("UsersClient", () => {
             starting_after: "starting_after",
         });
 
-        expect(expected.data).toEqual(page.data);
+        expect(expected.data ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.data).toEqual(nextPage.data);
+        expect(expected.data ?? []).toEqual(nextPage.data);
     });
 
     test("listWithMixedTypeCursorPagination", async () => {
@@ -92,15 +92,15 @@ describe("UsersClient", () => {
                     id: 1,
                 },
             ],
-        };
+        } as any;
         const page = await client.users.listWithMixedTypeCursorPagination({
             cursor: "cursor",
         });
 
-        expect(expected.data).toEqual(page.data);
+        expect(expected.data ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.data).toEqual(nextPage.data);
+        expect(expected.data ?? []).toEqual(nextPage.data);
     });
 
     test("listWithBodyCursorPagination", async () => {
@@ -147,17 +147,17 @@ describe("UsersClient", () => {
                     id: 1,
                 },
             ],
-        };
+        } as any;
         const page = await client.users.listWithBodyCursorPagination({
             pagination: {
                 cursor: "cursor",
             },
         });
 
-        expect(expected.data).toEqual(page.data);
+        expect(expected.data ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.data).toEqual(nextPage.data);
+        expect(expected.data ?? []).toEqual(nextPage.data);
     });
 
     test("listWithOffsetPagination", async () => {
@@ -203,7 +203,7 @@ describe("UsersClient", () => {
                     id: 1,
                 },
             ],
-        };
+        } as any;
         const page = await client.users.listWithOffsetPagination({
             page: 1,
             per_page: 1,
@@ -211,10 +211,10 @@ describe("UsersClient", () => {
             starting_after: "starting_after",
         });
 
-        expect(expected.data).toEqual(page.data);
+        expect(expected.data ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.data).toEqual(nextPage.data);
+        expect(expected.data ?? []).toEqual(nextPage.data);
     });
 
     test("listWithDoubleOffsetPagination", async () => {
@@ -260,7 +260,7 @@ describe("UsersClient", () => {
                     id: 1,
                 },
             ],
-        };
+        } as any;
         const page = await client.users.listWithDoubleOffsetPagination({
             page: 1.1,
             per_page: 1.1,
@@ -268,10 +268,10 @@ describe("UsersClient", () => {
             starting_after: "starting_after",
         });
 
-        expect(expected.data).toEqual(page.data);
+        expect(expected.data ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.data).toEqual(nextPage.data);
+        expect(expected.data ?? []).toEqual(nextPage.data);
     });
 
     test("listWithBodyOffsetPagination", async () => {
@@ -318,17 +318,17 @@ describe("UsersClient", () => {
                     id: 1,
                 },
             ],
-        };
+        } as any;
         const page = await client.users.listWithBodyOffsetPagination({
             pagination: {
                 page: 1,
             },
         });
 
-        expect(expected.data).toEqual(page.data);
+        expect(expected.data ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.data).toEqual(nextPage.data);
+        expect(expected.data ?? []).toEqual(nextPage.data);
     });
 
     test("listWithOffsetStepPagination", async () => {
@@ -374,17 +374,17 @@ describe("UsersClient", () => {
                     id: 1,
                 },
             ],
-        };
+        } as any;
         const page = await client.users.listWithOffsetStepPagination({
             page: 1,
             limit: 1,
             order: "asc",
         });
 
-        expect(expected.data).toEqual(page.data);
+        expect(expected.data ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.data).toEqual(nextPage.data);
+        expect(expected.data ?? []).toEqual(nextPage.data);
     });
 
     test("listWithOffsetPaginationHasNextPage", async () => {
@@ -430,17 +430,17 @@ describe("UsersClient", () => {
                     id: 1,
                 },
             ],
-        };
+        } as any;
         const page = await client.users.listWithOffsetPaginationHasNextPage({
             page: 1,
             limit: 1,
             order: "asc",
         });
 
-        expect(expected.data).toEqual(page.data);
+        expect(expected.data ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.data).toEqual(nextPage.data);
+        expect(expected.data ?? []).toEqual(nextPage.data);
     });
 
     test("listWithExtendedResults", async () => {
@@ -480,15 +480,15 @@ describe("UsersClient", () => {
                 ],
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        };
+        } as any;
         const page = await client.users.listWithExtendedResults({
             cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
 
-        expect(expected.data.users).toEqual(page.data);
+        expect(expected.data.users ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.data.users).toEqual(nextPage.data);
+        expect(expected.data.users ?? []).toEqual(nextPage.data);
     });
 
     test("listWithExtendedResultsAndOptionalData", async () => {
@@ -528,15 +528,15 @@ describe("UsersClient", () => {
                 ],
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        };
+        } as any;
         const page = await client.users.listWithExtendedResultsAndOptionalData({
             cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
 
-        expect(expected.data.users).toEqual(page.data);
+        expect(expected.data.users ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.data.users).toEqual(nextPage.data);
+        expect(expected.data.users ?? []).toEqual(nextPage.data);
     });
 
     test("listUsernames", async () => {
@@ -557,15 +557,15 @@ describe("UsersClient", () => {
                 after: "after",
                 data: ["data", "data"],
             },
-        };
+        } as any;
         const page = await client.users.listUsernames({
             starting_after: "starting_after",
         });
 
-        expect(expected.cursor.data).toEqual(page.data);
+        expect(expected.cursor.data ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.cursor.data).toEqual(nextPage.data);
+        expect(expected.cursor.data ?? []).toEqual(nextPage.data);
     });
 
     test("listUsernamesWithOptionalResponse", async () => {
@@ -586,15 +586,15 @@ describe("UsersClient", () => {
                 after: "after",
                 data: ["data", "data"],
             },
-        };
+        } as any;
         const page = await client.users.listUsernamesWithOptionalResponse({
             starting_after: "starting_after",
         });
 
-        expect(expected.cursor.data).toEqual(page.data);
+        expect(expected.cursor.data ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.cursor.data).toEqual(nextPage.data);
+        expect(expected.cursor.data ?? []).toEqual(nextPage.data);
     });
 
     test("listWithGlobalConfig", async () => {
@@ -612,14 +612,108 @@ describe("UsersClient", () => {
 
         const expected = {
             results: ["results", "results"],
-        };
+        } as any;
         const page = await client.users.listWithGlobalConfig({
             offset: 1,
         });
 
-        expect(expected.results).toEqual(page.data);
+        expect(expected.results ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.results).toEqual(nextPage.data);
+        expect(expected.results ?? []).toEqual(nextPage.data);
+    });
+
+    test("listWithOptionalData (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            hasNextPage: true,
+            page: { page: 1, next: { page: 2, starting_after: "next_cursor" }, per_page: 10, total_page: 5 },
+            total_count: 50,
+            data: [
+                { name: "Alice", id: 1 },
+                { name: "Bob", id: 2 },
+            ],
+        };
+        server
+            .mockEndpoint({ once: false })
+            .get("/users/optional-data")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const expected = {
+            hasNextPage: true,
+            page: {
+                page: 1,
+                next: {
+                    page: 2,
+                    starting_after: "next_cursor",
+                },
+                per_page: 10,
+                total_page: 5,
+            },
+            total_count: 50,
+            data: [
+                {
+                    name: "Alice",
+                    id: 1,
+                },
+                {
+                    name: "Bob",
+                    id: 2,
+                },
+            ],
+        } as any;
+        const page = await client.users.listWithOptionalData({
+            page: 1,
+        });
+
+        expect(expected.data ?? []).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data ?? []).toEqual(nextPage.data);
+    });
+
+    test("listWithOptionalData (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            hasNextPage: false,
+            page: { page: 1, next: { page: 2, starting_after: "next_cursor" }, per_page: 10, total_page: 1 },
+            total_count: 0,
+        };
+        server
+            .mockEndpoint({ once: false })
+            .get("/users/optional-data")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const expected = {
+            hasNextPage: false,
+            page: {
+                page: 1,
+                next: {
+                    page: 2,
+                    starting_after: "next_cursor",
+                },
+                per_page: 10,
+                total_page: 1,
+            },
+            total_count: 0,
+        } as any;
+        const page = await client.users.listWithOptionalData({
+            page: 1,
+        });
+
+        expect(expected.data ?? []).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data ?? []).toEqual(nextPage.data);
     });
 });

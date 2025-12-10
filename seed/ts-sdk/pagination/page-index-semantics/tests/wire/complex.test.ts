@@ -53,7 +53,7 @@ describe("ComplexClient", () => {
             },
             total_count: 1,
             type: "conversation.list",
-        };
+        } as any;
         const page = await client.complex.search("index", {
             pagination: {
                 per_page: 1,
@@ -66,9 +66,9 @@ describe("ComplexClient", () => {
             },
         });
 
-        expect(expected.conversations).toEqual(page.data);
+        expect(expected.conversations ?? []).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
-        expect(expected.conversations).toEqual(nextPage.data);
+        expect(expected.conversations ?? []).toEqual(nextPage.data);
     });
 });

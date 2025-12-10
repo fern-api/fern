@@ -999,4 +999,75 @@ export class UsersClient {
             },
         });
     }
+
+    /**
+     * @param {SeedPagination.ListUsersOptionalDataRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithOptionalData({
+     *         page: 1
+     *     })
+     */
+    public async listWithOptionalData(
+        request: SeedPagination.ListUsersOptionalDataRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersOptionalDataPaginationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsersOptionalDataRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersOptionalDataPaginationResponse>> => {
+                const { page } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (page != null) {
+                    _queryParams.page = page.toString();
+                }
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    this._options?.headers,
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users/optional-data",
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as SeedPagination.ListUsersOptionalDataPaginationResponse,
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedPaginationError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/optional-data");
+            },
+        );
+        let _offset = request?.page != null ? request?.page : 0;
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersOptionalDataPaginationResponse>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) => (response?.data ?? []).length > 0,
+            getItems: (response) => response?.data ?? [],
+            loadPage: (_response) => {
+                _offset += 1;
+                return list(core.setObjectProperty(request, "page", _offset));
+            },
+        });
+    }
 }
