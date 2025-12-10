@@ -5,9 +5,12 @@
   changelogEntry:
     - type: feat
       summary: |
-        Add request_options parameter documentation and source file links to reference.md for parity
-        with TypeScript SDK generator. All endpoints now document the request_options parameter, and
-        method names in the reference include hyperlinks to their source files.
+        Improve reference.md generation for parity with TypeScript SDK generator:
+        - Add request_options parameter documentation to all endpoints
+        - Add source file links (hyperlinks) to method names in the reference
+        - Prefer examples with request body data for detailed code snippets, ensuring
+          endpoints show full request bodies with nested objects and arrays instead of
+          minimal one-line examples
   irVersion: 61
 
 - version: 1.0.0-rc62
