@@ -225,6 +225,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
     private writeEnvironmentVariables({ writer }: { writer: go.Writer }): void {
         this.writeAuthEnvironmentVariables({ writer });
         this.writeHeaderEnvironmentVariables({ writer });
+        if (this.isRootClient) {
+            this.writeOAuthTokenFetching({ writer });
+        }
     }
 
     private writeHeaderEnvironmentVariables({ writer }: { writer: go.Writer }): void {
@@ -336,6 +339,127 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 env: configuration.clientSecretEnvVar
             });
         }
+    }
+
+    private writeOAuthTokenFetching({ writer }: { writer: go.Writer }): void {
+        const oauthScheme = this.getOAuthClientCredentialsScheme();
+        if (oauthScheme == null) {
+            return;
+        }
+
+        const authServiceFernFilepath = this.getAuthServiceFernFilepath();
+        if (authServiceFernFilepath == null) {
+            return;
+        }
+
+        // Create the OAuthTokenProvider
+        writer.writeNode(
+            go.codeblock((w) => {
+                w.write("oauthTokenProvider := ");
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "NewOAuthTokenProvider",
+                            importPath: this.context.getCoreImportPath()
+                        }),
+                        arguments_: [
+                            go.selector({ on: go.codeblock("options"), selector: go.codeblock("ClientID") }),
+                            go.selector({ on: go.codeblock("options"), selector: go.codeblock("ClientSecret") })
+                        ]
+                    })
+                );
+                w.newLine();
+
+                // Create a separate RequestOptions for the auth client to avoid infinite recursion
+                w.writeLine("authOptions := core.NewRequestOptions()");
+                w.writeLine("authOptions.BaseURL = options.BaseURL");
+                w.writeLine("authOptions.HTTPClient = options.HTTPClient");
+
+                // Create the auth client
+                const authClientImportPath = this.context.getClientFileLocation({
+                    fernFilepath: authServiceFernFilepath,
+                    subpackage: undefined
+                }).importPath;
+                w.write("authClient := ");
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "NewClient",
+                            importPath: authClientImportPath
+                        }),
+                        arguments_: [go.codeblock("authOptions")]
+                    })
+                );
+                w.newLine();
+
+                // Set up the token getter function
+                w.writeLine("options.SetTokenGetter(func() (string, error) {");
+                w.indent();
+                w.writeLine('if token := oauthTokenProvider.GetToken(); token != "" {');
+                w.indent();
+                w.writeLine("return token, nil");
+                w.dedent();
+                w.writeLine("}");
+
+                // Fetch a new token from the auth endpoint
+                w.write("response, err := authClient.GetTokenWithClientCredentials(");
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "Background",
+                            importPath: "context"
+                        }),
+                        arguments_: []
+                    })
+                );
+                w.write(", &");
+                w.writeNode(
+                    go.typeReference({
+                        name: "GetTokenRequest",
+                        importPath: this.context.getRootImportPath()
+                    })
+                );
+                w.writeLine("{");
+                w.indent();
+                w.writeLine("ClientId: options.ClientID,");
+                w.writeLine("ClientSecret: options.ClientSecret,");
+                w.dedent();
+                w.writeLine("})");
+                w.writeLine("if err != nil {");
+                w.indent();
+                w.writeLine('return "", err');
+                w.dedent();
+                w.writeLine("}");
+                w.writeLine("oauthTokenProvider.SetToken(response.AccessToken, response.ExpiresIn)");
+                w.writeLine("return response.AccessToken, nil");
+                w.dedent();
+                w.writeLine("})");
+            })
+        );
+    }
+
+    private getOAuthClientCredentialsScheme(): OAuthScheme | undefined {
+        if (this.context.ir.auth == null) {
+            return undefined;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth" && scheme.configuration?.type === "clientCredentials") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
+    private getAuthServiceFernFilepath(): FernFilepath | undefined {
+        const oauthScheme = this.getOAuthClientCredentialsScheme();
+        if (oauthScheme?.configuration?.type === "clientCredentials") {
+            const serviceId = oauthScheme.configuration.tokenEndpoint.endpointReference.serviceId;
+            const service = this.context.ir.services[serviceId];
+            if (service != null) {
+                return service.name.fernFilepath;
+            }
+        }
+        return undefined;
     }
 
     private writeEnvConditional({
