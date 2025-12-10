@@ -317,13 +317,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         }
     }
 
-    private writeOAuthEnvironmentVariables({
-        writer,
-        scheme
-    }: {
-        writer: go.Writer;
-        scheme: OAuthScheme;
-    }): void {
+    private writeOAuthEnvironmentVariables({ writer, scheme }: { writer: go.Writer; scheme: OAuthScheme }): void {
         const configuration = scheme.configuration;
         if (configuration == null || configuration.type !== "clientCredentials") {
             return;
