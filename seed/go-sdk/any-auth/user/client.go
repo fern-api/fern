@@ -26,6 +26,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	if options.ApiKey == "" {
 		options.ApiKey = os.Getenv("MY_API_KEY")
 	}
+	if options.ClientID == "" {
+		options.ClientID = os.Getenv("MY_CLIENT_ID")
+	}
+	if options.ClientSecret == "" {
+		options.ClientSecret = os.Getenv("MY_CLIENT_SECRET")
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,

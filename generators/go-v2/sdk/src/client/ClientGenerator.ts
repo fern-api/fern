@@ -9,6 +9,7 @@ import {
     HeaderAuthScheme,
     HttpService,
     Name,
+    OAuthScheme,
     ServiceId,
     Subpackage,
     SubpackageId
@@ -255,7 +256,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     this.writeHeaderAuthEnvironmentVariables({ writer, scheme });
                     break;
                 case "oauth":
-                    // TODO: OAuth is not supported yet.
+                    this.writeOAuthEnvironmentVariables({ writer, scheme });
                     break;
             }
         }
@@ -312,6 +313,27 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 writer,
                 propertyReference: this.getOptionsPropertyReference(scheme.name.name),
                 env: scheme.headerEnvVar
+            });
+        }
+    }
+
+    private writeOAuthEnvironmentVariables({ writer, scheme }: { writer: go.Writer; scheme: OAuthScheme }): void {
+        const configuration = scheme.configuration;
+        if (configuration == null || configuration.type !== "clientCredentials") {
+            return;
+        }
+        if (configuration.clientIdEnvVar != null) {
+            this.writeEnvConditional({
+                writer,
+                propertyReference: go.selector({ on: go.codeblock("options"), selector: go.codeblock("ClientID") }),
+                env: configuration.clientIdEnvVar
+            });
+        }
+        if (configuration.clientSecretEnvVar != null) {
+            this.writeEnvConditional({
+                writer,
+                propertyReference: go.selector({ on: go.codeblock("options"), selector: go.codeblock("ClientSecret") }),
+                env: configuration.clientSecretEnvVar
             });
         }
     }

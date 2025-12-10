@@ -1,3 +1,18 @@
+- version: 3.24.0
+  changelogEntry:
+    - summary: |
+        Add support for configuring the default timeout via `default-timeout-in-seconds` in generators.yml.
+        Previously, the default timeout was hardcoded to 60 seconds. Now you can customize it:
+
+        Configuration example:
+        ```yaml
+        config:
+          default-timeout-in-seconds: 120
+        ```
+      type: feat
+  createdAt: "2025-12-09"
+  irVersion: 61
+
 - version: 3.23.4
   changelogEntry:
     - summary: |
