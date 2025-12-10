@@ -105,7 +105,10 @@ class CoreUtilities:
         self.exceptions = Exceptions(filepath=self.filepath)
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
         self._pydantic_compatibility = custom_config.pydantic_config.version
-        self._use_str_enums = custom_config.pydantic_config.use_str_enums
+        # Mirrors enum handling logic from SDK enum_generator: use string enums if either
+        # use_str_enums is True OR enum_type is "literals"
+        self._enum_type = custom_config.pydantic_config.enum_type
+        self._use_str_enums = custom_config.pydantic_config.use_str_enums or self._enum_type == "literals"
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
