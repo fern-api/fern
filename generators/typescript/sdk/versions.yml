@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.39.2
+  changelogEntry:
+    - summary: |
+        Fix reference.md generation for APIs with multiple root-level endpoints.
+        Previously, only the last root endpoint appeared in the reference documentation because `addRootSection()` was called inside the endpoint loop, replacing the root section each time.
+        The fix moves section creation before the endpoint loop, ensuring all root endpoints are included and removing the empty `##` section header that was being generated.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 62
+
 - version: 3.39.1
   changelogEntry:
     - summary: |
@@ -17,7 +27,7 @@
         - Support for both forward (`getNextPage`) and backward (`getPreviousPage`) pagination
         - `AsyncIterable` implementation for ergonomic consumption with `for await...of`
         - Access to raw response data via `response` and `rawResponse` properties
-        
+
         The generated endpoint returns a `CustomPager` with a default parser that extracts items from the
         configured results property and sets `hasNextPage`/`hasPreviousPage` to `false`. SDK authors who need
         custom pagination logic can create their own wrapper/factory that calls `CustomPager.create()` with

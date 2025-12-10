@@ -9,6 +9,14 @@
 
 - changelogEntry:
     - summary: |
+        Test automated CLI publishing.
+      type: chore
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.8.0-rc0
+
+- changelogEntry:
+    - summary: |
         Include -y flag for the upgrade for non-interactive environments.
       type: feat
   irVersion: 62

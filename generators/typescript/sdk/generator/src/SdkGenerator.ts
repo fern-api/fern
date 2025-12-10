@@ -1216,21 +1216,19 @@ export class SdkGenerator {
             if (service.endpoints.length === 0) {
                 return;
             }
-            let serviceReference = this.referenceConfigBuilder.addSection({
-                title:
-                    service.displayName ??
-                    service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName).join(" ")
-            });
+            const serviceReference = packageId.isRoot
+                ? this.referenceConfigBuilder.addRootSection()
+                : this.referenceConfigBuilder.addSection({
+                      title:
+                          service.displayName ??
+                          service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName).join(" ")
+                  });
 
             const exportedFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
             exportedFilepath.rootDir = this.relativePackagePath;
             const serviceFilepath = this.exportsManager.convertExportedFilePathToFilePath(exportedFilepath);
 
             for (const endpoint of service.endpoints) {
-                if (packageId.isRoot) {
-                    serviceReference = this.referenceConfigBuilder.addRootSection();
-                }
-
                 let examplesForEndpoint: ExampleEndpointCall[] = [];
                 for (const userDefinedExample of endpoint.userSpecifiedExamples) {
                     if (userDefinedExample.example != null) {

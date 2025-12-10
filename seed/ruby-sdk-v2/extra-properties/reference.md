@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.create_user(request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_user</a>(request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -49,6 +49,14 @@ client.user.create_user(
 <dd>
 
 **name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>
