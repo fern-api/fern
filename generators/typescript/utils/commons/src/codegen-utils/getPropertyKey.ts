@@ -1,5 +1,13 @@
 import esutils from "esutils";
 
+/**
+ * Checks if a string is a valid JavaScript/TypeScript identifier name.
+ * This can be used to determine whether to use dot notation (obj.prop) or bracket notation (obj["prop"]).
+ */
+export function isValidIdentifier(name: string): boolean {
+    return esutils.keyword.isIdentifierNameES6(name);
+}
+
 export function getPropertyKey(key: string): string {
     // [key: string]: any; => [key: string]: any;
     if (key.startsWith("[") && key.endsWith("]")) {
