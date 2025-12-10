@@ -38,6 +38,16 @@
                     "balance_min": "0",
                     "rate_bps": 200,
                   },
+                  {
+                    "balance_max": "500000000",
+                    "balance_min": "100000000",
+                    "rate_bps": 350,
+                  },
+                  {
+                    "balance_max": null,
+                    "balance_min": "500000000",
+                    "rate_bps": 450,
+                  },
                 ],
               },
               "rate_type": "fixed",
@@ -51,6 +61,16 @@
                       "balance_max": "100000000",
                       "balance_min": "0",
                       "rate_bps": 200,
+                    },
+                    {
+                      "balance_max": "500000000",
+                      "balance_min": "100000000",
+                      "rate_bps": 350,
+                    },
+                    {
+                      "balance_max": null,
+                      "balance_min": "500000000",
+                      "rate_bps": 450,
                     },
                   ],
                 },

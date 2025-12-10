@@ -1418,10 +1418,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-ir.snap");
     });
 
-    // This test is marked as expected-failing because there's a bug where null values
-    // in examples are replaced with the schema's example value. Once the bug is fixed,
-    // this should be changed back to a normal `it(...)` test.
-    it.fails("should handle OpenAPI with nullable balance_max in tiered rates", async () => {
+    it("should handle OpenAPI with nullable balance_max in tiered rates", async () => {
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace: join(
