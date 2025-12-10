@@ -8,8 +8,7 @@ export namespace BearerAuthProvider {
         token?: core.Supplier<core.BearerToken>;
     }
 
-    export interface Options extends AuthOptions {
-    }
+    export interface Options extends AuthOptions {}
 }
 
 export class BearerAuthProvider implements core.AuthProvider {
@@ -23,20 +22,16 @@ export class BearerAuthProvider implements core.AuthProvider {
         return options.token != null;
     }
 
-    public async getAuthRequest(arg?: {
-            endpointMetadata?: core.EndpointMetadata;
-        }): Promise<core.AuthRequest> {
+    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+        const token = await core.Supplier.get(this.token);
+        if (token == null) {
+            throw new errors.SeedPaginationError({
+                message: "Please specify a token by passing it in to the constructor",
+            });
+        }
 
-                const token = await core.Supplier.get(this.token);
-                if (token == null) {
-                    throw new errors.SeedPaginationError({
-                        message: "Please specify a token by passing it in to the constructor"
-                    });
-                }
-
-                return {
-                    headers: { Authorization: `Bearer ${token}` }
-                };
-                
+        return {
+            headers: { Authorization: `Bearer ${token}` },
+        };
     }
 }

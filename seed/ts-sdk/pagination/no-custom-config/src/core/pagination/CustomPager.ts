@@ -1,4 +1,4 @@
-import { HttpResponsePromise, type RawResponse, type WithRawResponse } from "../fetcher/index.js";
+import type { HttpResponsePromise, RawResponse, WithRawResponse } from "../fetcher/index.js";
 
 /**
  * Parser function type for custom pagination.
@@ -10,7 +10,7 @@ import { HttpResponsePromise, type RawResponse, type WithRawResponse } from "../
  */
 export type CustomPagerParser<TItem, TRequest, TResponse> = (
     request: TRequest,
-    response: WithRawResponse<TResponse>
+    response: WithRawResponse<TResponse>,
 ) => Promise<{
     /** The request to use for fetching the next page, if any */
     nextRequest?: TRequest;
@@ -180,9 +180,9 @@ export class CustomPager<TItem, TRequest, TResponse> implements AsyncIterable<TI
             previousRequest: parsed.previousRequest,
             context: {
                 sendRequest: args.sendRequest,
-                currentRequest: args.initialRequest
+                currentRequest: args.initialRequest,
             },
-            parser: args.parse
+            parser: args.parse,
         });
     }
 }

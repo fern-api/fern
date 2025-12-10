@@ -4,14 +4,12 @@ import { ComplexClient } from "./api/resources/complex/client/Client.js";
 import { InlineUsersClient } from "./api/resources/inlineUsers/client/Client.js";
 import { UsersClient } from "./api/resources/users/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptionsWithAuth, type NormalizedClientOptionsWithAuth } from "./BaseClient.js";
-import * as core from "./core/index.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedPaginationClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedPaginationClient {
@@ -21,10 +19,7 @@ export class SeedPaginationClient {
     protected _users: UsersClient | undefined;
 
     constructor(options: SeedPaginationClient.Options) {
-
-
-                        this._options = normalizeClientOptionsWithAuth(options);
-                    
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get complex(): ComplexClient {
