@@ -19,4 +19,4 @@ publishDev:
   command:
     - pnpm install
     - pnpm turbo run dist:cli:dev --filter @fern-api/cli -- $VERSION
-    - pnpm --filter @fern-api/cli publish:cli:dev --access restricted
+    - pnpm --filter @fern-api/cli publish:cli:dev --access restricted --tag latest
