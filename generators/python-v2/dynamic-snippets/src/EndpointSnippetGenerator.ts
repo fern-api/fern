@@ -451,6 +451,23 @@ export class EndpointSnippetGenerator {
         if (request.body != null) {
             const bodyArgs = this.getBodyRequestArgs({ body: request.body, value: snippet.requestBody });
             bodyPropertyNames = new Set(bodyArgs.map((arg) => arg.name));
+
+            // Also include schema-level property names from the body type so that we
+            // catch collisions even when the example omits a particular field.
+            if (request.body.type === "typeReference") {
+                const typeReference = request.body.value;
+                if (typeReference.type === "named") {
+                    const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                    if (named != null && named.type === "object") {
+                        for (const property of named.properties) {
+                            if (this.resolvesToLiteralType(property.typeReference)) {
+                                continue;
+                            }
+                            bodyPropertyNames.add(this.context.getPropertyName(property.name.name));
+                        }
+                    }
+                }
+            }
         }
 
         // Add path parameters, adding underscore suffix if they collide with body properties
