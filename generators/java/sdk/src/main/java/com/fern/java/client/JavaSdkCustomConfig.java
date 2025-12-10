@@ -70,17 +70,13 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("custom-pager-name")
     Optional<String> customPagerName();
 
+    @JsonProperty("default-timeout-in-seconds")
+    Optional<Integer> defaultTimeoutInSeconds();
+
     @Override
     @Value.Default
     @JsonProperty("collapse-optional-nullable")
     default Boolean collapseOptionalNullable() {
-        return false;
-    }
-
-    @Override
-    @Value.Default
-    @JsonProperty("oauth-token-override")
-    default Boolean oauthTokenOverride() {
         return false;
     }
 

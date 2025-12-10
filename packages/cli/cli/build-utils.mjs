@@ -1,8 +1,12 @@
-import packageJson from "./package.json" with { type: "json" };
-import tsup from 'tsup';
+import { exec } from "child_process";
 import { writeFile } from "fs/promises";
 import path from "path";
-import { fileURLToPath } from 'url';
+import tsup from "tsup";
+import { fileURLToPath } from "url";
+import { promisify } from "util";
+import packageJson from "./package.json" with { type: "json" };
+
+const execAsync = promisify(exec);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -18,29 +22,29 @@ function getDependencyVersion(packageName) {
  * Common external dependencies for full builds (dev/prod with extensive externals)
  */
 export const FULL_EXTERNALS = [
-    '@boundaryml/baml',
+    "@boundaryml/baml",
     /^prettier(?:\/.*)?$/,
     /^prettier2(?:\/.*)?$/,
     /^vitest(?:\/.*)?$/,
     /^depcheck(?:\/.*)?$/,
     /^tsup(?:\/.*)?$/,
     /^typescript(?:\/.*)?$/,
-    /^@types\/.*$/,
+    /^@types\/.*$/
 ];
 
 /**
  * Minimal external dependencies for local/unminified builds
  */
-export const MINIMAL_EXTERNALS = ['@boundaryml/baml'];
+export const MINIMAL_EXTERNALS = ["@boundaryml/baml"];
 
 /**
  * Common tsup overrides for production-like builds with optimization
  */
 export const PRODUCTION_TSUP_OVERRIDES = {
-    platform: 'node',
-    target: 'node18',
+    platform: "node",
+    target: "node18",
     external: FULL_EXTERNALS,
-    metafile: true,
+    metafile: true
 };
 
 /**
@@ -58,22 +62,22 @@ export async function buildCli(config) {
         outDir,
         minify,
         env,
-        runtimeDependencies = ['@boundaryml/baml'],
+        runtimeDependencies = ["@boundaryml/baml"],
         packageJsonOverrides = {},
         tsupOverrides = {}
     } = config;
 
     // Build with tsup
     await tsup.build({
-        entry: ['src/cli.ts'],
-        format: ['cjs'],
+        entry: ["src/cli.ts"],
+        format: ["cjs"],
         minify,
         outDir,
         sourcemap: true,
         clean: true,
         env: {
             ...env,
-            CLI_VERSION: process.argv[2] || packageJson.version,
+            CLI_VERSION: process.argv[2] || packageJson.version
         },
         ...tsupOverrides
     });
@@ -91,11 +95,11 @@ export async function buildCli(config) {
     }
 
     // Validate that all required dependencies were found
-    const missingDeps = runtimeDependencies.filter(dep => !dependencies[dep]);
+    const missingDeps = runtimeDependencies.filter((dep) => !dependencies[dep]);
     if (missingDeps.length > 0) {
         throw new Error(
             `Missing required runtime dependencies in package.json: ${missingDeps.join(", ")}. ` +
-            `These must be declared in either dependencies or devDependencies.`
+                `These must be declared in either dependencies or devDependencies.`
         );
     }
 
@@ -108,8 +112,8 @@ export async function buildCli(config) {
         ...packageJsonOverrides
     };
 
-    await writeFile(
-        "package.json",
-        JSON.stringify(outputPackageJson, undefined, 2)
-    );
+    await writeFile("package.json", JSON.stringify(outputPackageJson, undefined, 2));
+
+    // Run npm pkg fix to format and fix the package.json
+    await execAsync("npm pkg fix");
 }

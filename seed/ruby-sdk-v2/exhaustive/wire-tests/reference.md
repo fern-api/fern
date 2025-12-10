@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>client.endpoints.container.get_and_return_list_of_primitives(request) -> Internal::Types::Array[String]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_list_of_primitives</a>(request) -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_list_of_primitives();
+client.endpoints.container.get_and_return_list_of_primitives(request: ['string', 'string']);
 ```
 </dd>
 </dl>
@@ -32,6 +32,14 @@ client.endpoints.container.get_and_return_list_of_primitives();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -40,7 +48,7 @@ client.endpoints.container.get_and_return_list_of_primitives();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.get_and_return_list_of_objects(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_list_of_objects</a>(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +61,11 @@ client.endpoints.container.get_and_return_list_of_primitives();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_list_of_objects();
+client.endpoints.container.get_and_return_list_of_objects(request: [{
+  string: 'string'
+}, {
+  string: 'string'
+}]);
 ```
 </dd>
 </dl>
@@ -72,6 +84,14 @@ client.endpoints.container.get_and_return_list_of_objects();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -80,7 +100,7 @@ client.endpoints.container.get_and_return_list_of_objects();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.get_and_return_set_of_primitives(request) -> Internal::Types::Array[String]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_set_of_primitives</a>(request) -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +113,7 @@ client.endpoints.container.get_and_return_list_of_objects();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_set_of_primitives();
+client.endpoints.container.get_and_return_set_of_primitives(request: Set.new(['string']));
 ```
 </dd>
 </dl>
@@ -112,6 +132,14 @@ client.endpoints.container.get_and_return_set_of_primitives();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -120,7 +148,7 @@ client.endpoints.container.get_and_return_set_of_primitives();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.get_and_return_set_of_objects(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_set_of_objects</a>(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -133,7 +161,9 @@ client.endpoints.container.get_and_return_set_of_primitives();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_set_of_objects();
+client.endpoints.container.get_and_return_set_of_objects(request: Set.new([{
+  string: 'string'
+}]));
 ```
 </dd>
 </dl>
@@ -152,6 +182,14 @@ client.endpoints.container.get_and_return_set_of_objects();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -160,7 +198,7 @@ client.endpoints.container.get_and_return_set_of_objects();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.get_and_return_map_prim_to_prim(request) -> Internal::Types::Hash[String, String]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_map_prim_to_prim</a>(request) -> Internal::Types::Hash[String, String]</code></summary>
 <dl>
 <dd>
 
@@ -173,7 +211,9 @@ client.endpoints.container.get_and_return_set_of_objects();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_map_prim_to_prim();
+client.endpoints.container.get_and_return_map_prim_to_prim(request: {
+  string: 'string'
+});
 ```
 </dd>
 </dl>
@@ -192,6 +232,14 @@ client.endpoints.container.get_and_return_map_prim_to_prim();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -200,7 +248,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.get_and_return_map_of_prim_to_object(request) -> Internal::Types::Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_map_of_prim_to_object</a>(request) -> Internal::Types::Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -213,7 +261,11 @@ client.endpoints.container.get_and_return_map_prim_to_prim();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_map_of_prim_to_object();
+client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
+  string: {
+    string: 'string'
+  }
+});
 ```
 </dd>
 </dl>
@@ -232,6 +284,14 @@ client.endpoints.container.get_and_return_map_of_prim_to_object();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -240,7 +300,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.get_and_return_optional(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_optional</a>(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -253,7 +313,9 @@ client.endpoints.container.get_and_return_map_of_prim_to_object();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_optional();
+client.endpoints.container.get_and_return_optional(request: {
+  string: 'string'
+});
 ```
 </dd>
 </dl>
@@ -272,6 +334,14 @@ client.endpoints.container.get_and_return_optional();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -281,7 +351,7 @@ client.endpoints.container.get_and_return_optional();
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>client.endpoints.content_type.post_json_patch_content_type(request) -> </code></summary>
+<details><summary><code>client.endpoints.content_type.<a href="/lib/seed/endpoints/content_type/client.rb">post_json_patch_content_type</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -329,6 +399,14 @@ client.endpoints.content_type.post_json_patch_content_type(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::ContentType::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -337,7 +415,7 @@ client.endpoints.content_type.post_json_patch_content_type(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.content_type.post_json_patch_content_with_charset_type(request) -> </code></summary>
+<details><summary><code>client.endpoints.content_type.<a href="/lib/seed/endpoints/content_type/client.rb">post_json_patch_content_with_charset_type</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -385,6 +463,14 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::ContentType::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -394,7 +480,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 </details>
 
 ## Endpoints Enum
-<details><summary><code>client.endpoints.enum.get_and_return_enum(request) -> Seed::Types::Enum::Types::WeatherReport</code></summary>
+<details><summary><code>client.endpoints.enum.<a href="/lib/seed/endpoints/enum/client.rb">get_and_return_enum</a>(request) -> Seed::Types::Enum::Types::WeatherReport</code></summary>
 <dl>
 <dd>
 
@@ -407,7 +493,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 <dd>
 
 ```ruby
-client.endpoints.enum.get_and_return_enum();
+client.endpoints.enum.get_and_return_enum(request: 'SUNNY');
 ```
 </dd>
 </dl>
@@ -426,6 +512,14 @@ client.endpoints.enum.get_and_return_enum();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Enum::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -435,7 +529,7 @@ client.endpoints.enum.get_and_return_enum();
 </details>
 
 ## Endpoints HttpMethods
-<details><summary><code>client.endpoints.http_methods.test_get(id) -> String</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_get</a>(id) -> String</code></summary>
 <dl>
 <dd>
 
@@ -467,6 +561,14 @@ client.endpoints.http_methods.test_get(id: 'id');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -475,7 +577,7 @@ client.endpoints.http_methods.test_get(id: 'id');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.test_post(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_post</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -507,6 +609,14 @@ client.endpoints.http_methods.test_post(string: 'string');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -515,7 +625,7 @@ client.endpoints.http_methods.test_post(string: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.test_put(id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_put</a>(id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -558,6 +668,14 @@ client.endpoints.http_methods.test_put(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -566,7 +684,7 @@ client.endpoints.http_methods.test_put(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.test_patch(id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_patch</a>(id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -623,6 +741,14 @@ client.endpoints.http_methods.test_patch(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -631,7 +757,7 @@ client.endpoints.http_methods.test_patch(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.test_delete(id) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="/lib/seed/endpoints/http_methods/client.rb">test_delete</a>(id) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -663,6 +789,14 @@ client.endpoints.http_methods.test_delete(id: 'id');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::HttpMethods::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -672,7 +806,7 @@ client.endpoints.http_methods.test_delete(id: 'id');
 </details>
 
 ## Endpoints Object_
-<details><summary><code>client.endpoints.object.get_and_return_with_optional_field(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_optional_field</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -720,6 +854,14 @@ client.endpoints.object.get_and_return_with_optional_field(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -728,7 +870,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.get_and_return_with_required_field(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_required_field</a>(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -760,6 +902,14 @@ client.endpoints.object.get_and_return_with_required_field(string: 'string');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -768,7 +918,7 @@ client.endpoints.object.get_and_return_with_required_field(string: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.get_and_return_with_map_of_map(request) -> Seed::Types::Object_::Types::ObjectWithMapOfMap</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_with_map_of_map</a>(request) -> Seed::Types::Object_::Types::ObjectWithMapOfMap</code></summary>
 <dl>
 <dd>
 
@@ -804,6 +954,14 @@ client.endpoints.object.get_and_return_with_map_of_map(map: {
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -812,7 +970,7 @@ client.endpoints.object.get_and_return_with_map_of_map(map: {
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.get_and_return_nested_with_optional_field(request) -> Seed::Types::Object_::Types::NestedObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_optional_field</a>(request) -> Seed::Types::Object_::Types::NestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -863,6 +1021,14 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -871,7 +1037,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.get_and_return_nested_with_required_field(string, request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_required_field</a>(string, request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -931,6 +1097,14 @@ client.endpoints.object.get_and_return_nested_with_required_field(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -939,7 +1113,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.get_and_return_nested_with_required_field_as_list(request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/lib/seed/endpoints/object/client.rb">get_and_return_nested_with_required_field_as_list</a>(request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -952,7 +1126,45 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_nested_with_required_field_as_list();
+client.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{
+  string: 'string',
+  nested_object: {
+    string: 'string',
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: '2024-01-15T09:30:00Z',
+    date: '2023-01-15',
+    uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    base_64: 'SGVsbG8gd29ybGQh',
+    list: ['list', 'list'],
+    set: Set.new(['set']),
+    map: {
+      1 => 'map'
+    },
+    bigint: '1000000'
+  }
+}, {
+  string: 'string',
+  nested_object: {
+    string: 'string',
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: '2024-01-15T09:30:00Z',
+    date: '2023-01-15',
+    uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    base_64: 'SGVsbG8gd29ybGQh',
+    list: ['list', 'list'],
+    set: Set.new(['set']),
+    map: {
+      1 => 'map'
+    },
+    bigint: '1000000'
+  }
+}]);
 ```
 </dd>
 </dl>
@@ -971,6 +1183,14 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Object_::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -980,7 +1200,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list();
 </details>
 
 ## Endpoints Params
-<details><summary><code>client.endpoints.params.get_with_path(param) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_path</a>(param) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1026,6 +1246,14 @@ client.endpoints.params.get_with_path(param: 'param');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1034,7 +1262,7 @@ client.endpoints.params.get_with_path(param: 'param');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.get_with_inline_path(param) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_inline_path</a>(param) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1080,6 +1308,14 @@ client.endpoints.params.get_with_path(param: 'param');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1088,7 +1324,7 @@ client.endpoints.params.get_with_path(param: 'param');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.get_with_query() -> </code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_query</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -1145,6 +1381,14 @@ client.endpoints.params.get_with_query(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1153,7 +1397,7 @@ client.endpoints.params.get_with_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.get_with_allow_multiple_query() -> </code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_allow_multiple_query</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -1210,6 +1454,14 @@ client.endpoints.params.get_with_query(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1218,7 +1470,7 @@ client.endpoints.params.get_with_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.get_with_path_and_query(param) -> </code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_path_and_query</a>(param) -> </code></summary>
 <dl>
 <dd>
 
@@ -1275,6 +1527,14 @@ client.endpoints.params.get_with_path_and_query(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1283,7 +1543,7 @@ client.endpoints.params.get_with_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.get_with_inline_path_and_query(param) -> </code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">get_with_inline_path_and_query</a>(param) -> </code></summary>
 <dl>
 <dd>
 
@@ -1340,6 +1600,14 @@ client.endpoints.params.get_with_path_and_query(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1348,7 +1616,7 @@ client.endpoints.params.get_with_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.modify_with_path(param, request) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">modify_with_path</a>(param, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1375,7 +1643,10 @@ PUT to update with path param
 <dd>
 
 ```ruby
-client.endpoints.params.modify_with_inline_path(param: 'param');
+client.endpoints.params.modify_with_path(
+  param: 'param',
+  request: 'string'
+);
 ```
 </dd>
 </dl>
@@ -1402,6 +1673,14 @@ client.endpoints.params.modify_with_inline_path(param: 'param');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1410,7 +1689,7 @@ client.endpoints.params.modify_with_inline_path(param: 'param');
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.modify_with_inline_path(param, request) -> String</code></summary>
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">modify_with_inline_path</a>(param, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1437,7 +1716,10 @@ PUT to update with path param
 <dd>
 
 ```ruby
-client.endpoints.params.modify_with_inline_path(param: 'param');
+client.endpoints.params.modify_with_path(
+  param: 'param',
+  request: 'string'
+);
 ```
 </dd>
 </dl>
@@ -1461,6 +1743,14 @@ client.endpoints.params.modify_with_inline_path(param: 'param');
 <dd>
 
 **request:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
     
 </dd>
 </dl>
@@ -1473,7 +1763,7 @@ client.endpoints.params.modify_with_inline_path(param: 'param');
 </details>
 
 ## Endpoints Primitive
-<details><summary><code>client.endpoints.primitive.get_and_return_string(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_string</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1486,7 +1776,7 @@ client.endpoints.params.modify_with_inline_path(param: 'param');
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_string();
+client.endpoints.primitive.get_and_return_string(request: 'string');
 ```
 </dd>
 </dl>
@@ -1505,6 +1795,14 @@ client.endpoints.primitive.get_and_return_string();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1513,7 +1811,7 @@ client.endpoints.primitive.get_and_return_string();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.get_and_return_int(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_int</a>(request) -> Integer</code></summary>
 <dl>
 <dd>
 
@@ -1526,7 +1824,7 @@ client.endpoints.primitive.get_and_return_string();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_int();
+client.endpoints.primitive.get_and_return_int(request: 1);
 ```
 </dd>
 </dl>
@@ -1545,6 +1843,14 @@ client.endpoints.primitive.get_and_return_int();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1553,7 +1859,7 @@ client.endpoints.primitive.get_and_return_int();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.get_and_return_long(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_long</a>(request) -> Integer</code></summary>
 <dl>
 <dd>
 
@@ -1566,7 +1872,7 @@ client.endpoints.primitive.get_and_return_int();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_long();
+client.endpoints.primitive.get_and_return_long(request: 1000000);
 ```
 </dd>
 </dl>
@@ -1585,6 +1891,14 @@ client.endpoints.primitive.get_and_return_long();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1593,7 +1907,7 @@ client.endpoints.primitive.get_and_return_long();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.get_and_return_double(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_double</a>(request) -> Integer</code></summary>
 <dl>
 <dd>
 
@@ -1606,7 +1920,7 @@ client.endpoints.primitive.get_and_return_long();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_double();
+client.endpoints.primitive.get_and_return_double(request: 1.1);
 ```
 </dd>
 </dl>
@@ -1625,6 +1939,14 @@ client.endpoints.primitive.get_and_return_double();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1633,7 +1955,7 @@ client.endpoints.primitive.get_and_return_double();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.get_and_return_bool(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_bool</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -1646,7 +1968,7 @@ client.endpoints.primitive.get_and_return_double();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_bool();
+client.endpoints.primitive.get_and_return_bool(request: true);
 ```
 </dd>
 </dl>
@@ -1665,6 +1987,14 @@ client.endpoints.primitive.get_and_return_bool();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1673,7 +2003,7 @@ client.endpoints.primitive.get_and_return_bool();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.get_and_return_datetime(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_datetime</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1686,7 +2016,7 @@ client.endpoints.primitive.get_and_return_bool();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_datetime();
+client.endpoints.primitive.get_and_return_datetime(request: '2024-01-15T09:30:00Z');
 ```
 </dd>
 </dl>
@@ -1705,6 +2035,14 @@ client.endpoints.primitive.get_and_return_datetime();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1713,7 +2051,7 @@ client.endpoints.primitive.get_and_return_datetime();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.get_and_return_date(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_date</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1726,7 +2064,7 @@ client.endpoints.primitive.get_and_return_datetime();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_date();
+client.endpoints.primitive.get_and_return_date(request: '2023-01-15');
 ```
 </dd>
 </dl>
@@ -1745,6 +2083,14 @@ client.endpoints.primitive.get_and_return_date();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1753,7 +2099,7 @@ client.endpoints.primitive.get_and_return_date();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.get_and_return_uuid(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_uuid</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1766,7 +2112,7 @@ client.endpoints.primitive.get_and_return_date();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_uuid();
+client.endpoints.primitive.get_and_return_uuid(request: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32');
 ```
 </dd>
 </dl>
@@ -1785,6 +2131,14 @@ client.endpoints.primitive.get_and_return_uuid();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1793,7 +2147,7 @@ client.endpoints.primitive.get_and_return_uuid();
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.get_and_return_base_64(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_base_64</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1806,7 +2160,7 @@ client.endpoints.primitive.get_and_return_uuid();
 <dd>
 
 ```ruby
-client.endpoints.primitive.get_and_return_base_64();
+client.endpoints.primitive.get_and_return_base_64(request: 'SGVsbG8gd29ybGQh');
 ```
 </dd>
 </dl>
@@ -1822,6 +2176,14 @@ client.endpoints.primitive.get_and_return_base_64();
 <dd>
 
 **request:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Primitive::RequestOptions` 
     
 </dd>
 </dl>
@@ -1834,7 +2196,7 @@ client.endpoints.primitive.get_and_return_base_64();
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.endpoints.put.add(id) -> Seed::Endpoints::Put::Types::PutResponse</code></summary>
+<details><summary><code>client.endpoints.put.<a href="/lib/seed/endpoints/put/client.rb">add</a>(id) -> Seed::Endpoints::Put::Types::PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -1866,6 +2228,14 @@ client.endpoints.put.add(id: 'id');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Put::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1875,7 +2245,7 @@ client.endpoints.put.add(id: 'id');
 </details>
 
 ## Endpoints Union
-<details><summary><code>client.endpoints.union.get_and_return_union(request) -> Seed::Types::Union::Types::Animal</code></summary>
+<details><summary><code>client.endpoints.union.<a href="/lib/seed/endpoints/union/client.rb">get_and_return_union</a>(request) -> Seed::Types::Union::Types::Animal</code></summary>
 <dl>
 <dd>
 
@@ -1907,6 +2277,14 @@ client.endpoints.union.get_and_return_union();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Union::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -1916,7 +2294,7 @@ client.endpoints.union.get_and_return_union();
 </details>
 
 ## Endpoints Urls
-<details><summary><code>client.endpoints.urls.with_mixed_case() -> String</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/lib/seed/endpoints/urls/client.rb">with_mixed_case</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -1936,12 +2314,27 @@ client.endpoints.urls.with_mixed_case();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.no_ending_slash() -> String</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/lib/seed/endpoints/urls/client.rb">no_ending_slash</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -1961,12 +2354,27 @@ client.endpoints.urls.no_ending_slash();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.with_ending_slash() -> String</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/lib/seed/endpoints/urls/client.rb">with_ending_slash</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -1986,12 +2394,27 @@ client.endpoints.urls.with_ending_slash();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.with_underscores() -> String</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="/lib/seed/endpoints/urls/client.rb">with_underscores</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -2011,13 +2434,28 @@ client.endpoints.urls.with_underscores();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Urls::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
 ## InlinedRequests
-<details><summary><code>client.inlined_requests.post_with_object_bodyand_response(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.inlined_requests.<a href="/lib/seed/inlined_requests/client.rb">post_with_object_bodyand_response</a>(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2099,6 +2537,14 @@ client.inlined_requests.post_with_object_bodyand_response(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::InlinedRequests::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -2108,7 +2554,7 @@ client.inlined_requests.post_with_object_bodyand_response(
 </details>
 
 ## NoAuth
-<details><summary><code>client.no_auth.post_with_no_auth(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.no_auth.<a href="/lib/seed/no_auth/client.rb">post_with_no_auth</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -2154,6 +2600,14 @@ client.no_auth.post_with_no_auth();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::NoAuth::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -2163,7 +2617,7 @@ client.no_auth.post_with_no_auth();
 </details>
 
 ## NoReqBody
-<details><summary><code>client.no_req_body.get_with_no_request_body() -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.no_req_body.<a href="/lib/seed/no_req_body/client.rb">get_with_no_request_body</a>() -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2183,12 +2637,27 @@ client.no_req_body.get_with_no_request_body();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::NoReqBody::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.no_req_body.post_with_no_request_body() -> String</code></summary>
+<details><summary><code>client.no_req_body.<a href="/lib/seed/no_req_body/client.rb">post_with_no_request_body</a>() -> String</code></summary>
 <dl>
 <dd>
 
@@ -2208,13 +2677,28 @@ client.no_req_body.post_with_no_request_body();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::NoReqBody::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.req_with_headers.get_with_custom_header(request) -> </code></summary>
+<details><summary><code>client.req_with_headers.<a href="/lib/seed/req_with_headers/client.rb">get_with_custom_header</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -2229,7 +2713,8 @@ client.no_req_body.post_with_no_request_body();
 ```ruby
 client.req_with_headers.get_with_custom_header(
   x_test_service_header: 'X-TEST-SERVICE-HEADER',
-  x_test_endpoint_header: 'X-TEST-ENDPOINT-HEADER'
+  x_test_endpoint_header: 'X-TEST-ENDPOINT-HEADER',
+  body: 'string'
 );
 ```
 </dd>
@@ -2254,6 +2739,14 @@ client.req_with_headers.get_with_custom_header(
 <dd>
 
 **request:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::ReqWithHeaders::RequestOptions` 
     
 </dd>
 </dl>

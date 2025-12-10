@@ -155,13 +155,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
 
         exported_client_class_name = self._context.get_class_name_for_exported_root_client()
+        oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+        is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
         root_client_builder = RootClientGenerator.GeneratedRootClientBuilder(
             # HACK: This is a hack to get the module path for the root client to be from the root of the project
             module_path=self._context.get_module_path_in_project(()),
             class_name=self._context.get_class_name_for_exported_root_client(),
             async_class_name="Async" + exported_client_class_name,
             constructor_parameters=self._root_client_constructor_params,
-            oauth_token_override=self._oauth_scheme is not None and self._context.custom_config.oauth_token_override,
+            oauth_token_override=is_oauth_client_credentials,
         )
         self._generated_root_client = root_client_builder.build()
 
@@ -196,18 +198,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         writer.write_line(self.ROOT_CLASS_DOCSTRING)
 
         oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
-        is_oauth_override_client_credentials = (
-            oauth_union is not None
-            and oauth_union.type == "clientCredentials"
-            and self._context.custom_config.oauth_token_override
-        )
+        is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
 
-        # For non client-credentials OAuth or when oauth_token_override is disabled,
-        # rely on the auto-generated parameter docstring.
-        if not is_oauth_override_client_credentials:
+        # For non client-credentials OAuth, rely on the auto-generated parameter docstring.
+        if not is_oauth_client_credentials:
             return
 
-        # Custom Parameters section for client-credentials + oauth_token_override
+        # Custom Parameters section for client-credentials OAuth with token override
         writer.write_line("")
         writer.write_line("Parameters")
         writer.write_line("----------")
@@ -303,12 +300,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         constructor_overloads = self._get_constructor_overloads(is_async=is_async)
 
         oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
-        disable_param_docs = (
-            oauth_union is not None
-            and oauth_union.type == "clientCredentials"
-            and self._context.custom_config.oauth_token_override
-        )
-        write_parameter_docstring = not disable_param_docs
+        is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
+        write_parameter_docstring = not is_oauth_client_credentials
 
         class_declaration = AST.ClassDeclaration(
             name=self._async_class_name if is_async else self._class_name,
@@ -563,144 +556,65 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
         if self._oauth_scheme is not None:
             oauth = self._oauth_scheme.configuration.get_as_union()
-            oauth_token_override = self._context.custom_config.oauth_token_override
             if oauth.type == "clientCredentials":
-                # When oauth_token_override is enabled, make client_id/client_secret optional
+                # For OAuth client credentials, make client_id/client_secret optional
                 # so users can provide a token directly instead
-                if oauth_token_override:
-                    # client_id is optional with env var fallback
-                    parameters.append(
-                        RootClientConstructorParameter(
-                            constructor_parameter_name="client_id",
-                            type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
-                            initializer=(
-                                AST.Expression(
-                                    AST.FunctionInvocation(
-                                        function_definition=AST.Reference(
-                                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                            qualified_name_excluding_import=("getenv",),
-                                        ),
-                                        args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
-                                    )
+                # client_id is optional with env var fallback
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name="client_id",
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        initializer=(
+                            AST.Expression(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                        qualified_name_excluding_import=("getenv",),
+                                    ),
+                                    args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
                                 )
-                                if oauth.client_id_env_var is not None
-                                else AST.Expression("None")
-                            ),
-                            docs=RootClientGenerator.CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS,
-                            # No validation_check - validation happens in constructor body
+                            )
+                            if oauth.client_id_env_var is not None
+                            else AST.Expression("None")
                         ),
-                    )
-                    # client_secret is optional with env var fallback
-                    parameters.append(
-                        RootClientConstructorParameter(
-                            constructor_parameter_name="client_secret",
-                            type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
-                            initializer=(
-                                AST.Expression(
-                                    AST.FunctionInvocation(
-                                        function_definition=AST.Reference(
-                                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                            qualified_name_excluding_import=("getenv",),
-                                        ),
-                                        args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
-                                    )
+                        docs=RootClientGenerator.CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS,
+                    ),
+                )
+                # client_secret is optional with env var fallback
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name="client_secret",
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        initializer=(
+                            AST.Expression(
+                                AST.FunctionInvocation(
+                                    function_definition=AST.Reference(
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                        qualified_name_excluding_import=("getenv",),
+                                    ),
+                                    args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
                                 )
-                                if oauth.client_secret_env_var is not None
-                                else AST.Expression("None")
-                            ),
-                            docs=RootClientGenerator.CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS,
-                            # No validation_check - validation happens in constructor body
+                            )
+                            if oauth.client_secret_env_var is not None
+                            else AST.Expression("None")
                         ),
-                    )
-                    # Add the token parameter for direct token authentication
-                    parameters.append(
-                        RootClientConstructorParameter(
-                            constructor_parameter_name=self.TOKEN_PARAMETER_NAME,
-                            type_hint=AST.TypeHint.optional(
-                                AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
-                            ),
-                            initializer=AST.Expression("None"),
-                            docs=(
-                                "Authenticate by providing a callable that returns a pre-generated bearer token. "
-                                "In this mode, OAuth client credentials are not required."
-                            ),
+                        docs=RootClientGenerator.CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS,
+                    ),
+                )
+                # Add the token parameter for direct token authentication
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=self.TOKEN_PARAMETER_NAME,
+                        type_hint=AST.TypeHint.optional(
+                            AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
                         ),
-                    )
-                else:
-                    # Original behavior: client_id/client_secret are required (or env var fallback)
-                    cred_type_hint = AST.TypeHint.str_()
-                    add_validation = False
-                    if oauth.client_id_env_var is not None:
-                        add_validation = True
-                        cred_type_hint = AST.TypeHint.optional(cred_type_hint)
-                    parameters.append(
-                        RootClientConstructorParameter(
-                            constructor_parameter_name="client_id",
-                            type_hint=cred_type_hint,
-                            initializer=(
-                                AST.Expression(
-                                    AST.FunctionInvocation(
-                                        function_definition=AST.Reference(
-                                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                            qualified_name_excluding_import=("getenv",),
-                                        ),
-                                        args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
-                                    )
-                                )
-                                if oauth.client_id_env_var is not None
-                                else None
-                            ),
-                            validation_check=(
-                                AST.Expression(
-                                    AST.CodeWriter(
-                                        self._get_parameter_validation_writer(
-                                            param_name="client_id",
-                                            environment_variable=oauth.client_id_env_var,
-                                        )
-                                    )
-                                )
-                                if add_validation and oauth.client_id_env_var is not None
-                                else None
-                            ),
+                        initializer=AST.Expression("None"),
+                        docs=(
+                            "Authenticate by providing a callable that returns a pre-generated bearer token. "
+                            "In this mode, OAuth client credentials are not required."
                         ),
-                    )
-
-                    sec_cred_type_hint = AST.TypeHint.str_()
-                    sec_add_validation = False
-                    if oauth.client_secret_env_var is not None:
-                        sec_add_validation = True
-                        sec_cred_type_hint = AST.TypeHint.optional(sec_cred_type_hint)
-                    parameters.append(
-                        RootClientConstructorParameter(
-                            constructor_parameter_name="client_secret",
-                            type_hint=sec_cred_type_hint,
-                            initializer=(
-                                AST.Expression(
-                                    AST.FunctionInvocation(
-                                        function_definition=AST.Reference(
-                                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                            qualified_name_excluding_import=("getenv",),
-                                        ),
-                                        args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
-                                    )
-                                )
-                                if oauth.client_secret_env_var is not None
-                                else None
-                            ),
-                            validation_check=(
-                                AST.Expression(
-                                    AST.CodeWriter(
-                                        self._get_parameter_validation_writer(
-                                            param_name="client_secret",
-                                            environment_variable=oauth.client_secret_env_var,
-                                        )
-                                    )
-                                )
-                                if sec_add_validation and oauth.client_secret_env_var is not None
-                                else None
-                            ),
-                        ),
-                    )
+                    ),
+                )
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=self.TOKEN_GETTER_PARAM_NAME,
@@ -794,12 +708,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
     def _get_constructor_overloads(self, *, is_async: bool) -> Optional[List[AST.FunctionSignature]]:
         """
-        Generate constructor overloads for OAuth token override.
+        Generate constructor overloads for OAuth client credentials.
         Returns two overload signatures:
         1. OAuth client credentials: client_id + client_secret (required, or optional if env vars configured)
         2. Direct token: token (required)
         """
-        if self._oauth_scheme is None or not self._context.custom_config.oauth_token_override:
+        if self._oauth_scheme is None:
             return None
 
         oauth = self._oauth_scheme.configuration.get_as_union()
@@ -924,10 +838,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 generated_environment=self._generated_environment,
             )
             use_oauth_token_provider = self._oauth_scheme is not None
-            oauth_token_override = self._context.custom_config.oauth_token_override
+            oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+            is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
 
-            if use_oauth_token_provider and oauth_token_override:
-                # OAuth token override mode: users can provide either token OR client_id/client_secret
+            if use_oauth_token_provider and is_oauth_client_credentials:
+                # OAuth client credentials mode: users can provide either token OR client_id/client_secret
                 self._write_oauth_token_override_constructor_body(
                     writer=writer,
                     client_wrapper_generator=client_wrapper_generator,

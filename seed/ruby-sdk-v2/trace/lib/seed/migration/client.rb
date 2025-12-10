@@ -22,7 +22,7 @@ module Seed
       # @return [Array[Seed::Migration::Types::Migration]]
       def get_attempted_migrations(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/migration-info/all",
           request_options: request_options

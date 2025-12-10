@@ -41,7 +41,7 @@ export abstract class CoreUtility {
         this.generateEndpointMetadata = init.generateEndpointMetadata;
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // biome-ignore lint/complexity/noBannedTypes: reason
     protected withExportedName<F extends Function>(
         exportedName: string,
         run: (referenceToExportedName: Reference) => F

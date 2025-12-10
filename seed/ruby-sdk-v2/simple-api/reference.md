@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.get(id) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get</a>(id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -29,6 +29,14 @@ client.user.get(id: 'id');
 <dd>
 
 **id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>

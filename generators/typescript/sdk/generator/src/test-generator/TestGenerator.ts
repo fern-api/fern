@@ -1154,24 +1154,31 @@ describe("${serviceName}", () => {
                       variable: "expected"
                   })
                 : "expected";
-        const pageName =
-            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
-                ? context.type.generateGetterForResponsePropertyAsString({
-                      property: endpoint.pagination.results,
-                      variable: "page"
-                  })
-                : "page";
-        const nextPageName =
-            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
-                ? context.type.generateGetterForResponsePropertyAsString({
-                      property: endpoint.pagination.results,
-                      variable: "nextPage"
-                  })
-                : "nextPage";
+        // For custom pagination, the page object's .data property already contains the items
+        // (via getItems), so we don't need to traverse the response path
+        const pageName = "page";
+        const nextPageName = "nextPage";
+
+        const isResultsPathMissing =
+            endpoint.pagination !== undefined &&
+            isPaginationResultsPathMissingInExample({
+                example,
+                endpoint,
+                retainOriginalCasing: context.retainOriginalCasing,
+                includeSerdeLayer: context.includeSerdeLayer
+            });
+
+        const expectedDeclaration = code`const expected = ${expected};`;
+
         const paginationBlock =
             endpoint.pagination !== undefined
-                ? code`
-                const expected = ${expected}
+                ? isResultsPathMissing
+                    ? code`
+                const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                expect(${pageName}.data).toEqual([]);
+                `
+                    : code`
+                ${expectedDeclaration}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
                     endpoint.pagination.type !== "custom"
@@ -1181,7 +1188,7 @@ describe("${serviceName}", () => {
                             const nextPage = await ${pageName}.getNextPage();
                             expect(${expectedName}).toEqual(${nextPageName}.data);
                         `
-                        : code`expect(${expectedName}).toEqual(${pageName});`
+                        : code`expect(${expectedName}).toEqual(${pageName}.data);`
                 }
                 `
                 : "";
@@ -1813,4 +1820,64 @@ function getParameterNameForVariable({
         return variableName.originalName;
     }
     return variableName.camelCase.safeName;
+}
+
+function getResponseBodyJsonExample(response: ExampleResponse): unknown | undefined {
+    return response._visit({
+        ok: (okResp) =>
+            okResp._visit({
+                body: (body) => (body ? body.jsonExample : undefined),
+                stream: () => undefined,
+                sse: () => undefined,
+                _other: () => undefined
+            }),
+        error: (err) => (err.body ? err.body.jsonExample : undefined),
+        _other: () => undefined
+    });
+}
+
+function isPaginationResultsPathMissingInExample({
+    example,
+    endpoint,
+    retainOriginalCasing,
+    includeSerdeLayer
+}: {
+    example: ExampleEndpointCall;
+    endpoint: HttpEndpoint;
+    retainOriginalCasing: boolean;
+    includeSerdeLayer: boolean;
+}): boolean {
+    const pagination = endpoint.pagination;
+    if (pagination == null || pagination.results == null) {
+        return false;
+    }
+
+    const responseJson = getResponseBodyJsonExample(example.response);
+    if (responseJson == null) {
+        return true;
+    }
+
+    const resultsProperty = pagination.results;
+
+    // Build the path segments using wire values for JSON walking
+    // When retainOriginalCasing is true or includeSerdeLayer is false, use wire values
+    // Otherwise use camelCase names (which match the serialized JSON)
+    const useWireValue = retainOriginalCasing || !includeSerdeLayer;
+    const segments = [
+        ...(resultsProperty.propertyPath ?? []).map((item) =>
+            useWireValue ? item.name.originalName : item.name.camelCase.safeName
+        ),
+        useWireValue ? resultsProperty.property.name.wireValue : resultsProperty.property.name.name.camelCase.safeName
+    ];
+
+    let cursor: unknown = responseJson;
+    for (const key of segments) {
+        if (cursor == null || typeof cursor !== "object" || !(key in cursor)) {
+            return true;
+        }
+        cursor = (cursor as Record<string, unknown>)[key];
+    }
+
+    // If the leaf is explicitly undefined, treat it as "missing" for pagination purposes
+    return cursor === undefined;
 }

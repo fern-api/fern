@@ -219,7 +219,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         TypeSpec builderTypeSpec = getClientBuilder();
 
         boolean isExtensible = clientGeneratorContext.getCustomConfig().enableExtensibleBuilders();
-        boolean hasOAuthTokenOverride = clientGeneratorContext.getCustomConfig().oauthTokenOverride();
 
         // Check if we have OAuth client credentials auth scheme for staged builder
         boolean hasOAuthClientCredentials = generatorContext.getResolvedAuthSchemes().stream()
@@ -265,7 +264,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     }
                 }));
 
-        boolean useStagedBuilder = hasOAuthTokenOverride && hasOAuthClientCredentials && !isExtensible;
+        // Always use staged builder when OAuth client credentials are present (token override is always enabled)
+        boolean useStagedBuilder = hasOAuthClientCredentials && !isExtensible;
 
         if (isExtensible) {
             ClassName implClassName = builderName.nestedClass("Impl");
@@ -333,7 +333,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     private TypeSpec getClientBuilder() {
         boolean isExtensible = clientGeneratorContext.getCustomConfig().enableExtensibleBuilders();
-        boolean hasOAuthTokenOverride = clientGeneratorContext.getCustomConfig().oauthTokenOverride();
 
         // Check if we have OAuth client credentials auth scheme
         boolean hasOAuthClientCredentials = generatorContext.getResolvedAuthSchemes().stream()
@@ -379,8 +378,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     }
                 }));
 
-        // Use staged builder pattern when OAuth token override is enabled
-        boolean useStagedBuilder = hasOAuthTokenOverride && hasOAuthClientCredentials && !isExtensible;
+        // Always use staged builder pattern when OAuth client credentials are present (token override is always
+        // enabled)
+        boolean useStagedBuilder = hasOAuthClientCredentials && !isExtensible;
 
         TypeSpec.Builder clientBuilder;
         if (isExtensible) {
@@ -1172,8 +1172,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 EndpointReference tokenEndpointReference =
                         clientCredentials.getTokenEndpoint().getEndpointReference();
 
-                boolean hasTokenOverride =
-                        clientGeneratorContext.getCustomConfig().oauthTokenOverride();
                 String tokenOverridePropertyName = "token";
 
                 // Collect custom properties info for OAuth token supplier
@@ -1217,7 +1215,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
                 String tokenPrefix = clientCredentials.getTokenPrefix().orElse("Bearer");
 
-                if (useStagedBuilder && hasTokenOverride) {
+                if (useStagedBuilder) {
+                    // Token override is always enabled - use staged builder pattern
                     generateStagedBuilderForOAuth(
                             clientCredentials,
                             tokenOverridePropertyName,
@@ -1226,31 +1225,29 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             authClientClassName,
                             oauthTokenSupplierClassName);
                 } else {
-                    // Original behavior: flat builder with runtime validation
-                    if (hasTokenOverride) {
-                        createTokenOverrideSetter(tokenOverridePropertyName);
+                    // Extensible builder mode - use flat builder with runtime validation
+                    createTokenOverrideSetter(tokenOverridePropertyName);
 
-                        // Add validation: must provide either token OR (clientId AND clientSecret), but not both
-                        buildMethod
-                                .beginControlFlow(
-                                        "if (this.$L != null && (this.clientId != null || this.clientSecret != null))",
-                                        tokenOverridePropertyName)
-                                .addStatement(
-                                        "throw new $T($S)",
-                                        IllegalStateException.class,
-                                        "Cannot provide both '" + tokenOverridePropertyName
-                                                + "' and 'clientId'/'clientSecret'. Use one authentication method.")
-                                .endControlFlow()
-                                .beginControlFlow(
-                                        "if (this.$L == null && (this.clientId == null || this.clientSecret == null))",
-                                        tokenOverridePropertyName)
-                                .addStatement(
-                                        "throw new $T($S)",
-                                        IllegalStateException.class,
-                                        "Please provide either '" + tokenOverridePropertyName
-                                                + "' or both 'clientId' and 'clientSecret'")
-                                .endControlFlow();
-                    }
+                    // Add validation: must provide either token OR (clientId AND clientSecret), but not both
+                    buildMethod
+                            .beginControlFlow(
+                                    "if (this.$L != null && (this.clientId != null || this.clientSecret != null))",
+                                    tokenOverridePropertyName)
+                            .addStatement(
+                                    "throw new $T($S)",
+                                    IllegalStateException.class,
+                                    "Cannot provide both '" + tokenOverridePropertyName
+                                            + "' and 'clientId'/'clientSecret'. Use one authentication method.")
+                            .endControlFlow()
+                            .beginControlFlow(
+                                    "if (this.$L == null && (this.clientId == null || this.clientSecret == null))",
+                                    tokenOverridePropertyName)
+                            .addStatement(
+                                    "throw new $T($S)",
+                                    IllegalStateException.class,
+                                    "Please provide either '" + tokenOverridePropertyName
+                                            + "' or both 'clientId' and 'clientSecret'")
+                            .endControlFlow();
 
                     createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
                     createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
@@ -1261,20 +1258,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     }
 
                     if (configureAuthMethod != null) {
-                        // If token override is enabled, check for token first
-                        if (hasTokenOverride) {
-                            configureAuthMethod.beginControlFlow("if (this.$L != null)", tokenOverridePropertyName);
-                            configureAuthMethod.addStatement(
-                                    "builder.addHeader($S, $S + this.$L)",
-                                    "Authorization",
-                                    tokenPrefix + " ",
-                                    tokenOverridePropertyName);
-                            configureAuthMethod.nextControlFlow(
-                                    "else if (this.clientId != null && this.clientSecret != null)");
-                        } else {
-                            configureAuthMethod.beginControlFlow(
-                                    "if (this.clientId != null && this.clientSecret != null)");
-                        }
+                        // Token override is always enabled - check for token first
+                        configureAuthMethod.beginControlFlow("if (this.$L != null)", tokenOverridePropertyName);
+                        configureAuthMethod.addStatement(
+                                "builder.addHeader($S, $S + this.$L)",
+                                "Authorization",
+                                tokenPrefix + " ",
+                                tokenOverridePropertyName);
+                        configureAuthMethod.nextControlFlow(
+                                "else if (this.clientId != null && this.clientSecret != null)");
 
                         configureAuthMethod.addStatement(
                                 "$T.Builder authClientOptionsBuilder = $T.builder().environment(this.$L)",
