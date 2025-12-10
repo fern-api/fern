@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.13.2
+  changelogEntry:
+    - summary: |
+        Include enum helper file in FastAPI core package for StrEnum support. This fixes a bug where
+        generated FastAPI code would fail to import the enum module from the core package.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 61
 
 - version: 1.13.1
   changelogEntry:
