@@ -5,6 +5,25 @@
 
 The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Subpackage Exports](#subpackage-exports)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Aborting Requests](#aborting-requests)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Logging](#logging)
+  - [Runtime Compatibility](#runtime-compatibility)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -26,7 +45,7 @@ const client = new SeedExhaustiveClient({ environment: "YOUR_BASE_URL", token: "
 await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"]);
 ```
 
-## Request And Response Types
+## Request and Response Types
 
 The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
 following namespace:
@@ -76,6 +95,15 @@ const client = new EndpointsClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedExhaustiveClient } from "@fern/exhaustive";
+
+const client = new SeedExhaustiveClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.endpoints.container.getAndReturnListOfPrimitives(..., {
     headers: {
         'X-Custom-Header': 'custom value'

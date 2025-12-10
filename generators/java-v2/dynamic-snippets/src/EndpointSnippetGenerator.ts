@@ -147,33 +147,10 @@ export class EndpointSnippetGenerator {
             writer.writeNode(
                 java.TypeLiteral.builder({
                     classReference: this.context.getRootClientClassReference(),
-                    parameters: this.getRootClientBuilderArgs({ endpoint, snippet }),
-                    entryMethod: this.getBuilderEntryMethod({ endpoint, snippet })
+                    parameters: this.getRootClientBuilderArgs({ endpoint, snippet })
                 })
             );
         });
-    }
-
-    private getBuilderEntryMethod({
-        endpoint,
-        snippet
-    }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): java.BuilderEntryMethod | undefined {
-        if (!this.context.customConfig?.["oauth-token-override"]) {
-            return undefined;
-        }
-        if (endpoint.auth?.type !== "oauth" || snippet.auth?.type !== "oauth") {
-            return undefined;
-        }
-        return {
-            name: "withCredentials",
-            arguments: [
-                java.TypeLiteral.string(snippet.auth.clientId),
-                java.TypeLiteral.string(snippet.auth.clientSecret)
-            ]
-        };
     }
 
     private buildFullCodeBlock({ body, options }: { body: java.CodeBlock; options: Options }): java.AstNode {
@@ -420,9 +397,6 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.OAuth;
         values: FernIr.dynamic.OAuthValues;
     }): java.BuilderParameter[] {
-        if (this.context.customConfig?.["oauth-token-override"]) {
-            return [];
-        }
         return [
             {
                 name: this.context.getMethodName(auth.clientId),

@@ -29,7 +29,7 @@ export declare namespace TypescriptProject {
         packagePath?: string;
         testPath: string;
         packageManager: "yarn" | "pnpm";
-        formatter: "prettier" | "biome" | "oxfmt";
+        formatter: "prettier" | "biome" | "oxfmt" | "none";
         linter: "biome" | "oxlint" | "none";
         generateSubpackageExports?: boolean;
         subpackageExportPaths?: Array<{ key: string; relPath: string }>;
@@ -107,7 +107,7 @@ export abstract class TypescriptProject {
     protected readonly packagePath: string;
     protected readonly testPath: string;
     protected readonly packageManager: "yarn" | "pnpm";
-    private readonly formatter: "prettier" | "biome" | "oxfmt";
+    private readonly formatter: "prettier" | "biome" | "oxfmt" | "none";
     private readonly linter: "biome" | "oxlint" | "none";
     protected readonly generateSubpackageExports: boolean;
     protected readonly subpackageExportPaths: Array<{ key: string; relPath: string }>;
@@ -280,6 +280,11 @@ export abstract class TypescriptProject {
                         [COMMON_SCRIPTS.FORMAT]: "oxfmt --no-error-on-unmatched-pattern .",
                         [COMMON_SCRIPTS.FORMAT_CHECK]: "oxfmt --check --no-error-on-unmatched-pattern ."
                     };
+                case "none":
+                    return {
+                        [COMMON_SCRIPTS.FORMAT]: "echo 'No formatter configured.'",
+                        [COMMON_SCRIPTS.FORMAT_CHECK]: "echo 'No formatter configured.'"
+                    };
                 default:
                     assertNever(this.formatter);
             }
@@ -317,6 +322,24 @@ export abstract class TypescriptProject {
                 };
             }
             if (this.formatter === "biome" && this.linter === "none") {
+                return {
+                    [COMMON_SCRIPTS.CHECK]: `${this.packageManager} ${COMMON_SCRIPTS.FORMAT_CHECK}`,
+                    [COMMON_SCRIPTS.CHECK_FIX]: `${this.packageManager} ${COMMON_SCRIPTS.FORMAT}`
+                };
+            }
+            if (this.formatter === "none" && this.linter === "none") {
+                return {
+                    [COMMON_SCRIPTS.CHECK]: "echo 'No formatter or linter configured.'",
+                    [COMMON_SCRIPTS.CHECK_FIX]: "echo 'No formatter or linter configured.'"
+                };
+            }
+            if (this.formatter === "none") {
+                return {
+                    [COMMON_SCRIPTS.CHECK]: `${this.packageManager} ${COMMON_SCRIPTS.LINT}`,
+                    [COMMON_SCRIPTS.CHECK_FIX]: `${this.packageManager} ${COMMON_SCRIPTS.LINT_FIX}`
+                };
+            }
+            if (this.linter === "none") {
                 return {
                     [COMMON_SCRIPTS.CHECK]: `${this.packageManager} ${COMMON_SCRIPTS.FORMAT_CHECK}`,
                     [COMMON_SCRIPTS.CHECK_FIX]: `${this.packageManager} ${COMMON_SCRIPTS.FORMAT}`
@@ -361,14 +384,14 @@ export abstract class TypescriptProject {
             deps["@biomejs/biome"] = "2.3.1";
         }
         if (this.linter === "oxlint") {
-            deps["oxlint"] = "1.25.0";
-            deps["oxlint-tsgolint"] = "0.4.0";
+            deps["oxlint"] = "1.32.0";
+            deps["oxlint-tsgolint"] = "0.8.4";
         }
         if (this.formatter === "prettier") {
             deps["prettier"] = "3.4.2";
         }
         if (this.formatter === "oxfmt") {
-            deps["oxfmt"] = "0.9.0";
+            deps["oxfmt"] = "0.17.0";
         }
         return deps;
     }

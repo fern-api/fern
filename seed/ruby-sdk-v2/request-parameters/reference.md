@@ -130,7 +130,7 @@ client.user.create_username_with_referenced_type(tags: ['tags', 'tags']);
 <dd>
 
 ```ruby
-client.user.create_username_optional();
+client.user.create_username_optional(request: {});
 ```
 </dd>
 </dl>

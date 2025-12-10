@@ -44,7 +44,6 @@ import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass
 import com.fern.java.client.GeneratedRootClient;
 import com.fern.java.client.generators.AbstractClientGeneratorUtils.Result;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
-import com.fern.java.client.generators.visitors.RequestPropertyToTypeVisitor;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
@@ -220,7 +219,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         TypeSpec builderTypeSpec = getClientBuilder();
 
         boolean isExtensible = clientGeneratorContext.getCustomConfig().enableExtensibleBuilders();
-        boolean hasOAuthTokenOverride = clientGeneratorContext.getCustomConfig().oauthTokenOverride();
 
         // Check if we have OAuth client credentials auth scheme for staged builder
         boolean hasOAuthClientCredentials = generatorContext.getResolvedAuthSchemes().stream()
@@ -266,7 +264,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     }
                 }));
 
-        boolean useStagedBuilder = hasOAuthTokenOverride && hasOAuthClientCredentials && !isExtensible;
+        // Always use staged builder when OAuth client credentials are present (token override is always enabled)
+        boolean useStagedBuilder = hasOAuthClientCredentials && !isExtensible;
 
         if (isExtensible) {
             ClassName implClassName = builderName.nestedClass("Impl");
@@ -334,7 +333,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     private TypeSpec getClientBuilder() {
         boolean isExtensible = clientGeneratorContext.getCustomConfig().enableExtensibleBuilders();
-        boolean hasOAuthTokenOverride = clientGeneratorContext.getCustomConfig().oauthTokenOverride();
 
         // Check if we have OAuth client credentials auth scheme
         boolean hasOAuthClientCredentials = generatorContext.getResolvedAuthSchemes().stream()
@@ -380,8 +378,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     }
                 }));
 
-        // Use staged builder pattern when OAuth token override is enabled
-        boolean useStagedBuilder = hasOAuthTokenOverride && hasOAuthClientCredentials && !isExtensible;
+        // Always use staged builder pattern when OAuth client credentials are present (token override is always
+        // enabled)
+        boolean useStagedBuilder = hasOAuthClientCredentials && !isExtensible;
 
         TypeSpec.Builder clientBuilder;
         if (isExtensible) {
@@ -1173,64 +1172,36 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 EndpointReference tokenEndpointReference =
                         clientCredentials.getTokenEndpoint().getEndpointReference();
 
-                boolean hasTokenOverride =
-                        clientGeneratorContext.getCustomConfig().oauthTokenOverride();
                 String tokenOverridePropertyName = "token";
 
-                // Get HTTP endpoint for header inspection
+                // Collect custom properties info for OAuth token supplier
+                OAuthAccessTokenRequestProperties requestProperties =
+                        clientCredentials.getTokenEndpoint().getRequestProperties();
+                List<String> customPropertyNames = new ArrayList<>();
+                if (requestProperties.getCustomProperties().isPresent()) {
+                    for (RequestProperty customProp :
+                            requestProperties.getCustomProperties().get()) {
+                        String propName = customProp
+                                .getProperty()
+                                .visit(new RequestPropertyToNameVisitor())
+                                .getName()
+                                .getCamelCase()
+                                .getSafeName();
+                        customPropertyNames.add(propName);
+                    }
+                }
+
+                // Also collect header properties from the endpoint (like x-api-key)
                 HttpService httpService =
                         clientGeneratorContext.getIr().getServices().get(tokenEndpointReference.getServiceId());
                 HttpEndpoint httpEndpoint = httpService.getEndpoints().stream()
                         .filter(it -> it.getId().equals(tokenEndpointReference.getEndpointId()))
                         .findFirst()
                         .orElseThrow();
-
-                // Collect custom properties info for OAuth token supplier, excluding literals
-                OAuthAccessTokenRequestProperties requestProperties =
-                        clientCredentials.getTokenEndpoint().getRequestProperties();
-                List<String> customPropertyNames = new ArrayList<>();
-
-                // Add scopes property if present and not a literal
-                if (requestProperties.getScopes().isPresent()) {
-                    com.fern.ir.model.types.TypeReference scopesPropType =
-                            requestProperties.getScopes().get().getProperty().visit(new RequestPropertyToTypeVisitor());
-                    if (!isLiteralType(scopesPropType)) {
-                        String scopesName = requestProperties
-                                .getScopes()
-                                .get()
-                                .getProperty()
-                                .visit(new RequestPropertyToNameVisitor())
-                                .getName()
-                                .getCamelCase()
-                                .getSafeName();
-                        customPropertyNames.add(scopesName);
-                    }
-                }
-
-                if (requestProperties.getCustomProperties().isPresent()) {
-                    for (RequestProperty customProp :
-                            requestProperties.getCustomProperties().get()) {
-                        com.fern.ir.model.types.TypeReference propType =
-                                customProp.getProperty().visit(new RequestPropertyToTypeVisitor());
-                        if (!isLiteralType(propType)) {
-                            String propName = customProp
-                                    .getProperty()
-                                    .visit(new RequestPropertyToNameVisitor())
-                                    .getName()
-                                    .getCamelCase()
-                                    .getSafeName();
-                            customPropertyNames.add(propName);
-                        }
-                    }
-                }
-
-                // Also collect header properties from the endpoint (like x-api-key), excluding literals
                 for (var header : httpEndpoint.getHeaders()) {
-                    if (!isLiteralType(header.getValueType())) {
-                        String headerName =
-                                header.getName().getName().getCamelCase().getSafeName();
-                        customPropertyNames.add(headerName);
-                    }
+                    String headerName =
+                            header.getName().getName().getCamelCase().getSafeName();
+                    customPropertyNames.add(headerName);
                 }
 
                 Subpackage subpackage = clientGeneratorContext
@@ -1244,7 +1215,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
                 String tokenPrefix = clientCredentials.getTokenPrefix().orElse("Bearer");
 
-                if (useStagedBuilder && hasTokenOverride) {
+                if (useStagedBuilder) {
+                    // Token override is always enabled - use staged builder pattern
                     generateStagedBuilderForOAuth(
                             clientCredentials,
                             tokenOverridePropertyName,
@@ -1253,31 +1225,29 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             authClientClassName,
                             oauthTokenSupplierClassName);
                 } else {
-                    // Original behavior: flat builder with runtime validation
-                    if (hasTokenOverride) {
-                        createTokenOverrideSetter(tokenOverridePropertyName);
+                    // Extensible builder mode - use flat builder with runtime validation
+                    createTokenOverrideSetter(tokenOverridePropertyName);
 
-                        // Add validation: must provide either token OR (clientId AND clientSecret), but not both
-                        buildMethod
-                                .beginControlFlow(
-                                        "if (this.$L != null && (this.clientId != null || this.clientSecret != null))",
-                                        tokenOverridePropertyName)
-                                .addStatement(
-                                        "throw new $T($S)",
-                                        IllegalStateException.class,
-                                        "Cannot provide both '" + tokenOverridePropertyName
-                                                + "' and 'clientId'/'clientSecret'. Use one authentication method.")
-                                .endControlFlow()
-                                .beginControlFlow(
-                                        "if (this.$L == null && (this.clientId == null || this.clientSecret == null))",
-                                        tokenOverridePropertyName)
-                                .addStatement(
-                                        "throw new $T($S)",
-                                        IllegalStateException.class,
-                                        "Please provide either '" + tokenOverridePropertyName
-                                                + "' or both 'clientId' and 'clientSecret'")
-                                .endControlFlow();
-                    }
+                    // Add validation: must provide either token OR (clientId AND clientSecret), but not both
+                    buildMethod
+                            .beginControlFlow(
+                                    "if (this.$L != null && (this.clientId != null || this.clientSecret != null))",
+                                    tokenOverridePropertyName)
+                            .addStatement(
+                                    "throw new $T($S)",
+                                    IllegalStateException.class,
+                                    "Cannot provide both '" + tokenOverridePropertyName
+                                            + "' and 'clientId'/'clientSecret'. Use one authentication method.")
+                            .endControlFlow()
+                            .beginControlFlow(
+                                    "if (this.$L == null && (this.clientId == null || this.clientSecret == null))",
+                                    tokenOverridePropertyName)
+                            .addStatement(
+                                    "throw new $T($S)",
+                                    IllegalStateException.class,
+                                    "Please provide either '" + tokenOverridePropertyName
+                                            + "' or both 'clientId' and 'clientSecret'")
+                            .endControlFlow();
 
                     createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
                     createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
@@ -1288,20 +1258,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     }
 
                     if (configureAuthMethod != null) {
-                        // If token override is enabled, check for token first
-                        if (hasTokenOverride) {
-                            configureAuthMethod.beginControlFlow("if (this.$L != null)", tokenOverridePropertyName);
-                            configureAuthMethod.addStatement(
-                                    "builder.addHeader($S, $S + this.$L)",
-                                    "Authorization",
-                                    tokenPrefix + " ",
-                                    tokenOverridePropertyName);
-                            configureAuthMethod.nextControlFlow(
-                                    "else if (this.clientId != null && this.clientSecret != null)");
-                        } else {
-                            configureAuthMethod.beginControlFlow(
-                                    "if (this.clientId != null && this.clientSecret != null)");
-                        }
+                        // Token override is always enabled - check for token first
+                        configureAuthMethod.beginControlFlow("if (this.$L != null)", tokenOverridePropertyName);
+                        configureAuthMethod.addStatement(
+                                "builder.addHeader($S, $S + this.$L)",
+                                "Authorization",
+                                tokenPrefix + " ",
+                                tokenOverridePropertyName);
+                        configureAuthMethod.nextControlFlow(
+                                "else if (this.clientId != null && this.clientSecret != null)");
 
                         configureAuthMethod.addStatement(
                                 "$T.Builder authClientOptionsBuilder = $T.builder().environment(this.$L)",
@@ -1326,9 +1291,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                 authClientClassName);
 
                         // Build OAuthTokenSupplier constructor call with custom properties
-                        // TODO: Order of customPropertyNames must match
-                        // OAuthTokenSupplierGenerator.getOrderedBuilderProperties()
-                        // Currently what we have works but but this would be a more robust solution
                         CodeBlock.Builder oauthConstructorArgs =
                                 CodeBlock.builder().add("this.clientId, this.clientSecret");
                         for (String customPropName : customPropertyNames) {

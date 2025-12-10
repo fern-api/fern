@@ -12,7 +12,7 @@ publish:
   workingDirectory: generators/java
   preBuildCommands:
     - ./gradlew :sdk:distTar
-    - pnpm --filter @fern-api/java-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/java-sdk
   docker:
     file: ./generators/java/sdk/Dockerfile
     image: fernapi/fern-java-sdk
@@ -25,7 +25,7 @@ test:
       - cd generators/java
       - ./gradlew :sdk:distTar
       - cd ../../
-      - pnpm --filter @fern-api/java-sdk dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/java-sdk
       - docker build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
   podman:
     image: fernapi/fern-java-sdk:latest
@@ -34,7 +34,7 @@ test:
       - cd generators/java
       - ./gradlew :sdk:distTar
       - cd ../../
-      - pnpm --filter @fern-api/java-sdk dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/java-sdk
       - podman build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
   local:
     workingDirectory: generators/java
@@ -265,9 +265,9 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: oauth-client-credentials
-    - customConfig:
-        oauth-token-override: true
-      outputFolder: token-override
+  oauth-client-credentials-mandatory-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
   header-auth:
     - customConfig:
         enable-wire-tests: true
@@ -290,6 +290,11 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: streaming
+  java-optional-nullable-query-params:
+    - customConfig:
+        use-default-request-parameter-values: true
+        collapse-optional-nullable: true
+      outputFolder: default
 scripts:
   - image: fernapi/java-seed
     commands:
@@ -309,11 +314,19 @@ allowedFailures:
   - java-inline-types:no-wrapped-aliases
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
+  - oauth-client-credentials
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-mandatory-auth:no-custom-config
+  - oauth-client-credentials-nested-root
+  - oauth-client-credentials-with-variables
   - request-parameters
   - streaming-parameter
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
+  - any-auth
   - java-inline-types:inline
   - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases

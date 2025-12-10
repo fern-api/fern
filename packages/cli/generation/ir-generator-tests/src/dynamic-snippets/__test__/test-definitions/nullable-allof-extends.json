@@ -1,0 +1,361 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:RootObject": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "RootObject",
+                    "camelCase": {
+                        "unsafeName": "rootObject",
+                        "safeName": "rootObject"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "root_object",
+                        "safeName": "root_object"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ROOT_OBJECT",
+                        "safeName": "ROOT_OBJECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RootObject",
+                        "safeName": "RootObject"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "normalField",
+                            "camelCase": {
+                                "unsafeName": "normalField",
+                                "safeName": "normalField"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "normal_field",
+                                "safeName": "normal_field"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NORMAL_FIELD",
+                                "safeName": "NORMAL_FIELD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NormalField",
+                                "safeName": "NormalField"
+                            }
+                        },
+                        "wireValue": "normalField"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "nullableField",
+                            "camelCase": {
+                                "unsafeName": "nullableField",
+                                "safeName": "nullableField"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nullable_field",
+                                "safeName": "nullable_field"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NULLABLE_FIELD",
+                                "safeName": "NULLABLE_FIELD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NullableField",
+                                "safeName": "NullableField"
+                            }
+                        },
+                        "wireValue": "nullableField"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_:NormalObject": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "NormalObject",
+                    "camelCase": {
+                        "unsafeName": "normalObject",
+                        "safeName": "normalObject"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "normal_object",
+                        "safeName": "normal_object"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NORMAL_OBJECT",
+                        "safeName": "NORMAL_OBJECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NormalObject",
+                        "safeName": "NormalObject"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "normalField",
+                            "camelCase": {
+                                "unsafeName": "normalField",
+                                "safeName": "normalField"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "normal_field",
+                                "safeName": "normal_field"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NORMAL_FIELD",
+                                "safeName": "NORMAL_FIELD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NormalField",
+                                "safeName": "NormalField"
+                            }
+                        },
+                        "wireValue": "normalField"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_:NullableObject": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "NullableObject",
+                    "camelCase": {
+                        "unsafeName": "nullableObject",
+                        "safeName": "nullableObject"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "nullable_object",
+                        "safeName": "nullable_object"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NULLABLE_OBJECT",
+                        "safeName": "NULLABLE_OBJECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NullableObject",
+                        "safeName": "NullableObject"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "nullableField",
+                            "camelCase": {
+                                "unsafeName": "nullableField",
+                                "safeName": "nullableField"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nullable_field",
+                                "safeName": "nullable_field"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NULLABLE_FIELD",
+                                "safeName": "NULLABLE_FIELD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NullableField",
+                                "safeName": "NullableField"
+                            }
+                        },
+                        "wireValue": "nullableField"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_.getTest": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getTest",
+                    "camelCase": {
+                        "unsafeName": "getTest",
+                        "safeName": "getTest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_test",
+                        "safeName": "get_test"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_TEST",
+                        "safeName": "GET_TEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetTest",
+                        "safeName": "GetTest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/test"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.createTest": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createTest",
+                    "camelCase": {
+                        "unsafeName": "createTest",
+                        "safeName": "createTest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_test",
+                        "safeName": "create_test"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_TEST",
+                        "safeName": "CREATE_TEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateTest",
+                        "safeName": "CreateTest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/test"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:RootObject"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": {
+        "defaultEnvironment": "Default",
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "Default",
+                    "name": {
+                        "originalName": "Default",
+                        "camelCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DEFAULT",
+                            "safeName": "DEFAULT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Default",
+                            "safeName": "Default"
+                        }
+                    },
+                    "url": "https://api.example.com",
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "variables": null,
+    "generatorConfig": null
+}

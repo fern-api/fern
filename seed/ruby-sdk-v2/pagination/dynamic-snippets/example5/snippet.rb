@@ -8,5 +8,6 @@ client = Seed::Client.new(
 client.inline_users.inline_users.list_with_cursor_pagination(
   page: 1.1,
   per_page: 1.1,
+  order: 'asc',
   starting_after: 'starting_after'
 );
