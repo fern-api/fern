@@ -79,11 +79,9 @@ export class UsersClient {
             },
         );
         return core.MyPager.create<string, SeedPagination.ListUsernamesRequestCustom, SeedPagination.UsernameCursor>({
-            context: {
-                sendRequest: list,
-                initialRequest: request,
-            },
-            parser: async (
+            sendRequest: list,
+            initialRequest: request,
+            parse: async (
                 _request: SeedPagination.ListUsernamesRequestCustom,
                 response: core.WithRawResponse<SeedPagination.UsernameCursor>,
             ) => ({

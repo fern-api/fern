@@ -21,8 +21,9 @@ export interface Pagination {
             itemType: ts.TypeNode;
             requestType: ts.TypeNode;
             responseType: ts.TypeNode;
-            context: ts.Expression;
-            parser: ts.Expression;
+            sendRequest: ts.Expression;
+            initialRequest: ts.Expression;
+            parse: ts.Expression;
         }) => ts.Expression;
         _getReferenceToType: (
             itemType: ts.TypeNode,
@@ -124,14 +125,16 @@ export class PaginationImpl extends CoreUtility implements Pagination {
                         itemType,
                         requestType,
                         responseType,
-                        context,
-                        parser
+                        sendRequest,
+                        initialRequest,
+                        parse
                     }: {
                         itemType: ts.TypeNode;
                         requestType: ts.TypeNode;
                         responseType: ts.TypeNode;
-                        context: ts.Expression;
-                        parser: ts.Expression;
+                        sendRequest: ts.Expression;
+                        initialRequest: ts.Expression;
+                        parse: ts.Expression;
                     }): ts.Expression => {
                         return ts.factory.createCallExpression(
                             ts.factory.createPropertyAccessExpression(
@@ -143,12 +146,16 @@ export class PaginationImpl extends CoreUtility implements Pagination {
                                 ts.factory.createObjectLiteralExpression(
                                     [
                                         ts.factory.createPropertyAssignment(
-                                            ts.factory.createIdentifier("context"),
-                                            context
+                                            ts.factory.createIdentifier("sendRequest"),
+                                            sendRequest
                                         ),
                                         ts.factory.createPropertyAssignment(
-                                            ts.factory.createIdentifier("parser"),
-                                            parser
+                                            ts.factory.createIdentifier("initialRequest"),
+                                            initialRequest
+                                        ),
+                                        ts.factory.createPropertyAssignment(
+                                            ts.factory.createIdentifier("parse"),
+                                            parse
                                         )
                                     ],
                                     true

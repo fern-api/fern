@@ -25,19 +25,6 @@ export type CustomPagerParser<TItem, TRequest, TResponse> = (
 }>;
 
 /**
- * Context object for custom pagination, providing the ability to send requests.
- *
- * @template TRequest The type of the request object.
- * @template TResponse The type of the API response.
- */
-export interface CustomPagerContext<TRequest, TResponse> {
-    /** Function to send a request and get a response */
-    sendRequest: (request: TRequest) => HttpResponsePromise<TResponse>;
-    /** The initial request that started the pagination */
-    initialRequest: TRequest;
-}
-
-/**
  * A custom pager for paginated API responses where the pagination logic
  * must be implemented by the SDK author.
  *
@@ -171,16 +158,18 @@ export class CustomPager<TItem, TRequest, TResponse> implements AsyncIterable<TI
     /**
      * Creates a CustomPager by making the initial request and parsing the response.
      *
-     * @param args.context The context containing the sendRequest function and initial request
-     * @param args.parser The parser function to extract items and pagination state
+     * @param args.sendRequest Function to send a request and get a response
+     * @param args.initialRequest The initial request to start pagination
+     * @param args.parse The parser function to extract items and pagination state
      * @returns A new CustomPager instance
      */
     public static async create<TItem, TRequest, TResponse>(args: {
-        context: CustomPagerContext<TRequest, TResponse>;
-        parser: CustomPagerParser<TItem, TRequest, TResponse>;
+        sendRequest: (request: TRequest) => HttpResponsePromise<TResponse>;
+        initialRequest: TRequest;
+        parse: CustomPagerParser<TItem, TRequest, TResponse>;
     }): Promise<CustomPager<TItem, TRequest, TResponse>> {
-        const { data, rawResponse } = await args.context.sendRequest(args.context.initialRequest).withRawResponse();
-        const parsed = await args.parser(args.context.initialRequest, { data, rawResponse });
+        const { data, rawResponse } = await args.sendRequest(args.initialRequest).withRawResponse();
+        const parsed = await args.parse(args.initialRequest, { data, rawResponse });
         return new CustomPager({
             response: data,
             rawResponse,
@@ -190,10 +179,10 @@ export class CustomPager<TItem, TRequest, TResponse> implements AsyncIterable<TI
             nextRequest: parsed.nextRequest,
             previousRequest: parsed.previousRequest,
             context: {
-                sendRequest: args.context.sendRequest,
-                currentRequest: args.context.initialRequest
+                sendRequest: args.sendRequest,
+                currentRequest: args.initialRequest
             },
-            parser: args.parser
+            parser: args.parse
         });
     }
 }

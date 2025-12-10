@@ -430,19 +430,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 // For custom pagination, use CustomPager.create with a default parser
                 // Note: We don't need the initial _dataWithRawResponse call here since
                 // CustomPager.create will make the first request itself
-                const contextExpr = ts.factory.createObjectLiteralExpression(
-                    [
-                        ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier("sendRequest"),
-                            ts.factory.createIdentifier(listFnName)
-                        ),
-                        ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier("initialRequest"),
-                            ts.factory.createIdentifier("request")
-                        )
-                    ],
-                    true
-                );
 
                 // Create a lambda that extracts items from the response
                 // paginationInfo.getItems expects a variable named "response" of type TResponse
@@ -512,12 +499,13 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             itemType: paginationInfo.itemType,
                             requestType: requestParameter,
                             responseType: paginationInfo.responseType,
-                            context: contextExpr,
-                            parser: defaultParserExpr
+                            sendRequest: ts.factory.createIdentifier(listFnName),
+                            initialRequest: ts.factory.createIdentifier("request"),
+                            parse: defaultParserExpr
                         })
                     )
                 ];
-            } else {
+            }else {
                 statements.push(
                     ts.factory.createReturnStatement(
                         context.coreUtilities.pagination.Page._construct({
