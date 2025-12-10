@@ -4,15 +4,14 @@
     - summary: |
         Add support for inferred authentication scheme. This allows the SDK to automatically
         obtain authentication tokens from a specified token endpoint and cache them for subsequent
-        requests. The implementation follows the same pattern as other SDK generators (TypeScript,
-        Java, Python, Go).
+        requests.
 
         When an API uses inferred auth, the SDK will:
         * Call the token endpoint to obtain authentication headers
         * Cache the headers and refresh them when expired (with a 2-minute buffer)
         * Automatically set the authenticated request headers on all API calls
       type: feat
-  createdAt: "2025-12-09"
+  createdAt: "2025-12-10"
   irVersion: 61
 
 - version: 2.11.2

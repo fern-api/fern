@@ -38,11 +38,9 @@ public partial class SeedInferredAuthExplicitClient
             clientSecret,
             new AuthClient(new RawClient(clientOptions.Clone()))
         );
-        var inferredHeaders = inferredAuthProvider.GetAuthHeadersAsync().Result;
-        foreach (var header in inferredHeaders)
-        {
-            clientOptions.Headers[header.Key] = header.Value;
-        }
+        clientOptions.Headers["Authorization"] = new Func<string>(() =>
+            inferredAuthProvider.GetAuthHeadersAsync().Result["Authorization"]
+        );
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
         NestedNoAuth = new NestedNoAuthClient(_client);

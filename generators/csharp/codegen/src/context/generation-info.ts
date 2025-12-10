@@ -384,6 +384,7 @@ export class Generation {
         }),
         methods: lazy({
             mockOauth: () => "MockOAuthEndpoint",
+            mockInferredAuth: () => "MockInferredAuthEndpoint",
             getAccessTokenAsync: () => "GetAccessTokenAsync",
             getAuthHeadersAsync: () => "GetAuthHeadersAsync"
         }),

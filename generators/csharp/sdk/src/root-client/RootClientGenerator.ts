@@ -397,18 +397,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                         innerWriter.writeTextStatement(")");
 
-                        // Set up headers from the inferred auth provider
-                        innerWriter.writeNode(
-                            this.csharp.codeblock((writer) => {
-                                writer.write(
-                                    `var inferredHeaders = inferredAuthProvider.${this.names.methods.getAuthHeadersAsync}().Result;`
-                                );
-                            })
-                        );
-                        innerWriter.writeLine("");
-                        innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in inferredHeaders"));
-                        innerWriter.writeLine("clientOptions.Headers[header.Key] = header.Value;");
-                        innerWriter.endControlFlow();
+                        // Set up header supplier using lazy evaluation via Func<string> to avoid blocking in the constructor
+                        // For now, we assume there's only one authenticated header (typically Authorization)
+                        const authHeader = this.inferred.tokenEndpoint.authenticatedRequestHeaders[0];
+                        if (authHeader != null) {
+                            const headerName = authHeader.headerName;
+                            innerWriter.writeNode(
+                                this.csharp.codeblock((writer) => {
+                                    writer.write(
+                                        `clientOptions.Headers["${headerName}"] = new Func<string>(() => inferredAuthProvider.${this.names.methods.getAuthHeadersAsync}().Result["${headerName}"]);`
+                                    );
+                                })
+                            );
+                        }
                     }
 
                     innerWriter.writeLine(`${this.members.clientName} = `);
@@ -516,6 +517,77 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         } else {
                             // default to bearer
                             arguments_.push(this.csharp.codeblock('"TOKEN"'));
+                        }
+                        break;
+                    }
+                    case "inferred": {
+                        if (this.context.getInferredAuth() != null) {
+                            // Add example values for inferred auth credentials
+                            const inferredScheme = this.context.getInferredAuth();
+                            if (inferredScheme) {
+                                const tokenEndpointReference = inferredScheme.tokenEndpoint.endpoint;
+                                const tokenEndpointHttpService = this.context.getHttpService(
+                                    tokenEndpointReference.serviceId
+                                );
+                                if (tokenEndpointHttpService != null) {
+                                    const tokenEndpoint = this.context.resolveEndpoint(
+                                        tokenEndpointHttpService,
+                                        tokenEndpointReference.endpointId
+                                    );
+
+                                    // Collect headers from the token endpoint
+                                    for (const header of tokenEndpoint.headers) {
+                                        if (
+                                            header.valueType.type === "container" &&
+                                            header.valueType.container.type === "literal"
+                                        ) {
+                                            continue;
+                                        }
+                                        const typeRef = this.context.csharpTypeMapper.convert({
+                                            reference: header.valueType
+                                        });
+                                        if (!typeRef.isOptional) {
+                                            arguments_.push(
+                                                this.csharp.codeblock(
+                                                    `"${header.name.name.screamingSnakeCase.safeName}"`
+                                                )
+                                            );
+                                        }
+                                    }
+
+                                    // Collect body properties from the token endpoint
+                                    if (tokenEndpoint.requestBody != null) {
+                                        tokenEndpoint.requestBody._visit({
+                                            inlinedRequestBody: (inlinedRequestBody) => {
+                                                for (const prop of inlinedRequestBody.properties) {
+                                                    if (
+                                                        prop.valueType.type === "container" &&
+                                                        prop.valueType.container.type === "literal"
+                                                    ) {
+                                                        continue;
+                                                    }
+                                                    const typeRef = this.context.csharpTypeMapper.convert({
+                                                        reference: prop.valueType
+                                                    });
+                                                    if (!typeRef.isOptional) {
+                                                        arguments_.push(
+                                                            this.csharp.codeblock(
+                                                                `"${prop.name.name.camelCase.unsafeName}"`
+                                                            )
+                                                        );
+                                                    }
+                                                }
+                                            },
+                                            // biome-ignore-start lint/suspicious/noEmptyBlockStatements: explanation
+                                            reference: () => {},
+                                            fileUpload: () => {},
+                                            bytes: () => {},
+                                            _other: () => {}
+                                            // biome-ignore-end lint/suspicious/noEmptyBlockStatements: explanation
+                                        });
+                                    }
+                                }
+                            }
                         }
                         break;
                     }
