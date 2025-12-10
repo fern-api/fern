@@ -3,5 +3,5 @@ import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCre
 
 export const unknown: () => Schema<unknown, unknown> = createIdentitySchemaCreator<unknown>(
     SchemaType.UNKNOWN,
-    (value) => ({ ok: true, value })
+    (value) => ({ ok: true, value }),
 );
