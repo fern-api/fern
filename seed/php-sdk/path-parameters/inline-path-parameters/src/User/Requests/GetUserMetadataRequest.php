@@ -30,8 +30,9 @@ class GetUserMetadataRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->tenantId = $values['tenantId'];$this->userId = $values['userId'];$this->version = $values['version'];
+    ) {
+        $this->tenantId = $values['tenantId'];
+        $this->userId = $values['userId'];
+        $this->version = $values['version'];
     }
 }

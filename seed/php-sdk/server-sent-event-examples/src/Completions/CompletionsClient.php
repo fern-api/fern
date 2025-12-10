@@ -12,7 +12,7 @@ use Seed\Core\Client\HttpMethod;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class CompletionsClient 
+class CompletionsClient
 {
     /**
      * @var array{
@@ -40,11 +40,10 @@ class CompletionsClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -62,7 +61,8 @@ class CompletionsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function stream(StreamCompletionRequest $request, ?array $options = null): void {
+    public function stream(StreamCompletionRequest $request, ?array $options = null): void
+    {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -77,7 +77,7 @@ class CompletionsClient
             $statusCode = $response->getStatusCode();
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

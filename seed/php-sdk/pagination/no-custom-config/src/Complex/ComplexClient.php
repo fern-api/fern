@@ -18,7 +18,7 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class ComplexClient 
+class ComplexClient
 {
     /**
      * @var array{
@@ -46,11 +46,10 @@ class ComplexClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -68,11 +67,12 @@ class ComplexClient
      * } $options
      * @return Pager<Conversation>
      */
-    public function search(string $index, SearchRequest $request, ?array $options = null): Pager {
+    public function search(string $index, SearchRequest $request, ?array $options = null): Pager
+    {
         return new CursorPager(
             request: $request,
-            getNextPage: fn(SearchRequest $request) => $this->_search($index, $request, $options),
-            setCursor: function (SearchRequest $request, ?string $cursor) { 
+            getNextPage: fn (SearchRequest $request) => $this->_search($index, $request, $options),
+            setCursor: function (SearchRequest $request, ?string $cursor) {
                 PaginationHelper::setDeep($request, ["pagination", "startingAfter"], $cursor);
             },
             /* @phpstan-ignore-next-line */
@@ -97,7 +97,8 @@ class ComplexClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    private function _search(string $index, SearchRequest $request, ?array $options = null): PaginatedConversationResponse {
+    private function _search(string $index, SearchRequest $request, ?array $options = null): PaginatedConversationResponse
+    {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -110,15 +111,15 @@ class ComplexClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return PaginatedConversationResponse::fromJson($json);
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

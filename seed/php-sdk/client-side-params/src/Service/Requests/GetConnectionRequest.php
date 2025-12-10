@@ -18,8 +18,7 @@ class GetConnectionRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    )
-    {
+    ) {
         $this->fields = $values['fields'] ?? null;
     }
 }

@@ -10,7 +10,7 @@ use Seed\Auth\Requests\GetTokenRequest;
  * The InferredAuthProvider retrieves an access token from the configured token endpoint.
  * The access token is then used as the bearer token in every authenticated request.
  */
-class InferredAuthProvider 
+class InferredAuthProvider
 {
     /**
      * @var int $BUFFER_IN_MINUTES
@@ -41,11 +41,10 @@ class InferredAuthProvider
      * @param AuthClient $authClient The client used to retrieve the access token.
      * @param array<mixed> $options The options containing credentials for the token endpoint.
      */
-    function __construct(
+    public function __construct(
         AuthClient $authClient,
         array $options,
-    )
-    {
+    ) {
         $this->authClient = $authClient;
         $this->options = $options;
         $this->accessToken = null;
@@ -57,8 +56,9 @@ class InferredAuthProvider
      *
      * @return string
      */
-    public function getToken(): string {
-        if ($this->accessToken !== null && ($this->expiresAt === null || $this->expiresAt > new DateTime())){
+    public function getToken(): string
+    {
+        if ($this->accessToken !== null && ($this->expiresAt === null || $this->expiresAt > new DateTime())) {
             return $this->accessToken;
         }
         return $this->refresh();
@@ -69,7 +69,8 @@ class InferredAuthProvider
      *
      * @return array<string, string>
      */
-    public function getAuthHeaders(): array {
+    public function getAuthHeaders(): array
+    {
         $token = $this->getToken();
         return [
             'Authorization' => "Bearer " . $token,
@@ -81,7 +82,8 @@ class InferredAuthProvider
      *
      * @return string
      */
-    private function refresh(): string {
+    private function refresh(): string
+    {
         /** @var array{xApiKey: string, clientId: string, clientSecret: string, audience: 'https://api.example.com', grantType: 'client_credentials', scope?: string|null} $values */
         $values = [
             'xApiKey' => $this->options['xApiKey'] ?? '',
@@ -109,7 +111,8 @@ class InferredAuthProvider
      * @param int $bufferInMinutes The buffer time in minutes to subtract from the expiration.
      * @return DateTime
      */
-    private function getExpiresAt(int $expiresInSeconds, int $bufferInMinutes): DateTime {
+    private function getExpiresAt(int $expiresInSeconds, int $bufferInMinutes): DateTime
+    {
         $now = new DateTime();
         $expiresInSecondsWithBuffer = $expiresInSeconds - ($bufferInMinutes * 60);
         $now->modify("+{$expiresInSecondsWithBuffer} seconds");

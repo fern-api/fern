@@ -13,7 +13,8 @@ class JsonEncoder
      * @return string The encoded string.
      * @throws JsonException
      */
-    public static function encode(mixed $value): string {
+    public static function encode(mixed $value): string
+    {
         return json_encode($value, JSON_THROW_ON_ERROR);
     }
 }

@@ -27,15 +27,16 @@ class GetBasicSolutionFileRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->methodName = $values['methodName'];$this->signature = $values['signature'];
+    ) {
+        $this->methodName = $values['methodName'];
+        $this->signature = $values['signature'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

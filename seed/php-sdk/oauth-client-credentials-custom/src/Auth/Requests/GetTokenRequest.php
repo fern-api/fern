@@ -62,8 +62,13 @@ class GetTokenRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->cid = $values['cid'];$this->csr = $values['csr'];$this->scp = $values['scp'];$this->entityId = $values['entityId'];$this->audience = $values['audience'];$this->grantType = $values['grantType'];$this->scope = $values['scope'] ?? null;
+    ) {
+        $this->cid = $values['cid'];
+        $this->csr = $values['csr'];
+        $this->scp = $values['scp'];
+        $this->entityId = $values['entityId'];
+        $this->audience = $values['audience'];
+        $this->grantType = $values['grantType'];
+        $this->scope = $values['scope'] ?? null;
     }
 }

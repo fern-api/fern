@@ -14,7 +14,7 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class HeadersClient 
+class HeadersClient
 {
     /**
      * @var array{
@@ -42,11 +42,10 @@ class HeadersClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -65,7 +64,8 @@ class HeadersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): SendResponse {
+    public function send(SendLiteralsInHeadersRequest $request, ?array $options = null): SendResponse
+    {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
         $headers['X-Endpoint-Version'] = '02-12-2024';
@@ -82,15 +82,15 @@ class HeadersClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return SendResponse::fromJson($json);
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

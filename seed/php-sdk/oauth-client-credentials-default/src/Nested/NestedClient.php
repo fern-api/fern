@@ -6,7 +6,7 @@ use Seed\Nested\Api\ApiClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class NestedClient 
+class NestedClient
 {
     /**
      * @var ApiClient $api
@@ -39,11 +39,10 @@ class NestedClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->api = new ApiClient($this->client, $this->options);

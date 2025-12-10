@@ -19,8 +19,7 @@ class UpdateUserRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
+    ) {
         $this->body = $values['body'];
     }
 }

@@ -16,7 +16,7 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class EventsClient 
+class EventsClient
 {
     /**
      * @var MetadataClient $metadata
@@ -49,11 +49,10 @@ class EventsClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->metadata = new MetadataClient($this->client, $this->options);
@@ -75,10 +74,11 @@ class EventsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listEvents(ListUserEventsRequest $request = new ListUserEventsRequest(), ?array $options = null): array {
+    public function listEvents(ListUserEventsRequest $request = new ListUserEventsRequest(), ?array $options = null): array
+    {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->limit != null){
+        if ($request->limit != null) {
             $query['limit'] = $request->limit;
         }
         try {
@@ -92,15 +92,15 @@ class EventsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeArray($json, [Event::class]); // @phpstan-ignore-line
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

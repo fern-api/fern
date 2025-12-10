@@ -35,8 +35,9 @@ class ListUsersOffsetStepPaginationRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    )
-    {
-        $this->page = $values['page'] ?? null;$this->limit = $values['limit'] ?? null;$this->order = $values['order'] ?? null;
+    ) {
+        $this->page = $values['page'] ?? null;
+        $this->limit = $values['limit'] ?? null;
+        $this->order = $values['order'] ?? null;
     }
 }

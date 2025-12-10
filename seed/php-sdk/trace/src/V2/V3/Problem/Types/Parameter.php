@@ -35,15 +35,17 @@ class Parameter extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->parameterId = $values['parameterId'];$this->name = $values['name'];$this->variableType = $values['variableType'];
+    ) {
+        $this->parameterId = $values['parameterId'];
+        $this->name = $values['name'];
+        $this->variableType = $values['variableType'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

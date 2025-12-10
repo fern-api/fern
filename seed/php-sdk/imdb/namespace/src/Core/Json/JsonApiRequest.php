@@ -1,6 +1,7 @@
 <?php
 
 namespace Fern\Core\Json;
+
 use Fern\Core\Client\BaseApiRequest;
 use Fern\Core\Client\HttpMethod;
 

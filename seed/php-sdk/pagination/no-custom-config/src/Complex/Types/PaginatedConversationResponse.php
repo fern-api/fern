@@ -42,15 +42,18 @@ class PaginatedConversationResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->conversations = $values['conversations'];$this->pages = $values['pages'] ?? null;$this->totalCount = $values['totalCount'];$this->type = $values['type'];
+    ) {
+        $this->conversations = $values['conversations'];
+        $this->pages = $values['pages'] ?? null;
+        $this->totalCount = $values['totalCount'];
+        $this->type = $values['type'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

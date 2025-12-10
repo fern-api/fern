@@ -22,8 +22,7 @@ class MultipartFormData
         string $name,
         string|int|bool|float|StreamInterface $value,
         ?string $contentType = null,
-    ): void
-    {
+    ): void {
         $headers = $contentType != null ? ['Content-Type' => $contentType] : null;
         self::addPart(
             new MultipartFormDataPart(
@@ -57,6 +56,6 @@ class MultipartFormData
      */
     public function toArray(): array
     {
-        return array_map(fn($part) => $part->toArray(), $this->parts);
+        return array_map(fn ($part) => $part->toArray(), $this->parts);
     }
 }

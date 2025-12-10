@@ -10,7 +10,7 @@ use Seed\Auth\Requests\GetTokenRequest;
  * The OAuthTokenProvider retrieves an OAuth access token, refreshing it as needed.
  * The access token is then used as the bearer token in every authenticated request.
  */
-class OAuthTokenProvider 
+class OAuthTokenProvider
 {
     /**
      * @var int $BUFFER_IN_MINUTES
@@ -47,12 +47,11 @@ class OAuthTokenProvider
      * @param string $clientSecret The client secret for OAuth authentication.
      * @param AuthClient $authClient The client used to retrieve the OAuth token.
      */
-    function __construct(
+    public function __construct(
         string $clientId,
         string $clientSecret,
         AuthClient $authClient,
-    )
-    {
+    ) {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
         $this->authClient = $authClient;
@@ -65,8 +64,9 @@ class OAuthTokenProvider
      *
      * @return string
      */
-    public function getToken(): string {
-        if ($this->accessToken !== null && ($this->expiresAt === null || $this->expiresAt > new DateTime())){
+    public function getToken(): string
+    {
+        if ($this->accessToken !== null && ($this->expiresAt === null || $this->expiresAt > new DateTime())) {
             return $this->accessToken;
         }
         return $this->refresh();
@@ -77,7 +77,8 @@ class OAuthTokenProvider
      *
      * @return string
      */
-    private function refresh(): string {
+    private function refresh(): string
+    {
         $request = new GetTokenRequest([
             'clientId' => $this->clientId,
             'clientSecret' => $this->clientSecret,
@@ -100,7 +101,8 @@ class OAuthTokenProvider
      * @param int $bufferInMinutes The buffer time in minutes to subtract from the expiration.
      * @return DateTime
      */
-    private function getExpiresAt(int $expiresInSeconds, int $bufferInMinutes): DateTime {
+    private function getExpiresAt(int $expiresInSeconds, int $bufferInMinutes): DateTime
+    {
         $now = new DateTime();
         $expiresInSecondsWithBuffer = $expiresInSeconds - ($bufferInMinutes * 60);
         $now->modify("+{$expiresInSecondsWithBuffer} seconds");

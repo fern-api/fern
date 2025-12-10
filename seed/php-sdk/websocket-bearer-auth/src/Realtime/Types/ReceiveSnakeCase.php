@@ -27,15 +27,16 @@ class ReceiveSnakeCase extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->receiveText = $values['receiveText'];$this->receiveInt = $values['receiveInt'];
+    ) {
+        $this->receiveText = $values['receiveText'];
+        $this->receiveInt = $values['receiveInt'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }
