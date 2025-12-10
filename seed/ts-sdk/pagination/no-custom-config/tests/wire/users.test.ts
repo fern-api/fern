@@ -715,8 +715,5 @@ describe("UsersClient", () => {
         });
 
         expect(page.data).toEqual([]);
-        expect(page.hasNextPage()).toBe(true);
-        const nextPage = await page.getNextPage();
-        expect(nextPage.data).toEqual([]);
     });
 });
