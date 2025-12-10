@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp, mkdir, readFile, writeFile } from "fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "fs/promises";
 import { glob } from "glob";
 import path, { join } from "path";
 import { SourceFile } from "ts-morph";
@@ -237,27 +237,53 @@ export class CoreUtilitiesManager {
             );
         }
 
-        // Generate custom pager file if customPagerName is set
-        // The file is named after the custom pager (e.g., MyPager.ts, PayrocPager.ts)
+        // Rename CustomPager to custom name if customPagerName is set
+        // This renames the class and types inside the file, not just aliasing
         if (
             this.referencedCoreUtilities["pagination"] != null &&
             this.customPagerName != null &&
             this.customPagerName !== "CustomPager"
         ) {
             const pagerFileName = this.customPagerName;
-            const pagerFilePath = path.join(pathToSrc, "core", "pagination", `${pagerFileName}.ts`);
-            const pagerContent = [
-                `export { CustomPager as ${pagerFileName}, type CustomPagerParser as ${pagerFileName}Parser, type CustomPagerContext as ${pagerFileName}Context } from "./CustomPager";`,
+            const paginationDir = path.join(pathToSrc, "core", "pagination");
+            const customPagerPath = path.join(paginationDir, "CustomPager.ts");
+
+            // Read the generated CustomPager.ts file
+            let contents = await readFile(customPagerPath, "utf8");
+
+            // Step 1: Remove 'export' from CustomPagerParser and CustomPagerContext
+            // These are internal types that don't need to be exported
+            contents = contents.replace("export type CustomPagerParser", "type CustomPagerParser");
+            contents = contents.replace("export interface CustomPagerContext", "interface CustomPagerContext");
+
+            // Step 2: Global replacement of CustomPager -> custom name
+            // This renames the class, types, and all references
+            contents = contents.replaceAll("CustomPager", pagerFileName);
+
+            // Write the renamed file
+            const pagerFilePath = path.join(paginationDir, `${pagerFileName}.ts`);
+            await writeFile(pagerFilePath, contents);
+
+            // Delete the original CustomPager.ts
+            await rm(customPagerPath);
+
+            // Rewrite pagination/index.ts to only export Page and the custom pager class
+            const paginationIndexPath = path.join(paginationDir, "index.ts");
+            const indexContents = [
+                `export { Page } from "./Page.js";`,
+                `export { ${pagerFileName} } from "./${pagerFileName}.js";`,
                 ""
             ].join("\n");
-            await writeFile(pagerFilePath, pagerContent);
+            await writeFile(paginationIndexPath, indexContents);
 
-            // Update pagination/index.ts to export from the custom pager file
-            const paginationIndexPath = path.join(pathToSrc, "core", "pagination", "index.ts");
-            const paginationIndexContent = await readFile(paginationIndexPath, "utf8");
-            const updatedPaginationIndexContent =
-                paginationIndexContent.trimEnd() + `\nexport * from "./${pagerFileName}";\n`;
-            await writeFile(paginationIndexPath, updatedPaginationIndexContent);
+            // Rewrite pagination/exports.ts to only export Page and the custom pager class
+            const exportsPath = path.join(paginationDir, "exports.ts");
+            const exportsContents = [
+                `export { Page } from "./Page.js";`,
+                `export { ${pagerFileName} } from "./${pagerFileName}.js";`,
+                ""
+            ].join("\n");
+            await writeFile(exportsPath, exportsContents);
         }
     }
 
