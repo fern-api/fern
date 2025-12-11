@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.search() -> Seed::Types::SearchResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">search</a>() -> Seed::Types::SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -35,6 +35,14 @@ client.search(
     }
   },
   optional_user: {
+    name: 'name',
+    tags: ['tags', 'tags']
+  },
+  neighbor: {
+    name: 'name',
+    tags: ['tags', 'tags']
+  },
+  neighbor_required: {
     name: 'name',
     tags: ['tags', 'tags']
   }
@@ -174,6 +182,14 @@ client.search(
 <dd>
 
 **neighbor_required:** `Seed::Types::SearchRequestNeighborRequired` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

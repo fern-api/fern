@@ -29,3 +29,4 @@
 "/users"
 "/users"
 "/users"
+"/users/optional-data"

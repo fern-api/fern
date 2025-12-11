@@ -70,6 +70,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedErrorPropertyClient } from "@fern/error-property";
+
+const client = new SeedErrorPropertyClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.propertyBasedError.throwError(..., {
     headers: {
         'X-Custom-Header': 'custom value'

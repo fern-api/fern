@@ -23,10 +23,11 @@ module Seed
       # @return [Seed::Problem::Types::CreateProblemResponse]
       def create_problem(request_options: {}, **params)
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/problem-crud/create",
-          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h
+          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -56,10 +57,11 @@ module Seed
       # @return [Seed::Problem::Types::UpdateProblemResponse]
       def update_problem(request_options: {}, **params)
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/problem-crud/update/#{params[:problem_id]}",
-          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h
+          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -89,9 +91,10 @@ module Seed
       # @return [untyped]
       def delete_problem(request_options: {}, **params)
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/problem-crud/delete/#{params[:problem_id]}"
+          path: "/problem-crud/delete/#{params[:problem_id]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -121,10 +124,11 @@ module Seed
         body_bag = params.slice(*body_prop_names)
 
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/problem-crud/default-starter-files",
-          body: Seed::Problem::Types::GetDefaultStarterFilesRequest.new(body_bag).to_h
+          body: Seed::Problem::Types::GetDefaultStarterFilesRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

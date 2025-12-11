@@ -38,7 +38,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedTraceClient, SeedTrace } from "@fern/trace";
+import { SeedTrace, SeedTraceClient } from "@fern/trace";
 
 const client = new SeedTraceClient({ token: "YOUR_TOKEN", xRandomHeader: "YOUR_X_RANDOM_HEADER" });
 await client.admin.updateTestSubmissionStatus(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
@@ -86,6 +86,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedTraceClient } from "@fern/trace";
+
+const client = new SeedTraceClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.admin.updateTestSubmissionStatus(..., {
     headers: {
         'X-Custom-Header': 'custom value'

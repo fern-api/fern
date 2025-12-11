@@ -59,7 +59,7 @@ Generator Invocation Custom Content for @fern/examples
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedExamplesEnvironment, SeedExamplesClient } from "@fern/examples";
+import { SeedExamplesClient, SeedExamplesEnvironment } from "@fern/examples";
 
 const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });
 await client.service.createMovie({
@@ -126,6 +126,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedExamplesClient } from "@fern/examples";
+
+const client = new SeedExamplesClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.service.createMovie(..., {
     headers: {
         'X-Custom-Header': 'custom value'

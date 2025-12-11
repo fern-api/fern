@@ -7,5 +7,9 @@ client = Seed::Client.new(
 
 client.playlist.update_playlist(
   service_param: 1,
-  playlist_id: 'playlistId'
+  playlist_id: 'playlistId',
+  request: {
+    name: 'name',
+    problems: ['problems', 'problems']
+  }
 );

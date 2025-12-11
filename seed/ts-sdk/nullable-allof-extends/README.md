@@ -37,7 +37,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedApiClient, SeedApi } from "@fern/nullable-allof-extends";
+import { SeedApi, SeedApiClient } from "@fern/nullable-allof-extends";
 
 const client = new SeedApiClient;
 await client.createTest({});
@@ -70,6 +70,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedApiClient } from "@fern/nullable-allof-extends";
+
+const client = new SeedApiClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.createTest(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -64,6 +64,7 @@ export async function convertMarkdown({
             "no-image-zoom": undefined,
             "force-toc": undefined,
             "hide-nav-links": undefined,
+            "last-updated": undefined,
             breadcrumb: undefined,
             excerpt: undefined,
             "canonical-url": undefined,

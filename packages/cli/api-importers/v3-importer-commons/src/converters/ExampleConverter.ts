@@ -888,39 +888,52 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         // Handle additional properties
         const additionalPropertiesResults: Array<{ key: string; result: ExampleConverter.Output }> = [];
-        if (resolvedSchema.additionalProperties !== false) {
-            const additionalPropertiesSchema: OpenAPIV3_1.SchemaObject =
-                typeof resolvedSchema.additionalProperties === "object"
-                    ? resolvedSchema.additionalProperties
-                    : ({
-                          oneOf: [
-                              { type: "string" },
-                              { type: "number" },
-                              { type: "boolean" },
-                              { type: "object" },
-                              { type: "array" }
-                          ]
-                          // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                      } as any);
 
-            // Find properties in the example that are not defined in the schema
-            const definedPropertyKeys = new Set(Object.keys(example ?? {}));
-            const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
+        // Find properties in the example that are not defined in the schema
+        const definedPropertyKeys = new Set(Object.keys(resolvedSchema.properties ?? {}));
+        const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
 
-            additionalPropertyKeys.forEach((key) => {
-                const exampleConverter = new ExampleConverter({
-                    breadcrumbs: [...this.breadcrumbs, key],
-                    context: this.context,
-                    schema: additionalPropertiesSchema,
-                    example: exampleObj[key],
-                    depth: this.depth + 1,
-                    generateOptionalProperties: false,
-                    exampleGenerationStrategy: this.exampleGenerationStrategy,
-                    seenRefs: this.getMaybeUpdatedSeenRefs()
+        if (additionalPropertyKeys.length > 0) {
+            if (resolvedSchema.additionalProperties === false) {
+                // Additional properties are not allowed, create errors for each extra property
+                additionalPropertyKeys.forEach((key) => {
+                    const breadcrumbPath = [...this.breadcrumbs, key].join(".");
+                    const error = {
+                        message: `Found unexpected property '${key}' in example. This property does not exist in the schema${breadcrumbPath ? ` at path: ${breadcrumbPath}` : ""}`,
+                        path: [...this.breadcrumbs, key]
+                    };
+                    additionalPropertiesResults.push({
+                        key,
+                        result: {
+                            isValid: false,
+                            coerced: false,
+                            usedProvidedExample: true,
+                            validExample: undefined,
+                            errors: [error]
+                        }
+                    });
                 });
-                const result = exampleConverter.convert();
-                additionalPropertiesResults.push({ key, result });
-            });
+            } else {
+                // Additional properties are allowed, but create warning errors for unexpected properties
+                // We'll add these as separate warning results that don't affect validation
+                additionalPropertyKeys.forEach((key) => {
+                    const breadcrumbPath = [...this.breadcrumbs, key].join(".");
+                    const warningError = {
+                        message: `Additional property ${key} is not allowed`,
+                        path: [...this.breadcrumbs, key]
+                    };
+                    additionalPropertiesResults.push({
+                        key,
+                        result: {
+                            isValid: true, // Keep as valid since additional properties are allowed
+                            coerced: false,
+                            usedProvidedExample: true,
+                            validExample: undefined, // Don't provide a valid example to avoid further validation
+                            errors: [warningError] // Include as warning error
+                        }
+                    });
+                });
+            }
         }
 
         // Add additional properties to the example
@@ -948,7 +961,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             validExample: example,
             errors: [
                 ...resultsByKey.flatMap(({ result }) => result.errors),
-                ...allOfResults.flatMap((result) => result.errors)
+                ...allOfResults.flatMap((result) => result.errors),
+                ...additionalPropertiesResults.flatMap(({ result }) => result.errors)
             ]
         };
     }

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require_relative "wire_helper"
 require "net/http"
 require "json"
 require "uri"
@@ -202,10 +202,51 @@ class EndpointsObjectWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.object.get_and_return_nested_with_required_field_as_list(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                                                 additional_headers: {
-                                                                                                   "X-Test-Id" => "endpoints.object.get_and_return_nested_with_required_field_as_list.0"
-                                                                                                 } })
+    client.endpoints.object.get_and_return_nested_with_required_field_as_list(
+      request: [{
+        string: "string",
+        nested_object: {
+          string: "string",
+          integer: 1,
+          long: 1_000_000,
+          double: 1.1,
+          bool: true,
+          datetime: "2024-01-15T09:30:00Z",
+          date: "2023-01-15",
+          uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+          base_64: "SGVsbG8gd29ybGQh",
+          list: %w[list list],
+          set: Set.new(["set"]),
+          map: {
+            1 => "map"
+          },
+          bigint: "1000000"
+        }
+      }, {
+        string: "string",
+        nested_object: {
+          string: "string",
+          integer: 1,
+          long: 1_000_000,
+          double: 1.1,
+          bool: true,
+          datetime: "2024-01-15T09:30:00Z",
+          date: "2023-01-15",
+          uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+          base_64: "SGVsbG8gd29ybGQh",
+          list: %w[list list],
+          set: Set.new(["set"]),
+          map: {
+            1 => "map"
+          },
+          bigint: "1000000"
+        }
+      }],
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.object.get_and_return_nested_with_required_field_as_list.0"
+                         } }
+    )
 
     verify_request_count(
       test_id: test_id,

@@ -40,7 +40,6 @@ await client.foo();
 </dl>
 </details>
 
-## 
 ## A B
 <details><summary><code>client.a.b.<a href="/src/api/resources/a/resources/b/client/Client.ts">foo</a>() -> void</code></summary>
 <dl>

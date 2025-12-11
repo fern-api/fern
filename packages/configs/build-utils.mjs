@@ -1,7 +1,11 @@
-import tsup from 'tsup';
-import { cp } from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import { exec } from "child_process";
+import { cp, mkdir, rm, writeFile } from "fs/promises";
+import path from "path";
+import tsup from "tsup";
+import { fileURLToPath } from "url";
+import { promisify } from "util";
+
+const execAsync = promisify(exec);
 
 /**
  * Standard build function for Fern generators
@@ -17,24 +21,20 @@ import { fileURLToPath } from 'url';
  *   - array of objects: [{ from: '...', to: '...' }, ...]
  */
 export async function buildGenerator(dirname, options = {}) {
-    const {
-        entry = 'src/cli.ts',
-        tsupOptions = {},
-        copy = null
-    } = options;
+    const { entry = "src/cli.ts", tsupOptions = {}, copy = null } = options;
 
     // Build with tsup (merge default options with custom ones)
     const defaultTsupOptions = {
         entry: [entry],
-        format: ['cjs'],
+        format: ["cjs"],
         sourcemap: true,
         clean: true,
-        outDir: 'dist',
+        outDir: "dist"
     };
 
     await tsup.build({
         ...defaultTsupOptions,
-        ...tsupOptions,
+        ...tsupOptions
     });
 
     // Copy additional files if needed
@@ -42,20 +42,15 @@ export async function buildGenerator(dirname, options = {}) {
         const copyOperations = Array.isArray(copy) ? copy : [copy];
 
         for (const copyOp of copyOperations) {
-            if (typeof copyOp === 'string') {
+            if (typeof copyOp === "string") {
                 // Simple string: copy to dist/
-                await cp(
-                    path.join(dirname, copyOp),
-                    path.join(dirname, 'dist'),
-                    { recursive: true }
-                );
-            } else if (typeof copyOp === 'object' && copyOp.from) {
+                await cp(path.join(dirname, copyOp), path.join(dirname, "dist"), { recursive: true });
+            } else if (typeof copyOp === "object" && copyOp.from) {
                 // Object with from/to: custom destination
-                await cp(
-                    path.join(dirname, copyOp.from),
-                    path.join(dirname, copyOp.to),
-                    { recursive: true, force: true }
-                );
+                await cp(path.join(dirname, copyOp.from), path.join(dirname, copyOp.to), {
+                    recursive: true,
+                    force: true
+                });
             }
         }
     }
@@ -68,4 +63,79 @@ export async function buildGenerator(dirname, options = {}) {
  */
 export function getDirname(importMetaUrl) {
     return path.dirname(fileURLToPath(importMetaUrl));
+}
+
+/**
+ * Build function for dynamic snippets packages
+ * Creates both CJS and ESM outputs with proper package.json exports
+ * @param {string} dirname - The __dirname of the calling build.mjs file
+ * @param {Object} packageJson - The package.json contents
+ * @param {string} [versionOverride] - Optional version override from CLI args
+ */
+export async function buildDynamicSnippets(dirname, packageJson, versionOverride) {
+    const distDir = path.join(dirname, "dist");
+    const srcDir = path.join(dirname, "src");
+    const tsconfigPath = path.join(dirname, "build.tsconfig.json");
+
+    await rm(distDir, { recursive: true, force: true });
+    await mkdir(distDir, { recursive: true });
+
+    // Import polyfillNode dynamically
+    const { polyfillNode } = await import("esbuild-plugin-polyfill-node");
+
+    await tsup.build({
+        entry: [path.join(srcDir, "index.ts")],
+        target: "es2020",
+        minify: true,
+        dts: true,
+        sourcemap: true,
+        esbuildPlugins: [
+            polyfillNode({
+                globals: {
+                    buffer: true,
+                    process: true
+                },
+                polyfills: {
+                    fs: false,
+                    crypto: false
+                }
+            })
+        ],
+        tsconfig: tsconfigPath,
+        format: ["cjs", "esm"],
+        outDir: path.join(distDir, "dist"), // yes, this is intentional to have dist/dist
+        clean: false
+    });
+
+    // Write package.json to dist directory
+    await writeFile(
+        path.join(distDir, "package.json"),
+        JSON.stringify(
+            {
+                name: packageJson.name,
+                version: versionOverride || packageJson.version,
+                repository: packageJson.repository,
+                type: "module",
+                exports: {
+                    import: {
+                        types: "./dist/index.d.ts",
+                        default: "./dist/index.js"
+                    },
+                    require: {
+                        types: "./dist/index.d.cts",
+                        default: "./dist/index.cjs"
+                    }
+                },
+                main: "./dist/index.cjs",
+                module: "./dist/index.js",
+                types: "./dist/index.d.cts",
+                files: ["dist"]
+            },
+            undefined,
+            2
+        )
+    );
+
+    // Run npm pkg fix to format and fix the package.json
+    await execAsync("npm pkg fix", { cwd: distDir });
 }

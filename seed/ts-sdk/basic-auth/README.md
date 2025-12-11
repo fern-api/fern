@@ -72,6 +72,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedBasicAuthClient } from "@fern/basic-auth";
+
+const client = new SeedBasicAuthClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.basicAuth.postWithBasicAuth(..., {
     headers: {
         'X-Custom-Header': 'custom value'

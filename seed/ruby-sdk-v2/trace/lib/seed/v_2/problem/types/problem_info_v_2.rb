@@ -6,26 +6,14 @@ module Seed
       module Types
         class ProblemInfoV2 < Internal::Types::Model
           field :problem_id, -> { String }, optional: false, nullable: false, api_name: "problemId"
-          field :problem_description, -> {
-            Seed::Problem::Types::ProblemDescription
-          }, optional: false, nullable: false, api_name: "problemDescription"
+          field :problem_description, -> { Seed::Problem::Types::ProblemDescription }, optional: false, nullable: false, api_name: "problemDescription"
           field :problem_name, -> { String }, optional: false, nullable: false, api_name: "problemName"
           field :problem_version, -> { Integer }, optional: false, nullable: false, api_name: "problemVersion"
-          field :supported_languages, -> {
-            Internal::Types::Array[Seed::Commons::Types::Language]
-          }, optional: false, nullable: false, api_name: "supportedLanguages"
-          field :custom_files, -> {
-            Seed::V2::Problem::Types::CustomFiles
-          }, optional: false, nullable: false, api_name: "customFiles"
-          field :generated_files, -> {
-            Seed::V2::Problem::Types::GeneratedFiles
-          }, optional: false, nullable: false, api_name: "generatedFiles"
-          field :custom_test_case_templates, -> {
-            Internal::Types::Array[Seed::V2::Problem::Types::TestCaseTemplate]
-          }, optional: false, nullable: false, api_name: "customTestCaseTemplates"
-          field :testcases, -> {
-            Internal::Types::Array[Seed::V2::Problem::Types::TestCaseV2]
-          }, optional: false, nullable: false
+          field :supported_languages, -> { Internal::Types::Array[Seed::Commons::Types::Language] }, optional: false, nullable: false, api_name: "supportedLanguages"
+          field :custom_files, -> { Seed::V2::Problem::Types::CustomFiles }, optional: false, nullable: false, api_name: "customFiles"
+          field :generated_files, -> { Seed::V2::Problem::Types::GeneratedFiles }, optional: false, nullable: false, api_name: "generatedFiles"
+          field :custom_test_case_templates, -> { Internal::Types::Array[Seed::V2::Problem::Types::TestCaseTemplate] }, optional: false, nullable: false, api_name: "customTestCaseTemplates"
+          field :testcases, -> { Internal::Types::Array[Seed::V2::Problem::Types::TestCaseV2] }, optional: false, nullable: false
           field :is_public, -> { Internal::Types::Boolean }, optional: false, nullable: false, api_name: "isPublic"
         end
       end

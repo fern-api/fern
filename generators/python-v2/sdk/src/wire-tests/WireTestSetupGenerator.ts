@@ -239,11 +239,28 @@ def verify_request_count(
     }
 
     /**
-     * Gets the client class name based on organization and workspace name.
+     * Gets the client class name to import in wire tests. Honors the same overrides as the main
+     * Python generator, so that if an SDK config specifies a custom client class name, the wire
+     * tests import and instantiate that exact class.
      */
     private getClientClassName(): string {
         const orgName = this.context.config.organization;
         const workspaceName = this.context.config.workspaceName;
+
+        const customConfig = (this.context.config.customConfig ?? {}) as {
+            client?: { exported_class_name?: string; class_name?: string };
+            client_class_name?: string;
+        };
+
+        if (customConfig.client?.exported_class_name != null) {
+            return customConfig.client.exported_class_name;
+        }
+        if (customConfig.client_class_name != null) {
+            return customConfig.client_class_name;
+        }
+        if (customConfig.client?.class_name != null) {
+            return customConfig.client.class_name;
+        }
 
         const toPascalCase = (str: string) => {
             return str

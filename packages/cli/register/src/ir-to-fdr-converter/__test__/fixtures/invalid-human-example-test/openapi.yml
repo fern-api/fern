@@ -1,0 +1,54 @@
+openapi: 3.1.0
+info:
+  title: Invalid Human Example Test
+  version: 1.0.0
+paths:
+  /user:
+    post:
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              examples:
+                invalidUserExample:
+                  summary: "Human example with invalid properties"
+                  value:
+                    id: "user-123"
+                    email: "test@example.com"
+                    name: "John Doe"
+                    role: "admin"
+                    # These properties DO NOT EXIST in the schema - testing if validation catches them
+                    invalidProperty: "this should not be here"
+                    anotherBadField: 12345
+                    # Missing required property: age (if it was required)
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - email
+        - name
+        - role
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        role:
+          type: string
+          enum: [user, admin]
+        # Note: No invalidProperty or anotherBadField defined

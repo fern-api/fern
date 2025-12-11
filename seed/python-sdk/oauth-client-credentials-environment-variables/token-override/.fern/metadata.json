@@ -1,8 +1,0 @@
-{
-  "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "latest",
-  "generatorConfig": {
-    "oauth-token-override": true
-  }
-}

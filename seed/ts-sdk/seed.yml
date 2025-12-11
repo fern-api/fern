@@ -266,18 +266,12 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
-    - outputFolder: token-override
-      customConfig:
-        oauthTokenOverride: true  
   oauth-client-credentials-mandatory-auth:
     - outputFolder: no-custom-config
       customConfig: null
   oauth-client-credentials-environment-variables:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: token-override
-      customConfig:
-        oauthTokenOverride: true
   oauth-client-credentials-nested-root:
     - outputFolder: no-custom-config
       customConfig: null
@@ -373,9 +367,14 @@ fixtures:
     - outputFolder: use-oxlint
       customConfig:
         linter: oxlint
-    - outputFolder: no-linter
+    - outputFolder: use-oxc
+      customConfig:
+        linter: oxlint
+        formatter: oxfmt
+    - outputFolder: no-linter-and-formatter
       customConfig:
         linter: none
+        formatter: none
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
@@ -447,6 +446,10 @@ fixtures:
     - outputFolder: page-index-semantics
       customConfig:
         offsetSemantics: "page-index"
+  pagination-custom:
+    - outputFolder: .
+      customConfig:
+        customPagerName: "MyPager"
 scripts:
   - image: fernapi/ts-seed
     commands:

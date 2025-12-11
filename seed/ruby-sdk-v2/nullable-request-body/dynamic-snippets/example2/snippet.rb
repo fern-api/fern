@@ -8,5 +8,9 @@ client.test_group.test_method_name(
     id: 'id',
     name: 'name'
   },
-  query_param_integer: 1
+  query_param_integer: 1,
+  body: {
+    id: 'id',
+    name: 'name'
+  }
 );

@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>client.unknown.post(request) -> Internal::Types::Array[Object]</code></summary>
+<details><summary><code>client.unknown.<a href="/lib/seed/unknown/client.rb">post</a>(request) -> Internal::Types::Array[Object]</code></summary>
 <dl>
 <dd>
 
@@ -32,6 +32,14 @@ client.unknown.post();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Unknown::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -40,7 +48,7 @@ client.unknown.post();
 </dl>
 </details>
 
-<details><summary><code>client.unknown.post_object(request) -> Internal::Types::Array[Object]</code></summary>
+<details><summary><code>client.unknown.<a href="/lib/seed/unknown/client.rb">post_object</a>(request) -> Internal::Types::Array[Object]</code></summary>
 <dl>
 <dd>
 
@@ -69,6 +77,14 @@ client.unknown.post_object();
 <dd>
 
 **request:** `Seed::Unknown::Types::MyObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Unknown::RequestOptions` 
     
 </dd>
 </dl>

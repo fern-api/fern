@@ -38,7 +38,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedAudiencesEnvironment, SeedAudiencesClient } from "@fern/audiences";
+import { SeedAudiencesClient, SeedAudiencesEnvironment } from "@fern/audiences";
 
 const client = new SeedAudiencesClient({ environment: SeedAudiencesEnvironment.EnvironmentA });
 await client.foo.find({
@@ -88,6 +88,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedAudiencesClient } from "@fern/audiences";
+
+const client = new SeedAudiencesClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.foo.find(..., {
     headers: {
         'X-Custom-Header': 'custom value'

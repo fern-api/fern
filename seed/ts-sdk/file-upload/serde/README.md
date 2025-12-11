@@ -40,8 +40,8 @@ Instantiate and use the client with the following:
 
 ```typescript
 import { createReadStream } from "fs";
-import { SeedFileUploadClient } from "@fern/file-upload";
 import * as fs from "fs";
+import { SeedFileUploadClient } from "@fern/file-upload";
 
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
 await client.service.justFile({
@@ -88,8 +88,8 @@ You can upload files using the client:
 
 ```typescript
 import { createReadStream } from "fs";
-import { SeedFileUploadClient } from "@fern/file-upload";
 import * as fs from "fs";
+import { SeedFileUploadClient } from "@fern/file-upload";
 
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
 await client.service.justFile({
@@ -133,6 +133,15 @@ For example, `fs.ReadStream` has a `path` property which the SDK uses to retriev
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedFileUploadClient } from "@fern/file-upload";
+
+const client = new SeedFileUploadClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.service.justFile(..., {
     headers: {
         'X-Custom-Header': 'custom value'

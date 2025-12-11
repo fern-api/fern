@@ -42,6 +42,7 @@ class CoreUtilities:
         self._should_generate_websocket_clients = custom_config.should_generate_websocket_clients
         self._exclude_types_from_init_exports = custom_config.exclude_types_from_init_exports
         self._custom_pager_base_name = self._sanitize_pager_name(custom_config.custom_pager_name or "CustomPager")
+        self._use_str_enums = custom_config.pydantic_config.use_str_enums
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -53,6 +54,17 @@ class CoreUtilities:
             ),
             exports={"serialize_datetime"} if not self._exclude_types_from_init_exports else set(),
         )
+        # Only copy enum.py when generating actual enum classes (not string literals)
+        if not self._use_str_enums:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="enum.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="enum"),
+                ),
+                exports=set(),
+            )
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="api_error.py",

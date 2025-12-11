@@ -98,6 +98,40 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             );
         }
 
+        // Add field for OAuth token provider if using client credentials OAuth
+        const oauth = this.context.getOauth();
+        if (oauth != null && oauth.configuration.type === "clientCredentials") {
+            class_.addField(
+                php.field({
+                    name: "$oauthTokenProvider",
+                    access: "private",
+                    type: php.Type.reference(
+                        php.classReference({
+                            name: "OAuthTokenProvider",
+                            namespace: this.context.getCoreNamespace()
+                        })
+                    )
+                })
+            );
+        }
+
+        // Add field for inferred auth provider if using inferred auth
+        const inferredAuth = this.context.getInferredAuth();
+        if (inferredAuth != null) {
+            class_.addField(
+                php.field({
+                    name: "$inferredAuthProvider",
+                    access: "private",
+                    type: php.Type.reference(
+                        php.classReference({
+                            name: "InferredAuthProvider",
+                            namespace: this.context.getCoreNamespace()
+                        })
+                    )
+                })
+            );
+        }
+
         const subpackages = this.getRootSubpackages();
         const constructorParameters = this.getConstructorParameters();
         class_.addConstructor(
@@ -348,26 +382,15 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
                 writer.writeLine();
 
-                // OAuth and inferred auth token retrieval - moved after environment setup
+                // OAuth and inferred auth provider setup - moved after environment setup
                 const oauth = this.context.getOauth();
                 if (oauth != null && oauth.configuration.type === "clientCredentials") {
-                    this.writeOAuthTokenRetrieval(writer, oauth, isMultiUrl);
+                    this.writeOAuthProviderSetup(writer, oauth, isMultiUrl);
                 }
 
                 const inferredAuth = this.context.getInferredAuth();
                 if (inferredAuth != null) {
-                    this.writeInferredAuthTokenRetrieval(writer, inferredAuth, isMultiUrl, constructorParameters);
-                }
-
-                // Update headers with auth tokens - moved after token retrieval
-                const oauthScheme = this.context.getOauth();
-                if (oauthScheme != null && oauthScheme.configuration.type === "clientCredentials") {
-                    writer.writeLine("$defaultHeaders['Authorization'] = \"Bearer $token\";");
-                }
-
-                const inferredAuthScheme = this.context.getInferredAuth();
-                if (inferredAuthScheme != null) {
-                    writer.writeLine("$defaultHeaders = array_merge($defaultHeaders, $authHeaders);");
+                    this.writeInferredAuthProviderSetup(writer, inferredAuth, isMultiUrl, constructorParameters);
                 }
 
                 // Update client options with the updated headers
@@ -387,6 +410,22 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     })
                 );
                 writer.writeLine();
+
+                // Build the RawClient options, including getAuthHeaders callback if using OAuth or InferredAuth
+                const hasOAuth = oauth != null && oauth.configuration.type === "clientCredentials";
+                const hasInferredAuth = inferredAuth != null;
+
+                if (hasOAuth || hasInferredAuth) {
+                    writer.writeLine(`$this->${this.context.getClientOptionsName()}['getAuthHeaders'] = fn () => `);
+                    if (hasOAuth) {
+                        writer.writeLine(
+                            "    ['Authorization' => \"Bearer \" . $this->oauthTokenProvider->getToken()];"
+                        );
+                    } else if (hasInferredAuth) {
+                        writer.writeLine("    $this->inferredAuthProvider->getAuthHeaders();");
+                    }
+                    writer.writeLine();
+                }
 
                 writer.write("$this->client = ");
                 writer.writeNodeStatement(
@@ -677,7 +716,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 
-    private writeOAuthTokenRetrieval(writer: php.Writer, oauth: OAuthScheme, isMultiUrl: boolean): void {
+    private writeOAuthProviderSetup(writer: php.Writer, oauth: OAuthScheme, isMultiUrl: boolean): void {
         const tokenEndpointReference = oauth.configuration.tokenEndpoint.endpointReference;
         const subpackageId = tokenEndpointReference.subpackageId;
 
@@ -709,11 +748,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             writer.writeLine("($authRawClient);");
         }
 
-        writer.write("$oauthTokenProvider = new ");
+        writer.write("$this->oauthTokenProvider = new ");
         writer.writeNode(oauthTokenProviderClassReference);
         writer.writeLine("($clientId ?? '', $clientSecret ?? '', $authClient);");
-
-        writer.writeLine("$token = $oauthTokenProvider->getToken();");
         writer.writeLine();
     }
 
@@ -785,7 +822,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         return parameters;
     }
 
-    private writeInferredAuthTokenRetrieval(
+    private writeInferredAuthProviderSetup(
         writer: php.Writer,
         inferredAuth: InferredAuthScheme,
         isMultiUrl: boolean,
@@ -879,11 +916,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         writer.dedent();
         writer.writeLine("];");
 
-        writer.write("$inferredAuthProvider = new ");
+        writer.write("$this->inferredAuthProvider = new ");
         writer.writeNode(inferredAuthProviderClassReference);
         writer.writeLine("($authClient, $inferredAuthOptions);");
-
-        writer.writeLine("$authHeaders = $inferredAuthProvider->getAuthHeaders();");
         writer.writeLine();
     }
 

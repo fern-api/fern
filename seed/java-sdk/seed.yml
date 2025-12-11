@@ -265,9 +265,6 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: oauth-client-credentials
-    - customConfig:
-        oauth-token-override: true
-      outputFolder: token-override
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
@@ -298,6 +295,10 @@ fixtures:
         use-default-request-parameter-values: true
         collapse-optional-nullable: true
       outputFolder: default
+  java-default-timeout:
+    - customConfig:
+        default-timeout-in-seconds: 120
+      outputFolder: default
 scripts:
   - image: fernapi/java-seed
     commands:
@@ -318,7 +319,6 @@ allowedFailures:
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
   - oauth-client-credentials
-  - oauth-client-credentials:token-override
   - oauth-client-credentials-custom
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
