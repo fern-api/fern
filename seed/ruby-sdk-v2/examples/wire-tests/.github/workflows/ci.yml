@@ -37,7 +37,6 @@ jobs:
 
   wire-tests:
     runs-on: ubuntu-latest
-    if: hashFiles('wiremock/docker-compose.test.yml') != ''
 
     steps:
       - name: Checkout repo
