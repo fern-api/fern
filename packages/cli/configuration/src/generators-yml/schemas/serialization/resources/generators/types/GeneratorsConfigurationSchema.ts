@@ -32,6 +32,7 @@ export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
     groups: core.serialization.record(core.serialization.string(), GeneratorGroupSchema).optional(),
     reviewers: ReviewersSchema.optional(),
     ai: AiServicesSchema.optional(),
+    autorelease: core.serialization.boolean().optional(),
     openapi: GeneratorsOpenApiSchema.optional(),
     "openapi-overrides": core.serialization.string().optional(),
     "spec-origin": core.serialization.string().optional(),
@@ -51,6 +52,7 @@ export declare namespace GeneratorsConfigurationSchema {
         groups?: Record<string, GeneratorGroupSchema.Raw> | null;
         reviewers?: ReviewersSchema.Raw | null;
         ai?: AiServicesSchema.Raw | null;
+        autorelease?: boolean | null;
         openapi?: GeneratorsOpenApiSchema.Raw | null;
         "openapi-overrides"?: string | null;
         "spec-origin"?: string | null;
