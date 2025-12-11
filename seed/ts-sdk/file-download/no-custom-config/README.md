@@ -5,6 +5,24 @@
 
 The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Binary Response](#binary-response)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Aborting Requests](#aborting-requests)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Logging](#logging)
+  - [Runtime Compatibility](#runtime-compatibility)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -442,6 +460,15 @@ const text = new TextDecoder().decode(bytes);
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedFileDownloadClient } from "@fern/file-download";
+
+const client = new SeedFileDownloadClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.service.simple(..., {
     headers: {
         'X-Custom-Header': 'custom value'

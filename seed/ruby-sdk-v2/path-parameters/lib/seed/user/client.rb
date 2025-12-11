@@ -25,7 +25,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}"
+          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -56,7 +57,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/#{params[:tenant_id]}/user/",
-          body: Seed::User::Types::User.new(params).to_h
+          body: Seed::User::Types::User.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -91,7 +93,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/#{params[:tenant_id]}/user/#{params[:user_id]}",
-          body: Seed::User::Types::User.new(body_params).to_h
+          body: Seed::User::Types::User.new(body_params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -130,7 +133,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/search",
-          query: query_params
+          query: query_params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -162,7 +166,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/metadata/v#{params[:version]}"
+          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/metadata/v#{params[:version]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -197,7 +202,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/specifics/#{params[:version]}/#{params[:thought]}"
+          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/specifics/#{params[:version]}/#{params[:thought]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)

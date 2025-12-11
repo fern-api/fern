@@ -32,6 +32,7 @@ export * from "./OpenApiSettingsSchema";
 export * from "./ResolveAliases";
 export * from "./ResolveAliasesSchema";
 export * from "./FormParameterEncoding";
+export * from "./DefaultIntegerFormat";
 export * from "./OpenApiExampleGenerationSchema";
 export * from "./RequestOrResponseExampleGenerationSchema";
 export * from "./OpenApiFilterSchema";

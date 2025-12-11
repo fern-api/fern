@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.endpoints.primitive.get_and_return_long();
+client.endpoints.primitive.get_and_return_long(request: 1000000);

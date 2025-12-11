@@ -1,6 +1,7 @@
 export * from "./ListUsersExtendedOptionalListResponse";
 export * from "./ListUsersExtendedResponse";
 export * from "./ListUsersMixedTypePaginationResponse";
+export * from "./ListUsersOptionalDataPaginationResponse";
 export * from "./ListUsersPaginationResponse";
 export * from "./NextPage";
 export * from "./Order";

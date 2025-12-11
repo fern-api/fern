@@ -19,6 +19,10 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: read # Required for checkout
+  id-token: write # Required for OIDC
+
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
@@ -74,7 +78,6 @@ jobs:
 
       - name: Publish Dev CLI
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           git_version="$(./scripts/git-version.sh)"
           pnpm seed publish cli --ver ${git_version} --dev --log-level debug
 
@@ -98,7 +101,7 @@ jobs:
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
-          pnpm --filter @fern-api/cli dist:cli:prod
+          pnpm turbo run dist:cli:prod --filter @fern-api/cli
           cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs"
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN" "true"
 
@@ -141,9 +144,6 @@ jobs:
           echo "Preview of the current file (${current_commit})"
           head packages/cli/cli/versions.yml
 
-          # Proceed with publishing
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          
           # Publish dev CLI at the same version as prod
           pnpm seed publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug --dev
           
@@ -174,14 +174,12 @@ jobs:
 
       - name: Publish Dev CLI
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           pnpm seed publish cli --ver ${{ inputs.version }} --dev --log-level debug
 
       - name: Publish + Register CLI
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           pnpm seed publish cli --ver ${{ inputs.version }} --log-level debug
           pnpm seed register cli
 

@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.endpoints.enum.get_and_return_enum();
+client.endpoints.enum.get_and_return_enum(request: 'SUNNY');

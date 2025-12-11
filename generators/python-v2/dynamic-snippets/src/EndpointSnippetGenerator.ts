@@ -451,6 +451,23 @@ export class EndpointSnippetGenerator {
         if (request.body != null) {
             const bodyArgs = this.getBodyRequestArgs({ body: request.body, value: snippet.requestBody });
             bodyPropertyNames = new Set(bodyArgs.map((arg) => arg.name));
+
+            // Also include schema-level property names from the body type so that we
+            // catch collisions even when the example omits a particular field.
+            if (request.body.type === "typeReference") {
+                const typeReference = request.body.value;
+                if (typeReference.type === "named") {
+                    const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                    if (named != null && named.type === "object") {
+                        for (const property of named.properties) {
+                            if (this.resolvesToLiteralType(property.typeReference)) {
+                                continue;
+                            }
+                            bodyPropertyNames.add(this.context.getPropertyName(property.name.name));
+                        }
+                    }
+                }
+            }
         }
 
         // Add path parameters, adding underscore suffix if they collide with body properties
@@ -651,6 +668,51 @@ export class EndpointSnippetGenerator {
         return python.TypeInstantiation.bytes(value);
     }
 
+    private getBodyPropertyNamesForInlinedRequest(request: FernIr.dynamic.InlinedRequest): Set<string> {
+        if (request.body == null) {
+            return new Set();
+        }
+
+        switch (request.body.type) {
+            case "referenced": {
+                const bodyType = request.body.bodyType;
+                if (bodyType.type !== "typeReference") {
+                    return new Set();
+                }
+                const typeReference = bodyType.value;
+                if (typeReference.type !== "named") {
+                    return new Set();
+                }
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null || named.type !== "object") {
+                    return new Set();
+                }
+                const result = new Set<string>();
+                for (const property of named.properties) {
+                    if (this.resolvesToLiteralType(property.typeReference)) {
+                        continue;
+                    }
+                    result.add(this.context.getPropertyName(property.name.name));
+                }
+                return result;
+            }
+            case "properties":
+                return new Set(
+                    request.body.value
+                        .filter((parameter) => !this.resolvesToLiteralType(parameter.typeReference))
+                        .map((parameter) => this.context.getPropertyName(parameter.name.name))
+                );
+            case "fileUpload":
+                return new Set(
+                    request.body.properties
+                        .filter((property) => property.type === "bodyProperty")
+                        .map((property) => this.context.getPropertyName(property.name.name))
+                );
+            default:
+                assertNever(request.body);
+        }
+    }
+
     private getMethodArgsForInlinedRequest({
         request,
         snippet
@@ -673,13 +735,18 @@ export class EndpointSnippetGenerator {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
+        const bodyPropertyNames = this.getBodyPropertyNamesForInlinedRequest(request);
+        const disambiguatedPathParamFields = pathParameterFields.map((field) =>
+            bodyPropertyNames.has(field.name) ? { ...field, name: `${field.name}_` } : field
+        );
+
         if (
             !this.context.includePathParametersInWrappedRequest({
                 request,
                 inlinePathParameters
             })
         ) {
-            args.push(...pathParameterFields);
+            args.push(...disambiguatedPathParamFields);
         }
 
         if (
@@ -697,7 +764,7 @@ export class EndpointSnippetGenerator {
                         request,
                         inlinePathParameters
                     })
-                        ? pathParameterFields
+                        ? disambiguatedPathParamFields
                         : [],
                     filePropertyInfo
                 })

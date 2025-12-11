@@ -5,7 +5,7 @@ imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
+    - pnpm turbo run dist:cli --filter @fern-typescript/sdk-generator-cli
   docker:
     file: ./generators/typescript/sdk/cli/Dockerfile
     image: fernapi/fern-typescript-sdk
@@ -15,15 +15,15 @@ test:
   docker:
     image: fernapi/fern-typescript-sdk:latest
     command:
-      - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest
+      - pnpm turbo run dockerTagLatest --filter @fern-typescript/sdk-generator-cli
   podman:
     image: fernapi/fern-typescript-sdk:latest
     command:
-      - pnpm --filter @fern-typescript/sdk-generator-cli podmanTagLatest
+      - pnpm turbo run podmanTagLatest --filter @fern-typescript/sdk-generator-cli
   local:
     workingDirectory: generators/typescript
     buildCommand:
-      - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
+      - pnpm turbo run dist:cli --filter @fern-typescript/sdk-generator-cli
     runCommand: node --enable-source-maps sdk/cli/dist/cli.cjs {CONFIG_PATH}
     env:
       NODE_ENV: test
@@ -266,6 +266,12 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+  oauth-client-credentials-mandatory-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
+  oauth-client-credentials-environment-variables:
+    - outputFolder: no-custom-config
+      customConfig: null
   oauth-client-credentials-nested-root:
     - outputFolder: no-custom-config
       customConfig: null
@@ -361,9 +367,14 @@ fixtures:
     - outputFolder: use-oxlint
       customConfig:
         linter: oxlint
-    - outputFolder: no-linter
+    - outputFolder: use-oxc
+      customConfig:
+        linter: oxlint
+        formatter: oxfmt
+    - outputFolder: no-linter-and-formatter
       customConfig:
         linter: none
+        formatter: none
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
@@ -435,6 +446,10 @@ fixtures:
     - outputFolder: page-index-semantics
       customConfig:
         offsetSemantics: "page-index"
+  pagination-custom:
+    - outputFolder: .
+      customConfig:
+        customPagerName: "MyPager"
 scripts:
   - image: fernapi/ts-seed
     commands:

@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.endpoints.container.get_and_return_set_of_primitives();
+client.endpoints.container.get_and_return_set_of_primitives(request: Set.new(['string']));

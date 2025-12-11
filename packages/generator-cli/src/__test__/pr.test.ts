@@ -24,7 +24,7 @@ describe("GitHub PR CLI call", () => {
         const file = await tmp.file();
         await writeFile(file.path, JSON.stringify(config, undefined, 2));
 
-        const args = [path.join(__dirname, "../../dist/cli.cjs"), "github", "pr", "--config", file.path];
+        const args = [path.join(__dirname, "../../bin/cli"), "github", "pr", "--config", file.path];
 
         const { stdout } = await execa("node", args);
         expect(stdout).toMatchSnapshot();

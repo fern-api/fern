@@ -193,7 +193,24 @@ export class ReadmeGenerator {
             if (index > 0) {
                 await writer.writeLine();
             }
-            await writer.writeCodeBlock(this.readmeConfig.language.type, snippet);
+            if (typeof snippet === "string") {
+                // Backwards compatibility: plain strings are treated as code snippets
+                await writer.writeCodeBlock(this.readmeConfig.language.type, snippet);
+            } else {
+                switch (snippet.type) {
+                    case "markdown":
+                        await writer.writeLine(snippet.content);
+                        break;
+                    case "code":
+                        await writer.writeCodeBlock(
+                            snippet.language ?? this.readmeConfig.language.type,
+                            snippet.content
+                        );
+                        break;
+                    default:
+                        assertNever(snippet);
+                }
+            }
         }
         if (feature.addendum != null) {
             await writer.writeLine(feature.addendum);
