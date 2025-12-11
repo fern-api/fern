@@ -29,10 +29,16 @@ class RawClient
     private array $headers;
 
     /**
+     * @var ?(callable(): array<string, string>) $getAuthHeaders
+     */
+    private $getAuthHeaders;
+
+    /**
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
      *   headers?: array<string, string>,
+     *   getAuthHeaders?: callable(): array<string, string>,
      * } $options
      */
     public function __construct(
@@ -41,6 +47,7 @@ class RawClient
         $this->client = $this->options['client']
             ?? $this->createDefaultClient();
         $this->headers = $this->options['headers'] ?? [];
+        $this->getAuthHeaders = $this->options['getAuthHeaders'] ?? null;
     }
 
     /**
@@ -128,6 +135,7 @@ class RawClient
         BaseApiRequest $request,
         array          $options,
     ): array {
+        $authHeaders = $this->getAuthHeaders !== null ? ($this->getAuthHeaders)() : [];
         return match (get_class($request)) {
             JsonApiRequest::class => array_merge(
                 [
@@ -135,11 +143,13 @@ class RawClient
                     "Accept" => "*/*",
                 ],
                 $this->headers,
+                $authHeaders,
                 $request->headers,
                 $options['headers'] ?? [],
             ),
             MultipartApiRequest::class => array_merge(
                 $this->headers,
+                $authHeaders,
                 $request->headers,
                 $options['headers'] ?? [],
             ),

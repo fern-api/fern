@@ -3,8 +3,7 @@ import { type NormalizedClientOptionsWithAuth } from "../../../../BaseClient.js"
 import * as core from "../../../../core/index.js";
 import type * as SeedExhaustive from "../../../index.js";
 export declare namespace NoReqBodyClient {
-    interface Options extends BaseClientOptions {
-    }
+    type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }

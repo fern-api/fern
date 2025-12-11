@@ -2,7 +2,7 @@ import { ruby } from "@fern-api/ruby-ast";
 import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
-export const RAW_CLIENT_REQUEST_VARIABLE_NAME = "_request";
+export const RAW_CLIENT_REQUEST_VARIABLE_NAME = "request";
 export declare namespace RawClient {
     export interface CreateHttpRequestWrapperArgs {
         baseUrl: ruby.CodeBlock;
@@ -33,11 +33,6 @@ export class RawClient {
     private writeBaseUrlDeclaration(writer: ruby.Writer): void {
         // Write base URL declaration, including default environment if specified
         writer.write("base_url: request_options[:base_url]");
-        const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
-        if (defaultEnvironmentReference != null) {
-            writer.write(" || ");
-            writer.writeNode(defaultEnvironmentReference);
-        }
     }
 
     public sendRequest({
@@ -71,6 +66,7 @@ export class RawClient {
                     if (bodyReference != null) {
                         writer.writeLine(`body: ${bodyReference},`);
                     }
+                    writer.writeLine(`request_options: request_options`);
                     writer.dedent();
                     writer.write(`)`);
                 });
@@ -82,7 +78,9 @@ export class RawClient {
                         `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalMultipartRequest()}.new(`
                     );
                     writer.indent();
-                    writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
+                    this.writeBaseUrlDeclaration(writer);
+                    writer.writeLine(",");
+                    writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
                     writer.write(`path: `);
                     this.writePathString({ writer, endpoint, pathParameterReferences });
                     writer.writeLine(",");
@@ -95,6 +93,7 @@ export class RawClient {
                     if (bodyReference != null) {
                         writer.writeLine(`body: ${bodyReference},`);
                     }
+                    writer.writeLine(`request_options: request_options`);
                     writer.dedent();
                     writer.write(`)`);
                 });
@@ -109,7 +108,8 @@ export class RawClient {
             writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
             writer.write(`path: `);
             this.writePathString({ writer, endpoint, pathParameterReferences });
-            writer.newLine();
+            writer.writeLine(",");
+            writer.writeLine(`request_options: request_options`);
             writer.dedent();
             writer.write(`)`);
         });

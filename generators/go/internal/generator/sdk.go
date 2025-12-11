@@ -65,6 +65,9 @@ var (
 
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
+
+	//go:embed sdk/core/oauth.go
+	oauthFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -298,6 +301,16 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("}")
 	f.P()
 
+	// Check if OAuth is configured
+	hasOAuth := getOAuthClientCredentials(auth) != nil
+
+	// Generate TokenGetter type if OAuth is configured
+	if hasOAuth {
+		f.P("// TokenGetter is a function that returns an access token.")
+		f.P("type TokenGetter func() (string, error)")
+		f.P()
+	}
+
 	f.P("// RequestOptions defines all of the possible request options.")
 	f.P("//")
 	f.P("// This type is primarily used by the generated code and is not meant")
@@ -309,6 +322,9 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("BodyProperties map[string]interface{}")
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
+	if hasOAuth {
+		f.P("tokenGetter TokenGetter")
+	}
 
 	// Generate the exported RequestOptions type that all clients can act upon.
 	for _, authScheme := range auth.Schemes {
@@ -328,6 +344,14 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				" ",
 				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
 			)
+		}
+		if authScheme.Oauth != nil {
+			f.P("ClientID string")
+			f.P("ClientSecret string")
+			// Only add Token field if there's no Bearer auth (which already provides Token)
+			if !hasBearerAuth(auth) {
+				f.P("Token string")
+			}
 		}
 	}
 	for _, header := range headers {
@@ -415,6 +439,19 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+			f.P("}")
+		}
+		if authScheme.Oauth != nil && !hasBearerAuth(auth) {
+			// When Token is provided directly, use it for Authorization header
+			// Skip if Bearer auth exists, as it already handles the Token field
+			f.P(`if r.Token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + r.Token)`)
+			f.P("}")
+			// If no token is set but tokenGetter is configured, use it to get the token
+			f.P(`if header.Get("Authorization") == "" && r.tokenGetter != nil {`)
+			f.P(`if token, err := r.tokenGetter(); err == nil && token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + token)`)
+			f.P("}")
 			f.P("}")
 		}
 	}
@@ -556,6 +593,44 @@ func (f *fileWriter) writeRequestOptionStructs(
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
 				}
+			}
+			if authScheme.Oauth != nil {
+				if err := f.writeOptionStruct("ClientID", "string", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+				if err := f.writeOptionStruct("ClientSecret", "string", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+				// The client credentials option requires special care because it sets
+				// two parameters.
+				f.P("// ClientCredentialsOption implements the RequestOption interface.")
+				f.P("type ClientCredentialsOption struct {")
+				f.P("ClientID string")
+				f.P("ClientSecret string")
+				f.P("}")
+				f.P()
+
+				f.P("func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {")
+				f.P("opts.ClientID = c.ClientID")
+				f.P("opts.ClientSecret = c.ClientSecret")
+				f.P("}")
+				f.P()
+
+				// Add TokenOption struct for direct token usage.
+				// Skip if Bearer auth exists, as it already provides TokenOption.
+				if !hasBearerAuth(auth) {
+					if err := f.writeOptionStruct("Token", "string", true, asIdempotentRequestOption); err != nil {
+						return err
+					}
+				}
+
+				// Add SetTokenGetter method for internal use
+				f.P("// SetTokenGetter sets the token getter function for OAuth.")
+				f.P("// This is an internal method and should not be called directly.")
+				f.P("func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {")
+				f.P("r.tokenGetter = getter")
+				f.P("}")
+				f.P()
 			}
 		}
 	}
@@ -835,6 +910,81 @@ func (f *fileWriter) WriteRequestOptions(
 			f.P("}")
 			f.P()
 		}
+		if authScheme.Oauth != nil {
+			if i == 0 {
+				option = ast.NewCallExpr(
+					ast.NewImportedReference(
+						"WithClientCredentials",
+						importPath,
+					),
+					[]ast.Expr{
+						ast.NewBasicLit(`"<YOUR_CLIENT_ID>"`),
+						ast.NewBasicLit(`"<YOUR_CLIENT_SECRET>"`),
+					},
+				)
+				oauthConfig := authScheme.Oauth.Configuration.ClientCredentials
+				if oauthConfig != nil {
+					if oauthConfig.ClientIdEnvVar != nil {
+						environmentVars = append(environmentVars, *oauthConfig.ClientIdEnvVar)
+					}
+					if oauthConfig.ClientSecretEnvVar != nil {
+						environmentVars = append(environmentVars, *oauthConfig.ClientSecretEnvVar)
+					}
+				}
+			}
+			f.P("// WithClientID sets the clientID auth request parameter.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientID(clientID string) *core.ClientIDOption {")
+			f.P("return &core.ClientIDOption{")
+			f.P("ClientID: clientID,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			f.P("// WithClientSecret sets the clientSecret auth request parameter.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientSecret(clientSecret string) *core.ClientSecretOption {")
+			f.P("return &core.ClientSecretOption{")
+			f.P("ClientSecret: clientSecret,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			f.P("// WithClientCredentials sets both the clientID and clientSecret auth request parameters.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientCredentials(clientID string, clientSecret string) *core.ClientCredentialsOption {")
+			f.P("return &core.ClientCredentialsOption{")
+			f.P("ClientID: clientID,")
+			f.P("ClientSecret: clientSecret,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			// Only add WithToken if there's no Bearer auth (which already provides WithToken)
+			if !hasBearerAuth(auth) {
+				f.P("// WithToken sets the OAuth token directly, bypassing the client credentials flow.")
+				f.P("// Use this when you already have an access token.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				f.P("func WithToken(token string) *core.TokenOption {")
+				f.P("return &core.TokenOption{")
+				f.P("Token: token,")
+				f.P("}")
+				f.P("}")
+				f.P()
+			}
+		}
 	}
 
 	for _, header := range headers {
@@ -934,11 +1084,17 @@ func (f *fileWriter) WriteClient(
 
 	receiver := typeNameToReceiver(clientName)
 
+	// Check if OAuth is configured
+	oauthClientCredentials := getOAuthClientCredentials(irAuth)
+
 	// Generate the client implementation.
 	f.P("type ", clientName, " struct {")
 	f.P("baseURL string")
 	f.P("caller *internal.Caller")
 	f.P("header http.Header")
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider *core.OAuthTokenProvider")
+	}
 	f.P()
 	if len(endpoints) > 0 {
 		f.P("WithRawResponse *", rawClientName)
@@ -978,6 +1134,20 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			continue
 		}
+		if authScheme.Oauth != nil && authScheme.Oauth.Configuration != nil && authScheme.Oauth.Configuration.ClientCredentials != nil {
+			oauthConfig := authScheme.Oauth.Configuration.ClientCredentials
+			if oauthConfig.ClientIdEnvVar != nil {
+				f.P(`if options.ClientID == "" {`)
+				f.P(`options.ClientID = os.Getenv("`, *oauthConfig.ClientIdEnvVar, `")`)
+				f.P("}")
+			}
+			if oauthConfig.ClientSecretEnvVar != nil {
+				f.P(`if options.ClientSecret == "" {`)
+				f.P(`options.ClientSecret = os.Getenv("`, *oauthConfig.ClientSecretEnvVar, `")`)
+				f.P("}")
+			}
+			continue
+		}
 	}
 	for _, header := range headers {
 		if header.Env != nil {
@@ -986,6 +1156,36 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			continue
 		}
+	}
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider := core.NewOAuthTokenProvider(options.ClientID, options.ClientSecret)")
+		// Create an auth client to fetch tokens
+		// We need to create a separate RequestOptions without the token getter to avoid infinite recursion
+		f.P("authOptions := core.NewRequestOptions()")
+		f.P("authOptions.BaseURL = options.BaseURL")
+		f.P("authOptions.HTTPClient = options.HTTPClient")
+		// Import the auth package
+		authImportPath := packagePathToImportPath(f.baseImportPath, []string{"auth"})
+		authPackage := f.scope.AddImport(authImportPath)
+		f.P("authClient := ", authPackage, ".NewClient(authOptions)")
+		// Set up the token getter function that will be called by ToHeader()
+		f.P("options.SetTokenGetter(func() (string, error) {")
+		f.P("if token := oauthTokenProvider.GetToken(); token != \"\" {")
+		f.P("return token, nil")
+		f.P("}")
+		// Fetch a new token from the auth endpoint
+		fernImportPath := f.baseImportPath
+		fernPackage := f.scope.AddImport(fernImportPath)
+		f.P("response, err := authClient.GetTokenWithClientCredentials(context.Background(), &", fernPackage, ".GetTokenRequest{")
+		f.P("ClientId: options.ClientID,")
+		f.P("ClientSecret: options.ClientSecret,")
+		f.P("})")
+		f.P("if err != nil {")
+		f.P("return \"\", err")
+		f.P("}")
+		f.P("oauthTokenProvider.SetToken(response.AccessToken, response.ExpiresIn)")
+		f.P("return response.AccessToken, nil")
+		f.P("})")
 	}
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
@@ -996,6 +1196,9 @@ func (f *fileWriter) WriteClient(
 	f.P("},")
 	f.P("),")
 	f.P("header: options.ToHeader(),")
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider: oauthTokenProvider,")
+	}
 	if len(endpoints) > 0 {
 		f.P(" WithRawResponse: ", rawClientConstructorName, "(options),")
 	}
@@ -1975,7 +2178,7 @@ func getEndpointParameters(
 			fields = append(
 				fields,
 				&ast.Field{
-					Key:   pathParameter.Name.PascalCase.UnsafeName,
+					Key:   goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName),
 					Value: f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
 				},
 			)
@@ -1996,7 +2199,7 @@ func getEndpointParameters(
 		fields = append(
 			fields,
 			&ast.Field{
-				Key:   header.Name.Name.PascalCase.UnsafeName,
+				Key:   goExportedFieldName(header.Name.Name.PascalCase.UnsafeName),
 				Value: f.snippetWriter.GetSnippetForExampleTypeReference(header.Value),
 			},
 		)
@@ -2024,7 +2227,7 @@ func getEndpointParameters(
 		fields = append(
 			fields,
 			&ast.Field{
-				Key:   queryParameter.Name.Name.PascalCase.UnsafeName,
+				Key:   goExportedFieldName(queryParameter.Name.Name.PascalCase.UnsafeName),
 				Value: exampleValue,
 			},
 		)
@@ -2083,7 +2286,7 @@ func exampleRequestBodyToFields(
 			fields = append(
 				fields,
 				&ast.Field{
-					Key:   property.Name.Name.PascalCase.UnsafeName,
+					Key:   goExportedFieldName(property.Name.Name.PascalCase.UnsafeName),
 					Value: f.snippetWriter.GetSnippetForExampleTypeReference(property.Value),
 				},
 			)
@@ -2096,7 +2299,7 @@ func exampleRequestBodyToFields(
 		fields = append(
 			fields,
 			&ast.Field{
-				Key:   endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName,
+				Key:   goExportedFieldName(endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName),
 				Value: f.snippetWriter.GetSnippetForExampleTypeReference(exampleRequestBody.Reference),
 			},
 		)
@@ -2813,7 +3016,7 @@ func (f *fileWriter) WriteRequestType(
 	// Collect from headers (exclude literals as they don't need setters)
 	for _, header := range append(serviceHeaders, endpoint.Headers...) {
 		if header.ValueType.Container == nil || header.ValueType.Container.Literal == nil {
-			propertyNames = append(propertyNames, header.Name.Name.PascalCase.UnsafeName)
+			propertyNames = append(propertyNames, goExportedFieldName(header.Name.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, header.Name.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			propertyTypes = append(propertyTypes, goType)
@@ -2823,7 +3026,7 @@ func (f *fileWriter) WriteRequestType(
 	// Collect from path parameters (always include these)
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
 		for _, pathParameter := range endpoint.AllPathParameters {
-			propertyNames = append(propertyNames, pathParameter.Name.PascalCase.UnsafeName)
+			propertyNames = append(propertyNames, goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, pathParameter.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			propertyTypes = append(propertyTypes, goType)
@@ -2833,7 +3036,7 @@ func (f *fileWriter) WriteRequestType(
 	// Collect from query parameters (always include these, exclude literals)
 	for _, queryParam := range endpoint.QueryParameters {
 		if queryParam.ValueType.Container == nil || queryParam.ValueType.Container.Literal == nil {
-			propertyNames = append(propertyNames, queryParam.Name.Name.PascalCase.UnsafeName)
+			propertyNames = append(propertyNames, goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, queryParam.Name.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			if queryParam.AllowMultiple {
@@ -2847,7 +3050,7 @@ func (f *fileWriter) WriteRequestType(
 	if endpoint.RequestBody != nil && endpoint.RequestBody.InlinedRequestBody != nil {
 		for _, property := range endpoint.RequestBody.InlinedRequestBody.Properties {
 			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
-				propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
+				propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
 				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 				propertyTypes = append(propertyTypes, goType)
@@ -2873,13 +3076,13 @@ func (f *fileWriter) WriteRequestType(
 			continue
 		}
 		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
-		f.P(header.Name.Name.PascalCase.UnsafeName, " ", goType, " `json:\"-\" url:\"-\"`")
+		f.P(goExportedFieldName(header.Name.Name.PascalCase.UnsafeName), " ", goType, " `json:\"-\" url:\"-\"`")
 	}
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
 		for _, pathParameter := range endpoint.AllPathParameters {
 			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			f.WriteDocs(pathParameter.Docs)
-			f.P(pathParameter.Name.PascalCase.UnsafeName, " ", value, " `json:\"-\" url:\"-\"`")
+			f.P(goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName), " ", value, " `json:\"-\" url:\"-\"`")
 		}
 	}
 	for _, queryParam := range endpoint.QueryParameters {
@@ -2898,7 +3101,7 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
-		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types, f.alwaysSendRequiredProperties))
+		f.P(goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName), " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types, f.alwaysSendRequiredProperties))
 	}
 	if endpoint.RequestBody == nil {
 		// If the request doesn't have a body, we don't need any custom [de]serialization logic.
@@ -3746,4 +3949,39 @@ func shouldGenerateHeader(header *ir.HttpHeader, types map[common.TypeId]*ir.Typ
 // shouldGenerateHeaderAuthScheme returns true if the given header auth scheme should be generated.
 func shouldGenerateHeaderAuthScheme(auth *ir.HeaderAuthScheme, types map[common.TypeId]*ir.TypeDeclaration) bool {
 	return auth.HeaderEnvVar != nil || !isLiteralType(auth.ValueType, types)
+}
+
+// getOAuthScheme returns the OAuth scheme from the auth configuration, or nil if not present.
+func getOAuthScheme(auth *ir.ApiAuth) *ir.OAuthScheme {
+	if auth == nil {
+		return nil
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Oauth != nil {
+			return scheme.Oauth
+		}
+	}
+	return nil
+}
+
+// hasBearerAuth returns true if the auth configuration has a bearer auth scheme.
+func hasBearerAuth(auth *ir.ApiAuth) bool {
+	if auth == nil {
+		return false
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Bearer != nil {
+			return true
+		}
+	}
+	return false
+}
+
+// getOAuthClientCredentials returns the OAuth client credentials configuration, or nil if not present.
+func getOAuthClientCredentials(auth *ir.ApiAuth) *ir.OAuthClientCredentials {
+	oauth := getOAuthScheme(auth)
+	if oauth == nil || oauth.Configuration == nil {
+		return nil
+	}
+	return oauth.Configuration.ClientCredentials
 }

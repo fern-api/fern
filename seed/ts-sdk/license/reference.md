@@ -39,5 +39,3 @@ await client.get();
 </dd>
 </dl>
 </details>
-
-## 

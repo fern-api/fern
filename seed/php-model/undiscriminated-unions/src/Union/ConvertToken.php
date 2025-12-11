@@ -27,16 +27,15 @@ class ConvertToken extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->method = $values['method'];
-        $this->tokenId = $values['tokenId'];
+    )
+    {
+        $this->method = $values['method'];$this->tokenId = $values['tokenId'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

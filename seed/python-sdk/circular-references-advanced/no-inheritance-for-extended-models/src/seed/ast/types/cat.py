@@ -22,7 +22,10 @@ class Cat(UniversalBaseModel):
 
 
 from .acai import Acai  # noqa: E402, I001
+from .animal import Animal  # noqa: E402, I001
+from .berry import Berry  # noqa: E402, I001
+from .dog import Dog  # noqa: E402, I001
 from .fig import Fig  # noqa: E402, I001
 from .fruit import Fruit  # noqa: E402, I001
 
-update_forward_refs(Cat, Fig=Fig, Acai=Acai)
+update_forward_refs(Cat, Acai=Acai, Animal=Animal, Berry=Berry, Dog=Dog, Fig=Fig, Fruit=Fruit)

@@ -55,4 +55,9 @@ export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSch
      * This is useful for organizations with multiple APIs deployed to the same set of environments.
      */
     "group-multi-api-environments"?: boolean;
+    /**
+     * The default format to use for integer types when no format is specified in the OpenAPI schema.
+     * Defaults to int32.
+     */
+    "default-integer-format"?: FernDefinition.DefaultIntegerFormat;
 }

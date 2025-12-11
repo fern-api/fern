@@ -24,8 +24,8 @@ class GetUsersRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->tenantId = $values['tenantId'];
-        $this->userId = $values['userId'];
+    )
+    {
+        $this->tenantId = $values['tenantId'];$this->userId = $values['userId'];
     }
 }

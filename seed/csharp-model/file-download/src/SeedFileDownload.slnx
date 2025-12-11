@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="SeedFileDownload.Test/SeedFileDownload.Test.csproj" />
-  <Project Path="SeedFileDownload/SeedFileDownload.csproj" />
-</Solution>

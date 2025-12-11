@@ -5,8 +5,9 @@ from __future__ import annotations
 import typing
 
 import httpx
+from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.oauth_token_provider import OAuthTokenProvider
+from .core.oauth_token_provider import AsyncOAuthTokenProvider, OAuthTokenProvider
 
 if typing.TYPE_CHECKING:
     from .auth.client import AsyncAuthClient, AuthClient
@@ -22,13 +23,33 @@ class SeedOauthClientCredentialsWithVariables:
 
     Parameters
     ----------
+
     base_url : str
         The base url to use for requests from the client.
 
-    root_variable : str
     client_id : str
+        The client identifier used for authentication.
+
     client_secret : str
-    _token_getter_override : typing.Optional[typing.Callable[[], str]]
+        The client secret used for authentication.
+
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
+
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+
+    httpx_client : typing.Optional[httpx.Client]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+
+    # or ...
+
+    base_url : str
+        The base url to use for requests from the client.
+
+    token : typing.Callable[[], str]
+        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -48,15 +69,48 @@ class SeedOauthClientCredentialsWithVariables:
         client_id="YOUR_CLIENT_ID",
         client_secret="YOUR_CLIENT_SECRET",
     )
+
+    # or ...
+
+    from seed import SeedOauthClientCredentialsWithVariables
+
+    client = SeedOauthClientCredentialsWithVariables(
+        base_url="https://yourhost.com/path/to/api",
+        token="YOUR_BEARER_TOKEN",
+    )
     """
 
+    @typing.overload
     def __init__(
         self,
         *,
         base_url: str,
         root_variable: str,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.Client] = None,
         client_id: str,
         client_secret: str,
+    ): ...
+    @typing.overload
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        root_variable: str,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.Client] = None,
+        token: typing.Callable[[], str],
+    ): ...
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        root_variable: str,
+        client_id: typing.Optional[str] = None,
+        client_secret: typing.Optional[str] = None,
+        token: typing.Optional[typing.Callable[[], str]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -65,29 +119,46 @@ class SeedOauthClientCredentialsWithVariables:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        oauth_token_provider = OAuthTokenProvider(
-            client_id=client_id,
-            client_secret=client_secret,
-            client_wrapper=SyncClientWrapper(
+        if token is not None:
+            self._client_wrapper = SyncClientWrapper(
                 base_url=base_url,
                 root_variable=root_variable,
-                httpx_client=httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
                 if follow_redirects is not None
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
-            ),
-        )
-        self._client_wrapper = SyncClientWrapper(
-            base_url=base_url,
-            root_variable=root_variable,
-            token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
-            httpx_client=httpx_client
-            if httpx_client is not None
-            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-            if follow_redirects is not None
-            else httpx.Client(timeout=_defaulted_timeout),
-            timeout=_defaulted_timeout,
-        )
+                token=_token_getter_override if _token_getter_override is not None else token,
+            )
+        elif client_id is not None and client_secret is not None:
+            oauth_token_provider = OAuthTokenProvider(
+                client_id=client_id,
+                client_secret=client_secret,
+                client_wrapper=SyncClientWrapper(
+                    base_url=base_url,
+                    root_variable=root_variable,
+                    httpx_client=httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                    if follow_redirects is not None
+                    else httpx.Client(timeout=_defaulted_timeout),
+                    timeout=_defaulted_timeout,
+                ),
+            )
+            self._client_wrapper = SyncClientWrapper(
+                base_url=base_url,
+                root_variable=root_variable,
+                token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                if follow_redirects is not None
+                else httpx.Client(timeout=_defaulted_timeout),
+                timeout=_defaulted_timeout,
+            )
+        else:
+            raise ApiError(
+                body="The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'"
+            )
         self._auth: typing.Optional[AuthClient] = None
         self._nested_no_auth: typing.Optional[NestedNoAuthClient] = None
         self._nested: typing.Optional[NestedClient] = None
@@ -141,13 +212,33 @@ class AsyncSeedOauthClientCredentialsWithVariables:
 
     Parameters
     ----------
+
     base_url : str
         The base url to use for requests from the client.
 
-    root_variable : str
     client_id : str
+        The client identifier used for authentication.
+
     client_secret : str
-    _token_getter_override : typing.Optional[typing.Callable[[], str]]
+        The client secret used for authentication.
+
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
+
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+
+    httpx_client : typing.Optional[httpx.AsyncClient]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+
+    # or ...
+
+    base_url : str
+        The base url to use for requests from the client.
+
+    token : typing.Callable[[], str]
+        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -167,15 +258,48 @@ class AsyncSeedOauthClientCredentialsWithVariables:
         client_id="YOUR_CLIENT_ID",
         client_secret="YOUR_CLIENT_SECRET",
     )
+
+    # or ...
+
+    from seed import AsyncSeedOauthClientCredentialsWithVariables
+
+    client = AsyncSeedOauthClientCredentialsWithVariables(
+        base_url="https://yourhost.com/path/to/api",
+        token="YOUR_BEARER_TOKEN",
+    )
     """
 
+    @typing.overload
     def __init__(
         self,
         *,
         base_url: str,
         root_variable: str,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None,
         client_id: str,
         client_secret: str,
+    ): ...
+    @typing.overload
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        root_variable: str,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        token: typing.Callable[[], str],
+    ): ...
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        root_variable: str,
+        client_id: typing.Optional[str] = None,
+        client_secret: typing.Optional[str] = None,
+        token: typing.Optional[typing.Callable[[], str]] = None,
         _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -184,29 +308,47 @@ class AsyncSeedOauthClientCredentialsWithVariables:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        oauth_token_provider = OAuthTokenProvider(
-            client_id=client_id,
-            client_secret=client_secret,
-            client_wrapper=SyncClientWrapper(
+        if token is not None:
+            self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,
                 root_variable=root_variable,
-                httpx_client=httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
                 if follow_redirects is not None
-                else httpx.Client(timeout=_defaulted_timeout),
+                else httpx.AsyncClient(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
-            ),
-        )
-        self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url,
-            root_variable=root_variable,
-            token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
-            httpx_client=httpx_client
-            if httpx_client is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-            if follow_redirects is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout),
-            timeout=_defaulted_timeout,
-        )
+                token=_token_getter_override if _token_getter_override is not None else token,
+            )
+        elif client_id is not None and client_secret is not None:
+            oauth_token_provider = AsyncOAuthTokenProvider(
+                client_id=client_id,
+                client_secret=client_secret,
+                client_wrapper=AsyncClientWrapper(
+                    base_url=base_url,
+                    root_variable=root_variable,
+                    httpx_client=httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                    if follow_redirects is not None
+                    else httpx.AsyncClient(timeout=_defaulted_timeout),
+                    timeout=_defaulted_timeout,
+                ),
+            )
+            self._client_wrapper = AsyncClientWrapper(
+                base_url=base_url,
+                root_variable=root_variable,
+                token=_token_getter_override,
+                async_token=oauth_token_provider.get_token,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                if follow_redirects is not None
+                else httpx.AsyncClient(timeout=_defaulted_timeout),
+                timeout=_defaulted_timeout,
+            )
+        else:
+            raise ApiError(
+                body="The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'"
+            )
         self._auth: typing.Optional[AsyncAuthClient] = None
         self._nested_no_auth: typing.Optional[AsyncNestedNoAuthClient] = None
         self._nested: typing.Optional[AsyncNestedClient] = None

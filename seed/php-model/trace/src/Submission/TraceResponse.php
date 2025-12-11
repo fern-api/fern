@@ -56,20 +56,15 @@ class TraceResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->submissionId = $values['submissionId'];
-        $this->lineNumber = $values['lineNumber'];
-        $this->returnValue = $values['returnValue'] ?? null;
-        $this->expressionLocation = $values['expressionLocation'] ?? null;
-        $this->stack = $values['stack'];
-        $this->stdout = $values['stdout'] ?? null;
+    )
+    {
+        $this->submissionId = $values['submissionId'];$this->lineNumber = $values['lineNumber'];$this->returnValue = $values['returnValue'] ?? null;$this->expressionLocation = $values['expressionLocation'] ?? null;$this->stack = $values['stack'];$this->stdout = $values['stdout'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

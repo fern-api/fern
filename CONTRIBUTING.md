@@ -85,7 +85,7 @@ pnpm install
 
 To compile all the packages in this monorepo, run `pnpm compile`.
 
-To compile a single package, filter to the relevant package: `pnpm --filter @fern-api/openapi-parser compile`.
+To compile a single package, filter to the relevant package: `pnpm turbo run compile --filter @fern-api/openapi-parser`.
 
 ### Step 3: Testing
 
@@ -93,7 +93,7 @@ This repo contains both unit tests and integration (end-to-end) tests.
 
 To run all the unit tests: `pnpm test`.
 
-To run unit tests for a single package: `pnpm --filter @fern-api/openapi-parser test`
+To run unit tests for a single package: `pnpm turbo run test --filter @fern-api/openapi-parser`
 
 To run the integration tests: `pnpm test:ete`.
 

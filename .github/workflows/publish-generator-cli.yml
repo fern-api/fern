@@ -79,10 +79,15 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - name: 🧪 Build and test
+      - name: Build CLI
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-        run: pnpm turbo compile test --filter=${{ env.PACKAGE_NAME }}
+        run: pnpm turbo run dist:cli --filter=${{ env.PACKAGE_NAME }}
+
+      - name: Test
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        run: pnpm turbo run test --filter=${{ env.PACKAGE_NAME }}
 
       - name: Setup Node for npm publish
         uses: actions/setup-node@v4
@@ -101,7 +106,7 @@ jobs:
           version_replace="s/0.0.0/${NEW_VERSION}/"
           cat package.json.tmp| sed "${version_replace}" > package.json
           rm -rf package.json.tmp
-          npm publish --access public --tag latest
+          npx -y npm@latest publish --access public --tag latest
 
   publish-sdks:
     needs: check-version

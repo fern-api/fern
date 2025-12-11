@@ -6,7 +6,7 @@ import * as core from "../../../../../../core/index.js";
 import { EmptyRealtimeSocket } from "./Socket.js";
 
 export declare namespace EmptyRealtimeClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface ConnectArgs {
         /** Arbitrary headers to send with the websocket connect request. */

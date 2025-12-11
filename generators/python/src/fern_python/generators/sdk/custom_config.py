@@ -52,6 +52,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     include_union_utils: bool = False
     use_api_name_in_package: bool = False
     package_name: Optional[str] = None
+    package_path: Optional[str] = None
     timeout_in_seconds: Union[Literal["infinity"], int] = 60
     flat_layout: bool = False
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()

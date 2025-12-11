@@ -6,29 +6,46 @@ client = Seed::Client.new(
 );
 
 client.problem.update_problem(
-  'problemId',
-  {
-    problemName: 'problemName',
-    problemDescription: {
-      boards: []
+  problem_id: 'problemId',
+  problem_name: 'problemName',
+  problem_description: {
+    boards: [{}, {}]
+  },
+  files: {
+    JAVA: {
+      solution_file: {
+        filename: 'filename',
+        contents: 'contents'
+      },
+      read_only_files: [{
+        filename: 'filename',
+        contents: 'contents'
+      }, {
+        filename: 'filename',
+        contents: 'contents'
+      }]
+    }
+  },
+  input_params: [{
+    variable_type: {},
+    name: 'name'
+  }, {
+    variable_type: {},
+    name: 'name'
+  }],
+  output_type: {},
+  testcases: [{
+    test_case: {
+      id: 'id',
+      params: [{}, {}]
     },
-    files: {},
-    inputParams: [{
-      name: 'name'
-    }, {
-      name: 'name'
-    }],
-    testcases: [{
-      testCase: {
-        id: 'id',
-        params: []
-      }
-    }, {
-      testCase: {
-        id: 'id',
-        params: []
-      }
-    }],
-    methodName: 'methodName'
-  }
+    expected_result: {}
+  }, {
+    test_case: {
+      id: 'id',
+      params: [{}, {}]
+    },
+    expected_result: {}
+  }],
+  method_name: 'methodName'
 );

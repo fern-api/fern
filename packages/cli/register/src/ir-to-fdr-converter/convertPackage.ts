@@ -65,7 +65,8 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FdrCjsSdk.
                 })
             ),
             payload: convertWebhookPayload(webhook.payload),
-            examples: webhookExamples
+            examples: webhookExamples,
+            responses: webhook.responses?.map(convertResponse).filter(isNonNullish)
         };
     });
 }
@@ -682,60 +683,62 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
 }
 
 function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.register.HttpResponse | undefined {
-    if (irResponse.body == null) {
-        return undefined;
-    }
     let description;
-    const type = Ir.http.HttpResponseBody._visit<FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined>(
-        irResponse.body,
-        {
-            fileDownload: (fileDownload) => {
-                description = fileDownload.docs;
-                return {
-                    type: "fileDownload",
-                    contentType: undefined
-                };
-            },
-            json: (jsonResponse) => {
-                description = jsonResponse.docs;
-                return {
-                    type: "reference",
-                    value: convertTypeReference(jsonResponse.responseBodyType)
-                };
-            },
-            text: () => undefined, // TODO: support text/plain in FDR
-            bytes: () => undefined, // TODO: support text/plain in FDR
-            streamParameter: () => undefined, // TODO: support stream parameter in FDR
-            streaming: (streamingResponse) => {
-                if (streamingResponse.type === "text") {
-                    description = streamingResponse.docs;
-                    return {
-                        type: "streamingText"
-                    };
-                } else if (streamingResponse.type === "json") {
-                    description = streamingResponse.docs;
-                    return {
-                        type: "stream",
-                        shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) },
-                        terminator: streamingResponse.terminator
-                    };
-                    // TODO(dsinghvi): update FDR with SSE.
-                } else if (streamingResponse.type === "sse") {
-                    description = streamingResponse.docs;
-                    return {
-                        type: "stream",
-                        shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) },
-                        terminator: streamingResponse.terminator
-                    };
-                }
+    let type: FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined;
 
-                return undefined;
-            },
-            _other: () => {
-                throw new Error("Unknown HttpResponse: " + irResponse.body);
+    if (irResponse.body != null) {
+        type = Ir.http.HttpResponseBody._visit<FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined>(
+            irResponse.body,
+            {
+                fileDownload: (fileDownload) => {
+                    description = fileDownload.docs;
+                    return {
+                        type: "fileDownload",
+                        contentType: undefined
+                    };
+                },
+                json: (jsonResponse) => {
+                    description = jsonResponse.docs;
+                    return {
+                        type: "reference",
+                        value: convertTypeReference(jsonResponse.responseBodyType)
+                    };
+                },
+                text: () => undefined, // TODO: support text/plain in FDR
+                bytes: () => undefined, // TODO: support text/plain in FDR
+                streamParameter: () => undefined, // TODO: support stream parameter in FDR
+                streaming: (streamingResponse) => {
+                    if (streamingResponse.type === "text") {
+                        description = streamingResponse.docs;
+                        return {
+                            type: "streamingText"
+                        };
+                    } else if (streamingResponse.type === "json") {
+                        description = streamingResponse.docs;
+                        return {
+                            type: "stream",
+                            shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) },
+                            terminator: streamingResponse.terminator
+                        };
+                        // TODO(dsinghvi): update FDR with SSE.
+                    } else if (streamingResponse.type === "sse") {
+                        description = streamingResponse.docs;
+                        return {
+                            type: "stream",
+                            shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) },
+                            terminator: streamingResponse.terminator
+                        };
+                    }
+
+                    return undefined;
+                },
+                _other: () => {
+                    throw new Error("Unknown HttpResponse: " + irResponse.body);
+                }
             }
-        }
-    );
+        );
+    }
+
     if (type != null) {
         return {
             type,
@@ -777,7 +780,18 @@ function convertResponseErrorsV2(
                     description: errorDeclaration.docs ?? undefined,
                     name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
                     availability: undefined,
-                    examples: getErrorExamplesFromDeclaration(errorDeclaration)
+                    examples: getErrorExamplesFromDeclaration(errorDeclaration, ir),
+                    headers:
+                        errorDeclaration.headers != null && errorDeclaration.headers.length > 0
+                            ? errorDeclaration.headers.map(
+                                  (header): FdrCjsSdk.api.v1.register.Header => ({
+                                      description: header.docs ?? undefined,
+                                      key: header.name.wireValue,
+                                      type: convertTypeReference(header.valueType),
+                                      availability: convertIrAvailability(header.availability)
+                                  })
+                              )
+                            : undefined
                 });
             }
         }
@@ -832,7 +846,18 @@ function convertResponseErrorsV2(
                             responseBody: { type: "json", value: irExample.jsonExample },
                             description: irExample.docs
                         };
-                    })
+                    }),
+                    headers:
+                        errorDeclaration.headers != null && errorDeclaration.headers.length > 0
+                            ? errorDeclaration.headers.map(
+                                  (header): FdrCjsSdk.api.v1.register.Header => ({
+                                      description: header.docs ?? undefined,
+                                      key: header.name.wireValue,
+                                      type: convertTypeReference(header.valueType),
+                                      availability: convertIrAvailability(header.availability)
+                                  })
+                              )
+                            : undefined
                 });
             }
         }
@@ -1332,7 +1357,8 @@ function convertMessageBody(
 }
 
 function getErrorExamplesFromDeclaration(
-    errorDeclaration: Ir.ErrorDeclaration
+    errorDeclaration: Ir.ErrorDeclaration,
+    ir: IntermediateRepresentation
 ): FdrCjsSdk.api.v1.register.ErrorExample[] {
     const v2UserSpecifiedExamples = errorDeclaration.v2Examples?.userSpecifiedExamples;
     const v2AutogeneratedExamples = errorDeclaration.v2Examples?.autogeneratedExamples;
@@ -1358,5 +1384,70 @@ function getErrorExamplesFromDeclaration(
         }));
     }
 
+    // Fall back to building an example from the underlying type's property-level examples
+    const exampleFromType = buildExampleFromErrorType(errorDeclaration, ir);
+    if (exampleFromType != null) {
+        return [exampleFromType];
+    }
+
     return [];
+}
+
+function buildExampleFromErrorType(
+    errorDeclaration: Ir.ErrorDeclaration,
+    ir: IntermediateRepresentation
+): FdrCjsSdk.api.v1.register.ErrorExample | undefined {
+    // Check if the error has a named type
+    if (errorDeclaration.type == null || errorDeclaration.type.type !== "named") {
+        return undefined;
+    }
+
+    const typeId = errorDeclaration.type.typeId;
+    const typeDeclaration = ir.types[typeId];
+    if (typeDeclaration == null) {
+        return undefined;
+    }
+
+    // Only handle object types for now
+    if (typeDeclaration.shape.type !== "object") {
+        return undefined;
+    }
+
+    const exampleObject: Record<string, unknown> = {};
+    let hasUserSpecifiedExample = false;
+
+    for (const property of typeDeclaration.shape.properties) {
+        const wireValue = property.name.wireValue;
+        const v2Examples = property.v2Examples;
+
+        // Prefer user-specified examples over autogenerated ones
+        if (v2Examples?.userSpecifiedExamples != null) {
+            const userExamples = Object.values(v2Examples.userSpecifiedExamples);
+            if (userExamples.length > 0) {
+                exampleObject[wireValue] = userExamples[0];
+                hasUserSpecifiedExample = true;
+                continue;
+            }
+        }
+
+        if (v2Examples?.autogeneratedExamples != null) {
+            const autoExamples = Object.values(v2Examples.autogeneratedExamples);
+            if (autoExamples.length > 0) {
+                exampleObject[wireValue] = autoExamples[0];
+                continue;
+            }
+        }
+    }
+
+    // Only return an example if we found at least one user-specified example
+    // (to avoid returning generic "string" examples)
+    if (!hasUserSpecifiedExample) {
+        return undefined;
+    }
+
+    return {
+        name: undefined,
+        responseBody: { type: "json" as const, value: exampleObject },
+        description: undefined
+    };
 }

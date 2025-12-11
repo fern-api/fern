@@ -27,16 +27,15 @@ class TracedTestCase extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->result = $values['result'];
-        $this->traceResponsesSize = $values['traceResponsesSize'];
+    )
+    {
+        $this->result = $values['result'];$this->traceResponsesSize = $values['traceResponsesSize'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

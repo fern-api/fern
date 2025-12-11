@@ -8,6 +8,7 @@ channel:
   query-parameters:
     model: optional<string>
     temperature: optional<integer>
+    language-code: optional<string>
   messages:
     send:
       display-name: Send

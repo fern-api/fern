@@ -26,31 +26,32 @@ module Seed
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[usernames avatar activated tags extra]
-        _query = {}
-        _query["usernames"] = params[:usernames] if params.key?(:usernames)
-        _query["avatar"] = params[:avatar] if params.key?(:avatar)
-        _query["activated"] = params[:activated] if params.key?(:activated)
-        _query["tags"] = params[:tags] if params.key?(:tags)
-        _query["extra"] = params[:extra] if params.key?(:extra)
-        params.except(*_query_param_names)
+        query_param_names = %i[usernames avatar activated tags extra]
+        query_params = {}
+        query_params["usernames"] = params[:usernames] if params.key?(:usernames)
+        query_params["avatar"] = params[:avatar] if params.key?(:avatar)
+        query_params["activated"] = params[:activated] if params.key?(:activated)
+        query_params["tags"] = params[:tags] if params.key?(:tags)
+        query_params["extra"] = params[:extra] if params.key?(:extra)
+        params.except(*query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/users",
-          query: _query
+          query: query_params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # @param request_options [Hash]
@@ -63,26 +64,27 @@ module Seed
       #
       # @return [Seed::Nullable::Types::User]
       def create_user(request_options: {}, **params)
-        _body_prop_names = %i[username tags metadata avatar]
-        _body_bag = params.slice(*_body_prop_names)
+        body_prop_names = %i[username tags metadata avatar]
+        body_bag = params.slice(*body_prop_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/users",
-          body: Seed::Nullable::Types::CreateUserRequest.new(_body_bag).to_h
+          body: Seed::Nullable::Types::CreateUserRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Nullable::Types::User.load(_response.body)
+          Seed::Nullable::Types::User.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -96,25 +98,26 @@ module Seed
       #
       # @return [Boolean]
       def delete_user(request_options: {}, **params)
-        _body_prop_names = %i[username]
-        _body_bag = params.slice(*_body_prop_names)
+        body_prop_names = %i[username]
+        body_bag = params.slice(*body_prop_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
           path: "/users",
-          body: Seed::Nullable::Types::DeleteUserRequest.new(_body_bag).to_h
+          body: Seed::Nullable::Types::DeleteUserRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
     end
   end

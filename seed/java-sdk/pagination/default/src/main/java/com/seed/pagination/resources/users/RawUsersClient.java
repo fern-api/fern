@@ -4,6 +4,7 @@
 package com.seed.pagination.resources.users;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.MediaTypes;
 import com.seed.pagination.core.ObjectMappers;
@@ -14,6 +15,7 @@ import com.seed.pagination.core.SeedPaginationException;
 import com.seed.pagination.core.SeedPaginationHttpResponse;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
+import com.seed.pagination.resources.users.requests.ListUsernamesWithOptionalResponseRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
@@ -36,6 +38,7 @@ import com.seed.pagination.resources.users.types.UsernameContainer;
 import com.seed.pagination.resources.users.types.WithCursor;
 import com.seed.pagination.resources.users.types.WithPage;
 import com.seed.pagination.types.UsernameCursor;
+import com.seed.pagination.types.UsernamePage;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -740,6 +743,69 @@ public class RawUsersClient {
                         new SyncPagingIterable<String>(
                                 startingAfter.isPresent(), result, parsedResponse, () -> listUsernames(
                                                 nextRequest, requestOptions)
+                                        .body()),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedPaginationException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<String>> listUsernamesWithOptionalResponse() {
+        return listUsernamesWithOptionalResponse(
+                ListUsernamesWithOptionalResponseRequest.builder().build());
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<String>> listUsernamesWithOptionalResponse(
+            ListUsernamesWithOptionalResponseRequest request) {
+        return listUsernamesWithOptionalResponse(request, null);
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<String>> listUsernamesWithOptionalResponse(
+            ListUsernamesWithOptionalResponseRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users");
+        if (request.getStartingAfter().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "starting_after", request.getStartingAfter().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                Optional<UsernameCursor> parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                        responseBodyString, new TypeReference<Optional<UsernameCursor>>() {});
+                Optional<String> startingAfter =
+                        parsedResponse.map(UsernameCursor::getCursor).flatMap(UsernamePage::getAfter);
+                ListUsernamesWithOptionalResponseRequest nextRequest =
+                        ListUsernamesWithOptionalResponseRequest.builder()
+                                .from(request)
+                                .startingAfter(startingAfter)
+                                .build();
+                List<String> result = parsedResponse
+                        .map(UsernameCursor::getCursor)
+                        .map(UsernamePage::getData)
+                        .orElse(Collections.emptyList());
+                return new SeedPaginationHttpResponse<>(
+                        new SyncPagingIterable<String>(
+                                startingAfter.isPresent(),
+                                result,
+                                parsedResponse,
+                                () -> listUsernamesWithOptionalResponse(nextRequest, requestOptions)
                                         .body()),
                         response);
             }

@@ -6,11 +6,14 @@ client = Seed::Client.new(
 );
 
 client.complex.search(
-  'index',
-  {
-    pagination: {
-      per_page: 1,
-      starting_after: 'starting_after'
-    }
+  index: 'index',
+  pagination: {
+    per_page: 1,
+    starting_after: 'starting_after'
+  },
+  query: {
+    field: 'field',
+    operator: '=',
+    value: 'value'
   }
 );

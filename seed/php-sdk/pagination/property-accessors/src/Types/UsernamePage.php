@@ -28,50 +28,39 @@ class UsernamePage extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->after = $values['after'] ?? null;
-        $this->data = $values['data'];
+    )
+    {
+        $this->after = $values['after'] ?? null;$this->data = $values['data'];
     }
 
     /**
      * @return ?string
      */
-    public function getAfter(): ?string
-    {
-        return $this->after;
-    }
+    public function getAfter(): ?string {
+        return $this->after;}
 
     /**
      * @param ?string $value
      */
-    public function setAfter(?string $value = null): self
-    {
-        $this->after = $value;
-        return $this;
-    }
+    public function setAfter(?string $value = null): self {
+        $this->after = $value;return $this;}
 
     /**
      * @return array<string>
      */
-    public function getData(): array
-    {
-        return $this->data;
-    }
+    public function getData(): array {
+        return $this->data;}
 
     /**
      * @param array<string> $value
      */
-    public function setData(array $value): self
-    {
-        $this->data = $value;
-        return $this;
-    }
+    public function setData(array $value): self {
+        $this->data = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

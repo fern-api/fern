@@ -1,5 +1,6 @@
 [project]
 name = "fern_required-nullable"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_required-nullable"

@@ -150,7 +150,6 @@
       "servers": [],
       "description": "Create a chat while specifying the default retrieval parameters used by the prompt.",
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/v2/chats",
       "examples": [
@@ -343,7 +342,6 @@
       "servers": [],
       "description": "Create a chat while specifying the default retrieval parameters used by the prompt.",
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/v2/chats",
       "examples": [

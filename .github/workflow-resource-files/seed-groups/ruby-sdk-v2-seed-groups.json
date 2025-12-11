@@ -95,7 +95,6 @@
         "license",
         "multiple-request-bodies",
         "circular-references-advanced",
-        "pagination-custom",
         "cross-package-type-names",
         "examples:no-custom-config"
       ],
@@ -141,7 +140,12 @@
         "empty-clients",
         "any-auth",
         "unknown",
-        "exhaustive"
+        "exhaustive:wire-tests",
+        "examples:wire-tests",
+        "no-retries",
+        "nullable-request-body",
+        "pagination-custom:.",
+        "unions-with-local-date"
       ],
       "groupTotalTimeSeconds": 2099
     }

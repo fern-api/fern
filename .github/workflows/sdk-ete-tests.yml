@@ -10,6 +10,7 @@ on:
         default: 'php'
         options:
           - php
+          - go
       test-definition:
         description: 'Name of the test definition to generate'
         required: false
@@ -17,35 +18,131 @@ on:
         default: 'exhaustive'
         options:
           - all
-          - exhaustive
-          - streaming
-          - trace
-          - pagination
-          - file-upload
-          - file-download
-          - oauth-client-credentials
-          - websocket
-          - server-sent-events
-          - unions
-          - enum
-          - validation
-          - bytes-upload
-          - bytes-download
+          - accept-header
+          - alias
+          - alias-extends
+          - any-auth
+          - api-wide-base-path
+          - audiences
           - basic-auth
-          - custom-auth
-          - examples
-          - imdb
-          - literal
-          - nullable
-          - optional
-          - path-parameters
-          - query-parameters
+          - basic-auth-environment-variables
+          - bearer-token-environment-variable
+          - bytes-download
+          - bytes-upload
+          - circular-references
+          - circular-references-advanced
+          - client-side-params
+          - content-type
+          - cross-package-type-names
+          - csharp-grpc-proto
+          - csharp-grpc-proto-exhaustive
+          - csharp-namespace-collision
+          - csharp-namespace-conflict
+          - csharp-system-collision
+          - csharp-xml-entities
+          - empty-clients
+          - enum
+          - error-property
           - errors
+          - examples
+          - exhaustive
+          - extends
+          - extra-properties
+          - file-download
+          - file-upload
+          - file-upload-openapi
+          - folders
+          - go-bytes-request
+          - go-content-type
+          - header-auth
+          - header-auth-environment-variable
+          - http-head
+          - idempotency-headers
+          - imdb
+          - inferred-auth-explicit
+          - inferred-auth-implicit
+          - inferred-auth-implicit-no-expiry
+          - java-builder-extension
+          - java-custom-package-prefix
+          - java-inline-types
+          - java-nullable-named-request-types
+          - java-pagination-deep-cursor-path
+          - java-single-property-endpoint
+          - java-staged-builder-ordering
+          - license
+          - literal
+          - literals-unions
+          - mixed-case
+          - mixed-file-directory
+          - multi-line-docs
+          - multi-url-environment
+          - multi-url-environment-no-default
+          - multiple-request-bodies
+          - no-environment
+          - no-retries
+          - nullable
+          - nullable-optional
+          - nullable-request-body
+          - oauth-client-credentials
+          - oauth-client-credentials-custom
+          - oauth-client-credentials-default
+          - oauth-client-credentials-environment-variables
+          - oauth-client-credentials-nested-root
+          - oauth-client-credentials-with-variables
+          - object
+          - objects-with-imports
+          - optional
+          - package-yml
+          - pagination
+          - pagination-custom
+          - path-parameters
+          - plain-text
+          - property-access
+          - public-object
+          - query-parameters
+          - query-parameters-openapi
+          - query-parameters-openapi-as-objects
+          - request-parameters
+          - required-nullable
+          - reserved-keywords
+          - response-property
+          - ruby-reserved-word-properties
+          - server-sent-event-examples
+          - server-sent-events
+          - simple-api
+          - simple-fhir
+          - single-url-environment-default
+          - single-url-environment-no-default
+          - streaming
+          - streaming-parameter
+          - trace
+          - ts-express-casing
+          - ts-inline-types
+          - undiscriminated-union-with-response-property
+          - undiscriminated-unions
+          - unions
+          - unions-with-local-date
+          - unknown
+          - url-form-encoded
+          - validation
+          - variables
+          - version
+          - version-no-default
+          - websocket
+          - websocket-bearer-auth
+          - websocket-inferred-auth
   pull_request:
     branches:
       - main
     paths:
       - 'generators/php/**'
+      - 'generators/go/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'generators/php/**'
+      - 'generators/go/**'
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -73,8 +170,14 @@ jobs:
         run: pnpm fern-dev:build
 
       - name: Build PHP SDK generator
-        if: ${{ inputs.language == 'php' || github.event_name == 'pull_request' }}
-        run: pnpm --filter @fern-api/php-sdk dist:cli
+        if: ${{ inputs.language == 'php' || github.event_name == 'pull_request' || github.event_name == 'push' }}
+        run: pnpm turbo run dist:cli --filter @fern-api/php-sdk
+
+      - name: Build Go SDK generator
+        if: ${{ inputs.language == 'go' }}
+        run: |
+          cd generators/go && go build ./...
+          pnpm turbo run dist:cli --filter @fern-api/go-sdk
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -86,12 +189,22 @@ jobs:
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Build PHP SDK Docker image
-        if: ${{ inputs.language == 'php' || github.event_name == 'pull_request' }}
+        if: ${{ inputs.language == 'php' || github.event_name == 'pull_request' || github.event_name == 'push' }}
         run: |
           docker build \
             -f generators/php/sdk/Dockerfile \
             -t fernapi/fern-php-sdk:latest \
             --cache-from fernapi/fern-php-sdk:latest \
+            --build-arg BUILDKIT_INLINE_CACHE=1 \
+            .
+
+      - name: Build Go SDK Docker image
+        if: ${{ inputs.language == 'go' }}
+        run: |
+          docker build \
+            -f generators/go/sdk/Dockerfile \
+            -t fernapi/fern-go-sdk:latest \
+            --cache-from fernapi/fern-go-sdk:latest \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             .
 
@@ -101,7 +214,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Generate PHP SDK for test definition
-        if: ${{ inputs.language == 'php' || github.event_name == 'pull_request' }}
+        if: ${{ inputs.language == 'php' || github.event_name == 'pull_request' || github.event_name == 'push' }}
         env:
           FORCE_COLOR: "2"
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
@@ -109,7 +222,12 @@ jobs:
         run: |
           cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs"
           cd test-definitions
-          test_definition="${{ inputs.test-definition || 'exhaustive' }}"
+          # Use 'all' for push events (merges to main), 'exhaustive' for PRs, or the input value for workflow_dispatch
+          if [ "${{ github.event_name }}" = "push" ]; then
+            test_definition="all"
+          else
+            test_definition="${{ inputs.test-definition || 'exhaustive' }}"
+          fi
           
           if [ "$test_definition" = "all" ]; then
             echo "Running fern generate for all test definitions with php-sdk group..."
@@ -152,6 +270,65 @@ jobs:
             echo "All test definitions processed"
           else
             FERN_NO_VERSION_REDIRECTION=true node $cli_path generate --local --group php-sdk --api $test_definition --log-level debug
+          fi
+
+      - name: Generate Go SDK for test definition
+        if: ${{ inputs.language == 'go' }}
+        env:
+          FORCE_COLOR: "2"
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SEED_GITHUB_TOKEN }}
+        run: |
+          cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs"
+          cd test-definitions
+          # Use 'all' for push events (merges to main), 'exhaustive' for PRs, or the input value for workflow_dispatch
+          if [ "${{ github.event_name }}" = "push" ]; then
+            test_definition="all"
+          else
+            test_definition="${{ inputs.test-definition || 'exhaustive' }}"
+          fi
+          
+          if [ "$test_definition" = "all" ]; then
+            echo "Running fern generate for all test definitions with go-sdk group..."
+            
+            # Find all test definitions that have a go-sdk group
+            test_definitions=()
+            for dir in fern/apis/*/; do
+              if [ -f "${dir}generators.yml" ] && grep -q "go-sdk:" "${dir}generators.yml"; then
+                api_name=$(basename "$dir")
+                test_definitions+=("$api_name")
+              fi
+            done
+            
+            echo "Found ${#test_definitions[@]} test definitions with go-sdk group"
+            
+            # Run in parallel batches of 5
+            batch_size=5
+            total=${#test_definitions[@]}
+            
+            for ((i=0; i<total; i+=batch_size)); do
+              batch=("${test_definitions[@]:i:batch_size}")
+              echo "Processing batch: ${batch[*]}"
+              
+              # Run batch in parallel
+              pids=()
+              for api in "${batch[@]}"; do
+                echo "Starting generation for: $api"
+                FERN_NO_VERSION_REDIRECTION=true node $cli_path generate --local --group go-sdk --api "$api" --log-level debug &
+                pids+=($!)
+              done
+              
+              # Wait for all processes in this batch to complete
+              for pid in "${pids[@]}"; do
+                wait $pid || echo "Process $pid failed"
+              done
+              
+              echo "Batch completed"
+            done
+            
+            echo "All test definitions processed"
+          else
+            FERN_NO_VERSION_REDIRECTION=true node $cli_path generate --local --group go-sdk --api $test_definition --log-level debug
           fi
 
       - name: Get updated branch name

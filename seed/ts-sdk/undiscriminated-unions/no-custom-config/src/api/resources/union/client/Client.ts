@@ -4,11 +4,12 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedUndiscriminatedUnions from "../../../index.js";
 
 export declare namespace UnionClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
@@ -67,21 +68,7 @@ export class UnionClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /.");
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
     }
 
     /**
@@ -127,21 +114,7 @@ export class UnionClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling GET /metadata.");
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/metadata");
     }
 
     /**
@@ -197,21 +170,7 @@ export class UnionClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling PUT /metadata.");
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/metadata");
     }
 
     /**
@@ -269,21 +228,7 @@ export class UnionClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /call.");
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/call");
     }
 
     /**
@@ -338,23 +283,7 @@ export class UnionClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
-                    "Timeout exceeded when calling POST /duplicate.",
-                );
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/duplicate");
     }
 
     /**
@@ -406,21 +335,7 @@ export class UnionClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /nested.");
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/nested");
     }
 
     /**
@@ -477,22 +392,6 @@ export class UnionClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
-                    "Timeout exceeded when calling POST /camel-case.",
-                );
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/camel-case");
     }
 }

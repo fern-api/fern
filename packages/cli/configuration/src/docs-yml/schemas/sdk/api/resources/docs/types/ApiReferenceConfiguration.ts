@@ -13,6 +13,8 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     audiences?: FernDocsConfig.Audience;
     /** Defaults to false */
     displayErrors?: boolean;
+    /** If true, a page will be created for each tag in the OpenAPI spec that contains a description. */
+    tagDescriptionPages?: boolean;
     snippets?: FernDocsConfig.SnippetsConfiguration;
     /** URL to a Postman collection for this API reference */
     postman?: string;

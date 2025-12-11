@@ -118,6 +118,7 @@
       "displayName": "BadRequestError",
       "docs": "Invalid user data",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "CreateUserRequestBadRequestError",
@@ -210,6 +211,7 @@
       "displayName": "ServiceUnavailableError",
       "docs": "Service is unhealthy",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetHealthRequestServiceUnavailableError",
@@ -302,6 +304,7 @@
       "displayName": "NotFoundError",
       "docs": "User not found",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetUserRequestNotFoundError",

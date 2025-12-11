@@ -1,6 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
 import { TaskContext } from "@fern-api/task-context";
@@ -36,7 +35,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined,
     removeDiscriminantsFromSchemas: undefined,
-    pathParameterOrder: undefined
+    pathParameterOrder: undefined,
+    defaultIntegerFormat: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -58,6 +58,7 @@ export async function convertGeneratorsConfiguration({
         api: parsedApiConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
+        groupAliases: rawGeneratorsConfiguration.aliases ?? {},
         reviewers: rawGeneratorsConfiguration.reviewers,
         groups:
             rawGeneratorsConfiguration.groups != null
@@ -125,7 +126,8 @@ function parseOpenApiDefinitionSettingsSchema(
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
-        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        defaultIntegerFormat: settings?.["default-integer-format"]
     };
 }
 
@@ -343,24 +345,7 @@ async function parseApiConfigurationV2Schema({
     apiSettings: generatorsYml.APIDefinitionSettings;
 }): Promise<generatorsYml.APIDefinition> {
     const partialConfig = {
-        "auth-schemes":
-            apiConfiguration.auth != null
-                ? Object.fromEntries(
-                      Object.entries(rawConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
-                          if (apiConfiguration.auth == null) {
-                              return false;
-                          }
-                          return visitRawApiAuth(apiConfiguration.auth, {
-                              any: (any) => {
-                                  return any.any.includes(name);
-                              },
-                              single: (single) => {
-                                  return single === name;
-                              }
-                          });
-                      })
-                  )
-                : undefined,
+        "auth-schemes": rawConfiguration["auth-schemes"],
         ...apiConfiguration
     };
 
@@ -571,7 +556,7 @@ async function convertGenerator({
             maybeTopLevelReviewers
         }),
         keywords: generator.keywords,
-        smartCasing: generator["smart-casing"] ?? false,
+        smartCasing: generator["smart-casing"] ?? true,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"
@@ -585,7 +570,15 @@ async function convertGenerator({
         irVersionOverride: generator["ir-version"] ?? undefined,
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
-        settings: generator.api?.settings ?? undefined
+        settings: generator.api?.settings ?? undefined,
+        apiOverride:
+            generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null
+                ? {
+                      specs: generator.api?.specs,
+                      auth: generator.api?.auth,
+                      "auth-schemes": generator.api?.["auth-schemes"]
+                  }
+                : undefined
     };
 }
 

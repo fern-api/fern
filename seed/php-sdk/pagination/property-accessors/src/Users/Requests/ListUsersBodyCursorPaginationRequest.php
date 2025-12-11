@@ -24,24 +24,20 @@ class ListUsersBodyCursorPaginationRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->pagination = $values['pagination'] ?? null;
     }
 
     /**
      * @return ?WithCursor
      */
-    public function getPagination(): ?WithCursor
-    {
-        return $this->pagination;
-    }
+    public function getPagination(): ?WithCursor {
+        return $this->pagination;}
 
     /**
      * @param ?WithCursor $value
      */
-    public function setPagination(?WithCursor $value = null): self
-    {
-        $this->pagination = $value;
-        return $this;
-    }
+    public function setPagination(?WithCursor $value = null): self {
+        $this->pagination = $value;return $this;}
 }

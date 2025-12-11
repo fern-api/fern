@@ -1,10 +1,10 @@
-irVersion: v61
+irVersion: v62
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/php-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/php-sdk
   docker:
     file: ./generators/php/sdk/Dockerfile
     image: fernapi/fern-php-sdk
@@ -12,19 +12,25 @@ publish:
 test:
   docker:
     image: fernapi/fern-php-sdk:latest
-    command: pnpm --filter @fern-api/php-sdk dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/php-sdk
   podman:
     image: fernapi/fern-php-sdk:latest
-    command: pnpm --filter @fern-api/php-sdk podmanTagLatest
+    command: pnpm turbo run podmanTagLatest --filter @fern-api/php-sdk
   local:
     workingDirectory: generators/php
     buildCommand:
-      - pnpm --filter @fern-api/php-sdk dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/php-sdk
     runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 language: php
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  exhaustive:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: wire-tests
+      customConfig:
+        enable-wire-tests: true
   examples:
     - customConfig: null
       outputFolder: no-custom-config
@@ -142,10 +148,12 @@ fixtures:
 scripts:
   - image: composer:2.7.9
     commands:
-      - composer install
-      - composer build
-      - composer analyze
-      - composer test
+      build:
+        - composer install
+        - composer build
+        - composer analyze
+      test:
+        - composer test
 allowedFailures:
   - pagination-custom
   # Dynamic snippets need to add support for global headers included in the client constructor.
@@ -159,6 +167,8 @@ allowedFailures:
   - examples:readme-config
   # Enums don't support the fromJson method yet.
   - exhaustive
+  # Wire tests have a bug where tests extend TestCase instead of WireMockTestCase
+  - exhaustive:wire-tests
   - trace
   - circular-references
   - circular-references-advanced

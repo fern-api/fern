@@ -339,7 +339,7 @@ service:
             body:
               type: datetime
               value: 1994-01-01T01:01:01Z
-    
+
     update:
       path: ""
       method: PATCH

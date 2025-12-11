@@ -8,7 +8,7 @@ client = Acme::Client.new(token: '<YOUR_API_KEY>');
 client.service.get_metadata(
   shallow: false,
   tag: ['development', 'public'],
-  xAPIVersion: '0.0.1'
+  x_api_version: '0.0.1'
 );
 "
 `;
@@ -30,8 +30,12 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.service.create_big_entity({
-  extendedMovie: {
+client.service.create_big_entity(
+  cast_member: {
+    id: 'john.doe',
+    name: 'John Doe'
+  },
+  extended_movie: {
     cast: ['John Travolta', 'Samuel L. Jackson', 'Uma Thurman', 'Bruce Willis'],
     id: 'movie-sda231x',
     title: 'Pulp Fiction',
@@ -43,9 +47,10 @@ client.service.create_big_entity({
     revenue: 1000000
   },
   migration: {
-    name: 'Migration 31 Aug'
+    name: 'Migration 31 Aug',
+    status: 'RUNNING'
   }
-});
+);
 "
 `;
 
@@ -66,7 +71,7 @@ exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.service.create_movie({
+client.service.create_movie(
   id: 'movie-c06a4ad7',
   prequel: 'movie-cv9b914f',
   title: 'The Boy and the Heron',
@@ -76,7 +81,7 @@ client.service.create_movie({
   tag: 'development',
   metadata: {},
   revenue: 1000000
-});
+);
 "
 `;
 
@@ -85,7 +90,7 @@ exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-opti
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.endpoints.object.get_and_return_with_optional_field({
+client.endpoints.object.get_and_return_with_optional_field(
   string: 'string',
   integer: 1,
   long: 1000000,
@@ -98,10 +103,10 @@ client.endpoints.object.get_and_return_with_optional_field({
   list: ['list', 'list'],
   set: Set.new(['set']),
   map: {
-    1: 'map'
+    1 => 'map'
   },
   bigint: '1000000'
-});
+);
 "
 `;
 
@@ -109,30 +114,43 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
 "[
   {
     "severity": "CRITICAL",
-    "path": [],
-    "message": "Expected object with key, value pairs but got: array"
+    "path": [
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "string"
+    ],
+    "message": "Expected string, got number"
   }
 ]"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [],
-    "message": "Expected object with key, value pairs but got: array"
-  }
-]"
+"require "acme"
+
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
+
+client.endpoints.container.get_and_return_list_of_objects(request: [{
+  string: 'one'
+}, {
+  string: 'two'
+}, {
+  string: 'three'
+}]);
+"
 `;
 
 exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (s…' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [],
-    "message": "Expected object with key, value pairs but got: array"
-  }
-]"
+"require "acme"
+
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
+
+client.endpoints.container.get_and_return_list_of_primitives(request: ['one', 'two', 'three']);
+"
 `;
 
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
@@ -160,7 +178,7 @@ client = Acme::Client.new();
 
 client.service.just_file_with_query_params(
   integer: 42,
-  maybeString: 'exists'
+  maybe_string: 'exists'
 );
 "
 `;
@@ -170,7 +188,7 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.imdb.get_movie('movie_xyz');
+client.imdb.get_movie(movie_id: 'movie_xyz');
 "
 `;
 
@@ -179,10 +197,10 @@ exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = 
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.imdb.create_movie({
+client.imdb.create_movie(
   title: 'The Matrix',
   rating: 8.2
-});
+);
 "
 `;
 
@@ -214,7 +232,7 @@ client = Acme::Client.new(
   environment: Acme::Environment::PRODUCTION
 );
 
-client.s3.get_presigned_url(s3Key: 'xyz');
+client.s3.get_presigned_url(s3key: 'xyz');
 "
 `;
 
@@ -226,7 +244,7 @@ client = Acme::Client.new(
   environment: Acme::Environment::STAGING
 );
 
-client.s3.get_presigned_url(s3Key: 'xyz');
+client.s3.get_presigned_url(s3key: 'xyz');
 "
 `;
 
@@ -249,8 +267,8 @@ client.nullable.create_user(
   username: 'john.doe',
   tags: ['admin'],
   metadata: {
-    createdAt: '1980-01-01T00:00:00Z',
-    updatedAt: '1980-01-01T00:00:00Z',
+    created_at: '1980-01-01T00:00:00Z',
+    updated_at: '1980-01-01T00:00:00Z',
     avatar: nil,
     activated: nil
   },
@@ -287,14 +305,14 @@ exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
 
 client = Acme::Client.new(base_url: 'https://api.example.com');
 
-client.create_user({
+client.create_user(
   password: 'password',
   profile: {
     name: 'name',
     verification: {},
     ssn: 'ssn'
   }
-});
+);
 "
 `;
 
@@ -303,7 +321,7 @@ exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] 
 
 client = Acme::Client.new(base_url: 'https://api.example.com');
 
-client.create_user({
+client.create_user(
   id: 'id',
   password: 'password',
   profile: {
@@ -311,7 +329,7 @@ client.create_user({
     verification: {},
     ssn: 'ssn'
   }
-});
+);
 "
 `;
 

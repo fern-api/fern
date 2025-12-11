@@ -6,7 +6,7 @@ import * as FernSeedConfig from "../../../index";
 
 /**
  * Configuration for publishing from a command, assuming something packaged up, like with the TypeScript generator.
- * ex. `pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"`
+ * ex. `pnpm turbo run dockerTagVersion --filter @fern-typescript/express-generator-cli -- "$VERSION"`
  * Commands can be multi-line, we'll run them all!
  */
 export interface PublishCommand {

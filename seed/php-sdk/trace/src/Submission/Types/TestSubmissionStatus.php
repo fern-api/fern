@@ -50,16 +50,15 @@ class TestSubmissionStatus extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
      * @return TestSubmissionStatus
      */
-    public static function stopped(): TestSubmissionStatus
-    {
+    public static function stopped(): TestSubmissionStatus {
         return new TestSubmissionStatus([
             'type' => 'stopped',
             'value' => null,
@@ -70,8 +69,7 @@ class TestSubmissionStatus extends JsonSerializableType
      * @param ErrorInfo $errored
      * @return TestSubmissionStatus
      */
-    public static function errored(ErrorInfo $errored): TestSubmissionStatus
-    {
+    public static function errored(ErrorInfo $errored): TestSubmissionStatus {
         return new TestSubmissionStatus([
             'type' => 'errored',
             'value' => $errored,
@@ -82,8 +80,7 @@ class TestSubmissionStatus extends JsonSerializableType
      * @param value-of<RunningSubmissionState> $running
      * @return TestSubmissionStatus
      */
-    public static function running(string $running): TestSubmissionStatus
-    {
+    public static function running(string $running): TestSubmissionStatus {
         return new TestSubmissionStatus([
             'type' => 'running',
             'value' => $running,
@@ -94,8 +91,7 @@ class TestSubmissionStatus extends JsonSerializableType
      * @param array<string, SubmissionStatusForTestCase> $testCaseIdToState
      * @return TestSubmissionStatus
      */
-    public static function testCaseIdToState(array $testCaseIdToState): TestSubmissionStatus
-    {
+    public static function testCaseIdToState(array $testCaseIdToState): TestSubmissionStatus {
         return new TestSubmissionStatus([
             'type' => 'testCaseIdToState',
             'value' => $testCaseIdToState,
@@ -105,97 +101,88 @@ class TestSubmissionStatus extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isStopped(): bool
-    {
-        return is_null($this->value) && $this->type === 'stopped';
+    public function isStopped(): bool {
+        return is_null($this->value)&& $this->type === 'stopped';
     }
 
     /**
      * @return bool
      */
-    public function isErrored(): bool
-    {
-        return $this->value instanceof ErrorInfo && $this->type === 'errored';
+    public function isErrored(): bool {
+        return $this->value instanceof ErrorInfo&& $this->type === 'errored';
     }
 
     /**
      * @return ErrorInfo
      */
-    public function asErrored(): ErrorInfo
-    {
-        if (!($this->value instanceof ErrorInfo && $this->type === 'errored')) {
+    public function asErrored(): ErrorInfo {
+        if (!($this->value instanceof ErrorInfo&& $this->type === 'errored')){
             throw new Exception(
                 "Expected errored; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isRunning(): bool
-    {
-        return $this->value instanceof RunningSubmissionState && $this->type === 'running';
+    public function isRunning(): bool {
+        return $this->value instanceof RunningSubmissionState&& $this->type === 'running';
     }
 
     /**
      * @return value-of<RunningSubmissionState>
      */
-    public function asRunning(): string
-    {
-        if (!($this->value instanceof RunningSubmissionState && $this->type === 'running')) {
+    public function asRunning(): string {
+        if (!($this->value instanceof RunningSubmissionState&& $this->type === 'running')){
             throw new Exception(
                 "Expected running; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isTestCaseIdToState(): bool
-    {
-        return is_array($this->value) && $this->type === 'testCaseIdToState';
+    public function isTestCaseIdToState(): bool {
+        return is_array($this->value)&& $this->type === 'testCaseIdToState';
     }
 
     /**
      * @return array<string, SubmissionStatusForTestCase>
      */
-    public function asTestCaseIdToState(): array
-    {
-        if (!(is_array($this->value) && $this->type === 'testCaseIdToState')) {
+    public function asTestCaseIdToState(): array {
+        if (!(is_array($this->value)&& $this->type === 'testCaseIdToState')){
             throw new Exception(
                 "Expected testCaseIdToState; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'stopped':
                 $result['stopped'] = [];
                 break;
@@ -213,27 +200,26 @@ class TestSubmissionStatus extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -242,34 +228,33 @@ class TestSubmissionStatus extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('type', $data)) {
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'stopped':
                 $args['value'] = null;
                 break;
             case 'errored':
-                if (!array_key_exists('errored', $data)) {
+                if (!array_key_exists('errored', $data)){
                     throw new Exception(
                         "JSON data is missing property 'errored'",
                     );
                 }
-
-                if (!(is_array($data['errored']))) {
+                
+                if (!(is_array($data['errored']))){
                     throw new Exception(
                         "Expected property 'errored' in JSON data to be array, instead received " . get_debug_type($data['errored']),
                     );
@@ -277,21 +262,21 @@ class TestSubmissionStatus extends JsonSerializableType
                 $args['value'] = ErrorInfo::jsonDeserialize($data['errored']);
                 break;
             case 'running':
-                if (!array_key_exists('running', $data)) {
+                if (!array_key_exists('running', $data)){
                     throw new Exception(
                         "JSON data is missing property 'running'",
                     );
                 }
-
+                
                 $args['value'] = $data['running'];
                 break;
             case 'testCaseIdToState':
-                if (!array_key_exists('testCaseIdToState', $data)) {
+                if (!array_key_exists('testCaseIdToState', $data)){
                     throw new Exception(
                         "JSON data is missing property 'testCaseIdToState'",
                     );
                 }
-
+                
                 $args['value'] = $data['testCaseIdToState'];
                 break;
             case '_unknown':
@@ -299,7 +284,7 @@ class TestSubmissionStatus extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }

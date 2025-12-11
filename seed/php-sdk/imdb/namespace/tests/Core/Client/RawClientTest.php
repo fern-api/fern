@@ -5,6 +5,8 @@ namespace Fern\Tests\Core\Client;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Promise as P;
+use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -16,8 +18,7 @@ use Fern\Core\Json\JsonApiRequest;
 use Fern\Core\Json\JsonSerializableType;
 use Fern\Core\Json\JsonProperty;
 
-class JsonRequest extends JsonSerializableType
-{
+class JsonRequest extends JsonSerializableType {
     /**
      * @var string
      */
@@ -440,5 +441,230 @@ class RawClientTest extends TestCase
         }
 
         $this->assertEquals(1, $this->mockHandler->count());
+    }
+
+    public function testRetryAfterSecondsHeaderControlsDelay(): void
+    {
+        $responses = [
+            new Response(503, ['Retry-After' => '10']),
+            new Response(200),
+        ];
+        $capturedOptions = [];
+
+        $handler = function (RequestInterface $request, array $options) use (&$responses, &$capturedOptions) {
+            $capturedOptions[] = $options;
+            $response = array_shift($responses);
+            return P\Create::promiseFor($response);
+        };
+
+        $middleware = RetryMiddleware::create([
+            'maxRetries' => 2,
+            'baseDelay' => 1000,
+        ]);
+
+        $retryHandler = $middleware($handler);
+        $request = new Request('GET', $this->baseUrl . '/test');
+
+        $promise = $retryHandler($request, ['delay' => 0]);
+        $promise->wait();
+
+        $this->assertCount(2, $capturedOptions);
+        $this->assertSame(0, $capturedOptions[0]['delay']);
+        $delay = $capturedOptions[1]['delay'];
+        $this->assertGreaterThanOrEqual(10000, $delay);
+        $this->assertLessThanOrEqual(12000, $delay);
+    }
+
+    public function testRetryAfterHttpDateHeaderIsHandled(): void
+    {
+        $retryAfterDate = gmdate('D, d M Y H:i:s \G\M\T', time() + 5);
+
+        $responses = [
+            new Response(503, ['Retry-After' => $retryAfterDate]),
+            new Response(200),
+        ];
+        $capturedOptions = [];
+
+        $handler = function (RequestInterface $request, array $options) use (&$responses, &$capturedOptions) {
+            $capturedOptions[] = $options;
+            $response = array_shift($responses);
+            return P\Create::promiseFor($response);
+        };
+
+        $middleware = RetryMiddleware::create([
+            'maxRetries' => 2,
+            'baseDelay' => 1000,
+        ]);
+
+        $retryHandler = $middleware($handler);
+        $request = new Request('GET', $this->baseUrl . '/test');
+
+        $promise = $retryHandler($request, ['delay' => 0]);
+        $promise->wait();
+
+        $this->assertCount(2, $capturedOptions);
+        $delay = $capturedOptions[1]['delay'];
+        $this->assertGreaterThan(0, $delay);
+        $this->assertLessThanOrEqual(60000, $delay);
+    }
+
+    public function testRateLimitResetHeaderControlsDelay(): void
+    {
+        $resetTime = (int) floor(microtime(true)) + 5;
+        $responses = [
+            new Response(429, ['X-RateLimit-Reset' => (string) $resetTime]),
+            new Response(200),
+        ];
+        $capturedOptions = [];
+
+        $handler = function (RequestInterface $request, array $options) use (&$responses, &$capturedOptions) {
+            $capturedOptions[] = $options;
+            $response = array_shift($responses);
+            return P\Create::promiseFor($response);
+        };
+
+        $middleware = RetryMiddleware::create([
+            'maxRetries' => 2,
+            'baseDelay' => 1000,
+        ]);
+
+        $retryHandler = $middleware($handler);
+        $request = new Request('GET', $this->baseUrl . '/test');
+
+        $promise = $retryHandler($request, ['delay' => 0]);
+        $promise->wait();
+
+        $this->assertCount(2, $capturedOptions);
+        $delay = $capturedOptions[1]['delay'];
+        $this->assertGreaterThan(0, $delay);
+        $this->assertLessThanOrEqual(60000, $delay);
+    }
+
+    public function testRateLimitResetHeaderRespectsMaxDelayAndPositiveJitter(): void
+    {
+        $resetTime = (int) floor(microtime(true)) + 1000;
+        $responses = [
+            new Response(429, ['X-RateLimit-Reset' => (string) $resetTime]),
+            new Response(200),
+        ];
+        $capturedOptions = [];
+
+        $handler = function (RequestInterface $request, array $options) use (&$responses, &$capturedOptions) {
+            $capturedOptions[] = $options;
+            $response = array_shift($responses);
+            return P\Create::promiseFor($response);
+        };
+
+        $middleware = RetryMiddleware::create([
+            'maxRetries' => 1,
+            'baseDelay' => 1000,
+        ]);
+
+        $retryHandler = $middleware($handler);
+        $request = new Request('GET', $this->baseUrl . '/test');
+
+        $promise = $retryHandler($request, ['delay' => 0]);
+        $promise->wait();
+
+        $delay = $capturedOptions[1]['delay'];
+        $this->assertGreaterThanOrEqual(60000, $delay);
+        $this->assertLessThanOrEqual(72000, $delay);
+    }
+
+    public function testExponentialBackoffWithSymmetricJitterWhenNoHeaders(): void
+    {
+        $responses = [
+            new Response(503),
+            new Response(200),
+        ];
+        $capturedOptions = [];
+
+        $handler = function (RequestInterface $request, array $options) use (&$responses, &$capturedOptions) {
+            $capturedOptions[] = $options;
+            $response = array_shift($responses);
+            return P\Create::promiseFor($response);
+        };
+
+        $middleware = RetryMiddleware::create([
+            'maxRetries' => 1,
+            'baseDelay' => 1000,
+        ]);
+
+        $retryHandler = $middleware($handler);
+        $request = new Request('GET', $this->baseUrl . '/test');
+
+        $promise = $retryHandler($request, ['delay' => 0]);
+        $promise->wait();
+
+        $this->assertCount(2, $capturedOptions);
+        $delay = $capturedOptions[1]['delay'];
+        $this->assertGreaterThanOrEqual(900, $delay);
+        $this->assertLessThanOrEqual(1100, $delay);
+    }
+
+    public function testRetryAfterHeaderTakesPrecedenceOverRateLimitReset(): void
+    {
+        $resetTime = (int) floor(microtime(true)) + 30;
+        $responses = [
+            new Response(503, [
+                'Retry-After' => '5',
+                'X-RateLimit-Reset' => (string) $resetTime,
+            ]),
+            new Response(200),
+        ];
+        $capturedOptions = [];
+
+        $handler = function (RequestInterface $request, array $options) use (&$responses, &$capturedOptions) {
+            $capturedOptions[] = $options;
+            $response = array_shift($responses);
+            return P\Create::promiseFor($response);
+        };
+
+        $middleware = RetryMiddleware::create([
+            'maxRetries' => 2,
+            'baseDelay' => 1000,
+        ]);
+
+        $retryHandler = $middleware($handler);
+        $request = new Request('GET', $this->baseUrl . '/test');
+
+        $promise = $retryHandler($request, ['delay' => 0]);
+        $promise->wait();
+
+        $this->assertCount(2, $capturedOptions);
+        $delay = $capturedOptions[1]['delay'];
+        $this->assertGreaterThanOrEqual(5000, $delay);
+        $this->assertLessThanOrEqual(6000, $delay);
+    }
+
+    public function testMaxDelayCapIsApplied(): void
+    {
+        $responses = [
+            new Response(503, ['Retry-After' => '120']),
+            new Response(200),
+        ];
+        $capturedOptions = [];
+
+        $handler = function (RequestInterface $request, array $options) use (&$responses, &$capturedOptions) {
+            $capturedOptions[] = $options;
+            $response = array_shift($responses);
+            return P\Create::promiseFor($response);
+        };
+
+        $middleware = RetryMiddleware::create([
+            'maxRetries' => 2,
+            'baseDelay' => 1000,
+        ]);
+
+        $retryHandler = $middleware($handler);
+        $request = new Request('GET', $this->baseUrl . '/test');
+
+        $promise = $retryHandler($request, ['delay' => 0]);
+        $promise->wait();
+
+        $this->assertCount(2, $capturedOptions);
+        $delay = $capturedOptions[1]['delay'];
+        $this->assertGreaterThanOrEqual(60000, $delay);
+        $this->assertLessThanOrEqual(72000, $delay);
     }
 }

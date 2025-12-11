@@ -2119,6 +2119,16 @@
             }
           ]
         },
+        "tag-description-pages": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "snippets": {
           "oneOf": [
             {
@@ -4050,6 +4060,16 @@
               "type": "null"
             }
           ]
+        },
+        "right-text": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -4669,6 +4689,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.Language"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "substitute-env-vars": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"

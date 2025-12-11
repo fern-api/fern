@@ -22,22 +22,20 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist": "pnpm compile && node build.cjs",
+    "dist": "node build.mjs",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "devDependencies": {
-    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
-    "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/dynamic-ir-sdk": "^59.6.1",
+    "@fern-api/dynamic-ir-sdk": "^61.7.0",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/python-ast": "workspace:*",
     "@fern-api/python-browser-compatible-base": "workspace:*",
@@ -45,7 +43,6 @@
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
-    "tsup": "^8.5.0",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

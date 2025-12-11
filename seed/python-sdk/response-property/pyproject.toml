@@ -1,5 +1,6 @@
 [project]
 name = "fern_response-property"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_response-property"

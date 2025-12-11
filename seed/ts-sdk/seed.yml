@@ -5,7 +5,7 @@ imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
+    - pnpm turbo run dist:cli --filter @fern-typescript/sdk-generator-cli
   docker:
     file: ./generators/typescript/sdk/cli/Dockerfile
     image: fernapi/fern-typescript-sdk
@@ -15,15 +15,15 @@ test:
   docker:
     image: fernapi/fern-typescript-sdk:latest
     command:
-      - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest
+      - pnpm turbo run dockerTagLatest --filter @fern-typescript/sdk-generator-cli
   podman:
     image: fernapi/fern-typescript-sdk:latest
     command:
-      - pnpm --filter @fern-typescript/sdk-generator-cli podmanTagLatest
+      - pnpm turbo run podmanTagLatest --filter @fern-typescript/sdk-generator-cli
   local:
     workingDirectory: generators/typescript
     buildCommand:
-      - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
+      - pnpm turbo run dist:cli --filter @fern-typescript/sdk-generator-cli
     runCommand: node --enable-source-maps sdk/cli/dist/cli.cjs {CONFIG_PATH}
     env:
       NODE_ENV: test
@@ -266,6 +266,12 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+  oauth-client-credentials-mandatory-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
+  oauth-client-credentials-environment-variables:
+    - outputFolder: no-custom-config
+      customConfig: null
   oauth-client-credentials-nested-root:
     - outputFolder: no-custom-config
       customConfig: null
@@ -361,9 +367,14 @@ fixtures:
     - outputFolder: use-oxlint
       customConfig:
         linter: oxlint
-    - outputFolder: no-linter
+    - outputFolder: use-oxc
+      customConfig:
+        linter: oxlint
+        formatter: oxfmt
+    - outputFolder: no-linter-and-formatter
       customConfig:
         linter: none
+        formatter: none
     - outputFolder: omit-fern-headers
       customConfig:
         omitFernHeaders: true
@@ -435,44 +446,55 @@ fixtures:
     - outputFolder: page-index-semantics
       customConfig:
         offsetSemantics: "page-index"
+  pagination-custom:
+    - outputFolder: .
+      customConfig:
+        customPagerName: "MyPager"
 scripts:
   - image: fernapi/ts-seed
     commands:
-      - |
-        if [ ! -f "package.json" ]; then
-          echo "No package.json found, exiting..."
-          exit 0
-        fi
-        if grep -q '"packageManager": "pnpm' package.json; then
-          mkdir -p .pnpm-cache
-          echo "Preparing corepack and pnpm..."
-          corepack prepare pnpm --activate
-          echo "Running pnpm install..."
-          if [ -f "pnpm-lock.yaml" ]; then
-            corepack pnpm install --prefer-offline --frozen-lockfile
-          else
-            corepack pnpm install --prefer-offline
+      build:
+        - |
+          if [ ! -f "package.json" ]; then
+            echo "No package.json found, exiting..."
+            exit 0
           fi
-          echo "Running pnpm build..."
-          if grep -q '"build":' package.json; then corepack pnpm build; fi
-          echo "Running pnpm test..."
-          if grep -q '"test":' package.json; then corepack pnpm test; fi
-        fi
-        if grep -q '"packageManager": "yarn' package.json; then
-          mkdir -p .yarn-cache
-          echo "Preparing corepack and yarn..."
-          corepack prepare yarn --activate
-          echo "Running yarn install..."
-          if [ -f "yarn.lock" ]; then
-            corepack yarn install --prefer-offline --frozen-lockfile
-          else
-            corepack yarn install --prefer-offline
+          if grep -q '"packageManager": "pnpm' package.json; then
+            mkdir -p .pnpm-cache
+            echo "Preparing corepack and pnpm..."
+            corepack prepare pnpm --activate
+            echo "Running pnpm install..."
+            if [ -f "pnpm-lock.yaml" ]; then
+              corepack pnpm install --prefer-offline --frozen-lockfile
+            else
+              corepack pnpm install --prefer-offline
+            fi
+            echo "Running pnpm build..."
+            if grep -q '"build":' package.json; then corepack pnpm build; fi
           fi
-          echo "Running yarn build..."
-          if grep -q '"build":' package.json; then corepack yarn build; fi
-          echo "Running yarn test..."
-          if grep -q '"test":' package.json; then corepack yarn test; fi
-        fi
+          if grep -q '"packageManager": "yarn' package.json; then
+            mkdir -p .yarn-cache
+            echo "Preparing corepack and yarn..."
+            corepack prepare yarn --activate
+            echo "Running yarn install..."
+            if [ -f "yarn.lock" ]; then
+              corepack yarn install --prefer-offline --frozen-lockfile
+            else
+              corepack yarn install --prefer-offline
+            fi
+            echo "Running yarn build..."
+            if grep -q '"build":' package.json; then corepack yarn build; fi
+          fi
+      test:
+        - |
+          if grep -q '"packageManager": "pnpm' package.json; then
+            echo "Running pnpm test..."
+            if grep -q '"test":' package.json; then corepack pnpm test; fi
+          fi
+          if grep -q '"packageManager": "yarn' package.json; then
+            echo "Running yarn test..."
+            if grep -q '"test":' package.json; then corepack yarn test; fi
+          fi
 allowedFailures:
   - enum:no-custom-config
   - enum:forward-compatible-enums

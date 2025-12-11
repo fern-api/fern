@@ -45,7 +45,7 @@ runs:
       shell: bash
       run: |
         echo "Building seed CLI once with Turbo caching..."
-        pnpm turbo run dist:cli --filter=@fern-api/seed-cli
+        pnpm seed:build
 
     - name: Run publish (auto)
       if: inputs.manual-trigger == 'false'
@@ -92,3 +92,128 @@ runs:
       run: |
         node --enable-source-maps packages/seed/dist/cli.cjs publish generator ${{ inputs.generator-name }} --ver ${{ inputs.version }} --log-level debug
         node --enable-source-maps packages/seed/dist/cli.cjs register generator --generators ${{ inputs.generator-name }}
+
+    - name: Determine snippet package info
+      id: snippet-info
+      shell: bash
+      run: |
+        GENERATOR_NAME="${{ inputs.generator-name }}"
+
+        # Map generator names to their corresponding snippet package names and directories
+        case "$GENERATOR_NAME" in
+          "python-sdk")
+            SNIPPET_PACKAGE="@fern-api/python-dynamic-snippets"
+            SNIPPET_DIR="generators/python-v2/dynamic-snippets"
+            ;;
+          "ts-sdk")
+            SNIPPET_PACKAGE="@fern-api/typescript-dynamic-snippets"
+            SNIPPET_DIR="generators/typescript-v2/dynamic-snippets"
+            ;;
+          "java-sdk")
+            SNIPPET_PACKAGE="@fern-api/java-dynamic-snippets"
+            SNIPPET_DIR="generators/java-v2/dynamic-snippets"
+            ;;
+          "go-sdk")
+            SNIPPET_PACKAGE="@fern-api/go-dynamic-snippets"
+            SNIPPET_DIR="generators/go-v2/dynamic-snippets"
+            ;;
+          "csharp-sdk")
+            SNIPPET_PACKAGE="@fern-api/csharp-dynamic-snippets"
+            SNIPPET_DIR="generators/csharp/dynamic-snippets"
+            ;;
+          "ruby-sdk")
+            SNIPPET_PACKAGE="@fern-api/ruby-dynamic-snippets"
+            SNIPPET_DIR="generators/ruby-v2/dynamic-snippets"
+            ;;
+          "php-sdk")
+            SNIPPET_PACKAGE="@fern-api/php-dynamic-snippets"
+            SNIPPET_DIR="generators/php/dynamic-snippets"
+            ;;
+          "swift-sdk")
+            SNIPPET_PACKAGE="@fern-api/swift-dynamic-snippets"
+            SNIPPET_DIR="generators/swift/dynamic-snippets"
+            ;;
+          *)
+            echo "No snippet package for generator: $GENERATOR_NAME"
+            SNIPPET_PACKAGE=""
+            SNIPPET_DIR=""
+            ;;
+        esac
+
+        echo "snippet_package=$SNIPPET_PACKAGE" >> "$GITHUB_OUTPUT"
+        echo "snippet_dir=$SNIPPET_DIR" >> "$GITHUB_OUTPUT"
+
+    - name: Determine version for snippet package (auto)
+      id: snippet-version-auto
+      if: inputs.manual-trigger == 'false' && steps.snippet-info.outputs.snippet_package != ''
+      shell: bash
+      env:
+        VERSIONS_FILE: ${{ inputs.version-file }}
+      run: |
+        # Extract the latest version from the versions.yml file
+        VERSION=$(grep -m1 "^- version:" ${VERSIONS_FILE} | sed 's/- version: //' | tr -d '"' | tr -d "'")
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "Extracted version: $VERSION"
+
+    - name: Setup for snippet package publishing
+      if: steps.snippet-info.outputs.snippet_package != ''
+      uses: bufbuild/buf-setup-action@v1.34.0
+      with:
+        github_token: ${{ github.token }}
+
+    - name: Setup Go for snippet package publishing
+      if: steps.snippet-info.outputs.snippet_package != ''
+      uses: actions/setup-go@v5
+      with:
+        go-version: "stable"
+
+    - name: Install protoc-gen-openapi for snippet package
+      if: steps.snippet-info.outputs.snippet_package != ''
+      shell: bash
+      run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+    - name: Build snippet package
+      if: steps.snippet-info.outputs.snippet_package != ''
+      shell: bash
+      env:
+        SNIPPET_PACKAGE: ${{ steps.snippet-info.outputs.snippet_package }}
+      run: |
+        echo "Building snippet package: $SNIPPET_PACKAGE"
+        pnpm turbo run compile --filter=$SNIPPET_PACKAGE
+
+    - name: Test snippet package
+      if: steps.snippet-info.outputs.snippet_package != ''
+      shell: bash
+      env:
+        SNIPPET_PACKAGE: ${{ steps.snippet-info.outputs.snippet_package }}
+      run: |
+        echo "Testing snippet package: $SNIPPET_PACKAGE"
+        pnpm turbo run test --filter=$SNIPPET_PACKAGE
+
+    - name: Publish snippet package (auto)
+      if: inputs.manual-trigger == 'false' && steps.snippet-info.outputs.snippet_package != ''
+      shell: bash
+      env:
+        SNIPPET_PACKAGE: ${{ steps.snippet-info.outputs.snippet_package }}
+        SNIPPET_DIR: ${{ steps.snippet-info.outputs.snippet_dir }}
+        VERSION: ${{ steps.snippet-version-auto.outputs.version }}
+      run: |
+        echo "Publishing snippet package: $SNIPPET_PACKAGE at version $VERSION"
+        cd $SNIPPET_DIR
+        pnpm turbo run dist --filter=$SNIPPET_PACKAGE -- $VERSION
+        cd dist
+        npx -y npm@latest publish --access public --tag latest
+
+    - name: Publish snippet package (manual)
+      if: inputs.manual-trigger == 'true' && steps.snippet-info.outputs.snippet_package != ''
+      shell: bash
+      env:
+        SNIPPET_PACKAGE: ${{ steps.snippet-info.outputs.snippet_package }}
+        SNIPPET_DIR: ${{ steps.snippet-info.outputs.snippet_dir }}
+        VERSION: ${{ inputs.version }}
+      run: |
+        echo "Publishing snippet package: $SNIPPET_PACKAGE at version $VERSION"
+        cd $SNIPPET_DIR
+        pnpm turbo run dist --filter=$SNIPPET_PACKAGE -- $VERSION
+        cd dist
+        npx -y npm@latest publish --access public --tag latest

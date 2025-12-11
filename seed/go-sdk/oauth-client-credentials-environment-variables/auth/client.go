@@ -8,6 +8,7 @@ import (
 	core "github.com/oauth-client-credentials-environment-variables/fern/core"
 	internal "github.com/oauth-client-credentials-environment-variables/fern/internal"
 	option "github.com/oauth-client-credentials-environment-variables/fern/option"
+	os "os"
 )
 
 type Client struct {
@@ -19,6 +20,12 @@ type Client struct {
 }
 
 func NewClient(options *core.RequestOptions) *Client {
+	if options.ClientID == "" {
+		options.ClientID = os.Getenv("CLIENT_ID")
+	}
+	if options.ClientSecret == "" {
+		options.ClientSecret = os.Getenv("CLIENT_SECRET")
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,

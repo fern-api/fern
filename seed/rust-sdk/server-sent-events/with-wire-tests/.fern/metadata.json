@@ -1,0 +1,10 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-rust-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "enableWireTests": true,
+    "packageName": "sse_events",
+    "packageVersion": "0.1.0"
+  }
+}

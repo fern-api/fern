@@ -6,7 +6,6 @@ exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = 
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.types.GetMetadataRequest;
 import java.util.Arrays;
-import java.util.Optional;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
@@ -18,7 +17,7 @@ client.service().getMetadata(
         .builder()
         .xAPIVersion("0.0.1")
         .tag(
-            Arrays.asList(Optional.of("development"), Optional.of("public"))
+            Arrays.asList("development", "public")
         )
         .shallow(false)
         .build()
@@ -32,7 +31,6 @@ exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.types.GetMetadataRequest;
 import java.util.Arrays;
-import java.util.Optional;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
@@ -44,7 +42,7 @@ client.service().getMetadata(
         .builder()
         .xAPIVersion("0.0.1")
         .tag(
-            Arrays.asList(Optional.of("development"))
+            Arrays.asList("development")
         )
         .shallow(false)
         .build()
@@ -578,38 +576,15 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
 `;
 
 exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
-"package com.example.usage;
-
-import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.Nullable;
-import com.acme.acme.types.GetUsersRequest;
-import java.util.Arrays;
-import java.util.Optional;
-
-AcmeAcmeClient client = AcmeAcmeClient
-    .builder()
-    .url("https://api.example.com")
-    .build();
-
-client.nullable().getUsers(
-    GetUsersRequest
-        .builder()
-        .extra(
-            Nullable.ofNull()
-        )
-        .usernames(
-            Arrays.asList(Optional.of("john.doe"), Optional.of("jane.doe"))
-        )
-        .tags(
-            Arrays.asList(
-                Optional.of(
-                    Nullable.ofNull()
-                )
-            )
-        )
-        .build()
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "queryParameters[0]"
+    ],
+    "message": "Expected non-null value, but got null"
+  }
+]"
 `;
 
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `

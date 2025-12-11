@@ -2,4 +2,4 @@ require "seed"
 
 client = Seed::Client.new(base_url: 'https://api.fern.com');
 
-client.service.get_optional_movie_docs();
+client.service.get_movie(request: 'string');

@@ -6,3 +6,4 @@
 !generators/go/cmd
 !generators/go/internal
 !generators/go/version.go
+**/.DS_Store

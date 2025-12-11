@@ -89,6 +89,93 @@ func (b *Bar) String() string {
 }
 
 var (
+	firstItemTypeFieldType = big.NewInt(1 << 0)
+	firstItemTypeFieldName = big.NewInt(1 << 1)
+)
+
+type FirstItemType struct {
+	Type *string `json:"type,omitempty" url:"type,omitempty"`
+	Name string  `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FirstItemType) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *FirstItemType) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FirstItemType) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FirstItemType) SetType(type_ *string) {
+	f.Type = type_
+	f.require(firstItemTypeFieldType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FirstItemType) SetName(name string) {
+	f.Name = name
+	f.require(firstItemTypeFieldName)
+}
+
+func (f *FirstItemType) UnmarshalJSON(data []byte) error {
+	type unmarshaler FirstItemType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FirstItemType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FirstItemType) MarshalJSON() ([]byte, error) {
+	type embed FirstItemType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FirstItemType) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+var (
 	fooFieldName = big.NewInt(1 << 0)
 )
 
@@ -260,6 +347,93 @@ func (f *FooExtended) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	secondItemTypeFieldType  = big.NewInt(1 << 0)
+	secondItemTypeFieldTitle = big.NewInt(1 << 1)
+)
+
+type SecondItemType struct {
+	Type  *string `json:"type,omitempty" url:"type,omitempty"`
+	Title string  `json:"title" url:"title"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SecondItemType) GetTitle() string {
+	if s == nil {
+		return ""
+	}
+	return s.Title
+}
+
+func (s *SecondItemType) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
+}
+
+func (s *SecondItemType) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SecondItemType) SetType(type_ *string) {
+	s.Type = type_
+	s.require(secondItemTypeFieldType)
+}
+
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SecondItemType) SetTitle(title string) {
+	s.Title = title
+	s.require(secondItemTypeFieldTitle)
+}
+
+func (s *SecondItemType) UnmarshalJSON(data []byte) error {
+	type unmarshaler SecondItemType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SecondItemType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SecondItemType) MarshalJSON() ([]byte, error) {
+	type embed SecondItemType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SecondItemType) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 // This is a simple union.
 type Union struct {
 	Type string
@@ -407,19 +581,19 @@ func (u *Union) validate() error {
 }
 
 type UnionWithBaseProperties struct {
-	Type    string
-	Id      string
-	Integer int
-	String  string
-	Foo     *Foo
+	Type        string
+	Id          string
+	Integer     int
+	FieldString string
+	Foo         *Foo
 }
 
 func NewUnionWithBasePropertiesFromInteger(value int) *UnionWithBaseProperties {
 	return &UnionWithBaseProperties{Type: "integer", Integer: value}
 }
 
-func NewUnionWithBasePropertiesFromString(value string) *UnionWithBaseProperties {
-	return &UnionWithBaseProperties{Type: "string", String: value}
+func NewUnionWithBasePropertiesFromFieldString(value string) *UnionWithBaseProperties {
+	return &UnionWithBaseProperties{Type: "string", FieldString: value}
 }
 
 func NewUnionWithBasePropertiesFromFoo(value *Foo) *UnionWithBaseProperties {
@@ -447,11 +621,11 @@ func (u *UnionWithBaseProperties) GetInteger() int {
 	return u.Integer
 }
 
-func (u *UnionWithBaseProperties) GetString() string {
+func (u *UnionWithBaseProperties) GetFieldString() string {
 	if u == nil {
 		return ""
 	}
-	return u.String
+	return u.FieldString
 }
 
 func (u *UnionWithBaseProperties) GetFoo() *Foo {
@@ -485,12 +659,12 @@ func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 		u.Integer = valueUnmarshaler.Integer
 	case "string":
 		var valueUnmarshaler struct {
-			String string `json:"value"`
+			FieldString string `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		u.String = valueUnmarshaler.String
+		u.FieldString = valueUnmarshaler.FieldString
 	case "foo":
 		value := new(Foo)
 		if err := json.Unmarshal(data, &value); err != nil {
@@ -521,13 +695,13 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "string":
 		var marshaler = struct {
-			Type   string `json:"type"`
-			Id     string `json:"id"`
-			String string `json:"value"`
+			Type        string `json:"type"`
+			Id          string `json:"id"`
+			FieldString string `json:"value"`
 		}{
-			Type:   "string",
-			Id:     u.Id,
-			String: u.String,
+			Type:        "string",
+			Id:          u.Id,
+			FieldString: u.FieldString,
 		}
 		return json.Marshal(marshaler)
 	case "foo":
@@ -537,7 +711,7 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 
 type UnionWithBasePropertiesVisitor interface {
 	VisitInteger(int) error
-	VisitString(string) error
+	VisitFieldString(string) error
 	VisitFoo(*Foo) error
 }
 
@@ -548,7 +722,7 @@ func (u *UnionWithBaseProperties) Accept(visitor UnionWithBasePropertiesVisitor)
 	case "integer":
 		return visitor.VisitInteger(u.Integer)
 	case "string":
-		return visitor.VisitString(u.String)
+		return visitor.VisitFieldString(u.FieldString)
 	case "foo":
 		return visitor.VisitFoo(u.Foo)
 	}
@@ -562,7 +736,7 @@ func (u *UnionWithBaseProperties) validate() error {
 	if u.Integer != 0 {
 		fields = append(fields, "integer")
 	}
-	if u.String != "" {
+	if u.FieldString != "" {
 		fields = append(fields, "string")
 	}
 	if u.Foo != nil {
@@ -1055,6 +1229,133 @@ func (u *UnionWithDuplicateTypes) validate() error {
 	}
 	if u.Foo2 != nil {
 		fields = append(fields, "foo2")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
+}
+
+type UnionWithDuplicativeDiscriminants struct {
+	Type           string
+	FirstItemType  *FirstItemType
+	SecondItemType *SecondItemType
+}
+
+func NewUnionWithDuplicativeDiscriminantsFromFirstItemType(value *FirstItemType) *UnionWithDuplicativeDiscriminants {
+	return &UnionWithDuplicativeDiscriminants{Type: "firstItemType", FirstItemType: value}
+}
+
+func NewUnionWithDuplicativeDiscriminantsFromSecondItemType(value *SecondItemType) *UnionWithDuplicativeDiscriminants {
+	return &UnionWithDuplicativeDiscriminants{Type: "secondItemType", SecondItemType: value}
+}
+
+func (u *UnionWithDuplicativeDiscriminants) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithDuplicativeDiscriminants) GetFirstItemType() *FirstItemType {
+	if u == nil {
+		return nil
+	}
+	return u.FirstItemType
+}
+
+func (u *UnionWithDuplicativeDiscriminants) GetSecondItemType() *SecondItemType {
+	if u == nil {
+		return nil
+	}
+	return u.SecondItemType
+}
+
+func (u *UnionWithDuplicativeDiscriminants) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
+	switch unmarshaler.Type {
+	case "firstItemType":
+		value := new(FirstItemType)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.FirstItemType = value
+	case "secondItemType":
+		value := new(SecondItemType)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.SecondItemType = value
+	}
+	return nil
+}
+
+func (u UnionWithDuplicativeDiscriminants) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
+	switch u.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "firstItemType":
+		return internal.MarshalJSONWithExtraProperty(u.FirstItemType, "type", "firstItemType")
+	case "secondItemType":
+		return internal.MarshalJSONWithExtraProperty(u.SecondItemType, "type", "secondItemType")
+	}
+}
+
+type UnionWithDuplicativeDiscriminantsVisitor interface {
+	VisitFirstItemType(*FirstItemType) error
+	VisitSecondItemType(*SecondItemType) error
+}
+
+func (u *UnionWithDuplicativeDiscriminants) Accept(visitor UnionWithDuplicativeDiscriminantsVisitor) error {
+	switch u.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "firstItemType":
+		return visitor.VisitFirstItemType(u.FirstItemType)
+	case "secondItemType":
+		return visitor.VisitSecondItemType(u.SecondItemType)
+	}
+}
+
+func (u *UnionWithDuplicativeDiscriminants) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.FirstItemType != nil {
+		fields = append(fields, "firstItemType")
+	}
+	if u.SecondItemType != nil {
+		fields = append(fields, "secondItemType")
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {
@@ -1654,17 +1955,17 @@ func (u *UnionWithOptionalTime) validate() error {
 }
 
 type UnionWithPrimitive struct {
-	Type    string
-	Integer int
-	String  string
+	Type        string
+	Integer     int
+	FieldString string
 }
 
 func NewUnionWithPrimitiveFromInteger(value int) *UnionWithPrimitive {
 	return &UnionWithPrimitive{Type: "integer", Integer: value}
 }
 
-func NewUnionWithPrimitiveFromString(value string) *UnionWithPrimitive {
-	return &UnionWithPrimitive{Type: "string", String: value}
+func NewUnionWithPrimitiveFromFieldString(value string) *UnionWithPrimitive {
+	return &UnionWithPrimitive{Type: "string", FieldString: value}
 }
 
 func (u *UnionWithPrimitive) GetType() string {
@@ -1681,11 +1982,11 @@ func (u *UnionWithPrimitive) GetInteger() int {
 	return u.Integer
 }
 
-func (u *UnionWithPrimitive) GetString() string {
+func (u *UnionWithPrimitive) GetFieldString() string {
 	if u == nil {
 		return ""
 	}
-	return u.String
+	return u.FieldString
 }
 
 func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
@@ -1710,12 +2011,12 @@ func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 		u.Integer = valueUnmarshaler.Integer
 	case "string":
 		var valueUnmarshaler struct {
-			String string `json:"value"`
+			FieldString string `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		u.String = valueUnmarshaler.String
+		u.FieldString = valueUnmarshaler.FieldString
 	}
 	return nil
 }
@@ -1738,11 +2039,11 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "string":
 		var marshaler = struct {
-			Type   string `json:"type"`
-			String string `json:"value"`
+			Type        string `json:"type"`
+			FieldString string `json:"value"`
 		}{
-			Type:   "string",
-			String: u.String,
+			Type:        "string",
+			FieldString: u.FieldString,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -1750,7 +2051,7 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
 
 type UnionWithPrimitiveVisitor interface {
 	VisitInteger(int) error
-	VisitString(string) error
+	VisitFieldString(string) error
 }
 
 func (u *UnionWithPrimitive) Accept(visitor UnionWithPrimitiveVisitor) error {
@@ -1760,7 +2061,7 @@ func (u *UnionWithPrimitive) Accept(visitor UnionWithPrimitiveVisitor) error {
 	case "integer":
 		return visitor.VisitInteger(u.Integer)
 	case "string":
-		return visitor.VisitString(u.String)
+		return visitor.VisitFieldString(u.FieldString)
 	}
 }
 
@@ -1772,7 +2073,7 @@ func (u *UnionWithPrimitive) validate() error {
 	if u.Integer != 0 {
 		fields = append(fields, "integer")
 	}
-	if u.String != "" {
+	if u.FieldString != "" {
 		fields = append(fields, "string")
 	}
 	if len(fields) == 0 {

@@ -6,8 +6,7 @@ import { ReqWithHeadersClient } from "./api/resources/reqWithHeaders/client/Clie
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "./BaseClient.js";
 export declare namespace SeedExhaustiveClient {
-    interface Options extends BaseClientOptions {
-    }
+    type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }

@@ -70,6 +70,9 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("custom-pager-name")
     Optional<String> customPagerName();
 
+    @JsonProperty("default-timeout-in-seconds")
+    Optional<Integer> defaultTimeoutInSeconds();
+
     @Override
     @Value.Default
     @JsonProperty("collapse-optional-nullable")

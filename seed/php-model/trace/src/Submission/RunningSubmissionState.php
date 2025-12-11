@@ -2,8 +2,8 @@
 
 namespace Seed\Submission;
 
-enum RunningSubmissionState: string
-{
+enum RunningSubmissionState
+ : string {
     case QueueingSubmission = "QUEUEING_SUBMISSION";
     case KillingHistoricalSubmissions = "KILLING_HISTORICAL_SUBMISSIONS";
     case WritingSubmissionToFile = "WRITING_SUBMISSION_TO_FILE";

@@ -50,7 +50,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/upload",
       "examples": [
@@ -114,7 +113,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/upload-list",
       "examples": [
@@ -257,7 +255,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/upload-with-content-type",
       "examples": [

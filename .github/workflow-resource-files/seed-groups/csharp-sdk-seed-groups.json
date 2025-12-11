@@ -64,7 +64,9 @@
         "public-object",
         "path-parameters:no-inline-path-parameters",
         "extra-properties:no-custom-config",
-        "simple-api",
+        "simple-api:no-custom-config",
+        "simple-api:custom-output-path",
+        "simple-api:custom-output-path-object",
         "examples:readme-config"
       ],
       "groupTotalTimeSeconds": 3557
@@ -91,7 +93,8 @@
         "version",
         "csharp-grpc-proto-exhaustive:read-only-memory",
         "imdb:no-custom-config",
-        "literal",
+        "literal:no-custom-config",
+        "literal:readonly-constants",
         "multi-line-docs",
         "validation",
         "inferred-auth-implicit",

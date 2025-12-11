@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/test",
+                "method": "GET",
+                "identifier_override": "endpoint_.getTest"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/nullable-allof-extends\";\n\nconst client = new SeedApiClient;\nawait client.getTest();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/test",
+                "method": "POST",
+                "identifier_override": "endpoint_.createTest"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApi, SeedApiClient } from \"@fern/nullable-allof-extends\";\n\nconst client = new SeedApiClient;\nawait client.createTest({});\n"
+            }
+        }
+    ],
+    "types": {}
+}

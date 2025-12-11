@@ -101,6 +101,7 @@ export interface Logo {
     light: AbsoluteFilePath | undefined;
     height: CjsFdrSdk.docs.v1.write.Height | undefined;
     href: CjsFdrSdk.Url | undefined;
+    rightText: string | undefined;
 }
 
 export interface BackgroundImage {
@@ -310,6 +311,7 @@ export declare namespace DocsNavigationItem {
         audiences: Audiences;
         availability: Availability | undefined;
         showErrors: boolean;
+        tagDescriptionPages: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
         postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;

@@ -1,7 +1,8 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
+import { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import path from "path";
 import { FixtureConfigurations, OutputMode } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
@@ -32,6 +33,8 @@ export declare namespace TestRunner {
         inspect: boolean;
         absolutePathToApiDefinition?: AbsoluteFilePath;
         outputDir?: AbsoluteFilePath;
+        /** Generator invocation with per-generator API overrides **/
+        generatorInvocation?: GeneratorInvocation;
     }
 
     interface DoRunArgs {
@@ -69,7 +72,7 @@ export declare namespace TestRunner {
 
     interface TestFailure {
         type: "failure";
-        cause: "invalid-fixture" | "generation" | "compile";
+        cause: "invalid-fixture" | "generation" | "build" | "test";
         message?: string;
         id: string;
         outputFolder: string;
@@ -79,8 +82,10 @@ export declare namespace TestRunner {
     interface TestCaseMetrics {
         /** The time it takes to generate code via the generator */
         generationTime?: string;
-        /** The time it takes to verify/compile the code */
-        compileTime?: string;
+        /** The time it takes to build/compile the code */
+        buildTime?: string;
+        /** The time it takes to run tests */
+        testTime?: string;
     }
 }
 
@@ -124,7 +129,8 @@ export abstract class TestRunner {
         configuration,
         inspect,
         absolutePathToApiDefinition,
-        outputDir
+        outputDir,
+        generatorInvocation
     }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
         try {
             if (this.buildInvocation == null) {
@@ -169,13 +175,20 @@ export abstract class TestRunner {
             const readme = configuration?.readmeConfig ?? undefined;
             const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
 
-            const fernWorkspace = await (
-                await convertGeneratorWorkspaceToFernWorkspace({
-                    absolutePathToAPIDefinition: absolutePathToApiDefinition,
-                    taskContext,
-                    fixture
-                })
-            )?.toFernWorkspace({ context: taskContext });
+            const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
+                absolutePathToAPIDefinition: absolutePathToApiDefinition,
+                taskContext,
+                fixture
+            });
+            const workspaceSettings =
+                generatorInvocation != null
+                    ? getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                    : undefined;
+            const fernWorkspace = await apiWorkspace?.toFernWorkspace(
+                { context: taskContext },
+                workspaceSettings,
+                generatorInvocation?.apiOverride?.specs
+            );
             if (fernWorkspace == null) {
                 return {
                     type: "failure",
@@ -253,9 +266,6 @@ export abstract class TestRunner {
                 };
             }
 
-            const scriptStopwatch = new Stopwatch();
-            scriptStopwatch.start();
-
             const scriptResponse = await this.scriptRunner?.run({
                 taskContext,
                 outputDir,
@@ -263,13 +273,15 @@ export abstract class TestRunner {
                 skipScripts: configuration?.skipScripts
             });
 
-            scriptStopwatch.stop();
-            metrics.compileTime = scriptStopwatch.duration();
+            if (scriptResponse != null) {
+                metrics.buildTime = this.formatDuration(scriptResponse.buildTimeMs);
+                metrics.testTime = this.formatDuration(scriptResponse.testTimeMs);
+            }
 
             if (scriptResponse?.type === "failure") {
                 return {
                     type: "failure",
-                    cause: "compile",
+                    cause: scriptResponse.phase,
                     id: fixture,
                     outputFolder,
                     metrics
@@ -293,5 +305,18 @@ export abstract class TestRunner {
     }
     protected getDockerImageName(): string {
         return this.generator.workspaceConfig.test.docker.image;
+    }
+
+    private formatDuration(ms: number | undefined): string | undefined {
+        if (ms == null) {
+            return undefined;
+        }
+        const seconds = ms / 1000;
+        if (seconds < 60) {
+            return `${seconds.toFixed(2)}s`;
+        }
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes}m ${remainingSeconds.toFixed(2)}s`;
     }
 }

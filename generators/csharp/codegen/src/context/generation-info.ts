@@ -184,8 +184,11 @@ export class Generation {
         shouldInlinePathParameters: () => this.customConfig["inline-path-parameters"] ?? true,
         /** When true, includes exception handler infrastructure for custom error handling. Default: false. */
         includeExceptionHandler: () => this.customConfig["include-exception-handler"] ?? false,
-        /** When true, generates mock server tests for the SDK. Default: true. */
-        shouldGenerateMockServerTests: () => this.customConfig["generate-mock-server-tests"] ?? true,
+        /** Custom name for the exception interceptor class. Default: {PackageName}ExceptionInterceptor. */
+        exceptionInterceptorClassName: () => this.customConfig["exception-interceptor-class-name"] ?? "",
+        /** When true, generates mock server tests for the SDK. Default: true. Also accepts enable-wire-tests as an alias. */
+        shouldGenerateMockServerTests: () =>
+            this.customConfig["generate-mock-server-tests"] ?? this.customConfig["enable-wire-tests"] ?? true,
         /** Access modifier for the root client class (Public or Internal). Default: Public. */
         rootClientAccess: () =>
             this.customConfig["root-client-class-access"] == "internal" ? ast.Access.Internal : ast.Access.Public,
@@ -194,7 +197,39 @@ export class Generation {
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
-        explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true
+        explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
+        /**
+         * Output path configuration for generated files.
+         * Returns normalized paths for library, test, solution, and other files.
+         */
+        outputPath: () => {
+            const config = this.customConfig["output-path"];
+            if (config == null) {
+                // Default: all files go to "src" for library/test, "." for solution/other
+                return {
+                    library: "src",
+                    test: "src",
+                    solution: ".",
+                    other: "."
+                };
+            }
+            if (typeof config === "string") {
+                // Simple string: library and test go to that path, solution/other go to "."
+                return {
+                    library: config,
+                    test: config,
+                    solution: ".",
+                    other: "."
+                };
+            }
+            // Object: use specified paths with defaults
+            return {
+                library: config.library ?? "src",
+                test: config.test ?? "src",
+                solution: config.solution ?? ".",
+                other: config.other ?? "."
+            };
+        }
     });
 
     public readonly constants = {
@@ -325,7 +360,11 @@ export class Generation {
                 this.settings.customPagerName || `${this.names.project.packageId.replace(/[^a-zA-Z0-9]/g, "")}Pager`,
             /** The name for the environment configuration class (e.g., "AcmeWidgetsEnvironment"). */
             environment: (): string =>
-                this.settings.environmentClassName || `${this.names.project.clientPrefix}Environment`
+                this.settings.environmentClassName || `${this.names.project.clientPrefix}Environment`,
+            /** The name for the custom exception interceptor class (e.g., "AcmeWidgetsExceptionInterceptor"). */
+            exceptionInterceptor: (): string =>
+                this.settings.exceptionInterceptorClassName ||
+                `${this.names.project.packageId.replace(/[^a-zA-Z0-9]/g, "")}ExceptionInterceptor`
         }),
         project: lazy({
             /** The computed client name derived from organization and workspace in camelCase (e.g., "AcmeWidgets"). */
@@ -543,6 +582,12 @@ export class Generation {
         ExceptionHandler: () =>
             this.csharp.classReference({
                 origin: this.model.staticExplicit("ExceptionHandler"),
+                namespace: this.namespaces.core
+            }),
+        /** Custom exception interceptor class for SDK authors to implement */
+        CustomExceptionInterceptor: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit(this.names.classes.exceptionInterceptor),
                 namespace: this.namespaces.core
             }),
         /** Utility for mapping Protocol Buffer Any types */

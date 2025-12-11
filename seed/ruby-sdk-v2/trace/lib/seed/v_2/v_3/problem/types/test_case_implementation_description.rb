@@ -6,9 +6,7 @@ module Seed
       module Problem
         module Types
           class TestCaseImplementationDescription < Internal::Types::Model
-            field :boards, lambda {
-              Internal::Types::Array[Seed::V2::V3::Problem::Types::TestCaseImplementationDescriptionBoard]
-            }, optional: false, nullable: false
+            field :boards, -> { Internal::Types::Array[Seed::V2::V3::Problem::Types::TestCaseImplementationDescriptionBoard] }, optional: false, nullable: false
           end
         end
       end

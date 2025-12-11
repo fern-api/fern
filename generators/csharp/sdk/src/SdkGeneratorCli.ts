@@ -17,6 +17,7 @@ import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentG
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
+import { CustomExceptionInterceptorGenerator } from "./error/CustomExceptionInterceptorGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { generateSdkTests } from "./generateSdkTests";
 import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
@@ -113,7 +114,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
 
         context.project.addSourceFiles(generateVersion({ context }));
 
-        if (context.config.writeUnitTests) {
+        if (context.settings.shouldGenerateMockServerTests) {
             const modelTests = generateModelTests({ context });
             for (const file of modelTests) {
                 context.project.addTestFiles(file);
@@ -188,6 +189,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 const errorGenerator = new ErrorGenerator(context, _error);
                 context.project.addSourceFiles(errorGenerator.generate());
             }
+        }
+
+        if (context.settings.includeExceptionHandler) {
+            const customExceptionInterceptor = new CustomExceptionInterceptorGenerator(context);
+            context.project.addSourceFiles(customExceptionInterceptor.generate());
         }
 
         const rootClient = new RootClientGenerator(context);
@@ -277,16 +283,18 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             return;
         }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        const otherPath = context.settings.outputPath.other;
         context.project.addRawFiles(
-            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of(otherPath), content)
         );
     }
 
     private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
         const builder = buildReference({ context });
         const content = await context.generatorAgent.generateReference(builder);
+        const otherPath = context.settings.outputPath.other;
         context.project.addRawFiles(
-            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
+            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of(otherPath), content)
         );
     }
 

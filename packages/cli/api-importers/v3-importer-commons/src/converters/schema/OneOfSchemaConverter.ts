@@ -276,7 +276,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         type: typeShape.aliasOf,
                         docs: subSchema.description
                     });
-                } else if (typeShape.type === "object" && typeShape.properties.length === 0) {
+                } else if (
+                    typeShape.type === "object" &&
+                    typeShape.properties.length === 0 &&
+                    typeShape.extends.length === 0
+                ) {
                     unionTypes.push({
                         type: TypeReference.container(
                             ContainerType.map({

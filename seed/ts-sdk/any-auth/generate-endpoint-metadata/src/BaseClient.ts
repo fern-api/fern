@@ -7,14 +7,10 @@ import { OAuthAuthProvider } from "./auth/OAuthAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
-export interface BaseClientOptions {
+export type BaseClientOptions = {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    token?: core.EndpointSupplier<core.BearerToken | undefined>;
-    apiKey?: core.EndpointSupplier<string | undefined>;
-    clientId?: core.EndpointSupplier<string>;
-    clientSecret?: core.EndpointSupplier<string>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.EndpointSupplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -25,7 +21,7 @@ export interface BaseClientOptions {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
-}
+} & AnyAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */
@@ -73,18 +69,28 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
+    const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
     normalized.authProvider ??= (() => {
         const authProviders: core.AuthProvider[] = [];
-        if (BearerAuthProvider.canCreate(options)) {
-            authProviders.push(new BearerAuthProvider(options));
+        if (BearerAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
+            authProviders.push(new BearerAuthProvider(normalizedWithNoOpAuthProvider));
         }
-        if (HeaderAuthProvider.canCreate(options)) {
-            authProviders.push(new HeaderAuthProvider(options));
+        if (HeaderAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
+            authProviders.push(new HeaderAuthProvider(normalizedWithNoOpAuthProvider));
         }
-        if (OAuthAuthProvider.canCreate(options)) {
-            authProviders.push(new OAuthAuthProvider(options));
+        if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
+            authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider));
         }
         return new AnyAuthProvider(authProviders);
     })();
     return normalized;
+}
+
+function withNoOpAuthProvider<T extends BaseClientOptions>(
+    options: NormalizedClientOptions<T>,
+): NormalizedClientOptionsWithAuth<T> {
+    return {
+        ...options,
+        authProvider: new core.NoOpAuthProvider(),
+    };
 }

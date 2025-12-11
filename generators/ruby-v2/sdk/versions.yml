@@ -1,4 +1,237 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 1.0.0-rc65
+  createdAt: "2025-12-11"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add CI workflow generation, .gitignore file, and wire test infrastructure:
+        - Generate `.github/workflows/ci.yml` with lint and test jobs (triggers on push and pull_request)
+        - Generate `.gitignore` file with `*.gem`
+        - Config-driven wire-tests job: when `enableWireTests: true`, generates wire-tests CI job
+        - Add `wire_helper.rb` for WireMock container lifecycle management using Minitest's `after_run` hook,
+          allowing users to run `bundle exec rake test` locally without manually managing docker compose
+  irVersion: 61
+
+- version: 1.0.0-rc64
+  createdAt: "2025-12-10"
+  changelogEntry:
+    - type: chore
+      summary: |
+        Improve reference.md generation for parity with TypeScript SDK generator:
+        - Add request_options parameter documentation to all endpoints
+        - Add source file links (hyperlinks) to method names in the reference
+        - Prefer examples with request body data for detailed code snippets, ensuring
+          endpoints show full request bodies with nested objects and arrays instead of
+          minimal one-line examples
+        - Synthesize requestBody from structured properties when jsonExample is null/empty
+  irVersion: 61
+
+- version: 1.0.0-rc63
+  createdAt: "2025-12-10"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix README.md generation for GitHub, direct publish, and seed test modes.
+        - Updated shouldGenerateReadme to return true by default instead of requiring snippetFilepath
+        - Fixed getGitHubConfig to return undefined for uri/token instead of placeholder values
+          that caused invalid git clone attempts
+  irVersion: 61
+
+- version: 1.0.0-rc62
+  createdAt: "2025-12-08"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for discriminated unions, enums, and undiscriminated unions in dynamic snippets.
+        This fixes issues where snippet examples were showing empty arrays or missing values for
+        complex types like union recipients in email/message send operations.
+  irVersion: 61
+
+- version: 1.0.0-rc61
+  createdAt: "2025-12-05"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Move default environment resolution from request functions to root client instantiation.
+        Without this change, a non-default base URL set on the client initialization is never
+        used. The default environment fallback was happening at the request layer, which meant
+        any base_url passed to individual requests would fall back to the default environment
+        if not explicitly provided in request_options—even when the root client was initialized
+        with a custom base_url.
+  irVersion: 61
+
+- version: 1.0.0-rc60
+  createdAt: "2025-12-05"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add extraDependencies and extraDevDependencies config flags to Ruby v2 SDK generator.
+        These options allow users to specify additional gem dependencies to include in the
+        generated gemspec (extraDependencies) and Gemfile (extraDevDependencies). Values are
+        written directly as version constraints (e.g., `{ "my-gem": "~> 6.0" }` produces
+        `spec.add_dependency "my-gem", "~> 6.0"`).
+  irVersion: 61
+
+- version: 1.0.0-rc59
+  createdAt: "2025-12-04"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add wire test generation support for Ruby SDK. When enableWireTests is set to true in
+        custom config, the generator produces Minitest-based integration tests that validate
+        SDK serialization/deserialization against WireMock. Includes docker-compose.test.yml
+        and wiremock-mappings.json for running tests locally.
+  irVersion: 61
+
+- version: 1.0.0-rc58
+  createdAt: "2025-12-03"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix additional RuboCop warnings in generated SDK code:
+        - Disabled Layout/LineLength cop (long type names and require paths are unavoidable)
+        - Set Naming/VariableNumber to snake_case style (allows `last_4`, `address_1`, etc.)
+        - Renamed `get_token` and `get_auth_headers` methods to `token` and `auth_headers`
+        - Replaced OpenStruct with Struct in iterator tests
+  irVersion: 61
+
+- version: 1.0.0-rc57
+  createdAt: "2025-12-02"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix additional RuboCop warnings in generated SDK code:
+        - Renamed iterator methods to follow Ruby conventions (get_next -> next_element/next_page, has_next? -> next?)
+        - Renamed custom pager methods (get_next_page -> next_page, has_next_page? -> next_page?)
+        - Added super() calls in iterator initializers to fix Lint/MissingSuper
+        - Combined duplicate pattern match branches in utils.rb to fix Lint/DuplicateBranch
+        - Updated .rubocop.yml to target Ruby 3.3 and disable additional cops
+  irVersion: 61
+
+- version: 1.0.0-rc56
+  createdAt: "2025-12-02"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Disable Metrics/CyclomaticComplexity in generated .rubocop.yml to silence warnings
+        for endpoint methods with many query parameters.
+  irVersion: 61
+
+- version: 1.0.0-rc55
+  createdAt: "2025-12-02"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix RuboCop Lint/UnderscorePrefixedVariableName warnings in generated code.
+        Renamed underscore-prefixed local variables (_query, _request, _response, etc.)
+        to non-underscore names (query_params, request, response, etc.) to follow
+        Ruby conventions for used variables.
+  irVersion: 61
+
+- version: 1.0.0-rc54
+  createdAt: "2025-12-02"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Auto-wrap long comment lines to fit within RuboCop's 120 character line length limit.
+        This prevents Layout/LineLength warnings for comments generated from long OpenAPI descriptions.
+  irVersion: 61
+
+- version: 1.0.0-rc53
+  createdAt: "2025-11-29"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Pass raw_client to custom pager for pagination. This allows custom pager implementations
+        to fetch additional pages using the HTTP client.
+  irVersion: 61
+
+- version: 1.0.0-rc52
+  createdAt: "2025-11-29"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix root client generation for inferred auth. The client now correctly creates an
+        unauthenticated client for the auth endpoint, passes auth_client and options to
+        InferredAuthProvider, and uses the correct Internal namespace.
+  irVersion: 61
+
+- version: 1.0.0-rc51
+  createdAt: "2025-11-29"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix inferred auth token refresh to properly refresh when within buffer period.
+        The token is now refreshed when the current time is within 2 minutes of expiration,
+        rather than only after the token has fully expired.
+  irVersion: 61
+
+- version: 1.0.0-rc50
+  createdAt: "2025-11-29"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add inferred auth support for Ruby SDKs. The SDK now generates an InferredAuthProvider class
+        that handles automatic token retrieval and caching with expiration handling. Root clients
+        accept the token endpoint request parameters for inferred authentication.
+  irVersion: 61
+
+- version: 1.0.0-rc49
+  createdAt: "2025-11-28"
+  changelogEntry:
+    - type: fix
+      summary: Added automatic redaction of sensitive fields in inspect output to prevent accidental exposure of credentials and tokens in logs and debug output.
+  irVersion: 61
+
+- version: 1.0.0-rc48
+  createdAt: "2025-11-28"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add custom pagination support with customPagerName configuration option.
+        When customPagerName is configured, the generator includes a CustomPager utility class
+        that provides navigation methods (has_next_page?, has_prev_page?, get_next_page, get_prev_page)
+        for custom pagination endpoints.
+  irVersion: 61
+
+- version: 1.0.0-rc47
+  createdAt: "2025-11-26"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix request_options[:base_url] being ignored.
+        The RawClient.build_url method now correctly uses the per-request base_url override when provided.
+  irVersion: 61
+
+- version: 1.0.0-rc46
+  createdAt: "2025-11-26"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Improve README snippet generation: use SCREAMING_SNAKE_CASE for Environment references,
+        snake_case for nested object property names, and filter out empty/undefined values to
+        avoid syntax errors like "param: ,".
+  irVersion: 61
+
+- version: 1.0.0-rc45
+  createdAt: "2025-11-26"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for multi-URL environments. APIs with multiple base URLs per environment
+        (e.g., separate api and identity URLs) now generate a proper Environment class using
+        the first base URL for each environment.
+  irVersion: 61
+
+- version: 1.0.0-rc44
+  createdAt: "2025-11-26"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Remove error on null config in README generation.
+  irVersion: 61
+
 - version: 1.0.0-rc43
   createdAt: "2025-11-24"
   changelogEntry:

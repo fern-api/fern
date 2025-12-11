@@ -23,6 +23,7 @@ class ReadmeSnippetBuilder:
     PAGINATION_FEATURE_ID: generatorcli.FeatureId = "PAGINATION"
     ACCESS_RAW_RESPONSE_DATA_FEATURE_ID: generatorcli.FeatureId = "ACCESS_RAW_RESPONSE_DATA"
     WEBSOCKETS_FEATURE_ID: generatorcli.FeatureId = "WEBSOCKETS"
+    OAUTH_TOKEN_OVERRIDE_FEATURE_ID: generatorcli.FeatureId = "OAUTH_TOKEN_OVERRIDE"
 
     NO_FEATURE_PLACEHOLDER_ID: generatorcli.FeatureId = "NO_FEATURE"
 
@@ -52,6 +53,8 @@ class ReadmeSnippetBuilder:
         # flags and how many places need this context.
         self._pagination_enabled = pagination_enabled
         self._websocket_enabled = websocket_enabled
+        # Determine if OAuth client credentials is enabled from the IR
+        self._is_oauth_client_credentials = self._check_oauth_client_credentials(ir)
 
         self._source_file_factory = source_file_factory
 
@@ -80,6 +83,9 @@ class ReadmeSnippetBuilder:
 
         if self._websocket_enabled:
             snippets[ReadmeSnippetBuilder.WEBSOCKETS_FEATURE_ID] = self._build_websocket_snippets()
+
+        if self._is_oauth_client_credentials:
+            snippets[ReadmeSnippetBuilder.OAUTH_TOKEN_OVERRIDE_FEATURE_ID] = self._build_oauth_token_override_snippets()
 
         snippets[ReadmeSnippetBuilder.ACCESS_RAW_RESPONSE_DATA_FEATURE_ID] = (
             self._build_access_raw_response_data_snippets()
@@ -497,6 +503,59 @@ for page in pager.iter_pages():
         except Exception as e:
             print(f"Failed to generage async client snippets with exception {e}")
             return []
+
+    def _build_oauth_token_override_snippets(self) -> List[str]:
+        """Build snippets demonstrating OAuth token override authentication options."""
+        try:
+
+            def _client_writer_token(writer: AST.NodeWriter) -> None:
+                writer.write_line("# Option 1: Direct bearer token (bypass OAuth flow)")
+                writer.write("client = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        class_=self._root_client.sync_client.class_reference,
+                        args=[AST.Expression("...")],
+                        kwargs=[("token", AST.Expression('"my-pre-generated-bearer-token"'))],
+                    ),
+                    should_write_as_snippet=False,
+                )
+
+            def _client_writer_credentials(writer: AST.NodeWriter) -> None:
+                writer.write_line("# Option 2: OAuth client credentials flow (automatic token management)")
+                writer.write("client = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        class_=self._root_client.sync_client.class_reference,
+                        args=[AST.Expression("...")],
+                        kwargs=[
+                            ("client_id", AST.Expression('"your-client-id"')),
+                            ("client_secret", AST.Expression('"your-client-secret"')),
+                        ],
+                    ),
+                    should_write_as_snippet=False,
+                )
+
+            token_snippet = self._expression_to_snippet_str(AST.Expression(AST.CodeWriter(_client_writer_token)))
+            credentials_snippet = self._expression_to_snippet_str(
+                AST.Expression(AST.CodeWriter(_client_writer_credentials))
+            )
+
+            return [f"{token_snippet}\n{credentials_snippet}"]
+        except Exception as e:
+            print(f"Failed to generate oauth token override snippets with exception {e}")
+            return []
+
+    def _check_oauth_client_credentials(self, ir: ir_types.IntermediateRepresentation) -> bool:
+        """Check if OAuth client credentials is configured in the IR."""
+        if ir.auth is None:
+            return False
+        for scheme in ir.auth.schemes:
+            scheme_union = scheme.get_as_union()
+            if scheme_union.type == "oauth":
+                oauth_config = scheme_union.configuration.get_as_union()
+                if oauth_config.type == "clientCredentials":
+                    return True
+        return False
 
     def _build_endpoint_feature_map(
         self, ir: ir_types.IntermediateRepresentation

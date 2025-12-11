@@ -28,10 +28,10 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedMixedCase
+        run: dotnet restore src/SeedMixedCase/SeedMixedCase.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedMixedCase -c Release --no-restore
+        run: dotnet build src/SeedMixedCase/SeedMixedCase.csproj -c Release --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -53,13 +53,13 @@ jobs:
           dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore src/SeedMixedCase.Test/SeedMixedCase.Test.csproj
 
       - name: Build Release
-        run: dotnet build src -c Release --no-restore
+        run: dotnet build src/SeedMixedCase.Test/SeedMixedCase.Test.csproj -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test src -c Release --no-build --no-restore
+        run: dotnet test src/SeedMixedCase.Test/SeedMixedCase.Test.csproj -c Release --no-build --no-restore
 
 
   publish:
@@ -83,15 +83,15 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedMixedCase
+        run: dotnet restore src/SeedMixedCase/SeedMixedCase.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedMixedCase -c Release --no-restore
+        run: dotnet build src/SeedMixedCase/SeedMixedCase.csproj -c Release --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
-          dotnet pack src/SeedMixedCase -c Release --no-build --no-restore
+          dotnet pack src/SeedMixedCase/SeedMixedCase.csproj -c Release --no-build --no-restore
           dotnet nuget push src/SeedMixedCase/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 

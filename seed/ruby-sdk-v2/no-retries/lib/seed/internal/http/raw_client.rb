@@ -45,7 +45,8 @@ module Seed
         # @return [URI::Generic] The URL.
         def build_url(request)
           path = request.path.start_with?("/") ? request.path[1..] : request.path
-          url = "#{@base_url.chomp("/")}/#{path}"
+          base = request.base_url || @base_url
+          url = "#{base.chomp("/")}/#{path}"
           url = "#{url}?#{encode_query(request.query)}" if request.query&.any?
           URI.parse(url)
         end
@@ -93,6 +94,11 @@ module Seed
           http.use_ssl = is_https
           http.max_retries = @max_retries
           http
+        end
+
+        # @return [String]
+        def inspect
+          "#<#{self.class.name}:0x#{object_id.to_s(16)} @base_url=#{@base_url.inspect}>"
         end
       end
     end

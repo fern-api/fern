@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.get_account(account_id) -> Seed::Types::Account</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_account</a>(account_id) -> Seed::Types::Account</code></summary>
 <dl>
 <dd>
 
@@ -12,7 +12,7 @@
 <dd>
 
 ```ruby
-client.get_account('account_id');
+client.get_account(account_id: 'account_id');
 ```
 </dd>
 </dl>
@@ -28,6 +28,14 @@ client.get_account('account_id');
 <dd>
 
 **account_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

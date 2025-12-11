@@ -126,22 +126,8 @@ class MyOtherRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->maybeString = $values['maybeString'] ?? null;
-        $this->integer = $values['integer'];
-        $this->file = $values['file'];
-        $this->fileList = $values['fileList'];
-        $this->maybeFile = $values['maybeFile'] ?? null;
-        $this->maybeFileList = $values['maybeFileList'] ?? null;
-        $this->maybeInteger = $values['maybeInteger'] ?? null;
-        $this->optionalListOfStrings = $values['optionalListOfStrings'] ?? null;
-        $this->listOfObjects = $values['listOfObjects'];
-        $this->optionalMetadata = $values['optionalMetadata'] ?? null;
-        $this->optionalObjectType = $values['optionalObjectType'] ?? null;
-        $this->optionalId = $values['optionalId'] ?? null;
-        $this->listOfObjectsWithOptionals = $values['listOfObjectsWithOptionals'];
-        $this->aliasObject = $values['aliasObject'];
-        $this->listOfAliasObject = $values['listOfAliasObject'];
-        $this->aliasListOfObject = $values['aliasListOfObject'];
+    )
+    {
+        $this->maybeString = $values['maybeString'] ?? null;$this->integer = $values['integer'];$this->file = $values['file'];$this->fileList = $values['fileList'];$this->maybeFile = $values['maybeFile'] ?? null;$this->maybeFileList = $values['maybeFileList'] ?? null;$this->maybeInteger = $values['maybeInteger'] ?? null;$this->optionalListOfStrings = $values['optionalListOfStrings'] ?? null;$this->listOfObjects = $values['listOfObjects'];$this->optionalMetadata = $values['optionalMetadata'] ?? null;$this->optionalObjectType = $values['optionalObjectType'] ?? null;$this->optionalId = $values['optionalId'] ?? null;$this->listOfObjectsWithOptionals = $values['listOfObjectsWithOptionals'];$this->aliasObject = $values['aliasObject'];$this->listOfAliasObject = $values['listOfAliasObject'];$this->aliasListOfObject = $values['aliasListOfObject'];
     }
 }

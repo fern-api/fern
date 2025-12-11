@@ -13,7 +13,7 @@ buildScripts:
 
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/ruby-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
   docker:
     file: ./generators/ruby-v2/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk
@@ -25,7 +25,7 @@ publish:
 test:
   docker:
     image: fernapi/fern-ruby-sdk:latest
-    command: pnpm --filter @fern-api/fern-ruby-sdk dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-ruby-sdk
 language: ruby
 generatorType: SDK
 defaultOutputMode: github
@@ -56,6 +56,7 @@ fixtures:
       outputFolder: flattened-module-structure
 allowedFailures:
   - accept-header
+  - examples:wire-tests
   - alias
   - alias-extends
   - any-auth
@@ -105,12 +106,14 @@ allowedFailures:
   - no-environment
   - no-retries
   - nullable
+  - nullable-allof-extends
   - nullable-optional
   - nullable-request-body
   - oauth-client-credentials
   - oauth-client-credentials-custom
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-mandatory-auth
   - oauth-client-credentials-nested-root
   - oauth-client-credentials-with-variables
   - object
@@ -175,6 +178,10 @@ features:
   whitelabel: false
   apiReferenceGeneration: false
 scripts:
-  - image: ruby:2.7
+  - image: ruby:3.3
     commands:
-      - bundle install && bundle exec rake test
+      build:
+        - bundle install
+        - bundle exec rubocop
+      test:
+        - bundle exec rake test

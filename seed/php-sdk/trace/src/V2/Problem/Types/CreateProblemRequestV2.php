@@ -65,21 +65,15 @@ class CreateProblemRequestV2 extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->problemName = $values['problemName'];
-        $this->problemDescription = $values['problemDescription'];
-        $this->customFiles = $values['customFiles'];
-        $this->customTestCaseTemplates = $values['customTestCaseTemplates'];
-        $this->testcases = $values['testcases'];
-        $this->supportedLanguages = $values['supportedLanguages'];
-        $this->isPublic = $values['isPublic'];
+    )
+    {
+        $this->problemName = $values['problemName'];$this->problemDescription = $values['problemDescription'];$this->customFiles = $values['customFiles'];$this->customTestCaseTemplates = $values['customTestCaseTemplates'];$this->testcases = $values['testcases'];$this->supportedLanguages = $values['supportedLanguages'];$this->isPublic = $values['isPublic'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

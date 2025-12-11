@@ -77,10 +77,12 @@ export class FilePropertyMapper {
         property: FernIr.dynamic.FileUploadRequestBodyProperty.File_;
         record: Record<string, unknown>;
     }): python.TypeInstantiation {
-        const fileValue = this.context.getSingleFileValue({ property, record });
+        let fileValue = this.context.getSingleFileValue({ property, record });
+
         if (fileValue == null) {
-            return python.TypeInstantiation.nop();
+            fileValue = `example_${property.wireValue ?? "file"}`;
         }
+
         return this.context.getFileFromString(fileValue);
     }
 

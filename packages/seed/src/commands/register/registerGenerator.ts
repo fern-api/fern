@@ -3,9 +3,21 @@ import { TaskContext } from "@fern-api/task-context";
 
 import { FernRegistryClient as FdrClient, FernRegistry } from "@fern-fern/generators-sdk";
 
-import { GeneratorType } from "../../config/api";
+import { GeneratorType, ScriptCommands } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
+
+/**
+ * Extracts all commands from a ScriptCommands union type as a flat array.
+ * For legacy format (string[]), returns the array as-is.
+ * For new format (ScriptCommandsByPhase), combines build and test commands.
+ */
+function getAllCommands(commands: ScriptCommands): string[] {
+    if (Array.isArray(commands)) {
+        return commands;
+    }
+    return [...(commands.build ?? []), ...(commands.test ?? [])];
+}
 
 // TODO: we should share the language and generator type with the FDR definition
 export async function registerGenerator({
@@ -31,22 +43,22 @@ export async function registerGenerator({
         scripts: {
             preInstallScript: generatorConfig.buildScripts?.preInstallScript
                 ? {
-                      steps: generatorConfig.buildScripts.preInstallScript.commands
+                      steps: getAllCommands(generatorConfig.buildScripts.preInstallScript.commands)
                   }
                 : undefined,
             installScript: generatorConfig.buildScripts?.installScript
                 ? {
-                      steps: generatorConfig.buildScripts.installScript.commands
+                      steps: getAllCommands(generatorConfig.buildScripts.installScript.commands)
                   }
                 : undefined,
             compileScript: generatorConfig.buildScripts?.compileScript
                 ? {
-                      steps: generatorConfig.buildScripts.compileScript.commands
+                      steps: getAllCommands(generatorConfig.buildScripts.compileScript.commands)
                   }
                 : undefined,
             testScript: generatorConfig.buildScripts?.testScript
                 ? {
-                      steps: generatorConfig.buildScripts.testScript.commands
+                      steps: getAllCommands(generatorConfig.buildScripts.testScript.commands)
                   }
                 : undefined
         }

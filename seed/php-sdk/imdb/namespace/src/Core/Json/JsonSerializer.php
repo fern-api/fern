@@ -24,13 +24,18 @@ class JsonSerializer
 
     /**
      * Serializes a DateTime object into a string using the date-time format.
+     * Normalizes UTC times to use 'Z' suffix instead of '+00:00'.
      *
      * @param DateTime $date The DateTime object to serialize.
      * @return string The serialized date-time string.
      */
     public static function serializeDateTime(DateTime $date): string
     {
-        return $date->format(Constant::DateTimeFormat);
+        $formatted = $date->format(Constant::DateTimeFormat);
+        if (str_ends_with($formatted, '+00:00')) {
+            return substr($formatted, 0, -6) . 'Z';
+        }
+        return $formatted;
     }
 
     /**

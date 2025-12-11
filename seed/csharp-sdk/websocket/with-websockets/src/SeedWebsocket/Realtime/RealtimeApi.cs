@@ -69,6 +69,16 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
             );
     }
 
+    public string? LanguageCode
+    {
+        get => ApiOptions.LanguageCode;
+        set =>
+            NotifyIfPropertyChanged(
+                EqualityComparer<string>.Default.Equals(ApiOptions.LanguageCode),
+                ApiOptions.LanguageCode = value
+            );
+    }
+
     /// <summary>
     /// Creates the Uri for the websocket connection from the BaseUrl and parameters
     /// </summary>
@@ -76,7 +86,12 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
     {
         var uri = new UriBuilder(BaseUrl)
         {
-            Query = new Query() { { "model", Model }, { "temperature", Temperature } },
+            Query = new Query()
+            {
+                { "model", Model },
+                { "temperature", Temperature },
+                { "language-code", LanguageCode },
+            },
         };
         uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(SessionId)}";
         return uri.Uri;
@@ -184,6 +199,8 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
         public string? Model { get; set; }
 
         public int? Temperature { get; set; }
+
+        public string? LanguageCode { get; set; }
 
         public required string SessionId { get; set; }
     }

@@ -5,13 +5,12 @@ import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import type * as environments from "./environments.js";
 
-export interface BaseClientOptions {
+export type BaseClientOptions = {
     environment?: core.Supplier<
         environments.SeedMultiUrlEnvironmentEnvironment | environments.SeedMultiUrlEnvironmentEnvironmentUrls
     >;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    token: core.Supplier<core.BearerToken>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -22,7 +21,7 @@ export interface BaseClientOptions {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
-}
+} & BearerAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */
@@ -70,6 +69,16 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
-    normalized.authProvider ??= new BearerAuthProvider(options);
+    const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
+    normalized.authProvider ??= new BearerAuthProvider(normalizedWithNoOpAuthProvider);
     return normalized;
+}
+
+function withNoOpAuthProvider<T extends BaseClientOptions>(
+    options: NormalizedClientOptions<T>,
+): NormalizedClientOptionsWithAuth<T> {
+    return {
+        ...options,
+        authProvider: new core.NoOpAuthProvider(),
+    };
 }

@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedSimpleApiEnvironment, SeedSimpleApiClient } from \"@fern-api/dummy\";\n\nconst client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
+                "client": "import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from \"@fern-api/dummy\";\n\nconst client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
             }
         }
     ],

@@ -13,7 +13,7 @@ use Seed\Core\Client\HttpMethod;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class Ec2Client
+class Ec2Client 
 {
     /**
      * @var array{
@@ -21,7 +21,7 @@ class Ec2Client
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -39,10 +39,11 @@ class Ec2Client
      * @param RawClient $client
      * @param Environments $environment
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         Environments $environment,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->environment = $environment;
         $this->options = [];
@@ -60,8 +61,7 @@ class Ec2Client
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function bootInstance(BootInstanceRequest $request, ?array $options = null): void
-    {
+    public function bootInstance(BootInstanceRequest $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -74,12 +74,12 @@ class Ec2Client
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

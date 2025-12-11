@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.get_users() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">get_users</a>() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -14,10 +14,7 @@
 
 ```ruby
 client.nullable.get_users(
-  usernames: ,
   avatar: 'avatar',
-  activated: ,
-  tags: ,
   extra: true
 );
 ```
@@ -70,6 +67,14 @@ client.nullable.get_users(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Nullable::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -78,7 +83,7 @@ client.nullable.get_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.create_user(request) -> Seed::Nullable::Types::User</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">create_user</a>(request) -> Seed::Nullable::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -95,10 +100,11 @@ client.nullable.create_user(
   username: 'username',
   tags: ['tags', 'tags'],
   metadata: {
-    createdAt: '2024-01-15T09:30:00Z',
-    updatedAt: '2024-01-15T09:30:00Z',
+    created_at: '2024-01-15T09:30:00Z',
+    updated_at: '2024-01-15T09:30:00Z',
     avatar: 'avatar',
     activated: true,
+    status: {},
     values: {
       values: 'values'
     }
@@ -147,6 +153,14 @@ client.nullable.create_user(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Nullable::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -155,7 +169,7 @@ client.nullable.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.delete_user(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">delete_user</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -184,6 +198,14 @@ client.nullable.delete_user(username: 'xy');
 <dd>
 
 **username:** `String` — The user to delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Nullable::RequestOptions` 
     
 </dd>
 </dl>

@@ -17984,6 +17984,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         }
     },
@@ -20594,6 +20595,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         }
     },
@@ -30964,6 +30966,7 @@ exports[`ir > {"name":"simple"} 1`] = `
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         },
         "error_imdb:NotFoundError": {
@@ -31070,6 +31073,7 @@ exports[`ir > {"name":"simple"} 1`] = `
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         }
     },
@@ -43379,6 +43383,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
                         }
                     ]
                 },
+                "responses": null,
                 "examples": null,
                 "v2Examples": null,
                 "availability": null,

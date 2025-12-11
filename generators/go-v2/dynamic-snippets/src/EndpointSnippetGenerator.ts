@@ -71,6 +71,18 @@ export class EndpointSnippetGenerator {
         });
     }
 
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<go.AstNode> {
+        throw new Error("Unsupported");
+    }
+
     private generateWiremockTest({
         endpoint,
         snippet
@@ -321,8 +333,7 @@ export class EndpointSnippetGenerator {
             case "header":
                 return values.type === "header" ? this.getConstructorHeaderAuthArg({ auth, values }) : TypeInst.nop();
             case "oauth":
-                this.addWarning("The Go SDK doesn't support OAuth client credentials yet");
-                return TypeInst.nop();
+                return values.type === "oauth" ? this.getConstructorOAuthAuthArg({ values }) : TypeInst.nop();
             case "inferred":
                 this.addWarning("The Go SDK Generator does not support Inferred auth scheme yet");
                 return TypeInst.nop();
@@ -465,6 +476,23 @@ export class EndpointSnippetGenerator {
                             typeReference: auth.header.typeReference,
                             value: values.value
                         })
+                    ]
+                })
+            );
+        });
+    }
+
+    private getConstructorOAuthAuthArg({ values }: { values: FernIr.dynamic.OAuthValues }): go.AstNode {
+        return go.codeblock((writer) => {
+            writer.writeNode(
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "WithClientCredentials",
+                        importPath: this.context.getOptionImportPath()
+                    }),
+                    arguments_: [
+                        go.TypeInstantiation.string(values.clientId),
+                        go.TypeInstantiation.string(values.clientSecret)
                     ]
                 })
             );

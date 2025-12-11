@@ -22,6 +22,16 @@ types:
         type: optional<ReadmeSchema>
       default-group:
         type: optional<string>
+      aliases:
+        type: optional<map<string, list<string>>>
+        docs: |
+          Aliases that map to multiple groups. When running `fern generate <alias>`,
+          all groups in the alias will be run. For example:
+          ```yaml
+          aliases:
+            all: ["php-sdk", "ts-sdk", "go-sdk"]
+          ```
+          Then `fern generate all` will run all three groups.
       groups:
         type: optional<map<string, group.GeneratorGroupSchema>>
       reviewers:
@@ -302,6 +312,7 @@ types:
       - environments.WithEnvironmentsSchema
     properties:
       auth: optional<auth.ApiAuthSchema>
+      auth-schemes: optional<map<string, auth.AuthSchemeDeclarationSchema>>
       specs: APIConfigurationV2SpecsSchema
       settings: optional<APIConfigurationV2SettingsSchema>
 
@@ -442,6 +453,12 @@ types:
           If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
           This is useful for organizations with multiple APIs deployed to the same set of environments.
         default: false
+      default-integer-format:
+        type: optional<DefaultIntegerFormat>
+        docs: |
+          The default format to use for integer types when no format is specified in the OpenAPI schema.
+          Defaults to int32.
+        default: int32
 
   ResolveAliases:
     discriminated: false
@@ -459,6 +476,13 @@ types:
     enum:
       - form
       - json
+
+  DefaultIntegerFormat:
+    enum:
+      - int32
+      - int64
+      - uint32
+      - uint64
 
   OpenAPIExampleGenerationSchema:
     properties:

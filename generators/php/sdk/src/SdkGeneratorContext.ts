@@ -10,6 +10,7 @@ import {
     HttpEndpoint,
     HttpMethod,
     HttpService,
+    InferredAuthScheme,
     IntermediateRepresentation,
     Name,
     OAuthScheme,
@@ -229,6 +230,17 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             name: "CursorPager",
             namespace: this.getCorePaginationNamespace()
         });
+    }
+
+    public getCustomPagerClassReference(): php.ClassReference {
+        return php.classReference({
+            name: this.getCustomPagerClassName(),
+            namespace: this.getCorePaginationNamespace()
+        });
+    }
+
+    public getCustomPagerClassName(): string {
+        return this.customConfig.customPagerClassname;
     }
 
     public getHttpMethod(method: HttpMethod): php.CodeBlock {
@@ -565,15 +577,23 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     private getCorePagerAsIsFiles(): string[] {
-        return this.hasPagination()
-            ? [
-                  AsIsFiles.CursorPager,
-                  AsIsFiles.OffsetPager,
-                  AsIsFiles.Page,
-                  AsIsFiles.Pager,
-                  AsIsFiles.PaginationHelper
-              ]
-            : [];
+        if (!this.hasPagination()) {
+            return [];
+        }
+
+        const files = [
+            AsIsFiles.CursorPager,
+            AsIsFiles.OffsetPager,
+            AsIsFiles.Page,
+            AsIsFiles.Pager,
+            AsIsFiles.PaginationHelper
+        ];
+
+        if (this.hasCustomPagination()) {
+            files.push(AsIsFiles.CustomPager);
+        }
+
+        return files;
     }
 
     public getCoreTestAsIsFiles(): string[] {
@@ -601,6 +621,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getUtilsAsIsFiles(): string[] {
         return [AsIsFiles.File];
+    }
+
+    public override getExtraTemplateVarsForFile(filename: string): Record<string, string> | undefined {
+        if (filename === AsIsFiles.CustomPager) {
+            return {
+                customPagerClassName: this.getCustomPagerClassName()
+            };
+        }
+        return undefined;
     }
 
     public getLocationForTypeId(typeId: TypeId): FileLocation {
@@ -708,6 +737,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.config.generatePaginatedClients === true && this.ir.sdkConfig.hasPaginatedEndpoints;
     }
 
+    public hasCustomPagination(): boolean {
+        if (!this.hasPagination()) {
+            return false;
+        }
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
+        );
+    }
+
     public getOauth(): OAuthScheme | undefined {
         if (
             this.ir.auth.schemes[0] != null &&
@@ -715,6 +753,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             this.config.generateOauthClients
         ) {
             return this.ir.auth.schemes[0];
+        }
+        return undefined;
+    }
+
+    public getInferredAuth(): InferredAuthScheme | undefined {
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "inferred") {
+                return scheme;
+            }
         }
         return undefined;
     }

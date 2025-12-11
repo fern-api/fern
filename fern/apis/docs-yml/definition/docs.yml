@@ -520,6 +520,11 @@ types:
       href:
         type: optional<string>
         docs: The URL that users will be directed to when clicking the logo. Typically your company's homepage or app.
+      right-text:
+        type: optional<string>
+        docs: |
+          Text to display to the right of the logo image. This is useful for adding a tagline or product name next to your logo.
+          Example: `Docs`
 
   BackgroundImageConfiguration:
     docs: This background image is used to customize the appearance of your docs site.
@@ -718,6 +723,14 @@ types:
           @default: false
       disable-analytics: optional<boolean>
       language: optional<Language>
+      substitute-env-vars:
+        type: optional<boolean>
+        docs: |
+          When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,
+          including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+          Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
+
+          @default: false
 
   ThemeConfig:
     properties:
@@ -1007,6 +1020,9 @@ types:
       display-errors:
         type: optional<boolean>
         docs: Defaults to false
+      tag-description-pages:
+        type: optional<boolean>
+        docs: If true, a page will be created for each tag in the OpenAPI spec that contains a description.
       snippets: optional<SnippetsConfiguration>
       postman:
         type: optional<string>

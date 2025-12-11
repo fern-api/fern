@@ -17,7 +17,7 @@ buildScripts:
 publish:
   workingDirectory: generators/go-v2
   preBuildCommands:
-    - pnpm --filter @fern-api/go-model dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/go-model
   docker:
     file: ./generators/go/model/Dockerfile
     image: fernapi/fern-go-model
@@ -26,10 +26,10 @@ publish:
 test:
   docker:
     image: fernapi/fern-go-model:latest
-    command: pnpm --filter @fern-api/go-model dist:cli && docker build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/go-model && docker build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest .
   podman:
     image: fernapi/fern-go-model:latest
-    command: pnpm --filter @fern-api/go-model dist:cli && podman build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/go-model && podman build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest .
 
 fixtures:
   streaming:
