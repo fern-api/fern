@@ -1,5 +1,4 @@
 using OneOf;
-using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace <%= namespace%>;
 
@@ -8,20 +7,20 @@ internal sealed class HeaderValue(
         string,
         Func<string>,
         Func<global::System.Threading.Tasks.ValueTask<string>>,
-        Func<SystemTask<string>>
+        Func<global::System.Threading.Tasks.Task<string>>
     > value
 )
     : OneOfBase<
         string,
         Func<string>,
         Func<global::System.Threading.Tasks.ValueTask<string>>,
-        Func<SystemTask<string>>
+        Func<global::System.Threading.Tasks.Task<string>>
     >(value)
 {
     public static implicit operator HeaderValue(string value) => new(value);
     public static implicit operator HeaderValue(Func<string> value) => new(value);
     public static implicit operator HeaderValue(Func<global::System.Threading.Tasks.ValueTask<string>> value) => new(value);
-    public static implicit operator HeaderValue(Func<SystemTask<string>> value) => new(value);
+    public static implicit operator HeaderValue(Func<global::System.Threading.Tasks.Task<string>> value) => new(value);
 
     internal global::System.Threading.Tasks.ValueTask<string> ResolveAsync()
     {
