@@ -683,60 +683,62 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
 }
 
 function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.register.HttpResponse | undefined {
-    if (irResponse.body == null) {
-        return undefined;
-    }
     let description;
-    const type = Ir.http.HttpResponseBody._visit<FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined>(
-        irResponse.body,
-        {
-            fileDownload: (fileDownload) => {
-                description = fileDownload.docs;
-                return {
-                    type: "fileDownload",
-                    contentType: undefined
-                };
-            },
-            json: (jsonResponse) => {
-                description = jsonResponse.docs;
-                return {
-                    type: "reference",
-                    value: convertTypeReference(jsonResponse.responseBodyType)
-                };
-            },
-            text: () => undefined, // TODO: support text/plain in FDR
-            bytes: () => undefined, // TODO: support text/plain in FDR
-            streamParameter: () => undefined, // TODO: support stream parameter in FDR
-            streaming: (streamingResponse) => {
-                if (streamingResponse.type === "text") {
-                    description = streamingResponse.docs;
-                    return {
-                        type: "streamingText"
-                    };
-                } else if (streamingResponse.type === "json") {
-                    description = streamingResponse.docs;
-                    return {
-                        type: "stream",
-                        shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) },
-                        terminator: streamingResponse.terminator
-                    };
-                    // TODO(dsinghvi): update FDR with SSE.
-                } else if (streamingResponse.type === "sse") {
-                    description = streamingResponse.docs;
-                    return {
-                        type: "stream",
-                        shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) },
-                        terminator: streamingResponse.terminator
-                    };
-                }
+    let type: FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined;
 
-                return undefined;
-            },
-            _other: () => {
-                throw new Error("Unknown HttpResponse: " + irResponse.body);
+    if (irResponse.body != null) {
+        type = Ir.http.HttpResponseBody._visit<FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined>(
+            irResponse.body,
+            {
+                fileDownload: (fileDownload) => {
+                    description = fileDownload.docs;
+                    return {
+                        type: "fileDownload",
+                        contentType: undefined
+                    };
+                },
+                json: (jsonResponse) => {
+                    description = jsonResponse.docs;
+                    return {
+                        type: "reference",
+                        value: convertTypeReference(jsonResponse.responseBodyType)
+                    };
+                },
+                text: () => undefined, // TODO: support text/plain in FDR
+                bytes: () => undefined, // TODO: support text/plain in FDR
+                streamParameter: () => undefined, // TODO: support stream parameter in FDR
+                streaming: (streamingResponse) => {
+                    if (streamingResponse.type === "text") {
+                        description = streamingResponse.docs;
+                        return {
+                            type: "streamingText"
+                        };
+                    } else if (streamingResponse.type === "json") {
+                        description = streamingResponse.docs;
+                        return {
+                            type: "stream",
+                            shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) },
+                            terminator: streamingResponse.terminator
+                        };
+                        // TODO(dsinghvi): update FDR with SSE.
+                    } else if (streamingResponse.type === "sse") {
+                        description = streamingResponse.docs;
+                        return {
+                            type: "stream",
+                            shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) },
+                            terminator: streamingResponse.terminator
+                        };
+                    }
+
+                    return undefined;
+                },
+                _other: () => {
+                    throw new Error("Unknown HttpResponse: " + irResponse.body);
+                }
             }
-        }
-    );
+        );
+    }
+
     if (type != null) {
         return {
             type,
