@@ -543,16 +543,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                         ) {
                                             continue;
                                         }
-                                        const typeRef = this.context.csharpTypeMapper.convert({
-                                            reference: header.valueType
-                                        });
-                                        if (!typeRef.isOptional) {
-                                            arguments_.push(
-                                                this.csharp.codeblock(
-                                                    `"${header.name.name.screamingSnakeCase.safeName}"`
-                                                )
-                                            );
-                                        }
+                                        // Include both required and optional fields
+                                        // Use the wire name (originalName) to match what the mock server expects
+                                        arguments_.push(this.csharp.codeblock(`"${header.name.wireValue}"`));
                                     }
 
                                     // Collect body properties from the token endpoint
@@ -566,16 +559,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                                     ) {
                                                         continue;
                                                     }
-                                                    const typeRef = this.context.csharpTypeMapper.convert({
-                                                        reference: prop.valueType
-                                                    });
-                                                    if (!typeRef.isOptional) {
-                                                        arguments_.push(
-                                                            this.csharp.codeblock(
-                                                                `"${prop.name.name.camelCase.unsafeName}"`
-                                                            )
-                                                        );
-                                                    }
+                                                    // Include both required and optional fields
+                                                    // Use the wire name (originalName) to match what the mock server expects
+                                                    arguments_.push(this.csharp.codeblock(`"${prop.name.wireValue}"`));
                                                 }
                                             },
                                             // biome-ignore-start lint/suspicious/noEmptyBlockStatements: explanation
@@ -769,17 +755,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
                         continue;
                     }
-                    // Skip optional types for simplicity
+                    // Include both required and optional fields
                     const typeRef = this.context.csharpTypeMapper.convert({ reference: header.valueType });
-                    if (!typeRef.isOptional) {
-                        parameters.push({
-                            name: header.name.name.camelCase.unsafeName,
-                            docs: header.docs ?? `The ${header.name.name.camelCase.unsafeName} for authentication.`,
-                            isOptional,
-                            typeReference: header.valueType,
-                            type: typeRef
-                        });
-                    }
+                    parameters.push({
+                        name: header.name.name.camelCase.unsafeName,
+                        docs: header.docs ?? `The ${header.name.name.camelCase.unsafeName} for authentication.`,
+                        isOptional: isOptional || typeRef.isOptional,
+                        typeReference: header.valueType,
+                        type: typeRef
+                    });
                 }
 
                 // Collect body properties from the token endpoint
@@ -795,17 +779,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                     continue;
                                 }
                                 const typeRef = this.context.csharpTypeMapper.convert({ reference: prop.valueType });
-                                // Skip optional types and already added parameters
-                                if (
-                                    !typeRef.isOptional &&
-                                    !parameters.some((p) => p.name === prop.name.name.camelCase.unsafeName)
-                                ) {
+                                // Include both required and optional fields, avoid duplicates
+                                if (!parameters.some((p) => p.name === prop.name.name.camelCase.unsafeName)) {
                                     parameters.push({
                                         name: prop.name.name.camelCase.unsafeName,
                                         docs:
                                             prop.docs ??
                                             `The ${prop.name.name.camelCase.unsafeName} for authentication.`,
-                                        isOptional,
+                                        isOptional: isOptional || typeRef.isOptional,
                                         typeReference: prop.valueType,
                                         type: typeRef
                                     });
@@ -902,11 +883,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
                 continue;
             }
-            // Skip optional types for simplicity
-            const typeRef = this.context.csharpTypeMapper.convert({ reference: header.valueType });
-            if (!typeRef.isOptional) {
-                params.push(header.name.name.camelCase.unsafeName);
-            }
+            // Include both required and optional fields
+            params.push(header.name.name.camelCase.unsafeName);
         }
 
         // Collect body properties from the token endpoint
@@ -918,9 +896,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
                             continue;
                         }
-                        const typeRef = this.context.csharpTypeMapper.convert({ reference: prop.valueType });
-                        // Skip optional types and already added parameters
-                        if (!typeRef.isOptional && !params.includes(prop.name.name.camelCase.unsafeName)) {
+                        // Include both required and optional fields, avoid duplicates
+                        if (!params.includes(prop.name.name.camelCase.unsafeName)) {
                             params.push(prop.name.name.camelCase.unsafeName);
                         }
                     }

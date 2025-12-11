@@ -38,7 +38,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedInferredAuthImplicit;
 
-var client = new SeedInferredAuthImplicitClient("X_API_KEY", "clientId", "clientSecret");
+var client = new SeedInferredAuthImplicitClient("X-Api-Key", "client_id", "client_secret", "scope");
 await client.Auth.GetTokenWithClientCredentialsAsync(
     new GetTokenRequest
     {

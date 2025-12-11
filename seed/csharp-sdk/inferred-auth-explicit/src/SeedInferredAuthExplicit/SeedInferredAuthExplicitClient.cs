@@ -12,6 +12,7 @@ public partial class SeedInferredAuthExplicitClient
         string xApiKey,
         string clientId,
         string clientSecret,
+        string? scope = null,
         ClientOptions? clientOptions = null
     )
     {
@@ -36,6 +37,7 @@ public partial class SeedInferredAuthExplicitClient
             xApiKey,
             clientId,
             clientSecret,
+            scope,
             new AuthClient(new RawClient(clientOptions.Clone()))
         );
         clientOptions.Headers["Authorization"] = new Func<string>(() =>

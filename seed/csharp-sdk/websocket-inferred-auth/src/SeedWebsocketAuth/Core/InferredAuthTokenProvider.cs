@@ -16,16 +16,20 @@ public partial class InferredAuthTokenProvider
 
     private string _clientSecret;
 
+    private string? _scope;
+
     public InferredAuthTokenProvider(
         string xApiKey,
         string clientId,
         string clientSecret,
+        string? scope,
         AuthClient client
     )
     {
         _xApiKey = xApiKey;
         _clientId = clientId;
         _clientSecret = clientSecret;
+        _scope = scope;
         _client = client;
     }
 
@@ -40,6 +44,7 @@ public partial class InferredAuthTokenProvider
                         XApiKey = _xApiKey,
                         ClientId = _clientId,
                         ClientSecret = _clientSecret,
+                        Scope = _scope,
                     }
                 )
                 .ConfigureAwait(false);

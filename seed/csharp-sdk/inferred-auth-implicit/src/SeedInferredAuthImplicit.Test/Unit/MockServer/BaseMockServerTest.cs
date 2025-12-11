@@ -62,9 +62,10 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedInferredAuthImplicitClient(
-            "X_API_KEY",
-            "clientId",
-            "clientSecret",
+            "X-Api-Key",
+            "client_id",
+            "client_secret",
+            "scope",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
         MockInferredAuthEndpoint();

@@ -32,7 +32,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     private expiresAtField: ast.Field | undefined;
     private expiryProperty: ResponseProperty | undefined;
     private requestType: ast.ClassReference;
-    private credentialFields = new Map<string, { field: ast.Field; propertyName: string }>();
+    private credentialFields = new Map<string, { field: ast.Field; propertyName: string; isOptional: boolean }>();
 
     constructor({ context, scheme }: InferredAuthTokenProviderGenerator.Args) {
         super(context);
@@ -134,17 +134,15 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
                 continue;
             }
 
-            // Skip optional types for simplicity (they can be added later if needed)
-            if (!typeRef.isOptional) {
-                const field = this.cls.addField({
-                    origin: this.cls.explicit(this.format.private(fieldName)),
-                    access: ast.Access.Private,
-                    type: typeRef
-                });
-                // Use PascalCase property name for the request object initializer
-                const propertyName = header.name.name.pascalCase.safeName;
-                this.credentialFields.set(fieldName, { field, propertyName });
-            }
+            // Include both required and optional fields
+            const field = this.cls.addField({
+                origin: this.cls.explicit(this.format.private(fieldName)),
+                access: ast.Access.Private,
+                type: typeRef
+            });
+            // Use PascalCase property name for the request object initializer
+            const propertyName = header.name.name.pascalCase.safeName;
+            this.credentialFields.set(fieldName, { field, propertyName, isOptional: typeRef.isOptional });
         }
 
         // Collect body properties from the token endpoint
@@ -160,8 +158,8 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
                             continue;
                         }
 
-                        // Skip optional types for simplicity
-                        if (!typeRef.isOptional && !this.credentialFields.has(fieldName)) {
+                        // Include both required and optional fields
+                        if (!this.credentialFields.has(fieldName)) {
                             const field = this.cls.addField({
                                 origin: this.cls.explicit(this.format.private(fieldName)),
                                 access: ast.Access.Private,
@@ -169,7 +167,11 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
                             });
                             // Use PascalCase property name for the request object initializer
                             const propertyName = prop.name.name.pascalCase.safeName;
-                            this.credentialFields.set(fieldName, { field, propertyName });
+                            this.credentialFields.set(fieldName, {
+                                field,
+                                propertyName,
+                                isOptional: typeRef.isOptional
+                            });
                         }
                     }
                 },
