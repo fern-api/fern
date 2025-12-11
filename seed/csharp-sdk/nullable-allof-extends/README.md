@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedInferredAuthImplicitNoExpiry)](https://nuget.org/packages/SeedInferredAuthImplicitNoExpiry)
+[![nuget shield](https://img.shields.io/nuget/v/SeedApi)](https://nuget.org/packages/SeedApi)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -24,7 +24,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedInferredAuthImplicitNoExpiry
+dotnet add package SeedApi
 ```
 
 ## Reference
@@ -36,20 +36,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedInferredAuthImplicitNoExpiry;
+using SeedApi;
 
-var client = new SeedInferredAuthImplicitNoExpiryClient("X_API_KEY", "clientId", "clientSecret");
-await client.Auth.GetTokenWithClientCredentialsAsync(
-    new GetTokenRequest
-    {
-        XApiKey = "X-Api-Key",
-        ClientId = "client_id",
-        ClientSecret = "client_secret",
-        Audience = "https://api.example.com",
-        GrantType = "client_credentials",
-        Scope = "scope",
-    }
-);
+var client = new SeedApiClient();
+await client.CreateTestAsync(new RootObject());
 ```
 
 ## Exception Handling
@@ -58,11 +48,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedInferredAuthImplicitNoExpiry;
+using SeedApi;
 
 try {
-    var response = await client.Auth.GetTokenWithClientCredentialsAsync(...);
-} catch (SeedInferredAuthImplicitNoExpiryApiException e) {
+    var response = await client.CreateTestAsync(...);
+} catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
@@ -85,7 +75,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Auth.GetTokenWithClientCredentialsAsync(
+var response = await client.CreateTestAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -98,7 +88,7 @@ var response = await client.Auth.GetTokenWithClientCredentialsAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Auth.GetTokenWithClientCredentialsAsync(
+var response = await client.CreateTestAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s

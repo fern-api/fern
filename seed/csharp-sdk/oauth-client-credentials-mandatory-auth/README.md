@@ -1,7 +1,7 @@
 # Seed C# Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FC%23)
-[![nuget shield](https://img.shields.io/nuget/v/SeedInferredAuthImplicitNoExpiry)](https://nuget.org/packages/SeedInferredAuthImplicitNoExpiry)
+[![nuget shield](https://img.shields.io/nuget/v/SeedOauthClientCredentialsMandatoryAuth)](https://nuget.org/packages/SeedOauthClientCredentialsMandatoryAuth)
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
@@ -24,7 +24,7 @@ This SDK requires:
 ## Installation
 
 ```sh
-dotnet add package SeedInferredAuthImplicitNoExpiry
+dotnet add package SeedOauthClientCredentialsMandatoryAuth
 ```
 
 ## Reference
@@ -36,18 +36,17 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```csharp
-using SeedInferredAuthImplicitNoExpiry;
+using SeedOauthClientCredentialsMandatoryAuth;
 
-var client = new SeedInferredAuthImplicitNoExpiryClient("X_API_KEY", "clientId", "clientSecret");
+var client = new SeedOauthClientCredentialsMandatoryAuthClient("CLIENT_ID", "CLIENT_SECRET");
 await client.Auth.GetTokenWithClientCredentialsAsync(
     new GetTokenRequest
     {
-        XApiKey = "X-Api-Key",
-        ClientId = "client_id",
-        ClientSecret = "client_secret",
+        ClientId = "my_oauth_app_123",
+        ClientSecret = "sk_live_abcdef123456789",
         Audience = "https://api.example.com",
         GrantType = "client_credentials",
-        Scope = "scope",
+        Scope = "read:users",
     }
 );
 ```
@@ -58,11 +57,11 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```csharp
-using SeedInferredAuthImplicitNoExpiry;
+using SeedOauthClientCredentialsMandatoryAuth;
 
 try {
     var response = await client.Auth.GetTokenWithClientCredentialsAsync(...);
-} catch (SeedInferredAuthImplicitNoExpiryApiException e) {
+} catch (SeedOauthClientCredentialsMandatoryAuthApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }
