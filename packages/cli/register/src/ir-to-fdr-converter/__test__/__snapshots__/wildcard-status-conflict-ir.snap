@@ -808,6 +808,10 @@
               "testOperationExample_200": {
                 "codeSamples": undefined,
                 "displayName": "testOperationExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

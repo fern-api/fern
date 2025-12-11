@@ -576,6 +576,10 @@
               "base_getHealthExample_200": {
                 "codeSamples": undefined,
                 "displayName": "getHealthExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,
@@ -983,6 +987,10 @@
               "base_getUserExample_200": {
                 "codeSamples": undefined,
                 "displayName": "getUserExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,
@@ -1281,6 +1289,10 @@
               "createUserExample_201": {
                 "codeSamples": undefined,
                 "displayName": "createUserExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

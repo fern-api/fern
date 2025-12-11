@@ -19,7 +19,7 @@ import {
 
 import { hashJSON } from "../../hashJSON";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
-import { ExampleGenerationResult } from "./ExampleGenerationResult";
+import { ExampleGenerationResult, ExamplePropertyMetadata } from "./ExampleGenerationResult";
 import {
     generateHeaderExamples,
     generatePathParameterExamples,
@@ -60,6 +60,29 @@ const TEXT_TYPE_REFERENCE = TypeReference.primitive({
     })
 });
 
+function mergeMetadata(
+    existing: ExamplePropertyMetadata | undefined,
+    additional: ExamplePropertyMetadata | undefined
+): ExamplePropertyMetadata {
+    if (!existing && !additional) {
+        return { hasDefaultProperties: true, hasCustomProperties: false };
+    }
+    if (!existing) {
+        return additional ?? { hasDefaultProperties: true, hasCustomProperties: false };
+    }
+    if (!additional) {
+        return existing;
+    }
+    return {
+        hasDefaultProperties: existing.hasDefaultProperties || additional.hasDefaultProperties,
+        hasCustomProperties: existing.hasCustomProperties || additional.hasCustomProperties
+    };
+}
+
+function createDefaultMetadata(): ExamplePropertyMetadata {
+    return { hasDefaultProperties: true, hasCustomProperties: false };
+}
+
 export function generateEndpointExample({
     ir,
     endpoint,
@@ -81,6 +104,8 @@ export function generateEndpointExample({
         docs: undefined
     };
 
+    let aggregatedMetadata: ExamplePropertyMetadata | undefined = undefined;
+
     const endpointPathResult = generatePathParameterExamples(endpoint.pathParameters, {
         typeDeclarations,
         skipOptionalRequestProperties,
@@ -90,6 +115,7 @@ export function generateEndpointExample({
         return endpointPathResult;
     }
     result.endpointPathParameters = endpointPathResult.example;
+    aggregatedMetadata = mergeMetadata(aggregatedMetadata, endpointPathResult.metadata);
 
     const servicePathResult = generatePathParameterExamples(service.pathParameters, {
         typeDeclarations,
@@ -100,6 +126,7 @@ export function generateEndpointExample({
         return servicePathResult;
     }
     result.servicePathParameters = servicePathResult.example;
+    aggregatedMetadata = mergeMetadata(aggregatedMetadata, servicePathResult.metadata);
 
     const rootPathResult = generatePathParameterExamples(ir.pathParameters, {
         typeDeclarations,
@@ -110,6 +137,7 @@ export function generateEndpointExample({
         return rootPathResult;
     }
     result.rootPathParameters = rootPathResult.example;
+    aggregatedMetadata = mergeMetadata(aggregatedMetadata, rootPathResult.metadata);
 
     const queryParamsResult = generateQueryParameterExamples(endpoint.queryParameters, {
         typeDeclarations,
@@ -120,6 +148,7 @@ export function generateEndpointExample({
         return queryParamsResult;
     }
     result.queryParameters = queryParamsResult.example;
+    aggregatedMetadata = mergeMetadata(aggregatedMetadata, queryParamsResult.metadata);
 
     const endpointHeadersResult = generateHeaderExamples(endpoint.headers, {
         typeDeclarations,
@@ -130,6 +159,7 @@ export function generateEndpointExample({
         return endpointHeadersResult;
     }
     result.endpointHeaders = endpointHeadersResult.example;
+    aggregatedMetadata = mergeMetadata(aggregatedMetadata, endpointHeadersResult.metadata);
 
     const serviceHeadersResult = generateHeaderExamples(service.headers, {
         typeDeclarations,
@@ -140,6 +170,7 @@ export function generateEndpointExample({
         return serviceHeadersResult;
     }
     result.serviceHeaders = serviceHeadersResult.example;
+    aggregatedMetadata = mergeMetadata(aggregatedMetadata, serviceHeadersResult.metadata);
 
     if (endpoint.requestBody != null) {
         switch (endpoint.requestBody.type) {
@@ -199,6 +230,7 @@ export function generateEndpointExample({
                         continue;
                     }
                     const { example, jsonExample: propertyJsonExample } = propertyExample;
+                    aggregatedMetadata = mergeMetadata(aggregatedMetadata, propertyExample.metadata);
                     properties.push({
                         name: property.name,
                         originalTypeDeclaration: undefined,
@@ -225,6 +257,7 @@ export function generateEndpointExample({
                     return generatedExample;
                 }
                 const { example } = generatedExample;
+                aggregatedMetadata = mergeMetadata(aggregatedMetadata, generatedExample.metadata);
                 result.request = ExampleRequestBody.reference(example);
                 break;
             }
@@ -249,6 +282,7 @@ export function generateEndpointExample({
                     return generatedExample;
                 }
                 const { example, jsonExample } = generatedExample;
+                aggregatedMetadata = mergeMetadata(aggregatedMetadata, generatedExample.metadata);
                 result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }));
                 break;
             }
@@ -284,6 +318,7 @@ export function generateEndpointExample({
                     return generatedExample;
                 }
                 const { example, jsonExample } = generatedExample;
+                aggregatedMetadata = mergeMetadata(aggregatedMetadata, generatedExample.metadata);
                 result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }));
                 break;
             }
@@ -302,6 +337,7 @@ export function generateEndpointExample({
                             return generatedExample;
                         }
                         const { example, jsonExample } = generatedExample;
+                        aggregatedMetadata = mergeMetadata(aggregatedMetadata, generatedExample.metadata);
                         result.response = ExampleResponse.ok(
                             ExampleEndpointSuccessResponse.sse([{ data: { ...example, jsonExample }, event: "" }])
                         );
@@ -319,6 +355,7 @@ export function generateEndpointExample({
                             return generatedExample;
                         }
                         const { example, jsonExample } = generatedExample;
+                        aggregatedMetadata = mergeMetadata(aggregatedMetadata, generatedExample.metadata);
                         result.response = ExampleResponse.ok(
                             ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }])
                         );
@@ -336,6 +373,7 @@ export function generateEndpointExample({
                             return generatedExample;
                         }
                         const { example, jsonExample } = generatedExample;
+                        aggregatedMetadata = mergeMetadata(aggregatedMetadata, generatedExample.metadata);
                         result.response = ExampleResponse.ok(
                             ExampleEndpointSuccessResponse.stream([{ ...example, jsonExample }])
                         );
@@ -359,6 +397,7 @@ export function generateEndpointExample({
                     return generatedExample;
                 }
                 const { example, jsonExample } = generatedExample;
+                aggregatedMetadata = mergeMetadata(aggregatedMetadata, generatedExample.metadata);
                 result.response = ExampleResponse.ok(ExampleEndpointSuccessResponse.body({ ...example, jsonExample }));
                 break;
             }
@@ -385,6 +424,7 @@ export function generateEndpointExample({
                 return generatedExample;
             }
             const { example } = generatedExample;
+            aggregatedMetadata = mergeMetadata(aggregatedMetadata, generatedExample.metadata);
             result.response = ExampleResponse.error({
                 body: example,
                 error: generationResponse.declaration.name
@@ -401,7 +441,8 @@ export function generateEndpointExample({
                 url: getUrlForExample(endpoint, result),
                 ...result
             },
-            jsonExample: undefined // dummy
+            jsonExample: undefined, // dummy
+            metadata: aggregatedMetadata ?? createDefaultMetadata()
         };
     } catch (e) {
         return { type: "failure", message: `Parse failure with exceptions ${e}` };

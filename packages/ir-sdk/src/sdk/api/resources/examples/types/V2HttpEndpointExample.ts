@@ -9,4 +9,5 @@ export interface V2HttpEndpointExample {
     request: FernIr.V2HttpEndpointRequest | undefined;
     response: FernIr.V2HttpEndpointResponse | undefined;
     codeSamples: FernIr.V2HttpEndpointCodeSample[] | undefined;
+    examplePropertyMetadata: FernIr.V2ExamplePropertyMetadata | undefined;
 }

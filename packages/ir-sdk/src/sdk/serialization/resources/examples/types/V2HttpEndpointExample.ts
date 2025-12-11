@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { V2HttpEndpointRequest } from "./V2HttpEndpointRequest";
 import { V2HttpEndpointResponse } from "./V2HttpEndpointResponse";
 import { V2HttpEndpointCodeSample } from "./V2HttpEndpointCodeSample";
+import { V2ExamplePropertyMetadata } from "./V2ExamplePropertyMetadata";
 
 export const V2HttpEndpointExample: core.serialization.ObjectSchema<
     serializers.V2HttpEndpointExample.Raw,
@@ -17,6 +18,7 @@ export const V2HttpEndpointExample: core.serialization.ObjectSchema<
     request: V2HttpEndpointRequest.optional(),
     response: V2HttpEndpointResponse.optional(),
     codeSamples: core.serialization.list(V2HttpEndpointCodeSample).optional(),
+    examplePropertyMetadata: V2ExamplePropertyMetadata.optional(),
 });
 
 export declare namespace V2HttpEndpointExample {
@@ -25,5 +27,6 @@ export declare namespace V2HttpEndpointExample {
         request?: V2HttpEndpointRequest.Raw | null;
         response?: V2HttpEndpointResponse.Raw | null;
         codeSamples?: V2HttpEndpointCodeSample.Raw[] | null;
+        examplePropertyMetadata?: V2ExamplePropertyMetadata.Raw | null;
     }
 }

@@ -1,6 +1,7 @@
 export * from "./WithV2Examples";
 export * from "./V2HttpEndpointExamples";
 export * from "./V2HttpEndpointExample";
+export * from "./V2ExamplePropertyMetadata";
 export * from "./V2HttpEndpointRequest";
 export * from "./V2HttpEndpointResponse";
 export * from "./V2HttpEndpointResponseBody";

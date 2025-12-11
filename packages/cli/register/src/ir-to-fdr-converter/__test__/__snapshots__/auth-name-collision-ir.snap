@@ -273,6 +273,10 @@
               "base_getProtectedExample_200": {
                 "codeSamples": undefined,
                 "displayName": "getProtectedExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,
@@ -448,6 +452,10 @@
               "base_getPublicExample_200": {
                 "codeSamples": undefined,
                 "displayName": "getPublicExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

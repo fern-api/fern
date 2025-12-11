@@ -435,6 +435,10 @@
               "anyOfExamplesAnyOfExampleNoTitlesExample_200": {
                 "codeSamples": undefined,
                 "displayName": "anyOfExamplesAnyOfExampleNoTitlesExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

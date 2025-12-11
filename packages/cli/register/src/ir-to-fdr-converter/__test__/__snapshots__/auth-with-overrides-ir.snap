@@ -402,6 +402,10 @@
               "base_usersListExample_200": {
                 "codeSamples": undefined,
                 "displayName": "listExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,
@@ -737,6 +741,10 @@
               "base_usersGetExample_200": {
                 "codeSamples": undefined,
                 "displayName": "getExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

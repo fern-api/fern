@@ -963,6 +963,10 @@
               "base_getPlantExample_200": {
                 "codeSamples": undefined,
                 "displayName": "getPlantExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,
@@ -2343,6 +2347,10 @@
               "createGardenExample_201": {
                 "codeSamples": undefined,
                 "displayName": "createGardenExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

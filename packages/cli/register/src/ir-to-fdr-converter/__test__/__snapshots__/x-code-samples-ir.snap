@@ -380,6 +380,10 @@ func main() {
                   },
                 ],
                 "displayName": "getUserExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

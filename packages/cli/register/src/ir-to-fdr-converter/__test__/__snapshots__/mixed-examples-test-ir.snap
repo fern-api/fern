@@ -1526,6 +1526,10 @@
               "createUserExample_Successfully created user_201": {
                 "codeSamples": undefined,
                 "displayName": "Successfully created user",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": true,
+                  "hasDefaultProperties": false,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,
@@ -2474,6 +2478,10 @@
               "base_getProductExample_200": {
                 "codeSamples": undefined,
                 "displayName": "getProductExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

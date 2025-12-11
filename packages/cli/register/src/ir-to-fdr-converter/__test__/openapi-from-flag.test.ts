@@ -1951,8 +1951,6 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-ir.snap");
     });
-<<<<<<< Updated upstream
-=======
 
     it("should preserve human-generated examples when ai-examples is enabled - OpenAPI example format", async () => {
         // Test case to verify that human-generated examples specified in OpenAPI spec
@@ -2173,5 +2171,4 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             await expect(ir).toMatchFileSnapshot(`__snapshots__/${fixtureName}-ir.snap`);
         });
     }
->>>>>>> Stashed changes
 });

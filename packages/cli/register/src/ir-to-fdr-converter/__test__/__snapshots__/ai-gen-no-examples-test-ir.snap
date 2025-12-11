@@ -312,6 +312,10 @@
               "productsCreateProductExample_201": {
                 "codeSamples": undefined,
                 "displayName": "productsCreateProductExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

@@ -2137,6 +2137,10 @@
               "addPlantExample_Successfully created plant_200": {
                 "codeSamples": undefined,
                 "displayName": "Successfully created plant",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": true,
+                  "hasDefaultProperties": false,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

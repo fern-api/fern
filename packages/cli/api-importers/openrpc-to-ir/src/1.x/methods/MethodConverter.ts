@@ -345,7 +345,11 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                               })
                             : undefined
                     },
-                    codeSamples: []
+                    codeSamples: [],
+                    examplePropertyMetadata: {
+                        hasDefaultProperties: true,
+                        hasCustomProperties: false
+                    }
                 };
             }
 

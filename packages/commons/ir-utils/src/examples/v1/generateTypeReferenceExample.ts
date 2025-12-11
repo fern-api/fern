@@ -6,10 +6,14 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 
-import { ExampleGenerationResult } from "./ExampleGenerationResult";
+import { ExampleGenerationResult, ExamplePropertyMetadata } from "./ExampleGenerationResult";
 import { generateContainerExample, generateEmptyContainerExample } from "./generateContainerExample";
 import { generatePrimitiveExample } from "./generatePrimitiveExample";
 import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
+
+function createDefaultMetadata(): ExamplePropertyMetadata {
+    return { hasDefaultProperties: true, hasCustomProperties: false };
+}
 
 export declare namespace generateTypeReferenceExample {
     interface Args {
@@ -66,7 +70,8 @@ export function generateTypeReferenceExample({
                         typeName: typeDeclaration.name
                     })
                 },
-                jsonExample
+                jsonExample,
+                metadata: generatedExample.metadata ?? createDefaultMetadata()
             };
         }
         case "container": {
@@ -88,7 +93,8 @@ export function generateTypeReferenceExample({
                         jsonExample,
                         shape: ExampleTypeReferenceShape.container(example)
                     },
-                    jsonExample
+                    jsonExample,
+                    metadata: createDefaultMetadata()
                 };
             }
             const { example, jsonExample } = generatedExample;
@@ -98,11 +104,12 @@ export function generateTypeReferenceExample({
                     jsonExample,
                     shape: ExampleTypeReferenceShape.container(example)
                 },
-                jsonExample
+                jsonExample,
+                metadata: generatedExample.metadata ?? createDefaultMetadata()
             };
         }
         case "primitive": {
-            const { jsonExample, example } = generatePrimitiveExample({
+            const { jsonExample, example, metadata } = generatePrimitiveExample({
                 fieldName,
                 primitiveType: typeReference.primitive
             });
@@ -112,7 +119,8 @@ export function generateTypeReferenceExample({
                     jsonExample,
                     shape: ExampleTypeReferenceShape.primitive(example)
                 },
-                jsonExample
+                jsonExample,
+                metadata
             };
         }
         case "unknown": {
@@ -123,7 +131,8 @@ export function generateTypeReferenceExample({
                     jsonExample,
                     shape: ExampleTypeReferenceShape.unknown(jsonExample)
                 },
-                jsonExample
+                jsonExample,
+                metadata: createDefaultMetadata()
             };
         }
     }

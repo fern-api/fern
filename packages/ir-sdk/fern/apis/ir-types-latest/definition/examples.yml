@@ -25,6 +25,12 @@ types:
       request: optional<V2HttpEndpointRequest>
       response: optional<V2HttpEndpointResponse>
       codeSamples: optional<list<V2HttpEndpointCodeSample>>
+      examplePropertyMetadata: optional<V2ExamplePropertyMetadata>
+
+  V2ExamplePropertyMetadata:
+    properties:
+      hasDefaultProperties: boolean
+      hasCustomProperties: boolean
 
   V2HttpEndpointRequest:
     extends: commons.WithDocs

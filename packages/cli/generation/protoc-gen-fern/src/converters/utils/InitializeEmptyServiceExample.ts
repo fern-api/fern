@@ -22,6 +22,10 @@ export function initializeEmptyServiceExample(): V2HttpEndpointExample {
             body: FernIr.V2HttpEndpointResponseBody.json({}),
             docs: undefined
         },
-        codeSamples: []
+        codeSamples: [],
+        examplePropertyMetadata: {
+            hasDefaultProperties: true,
+            hasCustomProperties: false
+        }
     };
 }

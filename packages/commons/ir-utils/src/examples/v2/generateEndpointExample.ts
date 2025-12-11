@@ -1,3 +1,4 @@
+import { Examples } from "@fern-api/core-utils";
 import {
     HttpEndpoint,
     IntermediateRepresentation,
@@ -36,6 +37,39 @@ const createExampleKey = (requestKey: string, responseKey: string, statusCode: n
     return key;
 };
 
+function hasDefaultValues(obj: unknown): boolean {
+    if (typeof obj !== "object" || obj === null) {
+        // Check if primitive value matches any default examples
+        const isDefaultPrimitive =
+            obj === Examples.STRING ||
+            obj === Examples.BOOLEAN ||
+            obj === Examples.DATE ||
+            obj === Examples.DATE_TIME ||
+            obj === Examples.DOUBLE ||
+            obj === Examples.FLOAT ||
+            obj === Examples.INT ||
+            obj === Examples.INT64 ||
+            obj === Examples.UINT ||
+            obj === Examples.UINT64 ||
+            obj === Examples.UUID ||
+            obj === Examples.BASE64 ||
+            obj === Examples.BIG_INTEGER;
+
+        // Also check if it's one of the sample strings
+        const isDefaultString = typeof obj === "string" && Examples.SAMPLE_STRINGS.includes(obj);
+
+        return isDefaultPrimitive || isDefaultString;
+    }
+
+    // For objects, recursively check all values
+    if (Array.isArray(obj)) {
+        return obj.some(hasDefaultValues);
+    }
+
+    const record = obj as Record<string, unknown>;
+    return Object.values(record).some(hasDefaultValues);
+}
+
 const addExampleToStore = ({
     exampleStore,
     key,
@@ -59,7 +93,8 @@ function maybeCreateAndStoreExample({
     request,
     response,
     exampleStore,
-    userOrAutoStore
+    userOrAutoStore,
+    isUserSpecified = false
 }: {
     key: string;
     displayName: string;
@@ -67,13 +102,33 @@ function maybeCreateAndStoreExample({
     response: V2HttpEndpointResponse;
     exampleStore: Map<string, V2HttpEndpointExample>;
     userOrAutoStore: Record<string, V2HttpEndpointExample>;
+    isUserSpecified?: boolean;
 }): boolean {
     if (!exampleStore.has(key)) {
+        // Analyze the actual example content to determine metadata
+        const requestHasDefaults =
+            hasDefaultValues(request.requestBody) ||
+            hasDefaultValues(request.pathParameters) ||
+            hasDefaultValues(request.queryParameters) ||
+            hasDefaultValues(request.headers);
+        const responseHasDefaults = hasDefaultValues(response.body);
+        const exampleHasDefaults = requestHasDefaults || responseHasDefaults;
+
         const example: V2HttpEndpointExample = {
             displayName,
             request,
             response,
-            codeSamples: undefined
+            codeSamples: undefined,
+            examplePropertyMetadata:
+                isUserSpecified || !exampleHasDefaults
+                    ? {
+                          hasDefaultProperties: false,
+                          hasCustomProperties: true
+                      }
+                    : {
+                          hasDefaultProperties: true,
+                          hasCustomProperties: false
+                      }
         };
 
         userOrAutoStore[key] = example;
@@ -225,7 +280,8 @@ function createExamplesForResponseStatusCodes({
                     request: requestExampleToUse,
                     response: responseExample,
                     exampleStore,
-                    userOrAutoStore: userResults
+                    userOrAutoStore: userResults,
+                    isUserSpecified: true
                 })
             ) {
                 examplesCreatedForResponse = true;
@@ -308,7 +364,8 @@ function createExamplesForRemainingUserRequests({
             request: requestExample,
             response: firstUserResponseExample ?? firstAutoResponseExample ?? baseResponseExample,
             exampleStore,
-            userOrAutoStore: userResults
+            userOrAutoStore: userResults,
+            isUserSpecified: true
         });
     }
 }

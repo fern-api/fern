@@ -697,6 +697,10 @@
               "createTransactionExample_200": {
                 "codeSamples": undefined,
                 "displayName": "createTransactionExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,
@@ -1011,6 +1015,10 @@
               "createUserTransactionExample_200": {
                 "codeSamples": undefined,
                 "displayName": "createUserTransactionExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,
@@ -1274,6 +1282,10 @@
               "base_getMerchantSettingsExample_200": {
                 "codeSamples": undefined,
                 "displayName": "getMerchantSettingsExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,
@@ -1496,6 +1508,10 @@
               "base_listUsersExample_200": {
                 "codeSamples": undefined,
                 "displayName": "listUsersExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

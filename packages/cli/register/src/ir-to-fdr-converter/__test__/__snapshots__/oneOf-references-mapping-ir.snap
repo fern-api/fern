@@ -444,6 +444,10 @@
               "createEventExample_200": {
                 "codeSamples": undefined,
                 "displayName": "createEventExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

@@ -8,7 +8,15 @@ import {
     StringValidationRules
 } from "@fern-api/ir-sdk";
 
-import { ExampleGenerationSuccess } from "./ExampleGenerationResult";
+import { ExampleGenerationSuccess, ExamplePropertyMetadata } from "./ExampleGenerationResult";
+
+function createCustomMetadata(): ExamplePropertyMetadata {
+    return { hasDefaultProperties: false, hasCustomProperties: true };
+}
+
+function createDefaultMetadata(): ExamplePropertyMetadata {
+    return { hasDefaultProperties: true, hasCustomProperties: false };
+}
 
 export declare namespace generatePrimitiveExample {
     interface Args {
@@ -31,17 +39,28 @@ export function generatePrimitiveExample({
             });
         }
         case "BASE_64": {
-            return { type: "success", example: ExamplePrimitive.base64(Examples.BASE64), jsonExample: Examples.BASE64 };
+            return {
+                type: "success",
+                example: ExamplePrimitive.base64(Examples.BASE64),
+                jsonExample: Examples.BASE64,
+                metadata: createDefaultMetadata()
+            };
         }
         case "BOOLEAN": {
             return {
                 type: "success",
                 example: ExamplePrimitive.boolean(Examples.BOOLEAN),
-                jsonExample: Examples.BOOLEAN
+                jsonExample: Examples.BOOLEAN,
+                metadata: createDefaultMetadata()
             };
         }
         case "DATE": {
-            return { type: "success", example: ExamplePrimitive.date(Examples.DATE), jsonExample: Examples.DATE };
+            return {
+                type: "success",
+                example: ExamplePrimitive.date(Examples.DATE),
+                jsonExample: Examples.DATE,
+                metadata: createDefaultMetadata()
+            };
         }
         case "DATE_TIME": {
             return {
@@ -50,7 +69,8 @@ export function generatePrimitiveExample({
                     datetime: new Date(Examples.DATE_TIME),
                     raw: Examples.DATE_TIME
                 }),
-                jsonExample: Examples.DATE_TIME
+                jsonExample: Examples.DATE_TIME,
+                metadata: createDefaultMetadata()
             };
         }
         case "DOUBLE": {
@@ -60,7 +80,12 @@ export function generatePrimitiveExample({
             });
         }
         case "FLOAT": {
-            return { type: "success", example: ExamplePrimitive.float(Examples.FLOAT), jsonExample: Examples.FLOAT };
+            return {
+                type: "success",
+                example: ExamplePrimitive.float(Examples.FLOAT),
+                jsonExample: Examples.FLOAT,
+                metadata: createDefaultMetadata()
+            };
         }
         case "INTEGER": {
             return generatePrimitiveIntegerExample({
@@ -69,23 +94,44 @@ export function generatePrimitiveExample({
             });
         }
         case "UINT_64": {
-            return { type: "success", example: ExamplePrimitive.uint64(Examples.INT64), jsonExample: Examples.INT64 };
+            return {
+                type: "success",
+                example: ExamplePrimitive.uint64(Examples.INT64),
+                jsonExample: Examples.INT64,
+                metadata: createDefaultMetadata()
+            };
         }
         case "UINT": {
-            return { type: "success", example: ExamplePrimitive.uint(Examples.UINT), jsonExample: Examples.UINT };
+            return {
+                type: "success",
+                example: ExamplePrimitive.uint(Examples.UINT),
+                jsonExample: Examples.UINT,
+                metadata: createDefaultMetadata()
+            };
         }
         case "BIG_INTEGER": {
             return {
                 type: "success",
                 example: ExamplePrimitive.bigInteger(Examples.INT64.toString()),
-                jsonExample: `${Examples.INT64}`
+                jsonExample: `${Examples.INT64}`,
+                metadata: createDefaultMetadata()
             };
         }
         case "LONG": {
-            return { type: "success", example: ExamplePrimitive.long(Examples.INT64), jsonExample: Examples.INT64 };
+            return {
+                type: "success",
+                example: ExamplePrimitive.long(Examples.INT64),
+                jsonExample: Examples.INT64,
+                metadata: createDefaultMetadata()
+            };
         }
         case "UUID": {
-            return { type: "success", example: ExamplePrimitive.uuid(Examples.UUID), jsonExample: Examples.UUID };
+            return {
+                type: "success",
+                example: ExamplePrimitive.uuid(Examples.UUID),
+                jsonExample: Examples.UUID,
+                metadata: createDefaultMetadata()
+            };
         }
         default:
             assertNever(primitiveType.v1);
@@ -153,7 +199,12 @@ function generatePrimitiveStringExample({
     validation: StringValidationRules | undefined;
 }): ExampleGenerationSuccess<ExamplePrimitive> {
     if (default_ != null) {
-        return { type: "success", example: ExamplePrimitive.string({ original: default_ }), jsonExample: default_ };
+        return {
+            type: "success",
+            example: ExamplePrimitive.string({ original: default_ }),
+            jsonExample: default_,
+            metadata: createCustomMetadata()
+        };
     }
     if (validation) {
         const minLength = validation.minLength;
@@ -163,19 +214,26 @@ function generatePrimitiveStringExample({
             return {
                 type: "success",
                 example: ExamplePrimitive.string({ original: minLengthExample }),
-                jsonExample: minLengthExample
+                jsonExample: minLengthExample,
+                metadata: createDefaultMetadata()
             };
         } else if (maxLength != null && maxLength < 10) {
             const maxLengthExample = getStringExampleOfLength(maxLength);
             return {
                 type: "success",
                 example: ExamplePrimitive.string({ original: maxLengthExample }),
-                jsonExample: maxLengthExample
+                jsonExample: maxLengthExample,
+                metadata: createDefaultMetadata()
             };
         }
     }
     const jsonExample = fieldName ?? Examples.STRING;
-    return { type: "success", example: ExamplePrimitive.string({ original: jsonExample }), jsonExample };
+    return {
+        type: "success",
+        example: ExamplePrimitive.string({ original: jsonExample }),
+        jsonExample,
+        metadata: createDefaultMetadata()
+    };
 }
 
 function generatePrimitiveDoubleExample({
@@ -189,12 +247,27 @@ function generatePrimitiveDoubleExample({
         const maximum = validation.max;
         const minimum = validation.min;
         if (maximum) {
-            return { type: "success", example: ExamplePrimitive.double(maximum), jsonExample: maximum };
+            return {
+                type: "success",
+                example: ExamplePrimitive.double(maximum),
+                jsonExample: maximum,
+                metadata: createCustomMetadata()
+            };
         } else if (minimum) {
-            return { type: "success", example: ExamplePrimitive.double(minimum), jsonExample: minimum };
+            return {
+                type: "success",
+                example: ExamplePrimitive.double(minimum),
+                jsonExample: minimum,
+                metadata: createCustomMetadata()
+            };
         }
     }
-    return { type: "success", example: ExamplePrimitive.double(Examples.DOUBLE), jsonExample: Examples.DOUBLE };
+    return {
+        type: "success",
+        example: ExamplePrimitive.double(Examples.DOUBLE),
+        jsonExample: Examples.DOUBLE,
+        metadata: createDefaultMetadata()
+    };
 }
 
 function generatePrimitiveIntegerExample({
@@ -208,10 +281,25 @@ function generatePrimitiveIntegerExample({
         const maximum = validation.max;
         const minimum = validation.min;
         if (maximum) {
-            return { type: "success", example: ExamplePrimitive.integer(maximum), jsonExample: maximum };
+            return {
+                type: "success",
+                example: ExamplePrimitive.integer(maximum),
+                jsonExample: maximum,
+                metadata: createCustomMetadata()
+            };
         } else if (minimum) {
-            return { type: "success", example: ExamplePrimitive.integer(minimum), jsonExample: minimum };
+            return {
+                type: "success",
+                example: ExamplePrimitive.integer(minimum),
+                jsonExample: minimum,
+                metadata: createCustomMetadata()
+            };
         }
     }
-    return { type: "success", example: ExamplePrimitive.integer(Examples.INT), jsonExample: Examples.INT };
+    return {
+        type: "success",
+        example: ExamplePrimitive.integer(Examples.INT),
+        jsonExample: Examples.INT,
+        metadata: createDefaultMetadata()
+    };
 }

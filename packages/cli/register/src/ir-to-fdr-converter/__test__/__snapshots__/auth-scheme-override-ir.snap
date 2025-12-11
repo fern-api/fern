@@ -512,6 +512,10 @@
               "base_getProtectedApiKeyExample_200": {
                 "codeSamples": undefined,
                 "displayName": "getProtectedApiKeyExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,
@@ -758,6 +762,10 @@
               "base_getProtectedTokenExample_200": {
                 "codeSamples": undefined,
                 "displayName": "getProtectedTokenExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,
@@ -955,6 +963,10 @@
               "base_getPublicExample_200": {
                 "codeSamples": undefined,
                 "displayName": "getPublicExample",
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": false,
+                  "hasDefaultProperties": true,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

@@ -368,6 +368,10 @@ puts user.name",
                   },
                 ],
                 "displayName": undefined,
+                "examplePropertyMetadata": {
+                  "hasCustomProperties": true,
+                  "hasDefaultProperties": false,
+                },
                 "request": {
                   "auth": undefined,
                   "baseUrl": undefined,

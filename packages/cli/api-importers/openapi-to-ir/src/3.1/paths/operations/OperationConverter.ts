@@ -674,7 +674,11 @@ export class OperationConverter extends AbstractOperationConverter {
                                 language,
                                 code: codeSample.code
                             };
-                        })
+                        }),
+                        examplePropertyMetadata: {
+                            hasDefaultProperties: false,
+                            hasCustomProperties: true
+                        }
                     }
                 ];
             })
