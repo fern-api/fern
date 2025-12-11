@@ -109,7 +109,7 @@
               ],
             },
           ],
-          "name": "Add a comment",
+          "name": "Add a Comment",
           "originalEndpointId": "endpoint_commentsService.createcomment",
           "path": {
             "parts": [
