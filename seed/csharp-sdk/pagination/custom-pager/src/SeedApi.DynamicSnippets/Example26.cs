@@ -2,7 +2,7 @@ using SeedPagination;
 
 namespace Usage;
 
-public class Example20
+public class Example26
 {
     public async Task Do() {
         var client = new SeedPaginationClient(
@@ -12,11 +12,9 @@ public class Example20
             }
         );
 
-        await client.Users.ListWithOffsetPaginationHasNextPageAsync(
-            new SeedPagination.ListWithOffsetPaginationHasNextPageRequest {
-                Page = 1,
-                Limit = 1,
-                Order = SeedPagination.Order.Asc
+        await client.Users.ListWithOptionalDataAsync(
+            new ListUsersOptionalDataRequest {
+                Page = 1
             }
         );
     }
