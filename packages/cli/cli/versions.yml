@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add inferred auth parameters to the dynamic IR so dynamic snippet generators can consume them.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.12.0
+
+- changelogEntry:
+    - summary: |
         Fully propagate webhook responses (e.g., 204, 400, 500 status codes) from OpenAPI specs from IR to FDR.
       type: feat
   irVersion: 62
