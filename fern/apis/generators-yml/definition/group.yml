@@ -45,6 +45,11 @@ types:
       publish-metadata:
         type: optional<GeneratorPublishMetadataSchema>
         docs: Deprecated, use `metadata` on the output block instead.
+      autorelease:
+        type: optional<boolean>
+        docs: |
+          If true, automatically release this SDK when changes are detected.
+          Overrides the top-level autorelease setting if specified.
 
   GeneratorAPISettingsSchema:
     docs: |
