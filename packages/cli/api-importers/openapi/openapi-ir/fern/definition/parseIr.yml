@@ -88,6 +88,7 @@ types:
         docs: |
           Populated as ${operationId}Payload
       payload: SchemaWithExample
+      response: optional<ResponseWithExample>
       examples: list<finalIr.WebhookExampleCall>
 
   HttpErrorWithExample:

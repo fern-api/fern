@@ -5,9 +5,7 @@
 import * as FernOpenapiIr from "../../../index";
 
 export interface QueryParameterWithExample
-    extends FernOpenapiIr.WithDescription,
-        FernOpenapiIr.WithAvailability,
-        FernOpenapiIr.WithSource {
+    extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithAvailability, FernOpenapiIr.WithSource {
     name: string;
     schema: FernOpenapiIr.SchemaWithExample;
     /** Populated by `x-fern-parameter-name` on a parameter object. */
