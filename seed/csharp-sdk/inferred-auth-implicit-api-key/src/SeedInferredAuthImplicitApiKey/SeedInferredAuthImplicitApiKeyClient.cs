@@ -31,9 +31,12 @@ public partial class SeedInferredAuthImplicitApiKeyClient
             apiKey,
             new AuthClient(new RawClient(clientOptions.Clone()))
         );
-        clientOptions.Headers["Authorization"] = new Func<string>(() =>
-            inferredAuthProvider.GetAuthHeadersAsync().Result["Authorization"]
-        );
+        clientOptions.Headers["Authorization"] =
+            new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+                (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))[
+                    "Authorization"
+                ]
+            );
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
         NestedNoAuth = new NestedNoAuthClient(_client);

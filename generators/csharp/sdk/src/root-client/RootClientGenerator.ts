@@ -393,7 +393,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                         innerWriter.writeTextStatement(")");
 
-                        // Set up header supplier using lazy evaluation via Func<string> to avoid blocking in the constructor
+                        // Set up header supplier using async Func<ValueTask<string>> to avoid blocking
                         // For now, we assume there's only one authenticated header (typically Authorization)
                         const authHeader = this.inferred.tokenEndpoint.authenticatedRequestHeaders[0];
                         if (authHeader != null) {
@@ -401,7 +401,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             innerWriter.writeNode(
                                 this.csharp.codeblock((writer) => {
                                     writer.write(
-                                        `clientOptions.Headers["${headerName}"] = new Func<string>(() => inferredAuthProvider.${this.names.methods.getAuthHeadersAsync}().Result["${headerName}"]);`
+                                        `clientOptions.Headers["${headerName}"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => (await inferredAuthProvider.${this.names.methods.getAuthHeadersAsync}().ConfigureAwait(false))["${headerName}"]);`
                                     );
                                 })
                             );
