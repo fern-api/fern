@@ -1,5 +1,7 @@
 import { HttpResponse, V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
+import { OpenAPIV3_1 } from "openapi-types";
 
+import { ResponseBodyConverter } from "../ResponseBodyConverter";
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
 export declare namespace WebhookConverter {
@@ -44,6 +46,8 @@ export class WebhookConverter extends AbstractOperationConverter {
             breadcrumbs: payloadBreadcrumbs
         });
 
+        const responses = this.convertWebhookResponses({ group, method });
+
         const convertedRequestBody = this.convertRequestBody({
             breadcrumbs: payloadBreadcrumbs,
             group,
@@ -74,8 +78,6 @@ export class WebhookConverter extends AbstractOperationConverter {
         } else {
             return undefined;
         }
-
-        const responses = this.convertWebhookResponses();
 
         return {
             audiences:
@@ -111,12 +113,20 @@ export class WebhookConverter extends AbstractOperationConverter {
         };
     }
 
-    private convertWebhookResponses(): HttpResponse[] {
+    private convertWebhookResponses({
+        group,
+        method
+    }: {
+        group: string[] | undefined;
+        method: string;
+    }): HttpResponse[] {
         const responses: HttpResponse[] = [];
 
         if (this.operation.responses == null) {
             return responses;
         }
+
+        const responseBreadcrumbs = [...this.breadcrumbs, "responses"];
 
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
             // Check for wildcard status codes like 4XX or 5XX
@@ -125,7 +135,6 @@ export class WebhookConverter extends AbstractOperationConverter {
 
             if (isWildcard) {
                 // Convert wildcard to base value (e.g., "4XX" -> 400, "5XX" -> 500)
-                // We know statusCode[0] exists because the regex matched
                 statusCodeNum = parseInt(statusCode.charAt(0)) * 100;
             } else {
                 statusCodeNum = parseInt(statusCode);
@@ -134,16 +143,45 @@ export class WebhookConverter extends AbstractOperationConverter {
                 }
             }
 
-            this.context.resolveMaybeReference({
+            const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
                 schemaOrReference: response,
-                breadcrumbs: [...this.breadcrumbs, "responses", statusCode]
+                breadcrumbs: [...responseBreadcrumbs, statusCode]
             });
 
-            responses.push({
-                statusCode: statusCodeNum,
-                isWildcardStatusCode: isWildcard ? true : undefined,
-                body: undefined
+            if (resolvedResponse == null) {
+                continue;
+            }
+
+            // Convert response body using ResponseBodyConverter
+            const responseBodyConverter = new ResponseBodyConverter({
+                context: this.context,
+                breadcrumbs: [...responseBreadcrumbs, statusCode],
+                responseBody: resolvedResponse,
+                group: group ?? [],
+                method,
+                statusCode,
+                streamingExtension: undefined
             });
+
+            const convertedResponseBody = responseBodyConverter.convert();
+
+            if (convertedResponseBody != null) {
+                // Merge inlined types from the response converter
+                Object.assign(this.inlinedTypes, convertedResponseBody.inlinedTypes);
+
+                responses.push({
+                    statusCode: statusCodeNum,
+                    isWildcardStatusCode: isWildcard ? true : undefined,
+                    body: convertedResponseBody.responseBody
+                });
+            } else {
+                // If no body was parsed, still include the response with undefined body
+                responses.push({
+                    statusCode: statusCodeNum,
+                    isWildcardStatusCode: isWildcard ? true : undefined,
+                    body: undefined
+                });
+            }
         }
 
         return responses;
