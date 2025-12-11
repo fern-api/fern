@@ -5,7 +5,15 @@
       type: chore
   irVersion: 62
   createdAt: "2025-12-11"
-  version: 3.13.1
+  version: 3.14.1
+  
+  - changelogEntry:
+    - summary: |
+        Fix `coerce-enums-to-literals: false` setting not being respected for SDK generation. Single-value enums are now correctly preserved as enum types instead of being coerced to literals.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.14.0
 
 - changelogEntry:
     - summary: |
