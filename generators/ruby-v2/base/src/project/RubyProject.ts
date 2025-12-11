@@ -6,7 +6,7 @@ import dedent from "dedent";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import { join as pathJoin } from "path";
-import { topologicalCompareAsIsFiles } from "../AsIs";
+import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 import { RubocopFile } from "./RubocopFile";
 
@@ -42,6 +42,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createVersionFile();
         await this.createModuleFile();
         await this.createRuboCopFile();
+        await this.createGithubCiWorkflow();
     }
 
     private async createGemspecfile(): Promise<void> {
@@ -91,6 +92,13 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(RUBOCOP_FILENAME)),
             await ruboCopFile.toString()
         );
+    }
+
+    private async createGithubCiWorkflow(): Promise<void> {
+        const githubWorkflowsDir = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".github/workflows"));
+        await mkdir(githubWorkflowsDir, { recursive: true });
+        const githubCiContents = (await readFile(getAsIsFilepath(AsIsFiles.GithubCiYml))).toString();
+        await writeFile(join(githubWorkflowsDir, RelativeFilePath.of("ci.yml")), githubCiContents);
     }
 
     private async createModuleFile(): Promise<void> {

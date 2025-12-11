@@ -1,4 +1,7 @@
 export const AsIsFiles = {
+    // GitHub CI workflow
+    GithubCiYml: "github-ci.yml",
+
     // Public-facing error classes
     ApiError: "errors/api_error.Template.rb",
     ClientError: "errors/client_error.Template.rb",
