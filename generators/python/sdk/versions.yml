@@ -12,7 +12,7 @@
 
 - version: 4.45.5
   changelogEntry:
-    - summary: Fix failing wire tests under `pytest‑xdist` by using a single shared WireMock plugin.
+    - summary: Fix failing wire tests under `pytest-xdist` by using a single shared WireMock plugin.
       type: fix
   createdAt: "2025-12-11"
   irVersion: 61
