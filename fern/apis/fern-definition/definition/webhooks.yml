@@ -15,6 +15,8 @@ types:
       method: WebhookMethodSchema
       headers: optional<map<string, services.HttpHeaderSchema>>
       payload: WebhookPayloadSchema
+      response: optional<services.HttpResponseSchema>
+      response-stream: optional<services.HttpResponseStreamSchema>
       examples: optional<list<examples.ExampleWebhookCallSchema>>
 
   WebhookMethodSchema:
