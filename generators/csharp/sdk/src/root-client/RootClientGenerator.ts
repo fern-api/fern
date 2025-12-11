@@ -357,18 +357,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                         innerWriter.writeTextStatement(")");
 
-                        innerWriter.writeNode(
-                            this.csharp.codeblock((writer) => {
-                                writer.writeLine(
-                                    `clientOptions.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>`
-                                );
-                                writer.writeLine(`{`);
-                                writer.writeLine(
-                                    `    var result = await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false);`
-                                );
-                                writer.writeLine(`    return result;`);
-                                writer.writeLine(`});`);
-                            })
+                        innerWriter.writeTextStatement(
+                            `clientOptions.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
                         );
                     }
 
