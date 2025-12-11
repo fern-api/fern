@@ -43,6 +43,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createModuleFile();
         await this.createRuboCopFile();
         await this.createGithubCiWorkflow();
+        await this.createGitignore();
     }
 
     private async createGemspecfile(): Promise<void> {
@@ -99,6 +100,11 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await mkdir(githubWorkflowsDir, { recursive: true });
         const githubCiContents = (await readFile(getAsIsFilepath(AsIsFiles.GithubCiYml))).toString();
         await writeFile(join(githubWorkflowsDir, RelativeFilePath.of("ci.yml")), githubCiContents);
+    }
+
+    private async createGitignore(): Promise<void> {
+        const gitignoreContents = (await readFile(getAsIsFilepath(AsIsFiles.Gitignore))).toString();
+        await writeFile(join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".gitignore")), gitignoreContents);
     }
 
     private async createModuleFile(): Promise<void> {
