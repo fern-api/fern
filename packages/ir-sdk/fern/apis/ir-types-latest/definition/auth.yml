@@ -44,7 +44,7 @@ types:
     extends: BaseAuthScheme
     properties:
       tokenEndpoint: InferredAuthSchemeTokenEndpoint
-      # refreshEndpoint: optional<InferredAuthSchemeRefreshEndpoint>
+      refreshEndpoint: optional<InferredAuthSchemeRefreshEndpoint>
 
   InferredAuthSchemeTokenEndpoint:
     properties:
@@ -52,13 +52,13 @@ types:
       expiryProperty: optional<http.ResponseProperty>
       authenticatedRequestHeaders: list<InferredAuthenticatedRequestHeader>
 
-  # InferredAuthSchemeRefreshEndpoint:
-  #   properties:
-  #     endpoint: commons.EndpointReference
-  #     expiryProperty: http.ResponseProperty
-  #     authenticatedRequestHeaders:
-  #       type: list<InferredAuthenticatedRequestHeader>
-  #       docs: These headers will override the headers defined on the tokenEndpoint.
+  InferredAuthSchemeRefreshEndpoint:
+    properties:
+      endpoint: commons.EndpointReference
+      expiryProperty: optional<http.ResponseProperty>
+      authenticatedRequestHeaders:
+        type: optional<list<InferredAuthenticatedRequestHeader>>
+        docs: These headers will override the headers defined on the tokenEndpoint.
 
   InferredAuthenticatedRequestHeader:
     docs: A header that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint.

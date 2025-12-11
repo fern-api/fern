@@ -7,4 +7,5 @@ import * as FernDefinition from "../../../index";
 export interface InferredBearerAuthSchema extends FernDefinition.WithDocsSchema {
     scheme: "bearer";
     "get-token": FernDefinition.InferredGetTokenEndpointSchema;
+    "refresh-token"?: FernDefinition.InferredRefreshTokenEndpointSchema;
 }
