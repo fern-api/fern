@@ -23,6 +23,7 @@ export class WireTestSetupGenerator {
     public generate(): void {
         this.generateWireMockConfigFile();
         this.generateDockerComposeFile();
+        this.generateWireHelper();
     }
 
     public static getWiremockConfigContent(ir: IntermediateRepresentation) {
@@ -187,6 +188,51 @@ export class WireTestSetupGenerator {
       timeout: 5s
       retries: 15
       start_period: 5s
+`;
+    }
+
+    /**
+     * Generates wire_helper.rb file that manages WireMock container lifecycle.
+     * This is the Ruby equivalent of Python's conftest.py for wire tests.
+     */
+    private generateWireHelper(): void {
+        const wireHelperContent = this.buildWireHelperContent();
+        const wireHelperFile = new File("wire_helper.rb", RelativeFilePath.of("test/wire"), wireHelperContent);
+
+        this.context.project.addRawFiles(wireHelperFile);
+        this.context.logger.debug("Generated wire_helper.rb for WireMock container lifecycle management");
+    }
+
+    /**
+     * Builds the content for wire_helper.rb which manages WireMock container lifecycle.
+     * When tests require this file, it will:
+     * 1. Start the WireMock container before any tests run
+     * 2. Stop the WireMock container after all tests complete
+     */
+    private buildWireHelperContent(): string {
+        return `# frozen_string_literal: true
+
+require "test_helper"
+
+# WireMock container lifecycle management for wire tests.
+# This file is the Ruby equivalent of Python's conftest.py for wire tests.
+# It automatically starts the WireMock container before tests and stops it after.
+
+WIREMOCK_COMPOSE_FILE = File.expand_path("../../wiremock/docker-compose.test.yml", __dir__)
+
+# Start WireMock container when this file is required
+if ENV["RUN_WIRE_TESTS"] == "true" && File.exist?(WIREMOCK_COMPOSE_FILE)
+  puts "Starting WireMock container..."
+  unless system("docker compose -f #{WIREMOCK_COMPOSE_FILE} up -d --wait")
+    warn "Failed to start WireMock container"
+  end
+
+  # Stop WireMock container after all tests complete
+  Minitest.after_run do
+    puts "Stopping WireMock container..."
+    system("docker compose -f #{WIREMOCK_COMPOSE_FILE} down")
+  end
+end
 `;
     }
 }

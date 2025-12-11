@@ -441,7 +441,7 @@ class RawInlineUsersClient:
 
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_step_pagination(
-                    page=page + len(_items),
+                    page=page + len(_items or []),
                     limit=limit,
                     order=order,
                     request_options=request_options,
@@ -505,7 +505,7 @@ class RawInlineUsersClient:
 
                 _has_next = True
                 _get_next = lambda: self.list_with_offset_pagination_has_next_page(
-                    page=page + len(_items),
+                    page=page + len(_items or []),
                     limit=limit,
                     order=order,
                     request_options=request_options,
@@ -1142,7 +1142,7 @@ class AsyncRawInlineUsersClient:
 
                 async def _get_next():
                     return await self.list_with_offset_step_pagination(
-                        page=page + len(_items),
+                        page=page + len(_items or []),
                         limit=limit,
                         order=order,
                         request_options=request_options,
@@ -1209,7 +1209,7 @@ class AsyncRawInlineUsersClient:
 
                 async def _get_next():
                     return await self.list_with_offset_pagination_has_next_page(
-                        page=page + len(_items),
+                        page=page + len(_items or []),
                         limit=limit,
                         order=order,
                         request_options=request_options,
