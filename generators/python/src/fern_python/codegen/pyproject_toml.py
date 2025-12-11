@@ -61,6 +61,16 @@ class PyProjectToml:
         self._enable_wire_tests = enable_wire_tests
         self._user_defined_toml = user_defined_toml
 
+        # When wire tests are enabled, compute the fully qualified module path
+        # for the generated pytest plugin that manages the WireMock lifecycle.
+        # The plugin is emitted into the root package, so we derive the package
+        # name from the poetry package include path.
+        self._wire_plugin_module: Optional[str] = None
+        if enable_wire_tests:
+            package_include = package.include
+            root_module = package_include.split("/")[0]
+            self._wire_plugin_module = f"{root_module}.wiremock_pytest_plugin"
+
     def write(self) -> None:
         blocks: List[PyProjectToml.Block] = [
             self._poetry_block,
@@ -70,7 +80,10 @@ class PyProjectToml:
                 python_version=self._python_version,
                 enable_wire_tests=self._enable_wire_tests,
             ),
-            PyProjectToml.PluginConfigurationBlock(),
+            PyProjectToml.PluginConfigurationBlock(
+                enable_wire_tests=self._enable_wire_tests,
+                wire_plugin_module=self._wire_plugin_module,
+            ),
             PyProjectToml.BuildSystemBlock(),
         ]
         content = f"""[project]
@@ -250,12 +263,22 @@ types-python-dateutil = "^2.9.0.20240316"
 
     @dataclass(frozen=True)
     class PluginConfigurationBlock(Block):
+        enable_wire_tests: bool = False
+        wire_plugin_module: Optional[str] = None
+
         def to_string(self) -> str:
-            return """
+            addopts_line = ""
+            if self.enable_wire_tests and self.wire_plugin_module is not None:
+                # Load the generated WireMock pytest plugin for all test runs.
+                # This ensures the WireMock container lifecycle is managed from
+                # the pytest controller process, including when running with xdist.
+                addopts_line = f'addopts = "-p {self.wire_plugin_module}"\n'
+
+            return f"""
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"
-
+{addopts_line}
 [tool.mypy]
 plugins = ["pydantic.mypy"]
 

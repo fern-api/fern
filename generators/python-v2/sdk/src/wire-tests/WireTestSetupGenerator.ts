@@ -19,13 +19,14 @@ export class WireTestSetupGenerator {
 
     /**
      * Generates docker-compose.test.yml file to spin up WireMock as a docker container
-     * and conftest.py for managing container lifecycle
+     * and the supporting test helpers / plugins.
      */
     public generate(): void {
         this.generateWireMockConfigFile();
         this.generateDockerComposeFile();
         this.generateConftestFile();
         this.generateInitFile();
+        this.generatePytestPluginFile();
     }
 
     public static getWiremockConfigContent(ir: IntermediateRepresentation) {
@@ -81,7 +82,12 @@ export class WireTestSetupGenerator {
     }
 
     /**
-     * Generates a conftest.py file that manages WireMock container lifecycle
+     * Generates a conftest.py file that exposes helpers for wire tests.
+     *
+     * The actual WireMock container lifecycle is managed by a top-level pytest
+     * plugin generated alongside this file. This ensures that the container is
+     * started exactly once even when running the full test suite with
+     * pytest-xdist parallelization.
      */
     private generateConftestFile(): void {
         const conftestContent = this.buildConftestContent();
@@ -111,10 +117,13 @@ export class WireTestSetupGenerator {
         return `"""
 Pytest configuration for wire tests.
 
-This module manages the WireMock container lifecycle for integration tests.
-It is compatible with pytest-xdist parallelization by ensuring only the
-controller process (or the single process in non-xdist runs) starts and
-stops the WireMock container.
+This module provides helpers for creating a configured client that talks to
+WireMock and for verifying requests in WireMock.
+
+The WireMock container lifecycle itself is managed by the generated
+pytest plugin (wiremock_pytest_plugin.py), which ensures the container is
+started exactly once even when running the full test suite with
+pytest-xdist parallelization.
 """
 import os
 import subprocess
@@ -162,40 +171,6 @@ def _stop_wiremock() -> None:
     )
 
 
-def _is_xdist_worker(config: pytest.Config) -> bool:
-    """
-    Determines if the current process is an xdist worker.
-    
-    In pytest-xdist, worker processes have a 'workerinput' attribute
-    on the config object, while the controller process does not.
-    """
-    return hasattr(config, "workerinput")
-
-
-def pytest_configure(config: pytest.Config) -> None:
-    """
-    Pytest hook that runs during test session setup.
-    
-    Starts WireMock container only from the controller process (xdist)
-    or the single process (non-xdist). This ensures only one container
-    is started regardless of the number of worker processes.
-    """
-    if not _is_xdist_worker(config):
-        _start_wiremock()
-
-
-def pytest_unconfigure(config: pytest.Config) -> None:
-    """
-    Pytest hook that runs during test session teardown.
-    
-    Stops WireMock container only from the controller process (xdist)
-    or the single process (non-xdist). This ensures the container is
-    cleaned up after all workers have finished.
-    """
-    if not _is_xdist_worker(config):
-        _stop_wiremock()
-
-
 def get_client(test_id: str) -> ${clientClassName}:
     """
     Creates a configured client instance for wire tests.
@@ -235,6 +210,132 @@ def verify_request_count(
     result = response.json()
     requests_found = len(result.get("requests", []))
     assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
+`;
+    }
+
+    /**
+     * Generates a top-level pytest plugin that is always loaded when running tests.
+     *
+     * This plugin is responsible for starting and stopping the WireMock container
+     * exactly once per test run, including when running with pytest-xdist over
+     * the entire test suite (not just tests/wire).
+     */
+    private generatePytestPluginFile(): void {
+        const pluginContent = this.buildPytestPluginContent();
+        const pluginDirectory = RelativeFilePath.of(`src/${this.context.config.organization}`);
+        const pluginFile = new File("wiremock_pytest_plugin.py", pluginDirectory, pluginContent);
+
+        this.context.project.addRawFiles(pluginFile);
+        this.context.logger.debug("Generated wiremock_pytest_plugin.py pytest plugin for WireMock lifecycle");
+    }
+
+    /**
+     * Builds the content for the pytest plugin that manages the WireMock container lifecycle.
+     *
+     * The plugin reuses the _start_wiremock and _stop_wiremock helpers defined in
+     * tests/wire/conftest.py by loading that module dynamically from disk. This avoids
+     * having to duplicate the container management logic while still ensuring that
+     * the container is started from the pytest controller process.
+     */
+    private buildPytestPluginContent(): string {
+        return `"""
+Pytest plugin that manages the WireMock container lifecycle for wire tests.
+
+This plugin is loaded globally for the test suite and is responsible for
+starting and stopping the WireMock container exactly once per test run,
+including when running with pytest-xdist over the entire project.
+
+It delegates to the helper functions defined in tests/wire/conftest.py so
+that all container configuration lives in a single place.
+"""
+
+import importlib.util
+import os
+from types import ModuleType
+from typing import Optional
+
+import pytest
+
+
+_WIRE_CONFTEST_MODULE: Optional[ModuleType] = None
+
+
+def _load_wire_conftest() -> ModuleType:
+    """
+    Dynamically loads the tests/wire/conftest.py module so that its helpers
+    can be reused from this plugin, even though it lives under the tests/
+    tree and is not importable as a regular Python package module.
+
+    The plugin itself lives under the installed SDK package, so we walk up to the
+    project root before resolving the tests/wire path.
+    """
+    package_dir = os.path.dirname(__file__)
+    project_root = os.path.abspath(os.path.join(package_dir, os.pardir, os.pardir))
+    conftest_path = os.path.join(project_root, "tests", "wire", "conftest.py")
+
+    if not os.path.exists(conftest_path):
+        raise RuntimeError(f"WireMock conftest not found at {conftest_path}")
+
+    spec = importlib.util.spec_from_file_location("wire_tests_conftest", conftest_path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"Could not load WireMock conftest from {conftest_path}")
+
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)  # type: ignore[attr-defined]
+    return module
+
+
+def _get_wire_conftest() -> ModuleType:
+    global _WIRE_CONFTEST_MODULE
+    if _WIRE_CONFTEST_MODULE is None:
+        _WIRE_CONFTEST_MODULE = _load_wire_conftest()
+    return _WIRE_CONFTEST_MODULE
+
+
+def _is_xdist_worker(config: pytest.Config) -> bool:
+    """
+    Determines if the current process is an xdist worker.
+
+    In pytest-xdist, worker processes have a 'workerinput' attribute
+    on the config object, while the controller process does not.
+    """
+    return hasattr(config, "workerinput")
+
+
+def pytest_configure(config: pytest.Config) -> None:
+    """
+    Pytest hook that runs during test session setup.
+
+    Starts WireMock container only from the controller process (xdist)
+    or the single process (non-xdist). This ensures only one container
+    is started regardless of the number of worker processes.
+    """
+    if _is_xdist_worker(config):
+        # Workers never manage the container lifecycle.
+        return
+
+    wire_conf = _get_wire_conftest()
+    start = getattr(wire_conf, "_start_wiremock", None)
+    if start is not None:
+        start()
+
+
+def pytest_unconfigure(config: pytest.Config) -> None:
+    """
+    Pytest hook that runs during test session teardown.
+
+    Stops WireMock container only from the controller process (xdist)
+    or the single process (non-xdist). This ensures the container is
+    cleaned up after all workers have finished.
+    """
+    if _is_xdist_worker(config):
+        # Workers never manage the container lifecycle.
+        return
+
+    wire_conf = _get_wire_conftest()
+    stop = getattr(wire_conf, "_stop_wiremock", None)
+    if stop is not None:
+        stop()
 `;
     }
 
