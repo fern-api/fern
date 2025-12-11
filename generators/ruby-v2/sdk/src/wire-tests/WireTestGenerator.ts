@@ -136,7 +136,7 @@ export class WireTestGenerator {
         // File header
         lines.push("# frozen_string_literal: true");
         lines.push("");
-        lines.push('require "test_helper"');
+        lines.push('require_relative "wire_helper"');
         lines.push('require "net/http"');
         lines.push('require "json"');
         lines.push('require "uri"');
