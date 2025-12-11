@@ -1,0 +1,172 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:ConfigurableProp": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ConfigurableProp",
+                    "camelCase": {
+                        "unsafeName": "configurableProp",
+                        "safeName": "configurableProp"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "configurable_prop",
+                        "safeName": "configurable_prop"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CONFIGURABLE_PROP",
+                        "safeName": "CONFIGURABLE_PROP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ConfigurableProp",
+                        "safeName": "ConfigurableProp"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        },
+                        "wireValue": "name"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "label",
+                            "camelCase": {
+                                "unsafeName": "label",
+                                "safeName": "label"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "label",
+                                "safeName": "label"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LABEL",
+                                "safeName": "LABEL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Label",
+                                "safeName": "Label"
+                            }
+                        },
+                        "wireValue": "label"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "withLabel",
+                            "camelCase": {
+                                "unsafeName": "withLabel",
+                                "safeName": "withLabel"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "with_label",
+                                "safeName": "with_label"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "WITH_LABEL",
+                                "safeName": "WITH_LABEL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "WithLabel",
+                                "safeName": "WithLabel"
+                            }
+                        },
+                        "wireValue": "withLabel"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "BOOLEAN"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "description",
+                            "camelCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "description",
+                                "safeName": "description"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DESCRIPTION",
+                                "safeName": "DESCRIPTION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Description",
+                                "safeName": "Description"
+                            }
+                        },
+                        "wireValue": "description"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {},
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

@@ -1185,9 +1185,9 @@ public final class BuilderGenerator {
     }
 
     /**
-     * Checks if a field name starting with "with" would conflict with Jackson's fluent setter
-     * convention for another property. For example, if there's a property "label" and another
-     * property "withLabel", Jackson interprets withLabel(T) as a fluent setter for "label".
+     * Checks if a field name starting with "with" would conflict with Jackson's fluent setter convention for another
+     * property. For example, if there's a property "label" and another property "withLabel", Jackson interprets
+     * withLabel(T) as a fluent setter for "label".
      */
     private boolean hasFluentSetterConflict(String fieldName) {
         if (fieldName.length() > 4 && fieldName.startsWith("with") && Character.isUpperCase(fieldName.charAt(4))) {
