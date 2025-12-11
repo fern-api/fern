@@ -113,6 +113,16 @@
         }
       ]
     },
+    "autorelease": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "openapi": {
       "oneOf": [
         {
@@ -3766,6 +3776,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/group.GeneratorPublishMetadataSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "autorelease": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
