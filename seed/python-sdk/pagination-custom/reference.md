@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames_custom</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames_custom</a>(...) -> AsyncCustomPager[str, UsernameCursor]</code></summary>
 <dl>
 <dd>
 

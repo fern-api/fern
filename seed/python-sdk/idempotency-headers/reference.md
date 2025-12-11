@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.payment.<a href="src/seed/payment/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.payment.<a href="src/seed/payment/client.py">create</a>(...) -> AsyncHttpResponse[uuid.UUID]</code></summary>
 <dl>
 <dd>
 
@@ -82,7 +82,7 @@ client.payment.create(
 </dl>
 </details>
 
-<details><summary><code>client.payment.<a href="src/seed/payment/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.payment.<a href="src/seed/payment/client.py">delete</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
