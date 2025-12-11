@@ -228,7 +228,8 @@ function convertLogoReference(
               dark: resolveFilepath(rawLogo.dark, absoluteFilepathToDocsConfig),
               light: resolveFilepath(rawLogo.light, absoluteFilepathToDocsConfig),
               height: rawLogo.height,
-              href: rawLogo.href != null ? CjsFdrSdk.Url(rawLogo.href) : undefined
+              href: rawLogo.href != null ? CjsFdrSdk.Url(rawLogo.href) : undefined,
+              rightText: rawLogo.rightText
           }
         : undefined;
 }
