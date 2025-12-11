@@ -7,12 +7,6 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, cast
 
-from fern_python.codegen.ast.dependency.dependency import (
-    Dependency,
-    DependencyCompatibility,
-)
-from fern_python.codegen.dependency_manager import DependencyManager
-
 from fern.generator_exec import (
     BasicLicense,
     GithubOutputMode,
@@ -20,6 +14,12 @@ from fern.generator_exec import (
     LicenseId,
     PypiMetadata,
 )
+
+from fern_python.codegen.ast.dependency.dependency import (
+    Dependency,
+    DependencyCompatibility,
+)
+from fern_python.codegen.dependency_manager import DependencyManager
 
 
 @dataclass(frozen=True)
@@ -61,16 +61,6 @@ class PyProjectToml:
         self._enable_wire_tests = enable_wire_tests
         self._user_defined_toml = user_defined_toml
 
-        # When wire tests are enabled, compute the fully qualified module path
-        # for the generated pytest plugin that manages the WireMock lifecycle.
-        # The plugin is emitted into the root package, so we derive the package
-        # name from the poetry package include path.
-        self._wire_plugin_module: Optional[str] = None
-        if enable_wire_tests:
-            package_include = package.include
-            root_module = package_include.split("/")[0]
-            self._wire_plugin_module = f"{root_module}.wiremock_pytest_plugin"
-
     def write(self) -> None:
         blocks: List[PyProjectToml.Block] = [
             self._poetry_block,
@@ -80,10 +70,7 @@ class PyProjectToml:
                 python_version=self._python_version,
                 enable_wire_tests=self._enable_wire_tests,
             ),
-            PyProjectToml.PluginConfigurationBlock(
-                enable_wire_tests=self._enable_wire_tests,
-                wire_plugin_module=self._wire_plugin_module,
-            ),
+            PyProjectToml.PluginConfigurationBlock(),
             PyProjectToml.BuildSystemBlock(),
         ]
         content = f"""[project]
@@ -263,22 +250,12 @@ types-python-dateutil = "^2.9.0.20240316"
 
     @dataclass(frozen=True)
     class PluginConfigurationBlock(Block):
-        enable_wire_tests: bool = False
-        wire_plugin_module: Optional[str] = None
-
         def to_string(self) -> str:
-            addopts_line = ""
-            if self.enable_wire_tests and self.wire_plugin_module is not None:
-                # Load the generated WireMock pytest plugin for all test runs.
-                # This ensures the WireMock container lifecycle is managed from
-                # the pytest controller process, including when running with xdist.
-                addopts_line = f'addopts = "-p {self.wire_plugin_module}"\n'
-
-            return f"""
+            return """
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"
-{addopts_line}
+
 [tool.mypy]
 plugins = ["pydantic.mypy"]
 

@@ -61,7 +61,12 @@ export class WireTestSetupGenerator {
     }
 
     /**
-     * Builds the content for the docker-compose.test.yml file
+     * Builds the content for the docker-compose.test.yml file.
+     *
+     * For performance, we run a single WireMock container for the entire test run,
+     * shared across all pytest-xdist workers. The container listens on a fixed
+     * port (8080), and a top-level pytest plugin is responsible for ensuring it
+     * is started exactly once from the controller process.
      */
     private buildDockerComposeContent(): string {
         return `services:
@@ -98,7 +103,11 @@ export class WireTestSetupGenerator {
     }
 
     /**
-     * Generates an __init__.py file to make tests/wire a proper Python package
+     * Generates an __init__.py file to make tests/wire a proper Python package.
+     *
+     * This file does not manage WireMock lifecycle; that is handled by a root-level
+     * tests/conftest.py plugin so that all tests (wire and non-wire) share the same
+     * WireMock container and plugin loading follows standard pytest conventions.
      */
     private generateInitFile(): void {
         const initFile = new File("__init__.py", RelativeFilePath.of("tests/wire"), "");
@@ -120,64 +129,24 @@ Pytest configuration for wire tests.
 This module provides helpers for creating a configured client that talks to
 WireMock and for verifying requests in WireMock.
 
-The WireMock container lifecycle itself is managed by the generated
-pytest plugin (wiremock_pytest_plugin.py), which ensures the container is
-started exactly once even when running the full test suite with
-pytest-xdist parallelization.
+The WireMock container lifecycle itself is managed by a top-level pytest
+plugin (wiremock_pytest_plugin.py) so that the container is started exactly
+once per test run, even when using pytest-xdist.
 """
-import os
-import subprocess
 from typing import Any, Dict, Optional
 
-import pytest
 import requests
 
 ${clientImport}
 
 
-def _compose_file() -> str:
-    """Returns the path to the docker-compose file for WireMock."""
-    test_dir = os.path.dirname(__file__)
-    project_root = os.path.abspath(os.path.join(test_dir, "..", ".."))
-    wiremock_dir = os.path.join(project_root, "wiremock")
-    return os.path.join(wiremock_dir, "docker-compose.test.yml")
-
-
-def _start_wiremock() -> None:
-    """Starts the WireMock container using docker-compose."""
-    compose_file = _compose_file()
-    print("\\nStarting WireMock container...")
-    try:
-        subprocess.run(
-            ["docker", "compose", "-f", compose_file, "up", "-d", "--wait"],
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-        print("WireMock container is ready")
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to start WireMock: {e.stderr}")
-        raise
-
-
-def _stop_wiremock() -> None:
-    """Stops and removes the WireMock container."""
-    compose_file = _compose_file()
-    print("\\nStopping WireMock container...")
-    subprocess.run(
-        ["docker", "compose", "-f", compose_file, "down", "-v"],
-        check=False,
-        capture_output=True,
-    )
-
-
 def get_client(test_id: str) -> ${clientClassName}:
     """
     Creates a configured client instance for wire tests.
-    
+
     Args:
         test_id: Unique identifier for the test, used for request tracking.
-        
+
     Returns:
         A configured client instance with all required auth parameters.
     """
@@ -214,28 +183,28 @@ def verify_request_count(
     }
 
     /**
-     * Generates a top-level pytest plugin that is always loaded when running tests.
+     * Generates a root-level tests/conftest.py pytest plugin that is always loaded when
+     * running tests. This is the canonical way to register pytest hooks for the entire
+     * test suite and avoids any imports under the SDK's runtime source tree.
      *
-     * This plugin is responsible for starting and stopping the WireMock container
-     * exactly once per test run, including when running with pytest-xdist over
-     * the entire test suite (not just tests/wire).
+     * The plugin is responsible for starting and stopping the WireMock container exactly
+     * once per test run, including when running with pytest-xdist over the entire test
+     * suite (not just tests/wire).
      */
     private generatePytestPluginFile(): void {
         const pluginContent = this.buildPytestPluginContent();
-        const pluginDirectory = RelativeFilePath.of(`src/${this.context.config.organization}`);
-        const pluginFile = new File("wiremock_pytest_plugin.py", pluginDirectory, pluginContent);
+        const pluginFile = new File("conftest.py", RelativeFilePath.of("tests"), pluginContent);
 
         this.context.project.addRawFiles(pluginFile);
-        this.context.logger.debug("Generated wiremock_pytest_plugin.py pytest plugin for WireMock lifecycle");
+        this.context.logger.debug("Generated tests/conftest.py pytest plugin for WireMock lifecycle");
     }
 
     /**
      * Builds the content for the pytest plugin that manages the WireMock container lifecycle.
      *
-     * The plugin reuses the _start_wiremock and _stop_wiremock helpers defined in
-     * tests/wire/conftest.py by loading that module dynamically from disk. This avoids
-     * having to duplicate the container management logic while still ensuring that
-     * the container is started from the pytest controller process.
+     * The plugin is loaded via pytest_plugins declared in tests/wire/__init__.py and is
+     * responsible for starting/stopping the shared WireMock container from the pytest
+     * controller process only, so that all workers reuse a single instance.
      */
     private buildPytestPluginContent(): string {
         return `"""
@@ -245,51 +214,60 @@ This plugin is loaded globally for the test suite and is responsible for
 starting and stopping the WireMock container exactly once per test run,
 including when running with pytest-xdist over the entire project.
 
-It delegates to the helper functions defined in tests/wire/conftest.py so
-that all container configuration lives in a single place.
+It lives under tests/ (as tests/conftest.py) and is discovered automatically
+by pytest's normal test collection rules.
 """
 
-import importlib.util
 import os
-from types import ModuleType
+import subprocess
 from typing import Optional
 
 import pytest
 
 
-_WIRE_CONFTEST_MODULE: Optional[ModuleType] = None
+_STARTED: bool = False
 
 
-def _load_wire_conftest() -> ModuleType:
-    """
-    Dynamically loads the tests/wire/conftest.py module so that its helpers
-    can be reused from this plugin, even though it lives under the tests/
-    tree and is not importable as a regular Python package module.
-
-    The plugin itself lives under the installed SDK package, so we walk up to the
-    project root before resolving the tests/wire path.
-    """
-    package_dir = os.path.dirname(__file__)
-    project_root = os.path.abspath(os.path.join(package_dir, os.pardir, os.pardir))
-    conftest_path = os.path.join(project_root, "tests", "wire", "conftest.py")
-
-    if not os.path.exists(conftest_path):
-        raise RuntimeError(f"WireMock conftest not found at {conftest_path}")
-
-    spec = importlib.util.spec_from_file_location("wire_tests_conftest", conftest_path)
-    if spec is None or spec.loader is None:
-        raise RuntimeError(f"Could not load WireMock conftest from {conftest_path}")
-
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)  # type: ignore[attr-defined]
-    return module
+def _compose_file() -> str:
+    """Returns the path to the docker-compose file for WireMock."""
+    # This file lives in tests/conftest.py, so the project root is the parent of tests.
+    tests_dir = os.path.dirname(__file__)
+    project_root = os.path.abspath(os.path.join(tests_dir, ".."))
+    wiremock_dir = os.path.join(project_root, "wiremock")
+    return os.path.join(wiremock_dir, "docker-compose.test.yml")
 
 
-def _get_wire_conftest() -> ModuleType:
-    global _WIRE_CONFTEST_MODULE
-    if _WIRE_CONFTEST_MODULE is None:
-        _WIRE_CONFTEST_MODULE = _load_wire_conftest()
-    return _WIRE_CONFTEST_MODULE
+def _start_wiremock() -> None:
+    """Starts the WireMock container using docker-compose."""
+    global _STARTED
+    if _STARTED:
+        return
+
+    compose_file = _compose_file()
+    print("\\nStarting WireMock container...")
+    try:
+        subprocess.run(
+            ["docker", "compose", "-f", compose_file, "up", "-d", "--wait"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        print("WireMock container is ready")
+        _STARTED = True
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to start WireMock: {e.stderr}")
+        raise
+
+
+def _stop_wiremock() -> None:
+    """Stops and removes the WireMock container."""
+    compose_file = _compose_file()
+    print("\\nStopping WireMock container...")
+    subprocess.run(
+        ["docker", "compose", "-f", compose_file, "down", "-v"],
+        check=False,
+        capture_output=True,
+    )
 
 
 def _is_xdist_worker(config: pytest.Config) -> bool:
@@ -314,10 +292,7 @@ def pytest_configure(config: pytest.Config) -> None:
         # Workers never manage the container lifecycle.
         return
 
-    wire_conf = _get_wire_conftest()
-    start = getattr(wire_conf, "_start_wiremock", None)
-    if start is not None:
-        start()
+    _start_wiremock()
 
 
 def pytest_unconfigure(config: pytest.Config) -> None:
@@ -332,10 +307,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         # Workers never manage the container lifecycle.
         return
 
-    wire_conf = _get_wire_conftest()
-    stop = getattr(wire_conf, "_stop_wiremock", None)
-    if stop is not None:
-        stop()
+    _stop_wiremock()
 `;
     }
 
