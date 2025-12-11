@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.45.4
+  changelogEntry:
+    - summary: Fix offset pagination to handle None items when calculating next page offset.
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
 - version: 4.45.3
   changelogEntry:
     - summary: Add return types to reference.md method signatures for consistency with other SDK generators.

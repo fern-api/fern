@@ -1,17 +1,41 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fully propagate webhook responses (e.g., 204, 400, 500 status codes) from OpenAPI specs from IR to FDR.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.11.0
+
+- changelogEntry:
+    - summary: |
+        Adds new `right-text` field to logo configuration in docs.yml. This allows users to display custom text to the right of the logo image.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.10.0
+
+- changelogEntry:
+    - summary: |
+        Propagate webhook responses (e.g., 204, 400, 500 status codes) from OpenAPI specs to the IR. Webhook endpoints can now define expected response status codes and descriptions, which are captured in the IR for use by generators and documentation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.9.0
+
+- changelogEntry:
+    - summary: |
         Test automated CLI publishing.
       type: chore
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-10"
   version: 3.8.0-rc0
-  
+
 - changelogEntry:
     - summary: |
         Include -y flag for the upgrade for non-interactive environments.
       type: feat
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-10"
   version: 3.8.0
 
