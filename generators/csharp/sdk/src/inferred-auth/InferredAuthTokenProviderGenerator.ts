@@ -230,7 +230,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
 
             for (const authHeader of authenticatedHeaders) {
                 const headerName = authHeader.headerName;
-                const valuePrefix = authHeader.valuePrefix ?? (headerName === "Authorization" ? "Bearer " : "");
+                const valuePrefix = authHeader.valuePrefix ?? "";
                 const accessorChain = this.buildResponsePropertyAccessor("tokenResponse", authHeader.responseProperty);
 
                 if (valuePrefix !== "") {

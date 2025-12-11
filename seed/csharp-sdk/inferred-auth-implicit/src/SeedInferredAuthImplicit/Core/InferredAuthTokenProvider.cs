@@ -51,7 +51,7 @@ public partial class InferredAuthTokenProvider
                 )
                 .ConfigureAwait(false);
             _cachedHeaders = new Dictionary<string, string>();
-            _cachedHeaders["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
+            _cachedHeaders["Authorization"] = tokenResponse.AccessToken;
             _expiresAt = DateTime
                 .UtcNow.AddSeconds(tokenResponse.ExpiresIn)
                 .AddMinutes(-BufferInMinutes);

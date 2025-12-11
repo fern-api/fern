@@ -431,6 +431,10 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
         const tokenEndpoint = this.findTokenEndpoint();
         if (tokenEndpoint == null) {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: "Could not find token endpoint for inferred auth. Token endpoint should have auth: false."
+            });
             return args;
         }
 
@@ -466,6 +470,11 @@ export class EndpointSnippetGenerator extends WithGeneration {
                     }
                 }
             }
+        } else {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message: `Token endpoint request type "${tokenEndpoint.request.type}" is not supported for inferred auth. Expected "inlined" request.`
+            });
         }
 
         return args;
@@ -518,22 +527,12 @@ export class EndpointSnippetGenerator extends WithGeneration {
             values: { type: "inferred" }
         });
 
-        // If we didn't find any credentials from the token endpoint, use default placeholder values
         if (args.length === 0) {
-            return [
-                {
-                    name: "xApiKey",
-                    assignment: this.csharp.Literal.string("X-Api-Key")
-                },
-                {
-                    name: "clientId",
-                    assignment: this.csharp.Literal.string("client_id")
-                },
-                {
-                    name: "clientSecret",
-                    assignment: this.csharp.Literal.string("client_secret")
-                }
-            ];
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message:
+                    "Could not infer auth credentials from token endpoint. The token endpoint may not be properly defined in the API spec."
+            });
         }
 
         return args;

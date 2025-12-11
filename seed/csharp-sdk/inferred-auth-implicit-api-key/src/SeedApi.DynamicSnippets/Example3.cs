@@ -1,12 +1,11 @@
-using SeedInferredAuthImplicit;
+using SeedInferredAuthImplicitApiKey;
 
 namespace Usage;
 
-public class Example4
+public class Example3
 {
     public async Task Do() {
-        var client = new SeedInferredAuthImplicitClient(
-            apiKey: "X-Api-Key",
+        var client = new SeedInferredAuthImplicitApiKeyClient(
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }
