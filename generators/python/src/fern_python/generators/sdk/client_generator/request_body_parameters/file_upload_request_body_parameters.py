@@ -195,7 +195,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                                 write_file_property(writer, property_as_union.value)
                                 writer.write("} ")
                                 writer.write_line(
-                                    f"if {property_as_union.value.get_as_union().key.wire_value} is not None "
+                                    f"if {self._get_file_property_name(property_as_union.value)} is not None "
                                 )
                                 writer.write_line("else {}")
                             writer.write_line("),")
