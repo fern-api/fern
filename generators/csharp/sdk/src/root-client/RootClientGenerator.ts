@@ -360,7 +360,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         innerWriter.writeNode(
                             this.csharp.codeblock((writer) => {
                                 writer.writeLine(
-                                    `clientOptions.Headers["Authorization"] = new Func<ValueTask<string>>(async () =>`
+                                    `clientOptions.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>`
                                 );
                                 writer.writeLine(`{`);
                                 writer.writeLine(

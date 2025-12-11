@@ -1,4 +1,5 @@
 using OneOf;
+using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace <%= namespace%>;
 
@@ -6,29 +7,29 @@ internal sealed class HeaderValue(
     OneOf<
         string,
         Func<string>,
-        Func<ValueTask<string>>,
-        Func<Task<string>>
+        Func<global::System.Threading.Tasks.ValueTask<string>>,
+        Func<SystemTask<string>>
     > value
 )
     : OneOfBase<
         string,
         Func<string>,
-        Func<ValueTask<string>>,
-        Func<Task<string>>
+        Func<global::System.Threading.Tasks.ValueTask<string>>,
+        Func<SystemTask<string>>
     >(value)
 {
     public static implicit operator HeaderValue(string value) => new(value);
     public static implicit operator HeaderValue(Func<string> value) => new(value);
-    public static implicit operator HeaderValue(Func<ValueTask<string>> value) => new(value);
-    public static implicit operator HeaderValue(Func<Task<string>> value) => new(value);
+    public static implicit operator HeaderValue(Func<global::System.Threading.Tasks.ValueTask<string>> value) => new(value);
+    public static implicit operator HeaderValue(Func<SystemTask<string>> value) => new(value);
 
-    internal ValueTask<string> ResolveAsync()
+    internal global::System.Threading.Tasks.ValueTask<string> ResolveAsync()
     {
         return Match(
-            str => new ValueTask<string>(str),
-            syncFunc => new ValueTask<string>(syncFunc()),
+            str => new global::System.Threading.Tasks.ValueTask<string>(str),
+            syncFunc => new global::System.Threading.Tasks.ValueTask<string>(syncFunc()),
             valueTaskFunc => valueTaskFunc(),
-            taskFunc => new ValueTask<string>(taskFunc())
+            taskFunc => new global::System.Threading.Tasks.ValueTask<string>(taskFunc())
         );
     }
 }
