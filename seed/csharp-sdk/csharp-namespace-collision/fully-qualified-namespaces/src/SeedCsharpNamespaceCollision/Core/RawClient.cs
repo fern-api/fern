@@ -43,7 +43,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         var timeout = request.Options?.Timeout ?? Options.Timeout;
         cts.CancelAfter(timeout);
 
-        var httpRequest = CreateHttpRequest(request);
+        var httpRequest = await CreateHttpRequestAsync(request).ConfigureAwait(false);
         // Send the request.
         return await SendWithRetriesAsync(httpRequest, request.Options, cts.Token)
             .ConfigureAwait(false);
@@ -248,7 +248,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(BaseRequest request)
+    internal async Task<HttpRequestMessage> CreateHttpRequestAsync(BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url)
@@ -256,10 +256,10 @@ internal partial class RawClient(ClientOptions clientOptions)
             Content = request.CreateContent(),
         };
         var mergedHeaders = new Dictionary<string, List<string>>();
-        MergeHeaders(mergedHeaders, Options.Headers);
+        await MergeHeadersAsync(mergedHeaders, Options.Headers).ConfigureAwait(false);
         MergeAdditionalHeaders(mergedHeaders, Options.AdditionalHeaders);
-        MergeHeaders(mergedHeaders, request.Headers);
-        MergeHeaders(mergedHeaders, request.Options?.Headers);
+        await MergeHeadersAsync(mergedHeaders, request.Headers).ConfigureAwait(false);
+        await MergeHeadersAsync(mergedHeaders, request.Options?.Headers).ConfigureAwait(false);
 
         MergeAdditionalHeaders(mergedHeaders, request.Options?.AdditionalHeaders ?? []);
         SetHeaders(httpRequest, mergedHeaders);
@@ -362,7 +362,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return result;
     }
 
-    private static void MergeHeaders(
+    private static async SystemTask MergeHeadersAsync(
         Dictionary<string, List<string>> mergedHeaders,
         Headers? headers
     )
@@ -374,8 +374,8 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         foreach (var header in headers)
         {
-            var value = header.Value?.Match(str => str, func => func.Invoke());
-            if (value != null)
+            var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+            if (value is not null)
             {
                 mergedHeaders[header.Key] = [value];
             }

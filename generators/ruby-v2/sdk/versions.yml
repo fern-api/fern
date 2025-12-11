@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc66
+  createdAt: "2025-12-11"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix union type matching for Hash and Array type wrappers. The `type_matches?` method now
+        correctly handles `Internal::Types::Hash` and `Internal::Types::Array` instances by checking
+        if the value is a `::Hash` or `::Array` respectively, instead of using `is_a?` directly on
+        the type wrapper classes.
+  irVersion: 61
+
 - version: 1.0.0-rc65
   createdAt: "2025-12-11"
   changelogEntry:

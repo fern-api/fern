@@ -1,0 +1,10 @@
+instances:
+  - url: test.docs.buildwithfern.com
+
+title: Human Examples Preserved Test
+
+experimental:
+  ai-examples: true
+
+navigation:
+  - api: API Reference

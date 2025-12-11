@@ -27,7 +27,7 @@ public class QueryParameterTests
     }
 
     [Test]
-    public void CreateRequest_QueryParametersEscaping()
+    public async SystemTask CreateRequest_QueryParametersEscaping()
     {
         _server
             .Given(WireMockRequest.Create().WithPath("/test").WithParam("foo", "bar").UsingGet())
@@ -47,7 +47,8 @@ public class QueryParameterTests
             Options = new RequestOptions(),
         };
 
-        var url = _rawClient.CreateHttpRequest(request).RequestUri!.AbsoluteUri;
+        var httpRequest = await _rawClient.CreateHttpRequestAsync(request).ConfigureAwait(false);
+        var url = httpRequest.RequestUri!.AbsoluteUri;
 
         Assert.That(url, Does.Contain("sample=value"));
         Assert.That(url, Does.Contain("email=bob%2Btest%40example.com"));

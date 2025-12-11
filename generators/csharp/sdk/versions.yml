@@ -11,7 +11,18 @@
         * Cache the headers and refresh them when expired (with a 2-minute buffer)
         * Automatically set the authenticated request headers on all API calls
       type: feat
-  createdAt: "2025-12-10"
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 2.11.3
+  changelogEntry:
+    - summary: |
+        Remove blocking `.Result` calls on async tasks in generated code. Header values now support
+        async resolution via `Func<ValueTask<string>>` and `Func<Task<string>>`, and the `RawClient`
+        uses async methods (`CreateHttpRequestAsync`, `MergeHeadersAsync`) to resolve headers without
+        blocking. This improves performance and prevents potential deadlocks in async contexts.
+      type: fix
+  createdAt: "2025-12-11"
   irVersion: 61
 
 - version: 2.11.2

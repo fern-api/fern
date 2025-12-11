@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v62.3.0] - 2025-12-11
+- Feature: Add parameters and values to dynamic IR `InferredAuth` to support dynamic snippet generation for inferred auth
+
 ## [v62.2.0] - 2025-12-10
 - Fix: Propogate webhook responses from OpenAPI to IR
 
