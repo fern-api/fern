@@ -7,6 +7,12 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, cast
 
+from fern_python.codegen.ast.dependency.dependency import (
+    Dependency,
+    DependencyCompatibility,
+)
+from fern_python.codegen.dependency_manager import DependencyManager
+
 from fern.generator_exec import (
     BasicLicense,
     GithubOutputMode,
@@ -14,12 +20,6 @@ from fern.generator_exec import (
     LicenseId,
     PypiMetadata,
 )
-
-from fern_python.codegen.ast.dependency.dependency import (
-    Dependency,
-    DependencyCompatibility,
-)
-from fern_python.codegen.dependency_manager import DependencyManager
 
 
 @dataclass(frozen=True)
