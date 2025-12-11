@@ -5,11 +5,18 @@ import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementR
 type AIEnhancerResolvedConfig = Required<Omit<AIExampleEnhancerConfig, "openaiApiKey">> &
     Pick<AIExampleEnhancerConfig, "openaiApiKey">;
 
+interface VenusJwtResponse {
+    token: string;
+    expiresAt: string;
+}
+
 export class LambdaExampleEnhancer {
     private config: AIEnhancerResolvedConfig;
     private context: TaskContext;
     private lambdaOrigin: string;
+    private venusOrigin: string;
     private token: FernToken;
+    private jwtPromise: Promise<string> | undefined;
 
     constructor(config: AIExampleEnhancerConfig, context: TaskContext, token: FernToken) {
         this.config = {
@@ -29,11 +36,65 @@ export class LambdaExampleEnhancer {
             );
         }
         this.lambdaOrigin = lambdaOrigin;
+
+        // Get Venus origin for JWT exchange
+        this.venusOrigin = process.env.DEFAULT_VENUS_ORIGIN ?? "https://venus.buildwithfern.com";
+
         this.token = token;
+    }
+
+    /**
+     * Fetches a JWT from Venus by exchanging the organization API token.
+     * The JWT is cached for the lifetime of this instance to avoid repeated calls.
+     */
+    private async getJwt(): Promise<string> {
+        if (this.jwtPromise == null) {
+            this.jwtPromise = this.fetchJwtFromVenus();
+        }
+        return this.jwtPromise;
+    }
+
+    /**
+     * Exchanges the organization API token for a short-lived JWT from Venus.
+     */
+    private async fetchJwtFromVenus(): Promise<string> {
+        this.context.logger.debug("Fetching JWT from Venus for AI example enhancement");
+
+        const response = await fetch(`${this.venusOrigin}/auth/jwt`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ token: this.token.value }),
+            signal: AbortSignal.timeout(10000) // 10 second timeout for JWT fetch
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Failed to fetch JWT from Venus: ${response.status} ${errorText || response.statusText}`);
+        }
+
+        const result = (await response.json()) as VenusJwtResponse;
+        this.context.logger.debug(`Successfully obtained JWT from Venus (expires at ${result.expiresAt})`);
+        return result.token;
     }
 
     async enhanceExample(request: ExampleEnhancementRequest): Promise<ExampleEnhancementResponse> {
         if (!this.config.enabled) {
+            return {
+                enhancedRequestExample: request.originalRequestExample,
+                enhancedResponseExample: request.originalResponseExample
+            };
+        }
+
+        // Fetch JWT from Venus (cached after first call)
+        let jwt: string;
+        try {
+            jwt = await this.getJwt();
+        } catch (error) {
+            this.context.logger.warn(
+                `Failed to obtain JWT from Venus: ${error}. AI example enhancement will be skipped.`
+            );
             return {
                 enhancedRequestExample: request.originalRequestExample,
                 enhancedResponseExample: request.originalResponseExample
@@ -75,7 +136,7 @@ export class LambdaExampleEnhancer {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${this.token.value}`
+                        Authorization: `Bearer ${jwt}`
                     },
                     body: JSON.stringify(requestBody),
                     signal: AbortSignal.timeout(this.config.requestTimeoutMs)
