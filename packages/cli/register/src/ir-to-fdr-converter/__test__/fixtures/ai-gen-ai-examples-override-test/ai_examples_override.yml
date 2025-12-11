@@ -1,0 +1,12 @@
+paths:
+  /products:
+    post:
+      x-fern-examples:
+        - request:
+            body: {}
+          response:
+            body:
+              title: "supersonic flux capacitor Headphones"
+              price: 79.99
+              id: a3f1c9e2-4b7d-4f8a-9c2e-1d2b3f4a5c6d
+              inStock: false

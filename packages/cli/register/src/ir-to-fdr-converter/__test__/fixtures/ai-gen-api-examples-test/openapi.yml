@@ -1,0 +1,76 @@
+openapi: 3.0.3
+info:
+  title: Products API Test
+  version: 1.0.0
+  description: A simple products API for testing example storage
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths:
+  /products:
+    post:
+      tags:
+        - products
+      summary: Create a product
+      description: Create a new product
+      operationId: createProduct
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductRequest"
+      responses:
+        "201":
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+              example:
+                title: "supersonic flux capacitor Headphones"
+                price: 79.99
+                id: a3f1c9e2-4b7d-4f8a-9c2e-1d2b3f4a5c6d
+                inStock: false
+
+components:
+  schemas:
+    CreateProductRequest:
+      type: object
+      required:
+        - title
+        - price
+      properties:
+        title:
+          type: string
+          description: Product title
+        price:
+          type: number
+          format: double
+          description: Product price
+        inStock:
+          type: boolean
+          description: Whether the product is in stock
+
+    Product:
+      type: object
+      required:
+        - id
+        - title
+        - price
+      properties:
+        id:
+          type: string
+          description: Unique product identifier
+        title:
+          type: string
+          description: Product title
+        price:
+          type: number
+          format: double
+          description: Product price
+        inStock:
+          type: boolean
+          description: Whether the product is in stock
