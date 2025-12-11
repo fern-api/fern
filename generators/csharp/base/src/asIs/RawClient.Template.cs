@@ -34,7 +34,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<global::<%= namespace%>.ApiResponse> MakeRequestAsync(
+    internal global::System.Threading.Tasks.Task<global::<%= namespace%>.ApiResponse> MakeRequestAsync(
         global::<%= namespace%>.BaseRequest request,
         CancellationToken cancellationToken = default
     )
@@ -42,7 +42,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<global::<%= namespace%>.ApiResponse> SendRequestAsync(
+    internal async global::System.Threading.Tasks.Task<global::<%= namespace%>.ApiResponse> SendRequestAsync(
         global::<%= namespace%>.BaseRequest request,
         CancellationToken cancellationToken = default
     )
@@ -58,7 +58,7 @@ internal partial class RawClient(ClientOptions clientOptions)
             .ConfigureAwait(false);
     }
 
-    internal async Task<global::<%= namespace%>.ApiResponse> SendRequestAsync(
+    internal async global::System.Threading.Tasks.Task<global::<%= namespace%>.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
@@ -73,7 +73,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return await SendWithRetriesAsync(request, options, cts.Token).ConfigureAwait(false);
     }
 
-    private static async Task<HttpRequestMessage> CloneRequestAsync(HttpRequestMessage request)
+    private static async global::System.Threading.Tasks.Task<HttpRequestMessage> CloneRequestAsync(HttpRequestMessage request)
     {
         var clonedRequest = new HttpRequestMessage(request.Method, request.RequestUri);
         clonedRequest.Version = request.Version;
@@ -124,7 +124,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<global::<%= namespace%>.ApiResponse> SendWithRetriesAsync(
+    private async global::System.Threading.Tasks.Task<global::<%= namespace%>.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -246,7 +246,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal async Task<HttpRequestMessage> CreateHttpRequestAsync(global::<%= namespace%>.BaseRequest request)
+    internal async global::System.Threading.Tasks.Task<HttpRequestMessage> CreateHttpRequestAsync(global::<%= namespace%>.BaseRequest request)
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -362,7 +362,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return result;
     }
 
-    private static async Task MergeHeadersAsync(
+    private static async SystemTask MergeHeadersAsync(
         Dictionary<string, List<string>> mergedHeaders,
         Headers? headers
     )
