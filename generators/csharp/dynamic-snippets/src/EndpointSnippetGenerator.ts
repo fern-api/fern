@@ -429,64 +429,42 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): NamedArgument[] {
         const args: NamedArgument[] = [];
 
-        // Search for the token endpoint by looking for endpoints with auth:false and token-related names
-        for (const endpoint of Object.values(this.context.ir.endpoints)) {
-            // Skip endpoints that require auth
-            if (endpoint.auth != null) {
-                continue;
+        const tokenEndpoint = this.findTokenEndpoint();
+        if (tokenEndpoint == null) {
+            return args;
+        }
+
+        if (tokenEndpoint.request.type === "inlined") {
+            const inlinedRequest = tokenEndpoint.request;
+
+            if (inlinedRequest.headers) {
+                for (const header of inlinedRequest.headers) {
+                    if (header.typeReference.type === "literal") {
+                        continue;
+                    }
+                    args.push({
+                        name: this.context.getParameterName(header.name.name),
+                        assignment: this.csharp.Literal.string(header.name.wireValue)
+                    });
+                }
             }
 
-            // Check if this looks like a token endpoint (contains "token" or "auth" in the name)
-            const endpointName = endpoint.declaration.name.camelCase.safeName.toLowerCase();
-            if (!endpointName.includes("token") && !endpointName.includes("auth")) {
-                continue;
-            }
-
-            // This is likely the token endpoint. Extract credential parameters from it.
-            // Collect headers (skip literals and optionals)
-            if (endpoint.request.type === "inlined") {
-                const inlinedRequest = endpoint.request;
-
-                // Add headers as credential parameters
-                if (inlinedRequest.headers) {
-                    for (const header of inlinedRequest.headers) {
-                        // Skip literal types
-                        if (header.typeReference.type === "literal") {
-                            continue;
-                        }
+            if (inlinedRequest.body?.type === "properties") {
+                for (const prop of inlinedRequest.body.value) {
+                    if (prop.typeReference.type === "literal") {
+                        continue;
+                    }
+                    if (prop.typeReference.type === "optional") {
+                        continue;
+                    }
+                    const paramName = this.context.getParameterName(prop.name.name);
+                    if (!args.find((arg) => arg.name === paramName)) {
                         args.push({
-                            name: this.context.getParameterName(header.name.name),
-                            assignment: this.csharp.Literal.string(header.name.wireValue)
+                            name: paramName,
+                            assignment: this.csharp.Literal.string(prop.name.wireValue)
                         });
                     }
                 }
-
-                // Add body properties as credential parameters (skip literals and optionals)
-                if (inlinedRequest.body?.type === "properties") {
-                    for (const prop of inlinedRequest.body.value) {
-                        // Skip literal types
-                        if (prop.typeReference.type === "literal") {
-                            continue;
-                        }
-                        // Skip optional types
-                        if (prop.typeReference.type === "optional") {
-                            continue;
-                        }
-                        // Skip if already added (e.g., from headers)
-                        const paramName = this.context.getParameterName(prop.name.name);
-                        if (!args.find((arg) => arg.name === paramName)) {
-                            args.push({
-                                name: paramName,
-                                assignment: this.csharp.Literal.string(prop.name.wireValue)
-                            });
-                        }
-                    }
-                }
-            }
-
-            // If we found parameters, we're done
-            if (args.length > 0) {
-                break;
             }
         }
 
@@ -494,7 +472,6 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }
 
     private apiUsesInferredAuth(): boolean {
-        // Check if any endpoint in the API uses inferred auth
         for (const endpoint of Object.values(this.context.ir.endpoints)) {
             if (endpoint.auth?.type === "inferred") {
                 return true;
@@ -503,20 +480,39 @@ export class EndpointSnippetGenerator extends WithGeneration {
         return false;
     }
 
-    private isTokenEndpoint(endpoint: FernIr.dynamic.Endpoint): boolean {
-        // Token endpoints typically:
-        // 1. Have no auth requirement (auth is null/undefined)
-        // 2. Have names containing "token" or "auth"
-        if (endpoint.auth != null) {
-            return false;
+    /**
+     * Finds the token endpoint in the API by looking for endpoints without auth requirements.
+     * Uses name-based heuristics as a fallback if multiple candidates exist.
+     */
+    private findTokenEndpoint(): FernIr.dynamic.Endpoint | undefined {
+        const hasInferredAuth = this.apiUsesInferredAuth();
+        if (!hasInferredAuth) {
+            return undefined;
         }
 
-        const endpointName = endpoint.declaration.name.camelCase.safeName.toLowerCase();
-        return endpointName.includes("token") || endpointName.includes("auth");
+        const candidateEndpoints = Object.values(this.context.ir.endpoints).filter((endpoint) => endpoint.auth == null);
+
+        if (candidateEndpoints.length === 0) {
+            return undefined;
+        }
+
+        if (candidateEndpoints.length === 1) {
+            return candidateEndpoints[0];
+        }
+
+        // Use name-based heuristics as a fallback when multiple candidates exist
+        const tokenKeywords = ["token", "auth", "oauth"];
+        for (const endpoint of candidateEndpoints) {
+            const endpointName = endpoint.declaration.name.camelCase.safeName.toLowerCase();
+            if (tokenKeywords.some((keyword) => endpointName.includes(keyword))) {
+                return endpoint;
+            }
+        }
+
+        return candidateEndpoints[0];
     }
 
     private getInferredAuthCredentials(): NamedArgument[] {
-        // Find the token endpoint and extract credential parameters from it
         const args = this.getConstructorInferredAuthArgs({
             auth: { type: "inferred" },
             values: { type: "inferred" }
