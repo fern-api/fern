@@ -35,25 +35,3 @@ jobs:
       - name: Run Tests
         run: bundle exec rake test
 
-  wire-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.3"
-          bundler-cache: true
-
-      - name: Start Wiremock
-        run: docker compose -f wiremock/docker-compose.test.yml up -d --wait
-
-      - name: Run Wire Tests
-        run: RUN_WIRE_TESTS=true bundle exec rake test
-
-      - name: Stop WireMock
-        if: hashFiles('wiremock/docker-compose.test.yml') != ''
-        run: docker compose -f wiremock/docker-compose.test.yml down

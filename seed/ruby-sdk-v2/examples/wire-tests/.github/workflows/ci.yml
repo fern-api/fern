@@ -37,6 +37,7 @@ jobs:
 
   wire-tests:
     runs-on: ubuntu-latest
+    if: hashFiles('wiremock/docker-compose.test.yml') != ''
 
     steps:
       - name: Checkout repo
@@ -55,5 +56,5 @@ jobs:
         run: RUN_WIRE_TESTS=true bundle exec rake test
 
       - name: Stop WireMock
-        if: hashFiles('wiremock/docker-compose.test.yml') != ''
         run: docker compose -f wiremock/docker-compose.test.yml down
+
