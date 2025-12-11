@@ -66,7 +66,7 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FdrCjsSdk.
             ),
             payload: convertWebhookPayload(webhook.payload),
             examples: webhookExamples,
-            responses: undefined
+            responses: webhook.responses?.map(convertResponse).filter(isNonNullish)
         };
     });
 }
