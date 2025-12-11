@@ -1,3 +1,12 @@
+- version: 3.24.1
+  changelogEntry:
+    - summary: |
+        Fix Jackson deserialization conflict when a property starts with `with` (e.g., `withLabel`) and
+        another property matches the suffix (e.g., `label`).
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
 - version: 3.24.0
   changelogEntry:
     - summary: |
