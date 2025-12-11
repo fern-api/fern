@@ -74,7 +74,7 @@ class OffsetPagination(Paginator):
 
     def get_step(self) -> str:
         if self.offset.step is not None:
-            return f"len({Paginator.PAGINATION_ITEMS_VARIABLE})"
+            return f"len({Paginator.PAGINATION_ITEMS_VARIABLE} or [])"
         return "1"
 
     def get_results_property(self) -> ir_types.ResponseProperty:
