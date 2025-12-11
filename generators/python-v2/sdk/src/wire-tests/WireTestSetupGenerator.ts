@@ -62,11 +62,6 @@ export class WireTestSetupGenerator {
 
     /**
      * Builds the content for the docker-compose.test.yml file.
-     *
-     * For performance, we run a single WireMock container for the entire test run,
-     * shared across all pytest-xdist workers. The container listens on a fixed
-     * port (8080), and a top-level pytest plugin is responsible for ensuring it
-     * is started exactly once from the controller process.
      */
     private buildDockerComposeContent(): string {
         return `services:
@@ -88,11 +83,6 @@ export class WireTestSetupGenerator {
 
     /**
      * Generates a conftest.py file that exposes helpers for wire tests.
-     *
-     * The actual WireMock container lifecycle is managed by a top-level pytest
-     * plugin generated alongside this file. This ensures that the container is
-     * started exactly once even when running the full test suite with
-     * pytest-xdist parallelization.
      */
     private generateConftestFile(): void {
         const conftestContent = this.buildConftestContent();
@@ -103,11 +93,7 @@ export class WireTestSetupGenerator {
     }
 
     /**
-     * Generates an __init__.py file to make tests/wire a proper Python package.
-     *
-     * This file does not manage WireMock lifecycle; that is handled by a root-level
-     * tests/conftest.py plugin so that all tests (wire and non-wire) share the same
-     * WireMock container and plugin loading follows standard pytest conventions.
+     * Generates an __init__.py file to make tests/wire a proper Python package
      */
     private generateInitFile(): void {
         const initFile = new File("__init__.py", RelativeFilePath.of("tests/wire"), "");
