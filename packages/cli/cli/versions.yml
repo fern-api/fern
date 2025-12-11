@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for autorelease flag in generators.yml.
+        See: https://buildwithfern.com/learn/sdks/overview/autorelease#disable-autorelease      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.13.0
+
+- changelogEntry:
+    - summary: |
         Add inferred auth parameters to the dynamic IR so dynamic snippet generators can consume them.
       type: feat
   irVersion: 62
