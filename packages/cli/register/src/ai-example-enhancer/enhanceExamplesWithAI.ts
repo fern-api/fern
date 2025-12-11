@@ -276,7 +276,7 @@ export async function enhanceExamplesWithAI(
         hasLoggedInfoMessage = true;
     }
 
-    const enhancer = new LambdaExampleEnhancer(config, context, token);
+    const enhancer = new LambdaExampleEnhancer(config, context, token, organizationId);
     const circuitBreaker = new CircuitBreaker();
 
     let openApiSpec: string | undefined;

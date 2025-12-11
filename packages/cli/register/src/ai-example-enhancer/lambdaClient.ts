@@ -17,8 +17,9 @@ export class LambdaExampleEnhancer {
     private venusOrigin: string;
     private token: FernToken;
     private jwtPromise: Promise<string> | undefined;
+    private organizationId: string;
 
-    constructor(config: AIExampleEnhancerConfig, context: TaskContext, token: FernToken) {
+    constructor(config: AIExampleEnhancerConfig, context: TaskContext, token: FernToken, organizationId: string) {
         this.config = {
             enabled: config.enabled,
             openaiApiKey: config.openaiApiKey,
@@ -41,6 +42,7 @@ export class LambdaExampleEnhancer {
         this.venusOrigin = process.env.DEFAULT_VENUS_ORIGIN ?? "https://venus.buildwithfern.com";
 
         this.token = token;
+        this.organizationId = organizationId;
     }
 
     /**
@@ -60,12 +62,20 @@ export class LambdaExampleEnhancer {
     private async fetchJwtFromVenus(): Promise<string> {
         this.context.logger.debug("Fetching JWT from Venus for AI example enhancement");
 
+        // Debug logging for token information
+        this.context.logger.debug(`Token type: ${this.token.type}`);
+        this.context.logger.debug(`Token value (first 10 chars): ${this.token.value.substring(0, 10)}...`);
+        this.context.logger.debug(`Token value starts with 'fern_': ${this.token.value.startsWith("fern_")}`);
+        this.context.logger.debug(`Venus origin: ${this.venusOrigin}`);
+        this.context.logger.debug(`Organization ID: ${this.organizationId}`);
+
         const response = await fetch(`${this.venusOrigin}/auth/jwt`, {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${this.token.value}`
             },
-            body: JSON.stringify({ token: this.token.value }),
+            body: JSON.stringify({ organizationId: this.organizationId }),
             signal: AbortSignal.timeout(10000) // 10 second timeout for JWT fetch
         });
 

@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Use Venus JWT for AI example enhancement requests. The CLI now exchanges the organization API token for a short-lived JWT from Venus before making requests to the AI example enhancement service, enabling request authentication validation.
-      type: feat
+        Use Venus JWT for AI example enhancement requests.
+      type: chore
   irVersion: 62
   createdAt: "2025-12-11"
-  version: 3.14.0
+  version: 3.13.1
 
 - changelogEntry:
     - summary: |
