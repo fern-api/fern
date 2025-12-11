@@ -18,6 +18,7 @@ class ReqWithHeadersWireTest < WireMockTestCase
     @client.req_with_headers.get_with_custom_header(
       x_test_service_header: "X-TEST-SERVICE-HEADER",
       x_test_endpoint_header: "X-TEST-ENDPOINT-HEADER",
+      body: "string",
       request_options: {
         additional_headers: {
           "X-Test-Id" => "req_with_headers.get_with_custom_header.0"

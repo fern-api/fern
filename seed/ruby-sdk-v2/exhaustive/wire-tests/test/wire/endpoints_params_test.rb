@@ -147,6 +147,7 @@ class EndpointsParamsWireTest < WireMockTestCase
 
     @client.endpoints.params.modify_with_path(
       param: "param",
+      request: "string",
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.params.modify_with_path.0"
@@ -168,6 +169,7 @@ class EndpointsParamsWireTest < WireMockTestCase
 
     @client.endpoints.params.modify_with_path(
       param: "param",
+      request: "string",
       request_options: {
         additional_headers: {
           "X-Test-Id" => "endpoints.params.modify_with_inline_path.0"

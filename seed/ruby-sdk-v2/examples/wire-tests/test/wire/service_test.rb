@@ -88,6 +88,10 @@ class ServiceWireTest < WireMockTestCase
     test_id = "service.create_big_entity.0"
 
     @client.service.create_big_entity(
+      cast_member: {
+        name: "name",
+        id: "id"
+      },
       extended_movie: {
         cast: %w[cast cast],
         id: "id",
@@ -102,8 +106,10 @@ class ServiceWireTest < WireMockTestCase
         revenue: 1_000_000
       },
       entity: {
+        type: "primitive",
         name: "name"
       },
+      metadata: {},
       common_metadata: {
         id: "id",
         data: {
@@ -111,9 +117,12 @@ class ServiceWireTest < WireMockTestCase
         },
         json_string: "jsonString"
       },
+      data: {},
       migration: {
-        name: "name"
+        name: "name",
+        status: "RUNNING"
       },
+      test: {},
       node: {
         name: "name",
         nodes: [{
