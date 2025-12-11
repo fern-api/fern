@@ -91,6 +91,10 @@ export class ExampleTypeFactory {
             case "literal":
                 return FullExample.literal(schema.value);
             case "nullable": {
+                // Explicit example of null should win over schema-level examples
+                if (example === null) {
+                    return FullExample.null({});
+                }
                 if (
                     example == null &&
                     !this.hasExample(schema.value, 0, visitedSchemaIds, options) &&
@@ -474,7 +478,9 @@ export class ExampleTypeFactory {
 
                     const propertyExampleFromParent = fullExample[property];
                     const propertySchemaExample = this.getSchemaExample(schema.schema);
-                    const exampleToUse = propertyExampleFromParent ?? propertySchemaExample;
+                    // If the property is explicitly present in the example (even if null),
+                    // treat that as authoritative; only fall back to schema example if it's absent.
+                    const exampleToUse = inExample ? propertyExampleFromParent : propertySchemaExample;
 
                     const propertyExample = this.buildExampleHelper({
                         schema: schema.schema,
