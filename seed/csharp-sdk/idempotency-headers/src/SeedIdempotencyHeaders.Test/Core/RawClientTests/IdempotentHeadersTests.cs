@@ -140,26 +140,28 @@ public class IdempotentHeadersTests
     }
 
     [Test]
-    public void CheckForIdempotencyHeadersSupport()
+    public async SystemTask CheckForIdempotencyHeadersSupport()
     {
         _server
             .Given(WireMockRequest.Create().WithPath("/test").WithParam("foo", "bar").UsingGet())
             .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
-        var request = _rawClient.CreateHttpRequest(
-            new JsonRequest()
-            {
-                BaseUrl = _baseUrl,
-                Method = HttpMethod.Get,
-                Path = "/test",
-                Query = new Dictionary<string, object>(),
-                Options = new IdempotentRequestOptions
+        var request = await _rawClient
+            .CreateHttpRequestAsync(
+                new JsonRequest()
                 {
-                    IdempotencyKey = "1234567890",
-                    IdempotencyExpiration = 3600,
-                },
-            }
-        );
+                    BaseUrl = _baseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/test",
+                    Query = new Dictionary<string, object>(),
+                    Options = new IdempotentRequestOptions
+                    {
+                        IdempotencyKey = "1234567890",
+                        IdempotencyExpiration = 3600,
+                    },
+                }
+            )
+            .ConfigureAwait(false);
 
         request.Headers.TryGetValues("IDEMPOTENCY-KEY", out var idempotencyKey);
         Assert.That(idempotencyKey?.First(), Is.EqualTo("1234567890"));

@@ -1188,3 +1188,43 @@ await client.Users.ListWithGlobalConfigAsync(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithOptionalDataAsync</a>(ListUsersOptionalDataRequest { ... }) -> Pager<User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Users.ListWithOptionalDataAsync(new ListUsersOptionalDataRequest { Page = 1 });
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ListUsersOptionalDataRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
