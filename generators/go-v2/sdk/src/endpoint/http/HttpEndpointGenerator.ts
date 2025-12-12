@@ -269,6 +269,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.write(" = response.Body");
             writer.writeNewLineIfLastLineNot();
 
+            // In per-endpoint mode, we need to build the error decoder inline so the errorCodes variable is available
+            if (this.isPerEndpointErrorCodes() && errorDecoder != null) {
+                writer.writeNode(errorDecoder);
+                writer.writeNewLineIfLastLineNot();
+            }
+
             writer.writeNode(this.buildFetcherFunction({ endpoint, subpackage, responseBodyType, hasErrorDecoder }));
             writer.writeNewLineIfLastLineNot();
 
@@ -302,13 +308,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         ];
 
         if (hasErrorDecoder) {
+            // In per-endpoint mode, we need to build the error codes inline
+            // In global mode, we reference the global ErrorCodes variable
+            const errorCodesReference = this.isPerEndpointErrorCodes()
+                ? go.codeblock("errorCodes")
+                : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference());
             callParamsFields.push({
                 name: "ErrorDecoder",
-                value: go.TypeInstantiation.reference(
-                    this.context.callNewErrorDecoder([
-                        go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference())
-                    ])
-                )
+                value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
             });
         }
 
