@@ -258,8 +258,10 @@ export async function publishDocs({
             }
         },
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
+            context.logger.debug("[DEBUG] Converting IR to FDR API..." + JSON.stringify(ir));
             let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 
+            context.logger.debug("[DEBUG] FDR API Definition:" + JSON.stringify(apiDefinition));
             const aiEnhancerConfig = getAIEnhancerConfig(withAiExamples);
             if (aiEnhancerConfig && workspace) {
                 const sources = workspace.getSources();
