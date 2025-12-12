@@ -1,6 +1,6 @@
 # Reference
 ## NullableOptional
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_user</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_user</a>(...) -> AsyncHttpResponse[UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -70,7 +70,7 @@ client.nullable_optional.get_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">create_user</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">create_user</a>(...) -> AsyncHttpResponse[UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -176,7 +176,7 @@ client.nullable_optional.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_user</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_user</a>(...) -> AsyncHttpResponse[UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -291,7 +291,7 @@ client.nullable_optional.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">list_users</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">list_users</a>(...) -> AsyncHttpResponse[typing.List[UserResponse]]</code></summary>
 <dl>
 <dd>
 
@@ -388,7 +388,7 @@ client.nullable_optional.list_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">search_users</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">search_users</a>(...) -> AsyncHttpResponse[typing.List[UserResponse]]</code></summary>
 <dl>
 <dd>
 
@@ -485,7 +485,7 @@ client.nullable_optional.search_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">create_complex_profile</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">create_complex_profile</a>(...) -> AsyncHttpResponse[ComplexProfile]</code></summary>
 <dl>
 <dd>
 
@@ -800,7 +800,7 @@ client.nullable_optional.create_complex_profile(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_complex_profile</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_complex_profile</a>(...) -> AsyncHttpResponse[ComplexProfile]</code></summary>
 <dl>
 <dd>
 
@@ -870,7 +870,7 @@ client.nullable_optional.get_complex_profile(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_complex_profile</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_complex_profile</a>(...) -> AsyncHttpResponse[ComplexProfile]</code></summary>
 <dl>
 <dd>
 
@@ -1016,7 +1016,7 @@ client.nullable_optional.update_complex_profile(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">test_deserialization</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">test_deserialization</a>(...) -> AsyncHttpResponse[DeserializationTestResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1230,7 +1230,7 @@ client.nullable_optional.test_deserialization(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">filter_by_role</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">filter_by_role</a>(...) -> AsyncHttpResponse[typing.List[UserResponse]]</code></summary>
 <dl>
 <dd>
 
@@ -1318,7 +1318,7 @@ client.nullable_optional.filter_by_role(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_notification_settings</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_notification_settings</a>(...) -> AsyncHttpResponse[typing.Optional[NotificationMethod]]</code></summary>
 <dl>
 <dd>
 
@@ -1388,7 +1388,7 @@ client.nullable_optional.get_notification_settings(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_tags</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_tags</a>(...) -> AsyncHttpResponse[typing.List[str]]</code></summary>
 <dl>
 <dd>
 
@@ -1485,7 +1485,7 @@ client.nullable_optional.update_tags(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_search_results</a>(...)</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_search_results</a>(...) -> AsyncHttpResponse[typing.Optional[typing.List[SearchResult]]]</code></summary>
 <dl>
 <dd>
 

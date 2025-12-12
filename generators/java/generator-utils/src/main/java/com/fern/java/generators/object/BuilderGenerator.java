@@ -1,6 +1,7 @@
 package com.fern.java.generators.object;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -52,6 +53,7 @@ public final class BuilderGenerator {
     private final boolean supportAdditionalProperties;
     private final boolean disableRequiredPropertyBuilderChecks;
     private final boolean builderNotNullChecks;
+    private final Set<String> allPropertyCamelCaseNames;
 
     public BuilderGenerator(
             ClassName objectClassName,
@@ -67,6 +69,9 @@ public final class BuilderGenerator {
                 .map(BuilderGenerator::maybeGetEnrichedObjectPropertyWithField)
                 .flatMap(Optional::stream)
                 .collect(Collectors.toList());
+        this.allPropertyCamelCaseNames = objectPropertyWithFields.stream()
+                .map(EnrichedObjectProperty::camelCaseKey)
+                .collect(Collectors.toSet());
         this.disableRequiredPropertyBuilderChecks = disableRequiredPropertyBuilderChecks;
         buildMethodArguments.addAll(this.objectPropertyWithFields.stream()
                 .map(enrichedObjectProperty -> enrichedObjectProperty.fieldSpec.name)
@@ -554,8 +559,12 @@ public final class BuilderGenerator {
                             enrichedObjectProperty, propertyTypeName, finalStageClassName)
                     .addModifiers(Modifier.ABSTRACT)
                     .build());
-            implSetterConsumer.accept(createOptionalNullableItemTypeNameSetter(
-                            enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+            MethodSpec.Builder optionalNullableConvenienceSetter = createOptionalNullableItemTypeNameSetter(
+                    enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride);
+            if (hasFluentSetterConflict(fieldSpec.name)) {
+                optionalNullableConvenienceSetter.addAnnotation(JsonIgnore.class);
+            }
+            implSetterConsumer.accept(optionalNullableConvenienceSetter
                     .addStatement("this.$L = $T.of($L)", fieldSpec.name, optionalNullableClassName, fieldSpec.name)
                     .addStatement("return this")
                     .build());
@@ -613,8 +622,12 @@ public final class BuilderGenerator {
                     .addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name)
                     .addStatement("return this")
                     .build());
-            implSetterConsumer.accept(createOptionalItemTypeNameSetter(
-                            enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride)
+            MethodSpec.Builder optionalConvenienceSetter = createOptionalItemTypeNameSetter(
+                    enrichedObjectProperty, propertyTypeName, finalStageClassName, implsOverride);
+            if (hasFluentSetterConflict(fieldSpec.name)) {
+                optionalConvenienceSetter.addAnnotation(JsonIgnore.class);
+            }
+            implSetterConsumer.accept(optionalConvenienceSetter
                     .addStatement("this.$L = $T.ofNullable($L)", fieldSpec.name, Optional.class, fieldSpec.name)
                     .addStatement("return this")
                     .build());
@@ -1169,6 +1182,19 @@ public final class BuilderGenerator {
 
     private ClassName getOptionalNullableClassName() {
         return ClassName.get(nullableClassName.packageName(), "OptionalNullable");
+    }
+
+    /**
+     * Checks if a field name starting with "with" would conflict with Jackson's fluent setter convention for another
+     * property. For example, if there's a property "label" and another property "withLabel", Jackson interprets
+     * withLabel(T) as a fluent setter for "label".
+     */
+    private boolean hasFluentSetterConflict(String fieldName) {
+        if (fieldName.length() > 4 && fieldName.startsWith("with") && Character.isUpperCase(fieldName.charAt(4))) {
+            String suffix = Character.toLowerCase(fieldName.charAt(4)) + fieldName.substring(5);
+            return allPropertyCamelCaseNames.contains(suffix);
+        }
+        return false;
     }
 
     private static <T> List<T> reverse(List<T> val) {

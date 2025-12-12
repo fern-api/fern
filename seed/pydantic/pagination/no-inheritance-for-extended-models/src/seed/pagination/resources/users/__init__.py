@@ -5,6 +5,7 @@
 from .list_users_extended_optional_list_response import ListUsersExtendedOptionalListResponse
 from .list_users_extended_response import ListUsersExtendedResponse
 from .list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
+from .list_users_optional_data_pagination_response import ListUsersOptionalDataPaginationResponse
 from .list_users_pagination_response import ListUsersPaginationResponse
 from .next_page import NextPage
 from .order import Order
@@ -22,6 +23,7 @@ __all__ = [
     "ListUsersExtendedOptionalListResponse",
     "ListUsersExtendedResponse",
     "ListUsersMixedTypePaginationResponse",
+    "ListUsersOptionalDataPaginationResponse",
     "ListUsersPaginationResponse",
     "NextPage",
     "Order",
