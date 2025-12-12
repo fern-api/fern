@@ -549,10 +549,12 @@ class OAuthTokenProviderGenerator:
 
     def _get_expires_at_function_declaration(self) -> AST.FunctionDeclaration:
         """
-        def _get_expires_at(expires_in_seconds: int, buffer_in_minutes: int):
+        def _get_expires_at(expires_in_seconds: typing.Optional[int], buffer_in_minutes: int):
+            # Default to 1 hour if expires_in_seconds is not provided
+            effective_expires_in = expires_in_seconds if expires_in_seconds is not None else 3600
             return (
                 dt.datetime.now()
-                + dt.timedelta(seconds=expires_in_seconds)
+                + dt.timedelta(seconds=effective_expires_in)
                 - dt.timedelta(minutes=buffer_in_minutes)
             )
         """
@@ -560,7 +562,7 @@ class OAuthTokenProviderGenerator:
         named_parameters = [
             AST.NamedFunctionParameter(
                 name="expires_in_seconds",
-                type_hint=AST.TypeHint.int_(),
+                type_hint=AST.TypeHint.optional(AST.TypeHint.int_()),
             ),
             AST.NamedFunctionParameter(
                 name="buffer_in_minutes",
@@ -569,6 +571,10 @@ class OAuthTokenProviderGenerator:
         ]
 
         def _write_get_expires_at_body(writer: AST.NodeWriter) -> None:
+            writer.write_line("# Default to 1 hour if expires_in_seconds is not provided")
+            writer.write_line(
+                "effective_expires_in = expires_in_seconds if expires_in_seconds is not None else 3600"
+            )
             writer.write_line("return (")
             with writer.indent():
                 writer.write_node(self._get_datetime_now_invocation())
@@ -576,7 +582,7 @@ class OAuthTokenProviderGenerator:
                 writer.write("+ ")
                 writer.write_node(
                     self._get_datetime_timedelta_invocation(
-                        kwargs=("seconds", AST.Expression("expires_in_seconds")),
+                        kwargs=("seconds", AST.Expression("effective_expires_in")),
                     ),
                 )
                 writer.write_line()
