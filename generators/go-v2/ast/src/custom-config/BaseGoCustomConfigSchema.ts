@@ -13,6 +13,7 @@ export const baseGoCustomConfigSchema = z.object({
     clientConstructorName: z.string().optional(),
     clientName: z.string().optional(),
     enableExplicitNull: z.boolean().optional(),
+    errorCodes: z.enum(["per-endpoint", "global"]).optional(),
     exportedClientName: z.string().optional(),
     includeLegacyClientOptions: z.boolean().optional(),
     inlinePathParameters: z.boolean().optional(),

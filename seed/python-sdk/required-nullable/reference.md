@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_foo</a>(...)</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get_foo</a>(...) -> AsyncHttpResponse[Foo]</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.get_foo(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">update_foo</a>(...)</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">update_foo</a>(...) -> AsyncHttpResponse[Foo]</code></summary>
 <dl>
 <dd>
 
