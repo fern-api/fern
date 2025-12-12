@@ -297,7 +297,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             { name: "Response", value: go.TypeInstantiation.reference(go.codeblock("&pageResponse")) }
         ];
 
-        if (hasErrorDecoder) {
+        if (hasErrorDecoder && !this.context.hasConflictingErrorStatusCodes()) {
             callParamsFields.push({
                 name: "ErrorDecoder",
                 value: go.TypeInstantiation.reference(

@@ -16,8 +16,15 @@ export class InternalFilesGenerator {
     }
 
     private generateErrorFiles(): GoFile[] {
+        // Skip generating the global error_codes.go file if there are conflicting status codes
+        // (e.g., multiple namespaced APIs with the same HTTP status codes like 400, 403, 500).
+        // In this case, per-endpoint error handling will still work correctly, and unhandled
+        // status codes will fall back to core.APIError.
+        if (this.context.hasConflictingErrorStatusCodes()) {
+            return [];
+        }
+
         const errorCodesContent = go.codeblock((writer) => {
-            // Then write the variable
             writer.write("var ErrorCodes ");
             writer.writeNode(this.context.getErrorCodesTypeReference());
             writer.write(" = ");

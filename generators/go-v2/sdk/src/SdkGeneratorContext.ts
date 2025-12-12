@@ -829,6 +829,18 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.ir.selfHosted ?? false;
     }
 
+    public hasConflictingErrorStatusCodes(): boolean {
+        const errors = Object.values(this.ir.errors ?? {});
+        const statusCodes = new Set<number>();
+        for (const errorDeclaration of errors) {
+            if (statusCodes.has(errorDeclaration.statusCode)) {
+                return true;
+            }
+            statusCodes.add(errorDeclaration.statusCode);
+        }
+        return false;
+    }
+
     private needsPaginationHelpers(): boolean {
         for (const service of Object.values(this.ir.services)) {
             for (const endpoint of service.endpoints) {

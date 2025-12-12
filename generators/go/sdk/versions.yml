@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.19.1
+  changelogEntry:
+    - summary: |
+        Fix invalid Go code generation when multiple namespaced APIs have conflicting HTTP status codes.
+        The global error_codes.go file is now skipped when there are duplicate status codes across namespaces,
+        and per-endpoint error handling continues to work correctly.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 60
+
 - version: 1.19.0
   changelogEntry:
     - summary: |

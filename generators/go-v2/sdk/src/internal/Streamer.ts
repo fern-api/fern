@@ -145,14 +145,27 @@ export class Streamer {
                 value: go.TypeInstantiation.reference(args.request)
             });
         }
-        arguments_.push({
-            name: "ErrorDecoder",
-            value: go.TypeInstantiation.reference(
-                this.context.callNewErrorDecoder([
-                    go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference())
-                ])
-            )
-        });
+        // When there are conflicting status codes across namespaces, we don't generate the global
+        // ErrorCodes variable. In that case, only use the per-endpoint error codes if available.
+        if (this.context.hasConflictingErrorStatusCodes()) {
+            if (args.errorCodes != null) {
+                arguments_.push({
+                    name: "ErrorDecoder",
+                    value: go.TypeInstantiation.reference(
+                        this.context.callNewErrorDecoder([go.TypeInstantiation.reference(args.errorCodes)])
+                    )
+                });
+            }
+        } else {
+            arguments_.push({
+                name: "ErrorDecoder",
+                value: go.TypeInstantiation.reference(
+                    this.context.callNewErrorDecoder([
+                        go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference())
+                    ])
+                )
+            });
+        }
         return go.codeblock((writer) => {
             writer.writeNode(
                 go.invokeMethod({
