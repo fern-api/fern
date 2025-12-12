@@ -463,7 +463,7 @@ async function enhancePackageExamples(
     const totalEndpointCount = countTotalEndpoints(apiDefinition);
 
     stats.total += allWorkItems.length;
-    context.logger.info(
+    context.logger.debug(
         `AI Examples Enhancement: ${allWorkItems.length} endpoints need enhancement out of ${totalEndpointCount} total endpoints (${coveredEndpoints.size} already covered)`
     );
     context.logger.debug(`Collected ${allWorkItems.length} work items across all packages`);
@@ -504,7 +504,7 @@ async function enhancePackageExamples(
     const enhancedRootPackage = applyEnhancementResults(apiDefinition.rootPackage, enhancementResults);
 
     // Log completion summary
-    context.logger.info(
+    context.logger.debug(
         `AI Examples Enhancement Complete: ${apiStats?.count || 0}/${allWorkItems.length} endpoints enhanced successfully (${totalEndpointCount} total endpoints in API)`
     );
 
@@ -620,7 +620,7 @@ function collectWorkItems(
 
     // Log filtering statistics summary
     if (context) {
-        context.logger.info(
+        context.logger.debug(
             `Endpoint Filtering Results: ${filteringStats.processed}/${filteringStats.totalEndpoints} endpoints selected for AI enhancement`
         );
         context.logger.debug(
