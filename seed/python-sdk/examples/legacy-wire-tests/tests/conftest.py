@@ -10,8 +10,8 @@ from seed import AsyncSeedExamples, SeedExamples
 @pytest.fixture
 def client() -> SeedExamples:
     return SeedExamples(
-        headers=os.getenv("ENV_HEADERS", "headers"),
         token=os.getenv("ENV_TOKEN", "token"),
+        headers=os.getenv("ENV_HEADERS", "headers"),
         base_url=os.getenv("TESTS_BASE_URL", "base_url"),
     )
 
@@ -19,7 +19,7 @@ def client() -> SeedExamples:
 @pytest.fixture
 def async_client() -> AsyncSeedExamples:
     return AsyncSeedExamples(
-        headers=os.getenv("ENV_HEADERS", "headers"),
         token=os.getenv("ENV_TOKEN", "token"),
+        headers=os.getenv("ENV_HEADERS", "headers"),
         base_url=os.getenv("TESTS_BASE_URL", "base_url"),
     )
