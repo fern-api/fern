@@ -45,15 +45,23 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         parts: Tuple[Filepath.DirectoryFilepathPart, ...] = ()
         for fern_filepath_part in fern_filepath.package_path:
+            # Skip empty name parts (can occur for root package types referenced elsewhere)
+            # Check both empty safe_name and "_" which is the sanitized form of empty string
+            safe_name = fern_filepath_part.snake_case.safe_name
+            if not safe_name or safe_name == "_":
+                continue
             parts += self._get_directories_for_fern_filepath_part(
                 fern_filepath_part=fern_filepath_part,
                 export_strategy=ExportStrategy(export_as_namespace=True),
             )
         if fern_filepath.file is not None:
-            parts += self._get_directories_for_fern_filepath_part(
-                fern_filepath_part=fern_filepath.file,
-                export_strategy=ExportStrategy(export_as_namespace=True, export_all=True),
-            )
+            file_safe_name = fern_filepath.file.snake_case.safe_name
+            # Skip empty file parts (check both empty and "_" which is sanitized empty)
+            if file_safe_name and file_safe_name != "_":
+                parts += self._get_directories_for_fern_filepath_part(
+                    fern_filepath_part=fern_filepath.file,
+                    export_strategy=ExportStrategy(export_as_namespace=True, export_all=True),
+                )
         return parts
 
     def _get_directories_for_fern_filepath_part(
