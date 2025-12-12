@@ -143,7 +143,7 @@ function addTestCommand(cli: Argv) {
 
             const taskContextFactory = new TaskContextFactory(argv["log-level"]);
             const lock = new Semaphore(argv.parallel);
-            const tests: Promise<boolean>[] = [];
+            const tests: Promise<TestGeneratorResult>[] = [];
             const scriptRunners: ScriptRunner[] = [];
 
             for (const generator of generators) {
