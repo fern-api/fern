@@ -2,7 +2,10 @@
     "name": "@fern/content-type",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:content-type/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/content-type/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

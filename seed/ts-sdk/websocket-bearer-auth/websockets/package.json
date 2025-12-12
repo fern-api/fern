@@ -2,7 +2,10 @@
     "name": "@fern/websocket-bearer-auth",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:websocket-bearer-auth/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/websocket-bearer-auth/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

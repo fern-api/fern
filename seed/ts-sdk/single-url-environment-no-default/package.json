@@ -2,7 +2,10 @@
     "name": "@fern/single-url-environment-no-default",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:single-url-environment-no-default/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/single-url-environment-no-default/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
