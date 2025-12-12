@@ -438,6 +438,31 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             })
         });
 
+        // Add DebugRequestResponse method (required by IWireMockLogger interface)
+        nestedClass.addMethod({
+            name: "DebugRequestResponse",
+            access: ast.Access.Public,
+            parameters: [
+                this.csharp.parameter({
+                    name: "logEntryModel",
+                    type: this.WireMock.LogEntryModel
+                }),
+                this.csharp.parameter({
+                    name: "isAdminRequest",
+                    type: this.Primitive.boolean
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine("if (IsDebugEnabled)");
+                writer.pushScope();
+                writer.writeLine(
+                    'Console.WriteLine("[Fern MockServer DebugRequestResponse] " + logEntryModel?.RequestMessage?.Url);'
+                );
+                writer.popScope();
+                writer.writeLine("_inner.DebugRequestResponse(logEntryModel, isAdminRequest);");
+            })
+        });
+
         class_.addNestedClass(nestedClass);
     }
 }

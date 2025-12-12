@@ -861,6 +861,14 @@ export class Extern {
             this.csharp.classReference({
                 name: "IWireMockLogger",
                 namespace: "WireMock.Logging"
+            }),
+        /**
+         * Reference to WireMock.Logging.LogEntryModel class.
+         */
+        LogEntryModel: () =>
+            this.csharp.classReference({
+                name: "LogEntryModel",
+                namespace: "WireMock.Logging"
             })
     });
 
