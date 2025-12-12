@@ -2,7 +2,10 @@
     "name": "@fern/cross-package-type-names",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:cross-package-type-names/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cross-package-type-names/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

@@ -38,6 +38,7 @@ export interface SdkCustomConfig {
     writeUnitTests: boolean | undefined;
     generateWireTests: boolean | undefined;
     noScripts: boolean | undefined;
+    skipNpmPkgFix: boolean | undefined;
     useBigInt: boolean | undefined;
     useLegacyExports: boolean | undefined;
     streamType: "wrapper" | "web";
