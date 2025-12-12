@@ -32,10 +32,10 @@ class BaseSeedExhaustive:
     environment : typing.Optional[SeedExhaustiveEnvironment]
         The environment to use for requests from the client.
 
-    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
+    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -61,8 +61,8 @@ class BaseSeedExhaustive:
         *,
         base_url: typing.Optional[str] = None,
         environment: typing.Optional[SeedExhaustiveEnvironment] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -72,8 +72,8 @@ class BaseSeedExhaustive:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
-            token=token,
             headers=headers,
+            token=token,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
@@ -192,10 +192,10 @@ class AsyncBaseSeedExhaustive:
     environment : typing.Optional[SeedExhaustiveEnvironment]
         The environment to use for requests from the client.
 
-    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
+    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -221,8 +221,8 @@ class AsyncBaseSeedExhaustive:
         *,
         base_url: typing.Optional[str] = None,
         environment: typing.Optional[SeedExhaustiveEnvironment] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -232,8 +232,8 @@ class AsyncBaseSeedExhaustive:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
-            token=token,
             headers=headers,
+            token=token,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)

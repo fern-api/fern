@@ -11,14 +11,14 @@ class BaseClientWrapper:
         self,
         *,
         x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
     ):
         self._x_random_header = x_random_header
-        self._token = token
         self._headers = headers
+        self._token = token
         self._base_url = base_url
         self._timeout = timeout
 
@@ -37,14 +37,14 @@ class BaseClientWrapper:
             headers["Authorization"] = f"Bearer {token}"
         return headers
 
+    def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
+        return self._headers
+
     def _get_token(self) -> typing.Optional[str]:
         if isinstance(self._token, str) or self._token is None:
             return self._token
         else:
             return self._token()
-
-    def get_custom_headers(self) -> typing.Optional[typing.Dict[str, str]]:
-        return self._headers
 
     def get_base_url(self) -> str:
         return self._base_url
@@ -58,14 +58,14 @@ class SyncClientWrapper(BaseClientWrapper):
         self,
         *,
         x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
         super().__init__(
-            x_random_header=x_random_header, token=token, headers=headers, base_url=base_url, timeout=timeout
+            x_random_header=x_random_header, headers=headers, token=token, base_url=base_url, timeout=timeout
         )
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
@@ -80,15 +80,15 @@ class AsyncClientWrapper(BaseClientWrapper):
         self,
         *,
         x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
         async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
         super().__init__(
-            x_random_header=x_random_header, token=token, headers=headers, base_url=base_url, timeout=timeout
+            x_random_header=x_random_header, headers=headers, token=token, base_url=base_url, timeout=timeout
         )
         self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
