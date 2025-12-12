@@ -58,7 +58,7 @@ export async function publishDocs({
     isPrivate = false,
     disableTemplates = false,
     skipUpload = false,
-    withAiExamples = false,
+    withAiExamples = true,
     targetAudiences
 }: {
     token: FernToken;
