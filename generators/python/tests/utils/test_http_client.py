@@ -152,12 +152,12 @@ def test_http_client_does_not_pass_empty_params_list() -> None:
         httpx_client=dummy_client,  # type: ignore[arg-type]
         base_timeout=lambda: None,
         base_headers=lambda: {},
-        base_url=lambda: "https://example.com/resource?after=123",
+        base_url=lambda: "https://example.com",
     )
 
-    # No params, no request_options.additional_query_parameters
+    # Use a path with query params (e.g., pagination cursor URL)
     http_client.request(
-        path="",
+        path="resource?after=123",
         method="GET",
         params=None,
         request_options=None,
@@ -166,6 +166,10 @@ def test_http_client_does_not_pass_empty_params_list() -> None:
     # We care that httpx receives params=None, not [] or {}
     assert "params" in dummy_client.last_request_kwargs
     assert dummy_client.last_request_kwargs["params"] is None
+
+    # Verify the query string in the URL is preserved
+    url = str(dummy_client.last_request_kwargs["url"])
+    assert "after=123" in url, f"Expected query param 'after=123' in URL, got: {url}"
 
 
 def test_http_client_passes_encoded_params_when_present() -> None:
@@ -202,12 +206,13 @@ async def test_async_http_client_does_not_pass_empty_params_list() -> None:
         httpx_client=dummy_client,  # type: ignore[arg-type]
         base_timeout=lambda: None,
         base_headers=lambda: {},
-        base_url=lambda: "https://example.com/resource?after=123",
+        base_url=lambda: "https://example.com",
         async_base_headers=None,
     )
 
+    # Use a path with query params (e.g., pagination cursor URL)
     await http_client.request(
-        path="",
+        path="resource?after=123",
         method="GET",
         params=None,
         request_options=None,
@@ -216,6 +221,10 @@ async def test_async_http_client_does_not_pass_empty_params_list() -> None:
     # We care that httpx receives params=None, not [] or {}
     assert "params" in dummy_client.last_request_kwargs
     assert dummy_client.last_request_kwargs["params"] is None
+
+    # Verify the query string in the URL is preserved
+    url = str(dummy_client.last_request_kwargs["url"])
+    assert "after=123" in url, f"Expected query param 'after=123' in URL, got: {url}"
 
 
 @pytest.mark.asyncio
