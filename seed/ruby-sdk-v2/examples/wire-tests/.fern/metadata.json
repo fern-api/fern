@@ -3,6 +3,7 @@
   "generatorName": "fernapi/fern-ruby-sdk-v2",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "enableWireTests": true
+    "enableWireTests": true,
+    "enablePublishWorkflow": true
   }
 }

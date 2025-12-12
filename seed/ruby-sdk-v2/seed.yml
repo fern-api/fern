@@ -53,6 +53,7 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+        enablePublishWorkflow: true
     - outputFolder: readme-config
       customConfig:
         customReadmeSections:
