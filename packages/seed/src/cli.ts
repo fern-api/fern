@@ -21,7 +21,12 @@ import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
 import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { ContainerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
-import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
+import {
+    FIXTURES,
+    LANGUAGE_SPECIFIC_FIXTURE_PREFIXES,
+    TestGeneratorResult,
+    testGenerator
+} from "./commands/test/testWorkspaceFixtures";
 import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local";
 import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
@@ -29,6 +34,7 @@ import { validateGenerator } from "./commands/validate/validateGeneratorChangelo
 import { validateVersionsYml } from "./commands/validate/validateVersionsYml";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
+import { GeneratorFailures, loadFailedTests, saveFailedTests } from "./utils/failedTests";
 
 void tryRunCli();
 
@@ -45,6 +51,7 @@ export async function tryRunCli(): Promise<void> {
         });
 
     addTestCommand(cli);
+    addRetryFailedCommand(cli);
     addTestRemoteLocalCommand(cli);
     addRunCommand(cli);
     addImgCommand(cli);
@@ -261,8 +268,210 @@ function addTestCommand(cli: Argv) {
                 await scriptRunner.stop();
             }
 
+            // Collect failed fixtures from all generators
+            const generatorFailures: GeneratorFailures[] = results.map((result) => ({
+                generator: result.generator,
+                fixtures: result.failedFixtures
+            }));
+
+            // Save failed tests to file for retry-failed command
+            saveFailedTests(generatorFailures, {
+                skipScripts: argv.skipScripts,
+                local: argv.local,
+                parallel: argv.parallel,
+                logLevel: argv["log-level"],
+                keepContainer: argv.keepContainer,
+                containerRuntime: argv.containerRuntime as string | undefined
+            });
+
             // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
-            if (results.includes(false) && !argv["allow-unexpected-failures"]) {
+            const hasUnexpectedFailures = results.some((result) => !result.success);
+            if (hasUnexpectedFailures && !argv["allow-unexpected-failures"]) {
+                process.exit(1);
+            }
+        }
+    );
+}
+
+function addRetryFailedCommand(cli: Argv) {
+    cli.command(
+        "retry-failed",
+        "Re-run the last test command with only the failed fixtures",
+        (yargs) =>
+            yargs
+                .option("parallel", {
+                    type: "number",
+                    demandOption: false,
+                    alias: "p",
+                    description: "Override the parallel setting from the last run"
+                })
+                .option("skip-scripts", {
+                    type: "boolean",
+                    demandOption: false,
+                    description: "Override the skip-scripts setting from the last run"
+                })
+                .option("local", {
+                    type: "boolean",
+                    demandOption: false,
+                    description: "Override the local setting from the last run"
+                })
+                .option("log-level", {
+                    demandOption: false,
+                    choices: LOG_LEVELS,
+                    description: "Override the log-level setting from the last run"
+                })
+                .option("keepContainer", {
+                    type: "boolean",
+                    demandOption: false,
+                    description: "Override the keepContainer setting from the last run",
+                    alias: ["keepDocker"]
+                })
+                .option("container-runtime", {
+                    type: "string",
+                    choices: ["docker", "podman"],
+                    demandOption: false,
+                    description: "Override the container-runtime setting from the last run"
+                })
+                .option("inspect", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Execute Node with --inspect flag for debugging"
+                })
+                .option("allow-unexpected-failures", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Allow unexpected test failures without failing the command"
+                }),
+        async (argv) => {
+            const failedTestsData = loadFailedTests();
+            if (failedTestsData == null) {
+                console.error("No failed tests found. Run 'seed test' first to generate a failures file.");
+                process.exit(1);
+            }
+
+            if (failedTestsData.fixtures.length === 0) {
+                console.log("No failed fixtures to retry.");
+                return;
+            }
+
+            console.log(
+                `Retrying ${failedTestsData.fixtures.length} failed fixture(s) for generator(s): ${failedTestsData.generators.join(", ")}`
+            );
+
+            const generators = await loadGeneratorWorkspaces();
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: failedTestsData.generators });
+
+            // Use saved options, but allow overrides from command line
+            const skipScripts = argv.skipScripts ?? failedTestsData.options.skipScripts;
+            const local = argv.local ?? failedTestsData.options.local;
+            const parallel = argv.parallel ?? failedTestsData.options.parallel;
+            const logLevel = (argv["log-level"] ?? failedTestsData.options.logLevel) as LogLevel;
+            const keepContainer = argv.keepContainer ?? failedTestsData.options.keepContainer;
+            const containerRuntime = (argv.containerRuntime ?? failedTestsData.options.containerRuntime) as
+                | "docker"
+                | "podman"
+                | undefined;
+
+            const taskContextFactory = new TaskContextFactory(logLevel);
+            const lock = new Semaphore(parallel);
+            const tests: Promise<TestGeneratorResult>[] = [];
+            const scriptRunners: ScriptRunner[] = [];
+
+            for (const generator of generators) {
+                if (!failedTestsData.generators.includes(generator.workspaceName)) {
+                    continue;
+                }
+
+                // Filter fixtures to only those that failed for this generator
+                const fixturesForGenerator = failedTestsData.fixtures;
+
+                let testRunner: TestRunner;
+                let scriptRunner: ScriptRunner;
+
+                if (local) {
+                    if (generator.workspaceConfig.test.local == null) {
+                        throw new Error(
+                            `Generator ${generator.workspaceName} does not have a local test configuration. Please add a 'test.local' section to your seed.yml with 'buildCommand' and 'runCommand' properties.`
+                        );
+                    }
+                    console.log(
+                        `Using local test runner for ${generator.workspaceName} with config:`,
+                        generator.workspaceConfig.test.local
+                    );
+                    scriptRunner = new LocalScriptRunner(
+                        generator,
+                        skipScripts,
+                        taskContextFactory.create("local-script-runner"),
+                        logLevel
+                    );
+                    testRunner = new LocalTestRunner({
+                        generator,
+                        lock,
+                        taskContextFactory,
+                        skipScripts,
+                        scriptRunner,
+                        keepContainer: false,
+                        inspect: argv.inspect
+                    });
+                } else {
+                    scriptRunner = new ContainerScriptRunner(
+                        generator,
+                        skipScripts,
+                        taskContextFactory.create("docker-script-runner"),
+                        logLevel,
+                        containerRuntime
+                    );
+                    testRunner = new ContainerTestRunner({
+                        generator,
+                        lock,
+                        taskContextFactory,
+                        skipScripts,
+                        keepContainer,
+                        scriptRunner,
+                        inspect: argv.inspect,
+                        runner: containerRuntime
+                    });
+                }
+
+                scriptRunners.push(scriptRunner);
+                tests.push(
+                    testGenerator({
+                        generator,
+                        runner: testRunner,
+                        fixtures: fixturesForGenerator,
+                        outputFolder: undefined,
+                        inspect: argv.inspect
+                    })
+                );
+            }
+
+            const results = await Promise.all(tests);
+
+            for (const scriptRunner of scriptRunners) {
+                await scriptRunner.stop();
+            }
+
+            // Collect failed fixtures from all generators
+            const generatorFailures: GeneratorFailures[] = results.map((result) => ({
+                generator: result.generator,
+                fixtures: result.failedFixtures
+            }));
+
+            // Save failed tests to file for next retry-failed command
+            saveFailedTests(generatorFailures, {
+                skipScripts,
+                local,
+                parallel,
+                logLevel,
+                keepContainer,
+                containerRuntime
+            });
+
+            // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
+            const hasUnexpectedFailures = results.some((result) => !result.success);
+            if (hasUnexpectedFailures && !argv["allow-unexpected-failures"]) {
                 process.exit(1);
             }
         }
