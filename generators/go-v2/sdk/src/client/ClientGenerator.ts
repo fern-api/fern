@@ -409,11 +409,8 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 // Set up the token getter function
                 w.writeLine("options.SetTokenGetter(func() (string, error) {");
                 w.indent();
-                w.writeLine('if token := oauthTokenProvider.GetToken(); token != "" {');
+                w.writeLine("return oauthTokenProvider.GetOrFetch(func() (string, int, error) {");
                 w.indent();
-                w.writeLine("return token, nil");
-                w.dedent();
-                w.writeLine("}");
 
                 // Fetch a new token from the auth endpoint
                 // Get the request type reference from the endpoint
@@ -446,11 +443,23 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeLine("})");
                 w.writeLine("if err != nil {");
                 w.indent();
-                w.writeLine('return "", err');
+                w.writeLine('return "", 0, err');
                 w.dedent();
                 w.writeLine("}");
-                w.writeLine("oauthTokenProvider.SetToken(response.AccessToken, response.ExpiresIn)");
-                w.writeLine("return response.AccessToken, nil");
+                w.writeLine("if response.AccessToken == nil {");
+                w.indent();
+                w.writeLine('return "", 0, errors.New("oauth response missing access token")');
+                w.dedent();
+                w.writeLine("}");
+                w.writeLine("expiresIn := core.DefaultExpirySeconds");
+                w.writeLine("if response.ExpiresIn != nil {");
+                w.indent();
+                w.writeLine("expiresIn = *response.ExpiresIn");
+                w.dedent();
+                w.writeLine("}");
+                w.writeLine("return *response.AccessToken, expiresIn, nil");
+                w.dedent();
+                w.writeLine("})");
                 w.dedent();
                 w.writeLine("})");
             })
