@@ -684,16 +684,17 @@ export class DocsDefinitionResolver {
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
             pageActions: this.parsedDocsConfig.pageActions,
-            theme:
-                this.parsedDocsConfig.theme != null
-                    ? {
-                          sidebar: this.parsedDocsConfig.theme.sidebar,
-                          body: this.parsedDocsConfig.theme.body,
-                          tabs: this.parsedDocsConfig.theme.tabs,
-                          "page-actions": this.parsedDocsConfig.theme.pageActions,
-                          footerNav: this.parsedDocsConfig.theme.footerNav
-                      }
-                    : undefined,
+                        theme:
+                            this.parsedDocsConfig.theme != null
+                                ? {
+                                      sidebar: this.parsedDocsConfig.theme.sidebar,
+                                      body: this.parsedDocsConfig.theme.body,
+                                      tabs: this.parsedDocsConfig.theme.tabs,
+                                      "page-actions": this.parsedDocsConfig.theme.pageActions,
+                                      footerNav: this.parsedDocsConfig.theme.footerNav,
+                                      "language-switcher": undefined
+                                  }
+                                : undefined,
             // deprecated
             logo: undefined,
             logoV2: undefined,
