@@ -99,6 +99,7 @@ export async function runRemoteGenerationForDocsWorkspace({
             disableTemplates,
             skipUpload,
             withAiExamples: docsWorkspace.config.experimental?.aiExamples,
+            experimentalConfig: docsWorkspace.config.experimental,
             targetAudiences: maybeInstance.audiences
                 ? Array.isArray(maybeInstance.audiences)
                     ? maybeInstance.audiences
