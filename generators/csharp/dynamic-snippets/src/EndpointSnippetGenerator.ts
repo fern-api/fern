@@ -177,15 +177,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         const authArgs: NamedArgument[] = [];
 
         // Check if the API uses inferred auth by looking for a token endpoint
-        // The dynamic IR doesn't include global auth configuration or per-endpoint auth,
-        // so we need to infer it by looking for token endpoints
-        const usesInferredAuth = this.apiUsesInferredAuth();
-
-        if (usesInferredAuth) {
-            // For inferred auth, the client constructor always requires credentials
-            // This is because the credentials are used to obtain tokens for authenticated requests
-            authArgs.push(...this.getInferredAuthCredentials());
-        } else if (endpoint.auth != null) {
+        if (endpoint.auth != null) {
             if (snippet.auth != null) {
                 authArgs.push(...this.getConstructorAuthArgs({ auth: endpoint.auth, values: snippet.auth }));
             } else {
@@ -429,109 +421,26 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): NamedArgument[] {
         const args: NamedArgument[] = [];
 
-        const tokenEndpoint = this.findTokenEndpoint();
-        if (tokenEndpoint == null) {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: "Could not find token endpoint for inferred auth. Token endpoint should have auth: false."
-            });
-            return args;
-        }
+        // Use parameters from the IR
+        if (auth.parameters != null) {
+            for (const param of auth.parameters) {
+                const wireValue = param.name.wireValue;
+                const value = values.values?.[wireValue];
 
-        if (tokenEndpoint.request.type === "inlined") {
-            const inlinedRequest = tokenEndpoint.request;
-
-            if (inlinedRequest.headers) {
-                for (const header of inlinedRequest.headers) {
-                    if (header.typeReference.type === "literal") {
-                        continue;
-                    }
-                    args.push({
-                        name: this.context.getParameterName(header.name.name),
-                        assignment: this.csharp.Literal.string(header.name.wireValue)
-                    });
-                }
-            }
-
-            if (inlinedRequest.body?.type === "properties") {
-                for (const prop of inlinedRequest.body.value) {
-                    if (prop.typeReference.type === "literal") {
-                        continue;
-                    }
-                    if (prop.typeReference.type === "optional") {
-                        continue;
-                    }
-                    const paramName = this.context.getParameterName(prop.name.name);
-                    if (!args.find((arg) => arg.name === paramName)) {
-                        args.push({
-                            name: paramName,
-                            assignment: this.csharp.Literal.string(prop.name.wireValue)
-                        });
-                    }
-                }
+                args.push({
+                    name: this.context.getParameterName(param.name.name),
+                    assignment: this.context.dynamicLiteralMapper.convert({
+                        typeReference: param.typeReference,
+                        value: value,
+                        fallbackToDefault: wireValue
+                    })
+                });
             }
         } else {
             this.context.errors.add({
                 severity: Severity.Critical,
-                message: `Token endpoint request type "${tokenEndpoint.request.type}" is not supported for inferred auth. Expected "inlined" request.`
-            });
-        }
-
-        return args;
-    }
-
-    private apiUsesInferredAuth(): boolean {
-        for (const endpoint of Object.values(this.context.ir.endpoints)) {
-            if (endpoint.auth?.type === "inferred") {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Finds the token endpoint in the API by looking for endpoints without auth requirements.
-     * Uses name-based heuristics as a fallback if multiple candidates exist.
-     */
-    private findTokenEndpoint(): FernIr.dynamic.Endpoint | undefined {
-        const hasInferredAuth = this.apiUsesInferredAuth();
-        if (!hasInferredAuth) {
-            return undefined;
-        }
-
-        const candidateEndpoints = Object.values(this.context.ir.endpoints).filter((endpoint) => endpoint.auth == null);
-
-        if (candidateEndpoints.length === 0) {
-            return undefined;
-        }
-
-        if (candidateEndpoints.length === 1) {
-            return candidateEndpoints[0];
-        }
-
-        // Use name-based heuristics as a fallback when multiple candidates exist
-        const tokenKeywords = ["token", "auth", "oauth"];
-        for (const endpoint of candidateEndpoints) {
-            const endpointName = endpoint.declaration.name.camelCase.safeName.toLowerCase();
-            if (tokenKeywords.some((keyword) => endpointName.includes(keyword))) {
-                return endpoint;
-            }
-        }
-
-        return candidateEndpoints[0];
-    }
-
-    private getInferredAuthCredentials(): NamedArgument[] {
-        const args = this.getConstructorInferredAuthArgs({
-            auth: { type: "inferred" },
-            values: { type: "inferred" }
-        });
-
-        if (args.length === 0) {
-            this.context.errors.add({
-                severity: Severity.Critical,
                 message:
-                    "Could not infer auth credentials from token endpoint. The token endpoint may not be properly defined in the API spec."
+                    "Inferred auth parameters are not defined in the IR. Please ensure you're using IR version 62.3.0 or later."
             });
         }
 

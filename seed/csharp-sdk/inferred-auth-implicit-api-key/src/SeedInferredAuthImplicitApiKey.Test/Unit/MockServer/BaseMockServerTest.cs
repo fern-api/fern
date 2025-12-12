@@ -31,7 +31,7 @@ public class BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
-                    .WithHeader("X-Api-Key", "api_key")
+                    .WithHeader("X-Api-Key", "X-Api-Key")
                     .UsingPost()
             )
             .RespondWith(

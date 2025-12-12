@@ -203,6 +203,44 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                     const response = example?.response;
                     return response?.type === "ok" && response.value.type === "body";
                 });
+
+                // Update example values to match the placeholder values used in client instantiation
+                tokenUseableExamples.forEach((example) => {
+                    // Update header values in the example
+                    for (const exampleHeader of [
+                        ...(example.serviceHeaders ?? []),
+                        ...(example.endpointHeaders ?? [])
+                    ]) {
+                        const matchingHeader = tokenHttpEndpoint.headers.find(
+                            (h) => h.name.wireValue === exampleHeader.name.wireValue
+                        );
+                        if (
+                            matchingHeader &&
+                            !(
+                                matchingHeader.valueType.type === "container" &&
+                                matchingHeader.valueType.container.type === "literal"
+                            )
+                        ) {
+                            // Update the example header value to match what the client sends (wireValue)
+                            exampleHeader.value = {
+                                ...exampleHeader.value,
+                                jsonExample: matchingHeader.name.wireValue
+                            };
+                        }
+                    }
+
+                    // Update body property values in the JSON example
+                    const jsonExample = example.request?.jsonExample as Record<string, unknown> | undefined;
+                    if (jsonExample && tokenHttpEndpoint.requestBody?.type === "inlinedRequestBody") {
+                        for (const prop of tokenHttpEndpoint.requestBody.properties) {
+                            if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
+                                continue;
+                            }
+                            deepSetProperty(jsonExample, [], prop.name.name, prop.name.wireValue);
+                        }
+                    }
+                });
+
                 writer.writeNode(
                     this.mockEndpointGenerator.generateForExamples(tokenHttpEndpoint, tokenUseableExamples)
                 );
