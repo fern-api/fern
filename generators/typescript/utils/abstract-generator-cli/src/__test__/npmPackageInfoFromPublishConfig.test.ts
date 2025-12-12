@@ -35,7 +35,6 @@ describe("npmPackageInfoFromPublishConfig", () => {
                 uri: undefined,
                 token: undefined,
                 mode: undefined,
-                branch: undefined,
                 target: FernIr.PublishTarget.npm({
                     packageName: "@payabli/sdk-node",
                     version: "0.0.116",
@@ -63,7 +62,6 @@ describe("npmPackageInfoFromPublishConfig", () => {
                 uri: "https://github.com/fallback/uri",
                 token: undefined,
                 mode: undefined,
-                branch: undefined,
                 target: FernIr.PublishTarget.npm({
                     packageName: "@custom/sdk",
                     version: "1.0.0",
@@ -90,7 +88,6 @@ describe("npmPackageInfoFromPublishConfig", () => {
                 uri: undefined,
                 token: undefined,
                 mode: undefined,
-                branch: undefined,
                 target: FernIr.PublishTarget.npm({
                     packageName: "@test/sdk",
                     version: "1.0.0",
@@ -190,7 +187,6 @@ describe("npmPackageInfoFromPublishConfig", () => {
                 uri: undefined,
                 token: undefined,
                 mode: undefined,
-                branch: undefined,
                 target: FernIr.PublishTarget.pypi({
                     packageName: "test-sdk",
                     version: "1.0.0"
