@@ -25,14 +25,9 @@ export async function validateDocsWorkspaceWithoutExiting({
     logSummary?: boolean;
     excludeRules?: string[];
 }): Promise<{ hasErrors: boolean }> {
-    // Always apply env var substitution to instances config (similar to analytics settings)
-    // This is separate from the settings.substitute-env-vars option
-    workspace.config.instances = replaceEnvVariables(workspace.config.instances, {
-        onError: (e) => context.failAndThrow(e)
-    });
-
-    // Apply env var substitution to the rest of the config if settings.substitute-env-vars is enabled
+    // Apply env var substitution if settings.substitute-env-vars is enabled
     // This matches the behavior of `fern generate --docs` which throws errors for missing env vars
+    // The entire config including instances (with custom domains) goes through substitution
     if (workspace.config.settings?.substituteEnvVars) {
         workspace.config = replaceEnvVariables(workspace.config, {
             onError: (e) => context.failAndThrow(e)

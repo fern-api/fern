@@ -29,13 +29,6 @@ export async function runRemoteGenerationForDocsWorkspace({
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
 }): Promise<void> {
-    // Always apply env var substitution to instances config (similar to analytics settings)
-    // This is separate from the settings.substitute-env-vars option which controls
-    // substitution in the rest of the docs content
-    const instances = replaceEnvVariables(docsWorkspace.config.instances, {
-        onError: (e) => context.failAndThrow(e)
-    });
-
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
     // environment variable even in preview mode. Will bubble up an error if the env var isn't found.
@@ -53,6 +46,10 @@ export async function runRemoteGenerationForDocsWorkspace({
         { onError: (e) => context.failAndThrow(e) },
         { substituteAsEmpty: shouldSubstituteAsEmpty }
     );
+
+    // Get instances after env var substitution has been applied to the config
+    // This ensures the full instance object including custom domains goes through env var replacement
+    const instances = docsWorkspace.config.instances;
 
     if (instances.length === 0) {
         context.failAndThrow("No instances specified in docs.yml! Cannot register docs.");
