@@ -146,7 +146,6 @@ SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariabl
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.basicAuthEnvironmentVariables.SeedBasicAuthEnvironmentVariablesClient;
 import com.seed.basicAuthEnvironmentVariables.core.RequestOptions;
@@ -154,7 +153,7 @@ import com.seed.basicAuthEnvironmentVariables.core.RequestOptions;
 // Client level
 SeedBasicAuthEnvironmentVariablesClient client = SeedBasicAuthEnvironmentVariablesClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -162,7 +161,7 @@ client.basicAuth().postWithBasicAuth(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

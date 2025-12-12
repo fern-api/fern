@@ -158,7 +158,6 @@ SeedSimpleApiClient client = SeedSimpleApiClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.simpleApi.SeedSimpleApiClient;
 import com.seed.simpleApi.core.RequestOptions;
@@ -166,7 +165,7 @@ import com.seed.simpleApi.core.RequestOptions;
 // Client level
 SeedSimpleApiClient client = SeedSimpleApiClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -174,7 +173,7 @@ client.user().get(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

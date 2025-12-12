@@ -30,8 +30,9 @@ class GetMetadataRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->shallow = $values['shallow'] ?? null;$this->tag = $values['tag'] ?? null;$this->xApiVersion = $values['xApiVersion'];
+    ) {
+        $this->shallow = $values['shallow'] ?? null;
+        $this->tag = $values['tag'] ?? null;
+        $this->xApiVersion = $values['xApiVersion'];
     }
 }

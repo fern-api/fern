@@ -34,15 +34,17 @@ class Movie extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->id = $values['id'];$this->title = $values['title'];$this->rating = $values['rating'];
+    ) {
+        $this->id = $values['id'];
+        $this->title = $values['title'];
+        $this->rating = $values['rating'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

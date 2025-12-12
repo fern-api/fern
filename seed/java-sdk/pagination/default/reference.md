@@ -1481,3 +1481,48 @@ client.users().listWithGlobalConfig(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.users.listWithOptionalData() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.users().listWithOptionalData(
+    ListUsersOptionalDataRequest
+        .builder()
+        .page(1)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Optional<Integer>` — Defaults to first page
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

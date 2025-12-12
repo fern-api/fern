@@ -42,8 +42,7 @@ class RetryMiddleware
     public function __construct(
         callable $nextHandler,
         ?array   $options = null,
-    )
-    {
+    ) {
         $this->nextHandler = $nextHandler;
         $this->options = array_merge(self::DEFAULT_RETRY_OPTIONS, $options ?? []);
     }
@@ -99,8 +98,7 @@ class RetryMiddleware
         int                $maxRetries,
         ?ResponseInterface $response = null,
         ?Throwable         $exception = null
-    ): bool
-    {
+    ): bool {
         if ($retryAttempt >= $maxRetries) {
             return false;
         }

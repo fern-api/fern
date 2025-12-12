@@ -36,8 +36,10 @@ class ListUsersRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    )
-    {
-        $this->limit = $values['limit'] ?? null;$this->offset = $values['offset'] ?? null;$this->includeDeleted = $values['includeDeleted'] ?? null;$this->sortBy = $values['sortBy'] ?? null;
+    ) {
+        $this->limit = $values['limit'] ?? null;
+        $this->offset = $values['offset'] ?? null;
+        $this->includeDeleted = $values['includeDeleted'] ?? null;
+        $this->sortBy = $values['sortBy'] ?? null;
     }
 }

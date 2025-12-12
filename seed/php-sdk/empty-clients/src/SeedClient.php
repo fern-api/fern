@@ -2,7 +2,6 @@
 
 namespace Seed;
 
-class SeedClient 
+class SeedClient
 {
-
 }

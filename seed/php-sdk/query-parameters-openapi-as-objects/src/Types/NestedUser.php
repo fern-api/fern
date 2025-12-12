@@ -27,15 +27,16 @@ class NestedUser extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    )
-    {
-        $this->name = $values['name'] ?? null;$this->user = $values['user'] ?? null;
+    ) {
+        $this->name = $values['name'] ?? null;
+        $this->user = $values['user'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }
