@@ -42,8 +42,7 @@ class OAuthTokenProvider:
 
     def _get_expires_at(self, *, expires_in_seconds: typing.Optional[int] = None, buffer_in_minutes: int):
         # Default to 1 hour if expires_in_seconds is not provided
-        DEFAULT_EXPIRY_SECONDS = 3600
-        effective_expires_in = expires_in_seconds if expires_in_seconds is not None else DEFAULT_EXPIRY_SECONDS
+        effective_expires_in = expires_in_seconds if expires_in_seconds is not None else 3600
         return dt.datetime.now() + dt.timedelta(seconds=effective_expires_in) - dt.timedelta(minutes=buffer_in_minutes)
 
 
@@ -78,6 +77,5 @@ class AsyncOAuthTokenProvider:
 
     def _get_expires_at(self, *, expires_in_seconds: typing.Optional[int] = None, buffer_in_minutes: int):
         # Default to 1 hour if expires_in_seconds is not provided
-        DEFAULT_EXPIRY_SECONDS = 3600
-        effective_expires_in = expires_in_seconds if expires_in_seconds is not None else DEFAULT_EXPIRY_SECONDS
+        effective_expires_in = expires_in_seconds if expires_in_seconds is not None else 3600
         return dt.datetime.now() + dt.timedelta(seconds=effective_expires_in) - dt.timedelta(minutes=buffer_in_minutes)
