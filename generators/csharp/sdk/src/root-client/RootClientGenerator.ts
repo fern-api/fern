@@ -17,6 +17,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "../endpoint/http/RawClient";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { getRequestBodyProperties } from "../utils/requestBodyUtils";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
@@ -549,29 +550,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                     }
 
                                     // Collect body properties from the token endpoint
-                                    if (tokenEndpoint.requestBody != null) {
-                                        tokenEndpoint.requestBody._visit({
-                                            inlinedRequestBody: (inlinedRequestBody) => {
-                                                for (const prop of inlinedRequestBody.properties) {
-                                                    if (
-                                                        prop.valueType.type === "container" &&
-                                                        prop.valueType.container.type === "literal"
-                                                    ) {
-                                                        continue;
-                                                    }
-                                                    // Include both required and optional fields
-                                                    // Use the wire name (originalName) to match what the mock server expects
-                                                    arguments_.push(this.csharp.codeblock(`"${prop.name.wireValue}"`));
-                                                }
-                                            },
-                                            // biome-ignore-start lint/suspicious/noEmptyBlockStatements: explanation
-                                            reference: () => {},
-                                            fileUpload: () => {},
-                                            bytes: () => {},
-                                            _other: () => {}
-                                            // biome-ignore-end lint/suspicious/noEmptyBlockStatements: explanation
-                                        });
-                                    }
+                                    arguments_.push(
+                                        ...getRequestBodyProperties(this.context, tokenEndpoint.requestBody).map(
+                                            (prop) => this.csharp.codeblock(`"${prop.name.wireValue}"`)
+                                        )
+                                    );
                                 }
                             }
                         }
@@ -767,47 +750,20 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 }
 
                 // Collect body properties from the token endpoint
-                if (tokenEndpoint.requestBody != null) {
-                    tokenEndpoint.requestBody._visit({
-                        inlinedRequestBody: (inlinedRequestBody) => {
-                            for (const prop of inlinedRequestBody.properties) {
-                                // Skip literal types - they are hardcoded in the request
-                                if (
-                                    prop.valueType.type === "container" &&
-                                    prop.valueType.container.type === "literal"
-                                ) {
-                                    continue;
-                                }
-                                const typeRef = this.context.csharpTypeMapper.convert({ reference: prop.valueType });
-                                // Include both required and optional fields, avoid duplicates
-                                if (!parameters.some((p) => p.name === prop.name.name.camelCase.unsafeName)) {
-                                    parameters.push({
-                                        name: prop.name.name.camelCase.unsafeName,
-                                        docs:
-                                            prop.docs ??
-                                            `The ${prop.name.name.camelCase.unsafeName} for authentication.`,
-                                        isOptional: isOptional || typeRef.isOptional,
-                                        typeReference: prop.valueType,
-                                        type: typeRef
-                                    });
-                                }
-                            }
-                        },
-                        reference: () => {
-                            // For referenced types, we would need to resolve the type
-                            // For now, skip - most inferred auth uses inline bodies
-                        },
-                        fileUpload: () => {
-                            // File uploads are not supported for token endpoints
-                        },
-                        bytes: () => {
-                            // Bytes are not supported for token endpoints
-                        },
-                        _other: () => {
-                            // Other request body types are not supported
-                        }
-                    });
-                }
+                parameters.push(
+                    ...getRequestBodyProperties(this.context, tokenEndpoint.requestBody)
+                        .filter((prop) => !parameters.some((p) => p.name === prop.name.name.camelCase.unsafeName))
+                        .map((prop) => {
+                            const typeRef = this.context.csharpTypeMapper.convert({ reference: prop.valueType });
+                            return {
+                                name: prop.name.name.camelCase.unsafeName,
+                                docs: prop.docs ?? `The ${prop.name.name.camelCase.unsafeName} for authentication.`,
+                                isOptional: isOptional || typeRef.isOptional,
+                                typeReference: prop.valueType,
+                                type: typeRef
+                            };
+                        })
+                );
 
                 return parameters;
             } else {
@@ -888,34 +844,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         }
 
         // Collect body properties from the token endpoint
-        if (tokenEndpoint.requestBody != null) {
-            tokenEndpoint.requestBody._visit({
-                inlinedRequestBody: (inlinedRequestBody) => {
-                    for (const prop of inlinedRequestBody.properties) {
-                        // Skip literal types - they are hardcoded in the request
-                        if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
-                            continue;
-                        }
-                        // Include both required and optional fields, avoid duplicates
-                        if (!params.includes(prop.name.name.camelCase.unsafeName)) {
-                            params.push(prop.name.name.camelCase.unsafeName);
-                        }
-                    }
-                },
-                reference: () => {
-                    // Referenced types are not supported for token endpoints
-                },
-                fileUpload: () => {
-                    // File uploads are not supported for token endpoints
-                },
-                bytes: () => {
-                    // Bytes are not supported for token endpoints
-                },
-                _other: () => {
-                    // Other request body types are not supported
-                }
-            });
-        }
+        params.push(
+            ...getRequestBodyProperties(this.context, tokenEndpoint.requestBody)
+                .map((prop) => prop.name.name.camelCase.unsafeName)
+                .filter((name) => !params.includes(name))
+        );
 
         return params;
     }

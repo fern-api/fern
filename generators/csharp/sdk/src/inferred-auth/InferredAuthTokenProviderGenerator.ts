@@ -11,6 +11,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { fail } from "assert";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { getRequestBodyProperties } from "../utils/requestBodyUtils";
 
 export declare namespace InferredAuthTokenProviderGenerator {
     interface Args {
@@ -161,50 +162,25 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         }
 
         // Collect body properties from the token endpoint
-        if (this.tokenEndpoint.requestBody != null) {
-            this.tokenEndpoint.requestBody._visit({
-                inlinedRequestBody: (inlinedRequestBody) => {
-                    for (const prop of inlinedRequestBody.properties) {
-                        const fieldName = prop.name.name.camelCase.unsafeName;
-                        const typeRef = this.context.csharpTypeMapper.convert({ reference: prop.valueType });
+        getRequestBodyProperties(this.context, this.tokenEndpoint.requestBody)
+            .filter((prop) => !this.credentialFields.has(prop.name.name.camelCase.unsafeName))
+            .forEach((prop) => {
+                const fieldName = prop.name.name.camelCase.unsafeName;
+                const typeRef = this.context.csharpTypeMapper.convert({ reference: prop.valueType });
 
-                        // Skip literal types - they are hardcoded in the request
-                        if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
-                            continue;
-                        }
-
-                        // Include both required and optional fields
-                        if (!this.credentialFields.has(fieldName)) {
-                            const field = this.cls.addField({
-                                origin: this.cls.explicit(this.format.private(fieldName)),
-                                access: ast.Access.Private,
-                                type: typeRef
-                            });
-                            // Use PascalCase property name for the request object initializer
-                            const propertyName = prop.name.name.pascalCase.safeName;
-                            this.credentialFields.set(fieldName, {
-                                field,
-                                propertyName,
-                                isOptional: typeRef.isOptional
-                            });
-                        }
-                    }
-                },
-                reference: () => {
-                    // For referenced types, we would need to resolve the type
-                    // For now, skip - most inferred auth uses inline bodies
-                },
-                fileUpload: () => {
-                    // File uploads are not supported for token endpoints
-                },
-                bytes: () => {
-                    // Bytes are not supported for token endpoints
-                },
-                _other: () => {
-                    // Other request body types are not supported
-                }
+                const field = this.cls.addField({
+                    origin: this.cls.explicit(this.format.private(fieldName)),
+                    access: ast.Access.Private,
+                    type: typeRef
+                });
+                // Use PascalCase property name for the request object initializer
+                const propertyName = prop.name.name.pascalCase.safeName;
+                this.credentialFields.set(fieldName, {
+                    field,
+                    propertyName,
+                    isOptional: typeRef.isOptional
+                });
             });
-        }
 
         // Validate that we have at least one credential field
         if (this.credentialFields.size === 0) {
