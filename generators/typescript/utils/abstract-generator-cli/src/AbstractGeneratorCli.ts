@@ -11,19 +11,18 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
-import { FernIr, serialization } from "@fern-fern/ir-sdk";
+import { serialization } from "@fern-fern/ir-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     constructNpmPackage,
-    constructNpmPackageArgs,
     constructNpmPackageFromArgs,
-    getRepoUrlFromUrl,
     NpmPackage,
     PersistedTypescriptProject
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
+import { npmPackageInfoFromPublishConfig } from "./npmPackageInfoFromPublishConfig";
 import { publishPackage } from "./publishPackage";
 import { writeGenerationMetadata } from "./writeGenerationMetadata";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
@@ -302,50 +301,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             mode: ir.publishConfig?.type === "github" ? ir.publishConfig.mode : undefined
         };
     }
-}
-
-function npmPackageInfoFromPublishConfig(
-    config: FernGeneratorExec.GeneratorConfig,
-    publishConfig: FernIr.PublishingConfig | undefined,
-    isPackagePrivate: boolean
-): constructNpmPackageArgs {
-    let args = {};
-    if (publishConfig?.type === "github" || publishConfig?.type === "direct" || publishConfig?.type === "filesystem") {
-        const target = publishConfig?.type === "filesystem" ? publishConfig.publishTarget : publishConfig.target;
-        if (target?.type === "npm") {
-            args = {
-                packageName: target.packageName,
-                version: target.version,
-                repoUrl: getRepoUrl(publishConfig),
-                publishInfo: undefined,
-                licenseConfig: config.license
-            };
-        }
-    }
-    return {
-        ...args,
-        isPackagePrivate
-    };
-}
-
-function getRepoUrl(
-    publishConfig: FernIr.PublishingConfig.Github | FernIr.PublishingConfig.Direct | FernIr.PublishingConfig.Filesystem
-): string | undefined {
-    const url = publishConfig._visit<string | undefined>({
-        github: (value) => {
-            if (value.owner != null && value.repo != null) {
-                return `https://github.com/${value.owner}/${value.repo}`;
-            }
-            return value.uri;
-        },
-        direct: () => undefined,
-        filesystem: () => undefined,
-        _other: () => undefined
-    });
-    if (!url) {
-        return undefined;
-    }
-    return getRepoUrlFromUrl(url);
 }
 
 class GeneratorContextImpl implements GeneratorContext {
