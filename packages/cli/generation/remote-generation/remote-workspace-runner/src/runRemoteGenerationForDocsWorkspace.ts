@@ -29,7 +29,12 @@ export async function runRemoteGenerationForDocsWorkspace({
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
 }): Promise<void> {
-    const instances = docsWorkspace.config.instances;
+    // Always apply env var substitution to instances config (similar to analytics settings)
+    // This is separate from the settings.substitute-env-vars option which controls
+    // substitution in the rest of the docs content
+    const instances = replaceEnvVariables(docsWorkspace.config.instances, {
+        onError: (e) => context.failAndThrow(e)
+    });
 
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
