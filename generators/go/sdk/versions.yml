@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.20.0
+  changelogEntry:
+    - summary: |
+        Add `errorCodes` config option with values `per-endpoint` or `global`. The `global` mode (default)
+        generates a shared `error_codes.go` file for all errors. The `per-endpoint` mode generates error
+        handling code inline for each endpoint, which is more robust for namespaced APIs or APIs where
+        different endpoints have different error schemas for the same status code.
+      type: feat
+  createdAt: "2025-12-12"
+  irVersion: 60
+
 - version: 1.19.0
   changelogEntry:
     - summary: |

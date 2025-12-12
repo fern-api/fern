@@ -111,6 +111,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return this.generateDelegatingEndpointBody({ endpoint, signature, subpackage });
     }
 
+    private isPerEndpointErrorCodes(): boolean {
+        return this.context.customConfig.errorCodes === "per-endpoint";
+    }
+
     private getStreamingEndpointBody({
         signature,
         endpoint,
@@ -131,7 +135,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
+                    errorDecoder: this.isPerEndpointErrorCodes() ? errorDecoder : undefined,
                     rawClient: false
                 })
             );
@@ -186,7 +190,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
+                    errorDecoder: this.isPerEndpointErrorCodes() ? errorDecoder : undefined,
                     rawClient: false,
                     encodeQuery: false
                 })
@@ -464,7 +468,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
+                    errorDecoder: this.isPerEndpointErrorCodes() ? errorDecoder : undefined,
                     rawClient: true
                 })
             );
