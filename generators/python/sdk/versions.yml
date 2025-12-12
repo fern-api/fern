@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.45.7
+  changelogEntry:
+    - summary: |
+        Fix empty query params stripping existing URL query strings. When `params` and
+        `additional_query_parameters` are both empty, httpx now receives `params=None` instead
+        of `params=[]`, preserving any query parameters already present in the URL (e.g.,
+        pagination cursors like `?after=123`).
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 61
+
 - version: 4.45.6
   changelogEntry:
     - summary: Fix failing wire tests under `pytest-xdist` by using a single shared WireMock plugin.
