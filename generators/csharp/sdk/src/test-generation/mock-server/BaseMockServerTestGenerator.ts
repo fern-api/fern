@@ -283,7 +283,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             partial: false,
             access: ast.Access.Private,
             sealed: true,
-            implements_: [this.WireMock.IWireMockLogger]
+            interfaceReferences: [this.WireMock.IWireMockLogger]
         });
 
         // Add static IsDebugEnabled field
@@ -291,7 +291,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             origin: nestedClass.explicit("IsDebugEnabled"),
             access: ast.Access.Private,
             static_: true,
-            readonly_: true,
+            readonly: true,
             type: this.Primitive.boolean,
             initializer: this.csharp.codeblock(
                 '!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FERN_DEBUG"))'
@@ -302,15 +302,13 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         nestedClass.addField({
             origin: nestedClass.explicit("_inner"),
             access: ast.Access.Private,
-            readonly_: true,
+            readonly: true,
             type: this.WireMock.IWireMockLogger
         });
 
         // Add constructor
-        nestedClass.addMethod({
-            name: "FernWireMockLogger",
+        nestedClass.addConstructor({
             access: ast.Access.Public,
-            isConstructor: true,
             parameters: [
                 this.csharp.parameter({
                     name: "inner",
