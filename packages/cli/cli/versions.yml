@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for style instructions in AI example enhancement. Users can now specify custom style instructions that guide how AI-generated examples are styled, allowing for more tailored and consistent example output.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-12"
+  version: 3.15.0
+
+- changelogEntry:
+    - summary: |
         Fix `coerce-enums-to-literals: false` setting not being respected for SDK generation. Single-value enums are now correctly preserved as enum types instead of being coerced to literals.
       type: fix
   irVersion: 62
