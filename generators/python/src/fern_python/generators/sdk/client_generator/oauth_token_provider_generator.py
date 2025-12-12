@@ -550,11 +550,12 @@ class OAuthTokenProviderGenerator:
     def _get_expires_at_function_declaration(self) -> AST.FunctionDeclaration:
         """
         def _get_expires_at(expires_in_seconds: typing.Optional[int], buffer_in_minutes: int):
-            if expires_in_seconds is None:
-                return dt.datetime.max
+            # Default to 1 hour if expires_in_seconds is not provided
+            DEFAULT_EXPIRY_SECONDS = 3600
+            effective_expires_in = expires_in_seconds if expires_in_seconds is not None else DEFAULT_EXPIRY_SECONDS
             return (
                 dt.datetime.now()
-                + dt.timedelta(seconds=expires_in_seconds)
+                + dt.timedelta(seconds=effective_expires_in)
                 - dt.timedelta(minutes=buffer_in_minutes)
             )
         """
@@ -571,11 +572,11 @@ class OAuthTokenProviderGenerator:
         ]
 
         def _write_get_expires_at_body(writer: AST.NodeWriter) -> None:
-            writer.write_line("if expires_in_seconds is None:")
-            with writer.indent():
-                writer.write("return ")
-                writer.write_node(self._get_datetime_max_reference())
-                writer.write_line()
+            writer.write_line("# Default to 1 hour if expires_in_seconds is not provided")
+            writer.write_line("DEFAULT_EXPIRY_SECONDS = 3600")
+            writer.write_line(
+                "effective_expires_in = expires_in_seconds if expires_in_seconds is not None else DEFAULT_EXPIRY_SECONDS"
+            )
             writer.write_line("return (")
             with writer.indent():
                 writer.write_node(self._get_datetime_now_invocation())
@@ -583,7 +584,7 @@ class OAuthTokenProviderGenerator:
                 writer.write("+ ")
                 writer.write_node(
                     self._get_datetime_timedelta_invocation(
-                        kwargs=("seconds", AST.Expression("expires_in_seconds")),
+                        kwargs=("seconds", AST.Expression("effective_expires_in")),
                     ),
                 )
                 writer.write_line()
@@ -610,14 +611,6 @@ class OAuthTokenProviderGenerator:
             function_definition=AST.Reference(
                 import_=AST.ReferenceImport(module=AST.Module.built_in(("datetime",)), alias="dt"),
                 qualified_name_excluding_import=("datetime", "now"),
-            )
-        )
-
-    def _get_datetime_max_reference(self) -> AST.Expression:
-        return AST.Expression(
-            AST.Reference(
-                import_=AST.ReferenceImport(module=AST.Module.built_in(("datetime",)), alias="dt"),
-                qualified_name_excluding_import=("datetime", "max"),
             )
         )
 
