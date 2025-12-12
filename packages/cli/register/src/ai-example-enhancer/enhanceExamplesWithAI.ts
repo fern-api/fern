@@ -270,7 +270,7 @@ export async function enhanceExamplesWithAI(
             apiName
         );
     } catch (error) {
-        context.logger.warn(
+        context.logger.debug(
             `AI example enhancement failed with error: ${error}. Continuing with original API definition to prevent CLI crash.`
         );
         context.logger.debug(
