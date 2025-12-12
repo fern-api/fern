@@ -825,4 +825,129 @@ describe("replaceReferencedCode", () => {
 
         `);
     });
+
+    it("should NOT replace Code components inside fenced code blocks (3 backticks)", async () => {
+        const markdown = `
+Some intro text.
+
+\`\`\`tsx
+<Code src="snippets/example.js" />
+\`\`\`
+
+More content.
+`;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async () => {
+                throw new Error("Should not be called - Code inside fenced block should be ignored");
+            }
+        });
+
+        // The markdown should be unchanged - Code inside fenced blocks should not be replaced
+        expect(result).toBe(markdown);
+    });
+
+    it("should NOT replace Code components inside 4-backtick fenced code blocks", async () => {
+        const markdown = `
+Some intro text.
+
+\`\`\`\`tsx Markdown
+\`\`\`js
+<Markdown src="snippets/example-code.mdx" />
+\`\`\`
+<Code src="snippets/example-code.js" />
+\`\`\`\`
+
+More content.
+`;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async () => {
+                throw new Error("Should not be called - Code inside fenced block should be ignored");
+            }
+        });
+
+        // The markdown should be unchanged - Code inside fenced blocks should not be replaced
+        expect(result).toBe(markdown);
+    });
+
+    it("should NOT replace Code components inside 5-backtick fenced code blocks", async () => {
+        const markdown = `
+Some intro text.
+
+\`\`\`\`\`tsx Markdown
+\`\`\`js
+<Markdown src="snippets/example-code.mdx" />
+\`\`\`
+<Code src="snippets/example-code.js" />
+\`\`\`\`\`
+
+More content.
+`;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async () => {
+                throw new Error("Should not be called - Code inside fenced block should be ignored");
+            }
+        });
+
+        // The markdown should be unchanged - Code inside fenced blocks should not be replaced
+        expect(result).toBe(markdown);
+    });
+
+    it("should replace Code components outside fenced blocks but not inside", async () => {
+        const markdown = `
+<Code src="../snippets/real-code.py" />
+
+\`\`\`\`tsx Markdown
+<Code src="snippets/example-code.js" />
+\`\`\`\`
+
+<Code src="../snippets/another-real-code.ts" />
+`;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/real-code.py")) {
+                    return "print('real code')";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/another-real-code.ts")) {
+                    return "console.log('another real code')";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+\`\`\`py title={"real-code.py"}
+print('real code')
+\`\`\`
+
+
+\`\`\`\`tsx Markdown
+<Code src="snippets/example-code.js" />
+\`\`\`\`
+
+\`\`\`ts title={"another-real-code.ts"}
+console.log('another real code')
+\`\`\`
+
+`);
+    });
 });

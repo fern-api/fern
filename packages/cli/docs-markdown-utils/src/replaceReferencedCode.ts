@@ -13,6 +13,68 @@ function isUrl(src: string): boolean {
 }
 
 /**
+ * Finds all fenced code block regions in the markdown content.
+ * Returns an array of [start, end] positions for each fenced block.
+ * Handles 3+ backtick fences (```, ````, `````, etc.) and tilde fences (~~~).
+ */
+function findFencedCodeBlocks(content: string): Array<[number, number]> {
+    const blocks: Array<[number, number]> = [];
+    const lines = content.split("\n");
+    let currentPos = 0;
+    let inFence = false;
+    let fenceChar = "";
+    let fenceLength = 0;
+    let fenceStart = 0;
+
+    for (const line of lines) {
+        const trimmedLine = line.trimStart();
+
+        if (!inFence) {
+            // Check for opening fence
+            const backtickMatch = trimmedLine.match(/^(`{3,})/);
+            const tildeMatch = trimmedLine.match(/^(~{3,})/);
+
+            if (backtickMatch) {
+                inFence = true;
+                fenceChar = "`";
+                fenceLength = backtickMatch[1].length;
+                fenceStart = currentPos;
+            } else if (tildeMatch) {
+                inFence = true;
+                fenceChar = "~";
+                fenceLength = tildeMatch[1].length;
+                fenceStart = currentPos;
+            }
+        } else {
+            // Check for closing fence (must be same char and at least same length)
+            const closingPattern = new RegExp(`^${fenceChar}{${fenceLength},}\\s*$`);
+            if (closingPattern.test(trimmedLine)) {
+                blocks.push([fenceStart, currentPos + line.length]);
+                inFence = false;
+                fenceChar = "";
+                fenceLength = 0;
+            }
+        }
+
+        currentPos += line.length + 1; // +1 for newline
+    }
+
+    return blocks;
+}
+
+/**
+ * Checks if a position is inside any of the fenced code blocks.
+ */
+function isInsideFencedBlock(position: number, fencedBlocks: Array<[number, number]>): boolean {
+    for (const [start, end] of fencedBlocks) {
+        if (position >= start && position <= end) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
  * Parses a lines parameter value and extracts the specified lines from content.
  * Supports formats:
  * - Single number: "5" or "[5]" (line 5)
@@ -101,6 +163,9 @@ export async function replaceReferencedCode({
 
     const regex = /([ \t]*)<Code(?![a-zA-Z])[\s\S]*?src={?['"]([^'"]+)['"](?! \+)}?([\s\S]*?)\/>/g;
 
+    // Find all fenced code blocks to avoid replacing Code components inside them
+    const fencedBlocks = findFencedCodeBlocks(markdown);
+
     let newMarkdown = markdown;
 
     // while match is found, replace the match with the content of the referenced markdown file
@@ -112,6 +177,11 @@ export async function replaceReferencedCode({
 
         if (matchString == null || src == null) {
             throw new Error(`Failed to parse regex "${match}" in ${absolutePathToMarkdownFile}`);
+        }
+
+        // Skip Code components that are inside fenced code blocks (they're just examples, not real references)
+        if (isInsideFencedBlock(match.index, fencedBlocks)) {
+            continue;
         }
 
         try {
