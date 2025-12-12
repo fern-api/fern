@@ -1130,12 +1130,11 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   # Use always() to ensure this runs even if stages from needs are skipped.
-  # Add check back to make sure it doesn't run for failures or cancellations.
+  # Continue even if some seed runs fail so we can still commit successful changes.
   commit-seed-changes-by-push:
     if: >-
       ${{
-        always() && !cancelled() && needs.setup.outputs.update-by-push == 'true' &&
-        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+        always() && !cancelled() && needs.setup.outputs.update-by-push == 'true'
       }}
     needs:
       [
@@ -1218,14 +1217,13 @@ jobs:
           message: "Automated update of seed files"
 
   # Verify that the branch is the default branch (running for PR to main)
+  # Continue even if some seed runs fail so we can still commit successful changes.
   commit-seed-changes-by-pr:
     if: >-
       ${{
         always() && !cancelled() &&
         github.ref == 'refs/heads/main' &&
-        needs.setup.outputs.update-by-pr == 'true' &&
-        !contains(needs.*.result, 'failure') && 
-        !contains(needs.*.result, 'cancelled')
+        needs.setup.outputs.update-by-pr == 'true'
       }}
     needs:
       [
