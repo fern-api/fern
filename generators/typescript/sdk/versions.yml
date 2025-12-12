@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.39.2-rc0
+- version: 3.39.3
   changelogEntry:
-    - summary: Fix missing npmPackage information in generated package.json.
+    - summary: Fix missing information in generated package.json.
       type: fix
   createdAt: "2025-12-12"
   irVersion: 62
