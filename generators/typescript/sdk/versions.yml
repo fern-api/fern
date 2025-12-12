@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.39.3-rc0
+  changelogEntry:
+    - summary: |
+        Run `npm pkg fix` after saving package.json to disk to normalize the package.json file.
+        This is enabled by default and can be disabled by setting `skipNpmPkgFix: true` in the generator config.
+      type: feat
+  createdAt: "2025-12-12"
+  irVersion: 62
+
 - version: 3.39.2-rc0
   changelogEntry:
     - summary: Fix missing npmPackage information in generated package.json.

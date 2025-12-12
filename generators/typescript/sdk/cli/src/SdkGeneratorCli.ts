@@ -75,6 +75,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             writeUnitTests: parsed?.writeUnitTests ?? true,
             generateWireTests: parsed?.generateWireTests ?? true,
             noScripts: parsed?.noScripts ?? false,
+            skipNpmPkgFix: parsed?.skipNpmPkgFix ?? false,
             useBigInt: parsed?.useBigInt ?? false,
             useLegacyExports: parsed?.useLegacyExports ?? false,
             streamType: parsed?.streamType ?? "web",
@@ -342,6 +343,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     protected shouldTolerateRepublish(_customConfig: SdkCustomConfig): boolean {
         const customConfig = this.customConfigWithOverrides(_customConfig);
         return customConfig.tolerateRepublish;
+    }
+
+    protected shouldSkipNpmPkgFix(_customConfig: SdkCustomConfig): boolean {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
+        return customConfig.skipNpmPkgFix ?? false;
     }
 
     protected publishToJsr(_customConfig: SdkCustomConfig): boolean {
