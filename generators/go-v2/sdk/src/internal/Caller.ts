@@ -176,9 +176,7 @@ export class Caller {
                 : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference());
             arguments_.push({
                 name: "ErrorDecoder",
-                value: go.TypeInstantiation.reference(
-                    this.context.callNewErrorDecoder([errorCodesReference])
-                )
+                value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
             });
         }
         return go.TypeInstantiation.structPointer({
