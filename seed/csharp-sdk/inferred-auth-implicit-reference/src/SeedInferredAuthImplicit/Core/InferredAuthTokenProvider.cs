@@ -2,7 +2,7 @@ using SeedInferredAuthImplicit;
 
 namespace SeedInferredAuthImplicit.Core;
 
-public partial class InferredAuthTokenProvider
+internal partial class InferredAuthTokenProvider
 {
     private const double BufferInMinutes = 2;
 
@@ -20,7 +20,7 @@ public partial class InferredAuthTokenProvider
 
     private string? _scope;
 
-    public InferredAuthTokenProvider(
+    internal InferredAuthTokenProvider(
         string clientId,
         string clientSecret,
         string? scope,
@@ -33,7 +33,7 @@ public partial class InferredAuthTokenProvider
         _client = client;
     }
 
-    public async Task<IDictionary<string, string>> GetAuthHeadersAsync()
+    internal async Task<IDictionary<string, string>> GetAuthHeadersAsync()
     {
         if (_cachedHeaders == null || DateTime.UtcNow >= _expiresAt)
         {

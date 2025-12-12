@@ -56,7 +56,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         this.cls = this.csharp.class_({
             reference: this.classReference,
             partial: true,
-            access: ast.Access.Public
+            access: ast.Access.Internal
         });
 
         this.clientField = this.cls.addField({
@@ -105,7 +105,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         // Collect credential properties from the token endpoint request
         this.collectCredentialProperties();
 
-        const ctor = this.cls.addConstructor({});
+        const ctor = this.cls.addConstructor({ access: ast.Access.Internal });
 
         // Add credential fields as constructor parameters
         for (const [parameter, { field }] of this.credentialFields.entries()) {
@@ -116,7 +116,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         ctor.body.assign(this.clientField, ctor.addParameter({ name: "client", type: this.clientField.type }));
 
         this.cls.addMethod({
-            access: ast.Access.Public,
+            access: ast.Access.Internal,
             isAsync: true,
             name: this.names.methods.getAuthHeadersAsync,
             body: this.getAuthHeadersBody(),
@@ -143,7 +143,9 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         // Collect headers from the token endpoint
         for (const header of this.tokenEndpoint.headers) {
             const fieldName = header.name.name.camelCase.unsafeName;
-            const typeRef = this.context.csharpTypeMapper.convert({ reference: header.valueType });
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: header.valueType
+            });
 
             // Skip literal types - they are hardcoded in the request
             if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
@@ -158,7 +160,11 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             });
             // Use PascalCase property name for the request object initializer
             const propertyName = header.name.name.pascalCase.safeName;
-            this.credentialFields.set(fieldName, { field, propertyName, isOptional: typeRef.isOptional });
+            this.credentialFields.set(fieldName, {
+                field,
+                propertyName,
+                isOptional: typeRef.isOptional
+            });
         }
 
         // Collect body properties from the token endpoint
@@ -166,7 +172,9 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             .filter((prop) => !this.credentialFields.has(prop.name.name.camelCase.unsafeName))
             .forEach((prop) => {
                 const fieldName = prop.name.name.camelCase.unsafeName;
-                const typeRef = this.context.csharpTypeMapper.convert({ reference: prop.valueType });
+                const typeRef = this.context.csharpTypeMapper.convert({
+                    reference: prop.valueType
+                });
 
                 const field = this.cls.addField({
                     origin: this.cls.explicit(this.format.private(fieldName)),
@@ -345,7 +353,10 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         });
     }
 
-    private buildRequestArguments(): { name: string; assignment: ast.CodeBlock }[] {
+    private buildRequestArguments(): {
+        name: string;
+        assignment: ast.CodeBlock;
+    }[] {
         const arguments_: { name: string; assignment: ast.CodeBlock }[] = [];
 
         for (const { field, propertyName } of this.credentialFields.values()) {

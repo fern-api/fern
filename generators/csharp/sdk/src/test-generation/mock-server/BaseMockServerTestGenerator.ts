@@ -121,7 +121,10 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                                     _other: () => {
                                         throw new Error("Internal error; Unexpected environment type");
                                     }
-                                }) ?? { name: "BaseUrl", assignment: this.csharp.codeblock("Server.Urls[0]") },
+                                }) ?? {
+                                    name: "BaseUrl",
+                                    assignment: this.csharp.codeblock("Server.Urls[0]")
+                                },
                                 { name: "MaxRetries", assignment: this.csharp.codeblock("0") }
                             ]
                         })

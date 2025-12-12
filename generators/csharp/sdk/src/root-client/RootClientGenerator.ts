@@ -185,7 +185,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             parameters.push(
                 this.csharp.parameter({
                     name: param.name,
-                    type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }),
+                    type: this.context.csharpTypeMapper.convert({
+                        reference: param.typeReference
+                    }),
                     docs: param.docs
                 })
             );
@@ -631,7 +633,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             prefix: scheme.prefix
                         },
                         typeReference: scheme.valueType,
-                        type: this.context.csharpTypeMapper.convert({ reference: scheme.valueType }),
+                        type: this.context.csharpTypeMapper.convert({
+                            reference: scheme.valueType
+                        }),
                         environmentVariable: scheme.headerEnvVar
                     }
                 ];
@@ -650,7 +654,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         },
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                            v2: PrimitiveTypeV2.string({
+                                default: undefined,
+                                validation: undefined
+                            })
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.tokenEnvVar
@@ -668,7 +675,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         isOptional,
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                            v2: PrimitiveTypeV2.string({
+                                default: undefined,
+                                validation: undefined
+                            })
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.usernameEnvVar
@@ -679,7 +689,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         isOptional,
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                            v2: PrimitiveTypeV2.string({
+                                default: undefined,
+                                validation: undefined
+                            })
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.passwordEnvVar
@@ -695,7 +708,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         isOptional,
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                            v2: PrimitiveTypeV2.string({
+                                default: undefined,
+                                validation: undefined
+                            })
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.configuration.clientIdEnvVar
@@ -706,7 +722,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         isOptional,
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                            v2: PrimitiveTypeV2.string({
+                                default: undefined,
+                                validation: undefined
+                            })
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.configuration.clientSecretEnvVar
@@ -739,7 +758,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         continue;
                     }
                     // Include both required and optional fields
-                    const typeRef = this.context.csharpTypeMapper.convert({ reference: header.valueType });
+                    const typeRef = this.context.csharpTypeMapper.convert({
+                        reference: header.valueType
+                    });
                     parameters.push({
                         name: header.name.name.camelCase.unsafeName,
                         docs: header.docs ?? `The ${header.name.name.camelCase.unsafeName} for authentication.`,
@@ -754,7 +775,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     ...getRequestBodyProperties(this.context, tokenEndpoint.requestBody)
                         .filter((prop) => !parameters.some((p) => p.name === prop.name.name.camelCase.unsafeName))
                         .map((prop) => {
-                            const typeRef = this.context.csharpTypeMapper.convert({ reference: prop.valueType });
+                            const typeRef = this.context.csharpTypeMapper.convert({
+                                reference: prop.valueType
+                            });
                             return {
                                 name: prop.name.name.camelCase.unsafeName,
                                 docs: prop.docs ?? `The ${prop.name.name.camelCase.unsafeName} for authentication.`,
@@ -787,7 +810,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             docs: header.docs,
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
             typeReference: header.valueType,
-            type: this.context.csharpTypeMapper.convert({ reference: header.valueType })
+            type: this.context.csharpTypeMapper.convert({
+                reference: header.valueType
+            })
         };
     }
 

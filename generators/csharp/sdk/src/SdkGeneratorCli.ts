@@ -292,7 +292,10 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             context.logger.debug("No snippets were produced; skipping README.md generation.");
             return;
         }
-        const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        const content = await context.generatorAgent.generateReadme({
+            context,
+            endpointSnippets
+        });
         const otherPath = context.settings.outputPath.other;
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of(otherPath), content)
