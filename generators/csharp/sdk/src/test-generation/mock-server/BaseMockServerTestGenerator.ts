@@ -292,7 +292,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             access: ast.Access.Private,
             static_: true,
             readonly_: true,
-            type: this.csharp.type({ name: "bool", namespace: "" }),
+            type: this.Primitive.boolean,
             initializer: this.csharp.codeblock(
                 '!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FERN_DEBUG"))'
             )
@@ -312,10 +312,10 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             access: ast.Access.Public,
             isConstructor: true,
             parameters: [
-                {
+                this.csharp.parameter({
                     name: "inner",
                     type: this.WireMock.IWireMockLogger
-                }
+                })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("_inner = inner;");
@@ -326,17 +326,15 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         nestedClass.addMethod({
             name: "Debug",
             access: ast.Access.Public,
-            returnType: this.csharp.type({ name: "void", namespace: "" }),
             parameters: [
-                {
+                this.csharp.parameter({
                     name: "formatString",
-                    type: this.csharp.type({ name: "string", namespace: "" })
-                },
-                {
+                    type: this.Primitive.string
+                }),
+                this.csharp.parameter({
                     name: "args",
-                    type: this.csharp.type({ name: "object[]", namespace: "" }),
-                    params: true
-                }
+                    type: this.Collection.array(this.Primitive.object)
+                })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("if (IsDebugEnabled)");
@@ -351,17 +349,15 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         nestedClass.addMethod({
             name: "Info",
             access: ast.Access.Public,
-            returnType: this.csharp.type({ name: "void", namespace: "" }),
             parameters: [
-                {
+                this.csharp.parameter({
                     name: "formatString",
-                    type: this.csharp.type({ name: "string", namespace: "" })
-                },
-                {
+                    type: this.Primitive.string
+                }),
+                this.csharp.parameter({
                     name: "args",
-                    type: this.csharp.type({ name: "object[]", namespace: "" }),
-                    params: true
-                }
+                    type: this.Collection.array(this.Primitive.object)
+                })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("if (IsDebugEnabled)");
@@ -376,17 +372,15 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         nestedClass.addMethod({
             name: "Warn",
             access: ast.Access.Public,
-            returnType: this.csharp.type({ name: "void", namespace: "" }),
             parameters: [
-                {
+                this.csharp.parameter({
                     name: "formatString",
-                    type: this.csharp.type({ name: "string", namespace: "" })
-                },
-                {
+                    type: this.Primitive.string
+                }),
+                this.csharp.parameter({
                     name: "args",
-                    type: this.csharp.type({ name: "object[]", namespace: "" }),
-                    params: true
-                }
+                    type: this.Collection.array(this.Primitive.object)
+                })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("if (IsDebugEnabled)");
@@ -401,17 +395,15 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         nestedClass.addMethod({
             name: "Error",
             access: ast.Access.Public,
-            returnType: this.csharp.type({ name: "void", namespace: "" }),
             parameters: [
-                {
+                this.csharp.parameter({
                     name: "formatString",
-                    type: this.csharp.type({ name: "string", namespace: "" })
-                },
-                {
+                    type: this.Primitive.string
+                }),
+                this.csharp.parameter({
                     name: "args",
-                    type: this.csharp.type({ name: "object[]", namespace: "" }),
-                    params: true
-                }
+                    type: this.Collection.array(this.Primitive.object)
+                })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("if (IsDebugEnabled)");
@@ -426,16 +418,15 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         nestedClass.addMethod({
             name: "Error",
             access: ast.Access.Public,
-            returnType: this.csharp.type({ name: "void", namespace: "" }),
             parameters: [
-                {
+                this.csharp.parameter({
                     name: "message",
-                    type: this.csharp.type({ name: "string", namespace: "" })
-                },
-                {
+                    type: this.Primitive.string
+                }),
+                this.csharp.parameter({
                     name: "exception",
-                    type: this.System.Exception()
-                }
+                    type: this.System.Exception
+                })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
                 writer.writeLine("if (IsDebugEnabled)");
