@@ -131,10 +131,57 @@ async function parseMarkdown({
             type: "success"
         };
     } catch (err) {
-        logger.trace(`Markdown parse failed with error: ${err instanceof Error ? err.message : String(err)}`);
+        const errorMessage = formatMdxParseError(err);
+        logger.trace(`Markdown parse failed with error: ${errorMessage}`);
         return {
             type: "failure",
-            message: err instanceof Error ? err.message : undefined
+            message: errorMessage
         };
     }
+}
+
+interface MdxParseError {
+    message?: string;
+    line?: number;
+    column?: number;
+    place?: {
+        line?: number;
+        column?: number;
+        offset?: number;
+    };
+    position?: {
+        start?: { line?: number; column?: number; offset?: number };
+        end?: { line?: number; column?: number; offset?: number };
+    };
+    reason?: string;
+}
+
+function formatMdxParseError(err: unknown): string {
+    if (!(err instanceof Error)) {
+        return String(err);
+    }
+
+    const mdxError = err as MdxParseError;
+    const reason = mdxError.reason ?? mdxError.message ?? "Unknown error";
+
+    let line: number | undefined;
+    let column: number | undefined;
+
+    if (mdxError.line != null) {
+        line = mdxError.line;
+        column = mdxError.column;
+    } else if (mdxError.place?.line != null) {
+        line = mdxError.place.line;
+        column = mdxError.place.column;
+    } else if (mdxError.position?.start?.line != null) {
+        line = mdxError.position.start.line;
+        column = mdxError.position.start.column;
+    }
+
+    if (line != null) {
+        const location = column != null ? `line ${line}, column ${column}` : `line ${line}`;
+        return `${reason} (at ${location})`;
+    }
+
+    return reason;
 }
