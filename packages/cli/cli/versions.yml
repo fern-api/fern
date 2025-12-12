@@ -1,16 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Improved error logging for docs publishing failures. When API definition registration fails with a "fetch failed" error, the CLI now logs detailed error information including status code, error type, reason, and error message to help debug network issues.
-      type: fix
-  irVersion: 62
-  createdAt: "2025-12-12"
-  version: 3.16.1
-
-- changelogEntry:
-    - summary: |
         Docs linting (`fern check`) now respects `settings.substitute-env-vars` and throws errors for missing environment variables, matching the behavior of `fern generate --docs`. The full `instances:` config including custom domains now goes through env var substitution when this setting is enabled.
       type: feat
+    - summary: |
+        Improved error logging for docs publishing failures. When API definition registration fails with a "fetch failed" error, the CLI now logs detailed error information including status code, error type, reason, and error message to help debug network issues.
+      type: fix
   irVersion: 62
   createdAt: "2025-12-12"
   version: 3.16.0
