@@ -456,7 +456,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 writer.writeLine("if (IsDebugEnabled)");
                 writer.pushScope();
                 writer.writeLine(
-                    'Console.WriteLine("[Fern MockServer DebugRequestResponse] " + logEntryModel?.RequestMessage?.Url);'
+                    'Console.WriteLine("[Fern MockServer DebugRequestResponse] " + logEntryModel?.Request?.Url);'
                 );
                 writer.popScope();
                 writer.writeLine("_inner.DebugRequestResponse(logEntryModel, isAdminRequest);");
