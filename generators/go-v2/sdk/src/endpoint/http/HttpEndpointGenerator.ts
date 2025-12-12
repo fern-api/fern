@@ -131,7 +131,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
+                    // In per-endpoint mode, build error decoder inline. In global mode, use the global ErrorCodes.
+                    errorDecoder: this.context.isPerEndpointErrorCodes() ? errorDecoder : undefined,
                     rawClient: false
                 })
             );
@@ -186,7 +187,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
+                    // In per-endpoint mode, build error decoder inline. In global mode, use the global ErrorCodes.
+                    errorDecoder: this.context.isPerEndpointErrorCodes() ? errorDecoder : undefined,
                     rawClient: false,
                     encodeQuery: false
                 })
@@ -464,7 +466,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
+                    // In per-endpoint mode, build error decoder inline. In global mode, use the global ErrorCodes.
+                    errorDecoder: this.context.isPerEndpointErrorCodes() ? errorDecoder : undefined,
                     rawClient: true
                 })
             );
