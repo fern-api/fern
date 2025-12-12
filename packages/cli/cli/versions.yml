@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+<<<<<<< Updated upstream
         Include examples for AI processing if 30% or more of the values are generic.
       type: feat
   irVersion: 62
@@ -16,6 +17,12 @@
       type: fix
   irVersion: 62
   createdAt: "2025-12-12"
+=======
+        Enable AI-powered examples by default for all documentation generation. The experimental ai-examples feature now defaults to true unless explicitly set to false.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-12"
+>>>>>>> Stashed changes
   version: 3.16.0
 
 - changelogEntry:
