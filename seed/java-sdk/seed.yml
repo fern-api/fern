@@ -299,6 +299,8 @@ fixtures:
     - customConfig:
         default-timeout-in-seconds: 120
       outputFolder: default
+  java-with-property-conflict:
+    - outputFolder: default
 scripts:
   - image: fernapi/java-seed
     commands:

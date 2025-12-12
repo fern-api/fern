@@ -1,6 +1,48 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.45.9
+  changelogEntry:
+    - summary: |
+        Fix empty query params stripping existing URL query strings. When `params` and
+        `additional_query_parameters` are both empty, httpx now receives `params=None` instead
+        of `params=[]`, preserving any query parameters already present in the URL (e.g.,
+        pagination cursors like `?after=123`).
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 61
+
+- version: 4.45.8
+  changelogEntry:
+    - summary: Ensures the root client always exposes a headers parameter and forwards it to the underlying ClientWrapper.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 61
+
+- version: 4.45.7
+  changelogEntry:
+    - summary: Fix client wrapper instantiation to use the correct bearer token parameter name, preventing incorrect `token=` references when custom auth parameter names are configured.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 61
+
+- version: 4.45.6
+  changelogEntry:
+    - summary: Fix failing wire tests under `pytest-xdist` by using a single shared WireMock plugin.
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 4.45.5
+  changelogEntry:
+    - summary: |
+        Fix file upload conditional check using wire_value instead of snake_case parameter name,
+        which caused mypy "name not defined" errors when the API field name differed from the
+        Python parameter name (e.g., `MyFile` vs `my_file`).
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
 - version: 4.45.4
   changelogEntry:
     - summary: Fix offset pagination to handle None items when calculating next page offset.

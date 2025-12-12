@@ -577,6 +577,20 @@ class ClientWrapperGenerator:
         parameters: List[ConstructorParameter] = []
         literal_headers: List[LiteralHeader] = []
 
+        headers_constructor_parameter = ConstructorParameter(
+            constructor_parameter_name=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_NAME,
+            type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
+            private_member_name=ClientWrapperGenerator.HEADERS_MEMBER_NAME,
+            getter_method=AST.FunctionDeclaration(
+                name=ClientWrapperGenerator.GET_CUSTOM_HEADERS_METHOD_NAME,
+                signature=AST.FunctionSignature(
+                    return_type=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
+                ),
+                body=AST.CodeWriter(f"return self.{ClientWrapperGenerator.HEADERS_MEMBER_NAME}"),
+            ),
+            docs=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_DOCS,
+        )
+
         for variable in self._context.ir.variables:
             variable_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 variable.type
@@ -622,6 +636,8 @@ class ClientWrapperGenerator:
             )
 
         if exclude_auth:
+            # Add generic headers parameter even when excluding auth
+            parameters.append(headers_constructor_parameter)
             return ConstructorInfo(
                 constructor_parameters=parameters,
                 literal_headers=literal_headers,
@@ -813,19 +829,6 @@ class ClientWrapperGenerator:
             )
 
         # Add generic headers parameter
-        headers_constructor_parameter = ConstructorParameter(
-            constructor_parameter_name=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_NAME,
-            type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
-            private_member_name=ClientWrapperGenerator.HEADERS_MEMBER_NAME,
-            getter_method=AST.FunctionDeclaration(
-                name=ClientWrapperGenerator.GET_CUSTOM_HEADERS_METHOD_NAME,
-                signature=AST.FunctionSignature(
-                    return_type=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
-                ),
-                body=AST.CodeWriter(f"return self.{ClientWrapperGenerator.HEADERS_MEMBER_NAME}"),
-            ),
-            docs=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_DOCS,
-        )
         parameters.append(headers_constructor_parameter)
 
         return ConstructorInfo(

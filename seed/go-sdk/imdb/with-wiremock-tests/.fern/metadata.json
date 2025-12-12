@@ -4,6 +4,7 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "enableWireTests": true,
-    "packageName": "testPackageName"
+    "packageName": "testPackageName",
+    "errorCodes": "per-endpoint"
   }
 }

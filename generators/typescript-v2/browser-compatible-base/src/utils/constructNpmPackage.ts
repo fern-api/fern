@@ -76,7 +76,7 @@ export function constructNpmPackage({
     }
 }
 
-function getRepoUrlFromUrl(repoUrl: string | undefined): string | undefined {
+export function getRepoUrlFromUrl(repoUrl: string | undefined): string | undefined {
     if (repoUrl == null) {
         return undefined;
     }

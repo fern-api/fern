@@ -5,12 +5,17 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
+import { NamedParameter } from "../../types/types/NamedParameter";
 
 export const InferredAuth: core.serialization.ObjectSchema<
     serializers.dynamic.InferredAuth.Raw,
     FernIr.dynamic.InferredAuth
-> = core.serialization.objectWithoutOptionalProperties({});
+> = core.serialization.objectWithoutOptionalProperties({
+    parameters: core.serialization.list(NamedParameter).optional(),
+});
 
 export declare namespace InferredAuth {
-    export interface Raw {}
+    export interface Raw {
+        parameters?: NamedParameter.Raw[] | null;
+    }
 }

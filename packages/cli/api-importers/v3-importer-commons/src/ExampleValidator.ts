@@ -253,7 +253,19 @@ export class ExampleValidator {
 
             const result = this.validateEndpointExample({ exampleToValidate });
 
-            if (result.isValid) {
+            // For AI examples, also check for unexpected properties (stricter validation for freshness)
+            const hasUnexpectedProperties = this.hasUnexpectedProperties({
+                requestExample: aiExample.request?.body,
+                responseExample: aiExample.response?.body,
+                requestSchema,
+                responseSchema
+            });
+
+            // For AI examples, treat warnings or unexpected properties as invalid to ensure freshness
+            const hasErrorsOrWarnings = result.errors.length > 0 || result.warnings.length > 0;
+            const isStale = !result.isValid || hasErrorsOrWarnings || hasUnexpectedProperties;
+
+            if (!isStale) {
                 validExamples.push(aiExample);
             } else {
                 invalidExamples.push({ example: aiExample, validationResult: result });
@@ -261,6 +273,65 @@ export class ExampleValidator {
         }
 
         return { validExamples, invalidExamples };
+    }
+
+    /**
+     * Check if examples contain unexpected properties (not defined in schema)
+     * This is used for AI example freshness validation
+     */
+    private hasUnexpectedProperties({
+        requestExample,
+        responseExample,
+        requestSchema,
+        responseSchema
+    }: {
+        requestExample?: unknown;
+        responseExample?: unknown;
+        requestSchema?: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        responseSchema?: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+    }): boolean {
+        if (requestExample && requestSchema) {
+            if (this.exampleHasUnexpectedProperties(requestExample, requestSchema)) {
+                return true;
+            }
+        }
+
+        if (responseExample && responseSchema) {
+            if (this.exampleHasUnexpectedProperties(responseExample, responseSchema)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if a single example has properties not defined in the schema
+     */
+    private exampleHasUnexpectedProperties(
+        example: unknown,
+        schemaOrRef: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+    ): boolean {
+        if (!example || typeof example !== "object" || example === null) {
+            return false;
+        }
+
+        const schema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+            schemaOrReference: schemaOrRef,
+            breadcrumbs: [],
+            skipErrorCollector: true
+        });
+
+        if (!schema || !schema.properties) {
+            return false;
+        }
+
+        const exampleObj = example as Record<string, unknown>;
+        const definedProperties = new Set(Object.keys(schema.properties));
+        const exampleProperties = Object.keys(exampleObj);
+
+        // Check if any example property is not defined in the schema
+        return exampleProperties.some((prop) => !definedProperties.has(prop));
     }
 
     /**

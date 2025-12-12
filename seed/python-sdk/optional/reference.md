@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_body</a>(...)</code></summary>
+<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_body</a>(...) -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ client.optional.send_optional_body(
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_typed_body</a>(...)</code></summary>
+<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_typed_body</a>(...) -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -115,7 +115,7 @@ client.optional.send_optional_typed_body(
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_nullable_with_all_optional_properties</a>(...)</code></summary>
+<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_nullable_with_all_optional_properties</a>(...) -> AsyncHttpResponse[DeployResponse]</code></summary>
 <dl>
 <dd>
 

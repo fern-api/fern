@@ -320,16 +320,23 @@ export async function publishDocs({
                             "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
                         );
                     }
-                    default:
+                    default: {
+                        const errorDetails = extractErrorDetails(response.error);
+                        context.logger.error(
+                            `FDR registerApiDefinition failed. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
+                        );
                         if (apiName != null) {
                             return context.failAndThrow(
-                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
+                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com`,
+                                errorDetails
                             );
                         } else {
                             return context.failAndThrow(
-                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
+                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com`,
+                                errorDetails
                             );
                         }
+                    }
                 }
             }
         },
@@ -778,5 +785,27 @@ function getAIEnhancerConfig(withAiExamples: boolean): AIExampleEnhancerConfig |
         model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
         maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
         requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000")
+    };
+}
+
+/**
+ * Extracts detailed error information from an FDR SDK error response.
+ * This helps debug network/fetch failures by providing structured error details
+ * including status codes, error messages, and any underlying cause information.
+ */
+function extractErrorDetails(error: unknown): Record<string, unknown> {
+    const errorObj = error as Record<string, unknown>;
+    const content = errorObj?.content as Record<string, unknown> | undefined;
+
+    return {
+        errorType: errorObj?.error,
+        statusCode: errorObj?.statusCode ?? content?.statusCode,
+        reason: content?.reason,
+        errorMessage: content?.errorMessage ?? content?.message,
+        body: content?.body,
+        // Include any underlying error/cause information
+        cause: content?.cause,
+        // Include the raw error for complete debugging if needed
+        rawError: error
     };
 }

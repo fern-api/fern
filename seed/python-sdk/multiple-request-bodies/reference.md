@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">upload_json_document</a>(...)</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">upload_json_document</a>(...) -> AsyncHttpResponse[UploadDocumentResponse]</code></summary>
 <dl>
 <dd>
 

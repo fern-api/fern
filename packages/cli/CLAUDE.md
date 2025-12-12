@@ -123,6 +123,14 @@ pnpm test --filter "*cli*"     # Test all CLI-related packages
 pnpm fern:local               # Run local development CLI
 ```
 
+### Before Committing
+Always run these commands from the repository root before committing changes:
+```bash
+pnpm lint:biome --fix          # Fix linting issues
+pnpm format:fix                # Fix formatting issues
+pnpm check:fix                 # Run all checks with fixes
+```
+
 ## Generation Pipeline Flow
 
 ### 1. Workspace Discovery

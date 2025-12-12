@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">upload</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">upload</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 

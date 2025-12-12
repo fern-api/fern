@@ -46,6 +46,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             respectNullableSchemas: spec.settings?.respectNullableSchemas,
             wrapReferencesToNullableInOptional: spec.settings?.wrapReferencesToNullableInOptional,
             coerceOptionalSchemasToNullable: spec.settings?.coerceOptionalSchemasToNullable,
+            coerceEnumsToLiterals: spec.settings?.coerceEnumsToLiterals,
             onlyIncludeReferencedSchemas: spec.settings?.onlyIncludeReferencedSchemas,
             inlinePathParameters: spec.settings?.inlinePathParameters,
             objectQueryParameters: spec.settings?.objectQueryParameters,

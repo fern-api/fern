@@ -29,8 +29,6 @@ export async function runRemoteGenerationForDocsWorkspace({
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
 }): Promise<void> {
-    const instances = docsWorkspace.config.instances;
-
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
     // environment variable even in preview mode. Will bubble up an error if the env var isn't found.
@@ -48,6 +46,10 @@ export async function runRemoteGenerationForDocsWorkspace({
         { onError: (e) => context.failAndThrow(e) },
         { substituteAsEmpty: shouldSubstituteAsEmpty }
     );
+
+    // Get instances after env var substitution has been applied to the config
+    // This ensures the full instance object including custom domains goes through env var replacement
+    const instances = docsWorkspace.config.instances;
 
     if (instances.length === 0) {
         context.failAndThrow("No instances specified in docs.yml! Cannot register docs.");
