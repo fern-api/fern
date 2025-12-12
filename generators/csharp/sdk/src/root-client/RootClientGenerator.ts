@@ -17,7 +17,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "../endpoint/http/RawClient";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { getRequestBodyProperties } from "../utils/requestBodyUtils";
+import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
@@ -85,7 +85,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      */
     private generateWebsocketFactories(cls: ast.Class) {
         if (this.settings.enableWebsockets) {
-            // add functions to create the websocket api client
             for (const subpackage of this.getSubpackages()) {
                 if (subpackage.websocket != null) {
                     const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
@@ -135,7 +134,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         class_.addConstructor(this.getConstructorMethod());
 
         for (const subpackage of this.getSubpackages()) {
-            // skip subpackages that have no endpoints (recursively)
             if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
                 class_.addField({
                     access: ast.Access.Public,
@@ -304,7 +302,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         })
                     );
 
-                    // Initialize the exception handler with the custom interceptor if enabled
                     if (this.settings.includeExceptionHandler) {
                         innerWriter.write("clientOptions.ExceptionHandler = ");
                         innerWriter.writeNodeStatement(
@@ -373,7 +370,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             this.inferred.tokenEndpoint.endpoint.serviceId
                         );
 
-                        // Get credential parameters for the inferred auth token provider
                         const credentialParams = this.getInferredAuthCredentialParams();
 
                         const arguments_ = [
@@ -382,7 +378,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             })
                         ];
 
-                        // Build the token provider instantiation with credential parameters
                         innerWriter.write("var inferredAuthProvider = new InferredAuthTokenProvider(");
                         for (const param of credentialParams) {
                             innerWriter.write(`${param}, `);
@@ -396,7 +391,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                         innerWriter.writeTextStatement(")");
 
-                        // Set up header suppliers using async Func<ValueTask<string>> to avoid blocking
                         const authenticatedHeaders = this.inferred.tokenEndpoint.authenticatedRequestHeaders;
                         if (authenticatedHeaders.length === 0) {
                             this.context.logger.warn(
@@ -435,7 +429,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     }
                     const arguments_ = [this.csharp.codeblock("_client")];
                     for (const subpackage of this.getSubpackages()) {
-                        // skip subpackages that have no endpoints (recursively)
                         if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
                             innerWriter.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                             innerWriter.writeNodeStatement(
@@ -453,7 +446,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     writeConstructorBody(writer);
                     writer.endControlFlow();
                     writer.controlFlow("catch", this.csharp.codeblock("Exception ex"));
-                    // Create a temporary interceptor to capture the exception since clientOptions may not be initialized
                     writer.write("var interceptor = ");
                     writer.writeNodeStatement(
                         this.csharp.instantiateClass({
@@ -495,7 +487,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 switch (scheme.type) {
                     case "header":
                         if (scheme.headerEnvVar == null || includeEnvVarArguments) {
-                            // assuming type is string for now to avoid generating complex example types here.
                             arguments_.push(this.csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
                         }
                         break;
@@ -518,14 +509,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             arguments_.push(this.csharp.codeblock('"CLIENT_ID"'));
                             arguments_.push(this.csharp.codeblock('"CLIENT_SECRET"'));
                         } else {
-                            // default to bearer
                             arguments_.push(this.csharp.codeblock('"TOKEN"'));
                         }
                         break;
                     }
                     case "inferred": {
                         if (this.context.getInferredAuth() != null) {
-                            // Add example values for inferred auth credentials
                             const inferredScheme = this.context.getInferredAuth();
                             if (inferredScheme) {
                                 const tokenEndpointReference = inferredScheme.tokenEndpoint.endpoint;
@@ -538,25 +527,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                         tokenEndpointReference.endpointId
                                     );
 
-                                    // Collect headers from the token endpoint
-                                    for (const header of tokenEndpoint.headers) {
-                                        if (
-                                            header.valueType.type === "container" &&
-                                            header.valueType.container.type === "literal"
-                                        ) {
-                                            continue;
-                                        }
-                                        // Include both required and optional fields
-                                        // Use the wire name (originalName) to match what the mock server expects
-                                        arguments_.push(this.csharp.codeblock(`"${header.name.wireValue}"`));
+                                    const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
+                                    for (const credential of credentials) {
+                                        arguments_.push(this.csharp.codeblock(`"${credential.wireValue}"`));
                                     }
-
-                                    // Collect body properties from the token endpoint
-                                    arguments_.push(
-                                        ...getRequestBodyProperties(this.context, tokenEndpoint.requestBody).map(
-                                            (prop) => this.csharp.codeblock(`"${prop.name.wireValue}"`)
-                                        )
-                                    );
                                 }
                             }
                         }
@@ -732,7 +706,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     }
                 ];
             } else {
-                this.context.logger.warn("Auth schems is set to oauth, but no oauth configuration is provided");
+                this.context.logger.warn(
+                    `Auth scheme is set to OAuth (type: ${scheme.type}), but no OAuth configuration is provided. ` +
+                        `Make sure the IR includes OAuth configuration with client credentials.`
+                );
                 return [];
             }
         } else if (scheme.type === "inferred") {
@@ -751,46 +728,26 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     tokenEndpointReference.endpointId
                 );
 
-                // Collect headers from the token endpoint
-                for (const header of tokenEndpoint.headers) {
-                    // Skip literal types - they are hardcoded in the request
-                    if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
-                        continue;
-                    }
-                    // Include both required and optional fields
+                const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
+                for (const credential of credentials) {
                     const typeRef = this.context.csharpTypeMapper.convert({
-                        reference: header.valueType
+                        reference: credential.typeReference
                     });
                     parameters.push({
-                        name: header.name.name.camelCase.unsafeName,
-                        docs: header.docs ?? `The ${header.name.name.camelCase.unsafeName} for authentication.`,
-                        isOptional: isOptional || typeRef.isOptional,
-                        typeReference: header.valueType,
+                        name: credential.camelName,
+                        docs: credential.docs ?? `The ${credential.camelName} for authentication.`,
+                        isOptional: isOptional || credential.isOptional,
+                        typeReference: credential.typeReference,
                         type: typeRef
                     });
                 }
 
-                // Collect body properties from the token endpoint
-                parameters.push(
-                    ...getRequestBodyProperties(this.context, tokenEndpoint.requestBody)
-                        .filter((prop) => !parameters.some((p) => p.name === prop.name.name.camelCase.unsafeName))
-                        .map((prop) => {
-                            const typeRef = this.context.csharpTypeMapper.convert({
-                                reference: prop.valueType
-                            });
-                            return {
-                                name: prop.name.name.camelCase.unsafeName,
-                                docs: prop.docs ?? `The ${prop.name.name.camelCase.unsafeName} for authentication.`,
-                                isOptional: isOptional || typeRef.isOptional,
-                                typeReference: prop.valueType,
-                                type: typeRef
-                            };
-                        })
-                );
-
                 return parameters;
             } else {
-                this.context.logger.warn("Auth scheme is set to inferred, but no inferred configuration is provided");
+                this.context.logger.warn(
+                    `Auth scheme is set to inferred (type: ${scheme.type}), but no inferred auth configuration is provided. ` +
+                        `Make sure the IR includes inferred auth configuration with a token endpoint.`
+                );
                 return [];
             }
         } else {
@@ -858,23 +815,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         }
         const tokenEndpoint = this.context.resolveEndpoint(tokenEndpointHttpService, tokenEndpointReference.endpointId);
 
-        // Collect headers from the token endpoint
-        for (const header of tokenEndpoint.headers) {
-            // Skip literal types - they are hardcoded in the request
-            if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
-                continue;
-            }
-            // Include both required and optional fields
-            params.push(header.name.name.camelCase.unsafeName);
-        }
-
-        // Collect body properties from the token endpoint
-        params.push(
-            ...getRequestBodyProperties(this.context, tokenEndpoint.requestBody)
-                .map((prop) => prop.name.name.camelCase.unsafeName)
-                .filter((name) => !params.includes(name))
-        );
-
-        return params;
+        const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
+        return credentials.map((credential) => credential.camelName);
     }
 }

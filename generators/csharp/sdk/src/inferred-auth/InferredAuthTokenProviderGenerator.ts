@@ -11,7 +11,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { fail } from "assert";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { getRequestBodyProperties } from "../utils/requestBodyUtils";
+import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils";
 
 export declare namespace InferredAuthTokenProviderGenerator {
     interface Args {
@@ -34,7 +34,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     private lockField: ast.Field | undefined;
     private expiryProperty: ResponseProperty | undefined;
     private requestType: ast.ClassReference;
-    private credentialFields = new Map<string, { field: ast.Field; propertyName: string; isOptional: boolean }>();
+    private credentialFields = new Map<string, { field: ast.Field; pascalName: string; isOptional: boolean }>();
 
     constructor({ context, scheme }: InferredAuthTokenProviderGenerator.Args) {
         super(context);
@@ -65,7 +65,6 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             type: this.context.getSubpackageClassReferenceForServiceId(this.tokenEndpointReference.serviceId)
         });
 
-        // Only add caching-related fields when expiry property exists
         if (this.expiryProperty != null) {
             this.bufferInMinutesField = this.cls.addField({
                 origin: this.cls.explicit("BufferInMinutes"),
@@ -98,21 +97,17 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
                 initializer: this.csharp.codeblock("new SemaphoreSlim(1, 1)")
             });
         } else {
-            // When no expiry, we don't need these fields
             this.expiresAtField = undefined;
         }
 
-        // Collect credential properties from the token endpoint request
         this.collectCredentialProperties();
 
         const ctor = this.cls.addConstructor({ access: ast.Access.Internal });
 
-        // Add credential fields as constructor parameters
         for (const [parameter, { field }] of this.credentialFields.entries()) {
             ctor.body.assign(field, ctor.addParameter({ name: parameter, type: field.type }));
         }
 
-        // Add the client as the last parameter and assign it in the body
         ctor.body.assign(this.clientField, ctor.addParameter({ name: "client", type: this.clientField.type }));
 
         this.cls.addMethod({
@@ -140,57 +135,26 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     }
 
     private collectCredentialProperties(): void {
-        // Collect headers from the token endpoint
-        for (const header of this.tokenEndpoint.headers) {
-            const fieldName = header.name.name.camelCase.unsafeName;
+        const credentials = collectInferredAuthCredentials(this.context, this.tokenEndpoint);
+
+        for (const credential of credentials) {
             const typeRef = this.context.csharpTypeMapper.convert({
-                reference: header.valueType
+                reference: credential.typeReference
             });
 
-            // Skip literal types - they are hardcoded in the request
-            if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
-                continue;
-            }
-
-            // Include both required and optional fields
             const field = this.cls.addField({
-                origin: this.cls.explicit(this.format.private(fieldName)),
+                origin: this.cls.explicit(this.format.private(credential.camelName)),
                 access: ast.Access.Private,
                 type: typeRef
             });
-            // Use PascalCase property name for the request object initializer
-            const propertyName = header.name.name.pascalCase.safeName;
-            this.credentialFields.set(fieldName, {
+
+            this.credentialFields.set(credential.camelName, {
                 field,
-                propertyName,
-                isOptional: typeRef.isOptional
+                pascalName: credential.pascalName,
+                isOptional: credential.isOptional
             });
         }
 
-        // Collect body properties from the token endpoint
-        getRequestBodyProperties(this.context, this.tokenEndpoint.requestBody)
-            .filter((prop) => !this.credentialFields.has(prop.name.name.camelCase.unsafeName))
-            .forEach((prop) => {
-                const fieldName = prop.name.name.camelCase.unsafeName;
-                const typeRef = this.context.csharpTypeMapper.convert({
-                    reference: prop.valueType
-                });
-
-                const field = this.cls.addField({
-                    origin: this.cls.explicit(this.format.private(fieldName)),
-                    access: ast.Access.Private,
-                    type: typeRef
-                });
-                // Use PascalCase property name for the request object initializer
-                const propertyName = prop.name.name.pascalCase.safeName;
-                this.credentialFields.set(fieldName, {
-                    field,
-                    propertyName,
-                    isOptional: typeRef.isOptional
-                });
-            });
-
-        // Validate that we have at least one credential field
         if (this.credentialFields.size === 0) {
             this.context.logger.warn(
                 `Inferred auth token endpoint has no credential parameters (headers or body properties). ` +
@@ -202,7 +166,6 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     private getAuthHeadersBody(): ast.CodeBlock {
         const authenticatedHeaders = this.scheme.tokenEndpoint.authenticatedRequestHeaders;
 
-        // When there's no expiry property, match TypeScript behavior: don't cache, always fetch fresh
         if (this.expiryProperty == null) {
             return this.csharp.codeblock((writer) => {
                 writer.writeNodeStatement(
@@ -223,7 +186,6 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
                     })
                 );
 
-                // Build the headers dictionary from the authenticated request headers
                 writer.writeTextStatement("var headers = new Dictionary<string, string>()");
 
                 for (const authHeader of authenticatedHeaders) {
@@ -245,8 +207,6 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             });
         }
 
-        // When there IS an expiry property, use caching with refresh logic
-        // Assert that these fields exist since we're in the expiry != null branch
         if (
             this.cachedHeadersField == null ||
             this.expiresAtField == null ||
@@ -264,7 +224,6 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
         const expiryProperty = this.expiryProperty;
 
         return this.csharp.codeblock((writer) => {
-            // First check without lock for performance
             writer.controlFlow(
                 "if",
                 this.csharp.codeblock((writer) => {
@@ -273,12 +232,10 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
                 })
             );
 
-            // Acquire lock to ensure thread-safe token refresh
             writer.writeTextStatement(`await ${lockField.name}.WaitAsync().ConfigureAwait(false)`);
             writer.writeLine("try");
             writer.pushScope();
 
-            // Double-check after acquiring lock
             writer.controlFlow(
                 "if",
                 this.csharp.codeblock((writer) => {
@@ -308,7 +265,6 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
                 })
             );
 
-            // Build the headers dictionary from the authenticated request headers
             writer.writeTextStatement(`${cachedHeadersField.name} = new Dictionary<string, string>()`);
 
             for (const authHeader of authenticatedHeaders) {
@@ -333,13 +289,12 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             writer.popScope();
             writer.writeLine("catch");
             writer.pushScope();
-            // Clear cache on error to force fresh fetch on next call
             writer.writeTextStatement(`${cachedHeadersField.name} = null`);
             writer.writeTextStatement(`${expiresAtField.name} = null`);
             writer.writeTextStatement("throw");
             writer.popScope();
 
-            writer.endControlFlow(); // End if (double-check)
+            writer.endControlFlow();
 
             writer.popScope();
             writer.writeLine("finally");
@@ -347,7 +302,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             writer.writeTextStatement(`${lockField.name}.Release()`);
             writer.popScope();
 
-            writer.endControlFlow(); // End if (first check)
+            writer.endControlFlow();
 
             writer.writeTextStatement(`return ${cachedHeadersField.name}`);
         });
@@ -359,9 +314,9 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     }[] {
         const arguments_: { name: string; assignment: ast.CodeBlock }[] = [];
 
-        for (const { field, propertyName } of this.credentialFields.values()) {
+        for (const { field, pascalName } of this.credentialFields.values()) {
             arguments_.push({
-                name: propertyName,
+                name: pascalName,
                 assignment: this.csharp.codeblock(field.name)
             });
         }
@@ -384,7 +339,6 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     }
 
     private getRequestType(): ast.ClassReference {
-        // Try to get the request type from the sdk request first
         const requestWrapper = this.requestWrapperName();
         if (requestWrapper) {
             return this.context.getRequestWrapperReference(this.tokenEndpointReference.serviceId, requestWrapper);
@@ -395,8 +349,19 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             if (is.ClassReference(typeRef)) {
                 return typeRef;
             }
+            throw new Error(
+                `Failed to get request class reference for inferred auth token endpoint. ` +
+                    `Expected ClassReference but got ${typeRef.constructor.name}. ` +
+                    `Service ID: ${this.tokenEndpointReference.serviceId}, ` +
+                    `Endpoint ID: ${this.tokenEndpointReference.endpointId}`
+            );
         }
-        throw new Error("Failed to get request class reference");
+        throw new Error(
+            `Failed to get request type reference for inferred auth token endpoint. ` +
+                `Service ID: ${this.tokenEndpointReference.serviceId}, ` +
+                `Endpoint ID: ${this.tokenEndpointReference.endpointId}. ` +
+                `The token endpoint must have either an SDK request wrapper or a request body.`
+        );
     }
 
     private requestWrapperName() {
