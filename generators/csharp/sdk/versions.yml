@@ -12,7 +12,7 @@
         * Automatically set the authenticated request headers on all API calls
       type: feat
   createdAt: "2025-12-11"
-  irVersion: 61
+  irVersion: 62
 
 - version: 2.11.3
   changelogEntry:

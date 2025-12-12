@@ -42,9 +42,9 @@ public partial class SeedInferredAuthExplicitClient
         );
         clientOptions.Headers["Authorization"] =
             new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
-                (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))[
-                    "Authorization"
-                ]
+                (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))
+                    .First()
+                    .Value
             );
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);

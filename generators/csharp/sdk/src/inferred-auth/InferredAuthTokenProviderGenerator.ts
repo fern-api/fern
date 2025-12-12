@@ -30,6 +30,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     private bufferInMinutesField: ast.Field;
     private cachedHeadersField: ast.Field;
     private expiresAtField: ast.Field | undefined;
+    private lockField: ast.Field;
     private expiryProperty: ResponseProperty | undefined;
     private requestType: ast.ClassReference;
     private credentialFields = new Map<string, { field: ast.Field; propertyName: string; isOptional: boolean }>();
@@ -85,6 +86,17 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
                       access: ast.Access.Private,
                       type: this.Value.dateTime.asOptional()
                   });
+
+        this.lockField = this.cls.addField({
+            origin: this.cls.explicit("_lock"),
+            access: ast.Access.Private,
+            readonly: true,
+            type: this.csharp.classReference({
+                name: "SemaphoreSlim",
+                namespace: "System.Threading"
+            }),
+            initializer: this.csharp.codeblock("new SemaphoreSlim(1, 1)")
+        });
 
         // Collect credential properties from the token endpoint request
         this.collectCredentialProperties();
@@ -190,12 +202,38 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
                 }
             });
         }
+
+        // Validate that we have at least one credential field
+        if (this.credentialFields.size === 0) {
+            this.context.logger.warn(
+                `Inferred auth token endpoint has no credential parameters (headers or body properties). ` +
+                    `The token provider will be created but may not work as expected.`
+            );
+        }
     }
 
     private getAuthHeadersBody(): ast.CodeBlock {
         const authenticatedHeaders = this.scheme.tokenEndpoint.authenticatedRequestHeaders;
 
         return this.csharp.codeblock((writer) => {
+            // First check without lock for performance
+            writer.controlFlow(
+                "if",
+                this.csharp.codeblock((writer) => {
+                    writer.write(`${this.cachedHeadersField.name} == null`);
+                    // Check expiresAt if present in the IR
+                    if (this.expiryProperty != null && this.expiresAtField != null) {
+                        writer.write(` || DateTime.UtcNow >= ${this.expiresAtField.name}`);
+                    }
+                })
+            );
+
+            // Acquire lock to ensure thread-safe token refresh
+            writer.writeTextStatement(`await ${this.lockField.name}.WaitAsync().ConfigureAwait(false)`);
+            writer.writeLine("try");
+            writer.pushScope();
+
+            // Double-check after acquiring lock
             writer.controlFlow(
                 "if",
                 this.csharp.codeblock((writer) => {
@@ -249,7 +287,15 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
                 );
             }
 
-            writer.endControlFlow();
+            writer.endControlFlow(); // End if (double-check)
+
+            writer.popScope();
+            writer.writeLine("finally");
+            writer.pushScope();
+            writer.writeTextStatement(`${this.lockField.name}.Release()`);
+            writer.popScope();
+
+            writer.endControlFlow(); // End if (first check)
 
             writer.writeTextStatement(`return ${this.cachedHeadersField.name}`);
         });

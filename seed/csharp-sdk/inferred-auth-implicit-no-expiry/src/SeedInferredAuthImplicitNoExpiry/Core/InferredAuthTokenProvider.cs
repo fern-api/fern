@@ -10,6 +10,8 @@ public partial class InferredAuthTokenProvider
 
     private IDictionary<string, string>? _cachedHeaders;
 
+    private readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
+
     private string _xApiKey;
 
     private string _clientId;
@@ -37,19 +39,30 @@ public partial class InferredAuthTokenProvider
     {
         if (_cachedHeaders == null)
         {
-            var tokenResponse = await _client
-                .GetTokenWithClientCredentialsAsync(
-                    new GetTokenRequest
-                    {
-                        XApiKey = _xApiKey,
-                        ClientId = _clientId,
-                        ClientSecret = _clientSecret,
-                        Scope = _scope,
-                    }
-                )
-                .ConfigureAwait(false);
-            _cachedHeaders = new Dictionary<string, string>();
-            _cachedHeaders["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
+            await _lock.WaitAsync().ConfigureAwait(false);
+            try
+            {
+                if (_cachedHeaders == null)
+                {
+                    var tokenResponse = await _client
+                        .GetTokenWithClientCredentialsAsync(
+                            new GetTokenRequest
+                            {
+                                XApiKey = _xApiKey,
+                                ClientId = _clientId,
+                                ClientSecret = _clientSecret,
+                                Scope = _scope,
+                            }
+                        )
+                        .ConfigureAwait(false);
+                    _cachedHeaders = new Dictionary<string, string>();
+                    _cachedHeaders["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
+                }
+            }
+            finally
+            {
+                _lock.Release();
+            }
         }
         return _cachedHeaders;
     }

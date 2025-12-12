@@ -393,15 +393,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                         innerWriter.writeTextStatement(")");
 
-                        // Set up header supplier using async Func<ValueTask<string>> to avoid blocking
-                        // For now, we assume there's only one authenticated header (typically Authorization)
-                        const authHeader = this.inferred.tokenEndpoint.authenticatedRequestHeaders[0];
-                        if (authHeader != null) {
+                        // Set up header suppliers using async Func<ValueTask<string>> to avoid blocking
+                        const authenticatedHeaders = this.inferred.tokenEndpoint.authenticatedRequestHeaders;
+                        if (authenticatedHeaders.length === 0) {
+                            this.context.logger.warn(
+                                "Inferred auth scheme has no authenticated request headers. At least one header should be specified."
+                            );
+                        }
+                        for (const authHeader of authenticatedHeaders) {
                             const headerName = authHeader.headerName;
                             innerWriter.writeNode(
                                 this.csharp.codeblock((writer) => {
                                     writer.write(
-                                        `clientOptions.Headers["${headerName}"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => (await inferredAuthProvider.${this.names.methods.getAuthHeadersAsync}().ConfigureAwait(false))["${headerName}"]);`
+                                        `clientOptions.Headers["${headerName}"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => (await inferredAuthProvider.${this.names.methods.getAuthHeadersAsync}().ConfigureAwait(false)).First().Value);`
                                     );
                                 })
                             );
