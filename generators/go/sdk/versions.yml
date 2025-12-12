@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.20.1
+  changelogEntry:
+    - summary: |
+        Improve OAuth token fetching with concurrency protection and better error handling.
+        Multiple concurrent requests now share a single token fetch instead of each triggering
+        their own. Added nil pointer checks for OAuth responses and a 1-hour default expiry
+        fallback when the server doesn't provide an expires_in value.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 60
+
 - version: 1.20.0
   changelogEntry:
     - summary: |
