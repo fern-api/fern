@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 import pytest
 
 from core_utilities.shared.http_client import AsyncHttpClient, HttpClient, get_request_body, remove_none_from_dict
@@ -9,32 +11,29 @@ class _DummySyncClient:
     """A minimal stub for httpx.Client that records request arguments."""
 
     def __init__(self) -> None:
-        self.last_request_kwargs: dict = {}
+        self.last_request_kwargs: Dict[str, Any] = {}
 
-    def request(self, **kwargs):
+    def request(self, **kwargs: Any) -> "_DummyResponse":
         self.last_request_kwargs = kwargs
-
-        class _Response:
-            status_code = 200
-            headers = {}
-
-        return _Response()
+        return _DummyResponse()
 
 
 class _DummyAsyncClient:
     """A minimal stub for httpx.AsyncClient that records request arguments."""
 
     def __init__(self) -> None:
-        self.last_request_kwargs: dict = {}
+        self.last_request_kwargs: Dict[str, Any] = {}
 
-    async def request(self, **kwargs):
+    async def request(self, **kwargs: Any) -> "_DummyResponse":
         self.last_request_kwargs = kwargs
+        return _DummyResponse()
 
-        class _Response:
-            status_code = 200
-            headers = {}
 
-        return _Response()
+class _DummyResponse:
+    """A minimal stub for httpx.Response."""
+
+    status_code = 200
+    headers: Dict[str, str] = {}
 
 
 def get_request_options() -> RequestOptions:
