@@ -1,6 +1,6 @@
 # Reference
 ## BasicAuth
-<details><summary><code>client.basic_auth.<a href="src/seed/basic_auth/client.py">get_with_basic_auth</a>()</code></summary>
+<details><summary><code>client.basic_auth.<a href="src/seed/basic_auth/client.py">get_with_basic_auth</a>() -> AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,7 @@ client.basic_auth.get_with_basic_auth()
 </dl>
 </details>
 
-<details><summary><code>client.basic_auth.<a href="src/seed/basic_auth/client.py">post_with_basic_auth</a>(...)</code></summary>
+<details><summary><code>client.basic_auth.<a href="src/seed/basic_auth/client.py">post_with_basic_auth</a>(...) -> AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 

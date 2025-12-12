@@ -1,6 +1,12 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate</a>(...)</code></summary>
+<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate</a>(...) -> typing.AsyncIterator[
+    AsyncHttpResponse[
+        typing.AsyncIterator[
+            typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]
+        ]
+    ]
+]</code></summary>
 <dl>
 <dd>
 

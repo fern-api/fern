@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 4.45.6
+  changelogEntry:
+    - summary: Fix failing wire tests under `pytest-xdist` by using a single shared WireMock plugin.
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
 - version: 4.45.5
   changelogEntry:
     - summary: |

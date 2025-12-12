@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -83,7 +83,7 @@ client.user.create_username(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_with_referenced_type</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_with_referenced_type</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -166,7 +166,7 @@ client.user.create_username_with_referenced_type(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_optional</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_optional</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -223,7 +223,7 @@ client.user.create_username_optional(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_username</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_username</a>(...) -> AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 
