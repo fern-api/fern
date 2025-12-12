@@ -1,0 +1,3 @@
+rootProject.name = 'java-with-property-conflict'
+
+include 'sample-app'
