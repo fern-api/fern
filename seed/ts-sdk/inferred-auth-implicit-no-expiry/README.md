@@ -89,6 +89,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedInferredAuthImplicitNoExpiryClient } from "@fern/inferred-auth-implicit-no-expiry";
+
+const client = new SeedInferredAuthImplicitNoExpiryClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.auth.getTokenWithClientCredentials(..., {
     headers: {
         'X-Custom-Header': 'custom value'

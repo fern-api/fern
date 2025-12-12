@@ -10,25 +10,22 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../commons/core-utils"
+      "path": "../task-context"
+    },
+    {
+      "path": "../../commons/github"
     },
     {
       "path": "../../commons/fs-utils"
     },
     {
+      "path": "../../commons/core-utils"
+    },
+    {
       "path": "../configuration"
     },
     {
-      "path": "../fern-definition/schema"
-    },
-    {
       "path": "../logger"
-    },
-    {
-      "path": "../task-context"
-    },
-    {
-      "path": "../../commons/github"
     }
   ]
 }

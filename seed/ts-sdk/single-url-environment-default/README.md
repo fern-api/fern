@@ -70,6 +70,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedSingleUrlEnvironmentDefaultClient } from "@fern/single-url-environment-default";
+
+const client = new SeedSingleUrlEnvironmentDefaultClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.dummy.getDummy(..., {
     headers: {
         'X-Custom-Header': 'custom value'

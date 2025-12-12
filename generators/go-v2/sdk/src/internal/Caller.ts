@@ -169,13 +169,14 @@ export class Caller {
             });
         }
         if (args.errorCodes != null) {
+            // In per-endpoint mode, use the locally generated error codes variable.
+            // In global mode, use the global ErrorCodes variable from the root package.
+            const errorCodesReference = this.context.isPerEndpointErrorCodes()
+                ? args.errorCodes
+                : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference());
             arguments_.push({
                 name: "ErrorDecoder",
-                value: go.TypeInstantiation.reference(
-                    this.context.callNewErrorDecoder([
-                        go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference())
-                    ])
-                )
+                value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
             });
         }
         return go.TypeInstantiation.structPointer({

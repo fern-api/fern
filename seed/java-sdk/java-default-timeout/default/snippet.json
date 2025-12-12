@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "2eeeefb",
+            "id": {
+                "method": "GET",
+                "path": "/user",
+                "identifier_override": "endpoint_.getUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaDefaultTimeout.SeedJavaDefaultTimeoutClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaDefaultTimeoutClient client = SeedJavaDefaultTimeoutClient\n            .builder()\n            .build();\n\n        client.getUser();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaDefaultTimeout.SeedJavaDefaultTimeoutClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaDefaultTimeoutClient client = SeedJavaDefaultTimeoutClient\n            .builder()\n            .build();\n\n        client.getUser();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

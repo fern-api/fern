@@ -1,5 +1,91 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.45.5
+  changelogEntry:
+    - summary: |
+        Fix file upload conditional check using wire_value instead of snake_case parameter name,
+        which caused mypy "name not defined" errors when the API field name differed from the
+        Python parameter name (e.g., `MyFile` vs `my_file`).
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 4.45.4
+  changelogEntry:
+    - summary: Fix offset pagination to handle None items when calculating next page offset.
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 4.45.3
+  changelogEntry:
+    - summary: Add return types to reference.md method signatures for consistency with other SDK generators.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
+- version: 4.45.2
+  changelogEntry:
+    - summary: Fix Python wire test generation by schema-based path/body name deconfliction and aligning client class resolution with the SDK's custom config rules.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
+- version: 4.45.1
+  changelogEntry:
+    - summary: Fix forward ref detection for complex circular type cycles.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
+- version: 4.45.0
+  changelogEntry:
+    - summary: |
+        Add `coerce_numbers_to_str` option to `pydantic_config`. When enabled, numeric types (int, float, Decimal)
+        will be coerced to strings during validation. This is useful for APIs that return numeric values as strings.
+      type: feat
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 4.44.2
+  changelogEntry:
+    - summary: |
+        Fix enum-typed headers to use `.value` instead of `str()` for consistent wire format across
+        all Python versions. Previously, `str(enum)` returned the enum name (e.g., `Operand.GREATER_THAN`)
+        on Python `< 3.11`, but the wire value (e.g., `>`) on Python `>= 3.11` with StrEnum.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 4.44.1
+  changelogEntry:
+    - summary: |
+        Remove `oauth-token-override` config flag. OAuth token override is now always enabled for OAuth client
+        credentials flows, allowing users to authenticate with either client_id/client_secret OR a pre-generated
+        bearer token directly via the `token` parameter without any configuration.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 4.44.0
+  changelogEntry:
+    - summary: |
+        Add Python 3.11+ StrEnum compatibility. Generated enums now use StrEnum for Python >= 3.11
+        and the (str, Enum) mixin for older versions, fixing compatibility issues with Python 3.11's
+        stricter enum mixin handling.
+      type: feat
+  createdAt: "2025-12-08"
+  irVersion: 61
+
+- version: 4.43.0
+  changelogEntry:
+    - summary: |
+        Add OAuth token override support. When `oauth-token-override: true` is configured, users can authenticate
+        with either OAuth client credentials or a pre-generated bearer token directly via the `token` parameter.
+      type: feat
+  createdAt: "2025-12-06"
+  irVersion: 61
+
 - version: 4.42.1
   changelogEntry:
     - summary: |

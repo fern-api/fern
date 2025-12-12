@@ -6,49 +6,49 @@ describe("object", () => {
     itSchemaIdentity(
         object({
             foo: string(),
-            bar: stringLiteral("bar")
+            bar: stringLiteral("bar"),
         }),
         {
             foo: "",
-            bar: "bar"
+            bar: "bar",
         },
         {
-            title: "functions as identity when values are primitives and property() isn't used"
-        }
+            title: "functions as identity when values are primitives and property() isn't used",
+        },
     );
 
     itSchema(
         "uses raw key from property()",
         object({
             foo: property("raw_foo", string()),
-            bar: stringLiteral("bar")
+            bar: stringLiteral("bar"),
         }),
         {
             raw: { raw_foo: "foo", bar: "bar" },
-            parsed: { foo: "foo", bar: "bar" }
-        }
+            parsed: { foo: "foo", bar: "bar" },
+        },
     );
 
     itSchema(
         "keys with unknown type can be omitted",
         object({
-            foo: unknown()
+            foo: unknown(),
         }),
         {
             raw: {},
-            parsed: {}
-        }
+            parsed: {},
+        },
     );
 
     itSchema(
         "keys with any type can be omitted",
         object({
-            foo: any()
+            foo: any(),
         }),
         {
             raw: {},
-            parsed: {}
-        }
+            parsed: {},
+        },
     );
 
     describe("unrecognizedObjectKeys", () => {
@@ -57,48 +57,48 @@ describe("object", () => {
                 'includes unknown values when unrecognizedObjectKeys === "passthrough"',
                 object({
                     foo: property("raw_foo", string()),
-                    bar: stringLiteral("bar")
+                    bar: stringLiteral("bar"),
                 }),
                 {
                     raw: {
                         raw_foo: "foo",
                         bar: "bar",
                         // @ts-expect-error
-                        baz: "yoyo"
+                        baz: "yoyo",
                     },
                     parsed: {
                         foo: "foo",
                         bar: "bar",
                         // @ts-expect-error
-                        baz: "yoyo"
+                        baz: "yoyo",
                     },
                     opts: {
-                        unrecognizedObjectKeys: "passthrough"
-                    }
-                }
+                        unrecognizedObjectKeys: "passthrough",
+                    },
+                },
             );
 
             itParse(
                 'strips unknown values when unrecognizedObjectKeys === "strip"',
                 object({
                     foo: property("raw_foo", string()),
-                    bar: stringLiteral("bar")
+                    bar: stringLiteral("bar"),
                 }),
                 {
                     raw: {
                         raw_foo: "foo",
                         bar: "bar",
                         // @ts-expect-error
-                        baz: "yoyo"
+                        baz: "yoyo",
                     },
                     parsed: {
                         foo: "foo",
-                        bar: "bar"
+                        bar: "bar",
                     },
                     opts: {
-                        unrecognizedObjectKeys: "strip"
-                    }
-                }
+                        unrecognizedObjectKeys: "strip",
+                    },
+                },
             );
         });
 
@@ -107,48 +107,48 @@ describe("object", () => {
                 'includes unknown values when unrecognizedObjectKeys === "passthrough"',
                 object({
                     foo: property("raw_foo", string()),
-                    bar: stringLiteral("bar")
+                    bar: stringLiteral("bar"),
                 }),
                 {
                     raw: {
                         raw_foo: "foo",
                         bar: "bar",
                         // @ts-expect-error
-                        baz: "yoyo"
+                        baz: "yoyo",
                     },
                     parsed: {
                         foo: "foo",
                         bar: "bar",
                         // @ts-expect-error
-                        baz: "yoyo"
+                        baz: "yoyo",
                     },
                     opts: {
-                        unrecognizedObjectKeys: "passthrough"
-                    }
-                }
+                        unrecognizedObjectKeys: "passthrough",
+                    },
+                },
             );
 
             itJson(
                 'strips unknown values when unrecognizedObjectKeys === "strip"',
                 object({
                     foo: property("raw_foo", string()),
-                    bar: stringLiteral("bar")
+                    bar: stringLiteral("bar"),
                 }),
                 {
                     raw: {
                         raw_foo: "foo",
-                        bar: "bar"
+                        bar: "bar",
                     },
                     parsed: {
                         foo: "foo",
                         bar: "bar",
                         // @ts-expect-error
-                        baz: "yoyo"
+                        baz: "yoyo",
                     },
                     opts: {
-                        unrecognizedObjectKeys: "strip"
-                    }
-                }
+                        unrecognizedObjectKeys: "strip",
+                    },
+                },
             );
         });
     });
@@ -156,17 +156,17 @@ describe("object", () => {
     describe("nullish properties", () => {
         itSchema("missing properties are not added", object({ foo: property("raw_foo", string().optional()) }), {
             raw: {},
-            parsed: {}
+            parsed: {},
         });
 
         itSchema("undefined properties are not dropped", object({ foo: property("raw_foo", string().optional()) }), {
             raw: { raw_foo: null },
-            parsed: { foo: undefined }
+            parsed: { foo: undefined },
         });
 
         itSchema("null properties are not dropped", object({ foo: property("raw_foo", string().optional()) }), {
             raw: { raw_foo: null },
-            parsed: { foo: undefined }
+            parsed: { foo: undefined },
         });
 
         describe("extensions", () => {
@@ -175,8 +175,8 @@ describe("object", () => {
                 object({}).extend(object({ foo: property("raw_foo", string().optional()) })),
                 {
                     raw: { raw_foo: null },
-                    parsed: { foo: undefined }
-                }
+                    parsed: { foo: undefined },
+                },
             );
 
             describe("parse()", () => {
@@ -185,8 +185,8 @@ describe("object", () => {
                     object({}).extend(object({ foo: property("raw_foo", string().optional()) })),
                     {
                         raw: { raw_foo: null },
-                        parsed: { foo: undefined }
-                    }
+                        parsed: { foo: undefined },
+                    },
                 );
             });
         });
@@ -196,60 +196,60 @@ describe("object", () => {
         "missing property",
         object({
             foo: string(),
-            bar: stringLiteral("bar")
+            bar: stringLiteral("bar"),
         }),
         { foo: "hello" },
         [
             {
                 path: [],
-                message: 'Missing required key "bar"'
-            }
-        ]
+                message: 'Missing required key "bar"',
+            },
+        ],
     );
 
     itValidate(
         "extra property",
         object({
             foo: string(),
-            bar: stringLiteral("bar")
+            bar: stringLiteral("bar"),
         }),
         { foo: "hello", bar: "bar", baz: 42 },
         [
             {
                 path: ["baz"],
-                message: 'Unexpected key "baz"'
-            }
-        ]
+                message: 'Unexpected key "baz"',
+            },
+        ],
     );
 
     itValidate(
         "not an object",
         object({
             foo: string(),
-            bar: stringLiteral("bar")
+            bar: stringLiteral("bar"),
         }),
         [],
         [
             {
                 path: [],
-                message: "Expected object. Received list."
-            }
-        ]
+                message: "Expected object. Received list.",
+            },
+        ],
     );
 
     itValidate(
         "nested validation error",
         object({
             foo: object({
-                bar: number()
-            })
+                bar: number(),
+            }),
         }),
         { foo: { bar: "hello" } },
         [
             {
                 path: ["foo", "bar"],
-                message: 'Expected number. Received "hello".'
-            }
-        ]
+                message: 'Expected number. Received "hello".',
+            },
+        ],
     );
 });

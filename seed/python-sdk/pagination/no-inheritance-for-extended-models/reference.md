@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.complex_.<a href="src/seed/complex_/client.py">search</a>(...)</code></summary>
+<details><summary><code>client.complex_.<a href="src/seed/complex_/client.py">search</a>(...) -> AsyncPager[Conversation, PaginatedConversationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -89,7 +89,7 @@ for page in response.iter_pages():
 </details>
 
 ## InlineUsers InlineUsers
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_cursor_pagination</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_cursor_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -181,7 +181,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_mixed_type_cursor_pagination</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_mixed_type_cursor_pagination</a>(...) -> AsyncPager[User, ListUsersMixedTypePaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -245,7 +245,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_cursor_pagination</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_cursor_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -313,7 +313,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -405,7 +405,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_double_offset_pagination</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_double_offset_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -497,7 +497,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_offset_pagination</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_offset_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -565,7 +565,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_step_pagination</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_step_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -649,7 +649,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination_has_next_page</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination_has_next_page</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -735,7 +735,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results</a>(...) -> AsyncPager[User, ListUsersExtendedResponse]</code></summary>
 <dl>
 <dd>
 
@@ -801,7 +801,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results_and_optional_data</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results_and_optional_data</a>(...) -> AsyncPager[User, ListUsersExtendedOptionalListResponse]</code></summary>
 <dl>
 <dd>
 
@@ -867,7 +867,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_usernames</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_usernames</a>(...) -> AsyncPager[str, UsernameCursor]</code></summary>
 <dl>
 <dd>
 
@@ -932,7 +932,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_global_config</a>(...)</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_global_config</a>(...) -> AsyncPager[str, UsernameContainer]</code></summary>
 <dl>
 <dd>
 
@@ -995,7 +995,7 @@ for page in response.iter_pages():
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_cursor_pagination</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_cursor_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1087,7 +1087,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_mixed_type_cursor_pagination</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_mixed_type_cursor_pagination</a>(...) -> AsyncPager[User, ListUsersMixedTypePaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1149,7 +1149,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_cursor_pagination</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_cursor_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1217,7 +1217,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1309,7 +1309,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_double_offset_pagination</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_double_offset_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1401,7 +1401,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_offset_pagination</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_offset_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1469,7 +1469,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_step_pagination</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_step_pagination</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1553,7 +1553,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination_has_next_page</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination_has_next_page</a>(...) -> AsyncPager[User, ListUsersPaginationResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1637,7 +1637,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results</a>(...) -> AsyncPager[User, ListUsersExtendedResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1703,7 +1703,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results_and_optional_data</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results_and_optional_data</a>(...) -> AsyncPager[User, ListUsersExtendedOptionalListResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1769,7 +1769,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames</a>(...) -> AsyncPager[str, UsernameCursor]</code></summary>
 <dl>
 <dd>
 
@@ -1834,7 +1834,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames_with_optional_response</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames_with_optional_response</a>(...) -> AsyncPager[str, typing.Optional[UsernameCursor]]</code></summary>
 <dl>
 <dd>
 
@@ -1899,7 +1899,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_global_config</a>(...)</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_global_config</a>(...) -> AsyncPager[str, UsernameContainer]</code></summary>
 <dl>
 <dd>
 
@@ -1942,6 +1942,68 @@ for page in response.iter_pages():
 <dd>
 
 **offset:** `typing.Optional[int]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_optional_data</a>(...) -> AsyncPager[User, ListUsersOptionalDataPaginationResponse]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedPagination
+
+client = SeedPagination(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.users.list_with_optional_data(
+    page=1,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `typing.Optional[int]` — Defaults to first page
     
 </dd>
 </dl>

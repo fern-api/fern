@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v62.3.0] - 2025-12-11
+- Feature: Add parameters and values to dynamic IR `InferredAuth` to support dynamic snippet generation for inferred auth
+
+## [v62.2.0] - 2025-12-10
+- Fix: Propogate webhook responses from OpenAPI to IR
+
+## [v62.1.0] - 2025-11-25
+
+- Feature: Add `isWildcardStatusCode` field to IR for 4XX/5XX wildcard status code support
+- Feature: Add optional `apiPlayground` field to `HttpEndpoint` to control API playground visibility via `x-fern-playground-enabled` extension
+- Feature: Add support for preserving error response headers in IR
+- Feature: Add refresh token endpoint option to inferred auth
+- Feature: Add service-level docs support (docs field on `HttpService`)
+
+## [v62.0.0] - 2025-11-04
+
+- Feature: Add file upload examples support to IR (breaking change - adds new union variant to `ExampleRequestBody`)
+- Feature: Add support for parsing minItems and maxItems from OpenAPI array schemas (`ListValidationRules`)
+- Feature: Add optional `postmanCollectionLink` field to `EndpointSnippetRequest` for API reference configuration
+
 ## [v61.7.0] - 2025-10-31
 
 - Feature: Add GenerationMetadata to IR

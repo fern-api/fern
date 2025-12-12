@@ -880,7 +880,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
         writer.write(`var ${this.names.variables.httpRequest} = `);
         writer.writeNodeStatement(
-            rawClient.createHttpRequest({
+            rawClient.createHttpRequestAsync({
                 request: apiRequestCodeBlock.requestReference,
                 clientReference: rawClientReference
             })

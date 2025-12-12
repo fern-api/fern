@@ -38,7 +38,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedMultiUrlEnvironmentNoDefaultEnvironment, SeedMultiUrlEnvironmentNoDefaultClient } from "@fern/multi-url-environment-no-default";
+import { SeedMultiUrlEnvironmentNoDefaultClient, SeedMultiUrlEnvironmentNoDefaultEnvironment } from "@fern/multi-url-environment-no-default";
 
 const client = new SeedMultiUrlEnvironmentNoDefaultClient({ environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production, token: "YOUR_TOKEN" });
 await client.ec2.bootInstance({
@@ -86,6 +86,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedMultiUrlEnvironmentNoDefaultClient } from "@fern/multi-url-environment-no-default";
+
+const client = new SeedMultiUrlEnvironmentNoDefaultClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.ec2.bootInstance(..., {
     headers: {
         'X-Custom-Header': 'custom value'

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require_relative "wire_helper"
 require "net/http"
 require "json"
 require "uri"
@@ -42,6 +42,7 @@ class ReqWithHeadersWireTest < Minitest::Test
     client.req_with_headers.get_with_custom_header(
       x_test_service_header: "X-TEST-SERVICE-HEADER",
       x_test_endpoint_header: "X-TEST-ENDPOINT-HEADER",
+      body: "string",
       request_options: { base_url: WIREMOCK_BASE_URL,
                          additional_headers: {
                            "X-Test-Id" => "req_with_headers.get_with_custom_header.0"

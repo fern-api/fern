@@ -73,6 +73,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedApiClient } from "@fern/imdb";
+
+const client = new SeedApiClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.imdb.createMovie(..., {
     headers: {
         'X-Custom-Header': 'custom value'

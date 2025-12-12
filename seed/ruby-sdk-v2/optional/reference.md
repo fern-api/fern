@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.optional.send_optional_body(request) -> String</code></summary>
+<details><summary><code>client.optional.<a href="/lib/seed/optional/client.rb">send_optional_body</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.optional.send_optional_body();
+client.optional.send_optional_body(request: {});
 ```
 </dd>
 </dl>
@@ -32,6 +32,14 @@ client.optional.send_optional_body();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Optional::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -40,7 +48,7 @@ client.optional.send_optional_body();
 </dl>
 </details>
 
-<details><summary><code>client.optional.send_optional_typed_body(request) -> String</code></summary>
+<details><summary><code>client.optional.<a href="/lib/seed/optional/client.rb">send_optional_typed_body</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +61,9 @@ client.optional.send_optional_body();
 <dd>
 
 ```ruby
-client.optional.send_optional_typed_body();
+client.optional.send_optional_typed_body(request: {
+  message: 'message'
+});
 ```
 </dd>
 </dl>
@@ -72,6 +82,14 @@ client.optional.send_optional_typed_body();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Optional::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -80,7 +98,7 @@ client.optional.send_optional_typed_body();
 </dl>
 </details>
 
-<details><summary><code>client.optional.send_optional_nullable_with_all_optional_properties(action_id, id, request) -> Seed::Optional::Types::DeployResponse</code></summary>
+<details><summary><code>client.optional.<a href="/lib/seed/optional/client.rb">send_optional_nullable_with_all_optional_properties</a>(action_id, id, request) -> Seed::Optional::Types::DeployResponse</code></summary>
 <dl>
 <dd>
 
@@ -110,7 +128,10 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 ```ruby
 client.optional.send_optional_nullable_with_all_optional_properties(
   action_id: 'actionId',
-  id: 'id'
+  id: 'id',
+  request: {
+    update_draft: true
+  }
 );
 ```
 </dd>
@@ -143,6 +164,14 @@ client.optional.send_optional_nullable_with_all_optional_properties(
 <dd>
 
 **request:** `Seed::Optional::Types::DeployParams` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Optional::RequestOptions` 
     
 </dd>
 </dl>

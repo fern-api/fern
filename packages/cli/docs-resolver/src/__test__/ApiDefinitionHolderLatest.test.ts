@@ -155,6 +155,7 @@ it.skip("finds webhook by id and by path/method", () => {
                 headers: [],
                 payloads: [],
                 examples: [],
+                responses: [],
                 description: "description",
                 availability: undefined,
                 namespace: [],

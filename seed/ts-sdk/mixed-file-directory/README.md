@@ -86,6 +86,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedMixedFileDirectoryClient } from "@fern/mixed-file-directory";
+
+const client = new SeedMixedFileDirectoryClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.organization.create(..., {
     headers: {
         'X-Custom-Header': 'custom value'

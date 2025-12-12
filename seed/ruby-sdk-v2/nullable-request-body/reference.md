@@ -1,6 +1,6 @@
 # Reference
 ## TestGroup
-<details><summary><code>client.test_group.test_method_name(path_param, request) -> Object</code></summary>
+<details><summary><code>client.test_group.<a href="/lib/seed/test_group/client.rb">test_method_name</a>(path_param, request) -> Object</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,10 @@ Post a nullable request body
 <dd>
 
 ```ruby
-client.test_group.test_method_name(path_param: 'path_param');
+client.test_group.test_method_name(
+  path_param: 'path_param',
+  body: {}
+);
 ```
 </dd>
 </dl>
@@ -67,6 +70,14 @@ client.test_group.test_method_name(path_param: 'path_param');
 <dd>
 
 **request:** `Seed::Types::PlainObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::TestGroup::RequestOptions` 
     
 </dd>
 </dl>

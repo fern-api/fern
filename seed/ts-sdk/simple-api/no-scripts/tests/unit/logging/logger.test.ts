@@ -5,7 +5,7 @@ function createMockLogger() {
         debug: vi.fn(),
         info: vi.fn(),
         warn: vi.fn(),
-        error: vi.fn()
+        error: vi.fn(),
     };
 }
 
@@ -34,7 +34,7 @@ describe("Logger", () => {
                 debug: vi.spyOn(console, "debug").mockImplementation(() => {}),
                 info: vi.spyOn(console, "info").mockImplementation(() => {}),
                 warn: vi.spyOn(console, "warn").mockImplementation(() => {}),
-                error: vi.spyOn(console, "error").mockImplementation(() => {})
+                error: vi.spyOn(console, "error").mockImplementation(() => {}),
             };
         });
 
@@ -88,7 +88,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Debug,
                     logger: mockLogger,
-                    silent: false
+                    silent: false,
                 });
 
                 logger.debug("debug");
@@ -106,7 +106,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Debug,
                     logger: mockLogger,
-                    silent: false
+                    silent: false,
                 });
 
                 expect(logger.isDebug()).toBe(true);
@@ -121,7 +121,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Info,
                     logger: mockLogger,
-                    silent: false
+                    silent: false,
                 });
 
                 logger.debug("debug");
@@ -139,7 +139,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Info,
                     logger: mockLogger,
-                    silent: false
+                    silent: false,
                 });
 
                 expect(logger.isDebug()).toBe(false);
@@ -154,7 +154,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Warn,
                     logger: mockLogger,
-                    silent: false
+                    silent: false,
                 });
 
                 logger.debug("debug");
@@ -172,7 +172,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Warn,
                     logger: mockLogger,
-                    silent: false
+                    silent: false,
                 });
 
                 expect(logger.isDebug()).toBe(false);
@@ -187,7 +187,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Error,
                     logger: mockLogger,
-                    silent: false
+                    silent: false,
                 });
 
                 logger.debug("debug");
@@ -205,7 +205,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Error,
                     logger: mockLogger,
-                    silent: false
+                    silent: false,
                 });
 
                 expect(logger.isDebug()).toBe(false);
@@ -220,7 +220,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Debug,
                     logger: mockLogger,
-                    silent: true
+                    silent: true,
                 });
 
                 logger.debug("debug");
@@ -238,7 +238,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Debug,
                     logger: mockLogger,
-                    silent: true
+                    silent: true,
                 });
 
                 expect(logger.isDebug()).toBe(false);
@@ -253,7 +253,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Info,
                     logger: mockLogger,
-                    silent: false
+                    silent: false,
                 });
 
                 expect(logger.shouldLog(LogLevel.Debug)).toBe(false);
@@ -266,7 +266,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Debug,
                     logger: mockLogger,
-                    silent: true
+                    silent: true,
                 });
 
                 expect(logger.shouldLog(LogLevel.Debug)).toBe(false);
@@ -281,7 +281,7 @@ describe("Logger", () => {
                 const logger = new Logger({
                     level: LogLevel.Debug,
                     logger: mockLogger,
-                    silent: false
+                    silent: false,
                 });
 
                 logger.debug("message", "arg1", { key: "value" }, 123);
@@ -300,7 +300,7 @@ describe("Logger", () => {
             const customLogger = new Logger({
                 level: LogLevel.Debug,
                 logger: new ConsoleLogger(),
-                silent: false
+                silent: false,
             });
 
             const result = createLogger(customLogger);
@@ -313,7 +313,7 @@ describe("Logger", () => {
             const logger = createLogger({
                 level: LogLevel.Warn,
                 logger: mockLogger,
-                silent: false
+                silent: false,
             });
 
             expect(logger).toBeInstanceOf(Logger);
@@ -332,7 +332,7 @@ describe("Logger", () => {
             const logger = createLogger({
                 level: LogLevel.Debug,
                 logger: mockLogger,
-                silent: false
+                silent: false,
             });
 
             logger.debug("test");
@@ -344,7 +344,7 @@ describe("Logger", () => {
 
             const logger = createLogger({
                 logger: mockLogger,
-                silent: false
+                silent: false,
             });
 
             logger.info("test");
@@ -357,7 +357,7 @@ describe("Logger", () => {
             const logger = createLogger({
                 logger: customLogger,
                 level: LogLevel.Debug,
-                silent: false
+                silent: false,
             });
 
             logger.debug("test");
@@ -369,7 +369,7 @@ describe("Logger", () => {
 
             const logger = createLogger({
                 logger: mockLogger,
-                level: LogLevel.Debug
+                level: LogLevel.Debug,
             });
 
             logger.debug("test");
@@ -398,7 +398,7 @@ describe("Logger", () => {
             const logger = new Logger({
                 level: LogLevel.Debug,
                 logger: mockLogger,
-                silent: false
+                silent: false,
             });
 
             logger.debug("");
@@ -411,7 +411,7 @@ describe("Logger", () => {
             const logger = new Logger({
                 level: LogLevel.Debug,
                 logger: mockLogger,
-                silent: false
+                silent: false,
             });
 
             logger.debug("message");
@@ -424,13 +424,13 @@ describe("Logger", () => {
             const logger = new Logger({
                 level: LogLevel.Debug,
                 logger: mockLogger,
-                silent: false
+                silent: false,
             });
 
             const complexObject = {
                 nested: { key: "value" },
                 array: [1, 2, 3],
-                fn: () => "test"
+                fn: () => "test",
             };
 
             logger.debug("message", complexObject);
@@ -443,7 +443,7 @@ describe("Logger", () => {
             const logger = new Logger({
                 level: LogLevel.Error,
                 logger: mockLogger,
-                silent: false
+                silent: false,
             });
 
             const error = new Error("Test error");

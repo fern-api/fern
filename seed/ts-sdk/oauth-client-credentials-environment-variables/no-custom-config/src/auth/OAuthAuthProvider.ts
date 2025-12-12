@@ -14,17 +14,19 @@ export class OAuthAuthProvider implements core.AuthProvider {
     private _expiresAt: Date;
     private _refreshPromise: Promise<string> | undefined;
 
-    constructor(options: OAuthAuthProvider.Options) {
+    constructor(options: OAuthAuthProvider.Options & OAuthAuthProvider.AuthOptions.ClientCredentials) {
         this._clientId = options.clientId;
         this._clientSecret = options.clientSecret;
         this._authClient = new AuthClient(options);
         this._expiresAt = new Date();
     }
 
-    public static canCreate(options: OAuthAuthProvider.Options): boolean {
+    public static canCreate(
+        options: OAuthAuthProvider.Options,
+    ): options is OAuthAuthProvider.Options & OAuthAuthProvider.AuthOptions.ClientCredentials {
         return (
-            (options.clientId != null || process.env?.CLIENT_ID != null) &&
-            (options.clientSecret != null || process.env?.CLIENT_SECRET != null)
+            (("clientId" in options && options.clientId != null) || process.env?.CLIENT_ID != null) &&
+            (("clientSecret" in options && options.clientSecret != null) || process.env?.CLIENT_SECRET != null)
         );
     }
 
@@ -88,11 +90,58 @@ export class OAuthAuthProvider implements core.AuthProvider {
     }
 }
 
+export class OAuthTokenOverrideAuthProvider implements core.AuthProvider {
+    private readonly _token: core.Supplier<string>;
+
+    constructor(options: OAuthAuthProvider.Options & OAuthAuthProvider.AuthOptions.TokenOverride) {
+        if (options.token == null) {
+            throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
+                message: "token is required. Please provide it in options.",
+            });
+        }
+        this._token = options.token;
+    }
+
+    public static canCreate(
+        options: OAuthAuthProvider.Options,
+    ): options is OAuthAuthProvider.Options & OAuthAuthProvider.AuthOptions.TokenOverride {
+        return "token" in options && options.token != null;
+    }
+
+    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+        return {
+            headers: {
+                Authorization: `Bearer ${await core.Supplier.get(this._token)}`,
+            },
+        };
+    }
+}
+
 export namespace OAuthAuthProvider {
-    export interface AuthOptions {
-        clientId?: core.Supplier<string> | undefined;
-        clientSecret?: core.Supplier<string> | undefined;
+    export type AuthOptions = AuthOptions.ClientCredentials | AuthOptions.TokenOverride;
+
+    export namespace AuthOptions {
+        export interface ClientCredentials {
+            clientId: core.Supplier<string> | undefined;
+            clientSecret: core.Supplier<string> | undefined;
+        }
+
+        export interface TokenOverride {
+            token: core.Supplier<string>;
+        }
     }
 
     export type Options = BaseClientOptions;
+
+    export function createInstance(options: Options): core.AuthProvider {
+        if (OAuthTokenOverrideAuthProvider.canCreate(options)) {
+            return new OAuthTokenOverrideAuthProvider(options);
+        } else if (OAuthAuthProvider.canCreate(options)) {
+            return new OAuthAuthProvider(options);
+        }
+        throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
+            message:
+                "Insufficient options to create OAuthAuthProvider. Please provide either clientId and clientSecret, or token.",
+        });
+    }
 }

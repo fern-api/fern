@@ -7,9 +7,12 @@ client = Seed::Client.new(
 
 client.problem.get_default_starter_files(
   input_params: [{
+    variable_type: {},
     name: 'name'
   }, {
+    variable_type: {},
     name: 'name'
   }],
+  output_type: {},
   method_name: 'methodName'
 );

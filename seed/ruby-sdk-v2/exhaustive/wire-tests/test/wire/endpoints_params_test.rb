@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require_relative "wire_helper"
 require "net/http"
 require "json"
 require "uri"
@@ -175,8 +175,9 @@ class EndpointsParamsWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.params.modify_with_inline_path(
+    client.endpoints.params.modify_with_path(
       param: "param",
+      request: "string",
       request_options: { base_url: WIREMOCK_BASE_URL,
                          additional_headers: {
                            "X-Test-Id" => "endpoints.params.modify_with_path.0"
@@ -197,8 +198,9 @@ class EndpointsParamsWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.params.modify_with_inline_path(
+    client.endpoints.params.modify_with_path(
       param: "param",
+      request: "string",
       request_options: { base_url: WIREMOCK_BASE_URL,
                          additional_headers: {
                            "X-Test-Id" => "endpoints.params.modify_with_inline_path.0"

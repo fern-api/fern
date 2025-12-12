@@ -8,5 +8,7 @@ client = Seed::Client.new(
 client.playlist.create_playlist(
   service_param: 1,
   datetime: '2024-01-15T09:30:00Z',
-  optional_datetime: '2024-01-15T09:30:00Z'
+  optional_datetime: '2024-01-15T09:30:00Z',
+  name: 'name',
+  problems: ['problems', 'problems']
 );

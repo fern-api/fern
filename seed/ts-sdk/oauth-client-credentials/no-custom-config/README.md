@@ -10,6 +10,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Installation](#installation)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Authentication](#authentication)
 - [Request and Response Types](#request-and-response-types)
 - [Exception Handling](#exception-handling)
 - [Advanced](#advanced)
@@ -45,6 +46,37 @@ await client.auth.getTokenWithClientCredentials({
     client_id: "my_oauth_app_123",
     client_secret: "sk_live_abcdef123456789",
     scope: "read:users"
+});
+```
+
+## Authentication
+
+The SDK supports OAuth authentication with two options:
+
+**Option 1: OAuth Client Credentials Flow**
+
+Use this when you want the SDK to automatically handle OAuth token retrieval and refreshing:
+
+```typescript
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials";
+
+const client = new SeedOauthClientCredentialsClient({
+    clientId: "YOUR_CLIENT_ID",
+    clientSecret: "YOUR_CLIENT_SECRET",
+    ...
+});
+```
+
+**Option 2: Token Override**
+
+Use this when you already have a valid bearer token and want to skip the OAuth flow:
+
+```typescript
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials";
+
+const client = new SeedOauthClientCredentialsClient({
+    token: "my-pre-generated-bearer-token",
+    ...
 });
 ```
 
@@ -88,6 +120,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials";
+
+const client = new SeedOauthClientCredentialsClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.auth.getTokenWithClientCredentials(..., {
     headers: {
         'X-Custom-Header': 'custom value'

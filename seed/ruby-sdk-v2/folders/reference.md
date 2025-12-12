@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.foo() -> </code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">foo</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -14,6 +14,21 @@
 ```ruby
 client.foo();
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
+    
 </dd>
 </dl>
 </dd>
@@ -25,7 +40,7 @@ client.foo();
 </details>
 
 ## A B
-<details><summary><code>client.a.b.foo() -> </code></summary>
+<details><summary><code>client.a.b.<a href="/lib/seed/a/b/client.rb">foo</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -40,6 +55,21 @@ client.foo();
 ```ruby
 client.foo();
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::A::B::RequestOptions` 
+    
 </dd>
 </dl>
 </dd>
@@ -51,7 +81,7 @@ client.foo();
 </details>
 
 ## A C
-<details><summary><code>client.a.c.foo() -> </code></summary>
+<details><summary><code>client.a.c.<a href="/lib/seed/a/c/client.rb">foo</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -66,6 +96,21 @@ client.foo();
 ```ruby
 client.foo();
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::A::C::RequestOptions` 
+    
 </dd>
 </dl>
 </dd>
@@ -77,7 +122,7 @@ client.foo();
 </details>
 
 ## Folder
-<details><summary><code>client.folder.foo() -> </code></summary>
+<details><summary><code>client.folder.<a href="/lib/seed/folder/client.rb">foo</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -97,13 +142,28 @@ client.foo();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Folder::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
 ## Folder Service
-<details><summary><code>client.folder.service.endpoint() -> </code></summary>
+<details><summary><code>client.folder.service.<a href="/lib/seed/folder/service/client.rb">endpoint</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -123,12 +183,27 @@ client.folder.service.endpoint();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Folder::Service::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.folder.service.unknown_request(request) -> </code></summary>
+<details><summary><code>client.folder.service.<a href="/lib/seed/folder/service/client.rb">unknown_request</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -157,6 +232,14 @@ client.folder.service.unknown_request();
 <dd>
 
 **request:** `Object` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Folder::Service::RequestOptions` 
     
 </dd>
 </dl>

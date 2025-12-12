@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require_relative "wire_helper"
 require "net/http"
 require "json"
 require "uri"
@@ -39,10 +39,13 @@ class EndpointsPrimitiveWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.primitive.get_and_return_string(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                        additional_headers: {
-                                                                          "X-Test-Id" => "endpoints.primitive.get_and_return_string.0"
-                                                                        } })
+    client.endpoints.primitive.get_and_return_string(
+      request: "string",
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.primitive.get_and_return_string.0"
+                         } }
+    )
 
     verify_request_count(
       test_id: test_id,
@@ -58,10 +61,13 @@ class EndpointsPrimitiveWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.primitive.get_and_return_int(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                     additional_headers: {
-                                                                       "X-Test-Id" => "endpoints.primitive.get_and_return_int.0"
-                                                                     } })
+    client.endpoints.primitive.get_and_return_int(
+      request: 1,
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.primitive.get_and_return_int.0"
+                         } }
+    )
 
     verify_request_count(
       test_id: test_id,
@@ -77,10 +83,13 @@ class EndpointsPrimitiveWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.primitive.get_and_return_long(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                      additional_headers: {
-                                                                        "X-Test-Id" => "endpoints.primitive.get_and_return_long.0"
-                                                                      } })
+    client.endpoints.primitive.get_and_return_long(
+      request: 1_000_000,
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.primitive.get_and_return_long.0"
+                         } }
+    )
 
     verify_request_count(
       test_id: test_id,
@@ -96,10 +105,13 @@ class EndpointsPrimitiveWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.primitive.get_and_return_double(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                        additional_headers: {
-                                                                          "X-Test-Id" => "endpoints.primitive.get_and_return_double.0"
-                                                                        } })
+    client.endpoints.primitive.get_and_return_double(
+      request: 1.1,
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.primitive.get_and_return_double.0"
+                         } }
+    )
 
     verify_request_count(
       test_id: test_id,
@@ -115,10 +127,13 @@ class EndpointsPrimitiveWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.primitive.get_and_return_bool(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                      additional_headers: {
-                                                                        "X-Test-Id" => "endpoints.primitive.get_and_return_bool.0"
-                                                                      } })
+    client.endpoints.primitive.get_and_return_bool(
+      request: true,
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.primitive.get_and_return_bool.0"
+                         } }
+    )
 
     verify_request_count(
       test_id: test_id,
@@ -134,10 +149,13 @@ class EndpointsPrimitiveWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.primitive.get_and_return_datetime(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                          additional_headers: {
-                                                                            "X-Test-Id" => "endpoints.primitive.get_and_return_datetime.0"
-                                                                          } })
+    client.endpoints.primitive.get_and_return_datetime(
+      request: "2024-01-15T09:30:00Z",
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.primitive.get_and_return_datetime.0"
+                         } }
+    )
 
     verify_request_count(
       test_id: test_id,
@@ -153,10 +171,13 @@ class EndpointsPrimitiveWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.primitive.get_and_return_date(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                      additional_headers: {
-                                                                        "X-Test-Id" => "endpoints.primitive.get_and_return_date.0"
-                                                                      } })
+    client.endpoints.primitive.get_and_return_date(
+      request: "2023-01-15",
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.primitive.get_and_return_date.0"
+                         } }
+    )
 
     verify_request_count(
       test_id: test_id,
@@ -172,10 +193,13 @@ class EndpointsPrimitiveWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.primitive.get_and_return_uuid(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                      additional_headers: {
-                                                                        "X-Test-Id" => "endpoints.primitive.get_and_return_uuid.0"
-                                                                      } })
+    client.endpoints.primitive.get_and_return_uuid(
+      request: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.primitive.get_and_return_uuid.0"
+                         } }
+    )
 
     verify_request_count(
       test_id: test_id,
@@ -191,10 +215,13 @@ class EndpointsPrimitiveWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.primitive.get_and_return_base_64(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                         additional_headers: {
-                                                                           "X-Test-Id" => "endpoints.primitive.get_and_return_base_64.0"
-                                                                         } })
+    client.endpoints.primitive.get_and_return_base_64(
+      request: "SGVsbG8gd29ybGQh",
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.primitive.get_and_return_base_64.0"
+                         } }
+    )
 
     verify_request_count(
       test_id: test_id,

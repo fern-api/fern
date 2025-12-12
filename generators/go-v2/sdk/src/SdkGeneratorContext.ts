@@ -453,6 +453,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public isPerEndpointErrorCodes(): boolean {
+        return this.customConfig.errorCodes === "per-endpoint";
+    }
+
     public callNewMultipartWriter(arguments_: go.AstNode[]): go.FuncInvocation {
         return this.callInternalFunc({ name: "NewMultipartWriter", arguments_, multiline: false });
     }

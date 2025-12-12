@@ -4060,6 +4060,16 @@
               "type": "null"
             }
           ]
+        },
+        "right-text": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

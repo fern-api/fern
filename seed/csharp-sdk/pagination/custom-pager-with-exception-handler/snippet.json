@@ -312,6 +312,30 @@
                 "type": "csharp",
                 "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Users.ListWithGlobalConfigAsync(\n    new SeedPagination.ListWithGlobalConfigRequest { Offset = 1 }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
+        },
+        {
+            "example_identifier": "WithData",
+            "id": {
+                "path": "/users/optional-data",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOptionalData"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Users.ListWithOptionalDataAsync(new ListUsersOptionalDataRequest { Page = 1 });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": "WithoutData",
+            "id": {
+                "path": "/users/optional-data",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOptionalData"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Users.ListWithOptionalDataAsync(new ListUsersOptionalDataRequest { Page = 1 });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
         }
     ]
 }
