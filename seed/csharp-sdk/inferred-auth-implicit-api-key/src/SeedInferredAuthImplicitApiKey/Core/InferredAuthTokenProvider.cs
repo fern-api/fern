@@ -31,14 +31,23 @@ public partial class InferredAuthTokenProvider
             {
                 if (_cachedHeaders == null || DateTime.UtcNow >= _expiresAt)
                 {
-                    var tokenResponse = await _client
-                        .GetTokenAsync(new GetTokenRequest { ApiKey = _apiKey })
-                        .ConfigureAwait(false);
-                    _cachedHeaders = new Dictionary<string, string>();
-                    _cachedHeaders["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
-                    _expiresAt = DateTime
-                        .UtcNow.AddSeconds(tokenResponse.ExpiresIn)
-                        .AddMinutes(-BufferInMinutes);
+                    try
+                    {
+                        var tokenResponse = await _client
+                            .GetTokenAsync(new GetTokenRequest { ApiKey = _apiKey })
+                            .ConfigureAwait(false);
+                        _cachedHeaders = new Dictionary<string, string>();
+                        _cachedHeaders["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
+                        _expiresAt = DateTime
+                            .UtcNow.AddSeconds(tokenResponse.ExpiresIn)
+                            .AddMinutes(-BufferInMinutes);
+                    }
+                    catch
+                    {
+                        _cachedHeaders = null;
+                        _expiresAt = null;
+                        throw;
+                    }
                 }
             }
             finally

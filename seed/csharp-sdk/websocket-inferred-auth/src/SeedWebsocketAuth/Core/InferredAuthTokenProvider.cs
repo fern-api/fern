@@ -4,11 +4,7 @@ namespace SeedWebsocketAuth.Core;
 
 public partial class InferredAuthTokenProvider
 {
-    private const double BufferInMinutes = 2;
-
     private AuthClient _client;
-
-    private IDictionary<string, string>? _cachedHeaders;
 
     private string _xApiKey;
 
@@ -35,22 +31,19 @@ public partial class InferredAuthTokenProvider
 
     public async Task<IDictionary<string, string>> GetAuthHeadersAsync()
     {
-        if (_cachedHeaders == null)
-        {
-            var tokenResponse = await _client
-                .GetTokenWithClientCredentialsAsync(
-                    new GetTokenRequest
-                    {
-                        XApiKey = _xApiKey,
-                        ClientId = _clientId,
-                        ClientSecret = _clientSecret,
-                        Scope = _scope,
-                    }
-                )
-                .ConfigureAwait(false);
-            _cachedHeaders = new Dictionary<string, string>();
-            _cachedHeaders["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
-        }
-        return _cachedHeaders;
+        var tokenResponse = await _client
+            .GetTokenWithClientCredentialsAsync(
+                new GetTokenRequest
+                {
+                    XApiKey = _xApiKey,
+                    ClientId = _clientId,
+                    ClientSecret = _clientSecret,
+                    Scope = _scope,
+                }
+            )
+            .ConfigureAwait(false);
+        var headers = new Dictionary<string, string>();
+        headers["Authorization"] = $"Bearer {tokenResponse.AccessToken}";
+        return headers;
     }
 }

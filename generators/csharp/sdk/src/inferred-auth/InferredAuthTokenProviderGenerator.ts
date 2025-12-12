@@ -27,10 +27,10 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     private tokenEndpoint: HttpEndpoint;
     private cls: ast.Class;
     private clientField: ast.Field;
-    private bufferInMinutesField: ast.Field;
-    private cachedHeadersField: ast.Field;
+    private bufferInMinutesField: ast.Field | undefined;
+    private cachedHeadersField: ast.Field | undefined;
     private expiresAtField: ast.Field | undefined;
-    private lockField: ast.Field;
+    private lockField: ast.Field | undefined;
     private expiryProperty: ResponseProperty | undefined;
     private requestType: ast.ClassReference;
     private credentialFields = new Map<string, { field: ast.Field; propertyName: string; isOptional: boolean }>();
@@ -64,39 +64,42 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             type: this.context.getSubpackageClassReferenceForServiceId(this.tokenEndpointReference.serviceId)
         });
 
-        this.bufferInMinutesField = this.cls.addField({
-            origin: this.cls.explicit("BufferInMinutes"),
-            access: ast.Access.Private,
-            const_: true,
-            type: this.Primitive.double,
-            initializer: this.csharp.codeblock("2")
-        });
+        // Only add caching-related fields when expiry property exists
+        if (this.expiryProperty != null) {
+            this.bufferInMinutesField = this.cls.addField({
+                origin: this.cls.explicit("BufferInMinutes"),
+                access: ast.Access.Private,
+                const_: true,
+                type: this.Primitive.double,
+                initializer: this.csharp.codeblock("2")
+            });
 
-        this.cachedHeadersField = this.cls.addField({
-            origin: this.cls.explicit("_cachedHeaders"),
-            access: ast.Access.Private,
-            type: this.Collection.idictionary(this.Primitive.string, this.Primitive.string).asOptional()
-        });
+            this.cachedHeadersField = this.cls.addField({
+                origin: this.cls.explicit("_cachedHeaders"),
+                access: ast.Access.Private,
+                type: this.Collection.idictionary(this.Primitive.string, this.Primitive.string).asOptional()
+            });
 
-        this.expiresAtField =
-            this.expiryProperty == null
-                ? undefined
-                : this.cls.addField({
-                      origin: this.cls.explicit("_expiresAt"),
-                      access: ast.Access.Private,
-                      type: this.Value.dateTime.asOptional()
-                  });
+            this.expiresAtField = this.cls.addField({
+                origin: this.cls.explicit("_expiresAt"),
+                access: ast.Access.Private,
+                type: this.Value.dateTime.asOptional()
+            });
 
-        this.lockField = this.cls.addField({
-            origin: this.cls.explicit("_lock"),
-            access: ast.Access.Private,
-            readonly: true,
-            type: this.csharp.classReference({
-                name: "SemaphoreSlim",
-                namespace: "System.Threading"
-            }),
-            initializer: this.csharp.codeblock("new SemaphoreSlim(1, 1)")
-        });
+            this.lockField = this.cls.addField({
+                origin: this.cls.explicit("_lock"),
+                access: ast.Access.Private,
+                readonly: true,
+                type: this.csharp.classReference({
+                    name: "SemaphoreSlim",
+                    namespace: "System.Threading"
+                }),
+                initializer: this.csharp.codeblock("new SemaphoreSlim(1, 1)")
+            });
+        } else {
+            // When no expiry, we don't need these fields
+            this.expiresAtField = undefined;
+        }
 
         // Collect credential properties from the token endpoint request
         this.collectCredentialProperties();
@@ -215,21 +218,79 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
     private getAuthHeadersBody(): ast.CodeBlock {
         const authenticatedHeaders = this.scheme.tokenEndpoint.authenticatedRequestHeaders;
 
+        // When there's no expiry property, match TypeScript behavior: don't cache, always fetch fresh
+        if (this.expiryProperty == null) {
+            return this.csharp.codeblock((writer) => {
+                writer.writeNodeStatement(
+                    this.csharp.codeblock((writer) => {
+                        writer.write("var tokenResponse = ");
+                        writer.writeNode(
+                            this.csharp.invokeMethod({
+                                async: true,
+                                method: `${this.clientField.name}.${this.context.getEndpointMethodName(this.tokenEndpoint)}`,
+                                arguments_: [
+                                    this.csharp.instantiateClass({
+                                        classReference: this.requestType,
+                                        arguments_: this.buildRequestArguments()
+                                    })
+                                ]
+                            })
+                        );
+                    })
+                );
+
+                // Build the headers dictionary from the authenticated request headers
+                writer.writeTextStatement("var headers = new Dictionary<string, string>()");
+
+                for (const authHeader of authenticatedHeaders) {
+                    const headerName = authHeader.headerName;
+                    const valuePrefix = authHeader.valuePrefix ?? "";
+                    const accessorChain = this.buildResponsePropertyAccessor(
+                        "tokenResponse",
+                        authHeader.responseProperty
+                    );
+
+                    if (valuePrefix !== "") {
+                        writer.writeTextStatement(`headers["${headerName}"] = $"${valuePrefix}{${accessorChain}}"`);
+                    } else {
+                        writer.writeTextStatement(`headers["${headerName}"] = ${accessorChain}`);
+                    }
+                }
+
+                writer.writeTextStatement("return headers");
+            });
+        }
+
+        // When there IS an expiry property, use caching with refresh logic
+        // Assert that these fields exist since we're in the expiry != null branch
+        if (
+            this.cachedHeadersField == null ||
+            this.expiresAtField == null ||
+            this.lockField == null ||
+            this.bufferInMinutesField == null ||
+            this.expiryProperty == null
+        ) {
+            throw new Error("Caching fields should be defined when expiryProperty is not null");
+        }
+
+        const cachedHeadersField = this.cachedHeadersField;
+        const expiresAtField = this.expiresAtField;
+        const lockField = this.lockField;
+        const bufferInMinutesField = this.bufferInMinutesField;
+        const expiryProperty = this.expiryProperty;
+
         return this.csharp.codeblock((writer) => {
             // First check without lock for performance
             writer.controlFlow(
                 "if",
                 this.csharp.codeblock((writer) => {
-                    writer.write(`${this.cachedHeadersField.name} == null`);
-                    // Check expiresAt if present in the IR
-                    if (this.expiryProperty != null && this.expiresAtField != null) {
-                        writer.write(` || DateTime.UtcNow >= ${this.expiresAtField.name}`);
-                    }
+                    writer.write(`${cachedHeadersField.name} == null`);
+                    writer.write(` || DateTime.UtcNow >= ${expiresAtField.name}`);
                 })
             );
 
             // Acquire lock to ensure thread-safe token refresh
-            writer.writeTextStatement(`await ${this.lockField.name}.WaitAsync().ConfigureAwait(false)`);
+            writer.writeTextStatement(`await ${lockField.name}.WaitAsync().ConfigureAwait(false)`);
             writer.writeLine("try");
             writer.pushScope();
 
@@ -237,13 +298,13 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             writer.controlFlow(
                 "if",
                 this.csharp.codeblock((writer) => {
-                    writer.write(`${this.cachedHeadersField.name} == null`);
-                    // Check expiresAt if present in the IR
-                    if (this.expiryProperty != null && this.expiresAtField != null) {
-                        writer.write(` || DateTime.UtcNow >= ${this.expiresAtField.name}`);
-                    }
+                    writer.write(`${cachedHeadersField.name} == null`);
+                    writer.write(` || DateTime.UtcNow >= ${expiresAtField.name}`);
                 })
             );
+
+            writer.writeLine("try");
+            writer.pushScope();
 
             writer.writeNodeStatement(
                 this.csharp.codeblock((writer) => {
@@ -264,7 +325,7 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
             );
 
             // Build the headers dictionary from the authenticated request headers
-            writer.writeTextStatement(`${this.cachedHeadersField.name} = new Dictionary<string, string>()`);
+            writer.writeTextStatement(`${cachedHeadersField.name} = new Dictionary<string, string>()`);
 
             for (const authHeader of authenticatedHeaders) {
                 const headerName = authHeader.headerName;
@@ -273,31 +334,38 @@ export class InferredAuthTokenProviderGenerator extends FileGenerator<CSharpFile
 
                 if (valuePrefix !== "") {
                     writer.writeTextStatement(
-                        `${this.cachedHeadersField.name}["${headerName}"] = $"${valuePrefix}{${accessorChain}}"`
+                        `${cachedHeadersField.name}["${headerName}"] = $"${valuePrefix}{${accessorChain}}"`
                     );
                 } else {
-                    writer.writeTextStatement(`${this.cachedHeadersField.name}["${headerName}"] = ${accessorChain}`);
+                    writer.writeTextStatement(`${cachedHeadersField.name}["${headerName}"] = ${accessorChain}`);
                 }
             }
 
-            if (this.expiryProperty != null && this.expiresAtField != null) {
-                const expiryAccessor = this.buildResponsePropertyAccessor("tokenResponse", this.expiryProperty);
-                writer.writeTextStatement(
-                    `${this.expiresAtField.name} = DateTime.UtcNow.AddSeconds(${expiryAccessor}).AddMinutes(-${this.bufferInMinutesField.name})`
-                );
-            }
+            const expiryAccessor = this.buildResponsePropertyAccessor("tokenResponse", expiryProperty);
+            writer.writeTextStatement(
+                `${expiresAtField.name} = DateTime.UtcNow.AddSeconds(${expiryAccessor}).AddMinutes(-${bufferInMinutesField.name})`
+            );
+
+            writer.popScope();
+            writer.writeLine("catch");
+            writer.pushScope();
+            // Clear cache on error to force fresh fetch on next call
+            writer.writeTextStatement(`${cachedHeadersField.name} = null`);
+            writer.writeTextStatement(`${expiresAtField.name} = null`);
+            writer.writeTextStatement("throw");
+            writer.popScope();
 
             writer.endControlFlow(); // End if (double-check)
 
             writer.popScope();
             writer.writeLine("finally");
             writer.pushScope();
-            writer.writeTextStatement(`${this.lockField.name}.Release()`);
+            writer.writeTextStatement(`${lockField.name}.Release()`);
             writer.popScope();
 
             writer.endControlFlow(); // End if (first check)
 
-            writer.writeTextStatement(`return ${this.cachedHeadersField.name}`);
+            writer.writeTextStatement(`return ${cachedHeadersField.name}`);
         });
     }
 
