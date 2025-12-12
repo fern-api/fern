@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fern init > init docs 1`] = `
+exports[`fern init > init mintlify 1`] = `
 [
   {
     "contents": [
@@ -130,7 +130,7 @@ groups:
 ]
 `;
 
-exports[`fern init > init mintlify 1`] = `
+exports[`fern init > init mintlify 2`] = `
 [
   {
     "contents": [

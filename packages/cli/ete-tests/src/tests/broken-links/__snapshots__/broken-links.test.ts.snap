@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fern docs broken-links > simple broken links 1`] = `
+exports[`fern docs broken-links > external link with docs domain in query param should not be flagged 1`] = `
 "[docs]:foo.md
        broken link to /bar/baz
        	fix here: foo.md:11:21

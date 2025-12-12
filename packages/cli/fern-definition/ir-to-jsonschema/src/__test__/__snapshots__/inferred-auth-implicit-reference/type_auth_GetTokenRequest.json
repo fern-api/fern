@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string"
+    },
+    "client_secret": {
+      "type": "string"
+    },
+    "audience": {
+      "const": "https://api.example.com"
+    },
+    "grant_type": {
+      "const": "client_credentials"
+    },
+    "scope": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "client_id",
+    "client_secret",
+    "audience",
+    "grant_type"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
