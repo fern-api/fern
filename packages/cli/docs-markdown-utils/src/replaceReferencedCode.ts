@@ -34,12 +34,12 @@ function findFencedCodeBlocks(content: string): Array<[number, number]> {
             const backtickMatch = trimmedLine.match(/^(`{3,})/);
             const tildeMatch = trimmedLine.match(/^(~{3,})/);
 
-            if (backtickMatch) {
+            if (backtickMatch && backtickMatch[1]) {
                 inFence = true;
                 fenceChar = "`";
                 fenceLength = backtickMatch[1].length;
                 fenceStart = currentPos;
-            } else if (tildeMatch) {
+            } else if (tildeMatch && tildeMatch[1]) {
                 inFence = true;
                 fenceChar = "~";
                 fenceLength = tildeMatch[1].length;
