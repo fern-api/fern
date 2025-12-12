@@ -55,7 +55,8 @@ export class LambdaExampleEnhancer {
                     operationDescription: request.operationDescription,
                     originalRequestExample: request.originalRequestExample,
                     originalResponseExample: request.originalResponseExample,
-                    openApiSpec: request.openApiSpec
+                    openApiSpec: request.openApiSpec,
+                    styleInstructions: request.styleInstructions
                 };
 
                 this.context.logger.debug(

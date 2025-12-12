@@ -24,6 +24,7 @@ export interface ExampleEnhancementRequest {
     originalRequestExample?: unknown;
     originalResponseExample?: unknown;
     openApiSpec?: string;
+    styleInstructions?: string;
 }
 
 export interface ExampleEnhancementResponse {
