@@ -3,6 +3,8 @@
 package client
 
 import (
+	context "context"
+	fern "github.com/any-auth/fern"
 	auth "github.com/any-auth/fern/auth"
 	core "github.com/any-auth/fern/core"
 	internal "github.com/any-auth/fern/internal"
@@ -34,6 +36,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.ClientSecret == "" {
 		options.ClientSecret = os.Getenv("MY_CLIENT_SECRET")
 	}
+	oauthTokenProvider := core.NewOAuthTokenProvider(
+		options.ClientID,
+		options.ClientSecret,
+	)
+	authOptions := *options
+	authClient := auth.NewClient(
+		&authOptions,
+	)
+	options.SetTokenGetter(func() (string, error) {
+		if token := oauthTokenProvider.GetToken(); token != "" {
+			return token, nil
+		}
+		response, err := authClient.GetToken(context.Background(), &fern.GetTokenRequest{
+			ClientId:     options.ClientID,
+			ClientSecret: options.ClientSecret,
+		})
+		if err != nil {
+			return "", err
+		}
+		oauthTokenProvider.SetToken(response.AccessToken, response.ExpiresIn)
+		return response.AccessToken, nil
+	})
 	return &Client{
 		Auth:    auth.NewClient(options),
 		User:    user.NewClient(options),

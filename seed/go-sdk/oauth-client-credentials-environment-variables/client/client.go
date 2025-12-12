@@ -3,6 +3,8 @@
 package client
 
 import (
+	context "context"
+	fern "github.com/oauth-client-credentials-environment-variables/fern"
 	auth "github.com/oauth-client-credentials-environment-variables/fern/auth"
 	core "github.com/oauth-client-credentials-environment-variables/fern/core"
 	internal "github.com/oauth-client-credentials-environment-variables/fern/internal"
@@ -32,6 +34,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.ClientSecret == "" {
 		options.ClientSecret = os.Getenv("CLIENT_SECRET")
 	}
+	oauthTokenProvider := core.NewOAuthTokenProvider(
+		options.ClientID,
+		options.ClientSecret,
+	)
+	authOptions := *options
+	authClient := auth.NewClient(
+		&authOptions,
+	)
+	options.SetTokenGetter(func() (string, error) {
+		if token := oauthTokenProvider.GetToken(); token != "" {
+			return token, nil
+		}
+		response, err := authClient.GetTokenWithClientCredentials(context.Background(), &fern.GetTokenRequest{
+			ClientId:     options.ClientID,
+			ClientSecret: options.ClientSecret,
+		})
+		if err != nil {
+			return "", err
+		}
+		oauthTokenProvider.SetToken(response.AccessToken, response.ExpiresIn)
+		return response.AccessToken, nil
+	})
 	return &Client{
 		Auth:         auth.NewClient(options),
 		NestedNoAuth: client.NewClient(options),

@@ -12,7 +12,10 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        nil,
+        option.WithClientCredentials(
+            "<clientId>",
+            "<clientSecret>",
+        ),
     )
     request := &fern.RefreshTokenRequest{
         ClientId: "client_id",
