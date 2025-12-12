@@ -258,6 +258,39 @@ export async function enhanceExamplesWithAI(
         return apiDefinition;
     }
 
+    // Wrap the entire AI enhancement pipeline in try-catch to prevent CLI crashes
+    try {
+        return await performAIEnhancement(
+            apiDefinition,
+            config,
+            context,
+            token,
+            organizationId,
+            sourceFilePath,
+            apiName
+        );
+    } catch (error) {
+        context.logger.warn(
+            `AI example enhancement failed with error: ${error}. Continuing with original API definition to prevent CLI crash.`
+        );
+        context.logger.debug(
+            `Full AI enhancement error stack: ${error instanceof Error ? error.stack : String(error)}`
+        );
+
+        // Return original API definition to ensure CLI can continue
+        return apiDefinition;
+    }
+}
+
+async function performAIEnhancement(
+    apiDefinition: FdrCjsSdk.api.v1.register.ApiDefinition,
+    config: AIExampleEnhancerConfig,
+    context: TaskContext,
+    token: FernToken,
+    organizationId: string,
+    sourceFilePath?: AbsoluteFilePath,
+    apiName?: string
+): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     // Log informative message only once per process
     if (!hasLoggedInfoMessage) {
         const message =
@@ -520,20 +553,11 @@ function collectWorkItems(
         const endpointV3 = endpoint as unknown as EndpointV3;
 
         // Check if endpoint already has human-specified examples in v2Examples
-        // const hasHumanExamples = hasUserSpecifiedV2Examples(endpointV3);
-        // if (hasHumanExamples) {
-        //     // Skip this endpoint - it already has human examples that shouldn't be overridden
-        //     continue;
-        // }
-
-        // Check if endpoint has any examples at all
-        // if (endpointV3.examples.length === 0) {
-        //     filteringStats.noExamples++;
-        //     context?.logger.debug(
-        //         `Endpoint ${endpointV3.method.toUpperCase()} [no-examples] skipped: no examples available`
-        //     );
-        //     continue;
-        // }
+        const hasHumanExamples = hasUserSpecifiedV2Examples(endpointV3);
+        if (hasHumanExamples) {
+            // Skip this endpoint - it already has human examples that shouldn't be overridden
+            continue;
+        }
 
         for (const example of endpointV3.examples) {
             const endpointKey = `${endpointV3.method.toLowerCase()}:${example.path}`;
