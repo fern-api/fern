@@ -275,11 +275,14 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
      * and only logs when the FERN_DEBUG environment variable is set.
      */
     private addFernWireMockLoggerClass(class_: ast.Class): void {
+        // Create a class reference with an origin derived from the parent class
+        const nestedClassReference = this.csharp.classReference({
+            origin: class_.explicit("FernWireMockLogger"),
+            enclosingType: this.Types.BaseMockServerTest
+        });
+
         const nestedClass = this.csharp.class_({
-            reference: this.csharp.classReference({
-                name: "FernWireMockLogger",
-                namespace: this.namespaces.root
-            }),
+            reference: nestedClassReference,
             partial: false,
             access: ast.Access.Private,
             sealed: true,
@@ -288,7 +291,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
 
         // Add static IsDebugEnabled field
         nestedClass.addField({
-            origin: nestedClass.explicit("IsDebugEnabled"),
+            name: "IsDebugEnabled",
             access: ast.Access.Private,
             static_: true,
             readonly: true,
@@ -300,7 +303,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
 
         // Add _inner field
         nestedClass.addField({
-            origin: nestedClass.explicit("_inner"),
+            name: "_inner",
             access: ast.Access.Private,
             readonly: true,
             type: this.WireMock.IWireMockLogger
