@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">extended_inline_request_body</a>(...)</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">extended_inline_request_body</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
