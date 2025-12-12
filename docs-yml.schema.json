@@ -3664,6 +3664,16 @@
               "type": "null"
             }
           ]
+        },
+        "ai-example-style-instructions": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
