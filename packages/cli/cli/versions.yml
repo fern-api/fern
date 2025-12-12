@@ -1,9 +1,94 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix `coerce-enums-to-literals: false` setting not being respected for SDK generation. Single-value enums are now correctly preserved as enum types instead of being coerced to literals.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.14.0
+
+- changelogEntry:
+    - summary: |
+        Add support for autorelease flag in generators.yml.
+        See: https://buildwithfern.com/learn/sdks/overview/autorelease#disable-autorelease
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.13.0
+
+- changelogEntry:
+    - summary: |
+        Add inferred auth parameters to the dynamic IR so dynamic snippet generators can consume them.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.12.0
+
+- changelogEntry:
+    - summary: |
+        Fully propagate webhook responses (e.g., 204, 400, 500 status codes) from OpenAPI specs from IR to FDR.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.11.0
+
+- changelogEntry:
+    - summary: |
+        Adds new `right-text` field to logo configuration in docs.yml. This allows users to display custom text to the right of the logo image.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.10.0
+
+- changelogEntry:
+    - summary: |
+        Propagate webhook responses (e.g., 204, 400, 500 status codes) from OpenAPI specs to the IR. Webhook endpoints can now define expected response status codes and descriptions, which are captured in the IR for use by generators and documentation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.9.0
+
+- changelogEntry:
+    - summary: |
+        Test automated CLI publishing.
+      type: chore
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.8.0-rc0
+
+- changelogEntry:
+    - summary: |
+        Include -y flag for the upgrade for non-interactive environments.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.8.0
+
+- changelogEntry:
+    - summary: |
+        Add API flag `default-integer-format` to configure which format is assumed for `type: "integer"`
+        properties in OpenAPI that do not specify a format.
+
+        ```yml
+        # generators.yml
+        api:
+          specs:
+            - openapi: openapi.yml
+              settings:
+                default-integer-format: int64
+        ```
+
+        Possible values are `int32`, `int64`, `uint32`, and `uint64`; defaults to `int32`.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.7.0
+
+- changelogEntry:
+    - summary: |
         Validate examples in `fern check` against OpenAPI schemas.
       type: feat
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-10"
   version: 3.6.0
 
@@ -11,7 +96,7 @@
     - summary: |
         Add support for vendor-specific JSON content types in example validation. Content types like `application/vnd.bc.v1+json` are now accepted as valid JSON content types when validating examples against `literal<"application/json">` types.
       type: feat
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-09"
   version: 3.5.0
 
@@ -19,7 +104,7 @@
     - summary: |
         Fix parsing of `<Code>` components with `for` attribute for synced tabs. The `for` attribute is now properly preserved when converting `<Code>` components to markdown code blocks, allowing synced tabs to work correctly across multiple `<CodeGroup>` sections.
       type: fix
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-08"
   version: 3.4.5
 
@@ -27,7 +112,7 @@
     - summary: |
         Fallback to variant type for display name if title and mapping are not present.
       type: fix
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-08"
   version: 3.4.4
 
@@ -35,7 +120,7 @@
     - summary: |
         Disallow absolute URLs as redirects in frontmatter slug definitions. `links` should be used in the navigation instead.
       type: fix
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-08"
   version: 3.4.3
 
@@ -43,7 +128,7 @@
     - summary: |
         Fix `fern generate` crash when inheriting from a schema with top-level `nullable: true` via `allOf`. The OpenAPI importer now correctly strips nullable wrappers from type references in extends lists.
       type: fix
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-06"
   version: 3.4.2
 
@@ -51,7 +136,7 @@
     - summary: |
         Map error response headers from IR to FDR for docs display.
       type: fix
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-05"
   version: 3.4.1
 
@@ -59,7 +144,7 @@
     - summary: |
         Upgrade `@fern-api/fdr-sdk` to version `0.142.1-b1f6b6363` which adds support for error response headers.
       type: chore
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-05"
   version: 3.4.0
 
@@ -67,7 +152,7 @@
     - summary: |
         Extend `substitute-env-vars` to apply to API specs (OpenAPI and Fern definitions) when generating docs. Environment variables using `${VAR_NAME}` syntax in API spec descriptions, examples, and other string fields are now substituted when `substitute-env-vars: true` is set in `docs.yml`.
       type: feat
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-05"
   version: 3.3.0
 
@@ -75,7 +160,7 @@
     - summary: |
         Add recursive markdown snippet resolution for docs. Markdown snippets can now reference other markdown snippets, with automatic detection and warning for circular references to prevent infinite loops.
       type: feat
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-05"
   version: 3.2.0
 
@@ -83,7 +168,7 @@
     - summary: |
         Preserve error response headers (e.g., Retry-After for 429 errors) from OpenAPI specs in the IR.
       type: feat
-  irVersion: 63
+  irVersion: 62
   createdAt: "2025-12-05"
   version: 3.1.0
 

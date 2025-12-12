@@ -49,6 +49,7 @@ export function convertWebhookGroup({
                       )
                     : [],
             payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),
+            responses: undefined,
             examples:
                 webhook.examples != null
                     ? convertWebhookExamples({

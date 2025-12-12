@@ -1,7 +1,11 @@
+import { exec } from "child_process";
 import { cp, mkdir, rm, writeFile } from "fs/promises";
 import path from "path";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
+import { promisify } from "util";
+
+const execAsync = promisify(exec);
 
 /**
  * Standard build function for Fern generators
@@ -131,4 +135,7 @@ export async function buildDynamicSnippets(dirname, packageJson, versionOverride
             2
         )
     );
+
+    // Run npm pkg fix to format and fix the package.json
+    await execAsync("npm pkg fix", { cwd: distDir });
 }

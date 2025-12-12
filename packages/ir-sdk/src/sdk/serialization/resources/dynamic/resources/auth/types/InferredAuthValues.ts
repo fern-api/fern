@@ -9,8 +9,12 @@ import * as core from "../../../../../../core";
 export const InferredAuthValues: core.serialization.ObjectSchema<
     serializers.dynamic.InferredAuthValues.Raw,
     FernIr.dynamic.InferredAuthValues
-> = core.serialization.objectWithoutOptionalProperties({});
+> = core.serialization.objectWithoutOptionalProperties({
+    values: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
+});
 
 export declare namespace InferredAuthValues {
-    export interface Raw {}
+    export interface Raw {
+        values?: Record<string, unknown> | null;
+    }
 }

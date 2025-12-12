@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.submit_form_data(request) -> Seed::Types::PostSubmitResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">submit_form_data</a>(request) -> Seed::Types::PostSubmitResponse</code></summary>
 <dl>
 <dd>
 
@@ -39,6 +39,14 @@ client.submit_form_data(
 <dd>
 
 **email:** `String` — The user's email address
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

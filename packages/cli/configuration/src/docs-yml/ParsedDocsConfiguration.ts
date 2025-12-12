@@ -101,6 +101,7 @@ export interface Logo {
     light: AbsoluteFilePath | undefined;
     height: CjsFdrSdk.docs.v1.write.Height | undefined;
     href: CjsFdrSdk.Url | undefined;
+    rightText: string | undefined;
 }
 
 export interface BackgroundImage {

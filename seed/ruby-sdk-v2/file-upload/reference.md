@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.just_file(request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">just_file</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -20,12 +20,27 @@ client.service.just_file();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.service.optional_args(request) -> String</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">optional_args</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -45,12 +60,27 @@ client.service.optional_args();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.service.simple() -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">simple</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -65,6 +95,21 @@ client.service.optional_args();
 ```ruby
 client.service.simple();
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
 </dd>
 </dl>
 </dd>

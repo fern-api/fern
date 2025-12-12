@@ -27,7 +27,10 @@ require "seed"
 
 client = Seed::Client.new();
 
-client.test_group.test_method_name(path_param: 'path_param');
+client.test_group.test_method_name(
+  path_param: 'path_param',
+  body: {}
+);
 ```
 
 ## Environments
