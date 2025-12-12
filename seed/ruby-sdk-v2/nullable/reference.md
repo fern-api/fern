@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.get_users() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">get_users</a>() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -67,6 +67,14 @@ client.nullable.get_users(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Nullable::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -75,7 +83,7 @@ client.nullable.get_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.create_user(request) -> Seed::Nullable::Types::User</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">create_user</a>(request) -> Seed::Nullable::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -145,6 +153,14 @@ client.nullable.create_user(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Nullable::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -153,7 +169,7 @@ client.nullable.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.delete_user(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.nullable.<a href="/lib/seed/nullable/client.rb">delete_user</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -182,6 +198,14 @@ client.nullable.delete_user(username: 'xy');
 <dd>
 
 **username:** `String` — The user to delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Nullable::RequestOptions` 
     
 </dd>
 </dl>

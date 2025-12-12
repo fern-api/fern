@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.union.get(request) -> Seed::Union::Types::MyUnion</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get</a>(request) -> Seed::Union::Types::MyUnion</code></summary>
 <dl>
 <dd>
 
@@ -32,6 +32,14 @@ client.union.get(request: 'string');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Union::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -40,7 +48,7 @@ client.union.get(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.union.get_metadata() -> Internal::Types::Hash[Seed::Union::Types::Key, String]</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get_metadata</a>() -> Internal::Types::Hash[Seed::Union::Types::Key, String]</code></summary>
 <dl>
 <dd>
 
@@ -60,12 +68,27 @@ client.union.get_metadata();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Union::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.union.update_metadata(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">update_metadata</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -97,6 +120,14 @@ client.union.update_metadata(request: {});
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Union::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -105,7 +136,7 @@ client.union.update_metadata(request: {});
 </dl>
 </details>
 
-<details><summary><code>client.union.call(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">call</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -137,6 +168,14 @@ client.union.call(union: {});
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Union::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -145,7 +184,7 @@ client.union.call(union: {});
 </dl>
 </details>
 
-<details><summary><code>client.union.duplicate_types_union(request) -> Seed::Union::Types::UnionWithDuplicateTypes</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">duplicate_types_union</a>(request) -> Seed::Union::Types::UnionWithDuplicateTypes</code></summary>
 <dl>
 <dd>
 
@@ -177,6 +216,14 @@ client.union.duplicate_types_union(request: 'string');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Union::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -185,7 +232,7 @@ client.union.duplicate_types_union(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.union.nested_unions(request) -> String</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">nested_unions</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -217,6 +264,14 @@ client.union.nested_unions(request: 'string');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Union::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -225,7 +280,7 @@ client.union.nested_unions(request: 'string');
 </dl>
 </details>
 
-<details><summary><code>client.union.test_camel_case_properties(request) -> String</code></summary>
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">test_camel_case_properties</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -257,6 +312,14 @@ client.union.test_camel_case_properties(payment_method: {
 <dd>
 
 **payment_method:** `Seed::Union::Types::PaymentMethodUnion` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Union::RequestOptions` 
     
 </dd>
 </dl>

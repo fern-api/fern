@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.payment.create(request) -> String</code></summary>
+<details><summary><code>client.payment.<a href="/lib/seed/payment/client.rb">create</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -43,6 +43,14 @@ client.payment.create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Payment::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -51,7 +59,7 @@ client.payment.create(
 </dl>
 </details>
 
-<details><summary><code>client.payment.delete(payment_id) -> </code></summary>
+<details><summary><code>client.payment.<a href="/lib/seed/payment/client.rb">delete</a>(payment_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -80,6 +88,14 @@ client.payment.delete(payment_id: 'paymentId');
 <dd>
 
 **payment_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Payment::RequestOptions` 
     
 </dd>
 </dl>

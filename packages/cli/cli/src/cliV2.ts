@@ -133,6 +133,13 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             description:
                                 "The API to upgrade the generator for. If not specified, the generator will be upgraded for all APIs."
                         })
+                        .option("yes", {
+                            alias: "y",
+                            boolean: true,
+                            default: false,
+                            description:
+                                "Automatically answer yes to any prompts that may appear during the upgrade process."
+                        })
                         .option("include-major", {
                             boolean: true,
                             default: false,

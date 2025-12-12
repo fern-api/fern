@@ -1,5 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.45.5
+  changelogEntry:
+    - summary: |
+        Fix file upload conditional check using wire_value instead of snake_case parameter name,
+        which caused mypy "name not defined" errors when the API field name differed from the
+        Python parameter name (e.g., `MyFile` vs `my_file`).
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 4.45.4
+  changelogEntry:
+    - summary: Fix offset pagination to handle None items when calculating next page offset.
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 4.45.3
+  changelogEntry:
+    - summary: Add return types to reference.md method signatures for consistency with other SDK generators.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
+- version: 4.45.2
+  changelogEntry:
+    - summary: Fix Python wire test generation by schema-based path/body name deconfliction and aligning client class resolution with the SDK's custom config rules.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
+- version: 4.45.1
+  changelogEntry:
+    - summary: Fix forward ref detection for complex circular type cycles.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
 - version: 4.45.0
   changelogEntry:
     - summary: |

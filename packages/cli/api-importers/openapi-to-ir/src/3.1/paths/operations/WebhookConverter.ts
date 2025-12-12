@@ -1,4 +1,4 @@
-import { V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
+import { HttpResponse, V2WebhookExample, Webhook, WebhookPayload } from "@fern-api/ir-sdk";
 
 import { AbstractOperationConverter } from "./AbstractOperationConverter";
 
@@ -75,6 +75,8 @@ export class WebhookConverter extends AbstractOperationConverter {
             return undefined;
         }
 
+        const responses = this.convertWebhookResponses();
+
         return {
             audiences:
                 this.context.getAudiences({
@@ -89,6 +91,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 method: httpMethod,
                 headers,
                 payload,
+                responses: responses.length > 0 ? responses : undefined,
                 examples: [],
                 availability: this.context.getAvailability({
                     node: this.operation,
@@ -106,6 +109,44 @@ export class WebhookConverter extends AbstractOperationConverter {
             },
             inlinedTypes: this.inlinedTypes
         };
+    }
+
+    private convertWebhookResponses(): HttpResponse[] {
+        const responses: HttpResponse[] = [];
+
+        if (this.operation.responses == null) {
+            return responses;
+        }
+
+        for (const [statusCode, response] of Object.entries(this.operation.responses)) {
+            // Check for wildcard status codes like 4XX or 5XX
+            const isWildcard = /^\d[Xx]{2}$/.test(statusCode);
+            let statusCodeNum: number;
+
+            if (isWildcard) {
+                // Convert wildcard to base value (e.g., "4XX" -> 400, "5XX" -> 500)
+                // We know statusCode[0] exists because the regex matched
+                statusCodeNum = parseInt(statusCode.charAt(0)) * 100;
+            } else {
+                statusCodeNum = parseInt(statusCode);
+                if (isNaN(statusCodeNum)) {
+                    continue;
+                }
+            }
+
+            this.context.resolveMaybeReference({
+                schemaOrReference: response,
+                breadcrumbs: [...this.breadcrumbs, "responses", statusCode]
+            });
+
+            responses.push({
+                statusCode: statusCodeNum,
+                isWildcardStatusCode: isWildcard ? true : undefined,
+                body: undefined
+            });
+        }
+
+        return responses;
     }
 
     private getWebhookV2ExamplesFromRequestBodyV2Examples(

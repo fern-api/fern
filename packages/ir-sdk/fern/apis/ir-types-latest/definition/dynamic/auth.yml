@@ -30,10 +30,22 @@ types:
       password: string
 
   InferredAuth:
-    properties: {}
+    docs: |
+      Inferred auth retrieves tokens dynamically. The client constructor parameters
+      are defined by the parameters list.
+    properties:
+      parameters:
+        type: optional<list<types.NamedParameter>>
+        docs: List of parameters (from token endpoint) needed for auth, including their types.
 
   InferredAuthValues:
-    properties: {}
+    docs: |
+      Parameter values for inferred auth in code snippets.
+      The keys are wire values matching the parameters in InferredAuth.
+    properties:
+      values:
+        type: optional<map<string, unknown>>
+        docs: Map of wire values to their example values for snippets.
 
   BearerAuth:
     properties:

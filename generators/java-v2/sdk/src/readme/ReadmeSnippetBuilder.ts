@@ -408,13 +408,16 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
     }
 
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
+        const defaultTimeout = this.context.customConfig?.["default-timeout-in-seconds"] ?? 60;
+        const timeoutValue = String(defaultTimeout);
+
         const requestOptionsClassReference = this.context.getRequestOptionsClassReference();
         const requestOptionsInitialization = java.TypeLiteral.builder({
             classReference: requestOptionsClassReference,
             parameters: [
                 {
                     name: "timeout",
-                    value: java.TypeLiteral.raw(java.codeblock("10"))
+                    value: java.TypeLiteral.raw(java.codeblock(timeoutValue))
                 }
             ]
         });
@@ -430,7 +433,7 @@ ${clientClassName} client = ${clientClassName}.withCredentials("client-id", "cli
             parameters: [
                 {
                     name: "timeout",
-                    value: java.TypeLiteral.raw(java.codeblock("10"))
+                    value: java.TypeLiteral.raw(java.codeblock(timeoutValue))
                 }
             ]
         });

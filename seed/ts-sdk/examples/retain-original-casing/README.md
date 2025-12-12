@@ -38,7 +38,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedExamplesEnvironment, SeedExamplesClient } from "@fern/examples";
+import { SeedExamplesClient, SeedExamplesEnvironment } from "@fern/examples";
 
 const client = new SeedExamplesClient({ environment: SeedExamplesEnvironment.Production, token: "YOUR_TOKEN" });
 await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");

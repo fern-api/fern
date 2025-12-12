@@ -12,8 +12,8 @@ public class Example20
             }
         );
 
-        await client.Users.ListWithOffsetStepPaginationAsync(
-            new SeedPagination.ListUsersOffsetStepPaginationRequest {
+        await client.Users.ListWithOffsetPaginationHasNextPageAsync(
+            new SeedPagination.ListWithOffsetPaginationHasNextPageRequest {
                 Page = 1,
                 Limit = 1,
                 Order = SeedPagination.Order.Asc

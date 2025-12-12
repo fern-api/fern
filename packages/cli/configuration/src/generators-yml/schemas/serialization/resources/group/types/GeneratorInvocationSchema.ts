@@ -28,6 +28,7 @@ export const GeneratorInvocationSchema: core.serialization.ObjectSchema<
     api: GeneratorApiSettingsSchema.optional(),
     "disable-examples": core.serialization.boolean().optional(),
     "publish-metadata": GeneratorPublishMetadataSchema.optional(),
+    autorelease: core.serialization.boolean().optional(),
 });
 
 export declare namespace GeneratorInvocationSchema {
@@ -45,5 +46,6 @@ export declare namespace GeneratorInvocationSchema {
         api?: GeneratorApiSettingsSchema.Raw | null;
         "disable-examples"?: boolean | null;
         "publish-metadata"?: GeneratorPublishMetadataSchema.Raw | null;
+        autorelease?: boolean | null;
     }
 }

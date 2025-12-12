@@ -16,6 +16,7 @@ import {
     HttpEndpoint,
     HttpHeader,
     HttpRequestBody,
+    InferredAuthScheme,
     IntermediateRepresentation,
     Literal,
     Name,
@@ -705,7 +706,9 @@ export class DynamicSnippetsConverter {
                     clientSecret: this.casingsGenerator.generateName("clientSecret")
                 });
             case "inferred":
-                return DynamicSnippets.Auth.inferred({});
+                return DynamicSnippets.Auth.inferred({
+                    parameters: this.getInferredAuthParameters(scheme)
+                });
             default:
                 assertNever(scheme);
         }
@@ -736,10 +739,94 @@ export class DynamicSnippetsConverter {
                     clientSecret: "<clientSecret>"
                 });
             case "inferred":
-                return DynamicSnippets.AuthValues.inferred({});
+                return DynamicSnippets.AuthValues.inferred({
+                    values: this.getInferredAuthValues(scheme)
+                });
             default:
                 assertNever(scheme);
         }
+    }
+
+    private getInferredAuthParameters(scheme: InferredAuthScheme): DynamicSnippets.NamedParameter[] {
+        const parameters: DynamicSnippets.NamedParameter[] = [];
+
+        // Get the token endpoint
+        const tokenEndpoint = Object.values(this.ir.services)
+            .flatMap((service) => service.endpoints)
+            .find((endpoint) => {
+                return endpoint.id === scheme.tokenEndpoint.endpoint.endpointId;
+            });
+
+        if (tokenEndpoint == null) {
+            return parameters;
+        }
+
+        // Extract credentials from headers
+        for (const header of tokenEndpoint.headers) {
+            if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
+                parameters.push({
+                    name: {
+                        name: header.name.name,
+                        wireValue: header.name.wireValue
+                    },
+                    typeReference: this.convertTypeReference(header.valueType),
+                    propertyAccess: undefined,
+                    variable: undefined
+                });
+            }
+        }
+
+        // Extract credentials from request body
+        if (tokenEndpoint.requestBody != null && tokenEndpoint.requestBody.type === "inlinedRequestBody") {
+            for (const property of tokenEndpoint.requestBody.properties) {
+                if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
+                    parameters.push({
+                        name: {
+                            name: property.name.name,
+                            wireValue: property.name.wireValue
+                        },
+                        typeReference: this.convertTypeReference(property.valueType),
+                        propertyAccess: undefined,
+                        variable: undefined
+                    });
+                }
+            }
+        }
+
+        return parameters;
+    }
+
+    private getInferredAuthValues(scheme: InferredAuthScheme): Record<string, unknown> {
+        const values: Record<string, unknown> = {};
+
+        // Get the token endpoint
+        const tokenEndpoint = Object.values(this.ir.services)
+            .flatMap((service) => service.endpoints)
+            .find((endpoint) => {
+                return endpoint.id === scheme.tokenEndpoint.endpoint.endpointId;
+            });
+
+        if (tokenEndpoint == null) {
+            return values;
+        }
+
+        // Extract credentials from headers - use wireValue as key
+        for (const header of tokenEndpoint.headers) {
+            if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
+                values[header.name.wireValue] = header.name.wireValue;
+            }
+        }
+
+        // Extract credentials from request body - use wireValue as key
+        if (tokenEndpoint.requestBody != null && tokenEndpoint.requestBody.type === "inlinedRequestBody") {
+            for (const property of tokenEndpoint.requestBody.properties) {
+                if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
+                    values[property.name.wireValue] = property.name.wireValue;
+                }
+            }
+        }
+
+        return values;
     }
 
     private convertDeclaration({

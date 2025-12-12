@@ -18,6 +18,11 @@ export const SNIPPET_JSON_FILENAME = "snippet.json";
 export const SNIPPET_TEMPLATES_JSON_FILENAME = "snippet-templates.json";
 export const RESOLVED_SNIPPET_TEMPLATES_MD = "resolved-snippet-templates.md";
 export const DEFAULT_GROUP_GENERATORS_CONFIG_KEY = "default-group";
+export const API_ORIGIN_LOCATION_KEY = "spec-origin";
+export const ASYNC_API_LOCATION_KEY = "async-api";
+export const OPENAPI_LOCATION_KEY = "openapi";
+export const OPENAPI_OVERRIDES_LOCATION_KEY = "openapi-overrides";
+export const API_SETTINGS_KEY = "api-settings";
 
 export const DOCS_DIRECTORY = "docs";
 export const APIS_DIRECTORY = "apis";

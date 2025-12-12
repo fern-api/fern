@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.echo(request) -> String</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">echo</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -31,6 +31,14 @@ client.echo(request: 'Hello world!\n\nwith\n\tnewlines');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -39,7 +47,7 @@ client.echo(request: 'Hello world!\n\nwith\n\tnewlines');
 </dl>
 </details>
 
-<details><summary><code>client.create_type(request) -> Seed::Types::Identifier</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_type</a>(request) -> Seed::Types::Identifier</code></summary>
 <dl>
 <dd>
 
@@ -71,6 +79,14 @@ client.echo(request: 'primitive');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -80,7 +96,7 @@ client.echo(request: 'primitive');
 </details>
 
 ## File Notification Service
-<details><summary><code>client.file.notification.service.get_exception(notification_id) -> Seed::Types::Types::Exception</code></summary>
+<details><summary><code>client.file.notification.service.<a href="/lib/seed/file/notification/service/client.rb">get_exception</a>(notification_id) -> Seed::Types::Types::Exception</code></summary>
 <dl>
 <dd>
 
@@ -112,6 +128,14 @@ client.file.notification.service.get_exception(notification_id: 'notification-hs
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::File::Notification::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -121,7 +145,7 @@ client.file.notification.service.get_exception(notification_id: 'notification-hs
 </details>
 
 ## File Service
-<details><summary><code>client.file.service.get_file(filename) -> Seed::Types::Types::File</code></summary>
+<details><summary><code>client.file.service.<a href="/lib/seed/file/service/client.rb">get_file</a>(filename) -> Seed::Types::Types::File</code></summary>
 <dl>
 <dd>
 
@@ -170,6 +194,14 @@ client.file.service.get_file(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::File::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -179,7 +211,7 @@ client.file.service.get_file(
 </details>
 
 ## Health Service
-<details><summary><code>client.health.service.check(id) -> </code></summary>
+<details><summary><code>client.health.service.<a href="/lib/seed/health/service/client.rb">check</a>(id) -> </code></summary>
 <dl>
 <dd>
 
@@ -225,6 +257,14 @@ client.health.service.check(id: 'id-2sdx82h');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Health::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -233,7 +273,7 @@ client.health.service.check(id: 'id-2sdx82h');
 </dl>
 </details>
 
-<details><summary><code>client.health.service.ping() -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.health.service.<a href="/lib/seed/health/service/client.rb">ping</a>() -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -267,13 +307,28 @@ client.health.service.ping();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Health::Service::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
 ## Service
-<details><summary><code>client.service.get_movie(movie_id) -> Seed::Types::Types::Movie</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_movie</a>(movie_id) -> Seed::Types::Types::Movie</code></summary>
 <dl>
 <dd>
 
@@ -305,6 +360,14 @@ client.service.get_movie(movie_id: 'movie-c06a4ad7');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -313,7 +376,7 @@ client.service.get_movie(movie_id: 'movie-c06a4ad7');
 </dl>
 </details>
 
-<details><summary><code>client.service.create_movie(request) -> String</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_movie</a>(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -355,6 +418,14 @@ client.service.create_movie(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -363,7 +434,7 @@ client.service.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.get_metadata() -> Seed::Types::Types::Metadata</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_metadata</a>() -> Seed::Types::Types::Metadata</code></summary>
 <dl>
 <dd>
 
@@ -414,6 +485,14 @@ client.service.get_metadata(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -422,7 +501,7 @@ client.service.get_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.service.create_big_entity(request) -> Seed::Types::Types::Response</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">create_big_entity</a>(request) -> Seed::Types::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -599,6 +678,14 @@ client.service.create_big_entity(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -607,7 +694,7 @@ client.service.create_big_entity(
 </dl>
 </details>
 
-<details><summary><code>client.service.refresh_token(request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">refresh_token</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -620,7 +707,9 @@ client.service.create_big_entity(
 <dd>
 
 ```ruby
-client.service.refresh_token();
+client.service.refresh_token(request: {
+  ttl: 420
+});
 ```
 </dd>
 </dl>
@@ -636,6 +725,14 @@ client.service.refresh_token();
 <dd>
 
 **request:** `Seed::Types::Types::RefreshTokenRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>

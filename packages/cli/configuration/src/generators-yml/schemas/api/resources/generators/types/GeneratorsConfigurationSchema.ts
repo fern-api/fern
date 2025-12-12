@@ -24,6 +24,11 @@ export interface GeneratorsConfigurationSchema {
     groups?: Record<string, FernDefinition.GeneratorGroupSchema>;
     reviewers?: FernDefinition.ReviewersSchema;
     ai?: FernDefinition.AiServicesSchema;
+    /**
+     * If true, automatically release SDKs when changes are detected.
+     * Can be overridden at the individual generator level.
+     */
+    autorelease?: boolean;
     /** Deprecated, use the `api` key instead */
     openapi?: FernDefinition.GeneratorsOpenApiSchema;
     /** Deprecated, use the `api` key instead */

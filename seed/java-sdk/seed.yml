@@ -295,6 +295,12 @@ fixtures:
         use-default-request-parameter-values: true
         collapse-optional-nullable: true
       outputFolder: default
+  java-default-timeout:
+    - customConfig:
+        default-timeout-in-seconds: 120
+      outputFolder: default
+  java-with-property-conflict:
+    - outputFolder: default
 scripts:
   - image: fernapi/java-seed
     commands:

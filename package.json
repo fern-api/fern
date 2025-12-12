@@ -46,7 +46,7 @@
     "fern:build:unminified": "cross-env POSTHOG_API_KEY=\"\" turbo run dist:cli:prod:unminified --filter @fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'",
     "fern-dev:build": "turbo run dist:cli:dev --filter=@fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/dev/cli.cjs'",
     "fern-local:build": "turbo run dist:cli:local --filter @fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/local/cli.cjs'",
-    "generator-cli:generate": "pnpm fern:build && pnpm fern generate --api generator-cli --local && turbo dist:cli --filter=@fern-api/generator-cli",
+    "generator-cli:generate": "pnpm fern:build && pnpm fern generate --api generator-cli --local && turbo run dist:cli --filter=@fern-api/generator-cli",
     "seed:build": "turbo run dist:cli --filter=@fern-api/seed-cli && echo 'Run node --enable-source-maps packages/seed/dist/cli.cjs'",
     "publish": "pnpm -r publish --access public --no-git-checks --loglevel=verbose",
     "jsonschema": "pnpm definition-yml:jsonschema && pnpm api-yml:jsonschema && pnpm package-yml:jsonschema && pnpm docs-yml:jsonschema && pnpm generators-yml:jsonschema && pnpm versions-yml:jsonschema && pnpm products-yml:jsonschema",
@@ -137,7 +137,7 @@
       "node-fetch@2.x>whatwg-url": "^14.0.0",
       "qs": "6.13.0",
       "url-join": "^4.0.1",
-      "@fern-api/fdr-sdk": "0.142.1-b1f6b6363",
+      "@fern-api/fdr-sdk": "0.142.4-4cf986c21",
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1",
       "form-data": "^4.0.4"

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.get_test() -> Seed::Types::RootObject</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get_test</a>() -> Seed::Types::RootObject</code></summary>
 <dl>
 <dd>
 
@@ -33,12 +33,27 @@ client.get_test();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.create_test(request) -> Seed::Types::RootObject</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create_test</a>(request) -> Seed::Types::RootObject</code></summary>
 <dl>
 <dd>
 
@@ -81,6 +96,14 @@ client.create_test();
 <dd>
 
 **request:** `Seed::Types::RootObject` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

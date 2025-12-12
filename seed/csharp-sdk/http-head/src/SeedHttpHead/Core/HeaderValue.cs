@@ -2,16 +2,40 @@ using OneOf;
 
 namespace SeedHttpHead.Core;
 
-internal sealed class HeaderValue(OneOf<string, Func<string>> value)
-    : OneOfBase<string, Func<string>>(value)
+internal sealed class HeaderValue(
+    OneOf<
+        string,
+        Func<string>,
+        Func<global::System.Threading.Tasks.ValueTask<string>>,
+        Func<global::System.Threading.Tasks.Task<string>>
+    > value
+)
+    : OneOfBase<
+        string,
+        Func<string>,
+        Func<global::System.Threading.Tasks.ValueTask<string>>,
+        Func<global::System.Threading.Tasks.Task<string>>
+    >(value)
 {
-    public static implicit operator HeaderValue(string value)
-    {
-        return new HeaderValue(value);
-    }
+    public static implicit operator HeaderValue(string value) => new(value);
 
-    public static implicit operator HeaderValue(Func<string> value)
+    public static implicit operator HeaderValue(Func<string> value) => new(value);
+
+    public static implicit operator HeaderValue(
+        Func<global::System.Threading.Tasks.ValueTask<string>> value
+    ) => new(value);
+
+    public static implicit operator HeaderValue(
+        Func<global::System.Threading.Tasks.Task<string>> value
+    ) => new(value);
+
+    internal global::System.Threading.Tasks.ValueTask<string> ResolveAsync()
     {
-        return new HeaderValue(value);
+        return Match(
+            str => new global::System.Threading.Tasks.ValueTask<string>(str),
+            syncFunc => new global::System.Threading.Tasks.ValueTask<string>(syncFunc()),
+            valueTaskFunc => valueTaskFunc(),
+            taskFunc => new global::System.Threading.Tasks.ValueTask<string>(taskFunc())
+        );
     }
 }

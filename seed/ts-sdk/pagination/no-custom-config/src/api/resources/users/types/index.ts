@@ -1,6 +1,7 @@
 export * from "./ListUsersExtendedOptionalListResponse.js";
 export * from "./ListUsersExtendedResponse.js";
 export * from "./ListUsersMixedTypePaginationResponse.js";
+export * from "./ListUsersOptionalDataPaginationResponse.js";
 export * from "./ListUsersPaginationResponse.js";
 export * from "./NextPage.js";
 export * from "./Order.js";

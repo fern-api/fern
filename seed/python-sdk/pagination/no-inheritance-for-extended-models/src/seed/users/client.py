@@ -11,6 +11,7 @@ from .raw_client import AsyncRawUsersClient, RawUsersClient
 from .types.list_users_extended_optional_list_response import ListUsersExtendedOptionalListResponse
 from .types.list_users_extended_response import ListUsersExtendedResponse
 from .types.list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
+from .types.list_users_optional_data_pagination_response import ListUsersOptionalDataPaginationResponse
 from .types.list_users_pagination_response import ListUsersPaginationResponse
 from .types.order import Order
 from .types.user import User
@@ -601,6 +602,41 @@ class UsersClient:
             yield page
         """
         return self._raw_client.list_with_global_config(offset=offset, request_options=request_options)
+
+    def list_with_optional_data(
+        self, *, page: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> SyncPager[User, ListUsersOptionalDataPaginationResponse]:
+        """
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[User, ListUsersOptionalDataPaginationResponse]
+
+        Examples
+        --------
+        from seed import SeedPagination
+
+        client = SeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.users.list_with_optional_data(
+            page=1,
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list_with_optional_data(page=page, request_options=request_options)
 
 
 class AsyncUsersClient:
@@ -1303,3 +1339,47 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         return await self._raw_client.list_with_global_config(offset=offset, request_options=request_options)
+
+    async def list_with_optional_data(
+        self, *, page: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncPager[User, ListUsersOptionalDataPaginationResponse]:
+        """
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[User, ListUsersOptionalDataPaginationResponse]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedPagination
+
+        client = AsyncSeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.users.list_with_optional_data(
+                page=1,
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list_with_optional_data(page=page, request_options=request_options)
