@@ -159,4 +159,67 @@ describe("replaceEnvVariables", () => {
             }
         });
     });
+
+    it("substitutes env vars in docs instances config including custom domains", () => {
+        process.env.DOCS_URL = "my-docs.docs.buildwithfern.com";
+        process.env.CUSTOM_DOMAIN = "docs.example.com";
+        process.env.CUSTOM_DOMAIN_2 = "api.example.com";
+        const instances = [
+            {
+                url: "${DOCS_URL}",
+                customDomain: "${CUSTOM_DOMAIN}"
+            },
+            {
+                url: "static.docs.buildwithfern.com",
+                customDomain: ["${CUSTOM_DOMAIN}", "${CUSTOM_DOMAIN_2}"]
+            }
+        ];
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(instances, { onError });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual([
+            {
+                url: "my-docs.docs.buildwithfern.com",
+                customDomain: "docs.example.com"
+            },
+            {
+                url: "static.docs.buildwithfern.com",
+                customDomain: ["docs.example.com", "api.example.com"]
+            }
+        ]);
+    });
+
+    it("throws error for missing env vars in docs instances config when substituteAsEmpty is false", () => {
+        process.env.DOCS_URL = "my-docs.docs.buildwithfern.com";
+        const instances = [
+            {
+                url: "${DOCS_URL}",
+                customDomain: "${MISSING_CUSTOM_DOMAIN}"
+            }
+        ];
+        const onError = vi.fn();
+        replaceEnvVariables(instances, { onError }, { substituteAsEmpty: false });
+
+        expect(onError).toHaveBeenCalled();
+    });
+
+    it("substitutes empty string for missing env vars in docs instances when substituteAsEmpty is true", () => {
+        const instances = [
+            {
+                url: "${MISSING_DOCS_URL}",
+                customDomain: "${MISSING_CUSTOM_DOMAIN}"
+            }
+        ];
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(instances, { onError }, { substituteAsEmpty: true });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual([
+            {
+                url: "",
+                customDomain: ""
+            }
+        ]);
+    });
 });
