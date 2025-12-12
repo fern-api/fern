@@ -406,14 +406,11 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 );
                 w.newLine();
 
-                // Set up the token getter function
+                // Set up the token getter function using GetOrFetch for concurrency protection
                 w.writeLine("options.SetTokenGetter(func() (string, error) {");
                 w.indent();
-                w.writeLine('if token := oauthTokenProvider.GetToken(); token != "" {');
+                w.writeLine("return oauthTokenProvider.GetOrFetch(func() (string, int, error) {");
                 w.indent();
-                w.writeLine("return token, nil");
-                w.dedent();
-                w.writeLine("}");
 
                 // Fetch a new token from the auth endpoint
                 // Get the request type reference from the endpoint
@@ -446,11 +443,15 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeLine("})");
                 w.writeLine("if err != nil {");
                 w.indent();
-                w.writeLine('return "", err');
+                w.writeLine('return "", 0, err');
                 w.dedent();
                 w.writeLine("}");
-                w.writeLine("oauthTokenProvider.SetToken(response.AccessToken, response.ExpiresIn)");
-                w.writeLine("return response.AccessToken, nil");
+
+                // Return the access token and expires_in directly
+                // The response types are non-pointer types (string and int) so we use them directly
+                w.writeLine("return response.AccessToken, response.ExpiresIn, nil");
+                w.dedent();
+                w.writeLine("})");
                 w.dedent();
                 w.writeLine("})");
             })

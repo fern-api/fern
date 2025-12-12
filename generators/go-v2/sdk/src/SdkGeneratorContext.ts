@@ -76,7 +76,23 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.Stream);
         }
 
+        if (this.hasOAuthClientCredentials()) {
+            files.push(AsIsFiles.OAuth);
+        }
+
         return files;
+    }
+
+    public hasOAuthClientCredentials(): boolean {
+        if (this.ir.auth == null) {
+            return false;
+        }
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "oauth" && scheme.configuration?.type === "clientCredentials") {
+                return true;
+            }
+        }
+        return false;
     }
 
     public getRootAsIsFiles(): string[] {
