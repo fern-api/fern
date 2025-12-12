@@ -1,7 +1,6 @@
 using global::System.Net.Http;
 using global::System.Net.Http.Headers;
 using global::System.Text;
-using global::System.Text.Json;
 using SystemTask = global::System.Threading.Tasks.Task;
 
 namespace <%= namespace%>;
@@ -13,24 +12,6 @@ internal partial class RawClient(ClientOptions clientOptions)
 {
     private const int MaxRetryDelayMs = 60000;
     private const double JitterFactor = 0.2;
-
-    private static readonly bool _isDebugEnabled = !string.IsNullOrEmpty(
-        Environment.GetEnvironmentVariable("FERN_DEBUG")
-    );
-
-    private static readonly HashSet<string> _sensitiveHeaders = new(StringComparer.OrdinalIgnoreCase)
-    {
-        "Authorization",
-        "X-Api-Key",
-        "X-Fern-Api-Key",
-        "Api-Key",
-        "Bearer",
-        "Cookie",
-        "Set-Cookie",
-        "X-Auth-Token",
-        "X-Session-Token",
-        "Proxy-Authorization",
-    };
 #if NET6_0_OR_GREATER
     // Use Random.Shared for thread-safe random number generation on .NET 6+
 #else
@@ -152,17 +133,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         var httpClient = options?.HttpClient ?? Options.HttpClient;
         var maxRetries = options?.MaxRetries ?? Options.MaxRetries;
 
-        if (_isDebugEnabled)
-        {
-            await LogRequestAsync(request).ConfigureAwait(false);
-        }
-
         var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-
-        if (_isDebugEnabled)
-        {
-            await LogResponseAsync(response).ConfigureAwait(false);
-        }
 
         var isRetryableContent = IsRetryableContent(request);
 
@@ -182,20 +153,9 @@ internal partial class RawClient(ClientOptions clientOptions)
             await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
             using var retryRequest = await CloneRequestAsync(request).ConfigureAwait(false);
 
-            if (_isDebugEnabled)
-            {
-                Console.WriteLine($"[{DateTimeOffset.UtcNow:O}] Fern: Retrying request (attempt {i + 1}/{maxRetries})");
-                await LogRequestAsync(retryRequest).ConfigureAwait(false);
-            }
-
             response = await httpClient
                 .SendAsync(retryRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
                 .ConfigureAwait(false);
-
-            if (_isDebugEnabled)
-            {
-                await LogResponseAsync(response).ConfigureAwait(false);
-            }
         }
 
         return new global::<%= namespace%>.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
@@ -474,89 +434,6 @@ internal partial class RawClient(ClientOptions clientOptions)
                 httpRequest.Headers.TryAddWithoutValidation(kv.Key, header);
             }
         }
-    }
-
-    private static async SystemTask LogRequestAsync(HttpRequestMessage request)
-    {
-        var sb = new StringBuilder();
-        sb.AppendLine($"[{DateTimeOffset.UtcNow:O}] Fern: HTTP Request");
-        sb.AppendLine($"  Method: {request.Method}");
-        sb.AppendLine($"  URL: {request.RequestUri}");
-        sb.AppendLine("  Headers:");
-        foreach (var header in request.Headers)
-        {
-            var value = _sensitiveHeaders.Contains(header.Key)
-                ? "[REDACTED]"
-                : string.Join(", ", header.Value);
-            sb.AppendLine($"    {header.Key}: {value}");
-        }
-
-        if (request.Content is not null)
-        {
-            foreach (var header in request.Content.Headers)
-            {
-                var value = _sensitiveHeaders.Contains(header.Key)
-                    ? "[REDACTED]"
-                    : string.Join(", ", header.Value);
-                sb.AppendLine($"    {header.Key}: {value}");
-            }
-
-            try
-            {
-                var body = await request.Content.ReadAsStringAsync().ConfigureAwait(false);
-                if (!string.IsNullOrEmpty(body))
-                {
-                    sb.AppendLine($"  Body: {body}");
-                }
-            }
-            catch
-            {
-                sb.AppendLine("  Body: [Unable to read body]");
-            }
-        }
-
-        Console.WriteLine(sb.ToString());
-    }
-
-    private static async SystemTask LogResponseAsync(HttpResponseMessage response)
-    {
-        var sb = new StringBuilder();
-        sb.AppendLine($"[{DateTimeOffset.UtcNow:O}] Fern: HTTP Response");
-        sb.AppendLine($"  Status: {(int)response.StatusCode} {response.ReasonPhrase}");
-        sb.AppendLine("  Headers:");
-        foreach (var header in response.Headers)
-        {
-            var value = _sensitiveHeaders.Contains(header.Key)
-                ? "[REDACTED]"
-                : string.Join(", ", header.Value);
-            sb.AppendLine($"    {header.Key}: {value}");
-        }
-
-        if (response.Content is not null)
-        {
-            foreach (var header in response.Content.Headers)
-            {
-                var value = _sensitiveHeaders.Contains(header.Key)
-                    ? "[REDACTED]"
-                    : string.Join(", ", header.Value);
-                sb.AppendLine($"    {header.Key}: {value}");
-            }
-
-            try
-            {
-                var body = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                if (!string.IsNullOrEmpty(body))
-                {
-                    sb.AppendLine($"  Body: {body}");
-                }
-            }
-            catch
-            {
-                sb.AppendLine("  Body: [Unable to read body]");
-            }
-        }
-
-        Console.WriteLine(sb.ToString());
     }
 
     private static (Encoding encoding, string? charset, string mediaType) ParseContentTypeOrDefault(

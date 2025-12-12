@@ -26,6 +26,9 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             annotations: [this.NUnit.Framework.SetUpFixture]
         });
 
+        // Add nested FernWireMockLogger class for debug logging
+        this.addFernWireMockLoggerClass(class_);
+
         class_.addField({
             origin: class_.explicit("Server"),
             access: ast.Access.Protected,
@@ -86,9 +89,9 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 writer.writeStatement(
                     "Server = WireMockServer.Start(new ",
                     this.WireMock.WireMockServerSettings,
-                    " { Logger = new ",
+                    " { Logger = new FernWireMockLogger(new ",
                     this.WireMock.WireMockConsoleLogger,
-                    "() })"
+                    "()) })"
                 );
                 writer.writeLine();
 
@@ -265,6 +268,185 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             this.generation.constants.folders.mockServerTests,
             RelativeFilePath.of(`${this.Types.BaseMockServerTest.name}.cs`)
         );
+    }
+
+    /**
+     * Adds a nested FernWireMockLogger class that wraps WireMockConsoleLogger
+     * and only logs when the FERN_DEBUG environment variable is set.
+     */
+    private addFernWireMockLoggerClass(class_: ast.Class): void {
+        const nestedClass = this.csharp.class_({
+            reference: this.csharp.classReference({
+                name: "FernWireMockLogger",
+                namespace: this.namespaces.root
+            }),
+            partial: false,
+            access: ast.Access.Private,
+            sealed: true,
+            implements_: [this.WireMock.IWireMockLogger]
+        });
+
+        // Add static IsDebugEnabled field
+        nestedClass.addField({
+            origin: nestedClass.explicit("IsDebugEnabled"),
+            access: ast.Access.Private,
+            static_: true,
+            readonly_: true,
+            type: this.csharp.type({ name: "bool", namespace: "" }),
+            initializer: this.csharp.codeblock(
+                '!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FERN_DEBUG"))'
+            )
+        });
+
+        // Add _inner field
+        nestedClass.addField({
+            origin: nestedClass.explicit("_inner"),
+            access: ast.Access.Private,
+            readonly_: true,
+            type: this.WireMock.IWireMockLogger
+        });
+
+        // Add constructor
+        nestedClass.addMethod({
+            name: "FernWireMockLogger",
+            access: ast.Access.Public,
+            isConstructor: true,
+            parameters: [
+                {
+                    name: "inner",
+                    type: this.WireMock.IWireMockLogger
+                }
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine("_inner = inner;");
+            })
+        });
+
+        // Add Debug method
+        nestedClass.addMethod({
+            name: "Debug",
+            access: ast.Access.Public,
+            returnType: this.csharp.type({ name: "void", namespace: "" }),
+            parameters: [
+                {
+                    name: "formatString",
+                    type: this.csharp.type({ name: "string", namespace: "" })
+                },
+                {
+                    name: "args",
+                    type: this.csharp.type({ name: "object[]", namespace: "" }),
+                    params: true
+                }
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine("if (IsDebugEnabled)");
+                writer.pushScope();
+                writer.writeLine('Console.WriteLine("[Fern MockServer Debug] " + string.Format(formatString, args));');
+                writer.popScope();
+                writer.writeLine("_inner.Debug(formatString, args);");
+            })
+        });
+
+        // Add Info method
+        nestedClass.addMethod({
+            name: "Info",
+            access: ast.Access.Public,
+            returnType: this.csharp.type({ name: "void", namespace: "" }),
+            parameters: [
+                {
+                    name: "formatString",
+                    type: this.csharp.type({ name: "string", namespace: "" })
+                },
+                {
+                    name: "args",
+                    type: this.csharp.type({ name: "object[]", namespace: "" }),
+                    params: true
+                }
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine("if (IsDebugEnabled)");
+                writer.pushScope();
+                writer.writeLine('Console.WriteLine("[Fern MockServer Info] " + string.Format(formatString, args));');
+                writer.popScope();
+                writer.writeLine("_inner.Info(formatString, args);");
+            })
+        });
+
+        // Add Warn method
+        nestedClass.addMethod({
+            name: "Warn",
+            access: ast.Access.Public,
+            returnType: this.csharp.type({ name: "void", namespace: "" }),
+            parameters: [
+                {
+                    name: "formatString",
+                    type: this.csharp.type({ name: "string", namespace: "" })
+                },
+                {
+                    name: "args",
+                    type: this.csharp.type({ name: "object[]", namespace: "" }),
+                    params: true
+                }
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine("if (IsDebugEnabled)");
+                writer.pushScope();
+                writer.writeLine('Console.WriteLine("[Fern MockServer Warn] " + string.Format(formatString, args));');
+                writer.popScope();
+                writer.writeLine("_inner.Warn(formatString, args);");
+            })
+        });
+
+        // Add Error method (with formatString and args)
+        nestedClass.addMethod({
+            name: "Error",
+            access: ast.Access.Public,
+            returnType: this.csharp.type({ name: "void", namespace: "" }),
+            parameters: [
+                {
+                    name: "formatString",
+                    type: this.csharp.type({ name: "string", namespace: "" })
+                },
+                {
+                    name: "args",
+                    type: this.csharp.type({ name: "object[]", namespace: "" }),
+                    params: true
+                }
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine("if (IsDebugEnabled)");
+                writer.pushScope();
+                writer.writeLine('Console.WriteLine("[Fern MockServer Error] " + string.Format(formatString, args));');
+                writer.popScope();
+                writer.writeLine("_inner.Error(formatString, args);");
+            })
+        });
+
+        // Add Error method (with message and exception)
+        nestedClass.addMethod({
+            name: "Error",
+            access: ast.Access.Public,
+            returnType: this.csharp.type({ name: "void", namespace: "" }),
+            parameters: [
+                {
+                    name: "message",
+                    type: this.csharp.type({ name: "string", namespace: "" })
+                },
+                {
+                    name: "exception",
+                    type: this.System.Exception()
+                }
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine("if (IsDebugEnabled)");
+                writer.pushScope();
+                writer.writeLine('Console.WriteLine("[Fern MockServer Error] " + message + ": " + exception);');
+                writer.popScope();
+                writer.writeLine("_inner.Error(message, exception);");
+            })
+        });
+
+        class_.addNestedClass(nestedClass);
     }
 }
 
