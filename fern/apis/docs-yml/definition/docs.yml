@@ -1577,6 +1577,13 @@ types:
         availability: pre-release
         docs: |
           Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+      example-style-instructions:
+        type: optional<string>
+        availability: pre-release
+        docs: |
+          Optional styling instructions for AI-generated examples. This text provides guidance to the AI model on how to format, structure, or style the generated examples. Can be multi-line text with specific formatting requirements, naming conventions, or style preferences.
+
+          Limited to 500 characters - longer text will be truncated with a warning.
 
   PlaygroundSettings:
     properties:

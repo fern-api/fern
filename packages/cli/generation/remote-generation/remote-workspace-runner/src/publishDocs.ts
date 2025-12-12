@@ -59,6 +59,7 @@ export async function publishDocs({
     disableTemplates = false,
     skipUpload = false,
     withAiExamples = false,
+    experimentalConfig,
     targetAudiences
 }: {
     token: FernToken;
@@ -75,6 +76,7 @@ export async function publishDocs({
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
     withAiExamples?: boolean;
+    experimentalConfig?: docsYml.RawSchemas.FernDocsConfig.ExperimentalConfig;
     targetAudiences?: string[];
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
@@ -260,7 +262,7 @@ export async function publishDocs({
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
             let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 
-            const aiEnhancerConfig = getAIEnhancerConfig(withAiExamples);
+            const aiEnhancerConfig = getAIEnhancerConfig(withAiExamples, experimentalConfig, context);
             if (aiEnhancerConfig && workspace) {
                 const sources = workspace.getSources();
                 const openApiSource = sources.find((source) => source.type === "openapi");
@@ -768,15 +770,31 @@ async function updateAiChatFromDocsDefinition({
     }
 }
 
-function getAIEnhancerConfig(withAiExamples: boolean): AIExampleEnhancerConfig | undefined {
+function getAIEnhancerConfig(
+    withAiExamples: boolean,
+    experimentalConfig?: docsYml.RawSchemas.FernDocsConfig.ExperimentalConfig,
+    context?: TaskContext
+): AIExampleEnhancerConfig | undefined {
     if (!withAiExamples) {
         return undefined;
+    }
+
+    // Validate and truncate exampleStyleInstructions to 500 characters
+    let exampleStyleInstructions = experimentalConfig?.exampleStyleInstructions;
+    if (exampleStyleInstructions && exampleStyleInstructions.length > 500) {
+        if (context) {
+            context.logger.warn(
+                `example-style-instructions exceeds 500 characters (${exampleStyleInstructions.length} chars). Truncating to 500 characters.`
+            );
+        }
+        exampleStyleInstructions = exampleStyleInstructions.substring(0, 500);
     }
 
     return {
         enabled: true,
         model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
         maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
-        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000")
+        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000"),
+        exampleStyleInstructions
     };
 }

@@ -19,6 +19,10 @@ export const ExperimentalConfig: core.serialization.ObjectSchema<
     openapiParserV3: core.serialization.property("openapi-parser-v3", core.serialization.boolean().optional()),
     dynamicSnippets: core.serialization.property("dynamic-snippets", core.serialization.boolean().optional()),
     aiExamples: core.serialization.property("ai-examples", core.serialization.boolean().optional()),
+    exampleStyleInstructions: core.serialization.property(
+        "example-style-instructions",
+        core.serialization.string().optional(),
+    ),
 });
 
 export declare namespace ExperimentalConfig {
@@ -29,5 +33,6 @@ export declare namespace ExperimentalConfig {
         "openapi-parser-v3"?: boolean | null;
         "dynamic-snippets"?: boolean | null;
         "ai-examples"?: boolean | null;
+        "example-style-instructions"?: string | null;
     }
 }
