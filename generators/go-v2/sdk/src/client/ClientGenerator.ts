@@ -446,18 +446,30 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeLine('return "", 0, err');
                 w.dedent();
                 w.writeLine("}");
-                w.writeLine("if response.AccessToken == nil {");
+                // Check for empty access token (handles both pointer and non-pointer types)
+                w.writeLine('if response.AccessToken == "" {');
                 w.indent();
-                w.writeLine('return "", 0, errors.New("oauth response missing access token")');
+                w.write('return "", 0, ');
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "New",
+                            importPath: "errors"
+                        }),
+                        arguments_: [go.codeblock('"oauth response missing access token"')]
+                    })
+                );
+                w.newLine();
                 w.dedent();
                 w.writeLine("}");
+                // Handle ExpiresIn with fallback to default
                 w.writeLine("expiresIn := core.DefaultExpirySeconds");
-                w.writeLine("if response.ExpiresIn != nil {");
+                w.writeLine("if response.ExpiresIn > 0 {");
                 w.indent();
-                w.writeLine("expiresIn = *response.ExpiresIn");
+                w.writeLine("expiresIn = response.ExpiresIn");
                 w.dedent();
                 w.writeLine("}");
-                w.writeLine("return *response.AccessToken, expiresIn, nil");
+                w.writeLine("return response.AccessToken, expiresIn, nil");
                 w.dedent();
                 w.writeLine("})");
                 w.dedent();
