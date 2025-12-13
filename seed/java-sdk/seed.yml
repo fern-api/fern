@@ -304,7 +304,7 @@ fixtures:
 scripts:
   - image: fernapi/java-seed
     commands:
-      - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
+      - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew spotlessCheck test
 allowedFailures:
   - alias-extends
   - enum:forward-compatible-enums
