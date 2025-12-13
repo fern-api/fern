@@ -724,66 +724,6 @@
                             },
                             "propertyAccess": "WRITE_ONLY",
                             "variable": null
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "normal",
-                                    "camelCase": {
-                                        "unsafeName": "normal",
-                                        "safeName": "normal"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "normal",
-                                        "safeName": "normal"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NORMAL",
-                                        "safeName": "NORMAL"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Normal",
-                                        "safeName": "Normal"
-                                    }
-                                },
-                                "wireValue": "normal"
-                            },
-                            "typeReference": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "foo",
-                                    "camelCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO",
-                                        "safeName": "FOO"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Foo",
-                                        "safeName": "Foo"
-                                    }
-                                },
-                                "wireValue": "foo"
-                            },
-                            "typeReference": {
-                                "type": "named",
-                                "value": "type_:Foo"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
                         }
                     ]
                 },
@@ -905,66 +845,6 @@
                             },
                             "propertyAccess": "WRITE_ONLY",
                             "variable": null
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "normal",
-                                    "camelCase": {
-                                        "unsafeName": "normal",
-                                        "safeName": "normal"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "normal",
-                                        "safeName": "normal"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NORMAL",
-                                        "safeName": "NORMAL"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Normal",
-                                        "safeName": "Normal"
-                                    }
-                                },
-                                "wireValue": "normal"
-                            },
-                            "typeReference": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "foo",
-                                    "camelCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO",
-                                        "safeName": "FOO"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Foo",
-                                        "safeName": "Foo"
-                                    }
-                                },
-                                "wireValue": "foo"
-                            },
-                            "typeReference": {
-                                "type": "named",
-                                "value": "type_:Foo"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
                         }
                     ]
                 },
@@ -1081,66 +961,6 @@
                                 "value": "STRING"
                             },
                             "propertyAccess": "WRITE_ONLY",
-                            "variable": null
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "normal",
-                                    "camelCase": {
-                                        "unsafeName": "normal",
-                                        "safeName": "normal"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "normal",
-                                        "safeName": "normal"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NORMAL",
-                                        "safeName": "NORMAL"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Normal",
-                                        "safeName": "Normal"
-                                    }
-                                },
-                                "wireValue": "normal"
-                            },
-                            "typeReference": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "foo",
-                                    "camelCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO",
-                                        "safeName": "FOO"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Foo",
-                                        "safeName": "Foo"
-                                    }
-                                },
-                                "wireValue": "foo"
-                            },
-                            "typeReference": {
-                                "type": "named",
-                                "value": "type_:Foo"
-                            },
-                            "propertyAccess": null,
                             "variable": null
                         }
                     ]
@@ -1312,6 +1132,400 @@
                     "value": {
                         "type": "named",
                         "value": "type_:User"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.getUser": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getUser",
+                    "camelCase": {
+                        "unsafeName": "getUser",
+                        "safeName": "getUser"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_user",
+                        "safeName": "get_user"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_USER",
+                        "safeName": "GET_USER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetUser",
+                        "safeName": "GetUser"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/users/{userId}"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "userId",
+                                "camelCase": {
+                                    "unsafeName": "userID",
+                                    "safeName": "userID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user_id",
+                                    "safeName": "user_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER_ID",
+                                    "safeName": "USER_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UserID",
+                                    "safeName": "UserID"
+                                }
+                            },
+                            "wireValue": "userId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.updateUser": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "updateUser",
+                    "camelCase": {
+                        "unsafeName": "updateUser",
+                        "safeName": "updateUser"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "update_user",
+                        "safeName": "update_user"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPDATE_USER",
+                        "safeName": "UPDATE_USER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UpdateUser",
+                        "safeName": "UpdateUser"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "PUT",
+                "path": "/users/{userId}"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "userId",
+                                "camelCase": {
+                                    "unsafeName": "userID",
+                                    "safeName": "userID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user_id",
+                                    "safeName": "user_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER_ID",
+                                    "safeName": "USER_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UserID",
+                                    "safeName": "UserID"
+                                }
+                            },
+                            "wireValue": "userId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:User"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.getUserOrAdmin": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getUserOrAdmin",
+                    "camelCase": {
+                        "unsafeName": "getUserOrAdmin",
+                        "safeName": "getUserOrAdmin"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_user_or_admin",
+                        "safeName": "get_user_or_admin"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_USER_OR_ADMIN",
+                        "safeName": "GET_USER_OR_ADMIN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetUserOrAdmin",
+                        "safeName": "GetUserOrAdmin"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/users/{userId}/user-or-admin"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "userId",
+                                "camelCase": {
+                                    "unsafeName": "userID",
+                                    "safeName": "userID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user_id",
+                                    "safeName": "user_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER_ID",
+                                    "safeName": "USER_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UserID",
+                                    "safeName": "UserID"
+                                }
+                            },
+                            "wireValue": "userId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.getUserOrAdminDiscriminated": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getUserOrAdminDiscriminated",
+                    "camelCase": {
+                        "unsafeName": "getUserOrAdminDiscriminated",
+                        "safeName": "getUserOrAdminDiscriminated"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_user_or_admin_discriminated",
+                        "safeName": "get_user_or_admin_discriminated"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_USER_OR_ADMIN_DISCRIMINATED",
+                        "safeName": "GET_USER_OR_ADMIN_DISCRIMINATED"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetUserOrAdminDiscriminated",
+                        "safeName": "GetUserOrAdminDiscriminated"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/users/{userId}/discriminated"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "userId",
+                                "camelCase": {
+                                    "unsafeName": "userID",
+                                    "safeName": "userID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user_id",
+                                    "safeName": "user_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER_ID",
+                                    "safeName": "USER_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UserID",
+                                    "safeName": "UserID"
+                                }
+                            },
+                            "wireValue": "userId"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.createFoo": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createFoo",
+                    "camelCase": {
+                        "unsafeName": "createFoo",
+                        "safeName": "createFoo"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_foo",
+                        "safeName": "create_foo"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_FOO",
+                        "safeName": "CREATE_FOO"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateFoo",
+                        "safeName": "CreateFoo"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/users/foo"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:Foo"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.createAdmin": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createAdmin",
+                    "camelCase": {
+                        "unsafeName": "createAdmin",
+                        "safeName": "createAdmin"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_admin",
+                        "safeName": "create_admin"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_ADMIN",
+                        "safeName": "CREATE_ADMIN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateAdmin",
+                        "safeName": "CreateAdmin"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/users/admin"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:Admin"
                     }
                 }
             },

@@ -20,7 +20,8 @@ export function validateUnionExample({
     file,
     workspace,
     breadcrumbs,
-    depth
+    depth,
+    isRequest
 }: {
     typeName: string;
     rawUnion: RawSchemas.DiscriminatedUnionSchema;
@@ -31,6 +32,7 @@ export function validateUnionExample({
     workspace: FernWorkspace;
     breadcrumbs: string[];
     depth: number;
+    isRequest?: boolean;
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
@@ -115,7 +117,8 @@ export function validateUnionExample({
             exampleResolver,
             workspace,
             breadcrumbs,
-            depth: depth + 1
+            depth: depth + 1,
+            isRequest
         });
 
         const relevantViolations = baseAndExtendsViolations.filter((violation) => {
@@ -200,7 +203,8 @@ export function validateUnionExample({
             exampleResolver,
             workspace,
             breadcrumbs,
-            depth: depth + 1
+            depth: depth + 1,
+            isRequest
         });
     }
 
@@ -230,7 +234,8 @@ export function validateUnionExample({
                 file,
                 workspace,
                 breadcrumbs,
-                depth: depth + 1
+                depth: depth + 1,
+                isRequest
             })
         );
     }

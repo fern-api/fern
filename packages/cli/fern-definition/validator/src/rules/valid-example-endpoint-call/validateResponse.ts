@@ -82,7 +82,8 @@ function validateBodyResponse({
                     file,
                     workspace,
                     breadcrumbs: ["response", "body"],
-                    depth: 0
+                    depth: 0,
+                    isRequest: false
                 }).map((val): RuleViolation => {
                     return {
                         severity: val.severity ?? "fatal",
@@ -129,7 +130,8 @@ function validateBodyResponse({
                         file: errorDeclaration.file,
                         workspace,
                         breadcrumbs: ["response", "body"],
-                        depth: 0
+                        depth: 0,
+                        isRequest: false
                     }).map((val): RuleViolation => {
                         return { severity: val.severity ?? "fatal", message: val.message };
                     })
@@ -185,7 +187,8 @@ function validateStreamResponse({
                     file,
                     workspace,
                     breadcrumbs: ["response", "body"],
-                    depth: 0
+                    depth: 0,
+                    isRequest: false
                 }).map((val): RuleViolation => {
                     return { severity: val.severity ?? "fatal", message: val.message };
                 })
@@ -237,7 +240,8 @@ function validateSseResponse({
                     file,
                     workspace,
                     breadcrumbs: ["response", "body"],
-                    depth: 0
+                    depth: 0,
+                    isRequest: false
                 }).map((val): RuleViolation => {
                     return { severity: val.severity ?? "fatal", message: val.message };
                 })

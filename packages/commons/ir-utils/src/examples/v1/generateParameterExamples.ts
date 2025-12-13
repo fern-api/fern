@@ -36,7 +36,8 @@ export function generatePathParameterExamples(
             maxDepth: options.maxDepth ?? 1,
             typeDeclarations: options.typeDeclarations,
             typeReference: p.valueType,
-            skipOptionalProperties: options.skipOptionalRequestProperties
+            skipOptionalProperties: options.skipOptionalRequestProperties,
+            exampleContext: "request"
         });
         if (generatedExample.type === "failure") {
             return generatedExample; // short-circuit failure
@@ -54,10 +55,15 @@ export function generatePathParameterExamples(
 /**
  * Generates header examples.
  */
-export function generateHeaderExamples(
-    headers: HttpHeader[],
-    options: GenerateParamsOptions
-): ExampleGenerationResult<ExampleHeader[]> {
+export function generateHeaderExamples({
+    headers,
+    options,
+    exampleContext
+}: {
+    headers: HttpHeader[];
+    options: GenerateParamsOptions;
+    exampleContext: "request" | "response" | "normal";
+}): ExampleGenerationResult<ExampleHeader[]> {
     const result: ExampleHeader[] = [];
 
     for (const h of headers) {
@@ -78,7 +84,8 @@ export function generateHeaderExamples(
             maxDepth: options.maxDepth ?? 1,
             typeDeclarations: options.typeDeclarations,
             typeReference: h.valueType,
-            skipOptionalProperties: options.skipOptionalRequestProperties
+            skipOptionalProperties: options.skipOptionalRequestProperties,
+            exampleContext
         });
         if (generatedExample.type === "failure") {
             return generatedExample;
@@ -119,7 +126,8 @@ export function generateQueryParameterExamples(
             maxDepth: options.maxDepth ?? 10,
             typeDeclarations: options.typeDeclarations,
             typeReference: q.valueType,
-            skipOptionalProperties: options.skipOptionalRequestProperties
+            skipOptionalProperties: options.skipOptionalRequestProperties,
+            exampleContext: "request"
         });
 
         if (generatedExample.type === "failure") {

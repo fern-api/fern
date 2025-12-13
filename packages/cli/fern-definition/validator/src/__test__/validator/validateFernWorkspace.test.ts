@@ -15,6 +15,10 @@ const FIXTURES: Fixture[] = [
     {
         name: "simple",
         expectedViolations: []
+    },
+    {
+        name: "property-access",
+        expectedViolations: []
     }
 ];
 
