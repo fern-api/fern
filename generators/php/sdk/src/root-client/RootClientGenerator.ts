@@ -738,7 +738,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$authRawClient = new ");
         writer.writeNode(this.context.rawClient.getClassReference());
-        writer.writeLine("(['headers' => []]);");
+        writer.writeLine(`(array_merge($this->${this.context.getClientOptionsName()}, ['headers' => []]));`);
 
         writer.write("$authClient = new ");
         writer.writeNode(authClientClassReference);
@@ -849,7 +849,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$authRawClient = new ");
         writer.writeNode(this.context.rawClient.getClassReference());
-        writer.writeLine("(['headers' => []]);");
+        writer.writeLine(`(array_merge($this->${this.context.getClientOptionsName()}, ['headers' => []]));`);
 
         writer.write("$authClient = new ");
         writer.writeNode(authClientClassReference);
