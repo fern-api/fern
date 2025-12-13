@@ -2,7 +2,10 @@
     "name": "@fern/pagination-custom",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:pagination-custom/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/pagination-custom/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

@@ -2,7 +2,10 @@
     "name": "@fern/server-sent-event-examples",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:server-sent-event-examples/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/server-sent-event-examples/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

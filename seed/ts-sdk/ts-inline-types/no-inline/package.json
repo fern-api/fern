@@ -2,7 +2,10 @@
     "name": "@fern/ts-inline-types",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:ts-inline-types/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ts-inline-types/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
