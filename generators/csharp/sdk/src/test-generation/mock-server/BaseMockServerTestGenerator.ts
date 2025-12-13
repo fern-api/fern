@@ -26,6 +26,9 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             annotations: [this.NUnit.Framework.SetUpFixture]
         });
 
+        // Add nested WireMockLogger class for test output logging
+        this.addWireMockLoggerClass(class_);
+
         class_.addField({
             origin: class_.explicit("Server"),
             access: ast.Access.Protected,
@@ -86,9 +89,9 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 writer.writeStatement(
                     "Server = WireMockServer.Start(new ",
                     this.WireMock.WireMockServerSettings,
-                    " { Logger = new ",
+                    " { Logger = new WireMockLogger(new ",
                     this.WireMock.WireMockConsoleLogger,
-                    "() })"
+                    "()) })"
                 );
                 writer.writeLine();
 
@@ -265,6 +268,172 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             this.generation.constants.folders.mockServerTests,
             RelativeFilePath.of(`${this.Types.BaseMockServerTest.name}.cs`)
         );
+    }
+
+    /**
+     * Adds a nested WireMockLogger class that wraps WireMockConsoleLogger
+     * and logs to NUnit's TestContext for test output visibility.
+     */
+    private addWireMockLoggerClass(class_: ast.Class): void {
+        // Create a class reference with an origin derived from the parent class
+        const nestedClassReference = this.csharp.classReference({
+            origin: class_.explicit("WireMockLogger"),
+            enclosingType: this.Types.BaseMockServerTest
+        });
+
+        const nestedClass = this.csharp.class_({
+            reference: nestedClassReference,
+            partial: false,
+            access: ast.Access.Private,
+            sealed: true,
+            interfaceReferences: [this.WireMock.IWireMockLogger]
+        });
+
+        // Add _inner field
+        nestedClass.addField({
+            name: "_inner",
+            access: ast.Access.Private,
+            readonly: true,
+            type: this.WireMock.IWireMockLogger
+        });
+
+        // Add constructor
+        nestedClass.addConstructor({
+            access: ast.Access.Public,
+            parameters: [
+                this.csharp.parameter({
+                    name: "inner",
+                    type: this.WireMock.IWireMockLogger
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine("_inner = inner;");
+            })
+        });
+
+        // Add Debug method
+        nestedClass.addMethod({
+            name: "Debug",
+            access: ast.Access.Public,
+            parameters: [
+                this.csharp.parameter({
+                    name: "formatString",
+                    type: this.Primitive.string
+                }),
+                this.csharp.parameter({
+                    name: "args",
+                    type: this.Collection.array(this.Primitive.object)
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine('TestContext.WriteLine("[MockServer Debug] " + string.Format(formatString, args));');
+                writer.writeLine("_inner.Debug(formatString, args);");
+            })
+        });
+
+        // Add Info method
+        nestedClass.addMethod({
+            name: "Info",
+            access: ast.Access.Public,
+            parameters: [
+                this.csharp.parameter({
+                    name: "formatString",
+                    type: this.Primitive.string
+                }),
+                this.csharp.parameter({
+                    name: "args",
+                    type: this.Collection.array(this.Primitive.object)
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine('TestContext.WriteLine("[MockServer Info] " + string.Format(formatString, args));');
+                writer.writeLine("_inner.Info(formatString, args);");
+            })
+        });
+
+        // Add Warn method
+        nestedClass.addMethod({
+            name: "Warn",
+            access: ast.Access.Public,
+            parameters: [
+                this.csharp.parameter({
+                    name: "formatString",
+                    type: this.Primitive.string
+                }),
+                this.csharp.parameter({
+                    name: "args",
+                    type: this.Collection.array(this.Primitive.object)
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine('TestContext.WriteLine("[MockServer Warn] " + string.Format(formatString, args));');
+                writer.writeLine("_inner.Warn(formatString, args);");
+            })
+        });
+
+        // Add Error method (with formatString and args)
+        nestedClass.addMethod({
+            name: "Error",
+            access: ast.Access.Public,
+            parameters: [
+                this.csharp.parameter({
+                    name: "formatString",
+                    type: this.Primitive.string
+                }),
+                this.csharp.parameter({
+                    name: "args",
+                    type: this.Collection.array(this.Primitive.object)
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine('TestContext.WriteLine("[MockServer Error] " + string.Format(formatString, args));');
+                writer.writeLine("_inner.Error(formatString, args);");
+            })
+        });
+
+        // Add Error method (with message and exception)
+        nestedClass.addMethod({
+            name: "Error",
+            access: ast.Access.Public,
+            parameters: [
+                this.csharp.parameter({
+                    name: "message",
+                    type: this.Primitive.string
+                }),
+                this.csharp.parameter({
+                    name: "exception",
+                    type: this.System.Exception
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine('TestContext.WriteLine("[MockServer Error] " + message + ": " + exception);');
+                writer.writeLine("_inner.Error(message, exception);");
+            })
+        });
+
+        // Add DebugRequestResponse method (required by IWireMockLogger interface)
+        nestedClass.addMethod({
+            name: "DebugRequestResponse",
+            access: ast.Access.Public,
+            parameters: [
+                this.csharp.parameter({
+                    name: "logEntryModel",
+                    type: this.WireMock.LogEntryModel
+                }),
+                this.csharp.parameter({
+                    name: "isAdminRequest",
+                    type: this.Primitive.boolean
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine(
+                    'TestContext.WriteLine("[MockServer DebugRequestResponse] " + logEntryModel?.Request?.Url);'
+                );
+                writer.writeLine("_inner.DebugRequestResponse(logEntryModel, isAdminRequest);");
+            })
+        });
+
+        class_.addNestedClass(nestedClass);
     }
 }
 

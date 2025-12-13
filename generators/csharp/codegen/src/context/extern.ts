@@ -853,6 +853,22 @@ export class Extern {
             this.csharp.classReference({
                 name: "WireMockConsoleLogger",
                 namespace: "WireMock.Logging"
+            }),
+        /**
+         * Reference to WireMock.Logging.IWireMockLogger interface.
+         */
+        IWireMockLogger: () =>
+            this.csharp.classReference({
+                name: "IWireMockLogger",
+                namespace: "WireMock.Logging"
+            }),
+        /**
+         * Reference to WireMock.Admin.Requests.LogEntryModel class.
+         */
+        LogEntryModel: () =>
+            this.csharp.classReference({
+                name: "LogEntryModel",
+                namespace: "WireMock.Admin.Requests"
             })
     });
 
