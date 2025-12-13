@@ -16,7 +16,7 @@ describe("FernDefinitionBuilder", () => {
             });
 
             const definition = builder.build();
-            expect(definition.definitionFiles["types.yml"]?.types).toEqual({
+            expect(definition.definitionFiles[RelativeFilePath.of("types.yml")]?.types).toEqual({
                 MyType: {
                     properties: {
                         id: "string"
@@ -45,7 +45,7 @@ describe("FernDefinitionBuilder", () => {
             });
 
             const definition = builder.build();
-            expect(definition.definitionFiles["diagrams.yml"]?.types).toEqual({
+            expect(definition.definitionFiles[RelativeFilePath.of("diagrams.yml")]?.types).toEqual({
                 DiagramContentPartialComments: schema
             });
             expect(definition.packageMarkerFile.types).toBeUndefined();
@@ -76,7 +76,7 @@ describe("FernDefinitionBuilder", () => {
             });
 
             const definition = builder.build();
-            expect(definition.definitionFiles["types.yml"]?.types).toEqual({
+            expect(definition.definitionFiles[RelativeFilePath.of("types.yml")]?.types).toEqual({
                 MyType: updatedSchema
             });
         });
@@ -103,14 +103,14 @@ describe("FernDefinitionBuilder", () => {
             });
 
             const definition = builder.build();
-            expect(definition.definitionFiles["file1.yml"]?.types).toEqual({
+            expect(definition.definitionFiles[RelativeFilePath.of("file1.yml")]?.types).toEqual({
                 SharedTypeName: {
                     properties: {
                         field1: "string"
                     }
                 }
             });
-            expect(definition.definitionFiles["file2.yml"]?.types).toEqual({
+            expect(definition.definitionFiles[RelativeFilePath.of("file2.yml")]?.types).toEqual({
                 SharedTypeName: {
                     properties: {
                         field2: "integer"
@@ -131,7 +131,7 @@ describe("FernDefinitionBuilder", () => {
             });
 
             const definition = builder.build();
-            expect(definition.definitionFiles["api.yml"]).toBeUndefined();
+            expect(definition.definitionFiles[RelativeFilePath.of("api.yml")]).toBeUndefined();
         });
     });
 });
