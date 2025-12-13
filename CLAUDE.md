@@ -164,6 +164,7 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 - **Testing**: Always run `pnpm test:ete` for end-to-end validation after CLI changes
 - **Monorepo**: Use Turbo filters for focused builds/tests on specific packages
 - **Docker**: Generators run in Docker containers for isolation and consistency
+- **Fixture Testing**: Always include a fixture to test your changes (see "Testing Changes with Fixtures" section below)
 
 ## Generated Code Management
 
@@ -180,6 +181,110 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 **New fixtures**: Create `/seed/<generator>/<fixture>/` directory → Add `seed.yml` config → Run `pnpm seed:build` → Run `pnpm test:update` and `pnpm test:ete:update` → Validate → Commit
 
 **Update fixtures**: `pnpm seed:build --filter <fixture-name>` or `pnpm test:update` for snapshots
+
+## Testing Changes with Fixtures
+
+**IMPORTANT**: Always include a fixture to test your changes. This is a critical requirement for all code changes in this repository.
+
+### When to Add/Update Fixtures
+
+You must include fixture testing when:
+- **Adding new generator features**: Create a new test definition in `/test-definitions/fern/apis/` and reference it in the appropriate `seed/<generator>/seed.yml`
+- **Fixing bugs**: Add a fixture that reproduces the bug, verify the fix resolves it
+- **Modifying existing behavior**: Update existing fixtures to reflect the changes
+- **Changing IR structure**: Update fixtures for all affected generators
+- **Adding CLI features**: Create fixtures that exercise the new functionality
+
+### How to Test with Fixtures
+
+**Step 1: Identify or Create Test Definition**
+```bash
+# For new features, create a test definition in test-definitions/fern/apis/
+# Example: test-definitions/fern/apis/my-new-feature/
+
+# For existing features, identify the relevant test definition
+ls test-definitions/fern/apis/
+```
+
+**Step 2: Add to seed.yml (if new)**
+```bash
+# Edit seed/<generator>/seed.yml to reference your test definition
+# Example: seed/python-sdk/seed.yml
+```
+
+**Step 3: Run Seed Test**
+```bash
+# Test specific generator and fixture
+pnpm seed test --generator <generator-id> --fixture <fixture-name>
+
+# Example for Python SDK with a specific fixture
+pnpm seed test --generator python-sdk --fixture my-new-feature
+
+# Skip compilation scripts for faster iteration during development
+pnpm seed test --generator python-sdk --fixture my-new-feature --skip-scripts
+```
+
+**Step 4: Verify Changes**
+```bash
+# Check what changed in the generated code
+git diff seed/<generator>/<fixture>/
+
+# Ensure changes are intentional and correct
+# Review generated code for quality and correctness
+```
+
+**Step 5: Commit Generated Code**
+```bash
+# Always commit both your source changes AND the generated fixture code
+git add generators/<generator>/
+git add seed/<generator>/<fixture>/
+git commit -m "feat(<generator>): add new feature with fixture"
+```
+
+### Best Practices
+
+- **Test locally first**: Always run seed tests locally before pushing to ensure your changes work
+- **Use appropriate fixtures**: Choose or create fixtures that specifically exercise your changes
+- **Check diffs carefully**: Review generated code diffs to catch unintended changes
+- **Update snapshots**: Run `pnpm test:update` if snapshot tests need updating
+- **Document new fixtures**: Add comments in test definitions explaining what they test
+- **Keep fixtures focused**: Each fixture should test a specific feature or scenario
+- **Run full test suite**: Before creating a PR, run the full test suite for your generator
+
+### Common Fixture Testing Patterns
+
+**Testing a bug fix:**
+```bash
+# 1. Create a minimal test definition that reproduces the bug
+# 2. Run seed test and verify it fails or produces incorrect output
+pnpm seed test --generator python-sdk --fixture bug-reproduction
+
+# 3. Fix the bug in your generator code
+# 4. Re-run seed test and verify the fix
+pnpm seed test --generator python-sdk --fixture bug-reproduction
+
+# 5. Commit both the fix and the updated fixture
+```
+
+**Testing a new feature:**
+```bash
+# 1. Create a test definition with API schema using the new feature
+# 2. Add to seed.yml
+# 3. Run seed test to generate initial output
+pnpm seed test --generator typescript-sdk --fixture new-feature
+
+# 4. Verify generated code is correct
+# 5. Commit everything together
+```
+
+**Iterating on changes:**
+```bash
+# Use --skip-scripts for faster iteration during development
+pnpm seed test --generator go-sdk --fixture my-feature --skip-scripts
+
+# Once satisfied, run full test with scripts to ensure compilation
+pnpm seed test --generator go-sdk --fixture my-feature
+```
 
 ## Pull Request Guidelines
 
