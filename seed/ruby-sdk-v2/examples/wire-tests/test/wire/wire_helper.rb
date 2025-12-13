@@ -3,7 +3,6 @@
 require "test_helper"
 
 # WireMock container lifecycle management for wire tests.
-# This file is the Ruby equivalent of Python's conftest.py for wire tests.
 # It automatically starts the WireMock container before tests and stops it after.
 
 WIREMOCK_COMPOSE_FILE = File.expand_path("../../wiremock/docker-compose.test.yml", __dir__)
