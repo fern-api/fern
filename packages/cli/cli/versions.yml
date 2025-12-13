@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix `fern check` errors when OpenAPI specs use `allOf` with multiple schemas that share the same property names in inline request bodies. The OpenAPI importer now correctly inlines conflicting schemas instead of extending them, preventing duplicate property errors.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.1
+
+- changelogEntry:
+    - summary: |
         Add `ai-example-style-instructions` field to docs.yml experimental config. This allows providing custom styling instructions for AI-generated examples to guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology.
       type: feat
   irVersion: 62
