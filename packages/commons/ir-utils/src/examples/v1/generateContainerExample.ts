@@ -15,6 +15,7 @@ export declare namespace generateContainerExample {
         currentDepth: number;
 
         skipOptionalProperties: boolean;
+        exampleContext: "request" | "response" | "normal";
     }
 }
 
@@ -24,7 +25,8 @@ export function generateContainerExample({
     maxDepth,
     currentDepth,
     typeDeclarations,
-    skipOptionalProperties
+    skipOptionalProperties,
+    exampleContext
 }: generateContainerExample.Args): ExampleGenerationResult<ExampleContainer> {
     if (currentDepth >= maxDepth) {
         return generateEmptyContainerExample({ containerType });
@@ -37,7 +39,8 @@ export function generateContainerExample({
                 maxDepth,
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
-                skipOptionalProperties
+                skipOptionalProperties,
+                exampleContext
             });
             if (example.type === "failure") {
                 return generateEmptyContainerExample({ containerType });
@@ -82,7 +85,8 @@ export function generateContainerExample({
                 maxDepth,
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
-                skipOptionalProperties
+                skipOptionalProperties,
+                exampleContext
             });
             if (example.type === "failure") {
                 return generateEmptyContainerExample({ containerType });
@@ -107,7 +111,8 @@ export function generateContainerExample({
                 maxDepth,
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
-                skipOptionalProperties
+                skipOptionalProperties,
+                exampleContext
             });
             if (example.type === "failure") {
                 return generateEmptyContainerExample({ containerType });
@@ -128,7 +133,8 @@ export function generateContainerExample({
                 maxDepth,
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
-                skipOptionalProperties
+                skipOptionalProperties,
+                exampleContext
             });
             if (example.type === "failure") {
                 return generateEmptyContainerExample({ containerType });
@@ -149,7 +155,8 @@ export function generateContainerExample({
                 maxDepth,
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
-                skipOptionalProperties
+                skipOptionalProperties,
+                exampleContext
             });
             const valueExample = generateTypeReferenceExample({
                 fieldName,
@@ -157,7 +164,8 @@ export function generateContainerExample({
                 maxDepth,
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
-                skipOptionalProperties
+                skipOptionalProperties,
+                exampleContext
             });
             if (keyExample.type === "failure" || valueExample.type === "failure") {
                 return generateEmptyContainerExample({ containerType });

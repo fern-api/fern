@@ -121,20 +121,28 @@ export function generateEndpointExample({
     }
     result.queryParameters = queryParamsResult.example;
 
-    const endpointHeadersResult = generateHeaderExamples(endpoint.headers, {
-        typeDeclarations,
-        skipOptionalRequestProperties,
-        maxDepth: 1
+    const endpointHeadersResult = generateHeaderExamples({
+        headers: endpoint.headers,
+        options: {
+            typeDeclarations,
+            skipOptionalRequestProperties,
+            maxDepth: 1
+        },
+        exampleContext: "request"
     });
     if (endpointHeadersResult.type === "failure") {
         return endpointHeadersResult;
     }
     result.endpointHeaders = endpointHeadersResult.example;
 
-    const serviceHeadersResult = generateHeaderExamples(service.headers, {
-        typeDeclarations,
-        skipOptionalRequestProperties,
-        maxDepth: 1
+    const serviceHeadersResult = generateHeaderExamples({
+        headers: service.headers,
+        options: {
+            typeDeclarations,
+            skipOptionalRequestProperties,
+            maxDepth: 1
+        },
+        exampleContext: "request"
     });
     if (serviceHeadersResult.type === "failure") {
         return serviceHeadersResult;
@@ -164,7 +172,8 @@ export function generateEndpointExample({
                             typeDeclarations,
                             currentDepth: 1,
                             maxDepth: 10,
-                            skipOptionalProperties: skipOptionalRequestProperties
+                            skipOptionalProperties: skipOptionalRequestProperties,
+                            exampleContext: "request"
                         });
                         if (extendedExample == null) {
                             continue;
@@ -185,7 +194,8 @@ export function generateEndpointExample({
                         typeDeclarations,
                         currentDepth: 1,
                         maxDepth: 10,
-                        skipOptionalProperties: skipOptionalRequestProperties
+                        skipOptionalProperties: skipOptionalRequestProperties,
+                        exampleContext: "request"
                     });
                     if (
                         propertyExample.type === "failure" &&
@@ -219,7 +229,8 @@ export function generateEndpointExample({
                     maxDepth: 10,
                     typeDeclarations,
                     typeReference: endpoint.requestBody.requestBodyType,
-                    skipOptionalProperties: skipOptionalRequestProperties
+                    skipOptionalProperties: skipOptionalRequestProperties,
+                    exampleContext: "request"
                 });
                 if (generatedExample.type === "failure") {
                     return generatedExample;
@@ -243,7 +254,8 @@ export function generateEndpointExample({
                     maxDepth: 10,
                     typeDeclarations,
                     typeReference: endpoint.response.body.value.responseBodyType,
-                    skipOptionalProperties: false
+                    skipOptionalProperties: false,
+                    exampleContext: "response"
                 });
                 if (generatedExample.type === "failure") {
                     return generatedExample;
@@ -265,7 +277,8 @@ export function generateEndpointExample({
                             maxDepth: 10,
                             typeDeclarations,
                             typeReference: endpoint.response.body.nonStreamResponse.value.responseBodyType,
-                            skipOptionalProperties: false
+                            skipOptionalProperties: false,
+                            exampleContext: "response"
                         });
                         break;
                     case "text":
@@ -274,7 +287,8 @@ export function generateEndpointExample({
                             maxDepth: 10,
                             typeDeclarations,
                             typeReference: TEXT_TYPE_REFERENCE,
-                            skipOptionalProperties: false
+                            skipOptionalProperties: false,
+                            exampleContext: "response"
                         });
                         break;
                     default:
@@ -296,7 +310,8 @@ export function generateEndpointExample({
                             maxDepth: 10,
                             typeDeclarations,
                             typeReference: endpoint.response.body.value.payload,
-                            skipOptionalProperties: false
+                            skipOptionalProperties: false,
+                            exampleContext: "response"
                         });
                         if (generatedExample.type === "failure") {
                             return generatedExample;
@@ -313,7 +328,8 @@ export function generateEndpointExample({
                             maxDepth: 10,
                             typeDeclarations,
                             typeReference: endpoint.response.body.value.payload,
-                            skipOptionalProperties: false
+                            skipOptionalProperties: false,
+                            exampleContext: "response"
                         });
                         if (generatedExample.type === "failure") {
                             return generatedExample;
@@ -330,7 +346,8 @@ export function generateEndpointExample({
                             maxDepth: 10,
                             typeDeclarations,
                             typeReference: TEXT_TYPE_REFERENCE,
-                            skipOptionalProperties: false
+                            skipOptionalProperties: false,
+                            exampleContext: "response"
                         });
                         if (generatedExample.type === "failure") {
                             return generatedExample;
@@ -353,7 +370,8 @@ export function generateEndpointExample({
                     maxDepth: 10,
                     typeDeclarations,
                     typeReference: TEXT_TYPE_REFERENCE,
-                    skipOptionalProperties: false
+                    skipOptionalProperties: false,
+                    exampleContext: "response"
                 });
                 if (generatedExample.type === "failure") {
                     return generatedExample;
@@ -379,7 +397,8 @@ export function generateEndpointExample({
                 maxDepth: 10,
                 typeDeclarations,
                 typeReference: generationResponse.declaration.type,
-                skipOptionalProperties: skipOptionalRequestProperties
+                skipOptionalProperties: skipOptionalRequestProperties,
+                exampleContext: "response"
             });
             if (generatedExample.type === "failure") {
                 return generatedExample;

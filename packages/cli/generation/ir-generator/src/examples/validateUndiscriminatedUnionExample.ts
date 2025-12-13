@@ -15,7 +15,8 @@ export function validateUndiscriminatedUnionExample({
     file,
     workspace,
     breadcrumbs,
-    depth
+    depth,
+    isRequest
 }: {
     rawUnion: RawSchemas.UndiscriminatedUnionSchema;
     example: RawSchemas.ExampleTypeValueSchema;
@@ -25,6 +26,7 @@ export function validateUndiscriminatedUnionExample({
     workspace: FernWorkspace;
     breadcrumbs: string[];
     depth: number;
+    isRequest?: boolean;
 }): ExampleViolation[] {
     const violations: ExampleViolation[] = [];
     for (const member of rawUnion.union) {
@@ -36,7 +38,8 @@ export function validateUndiscriminatedUnionExample({
             file,
             workspace,
             breadcrumbs,
-            depth: depth + 1
+            depth: depth + 1,
+            isRequest
         });
         if (violationsForMember.length === 0) {
             return [];

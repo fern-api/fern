@@ -38,7 +38,8 @@ export function validateTypeReferenceExample({
     file,
     workspace,
     breadcrumbs,
-    depth
+    depth,
+    isRequest
 }: {
     rawTypeReference: string;
     example: RawSchemas.ExampleTypeReferenceSchema;
@@ -48,6 +49,7 @@ export function validateTypeReferenceExample({
     workspace: FernWorkspace;
     breadcrumbs: string[];
     depth: number;
+    isRequest?: boolean;
 }): ExampleViolation[] {
     if (depth > MAX_RECURSION_DEPTH) {
         // This comment never reaches the user and serves as a termination condition for the recursion.
@@ -124,7 +126,8 @@ export function validateTypeReferenceExample({
                     exampleResolver,
                     workspace,
                     breadcrumbs,
-                    depth: depth + 1
+                    depth: depth + 1,
+                    isRequest
                 });
             },
             map: ({ keyType, valueType }) => {
@@ -140,7 +143,8 @@ export function validateTypeReferenceExample({
                         file,
                         workspace,
                         breadcrumbs: [...breadcrumbs, exampleKey],
-                        depth: depth + 1
+                        depth: depth + 1,
+                        isRequest
                     }),
                     ...validateTypeReferenceExample({
                         rawTypeReference: valueType,
@@ -150,7 +154,8 @@ export function validateTypeReferenceExample({
                         file,
                         workspace,
                         breadcrumbs: [...breadcrumbs, exampleKey],
-                        depth: depth + 1
+                        depth: depth + 1,
+                        isRequest
                     })
                 ]);
             },
@@ -167,7 +172,8 @@ export function validateTypeReferenceExample({
                         file,
                         workspace,
                         breadcrumbs: [...breadcrumbs, `${idx}`],
-                        depth: depth + 1
+                        depth: depth + 1,
+                        isRequest
                     })
                 );
             },
@@ -197,7 +203,8 @@ export function validateTypeReferenceExample({
                         file,
                         workspace,
                         breadcrumbs: [...breadcrumbs, `${idx}`],
-                        depth: depth + 1
+                        depth: depth + 1,
+                        isRequest
                     })
                 );
             },
@@ -213,7 +220,8 @@ export function validateTypeReferenceExample({
                     file,
                     workspace,
                     breadcrumbs,
-                    depth: depth + 1
+                    depth: depth + 1,
+                    isRequest
                 });
             },
             nullable: (itemType) => {
@@ -228,7 +236,8 @@ export function validateTypeReferenceExample({
                     file,
                     workspace,
                     breadcrumbs,
-                    depth: depth + 1
+                    depth: depth + 1,
+                    isRequest
                 });
             },
             unknown: () => {

@@ -72,20 +72,28 @@ export function generateWebSocketExample({
     result.queryParameters = queryParamsResult.example;
 
     // HEADERS
-    const channelHeaderResult = generateHeaderExamples(channel.headers, {
-        typeDeclarations,
-        skipOptionalRequestProperties,
-        maxDepth: 1
+    const channelHeaderResult = generateHeaderExamples({
+        headers: channel.headers,
+        options: {
+            typeDeclarations,
+            skipOptionalRequestProperties,
+            maxDepth: 1
+        },
+        exampleContext: "normal"
     });
     if (channelHeaderResult.type === "failure") {
         return channelHeaderResult;
     }
     result.headers.push(...channelHeaderResult.example);
 
-    const irHeaderResult = generateHeaderExamples(ir.headers, {
-        typeDeclarations,
-        skipOptionalRequestProperties,
-        maxDepth: 1
+    const irHeaderResult = generateHeaderExamples({
+        headers: ir.headers,
+        options: {
+            typeDeclarations,
+            skipOptionalRequestProperties,
+            maxDepth: 1
+        },
+        exampleContext: "normal"
     });
     if (irHeaderResult.type === "failure") {
         return irHeaderResult;
@@ -150,7 +158,8 @@ function generateExampleMessage({
         maxDepth: 10,
         typeDeclarations,
         typeReference: message.body.bodyType,
-        skipOptionalProperties: skipOptionalRequestProperties
+        skipOptionalProperties: skipOptionalRequestProperties,
+        exampleContext: "normal"
     });
     if (generatedExampleMessage.type === "success") {
         return ExampleWebSocketMessageBody.reference(generatedExampleMessage.example);

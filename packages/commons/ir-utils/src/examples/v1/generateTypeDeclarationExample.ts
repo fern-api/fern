@@ -52,6 +52,7 @@ export declare namespace generateTypeDeclarationExample {
         currentDepth: number;
 
         skipOptionalProperties: boolean;
+        exampleContext: "request" | "response" | "normal";
     }
 }
 
@@ -61,7 +62,8 @@ export function generateTypeDeclarationExample({
     typeDeclaration,
     maxDepth,
     currentDepth,
-    skipOptionalProperties
+    skipOptionalProperties,
+    exampleContext
 }: generateTypeDeclarationExample.Args): ExampleGenerationResult<ExampleTypeShape> | undefined {
     switch (typeDeclaration.shape.type) {
         case "alias": {
@@ -71,7 +73,8 @@ export function generateTypeDeclarationExample({
                 typeReference: typeDeclaration.shape.aliasOf,
                 maxDepth,
                 currentDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                exampleContext
             });
             if (generatedExample.type === "failure") {
                 return generatedExample;
@@ -121,7 +124,8 @@ export function generateTypeDeclarationExample({
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        exampleContext
                     });
                     if (extendedExample == null) {
                         continue;
@@ -139,7 +143,8 @@ export function generateTypeDeclarationExample({
                 typeDeclarations,
                 currentDepth,
                 maxDepth,
-                skipOptionalProperties
+                skipOptionalProperties,
+                exampleContext
             });
             if (objectExample.type === "failure") {
                 return objectExample;
@@ -192,7 +197,8 @@ export function generateTypeDeclarationExample({
                             typeDeclarations,
                             currentDepth: currentDepth + 1,
                             maxDepth,
-                            skipOptionalProperties
+                            skipOptionalProperties,
+                            exampleContext
                         });
                         if (variantExample.type === "success") {
                             const { example, jsonExample } = variantExample;
@@ -218,7 +224,8 @@ export function generateTypeDeclarationExample({
                     typeDeclarations,
                     currentDepth: currentDepth + 1,
                     maxDepth,
-                    skipOptionalProperties
+                    skipOptionalProperties,
+                    exampleContext
                 });
                 if (variantExample.type === "failure") {
                     ++i;
@@ -247,7 +254,8 @@ export function generateTypeDeclarationExample({
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        exampleContext
                     });
                     if (basePropertyExample.type === "success") {
                         basePropertyExamples[baseProperty.name.wireValue] = basePropertyExample.jsonExample;
@@ -262,7 +270,8 @@ export function generateTypeDeclarationExample({
                     typeDeclarations,
                     currentDepth: currentDepth + 1,
                     maxDepth,
-                    skipOptionalProperties
+                    skipOptionalProperties,
+                    exampleContext
                 });
                 if (propertyExample.type === "failure") {
                     throw new Error(`Failed to generate example for union base property ${property.name.wireValue}`);
@@ -287,7 +296,8 @@ export function generateTypeDeclarationExample({
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
                         maxDepth,
-                        skipOptionalProperties
+                        skipOptionalProperties,
+                        exampleContext
                     });
                     if (extendedExample == null || extendedExample.type === "failure") {
                         throw new Error(
@@ -337,7 +347,8 @@ export function generateTypeDeclarationExample({
                             fieldName,
                             typeDeclaration,
                             typeDeclarations,
-                            skipOptionalProperties
+                            skipOptionalProperties,
+                            exampleContext
                         });
                         if (typeDeclarationExample == null) {
                             return { type: "failure", message: "Failed to generate example for type reference" };
@@ -379,7 +390,8 @@ export function generateTypeDeclarationExample({
                             fieldName,
                             typeReference: value.type,
                             typeDeclarations,
-                            skipOptionalProperties
+                            skipOptionalProperties,
+                            exampleContext
                         });
                         if (singlePropertyExample.type === "failure") {
                             return singlePropertyExample;
@@ -424,7 +436,8 @@ function generateObjectDeclarationExample({
     typeDeclarations,
     maxDepth,
     currentDepth,
-    skipOptionalProperties
+    skipOptionalProperties,
+    exampleContext
 }: {
     fieldName?: string;
     typeDeclaration: TypeDeclaration;
@@ -433,6 +446,7 @@ function generateObjectDeclarationExample({
     maxDepth: number;
     currentDepth: number;
     skipOptionalProperties: boolean;
+    exampleContext: "request" | "response" | "normal";
 }): ExampleGenerationResult<ExampleObjectType> {
     const jsonExample: Record<string, unknown> = {};
     const properties: ExampleObjectProperty[] = [];
@@ -440,18 +454,31 @@ function generateObjectDeclarationExample({
         ...(objectTypeDeclaration.properties ?? []),
         ...(objectTypeDeclaration.extendedProperties ?? [])
     ]) {
+        // Skip properties based on access modifiers and request/response exampleContext
+        if (exampleContext != null && property.propertyAccess != null) {
+            // In requests: skip read-only properties
+            if (exampleContext === "request" && property.propertyAccess === "READ_ONLY") {
+                continue;
+            }
+            // In responses: skip write-only properties
+            if (exampleContext === "response" && property.propertyAccess === "WRITE_ONLY") {
+                continue;
+            }
+        }
         const propertyExample = generateTypeReferenceExample({
             fieldName: property.name.wireValue,
             typeReference: property.valueType,
             typeDeclarations,
             currentDepth: currentDepth + 1,
             maxDepth,
-            skipOptionalProperties
+            skipOptionalProperties,
+            exampleContext
         });
-        if (
-            propertyExample.type === "failure" &&
-            !isTypeReferenceOptional({ typeDeclarations, typeReference: property.valueType })
-        ) {
+
+        // Check if this property is actually required given the exampleContext
+        const isPropertyRequired = !isTypeReferenceOptional({ typeDeclarations, typeReference: property.valueType });
+
+        if (propertyExample.type === "failure" && isPropertyRequired) {
             return {
                 type: "failure",
                 message: `Failed to generate required property ${property.name.wireValue} b/c ${propertyExample.message}`

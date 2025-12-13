@@ -21,7 +21,8 @@ export function validateObjectExample({
     workspace,
     example,
     breadcrumbs,
-    depth
+    depth,
+    isRequest
 }: {
     // undefined for inline requests
     typeName: string | undefined;
@@ -34,6 +35,7 @@ export function validateObjectExample({
     workspace: FernWorkspace;
     breadcrumbs: string[];
     depth: number;
+    isRequest?: boolean;
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
@@ -56,9 +58,20 @@ export function validateObjectExample({
     // ensure required properties are present, we treat unknown as optional
     // TODO: we should not exclude nullable properties here, but that would be a breaking change
     // we need to find a way to configure a setting for Fern Definition => IR to make this non-breaking
-    const requiredProperties = allPropertiesForObject.filter(
-        (property) => !property.isNullable && !property.isOptional && property.resolvedPropertyType._type !== "unknown"
-    );
+    const requiredProperties = allPropertiesForObject.filter((property) => {
+        // Filter based on access modifiers
+        if (isRequest != null) {
+            // In requests: skip read-only properties (they shouldn't be in the request)
+            if (isRequest && property.access === "read-only") {
+                return false;
+            }
+            // In responses: skip write-only properties (they shouldn't be in the response)
+            if (!isRequest && property.access === "write-only") {
+                return false;
+            }
+        }
+        return !property.isNullable && !property.isOptional && property.resolvedPropertyType._type !== "unknown";
+    });
     for (const requiredProperty of requiredProperties) {
         // don't error on literal properties
         if (
@@ -90,6 +103,22 @@ export function validateObjectExample({
                 message: `Unexpected property "${exampleKey}"`
             });
         } else {
+            // Check if property should be allowed based on access modifier
+            if (isRequest != null && propertyWithPath.access != null) {
+                if (isRequest && propertyWithPath.access === "read-only") {
+                    violations.push({
+                        message: `Property "${exampleKey}" is read-only and should not be present in request examples`
+                    });
+                    continue;
+                }
+                if (!isRequest && propertyWithPath.access === "write-only") {
+                    violations.push({
+                        message: `Property "${exampleKey}" is write-only and should not be present in response examples`
+                    });
+                    continue;
+                }
+            }
+
             const definitionFile = getDefinitionFile(workspace, propertyWithPath.filepathOfDeclaration);
             if (definitionFile == null) {
                 throw new Error("Service file does not exist for property: " + propertyWithPath.wireKey);
@@ -108,7 +137,8 @@ export function validateObjectExample({
                     typeResolver,
                     exampleResolver,
                     breadcrumbs: [...breadcrumbs, `${exampleKey}`],
-                    depth: depth + 1
+                    depth: depth + 1,
+                    isRequest
                 })
             );
         }
