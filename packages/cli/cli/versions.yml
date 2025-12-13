@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Remove `fern check` validation rule that rejected HEAD endpoints with response bodies. HEAD endpoints can now define response bodies without triggering validation errors.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.2
+
+- changelogEntry:
+    - summary: |
         Fix `fern check` errors when OpenAPI specs use `allOf` with multiple schemas that share the same property names in inline request bodies. The OpenAPI importer now correctly inlines conflicting schemas instead of extending them, preventing duplicate property errors.
       type: fix
   irVersion: 62
