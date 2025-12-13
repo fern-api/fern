@@ -1,0 +1,193 @@
+openapi: 3.0.3
+info:
+  title: AllOf Conflicts Inline Request API
+  version: 1.0.0
+  description: |
+    Test fixture for allOf conflicts in inline request bodies.
+    This tests the case where multiple allOf schemas share the same property names,
+    which should be inlined rather than extended to avoid duplicate property errors.
+paths:
+  /tag-groups/{id}:
+    put:
+      operationId: tagGroupUpsert
+      summary: Upsert a tag group
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/TagGroupRequired'
+                - $ref: '#/components/schemas/TagGroupPartial'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagGroup'
+  /tags/{id}:
+    put:
+      operationId: tagUpsert
+      summary: Upsert a tag
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/TagRequired'
+                - $ref: '#/components/schemas/TagPartial'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tag'
+components:
+  schemas:
+    TagGroupRequired:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: The name of the tag group
+        icon:
+          type: string
+          description: The icon for the tag group
+        index:
+          type: integer
+          description: The display index
+        labels:
+          type: array
+          items:
+            type: string
+          description: Labels for the tag group
+        commit:
+          type: string
+          description: Commit hash
+    TagGroupPartial:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the tag group
+        icon:
+          type: string
+          description: The icon for the tag group
+        index:
+          type: integer
+          description: The display index
+        labels:
+          type: array
+          items:
+            type: string
+          description: Labels for the tag group
+        commit:
+          type: string
+          description: Commit hash
+    TagGroup:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        icon:
+          type: string
+        index:
+          type: integer
+        labels:
+          type: array
+          items:
+            type: string
+        commit:
+          type: string
+    TagRequired:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: The name of the tag
+        color:
+          type: string
+          description: The color of the tag
+        groupId:
+          type: string
+          description: The group ID
+        index:
+          type: integer
+          description: The display index
+        labels:
+          type: array
+          items:
+            type: string
+          description: Labels for the tag
+        commit:
+          type: string
+          description: Commit hash
+    TagPartial:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The name of the tag
+        color:
+          type: string
+          description: The color of the tag
+        groupId:
+          type: string
+          description: The group ID
+        index:
+          type: integer
+          description: The display index
+        labels:
+          type: array
+          items:
+            type: string
+          description: Labels for the tag
+        commit:
+          type: string
+          description: Commit hash
+    Tag:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        color:
+          type: string
+        groupId:
+          type: string
+        index:
+          type: integer
+        labels:
+          type: array
+          items:
+            type: string
+        commit:
+          type: string

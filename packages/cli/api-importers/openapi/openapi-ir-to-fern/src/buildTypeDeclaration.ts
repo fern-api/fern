@@ -345,7 +345,7 @@ function getAllParentSchemasToInline({
 }
 
 // Helper function to extract properties directly from a Schema object
-function getPropertiesFromSchema(
+export function getPropertiesFromSchema(
     context: OpenApiIrConverterContext,
     schema: Schema,
     namespace: string | undefined
@@ -364,7 +364,7 @@ function getPropertiesFromSchema(
     return { properties: [], allOf: [] };
 }
 
-function getProperties(
+export function getProperties(
     context: OpenApiIrConverterContext,
     schemaId: SchemaId,
     namespace: string | undefined
@@ -713,7 +713,7 @@ function startsWithNumber(str: string): boolean {
     return STARTS_WITH_NUMBER.test(str);
 }
 
-function getSchemaIdOfResolvedType({
+export function getSchemaIdOfResolvedType({
     schema,
     context,
     namespace

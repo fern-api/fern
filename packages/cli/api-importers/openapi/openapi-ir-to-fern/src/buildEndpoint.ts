@@ -9,6 +9,7 @@ import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefin
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
+import { getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { State } from "./State";
@@ -620,18 +621,81 @@ function getRequest({
                     return [property.key, typeReference];
                 })
         );
-        const extendedSchemas: string[] = resolvedSchema.allOf
-            .map((referencedSchema) => {
-                const allOfTypeReference = buildTypeReference({
-                    schema: Schema.reference(referencedSchema),
+        // Determine which schemas need to be inlined due to property conflicts
+        const schemasToInline = new Set<SchemaId>();
+        const propertiesToSetToUnknown = new Set<string>();
+        for (const allOfPropertyConflict of resolvedSchema.allOfPropertyConflicts) {
+            allOfPropertyConflict.allOfSchemaIds.forEach((schemaId) => schemasToInline.add(schemaId));
+            if (allOfPropertyConflict.conflictingTypeSignatures) {
+                propertiesToSetToUnknown.add(allOfPropertyConflict.propertyKey);
+            }
+        }
+
+        // Build extended schemas, skipping those that need to be inlined
+        const extendedSchemas: string[] = [];
+        for (const referencedSchema of resolvedSchema.allOf) {
+            const resolvedSchemaId = getSchemaIdOfResolvedType({
+                schema: referencedSchema.schema,
+                context,
+                namespace
+            });
+            if (resolvedSchemaId == null) {
+                continue;
+            }
+            if (schemasToInline.has(referencedSchema.schema) || schemasToInline.has(resolvedSchemaId)) {
+                continue; // don't extend from schemas that need to be inlined
+            }
+            const allOfTypeReference = buildTypeReference({
+                schema: Schema.reference(referencedSchema),
+                fileContainingReference: declarationFile,
+                context,
+                namespace,
+                declarationDepth: 0
+            });
+            const schemaType = stripNullableWrapperForExtends(getTypeFromTypeReference(allOfTypeReference));
+            if (schemaType !== "unknown") {
+                extendedSchemas.push(schemaType);
+            }
+        }
+
+        // Inline properties from schemas that have conflicts
+        for (const inlineSchemaId of schemasToInline) {
+            const inlinedSchemaPropertyInfo = getProperties(context, inlineSchemaId, namespace);
+            for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
+                if (properties[propertyToInline.key] == null) {
+                    if (propertiesToSetToUnknown.has(propertyToInline.key)) {
+                        properties[propertyToInline.key] = "unknown";
+                    } else {
+                        properties[propertyToInline.key] = buildTypeReference({
+                            schema: propertyToInline.schema,
+                            fileContainingReference: declarationFile,
+                            context,
+                            namespace,
+                            declarationDepth: 1
+                        });
+                    }
+                }
+            }
+            // Also extend from any non-conflicting parents of the inlined schema
+            for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
+                if (schemasToInline.has(extendedSchema.schema)) {
+                    continue; // don't extend from schemas that need to be inlined
+                }
+                const extendedSchemaTypeReference = buildTypeReference({
+                    schema: Schema.reference(extendedSchema),
                     fileContainingReference: declarationFile,
                     context,
                     namespace,
                     declarationDepth: 0
                 });
-                return stripNullableWrapperForExtends(getTypeFromTypeReference(allOfTypeReference));
-            })
-            .filter((schema) => schema !== "unknown");
+                const schemaType = stripNullableWrapperForExtends(
+                    getTypeFromTypeReference(extendedSchemaTypeReference)
+                );
+                if (schemaType !== "unknown" && !extendedSchemas.includes(schemaType)) {
+                    extendedSchemas.push(schemaType);
+                }
+            }
+        }
 
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties
