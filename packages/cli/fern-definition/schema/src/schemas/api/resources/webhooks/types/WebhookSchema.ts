@@ -5,7 +5,8 @@
 import * as FernDefinition from "../../../index";
 
 export interface WebhookSchema
-    extends FernDefinition.WithAvailability,
+    extends
+        FernDefinition.WithAvailability,
         FernDefinition.WithAudiences,
         FernDefinition.WithDocsSchema,
         FernDefinition.WithDisplayName {

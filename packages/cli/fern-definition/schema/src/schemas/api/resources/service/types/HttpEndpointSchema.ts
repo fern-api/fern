@@ -14,7 +14,17 @@ export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, Fern
     idempotent?: boolean;
     "stream-condition"?: string;
     request?: FernDefinition.HttpRequest;
+    /**
+     * DEPRECATED: Use 'responses' instead. This field will be removed in a future version.
+     * Single response type for the endpoint.
+     */
     response?: FernDefinition.HttpResponseSchema;
+    /**
+     * Response type(s) for the endpoint. Can be a single response or a list of responses
+     * with different status codes. When a response is just a string, it's assumed to be a 200.
+     * Only one 200 is allowed, and every status code in the list must be unique.
+     */
+    responses?: FernDefinition.HttpResponses;
     "response-stream"?: FernDefinition.HttpResponseStreamSchema;
     errors?: FernDefinition.ResponseErrorsSchema;
     examples?: FernDefinition.ExampleEndpointCallSchema[];

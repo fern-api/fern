@@ -357,6 +357,14 @@
 
 - changelogEntry:
     - summary: |
+        Add support for multiple responses in Fern Definition syntax. Users can now define a `responses:` array field in endpoint definitions to specify multiple response types with different status codes. Each response in the array supports `status-code`, `type`, and `docs` fields. The parsed responses are converted to the existing `V2HttpResponses` IR structure.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.16.0
+
+- changelogEntry:
+    - summary: |
         Fix `fern check` incorrectly reporting SDK method conflicts for endpoints with the same `x-fern-sdk-group-name` and `x-fern-sdk-method-name` when they are in different namespaces. The validator now correctly allows duplicate SDK method names across different namespaces, matching the generator behavior where namespace is prepended to the SDK group name.
       type: fix
   irVersion: 62
