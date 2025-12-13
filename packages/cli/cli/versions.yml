@@ -4,7 +4,7 @@
       type: fix
   irVersion: 62
   createdAt: "2025-12-11"
-  version: 3.14.1
+  version: 3.17.1
 
 - changelogEntry:
     - summary: |
