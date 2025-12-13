@@ -2,8 +2,8 @@ import { FernToken } from "@fern-api/auth";
 import { TaskContext } from "@fern-api/task-context";
 import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
 
-type AIEnhancerResolvedConfig = Required<Omit<AIExampleEnhancerConfig, "openaiApiKey">> &
-    Pick<AIExampleEnhancerConfig, "openaiApiKey">;
+type AIEnhancerResolvedConfig = Required<Omit<AIExampleEnhancerConfig, "openaiApiKey" | "styleInstructions">> &
+    Pick<AIExampleEnhancerConfig, "openaiApiKey" | "styleInstructions">;
 
 interface VenusJwtResponse {
     token: string;
@@ -25,7 +25,8 @@ export class LambdaExampleEnhancer {
             openaiApiKey: config.openaiApiKey,
             model: config.model ?? "gpt-4o-mini",
             maxRetries: config.maxRetries ?? 1, // Single retry - caller handles additional retries
-            requestTimeoutMs: 75000 // Increased timeout for larger batches
+            requestTimeoutMs: 75000, // Increased timeout for larger batches
+            styleInstructions: config.styleInstructions
         };
         this.context = context;
 
@@ -126,7 +127,8 @@ export class LambdaExampleEnhancer {
                     operationDescription: request.operationDescription,
                     originalRequestExample: request.originalRequestExample,
                     originalResponseExample: request.originalResponseExample,
-                    openApiSpec: request.openApiSpec
+                    openApiSpec: request.openApiSpec,
+                    exampleStyleInstructions: request.exampleStyleInstructions ?? this.config.styleInstructions
                 };
 
                 this.context.logger.debug(

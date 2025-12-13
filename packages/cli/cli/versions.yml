@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add `ai-example-style-instructions` field to docs.yml experimental config. This allows providing custom styling instructions for AI-generated examples to guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-12"
+  version: 3.18.0
+
+- changelogEntry:
+    - summary: |
         Enable AI-generated endpoint examples by default. To disable, set ai-examples to false in docs.yml's `experimental` settings.
       type: feat
   irVersion: 62
