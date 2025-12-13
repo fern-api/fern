@@ -149,7 +149,6 @@ SeedContentTypesClient client = SeedContentTypesClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.contentTypes.SeedContentTypesClient;
 import com.seed.contentTypes.core.RequestOptions;
@@ -157,7 +156,7 @@ import com.seed.contentTypes.core.RequestOptions;
 // Client level
 SeedContentTypesClient client = SeedContentTypesClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -165,7 +164,7 @@ client.service().patch(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

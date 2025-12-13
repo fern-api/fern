@@ -155,7 +155,6 @@ SeedEnumClient client = SeedEnumClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.enum.SeedEnumClient;
 import com.seed.enum.core.RequestOptions;
@@ -163,7 +162,7 @@ import com.seed.enum.core.RequestOptions;
 // Client level
 SeedEnumClient client = SeedEnumClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -171,7 +170,7 @@ client.headers().send(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

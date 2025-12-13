@@ -30,15 +30,16 @@ class ObjectFieldValue extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->name = $values['name'];$this->value = $values['value'];
+    ) {
+        $this->name = $values['name'];
+        $this->value = $values['value'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

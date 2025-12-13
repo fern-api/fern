@@ -230,7 +230,6 @@ SeedQueryParametersClient client = SeedQueryParametersClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.queryParameters.SeedQueryParametersClient;
 import com.seed.queryParameters.core.RequestOptions;
@@ -238,7 +237,7 @@ import com.seed.queryParameters.core.RequestOptions;
 // Client level
 SeedQueryParametersClient client = SeedQueryParametersClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -246,7 +245,7 @@ client.user().getUsername(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

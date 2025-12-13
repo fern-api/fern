@@ -143,7 +143,6 @@ SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVari
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.bearerTokenEnvironmentVariable.SeedBearerTokenEnvironmentVariableClient;
 import com.seed.bearerTokenEnvironmentVariable.core.RequestOptions;
@@ -151,7 +150,7 @@ import com.seed.bearerTokenEnvironmentVariable.core.RequestOptions;
 // Client level
 SeedBearerTokenEnvironmentVariableClient client = SeedBearerTokenEnvironmentVariableClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -159,7 +158,7 @@ client.service().getWithBearerToken(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

@@ -143,7 +143,6 @@ SeedNoEnvironmentClient client = SeedNoEnvironmentClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.noEnvironment.SeedNoEnvironmentClient;
 import com.seed.noEnvironment.core.RequestOptions;
@@ -151,7 +150,7 @@ import com.seed.noEnvironment.core.RequestOptions;
 // Client level
 SeedNoEnvironmentClient client = SeedNoEnvironmentClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -159,7 +158,7 @@ client.dummy().getDummy(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

@@ -15,7 +15,11 @@ export function buildReference({ context }: { context: SdkGeneratorContext }): R
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
             : builder.addSection({ title: getSectionTitle({ service }) });
-        const endpoints = getEndpointReferencesForService({ context, serviceId, service });
+        const endpoints = getEndpointReferencesForService({
+            context,
+            serviceId,
+            service
+        });
         for (const endpoint of endpoints) {
             hasEndpoints = true;
             section.addEndpoint(endpoint);
@@ -98,7 +102,10 @@ function getEndpointReference({
                     }
                 },
                 {
-                    text: getReferenceEndpointInvocationParameters({ context, endpointSignatureInfo })
+                    text: getReferenceEndpointInvocationParameters({
+                        context,
+                        endpointSignatureInfo
+                    })
                 }
             ],
             returnValue:

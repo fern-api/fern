@@ -163,7 +163,6 @@ SeedTraceClient client = SeedTraceClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.trace.SeedTraceClient;
 import com.seed.trace.core.RequestOptions;
@@ -171,7 +170,7 @@ import com.seed.trace.core.RequestOptions;
 // Client level
 SeedTraceClient client = SeedTraceClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -179,7 +178,7 @@ client.admin().updateTestSubmissionStatus(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

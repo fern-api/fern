@@ -20,7 +20,9 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkGeneratorContex
     public doGenerate(): CSharpFile {
         const bodyType =
             this.errorDeclaration.type != null
-                ? this.context.csharpTypeMapper.convert({ reference: this.errorDeclaration.type })
+                ? this.context.csharpTypeMapper.convert({
+                      reference: this.errorDeclaration.type
+                  })
                 : this.Primitive.object;
         const class_ = this.csharp.class_({
             reference: this.classReference,

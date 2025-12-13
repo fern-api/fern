@@ -27,39 +27,50 @@ class FirstItemType extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->type = $values['type'] ?? null;$this->name = $values['name'];
+    ) {
+        $this->type = $values['type'] ?? null;
+        $this->name = $values['name'];
     }
 
     /**
      * @return ?'firstItemType'
      */
-    public function getType(): ?string {
-        return $this->type;}
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
 
     /**
      * @param ?'firstItemType' $value
      */
-    public function setType(?string $value = null): self {
-        $this->type = $value;return $this;}
+    public function setType(?string $value = null): self
+    {
+        $this->type = $value;
+        return $this;
+    }
 
     /**
      * @return string
      */
-    public function getName(): string {
-        return $this->name;}
+    public function getName(): string
+    {
+        return $this->name;
+    }
 
     /**
      * @param string $value
      */
-    public function setName(string $value): self {
-        $this->name = $value;return $this;}
+    public function setName(string $value): self
+    {
+        $this->name = $value;
+        return $this;
+    }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

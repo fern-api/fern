@@ -24,7 +24,10 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
         cls: ast.Class,
         { serviceId, endpoint, rawGrpcClientReference, grpcClientInfo }: GrpcEndpointGenerator.Args
     ) {
-        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(
             this.csharp.parameter({
@@ -57,7 +60,10 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             summary: endpoint.docs,
             return_: endpointSignatureInfo.returnType,
             body: this.settings.includeExceptionHandler
-                ? this.wrapWithExceptionHandler({ body, returnType: endpointSignatureInfo.returnType })
+                ? this.wrapWithExceptionHandler({
+                      body,
+                      returnType: endpointSignatureInfo.returnType
+                  })
                 : body,
             codeExample: snippet?.endpointCall
         });

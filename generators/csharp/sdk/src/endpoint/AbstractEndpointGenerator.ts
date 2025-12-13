@@ -8,7 +8,9 @@ import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
 import { getEndpointReturnType } from "./utils/getEndpointReturnType";
 
-type PagingEndpoint = HttpEndpoint & { pagination: NonNullable<HttpEndpoint["pagination"]> };
+type PagingEndpoint = HttpEndpoint & {
+    pagination: NonNullable<HttpEndpoint["pagination"]>;
+};
 
 export abstract class AbstractEndpointGenerator extends WithGeneration {
     private exampleGenerator: ExampleGenerator;
@@ -69,10 +71,17 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         endpoint: HttpEndpoint;
         endpointType: "unpaged" | "paged";
     }): EndpointSignatureInfo {
-        const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
+        const request = getEndpointRequest({
+            context: this.context,
+            endpoint,
+            serviceId
+        });
         const requestParameter =
             request != null
-                ? this.csharp.parameter({ type: request.getParameterType(), name: request.getParameterName() })
+                ? this.csharp.parameter({
+                      type: request.getParameterType(),
+                      name: request.getParameterName()
+                  })
                 : undefined;
         const { pathParameters, pathParameterReferences } = this.getAllPathParameters({
             endpoint,
@@ -154,7 +163,9 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                     this.csharp.parameter({
                         docs: pathParam.docs,
                         name: parameterName,
-                        type: this.context.csharpTypeMapper.convert({ reference: pathParam.valueType })
+                        type: this.context.csharpTypeMapper.convert({
+                            reference: pathParam.valueType
+                        })
                     })
                 );
             }

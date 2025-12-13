@@ -9,7 +9,8 @@ use Seed\Core\Json\JsonProperty;
 
 class Response extends JsonSerializableType
 {
-    use WithMetadata,WithDocs;
+    use WithMetadata;
+    use WithDocs;
 
     /**
      * @var Movie $data
@@ -26,15 +27,17 @@ class Response extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->metadata = $values['metadata'];$this->docs = $values['docs'];$this->data = $values['data'];
+    ) {
+        $this->metadata = $values['metadata'];
+        $this->docs = $values['docs'];
+        $this->data = $values['data'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

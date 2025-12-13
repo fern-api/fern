@@ -27,15 +27,16 @@ class MapType extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->keyType = $values['keyType'];$this->valueType = $values['valueType'];
+    ) {
+        $this->keyType = $values['keyType'];
+        $this->valueType = $values['valueType'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

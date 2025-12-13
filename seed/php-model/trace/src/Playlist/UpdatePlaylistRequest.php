@@ -28,15 +28,16 @@ class UpdatePlaylistRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->name = $values['name'];$this->problems = $values['problems'];
+    ) {
+        $this->name = $values['name'];
+        $this->problems = $values['problems'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

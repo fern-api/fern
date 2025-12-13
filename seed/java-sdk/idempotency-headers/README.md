@@ -151,7 +151,6 @@ SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;
 import com.seed.idempotencyHeaders.core.RequestOptions;
@@ -159,7 +158,7 @@ import com.seed.idempotencyHeaders.core.RequestOptions;
 // Client level
 SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -167,7 +166,7 @@ client.payment().create(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

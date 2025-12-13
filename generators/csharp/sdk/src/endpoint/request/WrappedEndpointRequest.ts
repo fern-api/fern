@@ -159,7 +159,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
                     writer.controlFlow("if", this.csharp.codeblock(`${headerReference} != null`));
                     writer.write(`${this.names.variables.headers}["${header.name.wireValue}"] = `);
-                    writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
+                    writer.writeNodeStatement(
+                        this.stringify({
+                            reference: header.valueType,
+                            name: header.name.name
+                        })
+                    );
                     writer.endControlFlow();
                 }
             }),
@@ -287,7 +292,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 return false;
             }
             case "primitive": {
-                const csharpType = this.context.csharpTypeMapper.convert({ reference: typeReference });
+                const csharpType = this.context.csharpTypeMapper.convert({
+                    reference: typeReference
+                });
                 return is.Primitive.string(csharpType);
             }
             case "unknown": {
@@ -303,7 +310,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     return true;
                 }
                 if (typeReference.container.type === "nullable") {
-                    return this.isOptional({ typeReference: typeReference.container.nullable });
+                    return this.isOptional({
+                        typeReference: typeReference.container.nullable
+                    });
                 }
                 return false;
             case "named": {
@@ -326,7 +335,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
         switch (typeReference.type) {
             case "container":
                 if (typeReference.container.type === "optional") {
-                    return this.isNullable({ typeReference: typeReference.container.optional });
+                    return this.isNullable({
+                        typeReference: typeReference.container.optional
+                    });
                 }
                 if (typeReference.container.type === "nullable") {
                     return true;
@@ -438,13 +449,19 @@ export class WrappedEndpointRequest extends EndpointRequest {
         switch (typeReference.type) {
             case "container":
                 if (typeReference.container.type === "optional") {
-                    return this.isDateOrDateTime({ type, typeReference: typeReference.container.optional });
+                    return this.isDateOrDateTime({
+                        type,
+                        typeReference: typeReference.container.optional
+                    });
                 }
                 return false;
             case "named": {
                 const declaration = this.model.dereferenceType(typeReference.typeId).typeDeclaration;
                 if (declaration.shape.type === "alias") {
-                    return this.isDateOrDateTime({ type, typeReference: declaration.shape.aliasOf });
+                    return this.isDateOrDateTime({
+                        type,
+                        typeReference: declaration.shape.aliasOf
+                    });
                 }
                 return false;
             }
@@ -461,7 +478,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
         switch (typeReference.type) {
             case "container":
                 if (typeReference.container.type === "optional") {
-                    return this.isEnum({ typeReference: typeReference.container.optional });
+                    return this.isEnum({
+                        typeReference: typeReference.container.optional
+                    });
                 }
                 return false;
             case "named": {

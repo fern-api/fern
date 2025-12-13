@@ -140,7 +140,9 @@ export class BaseOptionsGenerator extends WithGeneration {
             origin: header,
             get: true,
             init: true,
-            type: this.getLiteralRootClientParameterType({ literal: header.valueType.container.literal }),
+            type: this.getLiteralRootClientParameterType({
+                literal: header.valueType.container.literal
+            }),
             summary: header.docs,
             initializer: options.includeInitializer ? this.csharp.codeblock("null") : undefined
         });
@@ -194,13 +196,19 @@ export class BaseOptionsGenerator extends WithGeneration {
         });
         this.getMaxRetriesField(iface, optionArgs);
         this.getTimeoutField(iface, optionArgs);
-        this.getQueryParametersField(iface, { optional: false, includeInitializer: false });
+        this.getQueryParametersField(iface, {
+            optional: false,
+            includeInitializer: false
+        });
         this.getBodyPropertiesField(iface, optionArgs);
     }
 
     public getLiteralHeaderOptions(classOrInterface: ast.Interface | ast.Class, optionArgs: OptionArgs) {
         for (const header of this.context.ir.headers) {
-            this.maybeGetLiteralHeaderField(classOrInterface, { header, options: optionArgs });
+            this.maybeGetLiteralHeaderField(classOrInterface, {
+                header,
+                options: optionArgs
+            });
         }
     }
 

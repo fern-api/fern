@@ -741,3 +741,67 @@ func (c *Client) ListWithGlobalConfig(
 	)
 	return pager.GetPage(ctx, &next)
 }
+
+func (c *Client) ListWithOptionalData(
+	ctx context.Context,
+	request *fern.ListUsersOptionalDataRequest,
+	opts ...option.RequestOption,
+) (*core.Page[*int, *fern.User, *fern.ListUsersOptionalDataPaginationResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users/optional-data"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*int]) *internal.CallParams {
+		if pageRequest.Cursor != nil {
+			queryParams.Set("page", fmt.Sprintf("%v", *pageRequest.Cursor))
+		}
+		nextURL := endpointURL
+		if len(queryParams) > 0 {
+			nextURL += "?" + queryParams.Encode()
+		}
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
+		}
+	}
+	next := 1
+	if queryParams.Has("page") {
+		var err error
+		if next, err = strconv.Atoi(queryParams.Get("page")); err != nil {
+			return nil, err
+		}
+	}
+
+	readPageResponse := func(response *fern.ListUsersOptionalDataPaginationResponse) *core.PageResponse[*int, *fern.User, *fern.ListUsersOptionalDataPaginationResponse] {
+		next += 1
+		results := response.GetData()
+		return &core.PageResponse[*int, *fern.User, *fern.ListUsersOptionalDataPaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
+		}
+	}
+	pager := internal.NewOffsetPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, &next)
+}

@@ -14,7 +14,12 @@ export class CustomExceptionInterceptorGenerator extends FileGenerator<CSharpFil
         class_.addMethod({
             name: "Intercept",
             access: ast.Access.Public,
-            parameters: [this.csharp.parameter({ name: "exception", type: this.System.Exception })],
+            parameters: [
+                this.csharp.parameter({
+                    name: "exception",
+                    type: this.System.Exception
+                })
+            ],
             return_: this.System.Exception,
             body: this.csharp.codeblock((writer) => {
                 writer.writeLine("// TODO: Implement your exception capturing logic here.");

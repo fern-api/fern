@@ -23,7 +23,9 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ast.Type {
-        return this.context.csharpTypeMapper.convert({ reference: this.requestBodyShape });
+        return this.context.csharpTypeMapper.convert({
+            reference: this.requestBodyShape
+        });
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {

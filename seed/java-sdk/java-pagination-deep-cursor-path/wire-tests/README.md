@@ -206,7 +206,6 @@ SeedDeepCursorPathClient client = SeedDeepCursorPathClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.deepCursorPath.SeedDeepCursorPathClient;
 import com.seed.deepCursorPath.core.RequestOptions;
@@ -214,7 +213,7 @@ import com.seed.deepCursorPath.core.RequestOptions;
 // Client level
 SeedDeepCursorPathClient client = SeedDeepCursorPathClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -222,7 +221,7 @@ client.deepCursorPath().doThing(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

@@ -230,7 +230,10 @@ public class RawNullableOptionalClient {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "includeDeleted", request.getIncludeDeleted().get(), false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "sortBy", request.getSortBy(), false);
+        if (!request.getSortBy().isAbsent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "sortBy", request.getSortBy().orElse(null), false);
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -275,12 +278,18 @@ public class RawNullableOptionalClient {
                 .addPathSegments("api")
                 .addPathSegments("users/search");
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
-        QueryStringMapper.addQueryParameter(httpUrl, "department", request.getDepartment(), false);
+        if (!request.getDepartment().isAbsent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "department", request.getDepartment().orElse(null), false);
+        }
         if (request.getRole().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "role", request.getRole().get(), false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "isActive", request.getIsActive(), false);
+        if (!request.getIsActive().isAbsent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "isActive", request.getIsActive().orElse(null), false);
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)
@@ -529,12 +538,18 @@ public class RawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users/filter");
-        QueryStringMapper.addQueryParameter(httpUrl, "role", request.getRole(), false);
+        if (!request.getRole().isAbsent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "role", request.getRole().orElse(null), false);
+        }
         if (request.getStatus().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "status", request.getStatus().get(), false);
         }
-        QueryStringMapper.addQueryParameter(httpUrl, "secondaryRole", request.getSecondaryRole(), false);
+        if (!request.getSecondaryRole().isAbsent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "secondaryRole", request.getSecondaryRole().orElse(null), false);
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
                 .method("GET", null)

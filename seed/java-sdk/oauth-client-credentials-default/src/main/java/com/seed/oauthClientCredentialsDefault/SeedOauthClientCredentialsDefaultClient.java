@@ -46,7 +46,23 @@ public class SeedOauthClientCredentialsDefaultClient {
         return this.simpleClient.get();
     }
 
-    public static SeedOauthClientCredentialsDefaultClientBuilder builder() {
-        return new SeedOauthClientCredentialsDefaultClientBuilder();
+    /**
+     * Creates a client builder using a pre-generated access token.
+     * @param token The access token to use for authentication
+     * @return A builder configured for token authentication
+     */
+    public static SeedOauthClientCredentialsDefaultClientBuilder._TokenAuth withToken(String token) {
+        return SeedOauthClientCredentialsDefaultClientBuilder.withToken(token);
+    }
+
+    /**
+     * Creates a client builder using OAuth client credentials.
+     * @param clientId The OAuth client ID
+     * @param clientSecret The OAuth client secret
+     * @return A builder configured for OAuth authentication
+     */
+    public static SeedOauthClientCredentialsDefaultClientBuilder._CredentialsAuth withCredentials(
+            String clientId, String clientSecret) {
+        return SeedOauthClientCredentialsDefaultClientBuilder.withCredentials(clientId, clientSecret);
     }
 }

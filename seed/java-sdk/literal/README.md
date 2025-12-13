@@ -148,7 +148,6 @@ SeedLiteralClient client = SeedLiteralClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.literal.SeedLiteralClient;
 import com.seed.literal.core.RequestOptions;
@@ -156,7 +155,7 @@ import com.seed.literal.core.RequestOptions;
 // Client level
 SeedLiteralClient client = SeedLiteralClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -164,7 +163,7 @@ client.headers().send(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

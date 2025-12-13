@@ -25,8 +25,7 @@ class SeedApiException extends SeedException
         int $statusCode,
         mixed $body,
         ?Throwable $previous = null,
-    )
-    {
+    ) {
         $this->body = $body;
         parent::__construct($message, $statusCode, $previous);
     }
@@ -36,15 +35,17 @@ class SeedApiException extends SeedException
      *
      * @return mixed
      */
-    public function getBody(): mixed {
+    public function getBody(): mixed
+    {
         return $this->body;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
-        if (empty($this->body)){
+    public function __toString(): string
+    {
+        if (empty($this->body)) {
             return "$this->message; Status Code: $this->code\n";
         }
         return "$this->message; Status Code: $this->code; Body: " . $this->body . "\n";

@@ -41,15 +41,18 @@ class Error extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->category = $values['category'];$this->code = $values['code'];$this->detail = $values['detail'] ?? null;$this->field = $values['field'] ?? null;
+    ) {
+        $this->category = $values['category'];
+        $this->code = $values['code'];
+        $this->detail = $values['detail'] ?? null;
+        $this->field = $values['field'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

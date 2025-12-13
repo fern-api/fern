@@ -30,15 +30,16 @@ class TokenResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->accessToken = $values['accessToken'];$this->refreshToken = $values['refreshToken'] ?? null;
+    ) {
+        $this->accessToken = $values['accessToken'];
+        $this->refreshToken = $values['refreshToken'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

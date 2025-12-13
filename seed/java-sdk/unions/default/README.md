@@ -142,7 +142,6 @@ SeedUnionsClient client = SeedUnionsClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.unions.SeedUnionsClient;
 import com.seed.unions.core.RequestOptions;
@@ -150,7 +149,7 @@ import com.seed.unions.core.RequestOptions;
 // Client level
 SeedUnionsClient client = SeedUnionsClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -158,7 +157,7 @@ client.bigunion().get(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

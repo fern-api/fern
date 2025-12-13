@@ -25,11 +25,13 @@ import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForO
 import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.ListUsersExtendedOptionalListResponse;
 import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
 import com.seed.pagination.resources.users.types.ListUsersMixedTypePaginationResponse;
+import com.seed.pagination.resources.users.types.ListUsersOptionalDataPaginationResponse;
 import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
 import com.seed.pagination.resources.users.types.NextPage;
 import com.seed.pagination.resources.users.types.Page;
@@ -861,6 +863,62 @@ public class RawUsersClient {
                 return new SeedPaginationHttpResponse<>(
                         new SyncPagingIterable<String>(
                                 true, result, parsedResponse, () -> listWithGlobalConfig(nextRequest, requestOptions)
+                                        .body()),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedPaginationException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOptionalData() {
+        return listWithOptionalData(ListUsersOptionalDataRequest.builder().build());
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOptionalData(
+            ListUsersOptionalDataRequest request) {
+        return listWithOptionalData(request, null);
+    }
+
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithOptionalData(
+            ListUsersOptionalDataRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegments("optional-data");
+        if (request.getPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                ListUsersOptionalDataPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                        responseBodyString, ListUsersOptionalDataPaginationResponse.class);
+                int newPageNumber =
+                        request.getPage().map((Integer page) -> page + 1).orElse(1);
+                ListUsersOptionalDataRequest nextRequest = ListUsersOptionalDataRequest.builder()
+                        .from(request)
+                        .page(newPageNumber)
+                        .build();
+                List<User> result = parsedResponse.getData().orElse(Collections.emptyList());
+                return new SeedPaginationHttpResponse<>(
+                        new SyncPagingIterable<User>(
+                                true, result, parsedResponse, () -> listWithOptionalData(nextRequest, requestOptions)
                                         .body()),
                         response);
             }

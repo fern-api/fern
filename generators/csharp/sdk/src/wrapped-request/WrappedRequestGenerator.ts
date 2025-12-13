@@ -55,13 +55,23 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
             service ?? fail(`Service with id ${this.serviceId} not found`),
             this.endpoint
         );
-        const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
+        const protobufProperties: {
+            propertyName: string;
+            typeReference: TypeReference;
+        }[] = [];
 
-        if (this.context.includePathParametersInWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })) {
+        if (
+            this.context.includePathParametersInWrappedRequest({
+                endpoint: this.endpoint,
+                wrapper: this.wrapper
+            })
+        ) {
             for (const pathParameter of this.endpoint.allPathParameters) {
                 class_.addField({
                     origin: pathParameter,
-                    type: this.context.csharpTypeMapper.convert({ reference: pathParameter.valueType }),
+                    type: this.context.csharpTypeMapper.convert({
+                        reference: pathParameter.valueType
+                    }),
                     access: ast.Access.Public,
                     get: true,
                     set: true,
@@ -110,7 +120,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         for (const header of [...(service?.headers ?? []), ...this.endpoint.headers]) {
             class_.addField({
                 origin: header,
-                type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
+                type: this.context.csharpTypeMapper.convert({
+                    reference: header.valueType
+                }),
                 access: ast.Access.Public,
                 get: true,
                 set: true,
@@ -125,7 +137,9 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
-                const type = this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType });
+                const type = this.context.csharpTypeMapper.convert({
+                    reference: reference.requestBodyType
+                });
                 const useRequired = !type.isOptional;
                 class_.addField({
                     origin: this.wrapper.bodyKey,
@@ -216,7 +230,12 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGenera
         parseDatetimes: boolean;
     }): ast.CodeBlock {
         const orderedFields: { name: Name; value: ast.CodeBlock }[] = [];
-        if (this.context.includePathParametersInWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })) {
+        if (
+            this.context.includePathParametersInWrappedRequest({
+                endpoint: this.endpoint,
+                wrapper: this.wrapper
+            })
+        ) {
             for (const pathParameter of [
                 ...example.rootPathParameters,
                 ...example.servicePathParameters,

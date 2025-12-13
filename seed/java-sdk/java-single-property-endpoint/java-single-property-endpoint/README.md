@@ -149,7 +149,6 @@ SeedSinglePropertyClient client = SeedSinglePropertyClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.singleProperty.SeedSinglePropertyClient;
 import com.seed.singleProperty.core.RequestOptions;
@@ -157,7 +156,7 @@ import com.seed.singleProperty.core.RequestOptions;
 // Client level
 SeedSinglePropertyClient client = SeedSinglePropertyClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -165,7 +164,7 @@ client.singleProperty().doThing(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

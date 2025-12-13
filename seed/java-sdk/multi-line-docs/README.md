@@ -149,7 +149,6 @@ SeedMultiLineDocsClient client = SeedMultiLineDocsClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.multiLineDocs.SeedMultiLineDocsClient;
 import com.seed.multiLineDocs.core.RequestOptions;
@@ -157,7 +156,7 @@ import com.seed.multiLineDocs.core.RequestOptions;
 // Client level
 SeedMultiLineDocsClient client = SeedMultiLineDocsClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -165,7 +164,7 @@ client.user().createUser(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

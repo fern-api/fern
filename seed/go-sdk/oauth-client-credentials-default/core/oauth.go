@@ -9,6 +9,9 @@ const (
 	// expirationBufferMinutes is subtracted from the token expiration time
 	// to ensure we refresh the token before it actually expires.
 	expirationBufferMinutes = 2
+
+	// DefaultExpirySeconds is used when the OAuth response doesn't include an expires_in value.
+	DefaultExpirySeconds = 3600 // 1 hour fallback
 )
 
 // OAuthTokenProvider manages OAuth access tokens, including caching and automatic refresh.
@@ -19,6 +22,9 @@ type OAuthTokenProvider struct {
 	mu          sync.Mutex
 	accessToken string
 	expiresAt   time.Time
+
+	// fetchMu ensures only one goroutine fetches a new token at a time
+	fetchMu sync.Mutex
 }
 
 // NewOAuthTokenProvider creates a new OAuthTokenProvider with the given credentials.
@@ -71,6 +77,34 @@ func (o *OAuthTokenProvider) GetToken() string {
 		return ""
 	}
 	return o.accessToken
+}
+
+// GetOrFetch returns a valid token, fetching a new one if necessary.
+// The fetchFunc is called at most once even if multiple goroutines call GetOrFetch
+// concurrently when the token is expired. It should return (accessToken, expiresInSeconds, error).
+func (o *OAuthTokenProvider) GetOrFetch(fetchFunc func() (string, int, error)) (string, error) {
+	// Fast path: check if we have a valid token
+	if token := o.GetToken(); token != "" {
+		return token, nil
+	}
+
+	// Slow path: acquire fetch lock to ensure only one goroutine fetches
+	o.fetchMu.Lock()
+	defer o.fetchMu.Unlock()
+
+	// Double-check after acquiring lock (another goroutine may have fetched)
+	if token := o.GetToken(); token != "" {
+		return token, nil
+	}
+
+	// Fetch new token
+	accessToken, expiresIn, err := fetchFunc()
+	if err != nil {
+		return "", err
+	}
+
+	o.SetToken(accessToken, expiresIn)
+	return accessToken, nil
 }
 
 // NeedsRefresh returns true if the token needs to be refreshed.

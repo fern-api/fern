@@ -27,15 +27,16 @@ class DoublyLinkedListNodeAndListValue extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->nodeId = $values['nodeId'];$this->fullList = $values['fullList'];
+    ) {
+        $this->nodeId = $values['nodeId'];
+        $this->fullList = $values['fullList'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

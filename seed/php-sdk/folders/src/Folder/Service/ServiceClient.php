@@ -11,7 +11,7 @@ use Seed\Core\Client\HttpMethod;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class ServiceClient 
+class ServiceClient
 {
     /**
      * @var array{
@@ -39,11 +39,10 @@ class ServiceClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -60,7 +59,8 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function endpoint(?array $options = null): void {
+    public function endpoint(?array $options = null): void
+    {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -72,12 +72,12 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -108,7 +108,8 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function unknownRequest(mixed $request, ?array $options = null): void {
+    public function unknownRequest(mixed $request, ?array $options = null): void
+    {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -121,12 +122,12 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

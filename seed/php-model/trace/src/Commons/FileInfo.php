@@ -27,15 +27,16 @@ class FileInfo extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->filename = $values['filename'];$this->contents = $values['contents'];
+    ) {
+        $this->filename = $values['filename'];
+        $this->contents = $values['contents'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

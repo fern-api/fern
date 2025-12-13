@@ -1800,3 +1800,60 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="/Sources/Resources/Users/UsersClient.swift">listWithOptionalData</a>(page: Int?, requestOptions: RequestOptions?) -> ListUsersOptionalDataPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Pagination
+
+private func main() async throws {
+    let client = PaginationClient(token: "<token>")
+
+    _ = try await client.users.listWithOptionalData(page: 1)
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Int?` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

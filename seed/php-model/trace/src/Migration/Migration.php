@@ -27,15 +27,16 @@ class Migration extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->name = $values['name'];$this->status = $values['status'];
+    ) {
+        $this->name = $values['name'];
+        $this->status = $values['status'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

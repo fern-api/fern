@@ -12,7 +12,7 @@ use Seed\Core\Client\HttpMethod;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class HeadersClient 
+class HeadersClient
 {
     /**
      * @var array{
@@ -40,11 +40,10 @@ class HeadersClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -62,15 +61,16 @@ class HeadersClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(SendEnumAsHeaderRequest $request, ?array $options = null): void {
+    public function send(SendEnumAsHeaderRequest $request, ?array $options = null): void
+    {
         $options = array_merge($this->options, $options ?? []);
         $headers = [];
         $headers['operand'] = $request->operand;
         $headers['operandOrColor'] = $request->operandOrColor;
-        if ($request->maybeOperand != null){
+        if ($request->maybeOperand != null) {
             $headers['maybeOperand'] = $request->maybeOperand;
         }
-        if ($request->maybeOperandOrColor != null){
+        if ($request->maybeOperandOrColor != null) {
             $headers['maybeOperandOrColor'] = $request->maybeOperandOrColor;
         }
         try {
@@ -84,12 +84,12 @@ class HeadersClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

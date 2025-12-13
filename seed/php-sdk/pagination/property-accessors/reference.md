@@ -1443,3 +1443,47 @@ $client->users->listWithGlobalConfig(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>$client->users->listWithOptionalData($request) -> ListUsersOptionalDataPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->users->listWithOptionalData(
+    new ListUsersOptionalDataRequest([
+        'page' => 1,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$page:** `?int` — Defaults to first page
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

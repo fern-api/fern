@@ -42,15 +42,18 @@ class DocumentMetadata extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    )
-    {
-        $this->author = $values['author'] ?? null;$this->id = $values['id'] ?? null;$this->tags = $values['tags'] ?? null;$this->title = $values['title'] ?? null;
+    ) {
+        $this->author = $values['author'] ?? null;
+        $this->id = $values['id'] ?? null;
+        $this->tags = $values['tags'] ?? null;
+        $this->title = $values['title'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

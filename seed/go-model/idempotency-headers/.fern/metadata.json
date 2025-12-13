@@ -1,0 +1,12 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-go-model",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "packageName": "fern",
+    "module": {
+      "path": "github.com/idempotency-headers/fern"
+    },
+    "includeLegacyClientOptions": true
+  }
+}

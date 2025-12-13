@@ -220,6 +220,24 @@ impl UsersClient {
             .await
     }
 
+    pub async fn list_usernames_with_optional_response(
+        &self,
+        request: &ListUsernamesWithOptionalResponseQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<Option<UsernameCursor>, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                "/users",
+                None,
+                QueryBuilder::new()
+                    .string("starting_after", request.starting_after.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
     pub async fn list_with_global_config(
         &self,
         request: &UsersListWithGlobalConfigQueryRequest,
@@ -232,6 +250,24 @@ impl UsersClient {
                 None,
                 QueryBuilder::new()
                     .int("offset", request.offset.clone())
+                    .build(),
+                options,
+            )
+            .await
+    }
+
+    pub async fn list_with_optional_data(
+        &self,
+        request: &ListWithOptionalDataQueryRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<ListUsersOptionalDataPaginationResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::GET,
+                "/users/optional-data",
+                None,
+                QueryBuilder::new()
+                    .int("page", request.page.clone())
                     .build(),
                 options,
             )

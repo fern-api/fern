@@ -34,8 +34,9 @@ class CreateUserRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->type = $values['type'];$this->version = $values['version'];$this->name = $values['name'];
+    ) {
+        $this->type = $values['type'];
+        $this->version = $values['version'];
+        $this->name = $values['name'];
     }
 }

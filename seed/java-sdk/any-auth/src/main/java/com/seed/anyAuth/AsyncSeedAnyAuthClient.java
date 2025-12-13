@@ -30,7 +30,22 @@ public class AsyncSeedAnyAuthClient {
         return this.userClient.get();
     }
 
-    public static AsyncSeedAnyAuthClientBuilder builder() {
-        return new AsyncSeedAnyAuthClientBuilder();
+    /**
+     * Creates a client builder using a pre-generated access token.
+     * @param token The access token to use for authentication
+     * @return A builder configured for token authentication
+     */
+    public static AsyncSeedAnyAuthClientBuilder._TokenAuth withToken(String token) {
+        return AsyncSeedAnyAuthClientBuilder.withToken(token);
+    }
+
+    /**
+     * Creates a client builder using OAuth client credentials.
+     * @param clientId The OAuth client ID
+     * @param clientSecret The OAuth client secret
+     * @return A builder configured for OAuth authentication
+     */
+    public static AsyncSeedAnyAuthClientBuilder._CredentialsAuth withCredentials(String clientId, String clientSecret) {
+        return AsyncSeedAnyAuthClientBuilder.withCredentials(clientId, clientSecret);
     }
 }

@@ -148,7 +148,6 @@ SeedNurseryApiClient client = SeedNurseryApiClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.nurseryApi.SeedNurseryApiClient;
 import com.seed.nurseryApi.core.RequestOptions;
@@ -156,7 +155,7 @@ import com.seed.nurseryApi.core.RequestOptions;
 // Client level
 SeedNurseryApiClient client = SeedNurseryApiClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -164,7 +163,7 @@ client.package_().test(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

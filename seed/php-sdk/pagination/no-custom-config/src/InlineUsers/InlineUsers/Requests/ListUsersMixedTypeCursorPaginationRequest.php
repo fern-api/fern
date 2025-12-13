@@ -18,8 +18,7 @@ class ListUsersMixedTypeCursorPaginationRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    )
-    {
+    ) {
         $this->cursor = $values['cursor'] ?? null;
     }
 }

@@ -5,7 +5,7 @@ namespace Seed\InlineUsers;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class InlineUsersClient 
+class InlineUsersClient
 {
     /**
      * @var \Seed\InlineUsers\InlineUsers\InlineUsersClient $inlineUsers
@@ -38,11 +38,10 @@ class InlineUsersClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->inlineUsers = new \Seed\InlineUsers\InlineUsers\InlineUsersClient($this->client, $this->options);

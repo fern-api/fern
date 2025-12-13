@@ -148,7 +148,6 @@ SeedServerSentEventsClient client = SeedServerSentEventsClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.serverSentEvents.SeedServerSentEventsClient;
 import com.seed.serverSentEvents.core.RequestOptions;
@@ -156,7 +155,7 @@ import com.seed.serverSentEvents.core.RequestOptions;
 // Client level
 SeedServerSentEventsClient client = SeedServerSentEventsClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -164,7 +163,7 @@ client.completions().stream(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

@@ -34,15 +34,17 @@ class Foo extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->normal = $values['normal'];$this->read = $values['read'];$this->write = $values['write'];
+    ) {
+        $this->normal = $values['normal'];
+        $this->read = $values['read'];
+        $this->write = $values['write'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

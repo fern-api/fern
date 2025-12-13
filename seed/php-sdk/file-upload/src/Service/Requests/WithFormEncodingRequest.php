@@ -35,8 +35,9 @@ class WithFormEncodingRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->file = $values['file'];$this->foo = $values['foo'];$this->bar = $values['bar'];
+    ) {
+        $this->file = $values['file'];
+        $this->foo = $values['foo'];
+        $this->bar = $values['bar'];
     }
 }

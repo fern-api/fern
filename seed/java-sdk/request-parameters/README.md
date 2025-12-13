@@ -154,7 +154,6 @@ SeedRequestParametersClient client = SeedRequestParametersClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.requestParameters.SeedRequestParametersClient;
 import com.seed.requestParameters.core.RequestOptions;
@@ -162,7 +161,7 @@ import com.seed.requestParameters.core.RequestOptions;
 // Client level
 SeedRequestParametersClient client = SeedRequestParametersClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -170,7 +169,7 @@ client.user().createUsername(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

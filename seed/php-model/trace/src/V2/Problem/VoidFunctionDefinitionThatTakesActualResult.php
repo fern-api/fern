@@ -31,15 +31,16 @@ class VoidFunctionDefinitionThatTakesActualResult extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->additionalParameters = $values['additionalParameters'];$this->code = $values['code'];
+    ) {
+        $this->additionalParameters = $values['additionalParameters'];
+        $this->code = $values['code'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

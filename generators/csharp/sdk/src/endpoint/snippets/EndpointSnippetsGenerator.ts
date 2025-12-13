@@ -49,7 +49,11 @@ export class EndpointSnippetsGenerator extends WithGeneration {
                 if (endpoint.pagination || isStreaming) {
                     endpointIdsWithGenerator.push({ id: endpoint.id, isPager: true });
                 }
-                return endpointIdsWithGenerator.map(({ id }) => ({ id, endpoint, serviceId }));
+                return endpointIdsWithGenerator.map(({ id }) => ({
+                    id,
+                    endpoint,
+                    serviceId
+                }));
             })
         );
 

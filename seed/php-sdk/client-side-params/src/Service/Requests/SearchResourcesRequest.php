@@ -40,8 +40,10 @@ class SearchResourcesRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->limit = $values['limit'];$this->offset = $values['offset'];$this->query = $values['query'] ?? null;$this->filters = $values['filters'] ?? null;
+    ) {
+        $this->limit = $values['limit'];
+        $this->offset = $values['offset'];
+        $this->query = $values['query'] ?? null;
+        $this->filters = $values['filters'] ?? null;
     }
 }

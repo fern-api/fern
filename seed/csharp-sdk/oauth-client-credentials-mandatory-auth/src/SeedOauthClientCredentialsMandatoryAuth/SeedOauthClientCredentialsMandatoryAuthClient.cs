@@ -37,10 +37,8 @@ public partial class SeedOauthClientCredentialsMandatoryAuthClient
         );
         clientOptions.Headers["Authorization"] =
             new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
-            {
-                var result = await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false);
-                return result;
-            });
+                await tokenProvider.GetAccessTokenAsync().ConfigureAwait(false)
+            );
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
         Nested = new NestedClient(_client);

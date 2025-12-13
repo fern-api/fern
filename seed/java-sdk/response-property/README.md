@@ -142,7 +142,6 @@ SeedResponsePropertyClient client = SeedResponsePropertyClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.responseProperty.SeedResponsePropertyClient;
 import com.seed.responseProperty.core.RequestOptions;
@@ -150,7 +149,7 @@ import com.seed.responseProperty.core.RequestOptions;
 // Client level
 SeedResponsePropertyClient client = SeedResponsePropertyClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -158,7 +157,7 @@ client.service().getMovie(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

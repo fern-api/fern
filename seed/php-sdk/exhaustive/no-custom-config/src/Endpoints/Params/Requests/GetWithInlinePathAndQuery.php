@@ -18,8 +18,7 @@ class GetWithInlinePathAndQuery extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
+    ) {
         $this->query = $values['query'];
     }
 }

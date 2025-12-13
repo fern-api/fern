@@ -27,15 +27,16 @@ class CreateMovieRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->title = $values['title'];$this->rating = $values['rating'];
+    ) {
+        $this->title = $values['title'];
+        $this->rating = $values['rating'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

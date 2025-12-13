@@ -14,7 +14,7 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class MetadataClient 
+class MetadataClient
 {
     /**
      * @var array{
@@ -42,11 +42,10 @@ class MetadataClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -67,7 +66,8 @@ class MetadataClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): Metadata {
+    public function getMetadata(GetEventMetadataRequest $request, ?array $options = null): Metadata
+    {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['id'] = $request->id;
@@ -82,15 +82,15 @@ class MetadataClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return Metadata::fromJson($json);
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

@@ -146,7 +146,6 @@ SeedExhaustiveClient client = SeedExhaustiveClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.exhaustive.SeedExhaustiveClient;
 import com.seed.exhaustive.core.RequestOptions;
@@ -154,7 +153,7 @@ import com.seed.exhaustive.core.RequestOptions;
 // Client level
 SeedExhaustiveClient client = SeedExhaustiveClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -162,7 +161,7 @@ client.endpoints().container().getAndReturnListOfPrimitives(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

@@ -142,7 +142,6 @@ SeedBytesUploadClient client = SeedBytesUploadClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.bytesUpload.SeedBytesUploadClient;
 import com.seed.bytesUpload.core.RequestOptions;
@@ -150,7 +149,7 @@ import com.seed.bytesUpload.core.RequestOptions;
 // Client level
 SeedBytesUploadClient client = SeedBytesUploadClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -158,7 +157,7 @@ client.service().upload(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

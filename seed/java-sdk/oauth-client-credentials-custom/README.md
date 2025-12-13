@@ -79,6 +79,29 @@ public class Example {
     }
 }
 ```
+## Authentication
+
+This SDK supports two authentication methods:
+
+### Option 1: Direct Bearer Token
+
+If you already have a valid access token, you can use it directly:
+
+```java
+SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.withToken("your-access-token")
+    .url("https://api.example.com")
+    .build();
+```
+
+### Option 2: OAuth Client Credentials
+
+The SDK can automatically handle token acquisition and refresh:
+
+```java
+SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.withCredentials("client-id", "client-secret")
+    .url("https://api.example.com")
+    .build();
+```
 
 ## Base Url
 
@@ -154,7 +177,6 @@ SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
 import com.seed.oauthClientCredentials.core.RequestOptions;
@@ -162,7 +184,7 @@ import com.seed.oauthClientCredentials.core.RequestOptions;
 // Client level
 SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -170,7 +192,7 @@ client.auth().getTokenWithClientCredentials(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

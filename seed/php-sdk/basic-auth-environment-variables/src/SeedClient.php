@@ -7,7 +7,7 @@ use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Exception;
 
-class SeedClient 
+class SeedClient
 {
     /**
      * @var BasicAuthClient $basicAuth
@@ -45,8 +45,7 @@ class SeedClient
         ?string $username = null,
         ?string $accessToken = null,
         ?array $options = null,
-    )
-    {
+    ) {
         $username ??= $this->getFromEnvOrThrow('USERNAME', 'Please pass in username or set the environment variable USERNAME.');
         $accessToken ??= $this->getFromEnvOrThrow('PASSWORD', 'Please pass in accessToken or set the environment variable PASSWORD.');
         $defaultHeaders = [
@@ -55,18 +54,18 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        
+
         $this->options = $options ?? [];
-        
+
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-        
+
         $this->client = new RawClient(
             options: $this->options,
         );
-        
+
         $this->basicAuth = new BasicAuthClient($this->client, $this->options);
     }
 
@@ -75,7 +74,8 @@ class SeedClient
      * @param string $message
      * @return string
      */
-    private function getFromEnvOrThrow(string $env, string $message): string {
+    private function getFromEnvOrThrow(string $env, string $message): string
+    {
         $value = getenv($env);
         return $value ? (string) $value : throw new Exception($message);
     }

@@ -38,7 +38,10 @@ export function getEndpointReturnType({
         // (this requires that consumers use `for await()` to consume the result, regardless if they are streaming or not)
         streamParameter: (reference) => reference.streamResponse._visit(streamResultType),
         fileDownload: () => context.System.IO.Stream.asFullyQualified(),
-        json: (reference) => context.csharpTypeMapper.convert({ reference: reference.responseBodyType }),
+        json: (reference) =>
+            context.csharpTypeMapper.convert({
+                reference: reference.responseBodyType
+            }),
         text: () => context.generation.Primitive.string,
         bytes: () => undefined,
         _other: () => undefined

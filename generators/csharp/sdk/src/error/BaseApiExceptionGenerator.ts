@@ -10,8 +10,14 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile> {
             parentClassReference: this.Types.BaseException,
             primaryConstructor: {
                 parameters: [
-                    this.csharp.parameter({ name: "message", type: this.Primitive.string }),
-                    this.csharp.parameter({ name: "statusCode", type: this.Primitive.integer }),
+                    this.csharp.parameter({
+                        name: "message",
+                        type: this.Primitive.string
+                    }),
+                    this.csharp.parameter({
+                        name: "statusCode",
+                        type: this.Primitive.integer
+                    }),
                     this.csharp.parameter({ name: "body", type: this.Primitive.object })
                 ],
                 superClassArguments: [this.csharp.codeblock("message")]

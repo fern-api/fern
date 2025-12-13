@@ -1,6 +1,7 @@
 <?php
 
 namespace Seed\Core\Json;
+
 use Seed\Core\Client\BaseApiRequest;
 use Seed\Core\Client\HttpMethod;
 

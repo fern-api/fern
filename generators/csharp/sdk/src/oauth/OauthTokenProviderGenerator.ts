@@ -105,7 +105,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
 
         // check for required primitive properties in the request, and propogate them as fields on the class
         for (const customProperty of this.scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
-            const typeRef = this.context.csharpTypeMapper.convert({ reference: customProperty.property.valueType });
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: customProperty.property.valueType
+            });
             if (!typeRef.isOptional && is.IR.TypeReference.Primitive(customProperty.property.valueType)) {
                 const name = this.model.getPropertyNameFor(customProperty.property.name);
 
@@ -121,7 +123,9 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         }
         const scopes = this.scheme.configuration.tokenEndpoint.requestProperties.scopes;
         if (scopes) {
-            const typeRef = this.context.csharpTypeMapper.convert({ reference: scopes.property.valueType });
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: scopes.property.valueType
+            });
             if (!typeRef.isOptional && is.IR.TypeReference.Primitive(scopes.property.valueType)) {
                 const name = this.model.getPropertyNameFor(scopes.property.name);
                 this.additionalRequestFields.set(

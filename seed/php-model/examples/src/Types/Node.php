@@ -35,15 +35,17 @@ class Node extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->name = $values['name'];$this->nodes = $values['nodes'] ?? null;$this->trees = $values['trees'] ?? null;
+    ) {
+        $this->name = $values['name'];
+        $this->nodes = $values['nodes'] ?? null;
+        $this->trees = $values['trees'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }
