@@ -489,6 +489,7 @@ export abstract class AbstractSpecConverter<
         endpointGroupDisplayName?: string;
     }): FernIr.HttpService {
         return {
+            docs: undefined,
             name: {
                 fernFilepath: {
                     allParts,

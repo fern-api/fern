@@ -10,7 +10,7 @@ imports:
 types:
   HttpServiceSchema:
     extends:
-      - commons.DeclarationWithoutDocsSchema
+      - commons.DeclarationSchema
       - commons.WithDisplayName
     properties:
       auth: boolean

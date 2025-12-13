@@ -14,23 +14,26 @@ import { PathParameter } from "./PathParameter";
 import { Encoding } from "../../types/types/Encoding";
 import { Transport } from "./Transport";
 import { AudienceReference } from "../../audience/types/AudienceReference";
+import { WithDocs } from "../../commons/types/WithDocs";
 
 export const HttpService: core.serialization.ObjectSchema<serializers.HttpService.Raw, FernIr.HttpService> =
-    core.serialization.objectWithoutOptionalProperties({
-        availability: Availability.optional(),
-        name: DeclaredServiceName,
-        displayName: core.serialization.string().optional(),
-        basePath: HttpPath,
-        endpoints: core.serialization.list(HttpEndpoint),
-        headers: core.serialization.list(HttpHeader),
-        pathParameters: core.serialization.list(PathParameter),
-        encoding: Encoding.optional(),
-        transport: Transport.optional(),
-        audiences: core.serialization.list(AudienceReference).optional(),
-    });
+    core.serialization
+        .objectWithoutOptionalProperties({
+            availability: Availability.optional(),
+            name: DeclaredServiceName,
+            displayName: core.serialization.string().optional(),
+            basePath: HttpPath,
+            endpoints: core.serialization.list(HttpEndpoint),
+            headers: core.serialization.list(HttpHeader),
+            pathParameters: core.serialization.list(PathParameter),
+            encoding: Encoding.optional(),
+            transport: Transport.optional(),
+            audiences: core.serialization.list(AudienceReference).optional(),
+        })
+        .extend(WithDocs);
 
 export declare namespace HttpService {
-    export interface Raw {
+    export interface Raw extends WithDocs.Raw {
         availability?: Availability.Raw | null;
         name: DeclaredServiceName.Raw;
         displayName?: string | null;

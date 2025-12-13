@@ -548,7 +548,8 @@
                     "docs": "Upload a file to the database"
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {
