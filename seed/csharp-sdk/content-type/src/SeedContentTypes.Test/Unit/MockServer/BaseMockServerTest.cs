@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SeedContentTypes;
+using WireMock.Admin.Requests;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;
@@ -20,7 +21,7 @@ public class BaseMockServerTest
     {
         // Start the WireMock server
         Server = WireMockServer.Start(
-            new WireMockServerSettings { Logger = new WireMockConsoleLogger() }
+            new WireMockServerSettings { Logger = new WireMockLogger(new WireMockConsoleLogger()) }
         );
 
         // Initialize the Client
@@ -34,5 +35,53 @@ public class BaseMockServerTest
     {
         Server.Stop();
         Server.Dispose();
+    }
+
+    private sealed class WireMockLogger : IWireMockLogger
+    {
+        private readonly IWireMockLogger _inner;
+
+        public WireMockLogger(IWireMockLogger inner)
+        {
+            _inner = inner;
+        }
+
+        public void Debug(string formatString, object[] args)
+        {
+            TestContext.WriteLine("[MockServer Debug] " + string.Format(formatString, args));
+            _inner.Debug(formatString, args);
+        }
+
+        public void Info(string formatString, object[] args)
+        {
+            TestContext.WriteLine("[MockServer Info] " + string.Format(formatString, args));
+            _inner.Info(formatString, args);
+        }
+
+        public void Warn(string formatString, object[] args)
+        {
+            TestContext.WriteLine("[MockServer Warn] " + string.Format(formatString, args));
+            _inner.Warn(formatString, args);
+        }
+
+        public void Error(string formatString, object[] args)
+        {
+            TestContext.WriteLine("[MockServer Error] " + string.Format(formatString, args));
+            _inner.Error(formatString, args);
+        }
+
+        public void Error(string message, Exception exception)
+        {
+            TestContext.WriteLine("[MockServer Error] " + message + ": " + exception);
+            _inner.Error(message, exception);
+        }
+
+        public void DebugRequestResponse(LogEntryModel logEntryModel, bool isAdminRequest)
+        {
+            TestContext.WriteLine(
+                "[MockServer DebugRequestResponse] " + logEntryModel?.Request?.Url
+            );
+            _inner.DebugRequestResponse(logEntryModel, isAdminRequest);
+        }
     }
 }

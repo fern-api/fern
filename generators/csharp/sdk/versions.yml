@@ -2,11 +2,11 @@
 - version: 2.12.0
   changelogEntry:
     - summary: |
-        Add debug logging for WireMock mock server tests when the `FERN_DEBUG` environment variable
-        is set. This helps debug wire tests by logging request and response information from the
-        mock server side. The generated `BaseMockServerTest` class now includes a custom
-        `FernWireMockLogger` that wraps the standard `WireMockConsoleLogger` and outputs additional
-        debug information when `FERN_DEBUG` is set.
+        Add debug logging for WireMock mock server tests using NUnit's TestContext.WriteLine.
+        This helps debug wire tests by logging request and response information from the mock
+        server side. The generated `BaseMockServerTest` class now includes a custom `WireMockLogger`
+        that wraps the standard `WireMockConsoleLogger` and outputs debug information to the test
+        output, which NUnit displays based on test verbosity settings.
       type: feat
   createdAt: "2025-12-11"
   irVersion: 61

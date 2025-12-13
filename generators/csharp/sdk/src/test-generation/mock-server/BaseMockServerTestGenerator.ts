@@ -26,8 +26,8 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             annotations: [this.NUnit.Framework.SetUpFixture]
         });
 
-        // Add nested FernWireMockLogger class for debug logging
-        this.addFernWireMockLoggerClass(class_);
+        // Add nested WireMockLogger class for test output logging
+        this.addWireMockLoggerClass(class_);
 
         class_.addField({
             origin: class_.explicit("Server"),
@@ -89,7 +89,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 writer.writeStatement(
                     "Server = WireMockServer.Start(new ",
                     this.WireMock.WireMockServerSettings,
-                    " { Logger = new FernWireMockLogger(new ",
+                    " { Logger = new WireMockLogger(new ",
                     this.WireMock.WireMockConsoleLogger,
                     "()) })"
                 );
@@ -271,13 +271,13 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
     }
 
     /**
-     * Adds a nested FernWireMockLogger class that wraps WireMockConsoleLogger
-     * and only logs when the FERN_DEBUG environment variable is set.
+     * Adds a nested WireMockLogger class that wraps WireMockConsoleLogger
+     * and logs to NUnit's TestContext for test output visibility.
      */
-    private addFernWireMockLoggerClass(class_: ast.Class): void {
+    private addWireMockLoggerClass(class_: ast.Class): void {
         // Create a class reference with an origin derived from the parent class
         const nestedClassReference = this.csharp.classReference({
-            origin: class_.explicit("FernWireMockLogger"),
+            origin: class_.explicit("WireMockLogger"),
             enclosingType: this.Types.BaseMockServerTest
         });
 
@@ -287,18 +287,6 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             access: ast.Access.Private,
             sealed: true,
             interfaceReferences: [this.WireMock.IWireMockLogger]
-        });
-
-        // Add static IsDebugEnabled field
-        nestedClass.addField({
-            name: "IsDebugEnabled",
-            access: ast.Access.Private,
-            static_: true,
-            readonly: true,
-            type: this.Primitive.boolean,
-            initializer: this.csharp.codeblock(
-                '!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FERN_DEBUG"))'
-            )
         });
 
         // Add _inner field
@@ -338,10 +326,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
-                writer.writeLine("if (IsDebugEnabled)");
-                writer.pushScope();
-                writer.writeLine('Console.WriteLine("[Fern MockServer Debug] " + string.Format(formatString, args));');
-                writer.popScope();
+                writer.writeLine('TestContext.WriteLine("[MockServer Debug] " + string.Format(formatString, args));');
                 writer.writeLine("_inner.Debug(formatString, args);");
             })
         });
@@ -361,10 +346,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
-                writer.writeLine("if (IsDebugEnabled)");
-                writer.pushScope();
-                writer.writeLine('Console.WriteLine("[Fern MockServer Info] " + string.Format(formatString, args));');
-                writer.popScope();
+                writer.writeLine('TestContext.WriteLine("[MockServer Info] " + string.Format(formatString, args));');
                 writer.writeLine("_inner.Info(formatString, args);");
             })
         });
@@ -384,10 +366,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
-                writer.writeLine("if (IsDebugEnabled)");
-                writer.pushScope();
-                writer.writeLine('Console.WriteLine("[Fern MockServer Warn] " + string.Format(formatString, args));');
-                writer.popScope();
+                writer.writeLine('TestContext.WriteLine("[MockServer Warn] " + string.Format(formatString, args));');
                 writer.writeLine("_inner.Warn(formatString, args);");
             })
         });
@@ -407,10 +386,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
-                writer.writeLine("if (IsDebugEnabled)");
-                writer.pushScope();
-                writer.writeLine('Console.WriteLine("[Fern MockServer Error] " + string.Format(formatString, args));');
-                writer.popScope();
+                writer.writeLine('TestContext.WriteLine("[MockServer Error] " + string.Format(formatString, args));');
                 writer.writeLine("_inner.Error(formatString, args);");
             })
         });
@@ -430,10 +406,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
-                writer.writeLine("if (IsDebugEnabled)");
-                writer.pushScope();
-                writer.writeLine('Console.WriteLine("[Fern MockServer Error] " + message + ": " + exception);');
-                writer.popScope();
+                writer.writeLine('TestContext.WriteLine("[MockServer Error] " + message + ": " + exception);');
                 writer.writeLine("_inner.Error(message, exception);");
             })
         });
@@ -453,12 +426,9 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                 })
             ],
             body: this.csharp.codeblock((writer: Writer) => {
-                writer.writeLine("if (IsDebugEnabled)");
-                writer.pushScope();
                 writer.writeLine(
-                    'Console.WriteLine("[Fern MockServer DebugRequestResponse] " + logEntryModel?.Request?.Url);'
+                    'TestContext.WriteLine("[MockServer DebugRequestResponse] " + logEntryModel?.Request?.Url);'
                 );
-                writer.popScope();
                 writer.writeLine("_inner.DebugRequestResponse(logEntryModel, isAdminRequest);");
             })
         });
