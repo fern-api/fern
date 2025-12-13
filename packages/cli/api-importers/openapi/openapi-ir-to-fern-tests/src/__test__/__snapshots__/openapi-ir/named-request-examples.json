@@ -1,0 +1,445 @@
+{
+  "title": "Named Request Examples API",
+  "description": "Tests that named examples in requestBody are preserved",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Create a workspace",
+      "audiences": [],
+      "tags": [
+        "Workspaces"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "PostWorkspacesRequestAuthorization",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "generatedRequestName": "PostWorkspacesRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostWorkspacesRequestBody",
+          "schema": "CreateWorkspace",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [
+          {
+            "name": "simple_workspace",
+            "value": {
+              "title": "My new workspace"
+            }
+          },
+          {
+            "name": "great_british_pounds_workspace",
+            "value": {
+              "title": "My workspace using British Pounds",
+              "currency_code": "GBP"
+            }
+          },
+          {
+            "name": "united_states_dollars_workspace",
+            "value": {
+              "title": "My workspace using US Dollars",
+              "currency_code": "USD"
+            }
+          }
+        ],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Workspace created successfully",
+        "schema": {
+          "generatedName": "PostWorkspacesResponse",
+          "schema": "Workspace",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Creates a new workspace and adds the user as a Workspace Admin.",
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/workspaces",
+      "examples": [
+        {
+          "name": "simple_workspace",
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": {
+                "value": {
+                  "value": "Authorization",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "request": {
+            "properties": {
+              "title": {
+                "value": {
+                  "value": "My new workspace",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "title": {
+                  "value": {
+                    "value": "title",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "currency_code": {
+                  "value": {
+                    "value": "currency_code",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        },
+        {
+          "name": "great_british_pounds_workspace",
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": {
+                "value": {
+                  "value": "Authorization",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "request": {
+            "properties": {
+              "title": {
+                "value": {
+                  "value": "My workspace using British Pounds",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "currency_code": {
+                "value": {
+                  "value": "GBP",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "title": {
+                  "value": {
+                    "value": "title",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "currency_code": {
+                  "value": {
+                    "value": "currency_code",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        },
+        {
+          "name": "united_states_dollars_workspace",
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": {
+                "value": {
+                  "value": "Authorization",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "request": {
+            "properties": {
+              "title": {
+                "value": {
+                  "value": "My workspace using US Dollars",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "currency_code": {
+                "value": {
+                  "value": "USD",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "title": {
+                  "value": {
+                    "value": "title",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "currency_code": {
+                  "value": {
+                    "value": "currency_code",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "CreateWorkspace": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createWorkspaceTitle",
+            "key": "title",
+            "schema": {
+              "description": "The title of the workspace",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "CreateWorkspaceTitle",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createWorkspaceCurrencyCode",
+            "key": "currency_code",
+            "schema": {
+              "generatedName": "CreateWorkspaceCurrencyCode",
+              "description": "The currency code for the workspace (e.g., USD, GBP, EUR)",
+              "value": {
+                "description": "The currency code for the workspace (e.g., USD, GBP, EUR)",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CreateWorkspaceCurrencyCode",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateWorkspace",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Workspace": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "workspaceId",
+            "key": "id",
+            "schema": {
+              "generatedName": "WorkspaceId",
+              "description": "The unique identifier for the workspace",
+              "value": {
+                "description": "The unique identifier for the workspace",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "WorkspaceId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "workspaceTitle",
+            "key": "title",
+            "schema": {
+              "generatedName": "WorkspaceTitle",
+              "description": "The title of the workspace",
+              "value": {
+                "description": "The title of the workspace",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "WorkspaceTitle",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "workspaceCurrencyCode",
+            "key": "currency_code",
+            "schema": {
+              "generatedName": "WorkspaceCurrencyCode",
+              "description": "The currency code for the workspace",
+              "value": {
+                "description": "The currency code for the workspace",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "WorkspaceCurrencyCode",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Workspace",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
