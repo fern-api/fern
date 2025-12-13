@@ -121,6 +121,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private rootApiFile: RawSchemas.RootApiFileSchema;
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private basePath: string | undefined = undefined;
+    // Global registry to track all type declarations across files
+    // Maps type name -> { file, schema } for deduplication
+    private globalTypeRegistry: Map<string, { file: RelativeFilePath; schema: RawSchemas.TypeDeclarationSchema }> =
+        new Map();
 
     public constructor(public readonly enableUniqueErrorsPerEndpoint: boolean) {
         this.root = new FernDefinitionDirectory();
@@ -331,6 +335,22 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (file === RelativeFilePath.of(ROOT_API_FILENAME)) {
             return;
         }
+
+        // Check if this type name already exists in another file
+        const existingType = this.globalTypeRegistry.get(name);
+        if (existingType != null) {
+            // If the type already exists in a different file with the same schema, skip adding it
+            if (existingType.file !== file && isEqual(existingType.schema, schema)) {
+                return;
+            }
+            // If the type exists in the same file, just update it (existing behavior)
+            // If the type exists in a different file with a different schema, we still add it
+            // (this will be caught by fern check as a duplicate declaration error)
+        }
+
+        // Register the type globally
+        this.globalTypeRegistry.set(name, { file, schema });
+
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.types == null) {
             fernFile.types = {};
