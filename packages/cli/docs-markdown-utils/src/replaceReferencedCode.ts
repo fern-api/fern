@@ -99,7 +99,7 @@ export async function replaceReferencedCode({
         return markdown;
     }
 
-    const regex = /([ \t]*)<Code(?![a-zA-Z])[\s\S]*?src={?['"]([^'"]+)['"](?! \+)}?([\s\S]*?)\/>/g;
+    const regex = /([ \t]*)<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
 
     let newMarkdown = markdown;
 

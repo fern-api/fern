@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Revert regex parsing of `<Code>` components.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.4
+
+- changelogEntry:
+    - summary: |
         Fix duplicate type declarations when OpenAPI specs use `allOf` references in inline request bodies.
       type: fix
   irVersion: 62
