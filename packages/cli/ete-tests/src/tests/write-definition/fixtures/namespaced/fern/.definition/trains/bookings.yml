@@ -91,6 +91,9 @@ service:
       examples:
         - path-parameters:
             bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          response:
+            body:
+              key: value
       method: DELETE
       path: /bookings/{bookingId}
       request:
@@ -99,6 +102,10 @@ service:
           bookingId:
             docs: The ID of the booking to retrieve.
             type: string
+      response:
+        docs: Booking deleted
+        status-code: 204
+        type: map<string, unknown>
       source:
         openapi: openapi/trains/openapi.yml
     get-booking:

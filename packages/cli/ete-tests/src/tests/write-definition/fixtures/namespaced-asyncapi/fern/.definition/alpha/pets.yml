@@ -7,9 +7,15 @@ service:
     createPets:
       display-name: Create a pet
       examples:
-        - {}
+        - response:
+            body:
+              key: value
       method: POST
       path: /pets
+      response:
+        docs: Null response
+        status-code: 201
+        type: map<string, unknown>
       source:
         openapi: alpha_one.yml
     listPets:

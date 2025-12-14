@@ -36,3 +36,7 @@ webhooks:
     headers: {}
     method: POST
     payload: NewBookingPayload
+    response:
+      docs: Return a 200 status to indicate that the data was received successfully.
+      status-code: 200
+      type: map<string, unknown>

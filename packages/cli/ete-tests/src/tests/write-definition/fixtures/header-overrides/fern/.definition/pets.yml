@@ -9,8 +9,15 @@ service:
       examples:
         - headers:
             X-Dummy-Header: X-Dummy-Header
+          response:
+            body:
+              key: value
       method: POST
       path: /pets
+      response:
+        docs: Null response
+        status-code: 201
+        type: map<string, unknown>
       source:
         openapi: openapi/openapi.yml
     listPets:
