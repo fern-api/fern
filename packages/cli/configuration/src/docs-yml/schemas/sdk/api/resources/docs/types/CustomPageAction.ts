@@ -10,9 +10,9 @@ export interface CustomPageAction {
     title: string;
     /** The subtitle/helper text of the custom action. */
     subtitle?: string;
-    /** The URL to navigate to. Use {slug} as a placeholder for the current page slug. */
+    /** The URL to navigate to. Use {slug} as a placeholder for the current page slug, {domain} as a placeholder for the current domain, and {url} as a placeholder for the current full URL. */
     url: string;
-    /** Icon to display for the custom action. Can be a file ID (e.g., "file:my-icon"), an image URL (starting with http://, https://, or /), or a Font Awesome icon name (e.g., "fas fa-star" or "star"). */
+    /** Icon to display for the custom action. Can be a relative filepath, an image URL (starting with http://, https://, or /), or a Font Awesome icon name (e.g., "fa-solid fa-star" or "star"). */
     icon?: string;
     /** Whether this custom action should be the default action. */
     default?: boolean;
