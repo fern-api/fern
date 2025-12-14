@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add `explode` field to PathParameter and QueryParameter types in the IR for OpenAPI parameter serialization control.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-14"
+  version: 3.19.0
+
+- changelogEntry:
+    - summary: |
         Revert regex parsing of `<Code>` components.
       type: fix
   irVersion: 62

@@ -512,6 +512,7 @@
           "allPathParameters": [
             {
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -614,6 +615,7 @@
           "pathParameters": [
             {
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {

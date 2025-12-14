@@ -141,6 +141,7 @@ types:
       location: PathParameterLocation
       variable: optional<variables.VariableId>
       v2Examples: optional<examples.V2SchemaExamples>
+      explode: optional<boolean>
 
   PathParameterLocation:
     enum:
@@ -155,6 +156,7 @@ types:
       valueType: types.TypeReference
       allowMultiple: boolean
       v2Examples: optional<examples.V2SchemaExamples>
+      explode: optional<boolean>
 
   HttpRequestBody:
     union:
