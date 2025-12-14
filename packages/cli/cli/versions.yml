@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix duplicate type declarations when OpenAPI specs use `allOf` references in inline request bodies.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.3
+
+- changelogEntry:
+    - summary: |
         Remove `fern check` validation rule that rejected HEAD endpoints with response bodies. HEAD endpoints can now define response bodies without triggering validation errors.
       type: fix
   irVersion: 62
