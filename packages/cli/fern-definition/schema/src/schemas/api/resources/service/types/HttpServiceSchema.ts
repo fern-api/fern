@@ -4,7 +4,7 @@
 
 import * as FernDefinition from "../../../index";
 
-export interface HttpServiceSchema extends FernDefinition.DeclarationWithoutDocsSchema, FernDefinition.WithDisplayName {
+export interface HttpServiceSchema extends FernDefinition.DeclarationSchema, FernDefinition.WithDisplayName {
     auth: boolean;
     url?: string;
     "base-path": string;

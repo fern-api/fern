@@ -369,6 +369,7 @@ function mergeServicesAndChannels(
             mergedServices[serviceId] = service;
         } else {
             mergedServices[serviceId] = {
+                docs: mergedServices[serviceId].docs ?? service.docs,
                 availability: service.availability,
                 name: service.name,
                 displayName: service.displayName,

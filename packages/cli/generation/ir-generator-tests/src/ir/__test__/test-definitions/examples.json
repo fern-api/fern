@@ -25297,7 +25297,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_file/notification/service": {
             "availability": null,
@@ -26677,7 +26678,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_file/service": {
             "availability": null,
@@ -27904,7 +27906,8 @@
                     "docs": "This endpoint returns a file by its name."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_health/service": {
             "availability": null,
@@ -28540,7 +28543,8 @@
                     "docs": "This endpoint checks the health of the service."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_service": {
             "availability": null,
@@ -41281,7 +41285,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {

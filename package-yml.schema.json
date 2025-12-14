@@ -2896,6 +2896,16 @@
     "service.HttpServiceSchema": {
       "type": "object",
       "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "availability": {
           "oneOf": [
             {

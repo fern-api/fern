@@ -3214,7 +3214,8 @@
                     "docs": "Create a new organization."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_user": {
             "availability": null,
@@ -4502,7 +4503,8 @@
                     "docs": "List all users."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_user/events": {
             "availability": null,
@@ -5935,7 +5937,8 @@
                     "docs": "List all user events."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_user/events/metadata": {
             "availability": null,
@@ -7075,7 +7078,8 @@
                     "docs": "Get event metadata."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {

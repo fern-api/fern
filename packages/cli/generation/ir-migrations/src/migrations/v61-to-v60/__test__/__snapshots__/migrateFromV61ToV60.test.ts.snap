@@ -694,6 +694,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
         "parts": [],
       },
       "displayName": null,
+      "docs": undefined,
       "encoding": {
         "json": {},
         "proto": null,
