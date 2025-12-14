@@ -170,6 +170,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 Object.assign(this.inlinedTypes, convertedResponseBody.inlinedTypes);
 
                 responses.push({
+                    docs: resolvedResponse.description,
                     statusCode: statusCodeNum,
                     isWildcardStatusCode: isWildcard ? true : undefined,
                     body: convertedResponseBody.responseBody
@@ -177,6 +178,7 @@ export class WebhookConverter extends AbstractOperationConverter {
             } else {
                 // If no body was parsed, still include the response with undefined body
                 responses.push({
+                    docs: resolvedResponse.description,
                     statusCode: statusCodeNum,
                     isWildcardStatusCode: isWildcard ? true : undefined,
                     body: undefined
