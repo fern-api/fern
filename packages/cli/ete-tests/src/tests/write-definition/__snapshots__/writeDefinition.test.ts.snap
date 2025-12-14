@@ -44,9 +44,15 @@ service:
     createPets:
       display-name: Create a pet
       examples:
-        - {}
+        - response:
+            body:
+              key: value
       method: POST
       path: /pets
+      response:
+        docs: Null response
+        status-code: 201
+        type: map<string, unknown>
       source:
         openapi: openapi/openapi.yml
     listPets:
@@ -154,8 +160,15 @@ service:
       examples:
         - headers:
             X-Dummy-Header: X-Dummy-Header
+          response:
+            body:
+              key: value
       method: POST
       path: /pets
+      response:
+        docs: Null response
+        status-code: 201
+        type: map<string, unknown>
       source:
         openapi: openapi/openapi.yml
     listPets:
@@ -559,9 +572,15 @@ service:
     createPets:
       display-name: Create a pet
       examples:
-        - {}
+        - response:
+            body:
+              key: value
       method: POST
       path: /pets
+      response:
+        docs: Null response
+        status-code: 201
+        type: map<string, unknown>
       source:
         openapi: openapi/petstore/openapi.yml
     listPets:
@@ -1346,6 +1365,9 @@ service:
       examples:
         - path-parameters:
             bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          response:
+            body:
+              key: value
       method: DELETE
       path: /bookings/{bookingId}
       request:
@@ -1354,6 +1376,10 @@ service:
           bookingId:
             docs: The ID of the booking to retrieve.
             type: string
+      response:
+        docs: Booking deleted
+        status-code: 204
+        type: map<string, unknown>
       source:
         openapi: openapi/trains/openapi.yml
     get-booking:
@@ -1753,6 +1779,10 @@ webhooks:
     headers: {}
     method: POST
     payload: NewBookingPayload
+    response:
+      docs: Return a 200 status to indicate that the data was received successfully.
+      status-code: 200
+      type: map<string, unknown>
 ",
         "name": "trains.yml",
         "type": "file",
@@ -2735,9 +2765,15 @@ service:
     createPets:
       display-name: Create a pet
       examples:
-        - {}
+        - response:
+            body:
+              key: value
       method: POST
       path: /pets
+      response:
+        docs: Null response
+        status-code: 201
+        type: map<string, unknown>
       source:
         openapi: alpha_one.yml
     listPets:
