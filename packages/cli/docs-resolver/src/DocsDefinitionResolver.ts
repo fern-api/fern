@@ -691,7 +691,8 @@ export class DocsDefinitionResolver {
                           body: this.parsedDocsConfig.theme.body,
                           tabs: this.parsedDocsConfig.theme.tabs,
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
-                          footerNav: this.parsedDocsConfig.theme.footerNav
+                          footerNav: this.parsedDocsConfig.theme.footerNav,
+                          "language-switcher": this.parsedDocsConfig.theme.languageSwitcher
                       }
                     : undefined,
             // deprecated

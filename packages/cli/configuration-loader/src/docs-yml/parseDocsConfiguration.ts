@@ -333,7 +333,8 @@ function convertPageActions(
             openAi: pageActions.options?.chatgpt ?? false,
             claude: pageActions.options?.claude ?? false,
             cursor: pageActions.options?.cursor ?? false,
-            vscode: pageActions.options?.vscode ?? false
+            vscode: pageActions.options?.vscode ?? false,
+            custom: (pageActions.options?.custom ?? []).map(convertCustomPageAction)
         }
     };
 }
@@ -359,6 +360,18 @@ function convertPageActionOption(
         default:
             assertNever(option);
     }
+}
+
+function convertCustomPageAction(
+    customAction: docsYml.RawSchemas.CustomPageAction
+): CjsFdrSdk.docs.v1.commons.CustomPageAction {
+    return {
+        title: customAction.title,
+        subtitle: customAction.subtitle,
+        url: customAction.url,
+        icon: customAction.icon,
+        default: customAction.default
+    };
 }
 
 function convertThemeConfig(
