@@ -279,6 +279,37 @@
           },
           "type": "reference"
         },
+        "responses": [
+          {
+            "body": {
+              "value": {
+                "docs": "Return a 200 status to indicate that the data was received successfully",
+                "responseBodyType": {
+                  "container": {
+                    "keyType": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "valueType": {
+                      "type": "unknown"
+                    },
+                    "type": "map"
+                  },
+                  "type": "container"
+                },
+                "type": "response"
+              },
+              "type": "json"
+            },
+            "statusCode": 200,
+            "docs": "Return a 200 status to indicate that the data was received successfully"
+          }
+        ],
         "examples": [
           {
             "name": {

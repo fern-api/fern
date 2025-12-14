@@ -286,6 +286,7 @@
         },
         "responses": [
           {
+            "docs": "Return a 200 status to indicate that the data was received successfully",
             "statusCode": 200,
             "body": {
               "value": {
@@ -327,8 +328,7 @@
                 "type": "response"
               },
               "type": "json"
-            },
-            "description": "Return a 200 status to indicate that the data was received successfully"
+            }
           }
         ],
         "examples": [],
