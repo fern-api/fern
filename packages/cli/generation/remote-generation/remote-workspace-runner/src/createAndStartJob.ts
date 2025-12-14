@@ -52,7 +52,13 @@ export async function createAndStartJob({
         try {
             fernignoreContents = await readFile(fernignorePath, "utf-8");
         } catch (error) {
-            context.failAndThrow(`Failed to read fernignore file at ${fernignorePath}: ${error}`);
+            const err = error as NodeJS.ErrnoException;
+            if (err.code === "ENOENT") {
+                context.failAndThrow(
+                    `The fernignore file was not found at path: ${fernignorePath}. Please check that the path is correct and the file exists.`
+                );
+            }
+            context.failAndThrow(`Failed to read fernignore file at path: ${fernignorePath}. ${String(error)}`);
         }
     }
 
