@@ -5,12 +5,12 @@
 import * as FernOpenapiIr from "../../../index";
 
 export interface PathParameterWithExample
-    extends FernOpenapiIr.WithDescription,
-        FernOpenapiIr.WithAvailability,
-        FernOpenapiIr.WithSource {
+    extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithAvailability, FernOpenapiIr.WithSource {
     name: string;
     schema: FernOpenapiIr.SchemaWithExample;
     variableReference: string | undefined;
     /** Populated by `x-fern-parameter-name` on a parameter object. */
     parameterNameOverride: string | undefined;
+    /** Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style. */
+    explode: boolean | undefined;
 }

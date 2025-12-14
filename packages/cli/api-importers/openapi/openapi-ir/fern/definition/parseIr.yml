@@ -174,6 +174,10 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      explode:
+        type: optional<boolean>
+        docs: |
+          Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style.
 
   QueryParameterWithExample:
     extends:
@@ -187,6 +191,10 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      explode:
+        type: optional<boolean>
+        docs: |
+          Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style.
 
   HeaderWithExample:
     extends:
