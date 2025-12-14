@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v62.5.0] - 2025-12-14
+- Feature: Add `docs` field to `HttpResponse` to support response-level documentation for webhook responses and standard endpoints
+
 ## [v62.4.0] - 2025-12-14
 - Feature: Add `explode` field to PathParameter and QueryParameter types for OpenAPI parameter serialization control
 
