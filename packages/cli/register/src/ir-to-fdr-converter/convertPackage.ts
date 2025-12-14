@@ -683,7 +683,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
 }
 
 function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.register.HttpResponse | undefined {
-    let description;
+    let description = irResponse.docs;
     let type: FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined;
 
     if (irResponse.body != null) {
@@ -691,14 +691,14 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
             irResponse.body,
             {
                 fileDownload: (fileDownload) => {
-                    description = fileDownload.docs;
+                    description = fileDownload.docs ?? description;
                     return {
                         type: "fileDownload",
                         contentType: undefined
                     };
                 },
                 json: (jsonResponse) => {
-                    description = jsonResponse.docs;
+                    description = jsonResponse.docs ?? description;
                     return {
                         type: "reference",
                         value: convertTypeReference(jsonResponse.responseBodyType)
@@ -709,12 +709,12 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
                 streamParameter: () => undefined, // TODO: support stream parameter in FDR
                 streaming: (streamingResponse) => {
                     if (streamingResponse.type === "text") {
-                        description = streamingResponse.docs;
+                        description = streamingResponse.docs ?? description;
                         return {
                             type: "streamingText"
                         };
                     } else if (streamingResponse.type === "json") {
-                        description = streamingResponse.docs;
+                        description = streamingResponse.docs ?? description;
                         return {
                             type: "stream",
                             shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) },
@@ -722,7 +722,7 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
                         };
                         // TODO(dsinghvi): update FDR with SSE.
                     } else if (streamingResponse.type === "sse") {
-                        description = streamingResponse.docs;
+                        description = streamingResponse.docs ?? description;
                         return {
                             type: "stream",
                             shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) },

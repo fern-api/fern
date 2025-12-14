@@ -75,18 +75,20 @@
           },
           "responses": [
             {
-              "description": undefined,
+              "description": "Webhook received successfully (HTTP 204 No Content)",
               "isWildcard": undefined,
               "statusCode": 204,
               "type": {
-                "extends": [],
-                "extraProperties": undefined,
-                "properties": [],
-                "type": "object",
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "Payment Sessions_paymentSessionCompletedWebhook_Response_204",
+                },
               },
             },
             {
-              "description": undefined,
+              "description": "Invalid payload or authentication failure",
               "isWildcard": undefined,
               "statusCode": 400,
               "type": {
@@ -97,7 +99,7 @@
               },
             },
             {
-              "description": undefined,
+              "description": "Server error processing webhook",
               "isWildcard": undefined,
               "statusCode": 500,
               "type": {
@@ -114,6 +116,18 @@
     },
   },
   "types": {
+    "Payment Sessions_paymentSessionCompletedWebhook_Response_204": {
+      "availability": undefined,
+      "description": "Empty response body",
+      "displayName": undefined,
+      "name": "Payment Sessions_paymentSessionCompletedWebhook_Response_204",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [],
+        "type": "object",
+      },
+    },
     "PaymentSession": {
       "availability": undefined,
       "description": undefined,
