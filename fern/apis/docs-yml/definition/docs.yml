@@ -289,7 +289,7 @@ types:
         docs: The subtitle/helper text of the custom action.
       url:
         type: string
-        docs: The URL to navigate to. Use {slug} as a placeholder for the current page slug.
+        docs: The URL to navigate to. Use {slug} as a placeholder for the current page slug, {domain} as a placeholder for the current domain, and {url} as a placeholder for the current full URL.
       icon:
         type: optional<string>
         docs: Icon to display for the custom action. Can be a file ID (e.g., "file:my-icon"), an image URL (starting with http://, https://, or /), or a Font Awesome icon name (e.g., "fas fa-star" or "star").
