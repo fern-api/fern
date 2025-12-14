@@ -32,7 +32,8 @@ export const MapSchema: core.serialization.ObjectSchema<serializers.MapSchema.Ra
 
 export declare namespace MapSchema {
     export interface Raw
-        extends WithSdkGroupName.Raw,
+        extends
+            WithSdkGroupName.Raw,
             WithNamespace.Raw,
             WithName.Raw,
             WithDescription.Raw,

@@ -35,7 +35,8 @@ export const EnumSchemaWithExample: core.serialization.ObjectSchema<
 
 export declare namespace EnumSchemaWithExample {
     export interface Raw
-        extends WithSdkGroupName.Raw,
+        extends
+            WithSdkGroupName.Raw,
             WithNamespace.Raw,
             WithName.Raw,
             WithDescription.Raw,

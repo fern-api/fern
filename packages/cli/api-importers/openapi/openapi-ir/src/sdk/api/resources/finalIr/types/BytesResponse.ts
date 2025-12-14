@@ -5,6 +5,4 @@
 import * as FernOpenapiIr from "../../../index";
 
 export interface BytesResponse
-    extends FernOpenapiIr.WithDescription,
-        FernOpenapiIr.WithSource,
-        FernOpenapiIr.WithStatusCode {}
+    extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithSource, FernOpenapiIr.WithStatusCode {}

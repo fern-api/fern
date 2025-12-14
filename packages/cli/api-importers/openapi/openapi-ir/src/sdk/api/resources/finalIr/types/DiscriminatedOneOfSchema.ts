@@ -5,7 +5,8 @@
 import * as FernOpenapiIr from "../../../index";
 
 export interface DiscriminatedOneOfSchema
-    extends FernOpenapiIr.WithSdkGroupName,
+    extends
+        FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithNamespace,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription,

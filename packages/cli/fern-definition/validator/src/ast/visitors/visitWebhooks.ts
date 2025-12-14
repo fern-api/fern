@@ -94,6 +94,42 @@ export function visitWebhooks({
                 }
             });
         },
+        "response-stream": (responseStream) => {
+            if (responseStream == null) {
+                return;
+            }
+            if (typeof responseStream === "string") {
+                visitTypeReference(responseStream, [...nodePathForWebhook, "response-stream"], {
+                    location: TypeReferenceLocation.StreamingResponse
+                });
+            } else {
+                visitTypeReference(responseStream.type, [...nodePathForWebhook, "response-stream"], {
+                    location: TypeReferenceLocation.StreamingResponse
+                });
+            }
+        },
+        response: (response) => {
+            if (response == null) {
+                return;
+            }
+            const nodePathForResponse = [...nodePathForWebhook, "response"];
+            if (typeof response === "string") {
+                visitTypeReference(response, nodePathForResponse, { location: TypeReferenceLocation.Response });
+            } else {
+                visitObject(response, {
+                    docs: createDocsVisitor(visitor, nodePathForResponse),
+                    type: (type) => {
+                        if (type != null) {
+                            visitTypeReference(type, [...nodePathForResponse, "type"], {
+                                location: TypeReferenceLocation.Response
+                            });
+                        }
+                    },
+                    property: noop,
+                    "status-code": noop
+                });
+            }
+        },
         audiences: noop,
         availability: noop,
         docs: createDocsVisitor(visitor, nodePathForWebhook)

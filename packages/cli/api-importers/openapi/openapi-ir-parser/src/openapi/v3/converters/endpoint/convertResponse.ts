@@ -134,6 +134,7 @@ function convertResolvedResponse({
     statusCode?: number;
 }): ResponseWithExample | undefined {
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
+    const hasResponseContent = resolvedResponse.content != null && Object.keys(resolvedResponse.content).length > 0;
 
     if (resolvedResponse.content != null) {
         const binaryContent = Object.entries(resolvedResponse.content).find(([_, mediaObject]) => {
@@ -290,7 +291,34 @@ function convertResolvedResponse({
         }
     }
 
+    if (isSuccessfulStatusCode(statusCode) && !hasResponseContent) {
+        const emptySchema: OpenAPIV3.SchemaObject = {
+            type: "object",
+            description: resolvedResponse.description ?? "Empty response body"
+        };
+        return ResponseWithExample.json({
+            description: resolvedResponse.description,
+            schema: convertSchema(
+                emptySchema,
+                false,
+                false,
+                context,
+                [...responseBreadcrumbs, statusCode.toString(), "Empty"],
+                source,
+                namespace
+            ),
+            responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
+            fullExamples: undefined,
+            source,
+            statusCode
+        });
+    }
+
     return undefined;
+}
+
+function isSuccessfulStatusCode(statusCode: number | undefined): statusCode is number {
+    return statusCode != null && statusCode >= 200 && statusCode < 300;
 }
 
 function markErrorSchemas({

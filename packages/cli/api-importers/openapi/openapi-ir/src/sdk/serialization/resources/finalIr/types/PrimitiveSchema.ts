@@ -29,7 +29,8 @@ export const PrimitiveSchema: core.serialization.ObjectSchema<
 
 export declare namespace PrimitiveSchema {
     export interface Raw
-        extends WithSdkGroupName.Raw,
+        extends
+            WithSdkGroupName.Raw,
             WithNamespace.Raw,
             WithName.Raw,
             WithDescription.Raw,

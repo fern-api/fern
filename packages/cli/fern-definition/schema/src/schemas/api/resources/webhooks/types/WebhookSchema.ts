@@ -12,5 +12,7 @@ export interface WebhookSchema
     method: FernDefinition.WebhookMethodSchema;
     headers?: Record<string, FernDefinition.HttpHeaderSchema>;
     payload: FernDefinition.WebhookPayloadSchema;
+    response?: FernDefinition.HttpResponseSchema;
+    "response-stream"?: FernDefinition.HttpResponseStreamSchema;
     examples?: FernDefinition.ExampleWebhookCallSchema[];
 }

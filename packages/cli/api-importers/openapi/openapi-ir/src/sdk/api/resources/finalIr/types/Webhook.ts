@@ -15,5 +15,6 @@ export interface Webhook extends FernOpenapiIr.WithDescription, FernOpenapiIr.Wi
     /** Populated as ${operationId}Payload */
     generatedPayloadName: string;
     payload: FernOpenapiIr.Schema;
+    response: FernOpenapiIr.Response | undefined;
     examples: FernOpenapiIr.WebhookExampleCall[];
 }
