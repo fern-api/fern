@@ -57,13 +57,13 @@ public class AsyncCustomPager<T> implements BiDirectionalPage<T> {
      * Create an AsyncCustomPager from an initial response.
      *
      * @param initialResponse The first page response from the API
-     * @param client The async HTTP client to use for subsequent requests
+     * @param clientOptions The client options containing HTTP client and other configuration
      * @param requestOptions Request options for authentication, headers, etc.
      * @return A CompletableFuture containing the new AsyncCustomPager instance
      */
     public static <T> CompletableFuture<AsyncCustomPager<T>> createAsync(
             Object initialResponse,
-            okhttp3.OkHttpClient client,
+            ClientOptions clientOptions,
             Object requestOptions) {
         throw new UnsupportedOperationException(
             "AsyncCustomPager must be implemented. " +
