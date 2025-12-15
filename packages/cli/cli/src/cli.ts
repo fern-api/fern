@@ -64,6 +64,8 @@ void runCli();
 const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
 
 async function runCli() {
+    // biome-ignore lint/suspicious/noConsole: Debug logging to verify CLI version
+    console.error("[FERN_AUTH_DESC_DEBUG] CLI loaded - this confirms you are running the patched version");
     const isLocal = process.argv.includes("--local");
     const cliContext = new CliContext(process.stdout, process.stderr, { isLocal });
 
