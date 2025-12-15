@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface HttpResponse {
+export interface HttpResponse extends FernIr.WithDocs {
     statusCode: number | undefined;
     /**
      * When true, indicates that the status-code represents a wildcard pattern (e.g., 4XX or 5XX).

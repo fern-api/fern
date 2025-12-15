@@ -9,14 +9,16 @@ import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefin
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
+import { getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { State } from "./State";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertFullExample } from "./utils/convertFullExample";
-import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
+import { convertSdkGroupNameToFile, resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
+import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
 import {
     getDocsFromTypeReference,
@@ -549,6 +551,24 @@ function getRequest({
 
             return convertedRequest;
         }
+
+        // Build a map from property key to the declaration file of its source allOf schema.
+        // This ensures that nested types from allOf references are declared in the same file
+        // as the allOf schema, not in the endpoint file.
+        const propertyToDeclarationFile = new Map<string, RelativeFilePath>();
+        for (const allOfRef of resolvedSchema.allOf) {
+            const allOfSchema = context.getSchema(allOfRef.schema, namespace);
+            if (allOfSchema == null) {
+                continue;
+            }
+            const groupName = getGroupNameForSchema(allOfSchema);
+            const allOfDeclarationFile = convertSdkGroupNameToFile(groupName);
+            const { properties: allOfProperties } = getProperties(context, allOfRef.schema, namespace);
+            for (const prop of allOfProperties) {
+                propertyToDeclarationFile.set(prop.key, allOfDeclarationFile);
+            }
+        }
+
         const properties = Object.fromEntries(
             resolvedSchema.properties
                 .filter((property) => {
@@ -562,9 +582,13 @@ function getRequest({
                     return true;
                 })
                 .map((property) => {
+                    // Use the declaration file from the source allOf schema if the property comes from one,
+                    // otherwise use the endpoint's declaration file.
+                    const propDeclarationFile = propertyToDeclarationFile.get(property.key) ?? declarationFile;
                     const propertyTypeReference = buildTypeReference({
                         schema: property.schema,
                         fileContainingReference: declarationFile,
+                        declarationFile: propDeclarationFile,
                         context,
                         namespace,
                         declarationDepth: 1 // 1 level deep for request body properties
@@ -620,18 +644,88 @@ function getRequest({
                     return [property.key, typeReference];
                 })
         );
-        const extendedSchemas: string[] = resolvedSchema.allOf
-            .map((referencedSchema) => {
-                const allOfTypeReference = buildTypeReference({
-                    schema: Schema.reference(referencedSchema),
+        // Determine which schemas need to be inlined due to property conflicts
+        const schemasToInline = new Set<SchemaId>();
+        const propertiesToSetToUnknown = new Set<string>();
+        for (const allOfPropertyConflict of resolvedSchema.allOfPropertyConflicts) {
+            allOfPropertyConflict.allOfSchemaIds.forEach((schemaId) => schemasToInline.add(schemaId));
+            if (allOfPropertyConflict.conflictingTypeSignatures) {
+                propertiesToSetToUnknown.add(allOfPropertyConflict.propertyKey);
+            }
+        }
+
+        // Build extended schemas, skipping those that need to be inlined
+        const extendedSchemas: string[] = [];
+        for (const referencedSchema of resolvedSchema.allOf) {
+            const resolvedSchemaId = getSchemaIdOfResolvedType({
+                schema: referencedSchema.schema,
+                context,
+                namespace
+            });
+            if (resolvedSchemaId == null) {
+                continue;
+            }
+            if (schemasToInline.has(referencedSchema.schema) || schemasToInline.has(resolvedSchemaId)) {
+                continue; // don't extend from schemas that need to be inlined
+            }
+            const allOfTypeReference = buildTypeReference({
+                schema: Schema.reference(referencedSchema),
+                fileContainingReference: declarationFile,
+                context,
+                namespace,
+                declarationDepth: 0
+            });
+            const schemaType = stripNullableWrapperForExtends(getTypeFromTypeReference(allOfTypeReference));
+            if (schemaType !== "unknown") {
+                extendedSchemas.push(schemaType);
+            }
+        }
+
+        // Inline properties from schemas that have conflicts
+        for (const inlineSchemaId of schemasToInline) {
+            const inlinedSchemaPropertyInfo = getProperties(context, inlineSchemaId, namespace);
+            // Get the declaration file for the inlined schema
+            const inlinedSchema = context.getSchema(inlineSchemaId, namespace);
+            const inlinedSchemaDeclarationFile =
+                inlinedSchema != null
+                    ? convertSdkGroupNameToFile(getGroupNameForSchema(inlinedSchema))
+                    : declarationFile;
+            for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
+                if (properties[propertyToInline.key] == null) {
+                    if (propertiesToSetToUnknown.has(propertyToInline.key)) {
+                        properties[propertyToInline.key] = "unknown";
+                    } else {
+                        properties[propertyToInline.key] = buildTypeReference({
+                            schema: propertyToInline.schema,
+                            fileContainingReference: declarationFile,
+                            declarationFile: inlinedSchemaDeclarationFile,
+                            context,
+                            namespace,
+                            declarationDepth: 1
+                        });
+                    }
+                }
+            }
+            // Also extend from any non-conflicting parents of the inlined schema
+            for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
+                if (schemasToInline.has(extendedSchema.schema)) {
+                    continue; // don't extend from schemas that need to be inlined
+                }
+                const extendedSchemaTypeReference = buildTypeReference({
+                    schema: Schema.reference(extendedSchema),
                     fileContainingReference: declarationFile,
                     context,
                     namespace,
                     declarationDepth: 0
                 });
-                return stripNullableWrapperForExtends(getTypeFromTypeReference(allOfTypeReference));
-            })
-            .filter((schema) => schema !== "unknown");
+                const schemaType = stripNullableWrapperForExtends(
+                    getTypeFromTypeReference(extendedSchemaTypeReference)
+                );
+                if (schemaType !== "unknown" && !extendedSchemas.includes(schemaType)) {
+                    extendedSchemas.push(schemaType);
+                }
+            }
+        }
 
         const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
             properties

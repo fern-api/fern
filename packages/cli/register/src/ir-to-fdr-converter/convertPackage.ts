@@ -196,7 +196,7 @@ function convertService(
                                   key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                                   type: convertTypeReference(pathParameter.valueType),
                                   availability: undefined,
-                                  explode: undefined
+                                  explode: pathParameter.explode
                               })
                           ),
                           parts: [...convertHttpPath(irEndpoint.basePath), ...convertHttpPath(irEndpoint.path)]
@@ -212,7 +212,7 @@ function convertService(
                                   key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                                   type: convertTypeReference(pathParameter.valueType),
                                   availability: undefined,
-                                  explode: undefined
+                                  explode: pathParameter.explode
                               })
                           ),
                           parts: [
@@ -227,7 +227,7 @@ function convertService(
                     key: queryParameter.name.wireValue,
                     type: convertTypeReference(queryParameter.valueType),
                     availability: convertIrAvailability(queryParameter.availability),
-                    explode: undefined
+                    explode: queryParameter.explode
                 })
             ),
             headers: [...irService.headers, ...irEndpoint.headers].map(
@@ -352,7 +352,7 @@ function convertWebSocketChannel(
                     key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                     type: convertTypeReference(pathParameter.valueType),
                     availability: undefined,
-                    explode: undefined
+                    explode: pathParameter.explode
                 })
             ),
             parts: convertHttpPath(channel.path)
@@ -371,7 +371,7 @@ function convertWebSocketChannel(
                 key: queryParameter.name.wireValue,
                 type: convertTypeReference(queryParameter.valueType),
                 availability: convertIrAvailability(queryParameter.availability),
-                explode: undefined
+                explode: queryParameter.explode
             })
         ),
         messages: channel.messages.map(
@@ -683,7 +683,8 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
 }
 
 function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.register.HttpResponse | undefined {
-    let description;
+    // Use response-level docs as the default description, which can be overridden by body-level docs
+    let description = irResponse.docs;
     let type: FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined;
 
     if (irResponse.body != null) {

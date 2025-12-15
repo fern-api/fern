@@ -101,7 +101,8 @@ export function convertHttpOperation({
                         availability: undefined,
                         title: undefined
                     }),
-                    description: undefined
+                    description: undefined,
+                    explode: undefined
                 });
             }
         }

@@ -3497,6 +3497,52 @@
         "vscode"
       ]
     },
+    "docs.CustomPageAction": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": "string"
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "title",
+        "url"
+      ],
+      "additionalProperties": false
+    },
     "docs.PageActionOptions": {
       "type": "object",
       "properties": {
@@ -3564,6 +3610,19 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "custom": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.CustomPageAction"
+              }
             },
             {
               "type": "null"
@@ -3659,6 +3718,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ai-example-style-instructions": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
@@ -4743,6 +4812,13 @@
         "minimal"
       ]
     },
+    "docs.LanguageSwitcherThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "minimal"
+      ]
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
@@ -4790,6 +4866,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.FooterNavThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "language-switcher": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LanguageSwitcherThemeConfig"
             },
             {
               "type": "null"

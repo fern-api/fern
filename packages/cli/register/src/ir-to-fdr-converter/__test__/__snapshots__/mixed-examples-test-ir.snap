@@ -1507,6 +1507,7 @@
                 },
               },
             },
+            "docs": "User created successfully",
             "isWildcardStatusCode": undefined,
             "statusCode": 201,
           },
@@ -1668,6 +1669,7 @@
                     },
                   },
                 },
+                "docs": "User created successfully",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 201,
               },
@@ -1678,6 +1680,7 @@
           "allPathParameters": [
             {
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -2353,6 +2356,7 @@
           "pathParameters": [
             {
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -2456,6 +2460,7 @@
                 },
               },
             },
+            "docs": "Product retrieved",
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
@@ -2568,6 +2573,7 @@
                     },
                   },
                 },
+                "docs": "Product retrieved",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },

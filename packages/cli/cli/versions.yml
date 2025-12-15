@@ -8,6 +8,113 @@
 
 - changelogEntry:
     - summary: |
+        Fix OpenAPI example parsing to preserve explicit `null` values. Previously, explicit `null` values in OpenAPI response examples (e.g., `balance_max: null` for unbounded tiers) were being incorrectly replaced with schema example values or generated placeholders.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.22.2
+
+- changelogEntry:
+    - summary: |
+        Fix OpenAPI 3.1+ parsing to respect `$ref` sibling examples. When a property has both a `$ref` and sibling `example`/`examples` properties, the sibling examples now correctly take precedence over the referenced schema's examples. This fix applies to both the old and new OpenAPI parsers.
+
+        ```yaml
+        # OpenAPI 3.1+ allows $ref siblings like example/examples
+        Company:
+          type: object
+          properties:
+            logo:
+              $ref: '#/components/schemas/File'
+              example:
+                url: https://images.example.com/logo.png  # This example is now used
+        ```
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.22.1
+
+- changelogEntry:
+    - summary: |
+        Share `.fernignore` handling between local and remote task handlers. When running remote generation with `local-file-system` output mode, the `.fernignore` file is now respected, matching the behavior of local generation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.22.0
+
+- changelogEntry:
+    - summary: |
+        Fix ExampleValidator to validate response examples against their corresponding status code schemas instead of always using the 200/201 success schema. Error response examples (400, 404, 500, etc.) are now correctly validated against their respective schemas.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.21.1
+
+- changelogEntry:
+    - summary: |
+        Add a `custom` field to the `page-actions` configuration. This allows users to add custom page actions to the docs.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.21.0
+
+- changelogEntry:
+    - summary: |
+        Add `docs` field to `HttpResponse` in the IR to capture response descriptions for webhook responses. This enables webhook response descriptions (e.g., for 204, 400, 500 status codes) to be properly propagated from OpenAPI specs to documentation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.20.0
+
+- changelogEntry:
+    - summary: |
+        Add `explode` field to PathParameter and QueryParameter types in the IR for OpenAPI parameter serialization control.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-14"
+  version: 3.19.0
+
+- changelogEntry:
+    - summary: |
+        Revert regex parsing of `<Code>` components.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.4
+
+- changelogEntry:
+    - summary: |
+        Fix duplicate type declarations when OpenAPI specs use `allOf` references in inline request bodies.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.3
+
+- changelogEntry:
+    - summary: |
+        Remove `fern check` validation rule that rejected HEAD endpoints with response bodies. HEAD endpoints can now define response bodies without triggering validation errors.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.2
+
+- changelogEntry:
+    - summary: |
+        Fix `fern check` errors when OpenAPI specs use `allOf` with multiple schemas that share the same property names in inline request bodies. The OpenAPI importer now correctly inlines conflicting schemas instead of extending them, preventing duplicate property errors.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.1
+
+- changelogEntry:
+    - summary: |
+        Add `ai-example-style-instructions` field to docs.yml experimental config. This allows providing custom styling instructions for AI-generated examples to guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-12"
+  version: 3.18.0
+
+- changelogEntry:
+    - summary: |
         Enable AI-generated endpoint examples by default. To disable, set ai-examples to false in docs.yml's `experimental` settings.
       type: feat
   irVersion: 62

@@ -5,11 +5,11 @@
 import * as FernOpenapiIr from "../../../index";
 
 export interface QueryParameterWithExample
-    extends FernOpenapiIr.WithDescription,
-        FernOpenapiIr.WithAvailability,
-        FernOpenapiIr.WithSource {
+    extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithAvailability, FernOpenapiIr.WithSource {
     name: string;
     schema: FernOpenapiIr.SchemaWithExample;
     /** Populated by `x-fern-parameter-name` on a parameter object. */
     parameterNameOverride: string | undefined;
+    /** Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style. */
+    explode: boolean | undefined;
 }

@@ -1117,7 +1117,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Successful response"
           },
           "docs": "Returns the user with the provided user ID.",
           "v2Examples": {
@@ -1201,7 +1202,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Successful response"
               }
             ]
           }
@@ -2035,7 +2037,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Successful response"
           },
           "docs": "",
           "v2Examples": {
@@ -2118,7 +2121,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Successful response"
               }
             ]
           }

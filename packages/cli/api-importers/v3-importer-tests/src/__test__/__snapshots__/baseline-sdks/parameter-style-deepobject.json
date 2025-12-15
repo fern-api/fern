@@ -804,7 +804,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "List of items"
           },
           "errors": [],
           "userSpecifiedExamples": [],

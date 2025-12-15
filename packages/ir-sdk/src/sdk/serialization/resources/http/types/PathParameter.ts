@@ -19,6 +19,7 @@ export const PathParameter: core.serialization.ObjectSchema<serializers.PathPara
             location: PathParameterLocation,
             variable: VariableId.optional(),
             v2Examples: V2SchemaExamples.optional(),
+            explode: core.serialization.boolean().optional(),
         })
         .extend(WithDocs);
 
@@ -29,5 +30,6 @@ export declare namespace PathParameter {
         location: PathParameterLocation.Raw;
         variable?: VariableId.Raw | null;
         v2Examples?: V2SchemaExamples.Raw | null;
+        explode?: boolean | null;
     }
 }

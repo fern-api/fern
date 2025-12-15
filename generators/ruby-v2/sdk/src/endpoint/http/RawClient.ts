@@ -18,6 +18,8 @@ export declare namespace RawClient {
         queryBagReference?: string;
         /** the request type, defaults to Json if none */
         requestType: RequestBodyType | undefined;
+        /** the base URL name for multi-URL environments (e.g., "ec2", "s3") */
+        baseUrlName?: string;
     }
 
     export type RequestBodyType = "json" | "bytes" | "multipartform";
@@ -30,9 +32,12 @@ export class RawClient {
         this.context = context;
     }
 
-    private writeBaseUrlDeclaration(writer: ruby.Writer): void {
-        // Write base URL declaration, including default environment if specified
-        writer.write("base_url: request_options[:base_url]");
+    private writeBaseUrlDeclaration(writer: ruby.Writer, baseUrlName?: string): void {
+        if (baseUrlName != null && this.context.isMultipleBaseUrlsEnvironment()) {
+            writer.write(`base_url: request_options[:base_url] || @base_url || @environment&.dig(:${baseUrlName})`);
+        } else {
+            writer.write("base_url: request_options[:base_url]");
+        }
     }
 
     public sendRequest({
@@ -42,7 +47,8 @@ export class RawClient {
         pathParameterReferences,
         headerBagReference,
         queryBagReference,
-        requestType
+        requestType,
+        baseUrlName
     }: RawClient.CreateHttpRequestWrapperArgs): ruby.CodeBlock | undefined {
         switch (requestType) {
             case "json":
@@ -51,7 +57,7 @@ export class RawClient {
                         `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
                     );
                     writer.indent();
-                    this.writeBaseUrlDeclaration(writer);
+                    this.writeBaseUrlDeclaration(writer, baseUrlName);
                     writer.writeLine(",");
                     writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
                     writer.write(`path: `);
@@ -78,7 +84,7 @@ export class RawClient {
                         `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalMultipartRequest()}.new(`
                     );
                     writer.indent();
-                    this.writeBaseUrlDeclaration(writer);
+                    this.writeBaseUrlDeclaration(writer, baseUrlName);
                     writer.writeLine(",");
                     writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
                     writer.write(`path: `);
@@ -103,7 +109,7 @@ export class RawClient {
                 `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
             );
             writer.indent();
-            this.writeBaseUrlDeclaration(writer);
+            this.writeBaseUrlDeclaration(writer, baseUrlName);
             writer.writeLine(",");
             writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
             writer.write(`path: `);

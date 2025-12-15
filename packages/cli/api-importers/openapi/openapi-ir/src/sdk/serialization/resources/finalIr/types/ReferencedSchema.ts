@@ -31,7 +31,8 @@ export const ReferencedSchema: core.serialization.ObjectSchema<
 
 export declare namespace ReferencedSchema {
     export interface Raw
-        extends WithSdkGroupName.Raw,
+        extends
+            WithSdkGroupName.Raw,
             WithNamespace.Raw,
             WithName.Raw,
             WithDescription.Raw,

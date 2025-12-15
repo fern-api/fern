@@ -14,6 +14,14 @@
   createdAt: "2025-12-11"
   irVersion: 62
 
+- version: 2.11.4
+  changelogEntry:
+    - summary: |
+        Don't use `required` keyword on properties that are read-only, since they're not supposed to be set by users.
+      type: fix
+  createdAt: "2025-12-13"
+  irVersion: 61
+
 - version: 2.11.3
   changelogEntry:
     - summary: |
