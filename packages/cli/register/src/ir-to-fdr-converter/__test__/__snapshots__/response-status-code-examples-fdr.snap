@@ -12,7 +12,6 @@
     "types": [
       "CreateSessionRequest",
       "CreateSessionResponse",
-      "SessionDetailResponse",
       "ErrorResponse",
     ],
     "webhooks": [],
@@ -39,7 +38,7 @@
           "authV2": undefined,
           "availability": undefined,
           "defaultEnvironment": undefined,
-          "description": "Creates a new session for processing.",
+          "description": "Creates a new session. Demonstrates response examples for multiple status codes.",
           "environments": undefined,
           "errors": undefined,
           "errorsV2": [
@@ -166,20 +165,16 @@
               "description": "",
               "headers": {},
               "name": undefined,
-              "path": "/sessions/v1/create",
+              "path": "/sessions/create",
               "pathParameters": {},
               "queryParameters": {},
               "requestBody": {
-                "failure_url": "string",
-                "success_url": "string",
-                "total_amount": 1,
+                "amount": 1,
               },
               "requestBodyV3": {
                 "type": "json",
                 "value": {
-                  "failure_url": "string",
-                  "success_url": "string",
-                  "total_amount": 1,
+                  "amount": 1,
                 },
               },
               "responseBody": {
@@ -211,7 +206,7 @@
               },
               {
                 "type": "literal",
-                "value": "/sessions/v1/create",
+                "value": "/sessions/create",
               },
             ],
             "pathParameters": [],
@@ -288,247 +283,6 @@
           },
           "slug": undefined,
         },
-        {
-          "auth": false,
-          "authV2": undefined,
-          "availability": undefined,
-          "defaultEnvironment": undefined,
-          "description": "Get the status of a session based on the session ID.",
-          "environments": undefined,
-          "errors": undefined,
-          "errorsV2": [
-            {
-              "availability": undefined,
-              "description": "Bad Request",
-              "examples": [
-                {
-                  "description": undefined,
-                  "name": "validationerror",
-                  "responseBody": {
-                    "type": "json",
-                    "value": {
-                      "error": "ValidationError",
-                      "message": "Bad Request",
-                    },
-                  },
-                },
-              ],
-              "headers": undefined,
-              "isWildcard": undefined,
-              "name": "BadRequestError",
-              "statusCode": 400,
-              "type": {
-                "type": "alias",
-                "value": {
-                  "default": undefined,
-                  "type": "id",
-                  "value": "ErrorResponse",
-                },
-              },
-            },
-            {
-              "availability": undefined,
-              "description": "Not Found",
-              "examples": [
-                {
-                  "description": undefined,
-                  "name": "notfound",
-                  "responseBody": {
-                    "type": "json",
-                    "value": {
-                      "error": "NotFound",
-                      "message": "Resource not found",
-                    },
-                  },
-                },
-              ],
-              "headers": undefined,
-              "isWildcard": undefined,
-              "name": "NotFoundError",
-              "statusCode": 404,
-              "type": {
-                "type": "alias",
-                "value": {
-                  "default": undefined,
-                  "type": "id",
-                  "value": "ErrorResponse",
-                },
-              },
-            },
-            {
-              "availability": undefined,
-              "description": "Method Not Allowed",
-              "examples": [
-                {
-                  "description": undefined,
-                  "name": "methodnotallowed",
-                  "responseBody": {
-                    "type": "json",
-                    "value": {
-                      "error": "MethodNotAllowed",
-                      "message": "Method not allowed",
-                    },
-                  },
-                },
-              ],
-              "headers": undefined,
-              "isWildcard": undefined,
-              "name": "MethodNotAllowedError",
-              "statusCode": 405,
-              "type": {
-                "type": "alias",
-                "value": {
-                  "default": undefined,
-                  "type": "id",
-                  "value": "ErrorResponse",
-                },
-              },
-            },
-            {
-              "availability": undefined,
-              "description": "Internal Server Error",
-              "examples": [
-                {
-                  "description": undefined,
-                  "name": "servererror",
-                  "responseBody": {
-                    "type": "json",
-                    "value": {
-                      "error": "ServerError",
-                      "message": "Internal server error",
-                    },
-                  },
-                },
-              ],
-              "headers": undefined,
-              "isWildcard": undefined,
-              "name": "InternalServerError",
-              "statusCode": 500,
-              "type": {
-                "type": "alias",
-                "value": {
-                  "default": undefined,
-                  "type": "id",
-                  "value": "ErrorResponse",
-                },
-              },
-            },
-          ],
-          "examples": [
-            {
-              "codeSamples": undefined,
-              "description": "",
-              "headers": {},
-              "name": undefined,
-              "path": "/sessions/v1/session_id",
-              "pathParameters": {
-                "session_id": "session_id",
-              },
-              "queryParameters": {},
-              "requestBody": undefined,
-              "requestBodyV3": undefined,
-              "responseBody": {
-                "capture_amount": 1,
-                "id": "string",
-                "status": "pending",
-              },
-              "responseBodyV3": {
-                "type": "json",
-                "value": {
-                  "capture_amount": 1,
-                  "id": "string",
-                  "status": "pending",
-                },
-              },
-              "responseStatusCode": 200,
-            },
-          ],
-          "headers": [],
-          "id": "getSession",
-          "includeInApiExplorer": undefined,
-          "method": "GET",
-          "multiAuth": undefined,
-          "name": "Get Session Status",
-          "originalEndpointId": "endpoint_sessions.getSession",
-          "path": {
-            "parts": [
-              {
-                "type": "literal",
-                "value": "",
-              },
-              {
-                "type": "literal",
-                "value": "/sessions/v1/",
-              },
-              {
-                "type": "pathParameter",
-                "value": "session_id",
-              },
-              {
-                "type": "literal",
-                "value": "",
-              },
-            ],
-            "pathParameters": [
-              {
-                "availability": undefined,
-                "description": "The session ID.",
-                "explode": undefined,
-                "key": "session_id",
-                "type": {
-                  "type": "primitive",
-                  "value": {
-                    "default": undefined,
-                    "format": undefined,
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "regex": undefined,
-                    "type": "string",
-                  },
-                },
-              },
-            ],
-          },
-          "protocol": {
-            "type": "rest",
-          },
-          "queryParameters": [],
-          "request": undefined,
-          "requestsV2": {
-            "requests": undefined,
-          },
-          "response": {
-            "description": "Successful response",
-            "isWildcard": undefined,
-            "statusCode": 200,
-            "type": {
-              "type": "reference",
-              "value": {
-                "default": undefined,
-                "type": "id",
-                "value": "SessionDetailResponse",
-              },
-            },
-          },
-          "responsesV2": {
-            "responses": [
-              {
-                "description": "Successful response",
-                "isWildcard": undefined,
-                "statusCode": 200,
-                "type": {
-                  "type": "reference",
-                  "value": {
-                    "default": undefined,
-                    "type": "id",
-                    "value": "SessionDetailResponse",
-                  },
-                },
-              },
-            ],
-          },
-          "slug": undefined,
-        },
       ],
       "name": "sessions",
       "pointsTo": undefined,
@@ -551,8 +305,8 @@
         "properties": [
           {
             "availability": undefined,
-            "description": "The total amount in cents",
-            "key": "total_amount",
+            "description": "The amount in cents",
+            "key": "amount",
             "propertyAccess": undefined,
             "valueType": {
               "type": "primitive",
@@ -562,61 +316,6 @@
                 "minimum": undefined,
                 "type": "integer",
               },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": "URL to redirect on success",
-            "key": "success_url",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": "URL to redirect on failure",
-            "key": "failure_url",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": "Optional metadata",
-            "key": "metadata",
-            "propertyAccess": undefined,
-            "valueType": {
-              "defaultValue": undefined,
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "default": undefined,
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "regex": undefined,
-                  "type": "string",
-                },
-              },
-              "type": "optional",
             },
           },
         ],
@@ -715,103 +414,6 @@
           },
         ],
         "type": "object",
-      },
-    },
-    "SessionDetailResponse": {
-      "availability": undefined,
-      "description": undefined,
-      "displayName": undefined,
-      "name": "SessionDetailResponse",
-      "shape": {
-        "extends": [],
-        "extraProperties": undefined,
-        "properties": [
-          {
-            "availability": undefined,
-            "description": "The session ID",
-            "key": "id",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": "The status of the session",
-            "key": "status",
-            "propertyAccess": undefined,
-            "valueType": {
-              "default": undefined,
-              "type": "id",
-              "value": "SessionDetailResponseStatus",
-            },
-          },
-          {
-            "availability": undefined,
-            "description": "The amount captured (optional)",
-            "key": "capture_amount",
-            "propertyAccess": undefined,
-            "valueType": {
-              "defaultValue": undefined,
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "default": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "type": "integer",
-                },
-              },
-              "type": "optional",
-            },
-          },
-        ],
-        "type": "object",
-      },
-    },
-    "SessionDetailResponseStatus": {
-      "availability": undefined,
-      "description": "The status of the session",
-      "displayName": undefined,
-      "name": "SessionDetailResponseStatus",
-      "shape": {
-        "default": undefined,
-        "type": "enum",
-        "values": [
-          {
-            "availability": undefined,
-            "description": undefined,
-            "value": "pending",
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "value": "processing",
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "value": "captured",
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "value": "canceled",
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "value": "rejected",
-          },
-        ],
       },
     },
   },

@@ -2,13 +2,13 @@ openapi: 3.0.3
 info:
   title: Session API
   version: 1.0.0
-  description: API for managing sessions with response examples for different status codes
+  description: API demonstrating response examples for different status codes
 paths:
-  /sessions/v1/create:
+  /sessions/create:
     post:
       operationId: createSession
       summary: Create Session
-      description: Creates a new session for processing.
+      description: Creates a new session. Demonstrates response examples for multiple status codes.
       tags:
         - Sessions
       requestBody:
@@ -72,96 +72,16 @@ paths:
                   value:
                     error: ServerError
                     message: Internal server error
-  /sessions/v1/{session_id}:
-    get:
-      operationId: getSession
-      summary: Get Session Status
-      description: Get the status of a session based on the session ID.
-      tags:
-        - Sessions
-      parameters:
-        - name: session_id
-          in: path
-          required: true
-          description: The session ID.
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SessionDetailResponse"
-        "400":
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-              examples:
-                validationerror:
-                  summary: ValidationError example
-                  value:
-                    error: ValidationError
-                    message: Bad Request
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-              examples:
-                notfound:
-                  summary: NotFound example
-                  value:
-                    error: NotFound
-                    message: Resource not found
-        "405":
-          description: Method Not Allowed
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-              examples:
-                methodnotallowed:
-                  summary: MethodNotAllowed example
-                  value:
-                    error: MethodNotAllowed
-                    message: Method not allowed
-        "500":
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-              examples:
-                servererror:
-                  summary: ServerError example
-                  value:
-                    error: ServerError
-                    message: Internal server error
 components:
   schemas:
     CreateSessionRequest:
       type: object
       required:
-        - total_amount
-        - success_url
-        - failure_url
+        - amount
       properties:
-        total_amount:
+        amount:
           type: integer
-          description: The total amount in cents
-        success_url:
-          type: string
-          description: URL to redirect on success
-        failure_url:
-          type: string
-          description: URL to redirect on failure
-        metadata:
-          type: string
-          description: Optional metadata
+          description: The amount in cents
     CreateSessionResponse:
       type: object
       required:
@@ -174,27 +94,6 @@ components:
         redirect_url:
           type: string
           description: The URL to redirect the user to
-    SessionDetailResponse:
-      type: object
-      required:
-        - id
-        - status
-      properties:
-        id:
-          type: string
-          description: The session ID
-        status:
-          type: string
-          enum:
-            - pending
-            - processing
-            - captured
-            - canceled
-            - rejected
-          description: The status of the session
-        capture_amount:
-          type: integer
-          description: The amount captured (optional)
     ErrorResponse:
       type: object
       required:
