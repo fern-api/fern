@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Optional
 
-
 from ...context import FastApiGeneratorContext
 from fern_python.codegen import AST
 
