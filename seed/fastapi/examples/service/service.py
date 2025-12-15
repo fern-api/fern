@@ -43,14 +43,26 @@ class AbstractRootService(AbstractFernService):
     def __init_echo(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.echo)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Body()
+                        ]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
-        setattr(cls.echo, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(
+            cls.echo,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
 
         @functools.wraps(cls.echo)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
@@ -79,14 +91,26 @@ class AbstractRootService(AbstractFernService):
     def __init_create_type(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_type)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Body()
+                        ]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
-        setattr(cls.create_type, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(
+            cls.create_type,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
 
         @functools.wraps(cls.create_type)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Identifier:

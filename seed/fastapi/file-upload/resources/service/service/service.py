@@ -233,18 +233,36 @@ class AbstractServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
-                new_parameters.append(parameter.replace(default=fastapi.UploadFile))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()]))
             elif parameter_name == "maybe_string":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="maybeString")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="maybeString")],
+                        default=None,
+                    )
+                )
             elif parameter_name == "integer":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()]))
             elif parameter_name == "maybe_integer":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="maybeInteger")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="maybeInteger")],
+                        default=None,
+                    )
+                )
             elif parameter_name == "list_of_strings":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=[], alias="listOfStrings")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="listOfStrings")],
+                        default=[],
+                    )
+                )
             elif parameter_name == "optional_list_of_strings":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, alias="optionalListOfStrings"))
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="optionalListOfStrings")],
+                        default=None,
+                    )
                 )
             else:
                 new_parameters.append(parameter)

@@ -25,10 +25,14 @@ class AbstractOptionalService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def send_optional_body(self, *, body: typing.Optional[typing.Dict[str, typing.Any]] = None) -> str: ...
+    def send_optional_body(
+        self, *, body: typing.Optional[typing.Dict[str, typing.Any]] = None
+    ) -> str: ...
 
     @abc.abstractmethod
-    def send_optional_typed_body(self, *, body: typing.Optional[SendOptionalBodyRequest] = None) -> str: ...
+    def send_optional_typed_body(
+        self, *, body: typing.Optional[SendOptionalBodyRequest] = None
+    ) -> str: ...
 
     @abc.abstractmethod
     def send_optional_nullable_with_all_optional_properties(
@@ -55,14 +59,26 @@ class AbstractOptionalService(AbstractFernService):
     def __init_send_optional_body(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_optional_body)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Body()
+                        ]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
-        setattr(cls.send_optional_body, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(
+            cls.send_optional_body,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
 
         @functools.wraps(cls.send_optional_body)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
@@ -91,14 +107,26 @@ class AbstractOptionalService(AbstractFernService):
     def __init_send_optional_typed_body(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_optional_typed_body)
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Body()
+                        ]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
-        setattr(cls.send_optional_typed_body, "__signature__", endpoint_function.replace(parameters=new_parameters))
+        setattr(
+            cls.send_optional_typed_body,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
 
         @functools.wraps(cls.send_optional_typed_body)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
@@ -124,18 +152,42 @@ class AbstractOptionalService(AbstractFernService):
         )(wrapper)
 
     @classmethod
-    def __init_send_optional_nullable_with_all_optional_properties(cls, router: fastapi.APIRouter) -> None:
-        endpoint_function = inspect.signature(cls.send_optional_nullable_with_all_optional_properties)
+    def __init_send_optional_nullable_with_all_optional_properties(
+        cls, router: fastapi.APIRouter
+    ) -> None:
+        endpoint_function = inspect.signature(
+            cls.send_optional_nullable_with_all_optional_properties
+        )
         new_parameters: typing.List[inspect.Parameter] = []
-        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+        for index, (parameter_name, parameter) in enumerate(
+            endpoint_function.parameters.items()
+        ):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Body()
+                        ]
+                    )
+                )
             elif parameter_name == "action_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Path()
+                        ]
+                    )
+                )
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Path()
+                        ]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -147,7 +199,9 @@ class AbstractOptionalService(AbstractFernService):
         @functools.wraps(cls.send_optional_nullable_with_all_optional_properties)
         def wrapper(*args: typing.Any, **kwargs: typing.Any) -> DeployResponse:
             try:
-                return cls.send_optional_nullable_with_all_optional_properties(*args, **kwargs)
+                return cls.send_optional_nullable_with_all_optional_properties(
+                    *args, **kwargs
+                )
             except FernHTTPException as e:
                 logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
                     f"Endpoint 'send_optional_nullable_with_all_optional_properties' unexpectedly threw {e.__class__.__name__}. "
@@ -158,11 +212,16 @@ class AbstractOptionalService(AbstractFernService):
 
         # this is necessary for FastAPI to find forward-ref'ed type hints.
         # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.send_optional_nullable_with_all_optional_properties.__globals__)
+        wrapper.__globals__.update(
+            cls.send_optional_nullable_with_all_optional_properties.__globals__
+        )
 
         router.post(
             path="/deploy/{action_id}/versions/{id}",
             response_model=DeployResponse,
             description=AbstractOptionalService.send_optional_nullable_with_all_optional_properties.__doc__,
-            **get_route_args(cls.send_optional_nullable_with_all_optional_properties, default_tag="optional"),
+            **get_route_args(
+                cls.send_optional_nullable_with_all_optional_properties,
+                default_tag="optional",
+            ),
         )(wrapper)
