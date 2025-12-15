@@ -1310,6 +1310,10 @@ describe("${serviceName}", () => {
         if (endpoint.idempotent) {
             return false;
         }
+        // Skip endpoints with custom pagination
+        if (endpoint.pagination?.type === "custom") {
+            return false;
+        }
         return true;
     }
 
