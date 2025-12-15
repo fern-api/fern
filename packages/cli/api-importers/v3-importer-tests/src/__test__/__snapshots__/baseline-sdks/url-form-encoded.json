@@ -387,6 +387,7 @@
             }
           },
           "response": {
+            "docs": "Successful operation",
             "body": {
               "value": {
                 "docs": "Successful operation",

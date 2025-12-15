@@ -11417,6 +11417,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "Successfully retrieved tree",
             "statusCode": 200,
             "body": {
               "value": {
@@ -11503,6 +11504,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Successfully retrieved tree",
                 "statusCode": 200,
                 "body": {
                   "value": {

@@ -721,6 +721,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "List of plants",
             "statusCode": 200,
             "body": {
               "value": {
@@ -808,6 +809,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "List of plants",
                 "statusCode": 200,
                 "body": {
                   "value": {

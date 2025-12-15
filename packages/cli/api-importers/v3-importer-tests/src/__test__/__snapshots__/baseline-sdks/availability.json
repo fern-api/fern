@@ -1153,6 +1153,7 @@
             }
           },
           "response": {
+            "docs": "OK",
             "body": {
               "value": {
                 "docs": "OK",
@@ -1411,6 +1412,7 @@
             }
           },
           "response": {
+            "docs": "OK",
             "body": {
               "value": {
                 "docs": "OK",
@@ -1669,6 +1671,7 @@
             }
           },
           "response": {
+            "docs": "OK",
             "body": {
               "value": {
                 "docs": "OK",
@@ -1884,6 +1887,7 @@
             }
           },
           "response": {
+            "docs": "OK",
             "body": {
               "value": {
                 "docs": "OK",
@@ -2099,6 +2103,7 @@
             }
           },
           "response": {
+            "docs": "OK",
             "body": {
               "value": {
                 "docs": "OK",

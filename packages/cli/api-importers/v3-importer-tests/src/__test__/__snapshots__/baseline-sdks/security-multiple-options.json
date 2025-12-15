@@ -535,6 +535,7 @@
             }
           },
           "response": {
+            "docs": "Plant details",
             "body": {
               "value": {
                 "docs": "Plant details",

@@ -305,6 +305,7 @@
             ]
           },
           "response": {
+            "docs": "Successful search response",
             "statusCode": 200,
             "body": {
               "value": {
@@ -358,6 +359,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Successful search response",
                 "statusCode": 200,
                 "body": {
                   "value": {
@@ -590,6 +592,7 @@
             ]
           },
           "response": {
+            "docs": "Successful search response",
             "statusCode": 200,
             "body": {
               "value": {
@@ -643,6 +646,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Successful search response",
                 "statusCode": 200,
                 "body": {
                   "value": {
@@ -875,6 +879,7 @@
             ]
           },
           "response": {
+            "docs": "Successful search response",
             "statusCode": 200,
             "body": {
               "value": {
@@ -928,6 +933,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Successful search response",
                 "statusCode": 200,
                 "body": {
                   "value": {

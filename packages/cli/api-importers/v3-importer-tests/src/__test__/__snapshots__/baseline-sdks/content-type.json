@@ -419,6 +419,7 @@
             }
           },
           "response": {
+            "docs": "The sample response",
             "body": {
               "value": {
                 "docs": "The sample response",
@@ -699,6 +700,7 @@
             }
           },
           "response": {
+            "docs": "The sample response",
             "body": {
               "value": {
                 "docs": "The sample response",

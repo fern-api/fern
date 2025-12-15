@@ -257,6 +257,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "List of plants",
             "body": {
               "value": {
                 "docs": "List of plants",

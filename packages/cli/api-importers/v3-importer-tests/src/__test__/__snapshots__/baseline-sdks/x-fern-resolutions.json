@@ -214,6 +214,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "Success",
             "body": {
               "value": {
                 "docs": "Success",
@@ -291,6 +292,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "Success",
             "body": {
               "value": {
                 "docs": "Success",

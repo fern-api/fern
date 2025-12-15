@@ -2041,6 +2041,7 @@
             }
           },
           "response": {
+            "docs": "OK",
             "body": {
               "value": {
                 "docs": "OK",

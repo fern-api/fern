@@ -1175,6 +1175,7 @@
             }
           },
           "response": {
+            "docs": "User created successfully",
             "body": {
               "value": {
                 "docs": "User created successfully",
@@ -1399,6 +1400,7 @@
             }
           },
           "response": {
+            "docs": "User retrieved successfully",
             "body": {
               "value": {
                 "docs": "User retrieved successfully",

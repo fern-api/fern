@@ -97,6 +97,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "A response",
             "statusCode": 200,
             "body": {
               "value": {
@@ -150,6 +151,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "A response",
                 "statusCode": 200,
                 "body": {
                   "value": {

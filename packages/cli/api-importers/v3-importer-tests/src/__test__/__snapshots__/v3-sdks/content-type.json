@@ -573,6 +573,7 @@
             ]
           },
           "response": {
+            "docs": "The sample response",
             "statusCode": 201,
             "body": {
               "value": {
@@ -631,6 +632,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "The sample response",
                 "statusCode": 201,
                 "body": {
                   "value": {
@@ -1179,6 +1181,7 @@
             ]
           },
           "response": {
+            "docs": "The sample response",
             "statusCode": 201,
             "body": {
               "value": {
@@ -1235,6 +1238,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "The sample response",
                 "statusCode": 201,
                 "body": {
                   "value": {

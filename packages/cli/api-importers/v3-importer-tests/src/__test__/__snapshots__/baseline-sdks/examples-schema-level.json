@@ -753,6 +753,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "List of trees",
             "body": {
               "value": {
                 "docs": "List of trees",
@@ -922,6 +923,7 @@
             }
           },
           "response": {
+            "docs": "Tree created successfully",
             "body": {
               "value": {
                 "docs": "Tree created successfully",
@@ -1146,6 +1148,7 @@
             }
           },
           "response": {
+            "docs": "Tree details",
             "body": {
               "value": {
                 "docs": "Tree details",
@@ -1402,6 +1405,7 @@
             }
           },
           "response": {
+            "docs": "Fern created successfully",
             "body": {
               "value": {
                 "docs": "Fern created successfully",
@@ -1608,6 +1612,7 @@
             }
           },
           "response": {
+            "docs": "Fern details",
             "body": {
               "value": {
                 "docs": "Fern details",

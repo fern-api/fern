@@ -670,6 +670,7 @@
             }
           },
           "response": {
+            "docs": "Success!",
             "body": {
               "value": {
                 "docs": "Success!",

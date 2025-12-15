@@ -6481,6 +6481,7 @@
             ]
           },
           "response": {
+            "docs": "A list of pets",
             "statusCode": 200,
             "body": {
               "value": {
@@ -6618,6 +6619,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "A list of pets",
                 "statusCode": 200,
                 "body": {
                   "value": {
@@ -7388,6 +7390,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "An order object",
             "statusCode": 200,
             "body": {
               "value": {
@@ -7472,6 +7475,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "An order object",
                 "statusCode": 200,
                 "body": {
                   "value": {

@@ -1304,6 +1304,7 @@
             ]
           },
           "response": {
+            "docs": "Success",
             "statusCode": 200,
             "body": {
               "value": {
@@ -1384,6 +1385,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Success",
                 "statusCode": 200,
                 "body": {
                   "value": {

@@ -804,6 +804,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "A list of workspace audit logs",
             "body": {
               "value": {
                 "docs": "A list of workspace audit logs",

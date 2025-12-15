@@ -434,6 +434,7 @@
             }
           },
           "response": {
+            "docs": "User retrieved successfully",
             "body": {
               "value": {
                 "docs": "User retrieved successfully",

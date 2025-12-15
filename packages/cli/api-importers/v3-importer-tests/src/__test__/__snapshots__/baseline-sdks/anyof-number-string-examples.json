@@ -594,6 +594,7 @@
             }
           },
           "response": {
+            "docs": "Payment created successfully",
             "body": {
               "value": {
                 "docs": "Payment created successfully",

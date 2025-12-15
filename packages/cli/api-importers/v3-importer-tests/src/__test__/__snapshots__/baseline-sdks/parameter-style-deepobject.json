@@ -770,6 +770,7 @@
             }
           },
           "response": {
+            "docs": "List of items",
             "body": {
               "value": {
                 "docs": "List of items",

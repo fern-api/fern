@@ -425,6 +425,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "Success",
             "statusCode": 200,
             "body": {
               "value": {
@@ -501,6 +502,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Success",
                 "statusCode": 200,
                 "body": {
                   "value": {
@@ -816,6 +818,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "Success",
             "statusCode": 200,
             "body": {
               "value": {
@@ -892,6 +895,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Success",
                 "statusCode": 200,
                 "body": {
                   "value": {

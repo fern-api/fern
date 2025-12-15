@@ -86,6 +86,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "Successful search response",
             "body": {
               "value": {
                 "docs": "Successful search response",
@@ -145,6 +146,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "Successful search response",
             "body": {
               "value": {
                 "docs": "Successful search response",

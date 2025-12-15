@@ -752,6 +752,7 @@
             ]
           },
           "response": {
+            "docs": "Successful operation",
             "statusCode": 200,
             "body": {
               "value": {
@@ -832,6 +833,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Successful operation",
                 "statusCode": 200,
                 "body": {
                   "value": {

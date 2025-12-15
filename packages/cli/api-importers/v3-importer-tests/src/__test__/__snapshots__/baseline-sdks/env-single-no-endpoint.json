@@ -86,6 +86,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "A response",
             "body": {
               "value": {
                 "docs": "A response",

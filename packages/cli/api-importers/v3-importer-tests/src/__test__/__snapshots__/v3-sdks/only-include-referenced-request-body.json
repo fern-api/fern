@@ -994,6 +994,7 @@
             ]
           },
           "response": {
+            "docs": "Created",
             "statusCode": 201,
             "body": {
               "value": {
@@ -1073,6 +1074,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Created",
                 "statusCode": 201,
                 "body": {
                   "value": {

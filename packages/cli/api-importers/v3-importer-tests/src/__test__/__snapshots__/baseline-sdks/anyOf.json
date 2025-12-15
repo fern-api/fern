@@ -322,6 +322,7 @@
             }
           },
           "response": {
+            "docs": "A simple API response.",
             "body": {
               "value": {
                 "docs": "A simple API response.",

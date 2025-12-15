@@ -2989,6 +2989,7 @@
             ]
           },
           "response": {
+            "docs": "OK",
             "statusCode": 200,
             "body": {
               "value": {
@@ -3060,6 +3061,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "OK",
                 "statusCode": 200,
                 "body": {
                   "value": {

@@ -2456,6 +2456,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "List of trees",
             "statusCode": 200,
             "body": {
               "value": {
@@ -2578,6 +2579,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "List of trees",
                 "statusCode": 200,
                 "body": {
                   "value": {
@@ -3825,6 +3827,7 @@
             ]
           },
           "response": {
+            "docs": "Tree created successfully",
             "statusCode": 201,
             "body": {
               "value": {
@@ -3973,6 +3976,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Tree created successfully",
                 "statusCode": 201,
                 "body": {
                   "value": {
@@ -4908,6 +4912,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "Tree details",
             "statusCode": 200,
             "body": {
               "value": {
@@ -5000,6 +5005,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Tree details",
                 "statusCode": 200,
                 "body": {
                   "value": {
@@ -5680,6 +5686,7 @@
             ]
           },
           "response": {
+            "docs": "Fern created successfully",
             "statusCode": 201,
             "body": {
               "value": {
@@ -5834,6 +5841,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Fern created successfully",
                 "statusCode": 201,
                 "body": {
                   "value": {
@@ -6114,6 +6122,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "Fern details",
             "statusCode": 200,
             "body": {
               "value": {
@@ -6186,6 +6195,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Fern details",
                 "statusCode": 200,
                 "body": {
                   "value": {
@@ -7600,6 +7610,7 @@
             ]
           },
           "response": {
+            "docs": "Succulents created successfully",
             "statusCode": 201,
             "body": {
               "value": {
@@ -7689,6 +7700,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Succulents created successfully",
                 "statusCode": 201,
                 "body": {
                   "value": {

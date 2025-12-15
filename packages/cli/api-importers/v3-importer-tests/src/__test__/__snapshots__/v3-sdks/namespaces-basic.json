@@ -951,6 +951,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "A list of pets",
             "statusCode": 200,
             "body": {
               "value": {
@@ -1037,6 +1038,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "A list of pets",
                 "statusCode": 200,
                 "body": {
                   "value": {
@@ -1809,6 +1811,7 @@
             ]
           },
           "response": {
+            "docs": "Pet created",
             "statusCode": 201,
             "body": {
               "value": {
@@ -1889,6 +1892,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Pet created",
                 "statusCode": 201,
                 "body": {
                   "value": {
@@ -2670,6 +2674,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "A list of pets",
             "statusCode": 200,
             "body": {
               "value": {
@@ -2756,6 +2761,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "A list of pets",
                 "statusCode": 200,
                 "body": {
                   "value": {
@@ -3528,6 +3534,7 @@
             ]
           },
           "response": {
+            "docs": "Pet created",
             "statusCode": 201,
             "body": {
               "value": {
@@ -3608,6 +3615,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Pet created",
                 "statusCode": 201,
                 "body": {
                   "value": {

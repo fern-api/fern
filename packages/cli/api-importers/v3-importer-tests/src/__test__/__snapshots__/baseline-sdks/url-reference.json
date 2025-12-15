@@ -2603,6 +2603,7 @@
             }
           },
           "response": {
+            "docs": "A list of pets",
             "body": {
               "value": {
                 "docs": "A list of pets",
@@ -2742,6 +2743,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "An order object",
             "body": {
               "value": {
                 "docs": "An order object",

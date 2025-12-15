@@ -1180,6 +1180,7 @@
             }
           },
           "response": {
+            "docs": "User created successfully",
             "body": {
               "value": {
                 "docs": "User created successfully",
@@ -1546,6 +1547,7 @@
             }
           },
           "response": {
+            "docs": "User updated successfully",
             "body": {
               "value": {
                 "docs": "User updated successfully",

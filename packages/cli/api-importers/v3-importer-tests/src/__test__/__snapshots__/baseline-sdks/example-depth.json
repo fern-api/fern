@@ -298,6 +298,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "Successfully retrieved tree",
             "body": {
               "value": {
                 "docs": "Successfully retrieved tree",

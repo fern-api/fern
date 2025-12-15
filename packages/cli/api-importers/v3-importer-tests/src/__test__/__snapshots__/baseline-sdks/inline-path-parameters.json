@@ -822,6 +822,7 @@
             }
           },
           "response": {
+            "docs": "Successful response",
             "body": {
               "value": {
                 "docs": "Successful response",
@@ -1412,6 +1413,7 @@
             }
           },
           "response": {
+            "docs": "Successful response",
             "body": {
               "value": {
                 "docs": "Successful response",

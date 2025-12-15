@@ -5118,6 +5118,7 @@
             "type": "inlinedRequestBody"
           },
           "response": {
+            "docs": "The transformed response object that wraps the original gas and paymaster response. It includes an array of asset change objects, a gasUsed field, and an error field.",
             "body": {
               "value": {
                 "docs": "The transformed response object that wraps the original gas and paymaster response. It includes an array of asset change objects, a gasUsed field, and an error field.",
@@ -7972,6 +7973,7 @@
             "type": "inlinedRequestBody"
           },
           "response": {
+            "docs": "Object containing the **fully-signed** transaction ready for `sendRawTransaction`.\n",
             "body": {
               "value": {
                 "docs": "Object containing the **fully-signed** transaction ready for `sendRawTransaction`.\n",

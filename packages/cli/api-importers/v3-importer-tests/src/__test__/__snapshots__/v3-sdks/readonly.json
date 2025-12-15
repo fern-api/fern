@@ -2973,6 +2973,7 @@
             ]
           },
           "response": {
+            "docs": "User created successfully",
             "statusCode": 200,
             "body": {
               "value": {
@@ -3078,6 +3079,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "User created successfully",
                 "statusCode": 200,
                 "body": {
                   "value": {
@@ -4415,6 +4417,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "User retrieved successfully",
             "statusCode": 200,
             "body": {
               "value": {
@@ -4517,6 +4520,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "User retrieved successfully",
                 "statusCode": 200,
                 "body": {
                   "value": {
@@ -7288,6 +7292,7 @@
             ]
           },
           "response": {
+            "docs": "User object validated successfully",
             "statusCode": 200,
             "body": {
               "value": {
@@ -7376,6 +7381,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "User object validated successfully",
                 "statusCode": 200,
                 "body": {
                   "value": {

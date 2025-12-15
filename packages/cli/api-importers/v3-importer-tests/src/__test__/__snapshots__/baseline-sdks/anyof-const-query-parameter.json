@@ -749,6 +749,7 @@
             }
           },
           "response": {
+            "docs": "Successful Response",
             "body": {
               "value": {
                 "docs": "Successful Response",

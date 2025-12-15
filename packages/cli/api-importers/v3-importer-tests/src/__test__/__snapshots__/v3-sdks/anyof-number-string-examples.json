@@ -1204,6 +1204,7 @@
             ]
           },
           "response": {
+            "docs": "Payment created successfully",
             "statusCode": 200,
             "body": {
               "value": {
@@ -1285,6 +1286,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Payment created successfully",
                 "statusCode": 200,
                 "body": {
                   "value": {

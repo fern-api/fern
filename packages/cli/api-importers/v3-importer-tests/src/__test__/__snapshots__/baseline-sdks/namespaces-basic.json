@@ -440,6 +440,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "A list of pets",
             "body": {
               "value": {
                 "docs": "A list of pets",
@@ -729,6 +730,7 @@
             }
           },
           "response": {
+            "docs": "Pet created",
             "body": {
               "value": {
                 "docs": "Pet created",
@@ -909,6 +911,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "A list of pets",
             "body": {
               "value": {
                 "docs": "A list of pets",
@@ -1198,6 +1201,7 @@
             }
           },
           "response": {
+            "docs": "Pet created",
             "body": {
               "value": {
                 "docs": "Pet created",

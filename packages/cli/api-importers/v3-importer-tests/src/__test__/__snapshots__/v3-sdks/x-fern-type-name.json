@@ -1831,6 +1831,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "A list of workspace audit logs",
             "statusCode": 200,
             "body": {
               "value": {
@@ -1927,6 +1928,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "A list of workspace audit logs",
                 "statusCode": 200,
                 "body": {
                   "value": {

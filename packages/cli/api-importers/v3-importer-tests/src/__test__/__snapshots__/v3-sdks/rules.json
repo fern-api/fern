@@ -1039,6 +1039,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "Successful response",
             "statusCode": 200,
             "body": {
               "value": {
@@ -1119,6 +1120,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "Successful response",
                 "statusCode": 200,
                 "body": {
                   "value": {

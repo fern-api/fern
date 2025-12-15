@@ -172,6 +172,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "OK response",
             "body": {
               "value": {
                 "docs": "OK response",

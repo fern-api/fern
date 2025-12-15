@@ -467,6 +467,7 @@
           "queryParameters": [],
           "headers": [],
           "response": {
+            "docs": "Successful response",
             "body": {
               "value": {
                 "docs": "Successful response",

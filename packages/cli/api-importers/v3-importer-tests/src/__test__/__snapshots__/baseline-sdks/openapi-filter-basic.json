@@ -290,6 +290,7 @@
             }
           },
           "response": {
+            "docs": "Created",
             "body": {
               "value": {
                 "docs": "Created",

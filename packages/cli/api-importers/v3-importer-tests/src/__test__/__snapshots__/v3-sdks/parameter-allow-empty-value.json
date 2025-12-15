@@ -1331,6 +1331,7 @@
           },
           "v2RequestBodies": {},
           "response": {
+            "docs": "List of items",
             "statusCode": 200,
             "body": {
               "value": {
@@ -1415,6 +1416,7 @@
           "v2Responses": {
             "responses": [
               {
+                "docs": "List of items",
                 "statusCode": 200,
                 "body": {
                   "value": {
