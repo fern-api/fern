@@ -1193,6 +1193,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private maybeResolveSchemaExample<Type>(
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     ): Type | undefined {
+        // In OpenAPI 3.1+, $ref siblings are supported. Check for sibling examples first
+        // before falling back to the referenced schema's examples.
+        if ("example" in schema) {
+            return schema.example as Type;
+        }
+        if ("examples" in schema) {
+            const examples = schema.examples;
+            if (Array.isArray(examples) && examples.length > 0) {
+                return examples[0] as Type;
+            }
+            if (examples != null && typeof examples === "object") {
+                return Object.values(examples)[0] as Type;
+            }
+        }
+
+        // Fall back to the resolved schema's examples
         const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
             schemaOrReference: schema,
             breadcrumbs: this.breadcrumbs,
