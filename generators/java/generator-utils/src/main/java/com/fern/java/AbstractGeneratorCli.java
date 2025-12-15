@@ -293,7 +293,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
-    private static void copyGradleWrapperFromResources(Path outputDirectory) {
+    private static void copyGradleWrapperFromResources(Path outputDirectory, Optional<String> customDistributionUrl) {
         try {
             copyResourceFile("gradle-wrapper/gradlew", outputDirectory.resolve("gradlew"), true);
             copyResourceFile("gradle-wrapper/gradlew.bat", outputDirectory.resolve("gradlew.bat"), false);
@@ -303,10 +303,22 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     "gradle-wrapper/gradle/wrapper/gradle-wrapper.jar",
                     wrapperDir.resolve("gradle-wrapper.jar"),
                     false);
-            copyResourceFile(
-                    "gradle-wrapper/gradle/wrapper/gradle-wrapper.properties",
-                    wrapperDir.resolve("gradle-wrapper.properties"),
-                    false);
+            if (customDistributionUrl.isPresent()) {
+                // Write custom gradle-wrapper.properties with the user-provided distribution URL
+                String propertiesContent = "distributionBase=GRADLE_USER_HOME\n"
+                        + "distributionPath=wrapper/dists\n"
+                        + "distributionUrl=" + customDistributionUrl.get().replace(":", "\\:") + "\n"
+                        + "networkTimeout=10000\n"
+                        + "validateDistributionUrl=true\n"
+                        + "zipStoreBase=GRADLE_USER_HOME\n"
+                        + "zipStorePath=wrapper/dists\n";
+                Files.writeString(wrapperDir.resolve("gradle-wrapper.properties"), propertiesContent);
+            } else {
+                copyResourceFile(
+                        "gradle-wrapper/gradle/wrapper/gradle-wrapper.properties",
+                        wrapperDir.resolve("gradle-wrapper.properties"),
+                        false);
+            }
         } catch (IOException e) {
             throw new RuntimeException("Failed to copy gradle wrapper from resources", e);
         }
@@ -505,7 +517,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
         copyLicenseFile(generatorConfig);
         if (publishResult.generateFullProject()) {
-            copyGradleWrapperFromResources(outputDirectory);
+            copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
         }
     }
 
@@ -547,7 +559,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         copyLicenseFile(generatorConfig);
-        copyGradleWrapperFromResources(outputDirectory);
+        copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
     }
 
     public boolean customConfigPublishToCentral(GeneratorConfig _generatorConfig) {
@@ -590,7 +602,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         copyLicenseFile(generatorConfig);
-        copyGradleWrapperFromResources(outputDirectory);
+        copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
 
         // run publish
         if (!generatorConfig.getDryRun()) {

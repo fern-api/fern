@@ -119,6 +119,9 @@ public interface ICustomConfig {
         return PackageLayout.NESTED;
     }
 
+    @JsonProperty("gradle-distribution-url")
+    Optional<String> gradleDistributionUrl();
+
     enum PackageLayout {
         NESTED("nested"),
         FLAT("flat");

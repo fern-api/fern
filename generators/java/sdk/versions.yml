@@ -1,3 +1,19 @@
+- version: 3.24.3
+  changelogEntry:
+    - summary: |
+        Add `gradle-distribution-url` configuration option to allow overriding the Gradle wrapper
+        distribution URL. This enables SDK generation on enterprise networks that cannot access
+        `services.gradle.org` by pointing to an internal Gradle distribution mirror.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-distribution-url: https://internal-mirror.example.com/gradle/gradle-8.14.3-bin.zip
+        ```
+      type: feat
+  createdAt: "2025-12-15"
+  irVersion: 61
+
 - version: 3.24.2
   changelogEntry:
     - summary: |
