@@ -1,4 +1,4 @@
-- version: 3.24.3
+- version: 3.25.0
   changelogEntry:
     - summary: |
         Add `gradle-distribution-url` configuration option to allow overriding the Gradle wrapper
