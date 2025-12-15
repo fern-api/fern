@@ -308,6 +308,9 @@ fixtures:
       customConfig:
         inlinePathParameters: true
         retainOriginalCasing: true
+    - outputFolder: inline-path-parameters-always
+      customConfig:
+        inlinePathParameters: "always"
     - outputFolder: parameter-naming-original-name
       customConfig:
         parameterNaming: originalName
