@@ -282,6 +282,7 @@ types:
       onlyPathParameters: optional<boolean>
 
   HttpResponse:
+    extends: commons.WithDocs
     properties:
       status-code: optional<integer>
       isWildcardStatusCode:

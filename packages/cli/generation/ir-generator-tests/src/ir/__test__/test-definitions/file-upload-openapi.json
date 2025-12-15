@@ -414,7 +414,8 @@
                             }
                         },
                         "status-code": 200,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": ""
                     },
                     "v2Responses": null,
                     "errors": [],

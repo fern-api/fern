@@ -5,8 +5,6 @@
 import * as FernDefinition from "../../../index";
 
 export interface TypeReferenceDetailedSchema
-    extends FernDefinition.BaseTypeReferenceSchema,
-        FernDefinition.WithName,
-        FernDefinition.WithAudiences {
+    extends FernDefinition.BaseTypeReferenceSchema, FernDefinition.WithName, FernDefinition.WithAudiences {
     type: string;
 }
