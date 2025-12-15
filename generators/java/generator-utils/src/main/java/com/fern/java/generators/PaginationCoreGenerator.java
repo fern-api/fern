@@ -59,6 +59,8 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
         List<String> fileNames = List.of(
                 "BasePage", "SyncPage", "SyncPagingIterable", "BiDirectionalPage", "CustomPager", "AsyncCustomPager");
 
+        String corePackage = generatorContext.getPoetClassNameFactory().getCorePackage();
+
         return fileNames.stream()
                 .map(fileName -> {
                     String fullFileName = "/" + fileName + ".java";
@@ -67,6 +69,15 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                             throw new RuntimeException("Resource not found: " + fullFileName);
                         }
                         String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+
+                        // Add ClientOptions import for CustomPager and AsyncCustomPager
+                        if (fileName.equals("CustomPager") || fileName.equals("AsyncCustomPager")) {
+                            String clientOptionsImport = "import " + corePackage + ".ClientOptions;\n";
+                            // Insert the import after the first import statement
+                            int firstImportEnd = contents.indexOf(";\n") + 2;
+                            contents = contents.substring(0, firstImportEnd) + clientOptionsImport
+                                    + contents.substring(firstImportEnd);
+                        }
 
                         // Apply custom pager name if configured
                         String customPagerName = generatorContext.getCustomConfig() != null
