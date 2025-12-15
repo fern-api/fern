@@ -74,8 +74,17 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
      * that cannot access services.gradle.org.
      */
     private async applyGradleDistributionUrlOverride(): Promise<void> {
+        // Log the entire customConfig for debugging
+        this.context.logger.debug(
+            `JavaProject: customConfig keys: ${Object.keys(this.context.customConfig).join(", ")}`
+        );
+        this.context.logger.debug(
+            `JavaProject: gradle-distribution-url value: ${this.context.customConfig["gradle-distribution-url"]}`
+        );
+
         const customUrl = this.context.customConfig["gradle-distribution-url"];
         if (customUrl == null) {
+            this.context.logger.debug(`JavaProject: No gradle-distribution-url configured, skipping override`);
             return;
         }
 
