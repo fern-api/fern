@@ -13,17 +13,20 @@ import path from "path";
 
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization";
 import { createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace";
+import { GeneratorSelection } from "./promptForGeneratorSelection";
 
 export async function initializeAPI({
     organization,
     versionOfCli,
     openApiPath,
-    context
+    context,
+    generatorSelection
 }: {
     organization: string | undefined;
     versionOfCli: string;
     openApiPath: AbsoluteFilePath | undefined;
     context: TaskContext;
+    generatorSelection?: GeneratorSelection;
 }): Promise<void> {
     const { absolutePathToFernDirectory } = await createFernDirectoryAndWorkspace({
         organization,
@@ -40,7 +43,8 @@ export async function initializeAPI({
             directoryOfWorkspace,
             openAPIFilePath: openApiPath,
             cliVersion: versionOfCli,
-            context
+            context,
+            generatorSelection
         });
 
         context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));

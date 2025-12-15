@@ -11,7 +11,13 @@ import {
 } from "@fern-api/configuration-loader";
 import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
+import {
+    initializeAPI,
+    initializeDocs,
+    initializeWithMintlify,
+    initializeWithReadme,
+    promptForGeneratorSelection
+} from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
@@ -338,12 +344,18 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`);
                     }
                 }
+
+                // Prompt for generator selection when initializing with OpenAPI
+                const generatorSelection =
+                    absoluteOpenApiPath != null ? await promptForGeneratorSelection() : undefined;
+
                 await cliContext.runTask(async (context) => {
                     await initializeAPI({
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         context,
-                        openApiPath: absoluteOpenApiPath
+                        openApiPath: absoluteOpenApiPath,
+                        generatorSelection
                     });
                 });
             }

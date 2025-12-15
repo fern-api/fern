@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add interactive prompts to `fern init --openapi` command. Users are now asked whether they want to generate SDKs or Docs, and if SDKs, which programming languages they want. The CLI provides a nice experience with arrow key navigation and grouped language options. The `generators.yml` file is initialized with the selected generators.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.23.0
+
+- changelogEntry:
+    - summary: |
         Share `.fernignore` handling between local and remote task handlers. When running remote generation with `local-file-system` output mode, the `.fernignore` file is now respected, matching the behavior of local generation.
       type: feat
   irVersion: 62
