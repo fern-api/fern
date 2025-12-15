@@ -264,9 +264,7 @@ export async function publishDocs({
             );
             let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
             // Debug logging for FDR auth schemes
-            context.logger.info(
-                `[FERN_AUTH_DESC_DEBUG] FDR authSchemes: ${JSON.stringify(apiDefinition.authSchemes)}`
-            );
+            context.logger.info(`[FERN_AUTH_DESC_DEBUG] FDR authSchemes: ${JSON.stringify(apiDefinition.authSchemes)}`);
 
             const aiEnhancerConfig = getAIEnhancerConfig(
                 withAiExamples,
