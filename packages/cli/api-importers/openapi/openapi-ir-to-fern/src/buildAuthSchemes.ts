@@ -16,8 +16,7 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 ...declaration,
                 docs: declaration.docs ?? descriptionFromOpenApi
             };
-            // Debug logging for auth scheme description
-            // eslint-disable-next-line no-console
+            // biome-ignore lint/suspicious/noConsole: Debug logging for auth scheme description
             console.error(
                 `[FERN_AUTH_DESC_DEBUG] Stage 2 (IR->FernDef): name=${name}, overrideDocs=${declaration.docs ? `"${declaration.docs.substring(0, 80)}..."` : "undefined"}, openApiDesc=${descriptionFromOpenApi ? `"${descriptionFromOpenApi.substring(0, 80)}..."` : "undefined"}, finalDocs=${schemaWithDocs.docs ? `"${schemaWithDocs.docs.substring(0, 80)}..."` : "undefined"}`
             );

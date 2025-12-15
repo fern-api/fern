@@ -88,7 +88,7 @@ function convertSchemeReference({
         }
         // Debug logging for auth scheme description
         const declarationDocs = (declaration as { docs?: string }).docs;
-        // eslint-disable-next-line no-console
+        // biome-ignore lint/suspicious/noConsole: Debug logging for auth scheme description
         console.error(
             `[FERN_AUTH_DESC_DEBUG] Stage 3 (FernDef->IR): reference=${reference}, referenceDocs=${docs ? `"${docs.substring(0, 80)}..."` : "undefined"}, declarationDocs=${declarationDocs ? `"${declarationDocs.substring(0, 80)}..."` : "undefined"}`
         );

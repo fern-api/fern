@@ -38,8 +38,7 @@ function convertSecuritySchemeHelper(
     source: Source,
     taskContext: TaskContext
 ): SecurityScheme | undefined {
-    // Debug logging for auth scheme description
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: Debug logging for auth scheme description
     console.error(
         `[FERN_AUTH_DESC_DEBUG] Stage 1 (OpenAPI->IR): type=${securityScheme.type}, description=${securityScheme.description ? `"${securityScheme.description.substring(0, 80)}..."` : "undefined"}`
     );

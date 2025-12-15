@@ -32,8 +32,7 @@ function convertAuthScheme({
     playgroundConfig?: PlaygroundConfig;
     context: TaskContext;
 }): FdrCjsSdk.api.v1.register.ApiAuth | undefined {
-    // Debug logging for auth scheme description
-    // eslint-disable-next-line no-console
+    // biome-ignore lint/suspicious/noConsole: Debug logging for auth scheme description
     console.error(
         `[FERN_AUTH_DESC_DEBUG] Stage 4 (IR->FDR): type=${scheme.type}, key=${scheme.key}, docs=${scheme.docs ? `"${scheme.docs.substring(0, 80)}..."` : "undefined"}`
     );
