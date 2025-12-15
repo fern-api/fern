@@ -70,7 +70,9 @@ class AbstractServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "movie_id":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="movieId")])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_movie, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -106,7 +108,9 @@ class AbstractServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_movie, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -143,24 +147,16 @@ class AbstractServiceService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "shallow":
                 new_parameters.append(
-                    parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query()],
-                        default=None,
-                    )
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
                 )
             elif parameter_name == "tag":
                 new_parameters.append(
-                    parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query()],
-                        default=None,
-                    )
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
                 )
             elif parameter_name == "x_api_version":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[
-                            parameter.annotation, fastapi.Header(alias="X-API-Version")
-                        ]
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-API-Version")]
                     )
                 )
             else:
@@ -198,7 +194,9 @@ class AbstractServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_big_entity, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -235,10 +233,7 @@ class AbstractServiceService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Body()],
-                        default=None,
-                    )
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)

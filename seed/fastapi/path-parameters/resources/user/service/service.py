@@ -70,7 +70,9 @@ class AbstractUserService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -106,7 +108,9 @@ class AbstractUserService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -142,9 +146,13 @@ class AbstractUserService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -180,13 +188,12 @@ class AbstractUserService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             elif parameter_name == "limit":
                 new_parameters.append(
-                    parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query()],
-                        default=None,
-                    )
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -223,9 +230,13 @@ class AbstractUserService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             elif parameter_name == "version":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_user_metadata, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -261,11 +272,17 @@ class AbstractUserService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             elif parameter_name == "version":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             elif parameter_name == "thought":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_user_specifics, "__signature__", endpoint_function.replace(parameters=new_parameters))
