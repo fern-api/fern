@@ -3494,7 +3494,8 @@
         "chatgpt",
         "claude",
         "cursor",
-        "vscode"
+        "vscode",
+        "llms-full"
       ]
     },
     "docs.CustomPageAction": {
@@ -3607,6 +3608,16 @@
           ]
         },
         "vscode": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "llms-full": {
           "oneOf": [
             {
               "type": "boolean"
