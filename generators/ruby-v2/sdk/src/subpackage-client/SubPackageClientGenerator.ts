@@ -38,19 +38,45 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
 
         const modules = this.getClientModuleNames().map((name) => ruby.module({ name }));
 
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const initializeParams: ruby.KeywordParameter[] = [
+            ruby.parameters.keyword({
+                name: "client",
+                type: ruby.Type.class_(this.context.getRawClientClassReference())
+            })
+        ];
+
+        if (isMultiUrl) {
+            initializeParams.push(
+                ruby.parameters.keyword({
+                    name: "base_url",
+                    type: ruby.Type.nilable(ruby.Type.string()),
+                    initializer: ruby.nilValue()
+                }),
+                ruby.parameters.keyword({
+                    name: "environment",
+                    type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.symbol(), ruby.Type.string())),
+                    initializer: ruby.nilValue()
+                })
+            );
+        }
+
         clientClass.addStatement(
             ruby.method({
                 name: "initialize",
                 parameters: {
-                    keyword: [
-                        ruby.parameters.keyword({
-                            name: "client",
-                            type: ruby.Type.class_(this.context.getRawClientClassReference())
-                        })
-                    ]
+                    keyword: initializeParams
                 },
                 returnType: ruby.Type.void(),
-                statements: [ruby.codeblock("@client = client")]
+                statements: [
+                    ruby.codeblock((writer) => {
+                        writer.writeLine("@client = client");
+                        if (isMultiUrl) {
+                            writer.writeLine("@base_url = base_url");
+                            writer.writeLine("@environment = environment");
+                        }
+                    })
+                ]
             })
         );
 
@@ -119,6 +145,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
     }
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         return new ruby.Method({
             name: subpackage.name.snakeCase.safeName,
             kind: ruby.MethodKind.Instance,
@@ -131,12 +158,21 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             ),
             statements: [
                 ruby.codeblock((writer) => {
-                    writer.writeLine(
-                        `@${subpackage.name.snakeCase.safeName} ||= ` +
-                            `${this.getClientModuleNames().join("::")}::` +
-                            `${subpackage.name.pascalCase.safeName}::` +
-                            `Client.new(client: @client)`
-                    );
+                    if (isMultiUrl) {
+                        writer.writeLine(
+                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                                `${this.getClientModuleNames().join("::")}::` +
+                                `${subpackage.name.pascalCase.safeName}::` +
+                                `Client.new(client: @client, base_url: @base_url, environment: @environment)`
+                        );
+                    } else {
+                        writer.writeLine(
+                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                                `${this.getClientModuleNames().join("::")}::` +
+                                `${subpackage.name.pascalCase.safeName}::` +
+                                `Client.new(client: @client)`
+                        );
+                    }
                 })
             ]
         });

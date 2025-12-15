@@ -60,13 +60,15 @@ export class HttpEndpointGenerator {
         }
 
         const pathParameterReferences = this.getPathParameterReferences({ endpoint });
+        const baseUrlName = this.getBaseUrlNameForEndpoint(endpoint);
         const sendRequestCodeBlock = rawClient.sendRequest({
             baseUrl: ruby.codeblock(""),
             pathParameterReferences,
             endpoint,
             requestType: request?.getRequestType(),
             queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
-            bodyReference: requestBodyCodeBlock?.requestBodyReference
+            bodyReference: requestBodyCodeBlock?.requestBodyReference,
+            baseUrlName
         });
 
         const isCustomPagination = endpoint.pagination?.type === "custom";
@@ -398,5 +400,18 @@ export class HttpEndpointGenerator {
         normalized = normalized.replace(/(^|,\s*)nil(?:,\s*nil)+(?=,|\]|$)/g, "$1nil");
         normalized = normalized.replace(/Hash\[untyped,\s*untyped\]/g, "Hash");
         return normalized;
+    }
+
+    private getBaseUrlNameForEndpoint(endpoint: HttpEndpoint): string | undefined {
+        if (!this.context.isMultipleBaseUrlsEnvironment()) {
+            return undefined;
+        }
+
+        const baseUrlId = endpoint.baseUrl ?? this.context.getDefaultBaseUrlId();
+        if (baseUrlId == null) {
+            return undefined;
+        }
+
+        return this.context.getBaseUrlName(baseUrlId);
     }
 }
