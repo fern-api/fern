@@ -33,6 +33,7 @@ export interface ParsedPageActionsConfig {
         claude: boolean;
         cursor: boolean;
         vscode: boolean;
+        llmsFull: boolean;
         custom: ParsedCustomPageAction[];
     };
 }

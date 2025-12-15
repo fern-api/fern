@@ -226,6 +226,8 @@ types:
       - claude
       - cursor
       - vscode
+      - value: llms-full
+        name: llms_full
 
   PageActionOptions:
     properties:
@@ -269,6 +271,12 @@ types:
         type: optional<boolean>
         docs: |
           When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
+
+          @default: false
+      llms-full:
+        type: optional<boolean>
+        docs: |
+          When enabled, displays an "Open llms-full.txt" button that allows users to view the full LLM-optimized documentation content for the current page.
 
           @default: false
       custom:

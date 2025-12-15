@@ -48,6 +48,12 @@ export interface PageActionOptions {
      */
     vscode?: boolean;
     /**
+     * When enabled, displays an "Open llms-full.txt" button that allows users to view the full LLM-optimized documentation content for the current page.
+     *
+     * @default: false
+     */
+    llmsFull?: boolean;
+    /**
      * When enabled, displays a custom button that allows users to open the page content in a custom IDE for editing and development.
      * The value of this property should be the name of the custom IDE.
      * Example: `cursor`

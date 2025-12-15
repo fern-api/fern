@@ -18,6 +18,7 @@ export const PageActionOptions: core.serialization.ObjectSchema<
     claude: core.serialization.boolean().optional(),
     cursor: core.serialization.boolean().optional(),
     vscode: core.serialization.boolean().optional(),
+    llmsFull: core.serialization.property("llms-full", core.serialization.boolean().optional()),
     custom: core.serialization.list(CustomPageAction).optional(),
 });
 
@@ -30,6 +31,7 @@ export declare namespace PageActionOptions {
         claude?: boolean | null;
         cursor?: boolean | null;
         vscode?: boolean | null;
+        "llms-full"?: boolean | null;
         custom?: CustomPageAction.Raw[] | null;
     }
 }

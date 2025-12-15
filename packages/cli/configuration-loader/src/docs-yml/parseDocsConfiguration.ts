@@ -335,6 +335,7 @@ function convertPageActions(
             claude: pageActions.options?.claude ?? false,
             cursor: pageActions.options?.cursor ?? false,
             vscode: pageActions.options?.vscode ?? false,
+            llmsFull: pageActions.options?.llmsFull ?? false,
             custom: (pageActions.options?.custom ?? []).map((action) =>
                 convertCustomPageAction(action, absoluteFilepathToDocsConfig)
             )
@@ -360,6 +361,8 @@ function convertPageActionOption(
             return CjsFdrSdk.docs.v1.commons.PageActionOption.Cursor;
         case "vscode":
             return CjsFdrSdk.docs.v1.commons.PageActionOption.Vscode;
+        case "llms-full":
+            return CjsFdrSdk.docs.v1.commons.PageActionOption.LlmsFull;
         default:
             assertNever(option);
     }
