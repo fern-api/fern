@@ -115,9 +115,6 @@ def test_path_param_annotated_parses_and_is_required() -> None:
 
 
 def test_pydantic_v1_module_present_does_not_break_annotated_query_parsing() -> None:
-    # The issue Candid reported is about request parameter handling when using Pydantic v1-on-v2.
-    # FastAPI does not generally accept pydantic.v1 BaseModel as `response_model` under Pydantic v2
-    # without a dedicated compat layer, so we keep this test focused on query parsing.
     import pydantic.v1  # noqa: F401
 
     app = fastapi.FastAPI()
