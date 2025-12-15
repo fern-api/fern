@@ -362,7 +362,8 @@ function convertPageActionOption(
         case "vscode":
             return CjsFdrSdk.docs.v1.commons.PageActionOption.Vscode;
         case "llms-full":
-            return CjsFdrSdk.docs.v1.commons.PageActionOption.LlmsFull;
+            // TODO: Replace with CjsFdrSdk.docs.v1.commons.PageActionOption.LlmsFull once @fern-api/fdr-sdk is updated
+            return "llmsFull" as CjsFdrSdk.docs.v1.commons.PageActionOption;
         default:
             assertNever(option);
     }
