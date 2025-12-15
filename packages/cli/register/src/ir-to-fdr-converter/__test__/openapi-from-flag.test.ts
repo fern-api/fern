@@ -1952,6 +1952,87 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-ir.snap");
     });
 
+    it("should handle OpenAPI with nullable balance_max in tiered rates", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/balance-max-null")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "balance-max-null"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that the RateTier type with nullable balance_max was processed
+        expect(intermediateRepresentation.types).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+
+        // Check that RateTier type exists and has the expected structure
+        const rateTierType = Object.values(intermediateRepresentation.types).find(
+            (type) => type.name.name.originalName === "RateTier"
+        );
+        expect(rateTierType).toBeDefined();
+
+        // Verify the endpoint example preserves null value for balance_max
+        const endpoint = fdrApiDefinition.rootPackage?.endpoints?.find((e) => e.id === "getRates");
+        expect(endpoint).toBeDefined();
+        expect(endpoint?.examples).toBeDefined();
+        expect(endpoint?.examples?.length).toBeGreaterThan(0);
+
+        // Get the tiers from the example response
+        const example = endpoint?.examples?.[0];
+        const responseBody = example?.responseBody as unknown as Record<string, unknown> | undefined;
+        const fixedRate = responseBody?.fixed_rate as { tiers: Array<{ balance_max: string | null }> } | undefined;
+        const tiers = fixedRate?.tiers;
+        expect(Array.isArray(tiers)).toBe(true);
+        expect(tiers).toHaveLength(3);
+
+        // Critical regression test: the third tier's balance_max must be null, not a string value
+        expect(tiers?.[0]?.balance_max).toBe("100000000");
+        expect(tiers?.[1]?.balance_max).toBe("500000000");
+        expect(tiers?.[2]?.balance_max).toBeNull();
+
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/balance-max-null-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/balance-max-null-ir.snap");
+    });
+
     it("should preserve human-generated examples when ai-examples is enabled - OpenAPI example format", async () => {
         // Test case to verify that human-generated examples specified in OpenAPI spec
         // are NOT overwritten when ai-examples: true is set in docs.yml

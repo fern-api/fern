@@ -832,7 +832,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 };
             } else {
                 const propExampleFromParent = exampleObj[key];
-                const propertyExample = propExampleFromParent ?? this.maybeResolveSchemaExample(property);
+                // Use the example from parent if it exists (including explicit null values)
+                // Only fall back to schema example if the property is truly undefined
+                const propertyExample =
+                    propExampleFromParent !== undefined
+                        ? propExampleFromParent
+                        : this.maybeResolveSchemaExample(property);
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, key],
                     context: this.context,
