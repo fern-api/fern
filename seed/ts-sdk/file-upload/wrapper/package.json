@@ -2,7 +2,10 @@
     "name": "@fern/file-upload",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:file-upload/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/file-upload/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

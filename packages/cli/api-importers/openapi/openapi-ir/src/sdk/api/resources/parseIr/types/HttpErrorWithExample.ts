@@ -5,9 +5,7 @@
 import * as FernOpenapiIr from "../../../index";
 
 export interface HttpErrorWithExample
-    extends FernOpenapiIr.WithDescription,
-        FernOpenapiIr.WithName,
-        FernOpenapiIr.WithSource {
+    extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithName, FernOpenapiIr.WithSource {
     statusCode: FernOpenapiIr.StatusCode;
     schema: FernOpenapiIr.SchemaWithExample;
     fullExamples: FernOpenapiIr.NamedFullExample[] | undefined;

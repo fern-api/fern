@@ -115,6 +115,7 @@
           "allPathParameters": [
             {
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -217,6 +218,7 @@
           "pathParameters": [
             {
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -318,6 +320,7 @@
                 },
               },
             },
+            "docs": "Successful response",
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
@@ -457,6 +460,7 @@ puts user.name",
                     },
                   },
                 },
+                "docs": "Successful response",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },

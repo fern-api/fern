@@ -683,7 +683,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            pageActions: this.parsedDocsConfig.pageActions,
+            pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
                     ? {
@@ -691,7 +691,8 @@ export class DocsDefinitionResolver {
                           body: this.parsedDocsConfig.theme.body,
                           tabs: this.parsedDocsConfig.theme.tabs,
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
-                          footerNav: this.parsedDocsConfig.theme.footerNav
+                          footerNav: this.parsedDocsConfig.theme.footerNav,
+                          "language-switcher": this.parsedDocsConfig.theme.languageSwitcher
                       }
                     : undefined,
             // deprecated
@@ -1546,6 +1547,32 @@ export class DocsDefinitionResolver {
         }
 
         return iconPath as string;
+    }
+
+    private convertPageActions(): DocsV1Write.PageActionsConfig | undefined {
+        if (this.parsedDocsConfig.pageActions == null) {
+            return undefined;
+        }
+
+        return {
+            default: this.parsedDocsConfig.pageActions.default,
+            options: {
+                askAi: this.parsedDocsConfig.pageActions.options.askAi,
+                copyPage: this.parsedDocsConfig.pageActions.options.copyPage,
+                viewAsMarkdown: this.parsedDocsConfig.pageActions.options.viewAsMarkdown,
+                openAi: this.parsedDocsConfig.pageActions.options.openAi,
+                claude: this.parsedDocsConfig.pageActions.options.claude,
+                cursor: this.parsedDocsConfig.pageActions.options.cursor,
+                vscode: this.parsedDocsConfig.pageActions.options.vscode,
+                custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
+                    title: customAction.title,
+                    subtitle: customAction.subtitle,
+                    url: customAction.url,
+                    icon: this.resolveIconFileId(customAction.icon),
+                    default: customAction.default
+                }))
+            }
+        };
     }
 
     private convertColorConfigImageReferences(): DocsV1Write.ColorsConfigV3 | undefined {

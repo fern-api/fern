@@ -2110,4 +2110,159 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/human-examples-preserved-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/human-examples-preserved-ir.snap");
     });
+
+    it("should handle OpenAPI with explode parameter settings", async () => {
+        // Test OpenAPI spec with various explode parameter configurations
+        // Tests smart default logic: form style defaults to explode=true, others default to explode=false
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/explode-parameter-test")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "explode-parameter-test"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate services and endpoints were parsed
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        // Validate that path and query parameters exist
+        const service = services[0];
+        expect(service).toBeDefined();
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as {
+                endpoints?: Array<{
+                    pathParameters?: Array<{ name: { originalName: string }; explode?: boolean }>;
+                    queryParameters?: Array<{ name: { name: { originalName: string } }; explode?: boolean }>;
+                }>;
+            };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBeGreaterThan(0);
+
+            // Check that explode field is present on parameters where it differs from default
+            // The smart default logic should:
+            // - Omit explode for form style when explode=true (default)
+            // - Preserve explode for form style when explode=false (non-default)
+            // - Omit explode for other styles when explode=false (default)
+            // - Preserve explode for other styles when explode=true (non-default)
+        }
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/explode-parameter-test-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/explode-parameter-test-ir.snap");
+    });
+
+    it("should handle OpenAPI with response examples for different status codes", async () => {
+        // Test OpenAPI spec with response examples for different status codes (200, 400, 404, 405, 500)
+        // This validates that response examples are correctly associated with their status code schemas
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/response-status-code-examples")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "response-status-code-examples"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate services and endpoints were parsed
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        // Validate that error types were created for different status codes
+        expect(intermediateRepresentation.errors).toBeDefined();
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/response-status-code-examples-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot(
+            "__snapshots__/response-status-code-examples-ir.snap"
+        );
+    });
 });

@@ -558,6 +558,7 @@
                 },
               },
             },
+            "docs": "Service is healthy",
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
@@ -664,6 +665,7 @@
                     },
                   },
                 },
+                "docs": "Service is healthy",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
@@ -674,6 +676,7 @@
           "allPathParameters": [
             {
               "docs": "The unique identifier of the user",
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -807,6 +810,7 @@
           "pathParameters": [
             {
               "docs": "The unique identifier of the user",
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -859,6 +863,7 @@
               "allowMultiple": false,
               "availability": undefined,
               "docs": "Whether to include user metadata",
+              "explode": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -965,6 +970,7 @@
                 },
               },
             },
+            "docs": "User found successfully",
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
@@ -1079,6 +1085,7 @@
                     },
                   },
                 },
+                "docs": "User found successfully",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
@@ -1263,6 +1270,7 @@
                 },
               },
             },
+            "docs": "User created successfully",
             "isWildcardStatusCode": undefined,
             "statusCode": 201,
           },
@@ -1424,6 +1432,7 @@
                     },
                   },
                 },
+                "docs": "User created successfully",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 201,
               },

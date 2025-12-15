@@ -66,6 +66,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     writeUnitTests: z.optional(z.boolean()),
     generateWireTests: z.optional(z.boolean()),
     noScripts: z.optional(z.boolean()),
+    skipNpmPkgFix: z.optional(z.boolean()),
     experimentalGenerateReadWriteOnlyTypes: z.optional(z.boolean()),
 
     // deprecated

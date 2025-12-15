@@ -4054,6 +4054,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -4139,6 +4140,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -4605,6 +4607,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -4690,6 +4693,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -5099,6 +5103,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -5184,6 +5189,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -5593,6 +5599,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -5678,6 +5685,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -7590,6 +7598,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -7675,6 +7684,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -7771,6 +7781,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "status": "GENERAL_AVAILABILITY",
               },
               "docs": undefined,
+              "explode": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -7809,6 +7820,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "status": "GENERAL_AVAILABILITY",
               },
               "docs": undefined,
+              "explode": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -7960,6 +7972,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "status": "GENERAL_AVAILABILITY",
               },
               "docs": undefined,
+              "explode": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -7998,6 +8011,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "status": "GENERAL_AVAILABILITY",
               },
               "docs": undefined,
+              "explode": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -8103,6 +8117,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -8188,6 +8203,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -8227,6 +8243,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 "status": "GENERAL_AVAILABILITY",
               },
               "docs": undefined,
+              "explode": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -8332,6 +8349,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -8417,6 +8435,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             {
               "availability": undefined,
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {

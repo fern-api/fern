@@ -170,11 +170,15 @@ export function convertParameters({
             source
         };
         if (resolvedParameter.in === "query") {
-            convertedParameters.queryParameters.push(convertedParameter);
+            convertedParameters.queryParameters.push({
+                ...convertedParameter,
+                explode: getExplodeForQueryParameter(resolvedParameter)
+            });
         } else if (resolvedParameter.in === "path") {
             convertedParameters.pathParameters.push({
                 ...convertedParameter,
-                variableReference: getVariableReference(resolvedParameter)
+                variableReference: getVariableReference(resolvedParameter),
+                explode: getExplodeForPathParameter(resolvedParameter)
             });
         } else if (resolvedParameter.in === "header") {
             if (
@@ -209,3 +213,52 @@ const HEADERS_TO_SKIP = new Set([
     "content-disposition",
     "x-ping-custom-domain"
 ]);
+
+/**
+ * Gets the explode value for a query parameter, applying smart default logic.
+ * Only returns a value when it differs from the OpenAPI default for the style.
+ *
+ * OpenAPI defaults:
+ * - form style (default for query): explode = true
+ * - All other styles: explode = false
+ */
+function getExplodeForQueryParameter(parameter: OpenAPIV3.ParameterObject): boolean | undefined {
+    const style = parameter.style ?? "form";
+    const explode = parameter.explode;
+
+    // If explode is not specified, return undefined (use default)
+    if (explode === undefined) {
+        return undefined;
+    }
+
+    // For form style, default explode is true
+    // Only preserve explode if it differs from the default
+    if (style === "form") {
+        return explode === true ? undefined : explode;
+    }
+
+    // For all other styles (spaceDelimited, pipeDelimited, deepObject), default explode is false
+    return explode === false ? undefined : explode;
+}
+
+/**
+ * Gets the explode value for a path parameter, applying smart default logic.
+ * Only returns a value when it differs from the OpenAPI default for the style.
+ *
+ * OpenAPI defaults:
+ * - simple style (default for path): explode = false
+ * - label style: explode = false
+ * - matrix style: explode = false
+ */
+function getExplodeForPathParameter(parameter: OpenAPIV3.ParameterObject): boolean | undefined {
+    const explode = parameter.explode;
+
+    // If explode is not specified, return undefined (use default)
+    if (explode === undefined) {
+        return undefined;
+    }
+
+    // For path parameters, all styles (simple, label, matrix) have default explode = false
+    // Only preserve explode if it differs from the default
+    return explode === false ? undefined : explode;
+}

@@ -416,7 +416,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "A simple API response."
           },
           "errors": [],
           "userSpecifiedExamples": [],

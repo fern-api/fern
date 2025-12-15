@@ -2,7 +2,10 @@
     "name": "@fern/url-form-encoded",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:url-form-encoded/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/url-form-encoded/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

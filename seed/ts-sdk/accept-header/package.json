@@ -2,7 +2,10 @@
     "name": "@fern/accept-header",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:accept-header/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/accept-header/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
