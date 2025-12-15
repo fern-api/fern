@@ -56,8 +56,22 @@ def test_query_optional_annotated_with_python_default_none_parses() -> None:
     params = openapi["paths"]["/"]["get"]["parameters"]
     q_param = next(p for p in params if p["name"] == "q")
     assert q_param["required"] is False
-    # For Optional[str], OpenAPI uses anyOf, so the constraint is nested
-    assert q_param["schema"]["anyOf"][0]["maxLength"] == 50
+
+    # Schema shape differs across FastAPI/Pydantic versions (e.g. anyOf vs nullable),
+    # so assert the constraint exists somewhere within the schema.
+    def _collect_values_for_key(obj: typing.Any, key: str) -> typing.List[typing.Any]:
+        values: typing.List[typing.Any] = []
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                if k == key:
+                    values.append(v)
+                values.extend(_collect_values_for_key(v, key))
+        elif isinstance(obj, list):
+            for item in obj:
+                values.extend(_collect_values_for_key(item, key))
+        return values
+
+    assert 50 in _collect_values_for_key(q_param["schema"], "maxLength")
 
 
 def test_query_required_annotated_without_default_is_required() -> None:
