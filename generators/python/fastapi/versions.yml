@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 1.14.0
+  changelogEntry:
+    - summary: |
+        FastAPI Python codegen now emits parameter markers via `typing.Annotated[...]` with standard Python defaults for better FastAPI/Pydantic compatibility.
+      type: feat
+  createdAt: "2025-12-15"
+  irVersion: 61
+
 - version: 1.13.2
   changelogEntry:
     - summary: |
