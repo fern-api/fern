@@ -1,6 +1,6 @@
 import { ClientRegistry } from "@boundaryml/baml";
 import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
-import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
+import { FERNIGNORE_FILENAME, getFernIgnorePaths } from "@fern-api/configuration";
 import { AiServicesSchema } from "@fern-api/configuration/src/generators-yml";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -430,29 +430,4 @@ export class LocalTaskHandler {
         this.context.logger.info(`Generated git diff to file: ${diffFile}`);
         return diffFile;
     }
-}
-
-const NEW_LINE_REGEX = /\r?\n/;
-
-async function getFernIgnorePaths({
-    absolutePathToFernignore
-}: {
-    absolutePathToFernignore: AbsoluteFilePath;
-}): Promise<string[]> {
-    const fernIgnoreFileContents = (await readFile(absolutePathToFernignore)).toString();
-    return [
-        FERNIGNORE_FILENAME,
-        ...fernIgnoreFileContents
-            .trim()
-            .split(NEW_LINE_REGEX)
-            .map((line) => {
-                // Remove comments at the end of the line
-                const commentIndex = line.indexOf("#");
-                if (commentIndex !== -1) {
-                    return line.slice(0, commentIndex).trim();
-                }
-                return line.trim();
-            })
-            .filter((line) => line.length > 0)
-    ];
 }
