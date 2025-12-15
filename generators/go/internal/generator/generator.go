@@ -382,6 +382,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.SdkConfig,
 			g.config.ModuleConfig,
 			g.config.Version,
+			ir.Environments,
 		); err != nil {
 			return nil, err
 		}
@@ -439,7 +440,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers)
+		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers, ir.Environments)
 		if err != nil {
 			return nil, err
 		}
