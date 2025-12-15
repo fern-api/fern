@@ -25,16 +25,23 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<RubyFile, SdkCus
     public doGenerate(): RubyFile {
         const class_ = ruby.class_({ name: this.context.getEnvironmentsClassReference().name });
 
-        // Use the first base URL as the default for each environment
-        const defaultBaseUrlId = this.multiUrlEnvironments.baseUrls[0]?.id;
-
         for (const environment of this.multiUrlEnvironments.environments) {
-            // Get the URL for the default base URL ID
-            const url = defaultBaseUrlId != null ? environment.urls[defaultBaseUrlId] : undefined;
-            if (url != null) {
+            const urlEntries = this.multiUrlEnvironments.baseUrls
+                .map((baseUrl) => {
+                    const url = environment.urls[baseUrl.id];
+                    if (url == null) {
+                        return undefined;
+                    }
+                    return `${baseUrl.name.snakeCase.safeName}: "${url}"`;
+                })
+                .filter((entry): entry is string => entry != null);
+
+            if (urlEntries.length > 0) {
                 class_.addStatement(
                     ruby.codeblock((writer) => {
-                        writer.write(`${environment.name.screamingSnakeCase.safeName} = "${url}"`);
+                        writer.write(
+                            `${environment.name.screamingSnakeCase.safeName} = { ${urlEntries.join(", ")} }.freeze`
+                        );
                     })
                 );
             }
