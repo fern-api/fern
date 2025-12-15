@@ -134,15 +134,17 @@ export class WebhookConverter extends AbstractOperationConverter {
                 }
             }
 
-            this.context.resolveMaybeReference({
+            const resolvedResponse = this.context.resolveMaybeReference({
                 schemaOrReference: response,
                 breadcrumbs: [...this.breadcrumbs, "responses", statusCode]
             });
+            const docs = resolvedResponse?.description;
 
             responses.push({
                 statusCode: statusCodeNum,
                 isWildcardStatusCode: isWildcard ? true : undefined,
-                body: undefined
+                body: undefined,
+                docs
             });
         }
 

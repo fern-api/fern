@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add `docs` field to `HttpResponse` in the IR to capture response descriptions for webhook responses. This enables webhook response descriptions (e.g., for 204, 400, 500 status codes) to be properly propagated from OpenAPI specs to documentation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.20.0
+
+- changelogEntry:
+    - summary: |
         Add `explode` field to PathParameter and QueryParameter types in the IR for OpenAPI parameter serialization control.
       type: feat
   irVersion: 62

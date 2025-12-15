@@ -16,5 +16,6 @@ export interface WebhookWithExample
     /** Populated as ${operationId}Payload */
     generatedPayloadName: string;
     payload: FernOpenapiIr.SchemaWithExample;
+    response: FernOpenapiIr.ResponseWithExample | undefined;
     examples: FernOpenapiIr.WebhookExampleCall[];
 }

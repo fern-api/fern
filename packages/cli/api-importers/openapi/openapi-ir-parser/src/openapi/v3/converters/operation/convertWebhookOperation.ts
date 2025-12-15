@@ -10,6 +10,7 @@ import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { OperationContext } from "../contexts";
 import { convertParameters } from "../endpoint/convertParameters";
 import { convertRequest } from "../endpoint/convertRequest";
+import { convertResponse } from "../endpoint/convertResponse";
 
 export function convertWebhookOperation({
     context,
@@ -22,6 +23,7 @@ export function convertWebhookOperation({
 }): WebhookWithExample[] {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
     const payloadBreadcrumbs = [...baseBreadcrumbs, "Payload"];
+    const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
 
     const convertedParameters = convertParameters({
         parameters: [...operationContext.pathItemParameters, ...operationContext.operationParameters],
@@ -38,6 +40,18 @@ export function convertWebhookOperation({
     }
 
     const operationId = operation.operationId ?? generateWebhookOperationId({ path, method, sdkMethodName });
+
+    // Parse webhook responses similar to how endpoints do it
+    const convertedResponse = operation.responses
+        ? convertResponse({
+              operationContext,
+              streamFormat: undefined,
+              responses: operation.responses,
+              context,
+              responseBreadcrumbs,
+              source
+          })
+        : undefined;
 
     if (method !== "POST" && method !== "GET") {
         context.logger.error(`Skipping webhook ${method.toUpperCase()} ${path}: Not POST or GET`);
@@ -79,6 +93,7 @@ export function convertWebhookOperation({
                 headers: convertedParameters.headers,
                 generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
                 payload: request.schema,
+                response: convertedResponse?.value,
                 description: operation.description,
                 examples: convertWebhookExamples(request.fullExamples),
                 source

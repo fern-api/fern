@@ -1036,7 +1036,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Success"
           },
           "docs": "This endpoint should be in `auth/user.yml`",
           "v2Examples": {
@@ -1121,7 +1122,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Success"
               }
             ]
           }

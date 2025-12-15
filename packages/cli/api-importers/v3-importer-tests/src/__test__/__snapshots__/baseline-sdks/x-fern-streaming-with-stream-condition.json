@@ -890,7 +890,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": ""
           },
           "errors": [],
           "userSpecifiedExamples": [],

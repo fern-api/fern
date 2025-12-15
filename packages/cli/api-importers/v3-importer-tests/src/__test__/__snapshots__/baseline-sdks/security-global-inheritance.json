@@ -297,7 +297,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "List of plants"
           },
           "errors": [],
           "userSpecifiedExamples": [],

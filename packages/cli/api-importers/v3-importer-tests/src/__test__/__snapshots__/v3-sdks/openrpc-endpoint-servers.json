@@ -5161,7 +5161,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "The transformed response object that wraps the original gas and paymaster response. It includes an array of asset change objects, a gasUsed field, and an error field."
           },
           "errors": [],
           "idempotent": false,
@@ -8014,7 +8015,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Object containing the **fully-signed** transaction ready for `sendRawTransaction`.\n"
           },
           "errors": [],
           "idempotent": false,

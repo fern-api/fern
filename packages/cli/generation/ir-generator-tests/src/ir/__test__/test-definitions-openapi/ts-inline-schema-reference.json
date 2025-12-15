@@ -2766,7 +2766,8 @@
                             }
                         },
                         "status-code": 200,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": "Successful response"
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -4139,7 +4140,8 @@
                             }
                         },
                         "status-code": 200,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": "Successful response"
                     },
                     "v2Responses": null,
                     "errors": [],

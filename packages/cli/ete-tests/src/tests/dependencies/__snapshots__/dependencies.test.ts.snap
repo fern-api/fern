@@ -504,7 +504,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "response": {
                         "body": null,
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1249,4 +1250,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `5758848`;
+exports[`dependencies > file dependencies 1`] = `5759232`;
