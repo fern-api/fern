@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix OpenAPI 3.1+ parsing to respect `$ref` sibling examples. When a property has both a `$ref` and sibling `example`/`examples` properties, the sibling examples now correctly take precedence over the referenced schema's examples. This fix applies to both the old and new OpenAPI parsers.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.21.2
+
+- changelogEntry:
+    - summary: |
         Fix ExampleValidator to validate response examples against their corresponding status code schemas instead of always using the 200/201 success schema. Error response examples (400, 404, 500, etc.) are now correctly validated against their respective schemas.
       type: fix
   irVersion: 62
