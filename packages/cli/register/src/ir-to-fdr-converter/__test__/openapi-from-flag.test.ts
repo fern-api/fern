@@ -2330,4 +2330,65 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/company-file-ref-examples-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/company-file-ref-examples-ir.snap");
     });
+
+    it("should handle OpenAPI with webhook containing dollar sign in field value", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/webhook-dollar-field")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "webhook-dollar-field"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate webhook was parsed correctly
+        expect(intermediateRepresentation.webhookGroups).toBeDefined();
+        expect(Object.keys(intermediateRepresentation.webhookGroups).length).toBeGreaterThan(0);
+
+        // Validate types were parsed correctly
+        expect(intermediateRepresentation.types).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/webhook-dollar-field-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/webhook-dollar-field-ir.snap");
+    });
 });

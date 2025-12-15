@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: Webhook Dollar Field Test
+  version: 1.0.0
+  description: Test OpenAPI spec for webhook with field containing dollar sign
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths: {}
+
+webhooks:
+  PayInTransactionOnHold:
+    post:
+      operationId: payInTransactionOnHoldWebhook
+      summary: Pay-in transaction on hold webhook
+      description: Webhook triggered when a pay-in transaction is held
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PayInTransactionOnHoldContent"
+            examples:
+              PayInTransactionOnHold:
+                summary: Pay-in transaction on hold example
+                value:
+                  Event: HoldTransaction
+                  Paypoint: Gruzya Adventure Outfitters
+                  Text: A transaction has been held for Gruzya Adventure Outfitters
+                  TransId: 391-991800719eab45ac9f9392d012b6cff2
+                  TotalAmount: "$3.00"
+                  CustomerId: "1234"
+                  CustomerNumber: ELC-667
+                  Method: ach
+                  ExternalPaypointId: null
+      responses:
+        "200":
+          description: Webhook received successfully
+
+components:
+  schemas:
+    PayInTransactionOnHoldContent:
+      type: object
+      properties:
+        Event:
+          type: string
+          description: The event type
+        Paypoint:
+          type: string
+          description: The paypoint name
+        Text:
+          type: string
+          description: Description text
+        TransId:
+          type: string
+          description: Transaction ID
+        TotalAmount:
+          type: string
+          description: Total amount with currency symbol (e.g., "$3.00")
+        CustomerId:
+          type: string
+          description: Customer ID
+        CustomerNumber:
+          type: string
+          description: Customer number
+        Method:
+          type: string
+          description: Payment method
+        ExternalPaypointId:
+          type: string
+          nullable: true
+          description: External paypoint ID
