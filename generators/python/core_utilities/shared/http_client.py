@@ -121,18 +121,34 @@ def _should_retry(response: httpx.Response) -> bool:
     return response.status_code >= 500 or response.status_code in retryable_400s
 
 
+def _stringify_multipart_form_data(data: typing.Mapping[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    """
+    Convert all non-string/bytes form data values to strings for multipart requests.
+    httpx requires all form field values to be strings or bytes for multipart/form-data encoding.
+    """
+    result: typing.Dict[str, typing.Any] = {}
+    for key, value in data.items():
+        if value is None:
+            continue
+        if isinstance(value, (str, bytes)):
+            result[key] = value
+        else:
+            result[key] = str(value)
+    return result
+
+
 def _maybe_filter_none_from_multipart_data(
     data: typing.Optional[typing.Any],
     request_files: typing.Optional[RequestFiles],
     force_multipart: typing.Optional[bool],
 ) -> typing.Optional[typing.Any]:
     """
-    Filter None values from data body for multipart/form requests.
-    This prevents httpx from converting None to empty strings in multipart encoding.
+    Filter None values and stringify non-string values from data body for multipart/form requests.
+    httpx requires all form field values to be strings or bytes for multipart/form-data encoding.
     Only applies when files are present or force_multipart is True.
     """
     if data is not None and isinstance(data, typing.Mapping) and (request_files or force_multipart):
-        return remove_none_from_dict(data)
+        return _stringify_multipart_form_data(data)
     return data
 
 
