@@ -5,7 +5,7 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 41 types for API operations
+//! - **Request/Response Types**: 43 types for API operations
 //! - **Model Types**: 28 types for data representation
 
 pub mod username_cursor;
@@ -48,6 +48,7 @@ pub mod users_username_container;
 pub mod users_list_users_extended_response;
 pub mod users_list_users_extended_optional_list_response;
 pub mod users_list_users_pagination_response;
+pub mod users_list_users_optional_data_pagination_response;
 pub mod users_list_users_mixed_type_pagination_response;
 pub mod users_page;
 pub mod users_next_page;
@@ -77,6 +78,7 @@ pub mod users_list_with_extended_results_and_optional_data_query_request;
 pub mod users_list_usernames_query_request;
 pub mod list_usernames_with_optional_response_query_request;
 pub mod users_list_with_global_config_query_request;
+pub mod list_with_optional_data_query_request;
 
 pub use username_cursor::UsernameCursor;
 pub use username_page::UsernamePage;
@@ -118,6 +120,7 @@ pub use users_username_container::UsernameContainer2;
 pub use users_list_users_extended_response::ListUsersExtendedResponse2;
 pub use users_list_users_extended_optional_list_response::ListUsersExtendedOptionalListResponse2;
 pub use users_list_users_pagination_response::ListUsersPaginationResponse2;
+pub use users_list_users_optional_data_pagination_response::ListUsersOptionalDataPaginationResponse;
 pub use users_list_users_mixed_type_pagination_response::ListUsersMixedTypePaginationResponse2;
 pub use users_page::Page2;
 pub use users_next_page::NextPage2;
@@ -147,4 +150,5 @@ pub use users_list_with_extended_results_and_optional_data_query_request::UsersL
 pub use users_list_usernames_query_request::UsersListUsernamesQueryRequest;
 pub use list_usernames_with_optional_response_query_request::ListUsernamesWithOptionalResponseQueryRequest;
 pub use users_list_with_global_config_query_request::UsersListWithGlobalConfigQueryRequest;
+pub use list_with_optional_data_query_request::ListWithOptionalDataQueryRequest;
 
