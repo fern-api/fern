@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...)</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -> AsyncHttpResponse[TokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -83,7 +83,7 @@ client.auth.get_token_with_client_credentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...)</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -> AsyncHttpResponse[TokenResponse]</code></summary>
 <dl>
 <dd>
 

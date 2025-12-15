@@ -1,3 +1,4 @@
+import { replaceEnvVariables } from "@fern-api/core-utils";
 import { validateDocsWorkspace } from "@fern-api/docs-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
@@ -24,6 +25,15 @@ export async function validateDocsWorkspaceWithoutExiting({
     logSummary?: boolean;
     excludeRules?: string[];
 }): Promise<{ hasErrors: boolean }> {
+    // Apply env var substitution if settings.substitute-env-vars is enabled
+    // This matches the behavior of `fern generate --docs` which throws errors for missing env vars
+    // The entire config including instances (with custom domains) goes through substitution
+    if (workspace.config.settings?.substituteEnvVars) {
+        workspace.config = replaceEnvVariables(workspace.config, {
+            onError: (e) => context.failAndThrow(e)
+        });
+    }
+
     const startTime = performance.now();
     const violations = await validateDocsWorkspace(
         workspace,

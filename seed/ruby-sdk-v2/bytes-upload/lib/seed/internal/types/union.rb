@@ -38,6 +38,25 @@ module Seed
           !@discriminant.nil?
         end
 
+        # Check if value matches a type, handling type wrapper instances
+        # (Internal::Types::Hash and Internal::Types::Array instances)
+        #
+        # @param value [Object]
+        # @param member_type [Object]
+        # @return [Boolean]
+        private def type_matches?(value, member_type)
+          case member_type
+          when Seed::Internal::Types::Hash
+            value.is_a?(::Hash)
+          when Seed::Internal::Types::Array
+            value.is_a?(::Array)
+          when Class, Module
+            value.is_a?(member_type)
+          else
+            false
+          end
+        end
+
         # Resolves the type of a value to be one of the members
         #
         # @param value [Object]
@@ -53,7 +72,7 @@ module Seed
             # First try exact type matching
             result = members.find do |_key, mem|
               member_type = Utils.unwrap_type(mem)
-              value.is_a?(member_type)
+              type_matches?(value, member_type)
             end&.last&.call
 
             return result if result

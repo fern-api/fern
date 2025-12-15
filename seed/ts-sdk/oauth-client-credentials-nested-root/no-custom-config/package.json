@@ -2,7 +2,10 @@
     "name": "@fern/oauth-client-credentials-nested-root",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:oauth-client-credentials-nested-root/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/oauth-client-credentials-nested-root/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

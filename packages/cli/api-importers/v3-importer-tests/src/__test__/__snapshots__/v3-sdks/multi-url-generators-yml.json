@@ -1073,7 +1073,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Successful response"
           },
           "docs": "List information about all users",
           "v2Examples": {
@@ -1155,7 +1156,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Successful response"
               }
             ]
           }
@@ -1989,7 +1991,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Successful response"
           },
           "docs": "Retrieve detailed information about a specific user",
           "v2Examples": {
@@ -2073,7 +2076,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Successful response"
               }
             ]
           }
@@ -2553,7 +2557,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Successful response"
           },
           "docs": "Retrieve an authentication token for the API",
           "v2Examples": {
@@ -2633,7 +2638,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Successful response"
               }
             ]
           }

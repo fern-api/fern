@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require_relative "wire_helper"
 require "net/http"
 require "json"
 require "uri"

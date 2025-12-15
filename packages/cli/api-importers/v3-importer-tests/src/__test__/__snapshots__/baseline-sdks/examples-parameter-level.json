@@ -354,7 +354,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "Success"
           },
           "errors": [],
           "userSpecifiedExamples": [],

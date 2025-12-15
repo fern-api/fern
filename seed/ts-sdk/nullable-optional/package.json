@@ -2,7 +2,10 @@
     "name": "@fern/nullable-optional",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:nullable-optional/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nullable-optional/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

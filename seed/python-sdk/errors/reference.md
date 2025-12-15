@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_without_endpoint_error</a>(...)</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_without_endpoint_error</a>(...) -> AsyncHttpResponse[FooResponse]</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ client.simple.foo_without_endpoint_error(
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo</a>(...)</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo</a>(...) -> AsyncHttpResponse[FooResponse]</code></summary>
 <dl>
 <dd>
 
@@ -112,7 +112,7 @@ client.simple.foo(
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_with_examples</a>(...)</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_with_examples</a>(...) -> AsyncHttpResponse[FooResponse]</code></summary>
 <dl>
 <dd>
 

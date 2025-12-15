@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { Examples } from "@fern-api/core-utils";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { type EndpointSelector, type HttpMethod, OpenAPIPruner } from "@fern-api/openapi-pruner";
@@ -12,6 +13,7 @@ import { join } from "path";
 import { LambdaExampleEnhancer } from "./lambdaClient";
 import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator";
 import { AIExampleEnhancerConfig } from "./types";
+import { removeInvalidAiExamples, validateAiExamplesFromFile } from "./validateAiExamples";
 import {
     EnhancedExampleRecord,
     loadExistingOverrideCoverage,
@@ -256,6 +258,39 @@ export async function enhanceExamplesWithAI(
         return apiDefinition;
     }
 
+    // Wrap the entire AI enhancement pipeline in try-catch to prevent CLI crashes
+    try {
+        return await performAIEnhancement(
+            apiDefinition,
+            config,
+            context,
+            token,
+            organizationId,
+            sourceFilePath,
+            apiName
+        );
+    } catch (error) {
+        context.logger.debug(
+            `AI example enhancement failed with error: ${error}. Continuing with original API definition to prevent CLI crash.`
+        );
+        context.logger.debug(
+            `Full AI enhancement error stack: ${error instanceof Error ? error.stack : String(error)}`
+        );
+
+        // Return original API definition to ensure CLI can continue
+        return apiDefinition;
+    }
+}
+
+async function performAIEnhancement(
+    apiDefinition: FdrCjsSdk.api.v1.register.ApiDefinition,
+    config: AIExampleEnhancerConfig,
+    context: TaskContext,
+    token: FernToken,
+    organizationId: string,
+    sourceFilePath?: AbsoluteFilePath,
+    apiName?: string
+): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     // Log informative message only once per process
     if (!hasLoggedInfoMessage) {
         const message =
@@ -274,13 +309,12 @@ export async function enhanceExamplesWithAI(
         hasLoggedInfoMessage = true;
     }
 
-    const enhancer = new LambdaExampleEnhancer(config, context, token);
+    const enhancer = new LambdaExampleEnhancer(config, context, token, organizationId);
     const circuitBreaker = new CircuitBreaker();
 
-    const coveredEndpoints =
-        sourceFilePath != null ? await loadExistingOverrideCoverage(sourceFilePath, context) : new Set<string>();
-
     let openApiSpec: string | undefined;
+    let endpointsNeedingRegeneration = new Set<string>();
+
     if (sourceFilePath != null) {
         try {
             const specContent = await readFile(sourceFilePath, "utf-8");
@@ -293,8 +327,59 @@ export async function enhanceExamplesWithAI(
 
             openApiSpec = specContent;
             context.logger.debug(`Loaded OpenAPI spec (${specContent.length} characters) for AI enhancement`);
+
+            // Load original coverage before cleanup to know which endpoints to preserve
+            const originalCoveredEndpoints = await loadExistingOverrideCoverage(sourceFilePath, context);
+
+            // Clean up stale AI examples before processing
+            try {
+                const validationResult = await validateAiExamplesFromFile({
+                    sourceFilePath,
+                    context
+                });
+
+                if (validationResult.invalidCount > 0) {
+                    // Track which endpoints had invalid examples removed
+                    for (const { example } of validationResult.invalidExamples) {
+                        const endpointKey = `${example.method.toLowerCase()}:${example.endpointPath}`;
+                        endpointsNeedingRegeneration.add(endpointKey);
+                    }
+
+                    const cleanupResult = await removeInvalidAiExamples({
+                        sourceFilePath,
+                        context
+                    });
+
+                    context.logger.info(
+                        `Removed ${cleanupResult.removedCount} stale AI examples, ${endpointsNeedingRegeneration.size} endpoints will be regenerated`
+                    );
+                } else {
+                    context.logger.debug("No stale AI examples found to remove");
+                }
+            } catch (error) {
+                context.logger.debug(`Failed to clean up stale AI examples: ${error}`);
+            }
         } catch (error) {
             context.logger.debug(`Failed to read OpenAPI spec file: ${error}`);
+        }
+    }
+
+    // Create final coverage set: exclude endpoints that need regeneration from original coverage
+    let coveredEndpoints = new Set<string>();
+    if (sourceFilePath != null) {
+        const currentCoveredEndpoints = await loadExistingOverrideCoverage(sourceFilePath, context);
+
+        // Only include endpoints in coverage if they weren't removed due to being stale
+        for (const endpoint of currentCoveredEndpoints) {
+            if (!endpointsNeedingRegeneration.has(endpoint)) {
+                coveredEndpoints.add(endpoint);
+            }
+        }
+
+        if (endpointsNeedingRegeneration.size > 0) {
+            context.logger.debug(
+                `Coverage adjusted: ${currentCoveredEndpoints.size} total, ${coveredEndpoints.size} preserved, ${endpointsNeedingRegeneration.size} marked for regeneration`
+            );
         }
     }
 
@@ -309,6 +394,7 @@ export async function enhanceExamplesWithAI(
         examplesEnhanced,
         enhancedExampleRecords,
         coveredEndpoints,
+        endpointsNeedingRegeneration,
         openApiSpec,
         sourceFilePath,
         apiName,
@@ -327,6 +413,12 @@ export async function enhanceExamplesWithAI(
         }
     }
 
+    // Log final statistics including total endpoint count
+    const finalTotalEndpointCount = countTotalEndpoints(enhancedApiDefinition);
+    context.logger.debug(
+        `AI Enhancement Summary - Total endpoints in API: ${finalTotalEndpointCount}, Enhanced: ${examplesEnhanced.count}/${examplesEnhanced.total}, Covered: ${coveredEndpoints.size}`
+    );
+
     return enhancedApiDefinition;
 }
 
@@ -338,6 +430,7 @@ async function enhancePackageExamples(
     stats: { count: number; total: number },
     enhancedExampleRecords: EnhancedExampleRecord[],
     coveredEndpoints: Set<string>,
+    endpointsNeedingRegeneration: Set<string>,
     openApiSpec?: string,
     sourceFilePath?: AbsoluteFilePath,
     apiName?: string,
@@ -350,16 +443,29 @@ async function enhancePackageExamples(
     for (const [packageId, subpackage] of Object.entries(apiDefinition.subpackages)) {
         const packageWorkItems = collectWorkItems(
             subpackage as unknown as FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
-            coveredEndpoints
+            coveredEndpoints,
+            endpointsNeedingRegeneration,
+            context
         );
         allWorkItems.push(...packageWorkItems.map((item) => ({ ...item, packageId })));
     }
 
     // Collect from root package
-    const rootWorkItems = collectWorkItems(apiDefinition.rootPackage, coveredEndpoints);
+    const rootWorkItems = collectWorkItems(
+        apiDefinition.rootPackage,
+        coveredEndpoints,
+        endpointsNeedingRegeneration,
+        context
+    );
     allWorkItems.push(...rootWorkItems.map((item) => ({ ...item, packageId: "root" })));
 
+    // Count total endpoints for logging
+    const totalEndpointCount = countTotalEndpoints(apiDefinition);
+
     stats.total += allWorkItems.length;
+    context.logger.debug(
+        `AI Examples Enhancement: ${allWorkItems.length} endpoints need enhancement out of ${totalEndpointCount} total endpoints (${coveredEndpoints.size} already covered)`
+    );
     context.logger.debug(`Collected ${allWorkItems.length} work items across all packages`);
 
     const coordinator = SpinnerStatusCoordinator.getInstance();
@@ -397,6 +503,11 @@ async function enhancePackageExamples(
 
     const enhancedRootPackage = applyEnhancementResults(apiDefinition.rootPackage, enhancementResults);
 
+    // Log completion summary
+    context.logger.debug(
+        `AI Examples Enhancement Complete: ${apiStats?.count || 0}/${allWorkItems.length} endpoints enhanced successfully (${totalEndpointCount} total endpoints in API)`
+    );
+
     return {
         ...apiDefinition,
         subpackages: enhancedSubpackages,
@@ -404,29 +515,90 @@ async function enhancePackageExamples(
     };
 }
 
+function countTotalEndpoints(apiDefinition: FdrCjsSdk.api.v1.register.ApiDefinition): number {
+    let totalCount = 0;
+
+    // Count endpoints in root package
+    totalCount += apiDefinition.rootPackage.endpoints.length;
+
+    // Count endpoints in all subpackages
+    for (const subpackage of Object.values(apiDefinition.subpackages)) {
+        totalCount += (subpackage as unknown as FdrCjsSdk.api.v1.register.ApiDefinitionPackage).endpoints.length;
+    }
+
+    return totalCount;
+}
+
 function collectWorkItems(
     pkg: FdrCjsSdk.api.v1.register.ApiDefinitionPackage,
-    coveredEndpoints: Set<string>
+    coveredEndpoints: Set<string>,
+    endpointsNeedingRegeneration?: Set<string>,
+    context?: TaskContext
 ): EndpointWorkItem[] {
     const workItems: EndpointWorkItem[] = [];
+    const processedEndpoints = new Set<string>();
+
+    // Tracking for filtering statistics
+    const filteringStats = {
+        totalEndpoints: pkg.endpoints.length,
+        alreadyCovered: 0,
+        notAutogenerated: 0,
+        noExistingExamples: 0,
+        alreadyProcessed: 0,
+        noExamples: 0,
+        processed: 0
+    };
 
     for (const endpoint of pkg.endpoints) {
         const endpointV3 = endpoint as unknown as EndpointV3;
 
+        // Check if endpoint already has human-specified examples in v2Examples
+        const hasHumanExamples = hasUserSpecifiedV2Examples(endpointV3);
+        if (hasHumanExamples) {
+            // Skip this endpoint - it already has human examples that shouldn't be overridden
+            continue;
+        }
+
         for (const example of endpointV3.examples) {
             const endpointKey = `${endpointV3.method.toLowerCase()}:${example.path}`;
 
-            if (coveredEndpoints.has(endpointKey)) {
+            // Skip if we already processed this endpoint
+            if (processedEndpoints.has(endpointKey)) {
+                filteringStats.alreadyProcessed++;
+                context?.logger.debug(
+                    `Endpoint ${endpointV3.method.toUpperCase()} ${example.path} skipped: already processed in this run`
+                );
                 continue;
             }
 
-            if (!isExampleAutogenerated(example)) {
+            // Force regeneration for stale endpoints, even if they have coverage
+            const needsRegeneration = endpointsNeedingRegeneration?.has(endpointKey);
+
+            if (!needsRegeneration && coveredEndpoints.has(endpointKey)) {
+                filteringStats.alreadyCovered++;
+                context?.logger.debug(
+                    `Endpoint ${endpointV3.method.toUpperCase()} ${example.path} skipped: already covered (has AI-enhanced examples)`
+                );
+                continue;
+            }
+
+            if (!needsRegeneration && !isExampleAutogenerated(example, context, endpointKey)) {
+                filteringStats.notAutogenerated++;
+                context?.logger.debug(
+                    `Endpoint ${endpointV3.method.toUpperCase()} ${example.path} skipped: has human-written examples (not auto-generated)`
+                );
                 continue;
             }
 
             const originalRequestExample = extractExampleValue(example.requestBodyV3);
             const originalResponseExample = extractExampleValue(example.responseBodyV3);
-            if (!originalRequestExample && !originalResponseExample) {
+
+            // For stale endpoints, we allow regeneration even without existing examples
+            if (!needsRegeneration && !originalRequestExample && !originalResponseExample) {
+                filteringStats.noExistingExamples++;
+                context?.logger.debug(
+                    `Endpoint ${endpointV3.method.toUpperCase()} ${example.path} skipped: no existing request/response examples to enhance`
+                );
                 continue;
             }
 
@@ -435,8 +607,30 @@ function collectWorkItems(
                 example,
                 endpointKey
             });
-            break; // Only process first autogenerated example per endpoint
+
+            filteringStats.processed++;
+            context?.logger.debug(
+                `Endpoint ${endpointV3.method.toUpperCase()} ${example.path} selected for AI enhancement`
+            );
+
+            processedEndpoints.add(endpointKey);
+            break; // Only process first example per endpoint
         }
+    }
+
+    // Log filtering statistics summary
+    if (context) {
+        context.logger.debug(
+            `Endpoint Filtering Results: ${filteringStats.processed}/${filteringStats.totalEndpoints} endpoints selected for AI enhancement`
+        );
+        context.logger.debug(
+            `Filtering breakdown - Already covered: ${filteringStats.alreadyCovered}, ` +
+                `Not auto-generated: ${filteringStats.notAutogenerated}, ` +
+                `No existing examples: ${filteringStats.noExistingExamples}, ` +
+                `No examples at all: ${filteringStats.noExamples}, ` +
+                `Already processed: ${filteringStats.alreadyProcessed}, ` +
+                `Selected: ${filteringStats.processed}`
+        );
     }
 
     return workItems;
@@ -703,38 +897,258 @@ function applyEnhancementResults(
     };
 }
 
-function isExampleAutogenerated(example: ExampleV3): boolean {
-    const hasGenericName = !example.name || example.name === "" || example.name === "Example";
-    const hasEmptyDescription = !example.description || example.description === "";
+function isExampleAutogenerated(example: ExampleV3, context?: TaskContext, endpointKey?: string): boolean {
+    // Use percentage-based detection: if at least 30% of values are auto-generated, consider it auto-generated
+    const AUTOGENERATION_THRESHOLD = 0.3;
 
-    const requestHasGenericValues = hasGenericValues(extractExampleValue(example.requestBodyV3));
-    const responseHasGenericValues = hasGenericValues(extractExampleValue(example.responseBodyV3));
+    const requestValue = extractExampleValue(example.requestBodyV3);
+    const responseValue = extractExampleValue(example.responseBodyV3);
 
-    return hasGenericName && hasEmptyDescription && (requestHasGenericValues || responseHasGenericValues);
+    const requestStats = countAutogeneratedValues(requestValue, context, `${endpointKey}:request`);
+    const responseStats = countAutogeneratedValues(responseValue, context, `${endpointKey}:response`);
+
+    const totalValues = requestStats.total + responseStats.total;
+    const autogeneratedValues = requestStats.autogenerated + responseStats.autogenerated;
+
+    // Handle edge case where there are no values at all
+    if (totalValues === 0) {
+        return true; // Consider empty/null examples as auto-generated
+    }
+
+    const autogeneratedPercentage = autogeneratedValues / totalValues;
+    const isAutogenerated = autogeneratedPercentage >= AUTOGENERATION_THRESHOLD;
+
+    if (context && endpointKey) {
+        if (isAutogenerated) {
+            context.logger.debug(
+                `Endpoint ${endpointKey} considered auto-generated: ${autogeneratedValues}/${totalValues} (${(autogeneratedPercentage * 100).toFixed(1)}%) values are generic`
+            );
+        } else {
+            context.logger.debug(
+                `Endpoint ${endpointKey} flagged as human-written: only ${autogeneratedValues}/${totalValues} (${(autogeneratedPercentage * 100).toFixed(1)}%) values are generic (threshold: ${AUTOGENERATION_THRESHOLD * 100}%)`
+            );
+        }
+    }
+
+    return isAutogenerated;
 }
 
-function hasGenericValues(obj: unknown): boolean {
+function countAutogeneratedValues(
+    obj: unknown,
+    context?: TaskContext,
+    path?: string
+): { autogenerated: number; total: number } {
     if (obj === null || obj === undefined) {
-        return false;
+        return { autogenerated: 0, total: 0 }; // Don't count null/undefined as values
     }
 
     if (typeof obj === "string") {
-        return obj === "string" || obj === "String" || obj === "";
+        const isGeneric =
+            obj === Examples.STRING ||
+            obj === Examples.BASE64 ||
+            obj === Examples.DATE ||
+            obj === Examples.DATE_TIME ||
+            obj === Examples.UUID ||
+            obj === Examples.BIG_INTEGER ||
+            Examples.SAMPLE_STRINGS.includes(obj) ||
+            obj === ""; // Keep empty string as generic
+
+        if (!isGeneric && context && path) {
+            context.logger.debug(`Non-generic string found at ${path}: "${obj}"`);
+        }
+
+        return { autogenerated: isGeneric ? 1 : 0, total: 1 };
     }
 
     if (typeof obj === "number") {
-        return obj === 1 || obj === 0;
+        const isGeneric =
+            obj === Examples.DOUBLE ||
+            obj === Examples.FLOAT ||
+            obj === Examples.INT ||
+            obj === Examples.INT64 ||
+            obj === Examples.UINT ||
+            obj === Examples.UINT64 ||
+            obj === 0; // Keep 0 as generic
+
+        if (!isGeneric && context && path) {
+            context.logger.debug(`Non-generic number found at ${path}: ${obj}`);
+        }
+
+        return { autogenerated: isGeneric ? 1 : 0, total: 1 };
+    }
+
+    if (typeof obj === "boolean") {
+        const isGeneric = obj === Examples.BOOLEAN;
+
+        if (!isGeneric && context && path) {
+            context.logger.debug(`Non-generic boolean found at ${path}: ${obj}`);
+        }
+
+        return { autogenerated: isGeneric ? 1 : 0, total: 1 };
     }
 
     if (Array.isArray(obj)) {
-        return obj.length > 0 && obj.some((item) => hasGenericValues(item));
+        if (obj.length === 0) {
+            return { autogenerated: 0, total: 0 }; // Empty arrays don't contribute to the count
+        }
+
+        let totalAutogenerated = 0;
+        let totalValues = 0;
+
+        obj.forEach((item, index) => {
+            const itemStats = countAutogeneratedValues(item, context, path ? `${path}[${index}]` : undefined);
+            totalAutogenerated += itemStats.autogenerated;
+            totalValues += itemStats.total;
+        });
+
+        return { autogenerated: totalAutogenerated, total: totalValues };
     }
 
     if (typeof obj === "object") {
-        return Object.values(obj).some((value) => hasGenericValues(value));
+        let totalAutogenerated = 0;
+        let totalValues = 0;
+
+        Object.entries(obj).forEach(([key, value]) => {
+            const valueStats = countAutogeneratedValues(value, context, path ? `${path}.${key}` : undefined);
+            totalAutogenerated += valueStats.autogenerated;
+            totalValues += valueStats.total;
+        });
+
+        return { autogenerated: totalAutogenerated, total: totalValues };
+    }
+
+    if (context && path) {
+        context.logger.debug(`Unknown type at ${path}: ${typeof obj} = ${obj}`);
+    }
+
+    // Unknown types count as non-generic
+    return { autogenerated: 0, total: 1 };
+}
+
+function isFromAutogeneratedValues(obj: unknown, context?: TaskContext, path?: string): boolean {
+    if (obj === null || obj === undefined) {
+        return true;
+    }
+
+    if (typeof obj === "string") {
+        const isGeneric =
+            obj === Examples.STRING ||
+            obj === Examples.BASE64 ||
+            obj === Examples.DATE ||
+            obj === Examples.DATE_TIME ||
+            obj === Examples.UUID ||
+            obj === Examples.BIG_INTEGER ||
+            Examples.SAMPLE_STRINGS.includes(obj) ||
+            obj === ""; // Keep empty string as generic
+
+        if (!isGeneric && context && path) {
+            context.logger.debug(`Non-generic string found at ${path}: "${obj}"`);
+        }
+        return isGeneric;
+    }
+
+    if (typeof obj === "number") {
+        const isGeneric =
+            obj === Examples.DOUBLE ||
+            obj === Examples.FLOAT ||
+            obj === Examples.INT ||
+            obj === Examples.INT64 ||
+            obj === Examples.UINT ||
+            obj === Examples.UINT64 ||
+            obj === 0; // Keep 0 as generic
+
+        if (!isGeneric && context && path) {
+            context.logger.debug(`Non-generic number found at ${path}: ${obj}`);
+        }
+        return isGeneric;
+    }
+
+    if (typeof obj === "boolean") {
+        const isGeneric = obj === Examples.BOOLEAN;
+
+        if (!isGeneric && context && path) {
+            context.logger.debug(`Non-generic boolean found at ${path}: ${obj}`);
+        }
+        return isGeneric;
+    }
+
+    if (Array.isArray(obj)) {
+        // All items in array must be autogenerated values for array to be considered autogenerated
+        if (obj.length === 0) {
+            return true;
+        }
+
+        const allGeneric = obj.every((item, index) =>
+            isFromAutogeneratedValues(item, context, path ? `${path}[${index}]` : undefined)
+        );
+
+        if (!allGeneric && context && path) {
+            context.logger.debug(`Array at ${path} contains non-generic values`);
+        }
+
+        return allGeneric;
+    }
+
+    if (typeof obj === "object") {
+        // All values in object must be autogenerated for object to be considered autogenerated
+        const entries = Object.entries(obj);
+        const allGeneric = entries.every(([key, value]) =>
+            isFromAutogeneratedValues(value, context, path ? `${path}.${key}` : undefined)
+        );
+
+        if (!allGeneric && context && path) {
+            context.logger.debug(`Object at ${path} contains non-generic values`);
+        }
+
+        return allGeneric;
+    }
+
+    if (context && path) {
+        context.logger.debug(`Unknown type at ${path}: ${typeof obj} = ${obj}`);
     }
 
     return false;
+}
+
+/**
+ * Check if an endpoint has user-specified examples in v2Examples structure.
+ * This prevents AI enhancement from overriding human-provided OpenAPI examples.
+ */
+function hasUserSpecifiedV2Examples(endpointV3: EndpointV3): boolean {
+    try {
+        // Cast to any to access v2Examples properties that aren't in the type definition
+        // biome-ignore lint/suspicious/noExplicitAny: accessing v2Examples properties not in type definition
+        const endpoint = endpointV3 as any;
+
+        // Check if endpoint has v2Examples structure with user-specified examples
+        if (
+            endpoint.v2Examples?.userSpecifiedExamples &&
+            typeof endpoint.v2Examples.userSpecifiedExamples === "object"
+        ) {
+            const userExamples = endpoint.v2Examples.userSpecifiedExamples;
+            return Object.keys(userExamples).length > 0;
+        }
+
+        // Also check v2Responses for user-specified examples (response-specific examples)
+        if (endpoint.v2Responses?.responses) {
+            for (const response of endpoint.v2Responses.responses) {
+                if (
+                    response.body?.v2Examples?.userSpecifiedExamples &&
+                    typeof response.body.v2Examples.userSpecifiedExamples === "object"
+                ) {
+                    const responseUserExamples = response.body.v2Examples.userSpecifiedExamples;
+                    if (Object.keys(responseUserExamples).length > 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    } catch (error) {
+        // If there's any error checking the structure, default to false (allow AI enhancement)
+        return false;
+    }
 }
 
 function extractExampleValue(bodyV3: BodyV3 | undefined): unknown {

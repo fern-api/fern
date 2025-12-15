@@ -49,6 +49,7 @@ export async function convertMarkdown({
             "hide-toc": undefined,
             "hide-page-actions": undefined,
             "hide-feedback": undefined,
+            "last-updated": undefined,
             "no-image-zoom": undefined,
             "force-toc": undefined,
             "hide-nav-links": undefined,

@@ -855,7 +855,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "A response"
           },
           "errors": [
             {
@@ -1100,7 +1101,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "A response"
           },
           "errors": [
             {

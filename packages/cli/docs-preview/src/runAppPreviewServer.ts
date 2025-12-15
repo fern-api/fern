@@ -35,6 +35,7 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
         footerLinks: undefined,
         logoHeight: undefined,
         logoHref: undefined,
+        logoRightText: undefined,
         favicon: undefined,
         metadata: undefined,
         redirects: undefined,

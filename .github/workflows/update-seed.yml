@@ -24,6 +24,16 @@ on:
           - ruby
           - openapi
           - postman
+      commit-on-failure:
+        description: 'Commit successful seed changes even if some seed runs fail'
+        required: false
+        default: false
+        type: boolean
+      skip-scripts:
+        description: 'Skip running compile/test scripts during seed generation'
+        required: false
+        default: false
+        type: boolean
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -47,6 +57,7 @@ jobs:
       update-by-push: ${{ steps.set-update-options.outputs.update-by-push }}
       update-by-pr: ${{ steps.set-update-options.outputs.update-by-pr }}
       selected-language: ${{ steps.set-language-filter.outputs.selected-language }}
+      commit-on-failure: ${{ steps.set-commit-on-failure.outputs.commit-on-failure }}
     steps:
       # Apply by direct push for workflow_dispatches that aren't on main, apply by PR if running against main
       - name: Set update options
@@ -58,7 +69,13 @@ jobs:
             echo "update-by-push=true" >> $GITHUB_OUTPUT
             echo "update-by-pr=false" >> $GITHUB_OUTPUT
           else
-            echo "skip-scripts=false" >> $GITHUB_OUTPUT
+            # For workflow_dispatch, check if skip-scripts checkbox is checked
+            # For push events, default to false
+            if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.event.inputs.skip-scripts }}" == "true" ]]; then
+              echo "skip-scripts=true" >> $GITHUB_OUTPUT
+            else
+              echo "skip-scripts=false" >> $GITHUB_OUTPUT
+            fi
             echo "update-by-push=false" >> $GITHUB_OUTPUT
             echo "update-by-pr=true" >> $GITHUB_OUTPUT
           fi
@@ -77,6 +94,21 @@ jobs:
             echo "Push event detected, running all languages"
           fi
           echo "selected-language=$SELECTED_LANGUAGE" >> $GITHUB_OUTPUT
+
+      - name: Set commit-on-failure option
+        id: set-commit-on-failure
+        shell: bash
+        run: |
+          # For workflow_dispatch events, use the input commit-on-failure option
+          # For push events, default to 'false' to maintain existing behavior
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            COMMIT_ON_FAILURE="${{ github.event.inputs.commit-on-failure }}"
+            echo "Commit on failure option from workflow_dispatch input: $COMMIT_ON_FAILURE"
+          else
+            COMMIT_ON_FAILURE="false"
+            echo "Push event detected, defaulting commit-on-failure to false"
+          fi
+          echo "commit-on-failure=$COMMIT_ON_FAILURE" >> $GITHUB_OUTPUT
 
   changes:
     if: github.repository == 'fern-api/fern'
@@ -1130,12 +1162,12 @@ jobs:
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
 
   # Use always() to ensure this runs even if stages from needs are skipped.
-  # Add check back to make sure it doesn't run for failures or cancellations.
+  # By default, block on failures. If commit-on-failure is true, continue even if some seed runs fail.
   commit-seed-changes-by-push:
     if: >-
       ${{
         always() && !cancelled() && needs.setup.outputs.update-by-push == 'true' &&
-        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+        (needs.setup.outputs.commit-on-failure == 'true' || (!contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')))
       }}
     needs:
       [
@@ -1218,14 +1250,14 @@ jobs:
           message: "Automated update of seed files"
 
   # Verify that the branch is the default branch (running for PR to main)
+  # By default, block on failures. If commit-on-failure is true, continue even if some seed runs fail.
   commit-seed-changes-by-pr:
     if: >-
       ${{
         always() && !cancelled() &&
         github.ref == 'refs/heads/main' &&
         needs.setup.outputs.update-by-pr == 'true' &&
-        !contains(needs.*.result, 'failure') && 
-        !contains(needs.*.result, 'cancelled')
+        (needs.setup.outputs.commit-on-failure == 'true' || (!contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')))
       }}
     needs:
       [

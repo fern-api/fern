@@ -453,12 +453,55 @@ export class EndpointSnippetGenerator {
         );
 
         // Handle request.body if present
-        if (request.body != null) {
+        if (request.body != null && snippet.requestBody != null) {
             switch (request.body.type) {
                 case "properties":
                     args.push(...this.getMethodArgsForPropertiesRequest({ request: request.body, snippet }));
                     break;
-                case "referenced":
+                case "referenced": {
+                    // Handle referenced body types (like BillOutData)
+                    const bodyType = request.body.bodyType;
+                    if (bodyType.type === "typeReference") {
+                        const typeRef = bodyType.value;
+                        if (typeRef.type === "named") {
+                            const namedType = this.context.resolveNamedType({ typeId: typeRef.value });
+                            if (namedType != null && namedType.type === "object") {
+                                // For objects, flatten the body fields into keyword arguments
+                                const bodyRecord = this.context.getRecord(snippet.requestBody);
+                                if (bodyRecord != null) {
+                                    const bodyFields = this.getBodyFieldsAsKeywordArgs({
+                                        namedType,
+                                        bodyRecord
+                                    });
+                                    args.push(...bodyFields);
+                                }
+                            } else if (namedType != null) {
+                                // For non-object named types, convert and pass as single argument
+                                const bodyArgs = this.getBodyArgsForNonObjectType({
+                                    namedType,
+                                    typeRef,
+                                    bodyValue: snippet.requestBody
+                                });
+                                args.push(...bodyArgs);
+                            }
+                        } else {
+                            // For non-named type references, convert directly
+                            const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
+                                typeReference: typeRef,
+                                value: snippet.requestBody
+                            });
+                            if (!ruby.TypeLiteral.isNop(convertedValue)) {
+                                args.push(
+                                    ruby.keywordArgument({
+                                        name: request.body.bodyKey.snakeCase.safeName,
+                                        value: convertedValue
+                                    })
+                                );
+                            }
+                        }
+                    }
+                    break;
+                }
                 case "fileUpload":
                     // Not implemented for Ruby snippets yet
                     break;

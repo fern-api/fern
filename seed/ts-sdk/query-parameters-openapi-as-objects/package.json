@@ -2,7 +2,10 @@
     "name": "@fern/query-parameters-openapi-as-objects",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:query-parameters-openapi-as-objects/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/query-parameters-openapi-as-objects/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

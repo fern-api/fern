@@ -822,7 +822,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "Successful Response"
           },
           "errors": [],
           "userSpecifiedExamples": [],

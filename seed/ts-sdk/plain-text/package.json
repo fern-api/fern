@@ -2,7 +2,10 @@
     "name": "@fern/plain-text",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:plain-text/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/plain-text/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

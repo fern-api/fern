@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">foo</a>()</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">foo</a>() -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -46,7 +46,7 @@ client.foo()
 </details>
 
 ## A B
-<details><summary><code>client.a.b.<a href="src/seed/a/b/client.py">foo</a>()</code></summary>
+<details><summary><code>client.a.b.<a href="src/seed/a/b/client.py">foo</a>() -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ client.a.b.foo()
 </details>
 
 ## A C
-<details><summary><code>client.a.c.<a href="src/seed/a/c/client.py">foo</a>()</code></summary>
+<details><summary><code>client.a.c.<a href="src/seed/a/c/client.py">foo</a>() -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -140,7 +140,7 @@ client.a.c.foo()
 </details>
 
 ## Folder
-<details><summary><code>client.folder.<a href="src/seed/folder/client.py">foo</a>()</code></summary>
+<details><summary><code>client.folder.<a href="src/seed/folder/client.py">foo</a>() -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -187,7 +187,7 @@ client.folder.foo()
 </details>
 
 ## Folder Service
-<details><summary><code>client.folder.service.<a href="src/seed/folder/service/client.py">endpoint</a>()</code></summary>
+<details><summary><code>client.folder.service.<a href="src/seed/folder/service/client.py">endpoint</a>() -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -233,7 +233,7 @@ client.folder.service.endpoint()
 </dl>
 </details>
 
-<details><summary><code>client.folder.service.<a href="src/seed/folder/service/client.py">unknown_request</a>(...)</code></summary>
+<details><summary><code>client.folder.service.<a href="src/seed/folder/service/client.py">unknown_request</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 

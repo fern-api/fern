@@ -332,7 +332,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "Successfully retrieved tree"
           },
           "errors": [],
           "userSpecifiedExamples": [],
