@@ -75,7 +75,8 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                             String clientOptionsImport = "import " + corePackage + ".ClientOptions;\n";
                             // Insert the import after the first import statement
                             int firstImportEnd = contents.indexOf(";\n") + 2;
-                            contents = contents.substring(0, firstImportEnd) + clientOptionsImport
+                            contents = contents.substring(0, firstImportEnd)
+                                    + clientOptionsImport
                                     + contents.substring(firstImportEnd);
                         }
 
