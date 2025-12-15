@@ -235,7 +235,7 @@ class HttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
@@ -338,7 +338,7 @@ class HttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> typing.Iterator[httpx.Response]:
@@ -452,7 +452,7 @@ class AsyncHttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
@@ -558,7 +558,7 @@ class AsyncHttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> typing.AsyncIterator[httpx.Response]:

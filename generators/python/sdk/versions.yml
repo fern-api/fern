@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.45.10
+  changelogEntry:
+    - summary: |
+        Fix retry logic "off-by-two" error. The `retries` parameter in HTTP client methods
+        now correctly defaults to 0 instead of 2, ensuring users get the expected number of
+        retries when configuring `max_retries` in request options.
+      type: fix
+  createdAt: "2025-12-15"
+  irVersion: 61
+
 - version: 4.45.9
   changelogEntry:
     - summary: |
