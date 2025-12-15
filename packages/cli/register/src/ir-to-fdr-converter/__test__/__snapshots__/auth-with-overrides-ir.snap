@@ -380,6 +380,7 @@
                 },
               },
             },
+            "docs": "List of users",
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
@@ -502,6 +503,7 @@
                     },
                   },
                 },
+                "docs": "List of users",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
@@ -512,6 +514,7 @@
           "allPathParameters": [
             {
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -614,6 +617,7 @@
           "pathParameters": [
             {
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -715,6 +719,7 @@
                 },
               },
             },
+            "docs": "User details",
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
@@ -827,6 +832,7 @@
                     },
                   },
                 },
+                "docs": "User details",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },

@@ -2,7 +2,10 @@
     "name": "@fern/request-parameters",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:request-parameters/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/request-parameters/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

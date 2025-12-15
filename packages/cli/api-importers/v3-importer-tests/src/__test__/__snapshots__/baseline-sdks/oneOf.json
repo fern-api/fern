@@ -2066,7 +2066,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "OK"
           },
           "errors": [],
           "userSpecifiedExamples": [],

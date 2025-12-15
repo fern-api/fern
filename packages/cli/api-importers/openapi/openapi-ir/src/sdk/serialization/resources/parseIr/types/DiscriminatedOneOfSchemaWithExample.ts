@@ -41,7 +41,8 @@ export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchem
 
 export declare namespace DiscriminatedOneOfSchemaWithExample {
     export interface Raw
-        extends WithSdkGroupName.Raw,
+        extends
+            WithSdkGroupName.Raw,
             WithNamespace.Raw,
             WithName.Raw,
             WithDescription.Raw,

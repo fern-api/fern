@@ -2,7 +2,10 @@
     "name": "@fern/audiences",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:audiences/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/audiences/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

@@ -2,7 +2,10 @@
     "name": "@fern/nullable-request-body",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:nullable-request-body/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nullable-request-body/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

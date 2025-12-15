@@ -5,9 +5,7 @@
 import * as FernOpenapiIr from "../../../index";
 
 export interface WebhookWithExample
-    extends FernOpenapiIr.WithDescription,
-        FernOpenapiIr.WithSource,
-        FernOpenapiIr.WithNamespace {
+    extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithSource, FernOpenapiIr.WithNamespace {
     audiences: string[];
     sdkName: FernOpenapiIr.EndpointSdkName | undefined;
     method: FernOpenapiIr.WebhookHttpMethod;
@@ -18,5 +16,6 @@ export interface WebhookWithExample
     /** Populated as ${operationId}Payload */
     generatedPayloadName: string;
     payload: FernOpenapiIr.SchemaWithExample;
+    response: FernOpenapiIr.ResponseWithExample | undefined;
     examples: FernOpenapiIr.WebhookExampleCall[];
 }

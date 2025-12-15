@@ -2,7 +2,10 @@
     "name": "@fern/no-retries",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:no-retries/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/no-retries/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

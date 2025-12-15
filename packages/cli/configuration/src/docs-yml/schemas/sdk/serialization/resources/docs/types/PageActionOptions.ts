@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { CustomPageAction } from "./CustomPageAction";
 
 export const PageActionOptions: core.serialization.ObjectSchema<
     serializers.PageActionOptions.Raw,
@@ -17,6 +18,7 @@ export const PageActionOptions: core.serialization.ObjectSchema<
     claude: core.serialization.boolean().optional(),
     cursor: core.serialization.boolean().optional(),
     vscode: core.serialization.boolean().optional(),
+    custom: core.serialization.list(CustomPageAction).optional(),
 });
 
 export declare namespace PageActionOptions {
@@ -28,5 +30,6 @@ export declare namespace PageActionOptions {
         claude?: boolean | null;
         cursor?: boolean | null;
         vscode?: boolean | null;
+        custom?: CustomPageAction.Raw[] | null;
     }
 }

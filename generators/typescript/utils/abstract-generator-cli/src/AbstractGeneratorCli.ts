@@ -145,6 +145,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 }
             });
 
+            // Run npm pkg fix to normalize package.json (enabled by default)
+            if (!this.shouldSkipNpmPkgFix(customConfig)) {
+                await typescriptProject.fixPackageJson(logger);
+            }
+
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await typescriptProject.installDependencies(logger);
@@ -260,6 +265,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract getPackageManager(customConfig: CustomConfig): "pnpm" | "yarn";
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
+    protected abstract shouldSkipNpmPkgFix(customConfig: CustomConfig): boolean;
 
     private shouldGenerateFullProject(ir: IntermediateRepresentation): boolean {
         const publishConfig = ir.publishConfig;

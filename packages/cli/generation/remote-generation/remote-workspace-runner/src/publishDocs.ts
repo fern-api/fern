@@ -58,7 +58,7 @@ export async function publishDocs({
     isPrivate = false,
     disableTemplates = false,
     skipUpload = false,
-    withAiExamples = false,
+    withAiExamples = true,
     targetAudiences
 }: {
     token: FernToken;
@@ -260,7 +260,10 @@ export async function publishDocs({
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
             let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 
-            const aiEnhancerConfig = getAIEnhancerConfig(withAiExamples);
+            const aiEnhancerConfig = getAIEnhancerConfig(
+                withAiExamples,
+                docsWorkspace.config.experimental?.aiExampleStyleInstructions
+            );
             if (aiEnhancerConfig && workspace) {
                 const sources = workspace.getSources();
                 const openApiSource = sources.find((source) => source.type === "openapi");
@@ -775,7 +778,7 @@ async function updateAiChatFromDocsDefinition({
     }
 }
 
-function getAIEnhancerConfig(withAiExamples: boolean): AIExampleEnhancerConfig | undefined {
+function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string): AIExampleEnhancerConfig | undefined {
     if (!withAiExamples) {
         return undefined;
     }
@@ -784,7 +787,8 @@ function getAIEnhancerConfig(withAiExamples: boolean): AIExampleEnhancerConfig |
         enabled: true,
         model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
         maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
-        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000")
+        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000"),
+        styleInstructions
     };
 }
 

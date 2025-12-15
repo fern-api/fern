@@ -8,6 +8,8 @@ import * as core from "../../../../core";
 import { WebhookMethodSchema } from "./WebhookMethodSchema";
 import { HttpHeaderSchema } from "../../service/types/HttpHeaderSchema";
 import { WebhookPayloadSchema } from "./WebhookPayloadSchema";
+import { HttpResponseSchema } from "../../service/types/HttpResponseSchema";
+import { HttpResponseStreamSchema } from "../../service/types/HttpResponseStreamSchema";
 import { ExampleWebhookCallSchema } from "../../examples/types/ExampleWebhookCallSchema";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithAudiences } from "../../commons/types/WithAudiences";
@@ -22,6 +24,8 @@ export const WebhookSchema: core.serialization.ObjectSchema<
         method: WebhookMethodSchema,
         headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
         payload: WebhookPayloadSchema,
+        response: HttpResponseSchema.optional(),
+        "response-stream": HttpResponseStreamSchema.optional(),
         examples: core.serialization.list(ExampleWebhookCallSchema).optional(),
     })
     .extend(WithAvailability)
@@ -34,6 +38,8 @@ export declare namespace WebhookSchema {
         method: WebhookMethodSchema.Raw;
         headers?: Record<string, HttpHeaderSchema.Raw> | null;
         payload: WebhookPayloadSchema.Raw;
+        response?: HttpResponseSchema.Raw | null;
+        "response-stream"?: HttpResponseStreamSchema.Raw | null;
         examples?: ExampleWebhookCallSchema.Raw[] | null;
     }
 }
