@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add a `custom` field to the `page-actions` configuration. This allows users to add custom page actions to the docs.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.21.0
+
+- changelogEntry:
+    - summary: |
         Add `docs` field to `HttpResponse` in the IR to capture response descriptions for webhook responses. This enables webhook response descriptions (e.g., for 204, 400, 500 status codes) to be properly propagated from OpenAPI specs to documentation.
       type: feat
   irVersion: 62
