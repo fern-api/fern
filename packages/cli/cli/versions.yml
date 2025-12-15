@@ -5,7 +5,15 @@
       type: fix
   irVersion: 62
   createdAt: "2025-12-15"
-  version: 3.21.2
+  version: 3.22.1
+
+- changelogEntry:
+    - summary: |
+        Share `.fernignore` handling between local and remote task handlers. When running remote generation with `local-file-system` output mode, the `.fernignore` file is now respected, matching the behavior of local generation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.22.0
 
 - changelogEntry:
     - summary: |

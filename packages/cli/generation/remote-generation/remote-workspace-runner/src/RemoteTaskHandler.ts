@@ -1,14 +1,15 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { noop } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import chalk from "chalk";
 import decompress from "decompress";
 import { createWriteStream } from "fs";
-import { mkdir, rm } from "fs/promises";
+import { cp, mkdir, rm } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
@@ -159,10 +160,27 @@ async function downloadFilesForTask({
     context: InteractiveTaskContext;
 }) {
     try {
-        await downloadZipForTask({
-            s3PreSignedReadUrl,
-            absolutePathToLocalOutput
-        });
+        const isFernIgnorePresent = await checkFernIgnorePresent(absolutePathToLocalOutput);
+        const isExistingGitRepo = await checkIsGitRepository(absolutePathToLocalOutput);
+
+        if (isFernIgnorePresent && isExistingGitRepo) {
+            await downloadFilesWithFernIgnoreInExistingRepo({
+                s3PreSignedReadUrl,
+                absolutePathToLocalOutput,
+                context
+            });
+        } else if (isFernIgnorePresent && !isExistingGitRepo) {
+            await downloadFilesWithFernIgnoreInTempRepo({
+                s3PreSignedReadUrl,
+                absolutePathToLocalOutput,
+                context
+            });
+        } else {
+            await downloadZipForTask({
+                s3PreSignedReadUrl,
+                absolutePathToLocalOutput
+            });
+        }
 
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
     } catch (e) {
@@ -208,4 +226,114 @@ function convertLogLevel(logLevel: FernFiddle.LogLevel): LogLevel {
         default:
             return LogLevel.Info;
     }
+}
+
+async function checkFernIgnorePresent(absolutePathToLocalOutput: AbsoluteFilePath): Promise<boolean> {
+    const absolutePathToFernignore = join(absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME));
+    return await doesPathExist(absolutePathToFernignore);
+}
+
+async function checkIsGitRepository(absolutePathToLocalOutput: AbsoluteFilePath): Promise<boolean> {
+    const absolutePathToGitDir = join(absolutePathToLocalOutput, RelativeFilePath.of(".git"));
+    return await doesPathExist(absolutePathToGitDir);
+}
+
+async function runGitCommand(
+    options: string[],
+    cwd: AbsoluteFilePath,
+    context: InteractiveTaskContext
+): Promise<string> {
+    const response = await loggingExeca(context.logger, "git", options, {
+        cwd,
+        doNotPipeOutput: true
+    });
+    return response.stdout;
+}
+
+async function downloadFilesWithFernIgnoreInExistingRepo({
+    s3PreSignedReadUrl,
+    absolutePathToLocalOutput,
+    context
+}: {
+    s3PreSignedReadUrl: string;
+    absolutePathToLocalOutput: AbsoluteFilePath;
+    context: InteractiveTaskContext;
+}): Promise<void> {
+    const absolutePathToFernignore = join(absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME));
+    const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
+
+    const gitConfigResponse = await runGitCommand(["config", "--list"], absolutePathToLocalOutput, context);
+    if (!gitConfigResponse.includes("user.name")) {
+        await runGitCommand(["config", "user.name", "fern-api"], absolutePathToLocalOutput, context);
+        await runGitCommand(["config", "user.email", "info@buildwithfern.com"], absolutePathToLocalOutput, context);
+    }
+
+    await runGitCommand(["rm", "-rf", "."], absolutePathToLocalOutput, context);
+
+    await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: absolutePathToLocalOutput });
+
+    await runGitCommand(["add", "."], absolutePathToLocalOutput, context);
+
+    await runGitCommand(["reset", "--", ...fernIgnorePaths], absolutePathToLocalOutput, context);
+    await runGitCommand(["restore", "."], absolutePathToLocalOutput, context);
+}
+
+async function downloadFilesWithFernIgnoreInTempRepo({
+    s3PreSignedReadUrl,
+    absolutePathToLocalOutput,
+    context
+}: {
+    s3PreSignedReadUrl: string;
+    absolutePathToLocalOutput: AbsoluteFilePath;
+    context: InteractiveTaskContext;
+}): Promise<void> {
+    const tmpOutputResolutionDir = AbsoluteFilePath.of((await tmp.dir({})).path);
+
+    const absolutePathToFernignore = join(absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME));
+    const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
+
+    await cp(absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
+
+    await runGitCommand(["init"], tmpOutputResolutionDir, context);
+    await runGitCommand(["add", "."], tmpOutputResolutionDir, context);
+
+    const gitConfigResponse = await runGitCommand(["config", "--list"], tmpOutputResolutionDir, context);
+    if (!gitConfigResponse.includes("user.name")) {
+        await runGitCommand(["config", "user.name", "fern-api"], tmpOutputResolutionDir, context);
+        await runGitCommand(["config", "user.email", "info@buildwithfern.com"], tmpOutputResolutionDir, context);
+    }
+    await runGitCommand(["commit", "--allow-empty", "-m", '"init"'], tmpOutputResolutionDir, context);
+
+    await runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir, context);
+
+    await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: tmpOutputResolutionDir });
+
+    await runGitCommand(["add", "."], tmpOutputResolutionDir, context);
+
+    await runGitCommand(["reset", "--", ...fernIgnorePaths], tmpOutputResolutionDir, context);
+
+    await runGitCommand(["restore", "."], tmpOutputResolutionDir, context);
+
+    await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true });
+
+    await rm(absolutePathToLocalOutput, { recursive: true });
+    await cp(tmpOutputResolutionDir, absolutePathToLocalOutput, { recursive: true });
+}
+
+async function downloadAndExtractZipToDirectory({
+    s3PreSignedReadUrl,
+    outputPath
+}: {
+    s3PreSignedReadUrl: string;
+    outputPath: AbsoluteFilePath;
+}): Promise<void> {
+    const request = await axios.get(s3PreSignedReadUrl, {
+        responseType: "stream"
+    });
+
+    const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });
+    const outputZipPath = path.join(tmpDir.path, "output.zip");
+    await pipeline(request.data, createWriteStream(outputZipPath));
+
+    await decompress(outputZipPath, outputPath);
 }
