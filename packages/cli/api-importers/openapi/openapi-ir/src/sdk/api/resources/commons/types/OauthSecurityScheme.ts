@@ -4,6 +4,6 @@
 
 import * as FernOpenapiIr from "../../../index";
 
-export interface OauthSecurityScheme {
+export interface OauthSecurityScheme extends FernOpenapiIr.WithDescription {
     scopesEnum: FernOpenapiIr.EnumSchema | undefined;
 }

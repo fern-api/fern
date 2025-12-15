@@ -51,7 +51,8 @@ function convertSecuritySchemeHelper(
                 headerVariableName:
                     headerNames?.name ??
                     getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
-                headerEnvVar: headerNames?.env
+                headerEnvVar: headerNames?.env,
+                description: securityScheme.description
             });
         } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "bearer") {
             // ^ case insensitivity for securityScheme.scheme required in OAS
@@ -63,7 +64,8 @@ function convertSecuritySchemeHelper(
                 tokenVariableName:
                     bearerNames?.name ??
                     getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
-                tokenEnvVar: bearerNames?.env
+                tokenEnvVar: bearerNames?.env,
+                description: securityScheme.description
             });
         } else if (securityScheme.type === "http" && securityScheme.scheme?.toLowerCase() === "basic") {
             // ^ case insensitivity for securityScheme.scheme required in OAS
@@ -75,16 +77,19 @@ function convertSecuritySchemeHelper(
                 usernameEnvVar: basicSecuritySchemeNamingAndEnvvar?.username?.env,
                 passwordVariableName:
                     basicSecuritySchemeNamingAndEnvvar?.password?.name ?? basicSecuritySchemeNaming.passwordVariable,
-                passwordEnvVar: basicSecuritySchemeNamingAndEnvvar?.password?.env
+                passwordEnvVar: basicSecuritySchemeNamingAndEnvvar?.password?.env,
+                description: securityScheme.description
             });
         } else if (securityScheme.type === "openIdConnect") {
             return SecurityScheme.bearer({
                 tokenVariableName: undefined,
-                tokenEnvVar: undefined
+                tokenEnvVar: undefined,
+                description: securityScheme.description
             });
         } else if (securityScheme.type === "oauth2") {
             return SecurityScheme.oauth({
-                scopesEnum: getScopes(securityScheme, source)
+                scopesEnum: getScopes(securityScheme, source),
+                description: securityScheme.description
             });
         }
     } catch (error) {

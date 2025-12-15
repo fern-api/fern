@@ -1,0 +1,31 @@
+openapi: 3.0.3
+info:
+  title: Auth Scheme Description Test API
+  version: 1.0.0
+  description: Test API to verify that security scheme descriptions are preserved when auth-schemes are overridden in generators.yml
+paths:
+  /test:
+    get:
+      operationId: getTest
+      summary: Test endpoint
+      security:
+        - token: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  securitySchemes:
+    token:
+      type: apiKey
+      description: |-
+        This is a description from the OpenAPI spec.
+        It should be preserved when auth-schemes are overridden.
+      name: Authorization
+      in: header

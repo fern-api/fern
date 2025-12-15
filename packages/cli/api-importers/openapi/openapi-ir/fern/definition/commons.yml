@@ -97,11 +97,13 @@ types:
         type: OauthSecurityScheme
 
   BearerSecurityScheme:
+    extends: WithDescription
     properties:
       tokenVariableName: optional<string>
       tokenEnvVar: optional<string>
 
   BasicSecurityScheme:
+    extends: WithDescription
     properties:
       usernameVariableName: optional<string>
       usernameEnvVar: optional<string>
@@ -109,6 +111,7 @@ types:
       passwordEnvVar: optional<string>
 
   HeaderSecurityScheme:
+    extends: WithDescription
     properties:
       headerName: string
       prefix: optional<string>
@@ -116,10 +119,12 @@ types:
       headerEnvVar: optional<string>
 
   QuerySecurityScheme:
+    extends: WithDescription
     properties:
       queryParameterName: string
 
   OauthSecurityScheme:
+    extends: WithDescription
     properties:
       scopesEnum: optional<finalIr.EnumSchema>
 

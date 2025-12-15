@@ -5,16 +5,19 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { WithDescription } from "./WithDescription";
 
 export const QuerySecurityScheme: core.serialization.ObjectSchema<
     serializers.QuerySecurityScheme.Raw,
     FernOpenapiIr.QuerySecurityScheme
-> = core.serialization.objectWithoutOptionalProperties({
-    queryParameterName: core.serialization.string(),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        queryParameterName: core.serialization.string(),
+    })
+    .extend(WithDescription);
 
 export declare namespace QuerySecurityScheme {
-    export interface Raw {
+    export interface Raw extends WithDescription.Raw {
         queryParameterName: string;
     }
 }
