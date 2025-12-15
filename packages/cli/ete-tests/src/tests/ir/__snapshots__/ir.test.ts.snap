@@ -2109,7 +2109,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                     "response": {
                         "body": null,
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -9146,7 +9147,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "response": {
                         "body": null,
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -9232,7 +9234,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "response": {
                         "body": null,
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -9383,7 +9386,8 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                     "response": {
                         "body": null,
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -11192,7 +11196,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -13711,7 +13716,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                     "response": {
                         "body": null,
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -15631,7 +15637,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -16363,7 +16370,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -18335,7 +18343,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -21006,7 +21015,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -31428,7 +31438,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -32411,7 +32422,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -34857,7 +34869,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -37472,7 +37485,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "response": {
                         "body": null,
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -40921,7 +40935,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -41173,7 +41188,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -42260,7 +42276,8 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "response": {
                         "body": null,
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
