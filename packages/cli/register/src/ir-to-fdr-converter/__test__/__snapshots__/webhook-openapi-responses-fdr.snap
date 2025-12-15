@@ -75,7 +75,7 @@
           },
           "responses": [
             {
-              "description": undefined,
+              "description": "Webhook received successfully (HTTP 204 No Content)",
               "isWildcard": undefined,
               "statusCode": 204,
               "type": {
@@ -86,7 +86,7 @@
               },
             },
             {
-              "description": undefined,
+              "description": "Invalid payload or authentication failure",
               "isWildcard": undefined,
               "statusCode": 400,
               "type": {
@@ -97,7 +97,7 @@
               },
             },
             {
-              "description": undefined,
+              "description": "Server error processing webhook",
               "isWildcard": undefined,
               "statusCode": 500,
               "type": {
