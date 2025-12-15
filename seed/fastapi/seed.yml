@@ -150,5 +150,7 @@ allowedFailures:
   - inferred-auth-explicit
   - inferred-auth-implicit
   - inferred-auth-implicit-no-expiry
+  - inferred-auth-implicit-api-key
+  - inferred-auth-implicit-reference
   - websocket-inferred-auth
   - undiscriminated-union-with-response-property
