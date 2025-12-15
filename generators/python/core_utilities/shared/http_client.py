@@ -299,9 +299,9 @@ class HttpClient:
             timeout=timeout,
         )
 
-        max_retries: int = request_options.get("max_retries", 0) if request_options is not None else 0
+        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
         if _should_retry(response=response):
-            if max_retries > retries:
+            if retries < max_retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
                 return self.request(
                     path=path,
@@ -520,9 +520,9 @@ class AsyncHttpClient:
             timeout=timeout,
         )
 
-        max_retries: int = request_options.get("max_retries", 0) if request_options is not None else 0
+        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
         if _should_retry(response=response):
-            if max_retries > retries:
+            if retries < max_retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
                 return await self.request(
                     path=path,
