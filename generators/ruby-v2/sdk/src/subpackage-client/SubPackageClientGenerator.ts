@@ -55,7 +55,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
                 }),
                 ruby.parameters.keyword({
                     name: "environment",
-                    type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.symbol(), ruby.Type.string())),
+                    type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.string())),
                     initializer: ruby.nilValue()
                 })
             );

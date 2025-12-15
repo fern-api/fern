@@ -67,7 +67,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
             const environmentParameter = ruby.parameters.keyword({
                 name: "environment",
-                type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.symbol(), ruby.Type.string())),
+                type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.string())),
                 initializer: defaultEnvironmentReference != null ? defaultEnvironmentReference : ruby.nilValue(),
                 docs: "The environment URLs to use for requests"
             });
