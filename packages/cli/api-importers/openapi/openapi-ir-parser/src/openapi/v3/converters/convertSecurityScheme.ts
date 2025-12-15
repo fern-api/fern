@@ -38,6 +38,11 @@ function convertSecuritySchemeHelper(
     source: Source,
     taskContext: TaskContext
 ): SecurityScheme | undefined {
+    // Debug logging for auth scheme description
+    // eslint-disable-next-line no-console
+    console.error(
+        `[FERN_AUTH_DESC_DEBUG] Stage 1 (OpenAPI->IR): type=${securityScheme.type}, description=${securityScheme.description ? `"${securityScheme.description.substring(0, 80)}..."` : "undefined"}`
+    );
     try {
         if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
             const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);

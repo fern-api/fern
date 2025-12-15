@@ -86,6 +86,12 @@ function convertSchemeReference({
         if (declaration == null) {
             throw new Error("Unknown auth scheme: " + reference);
         }
+        // Debug logging for auth scheme description
+        const declarationDocs = (declaration as { docs?: string }).docs;
+        // eslint-disable-next-line no-console
+        console.error(
+            `[FERN_AUTH_DESC_DEBUG] Stage 3 (FernDef->IR): reference=${reference}, referenceDocs=${docs ? `"${docs.substring(0, 80)}..."` : "undefined"}, declarationDocs=${declarationDocs ? `"${declarationDocs.substring(0, 80)}..."` : "undefined"}`
+        );
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
                 AuthScheme.header({
