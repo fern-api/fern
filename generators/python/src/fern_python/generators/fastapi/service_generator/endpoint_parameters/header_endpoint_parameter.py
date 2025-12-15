@@ -4,6 +4,7 @@ from .endpoint_parameter import EndpointParameter
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
 
+import typing
 import fern.ir.resources as ir_types
 
 
@@ -18,13 +19,18 @@ class HeaderEndpointParameter(EndpointParameter):
     def get_type(self) -> AST.TypeHint:
         return convert_to_singular_type(self._context, self._header.value_type)
 
-    def get_default(self) -> AST.Expression:
+    def get_fastapi_marker(self) -> AST.Expression:
+        return FastAPI.Header(wire_value=self._header.name.wire_value)
+
+    def get_python_default(self) -> "typing.Optional[AST.Expression]":
         value_type = self._header.value_type.get_as_union()
         is_optional = value_type.type == "container" and (
             value_type.container.get_as_union().type == "optional"
             or value_type.container.get_as_union().type == "nullable"
         )
-        return FastAPI.Header(is_optional=is_optional, wire_value=self._header.name.wire_value)
+        if is_optional:
+            return AST.Expression(AST.TypeHint.none())
+        return None
 
     @staticmethod
     def get_variable_name_of_header(header: ir_types.HttpHeader) -> str:

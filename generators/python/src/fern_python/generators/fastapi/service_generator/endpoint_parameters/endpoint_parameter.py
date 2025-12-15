@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from typing import Optional
+
 
 from ...context import FastApiGeneratorContext
 from fern_python.codegen import AST
@@ -25,7 +27,13 @@ class EndpointParameter(ABC):
     def get_type(self) -> AST.TypeHint: ...
 
     @abstractmethod
-    def get_default(self) -> AST.Expression: ...
+    def get_fastapi_marker(self) -> AST.Expression: ...
+
+    # If this returns None, the parameter remains "required" (i.e. no Python default).
+    # If this returns a value (e.g. None / []), it will be used as the Python default in the
+    # generated signature, while the FastAPI marker is provided via typing.Annotated.
+    def get_python_default(self) -> Optional[AST.Expression]:
+        return None
 
     def _get_request_param_name(self) -> str:
         return "body"

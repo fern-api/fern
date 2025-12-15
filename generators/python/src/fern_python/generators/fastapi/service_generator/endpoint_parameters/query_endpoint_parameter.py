@@ -4,6 +4,7 @@ from .endpoint_parameter import EndpointParameter
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
 
+import typing
 import fern.ir.resources as ir_types
 
 
@@ -20,23 +21,24 @@ class QueryEndpointParameter(EndpointParameter):
             return self.get_list_wrapped_type_hint()
         return convert_to_singular_type(self._context, self._query_parameter.value_type)
 
-    def get_default(self) -> AST.Expression:
+    def get_fastapi_marker(self) -> AST.Expression:
+        return FastAPI.Query(
+            variable_name=self.get_name(),
+            wire_value=self._query_parameter.name.wire_value,
+            docs=self._query_parameter.docs,
+        )
+
+    def get_python_default(self) -> "typing.Optional[AST.Expression]":
         value_type = self._query_parameter.value_type.get_as_union()
         is_optional = value_type.type == "container" and (
             value_type.container.get_as_union().type == "optional"
             or value_type.container.get_as_union().type == "nullable"
         )
-        default = None
         if is_optional:
-            default = AST.Expression(AST.TypeHint.none())
-        elif self._query_parameter.allow_multiple and not is_optional:
-            default = AST.Expression("[]")
-        return FastAPI.Query(
-            default=default,
-            variable_name=self.get_name(),
-            wire_value=self._query_parameter.name.wire_value,
-            docs=self._query_parameter.docs,
-        )
+            return AST.Expression(AST.TypeHint.none())
+        if self._query_parameter.allow_multiple and not is_optional:
+            return AST.Expression("[]")
+        return None
 
     def get_list_wrapped_type_hint(self) -> AST.TypeHint:
         query_param_type = self._query_parameter.value_type.get_as_union()
