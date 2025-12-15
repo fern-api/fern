@@ -838,7 +838,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "A list of workspace audit logs"
           },
           "errors": [],
           "userSpecifiedExamples": [],

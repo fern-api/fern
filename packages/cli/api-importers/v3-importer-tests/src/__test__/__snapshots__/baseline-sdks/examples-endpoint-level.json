@@ -921,7 +921,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "List of trees"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -1084,7 +1085,8 @@
               },
               "type": "json"
             },
-            "statusCode": 201
+            "statusCode": 201,
+            "docs": "Tree created successfully"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -1308,7 +1310,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "Tree details"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -1564,7 +1567,8 @@
               },
               "type": "json"
             },
-            "statusCode": 201
+            "statusCode": 201,
+            "docs": "Fern created successfully"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -1779,7 +1783,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "Fern details"
           },
           "errors": [],
           "userSpecifiedExamples": [],
