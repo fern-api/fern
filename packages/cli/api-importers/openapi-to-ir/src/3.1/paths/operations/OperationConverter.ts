@@ -265,6 +265,7 @@ export class OperationConverter extends AbstractOperationConverter {
                           v2Responses: {
                               responses: [
                                   {
+                                      docs: undefined,
                                       statusCode: 200,
                                       isWildcardStatusCode: undefined,
                                       body: streamResponse.body
@@ -354,12 +355,14 @@ export class OperationConverter extends AbstractOperationConverter {
                         hasSuccessfulResponse = true;
 
                         convertedResponseBody.response = {
+                            docs: resolvedResponse.description,
                             statusCode: statusCodeNum,
                             isWildcardStatusCode: isWildcardStatusCode ? true : undefined,
                             body: converted.responseBody
                         };
 
                         convertedResponseBody.streamResponse = {
+                            docs: resolvedResponse.description,
                             statusCode: statusCodeNum,
                             isWildcardStatusCode: isWildcardStatusCode ? true : undefined,
                             body: converted.streamResponseBody
@@ -369,6 +372,7 @@ export class OperationConverter extends AbstractOperationConverter {
                     convertedResponseBody.v2Responses = [
                         ...(convertedResponseBody.v2Responses ?? []),
                         {
+                            docs: resolvedResponse.description,
                             statusCode: statusCodeNum,
                             isWildcardStatusCode: isWildcardStatusCode ? true : undefined,
                             body: converted.responseBody
@@ -434,17 +438,20 @@ export class OperationConverter extends AbstractOperationConverter {
                     ...converted.inlinedTypes
                 };
                 convertedResponseBody.response = {
+                    docs: undefined,
                     statusCode: 200,
                     isWildcardStatusCode: undefined,
                     body: converted.responseBody
                 };
                 convertedResponseBody.streamResponse = {
+                    docs: undefined,
                     statusCode: 200,
                     isWildcardStatusCode: undefined,
                     body: converted.streamResponseBody
                 };
                 convertedResponseBody.v2Responses = [
                     {
+                        docs: undefined,
                         statusCode: 200,
                         isWildcardStatusCode: undefined,
                         body: converted.responseBody

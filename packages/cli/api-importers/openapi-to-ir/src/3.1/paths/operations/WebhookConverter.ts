@@ -134,7 +134,7 @@ export class WebhookConverter extends AbstractOperationConverter {
                 }
             }
 
-            this.context.resolveMaybeReference({
+            const resolvedResponse = this.context.resolveMaybeReference({
                 schemaOrReference: response,
                 breadcrumbs: [...this.breadcrumbs, "responses", statusCode]
             });
@@ -142,7 +142,8 @@ export class WebhookConverter extends AbstractOperationConverter {
             responses.push({
                 statusCode: statusCodeNum,
                 isWildcardStatusCode: isWildcard ? true : undefined,
-                body: undefined
+                body: undefined,
+                docs: resolvedResponse?.description
             });
         }
 

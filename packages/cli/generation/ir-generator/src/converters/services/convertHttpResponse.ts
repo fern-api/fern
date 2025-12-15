@@ -33,6 +33,7 @@ export function convertHttpResponse({
         typeResolver
     });
     return {
+        docs: typeof endpoint.response !== "string" ? endpoint.response?.docs : undefined,
         body: responseBody,
         statusCode: typeof endpoint.response !== "string" ? endpoint.response?.["status-code"] : undefined,
         isWildcardStatusCode: undefined

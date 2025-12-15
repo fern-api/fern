@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Propagate webhook response descriptions from OpenAPI specs through IR to FDR/docs. Webhook responses now include the description field from the OpenAPI spec, enabling documentation to display response descriptions like "Webhook received successfully (HTTP 204 No Content)".
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.20.0
+
+- changelogEntry:
+    - summary: |
         Add `explode` field to PathParameter and QueryParameter types in the IR for OpenAPI parameter serialization control.
       type: feat
   irVersion: 62

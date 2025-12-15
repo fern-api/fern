@@ -683,7 +683,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
 }
 
 function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.register.HttpResponse | undefined {
-    let description;
+    let description = irResponse.docs;
     let type: FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined;
 
     if (irResponse.body != null) {
