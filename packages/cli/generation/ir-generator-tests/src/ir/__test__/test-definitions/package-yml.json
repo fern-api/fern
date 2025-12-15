@@ -400,7 +400,8 @@
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1143,7 +1144,8 @@
                     "response": {
                         "body": null,
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],

@@ -763,7 +763,8 @@
                             }
                         },
                         "status-code": 200,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": "Successful Response"
                     },
                     "v2Responses": null,
                     "errors": [
