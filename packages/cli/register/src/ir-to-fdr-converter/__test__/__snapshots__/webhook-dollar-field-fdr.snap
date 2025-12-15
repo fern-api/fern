@@ -8,31 +8,31 @@
     "pointsTo": undefined,
     "subpackages": [],
     "types": [
-      "PayInTransactionOnHoldContent",
+      "TransactionPendingPayload",
     ],
     "webhooks": [
       {
-        "description": "Webhook triggered when a pay-in transaction is held",
+        "description": "Webhook triggered when a transaction is pending review",
         "examples": [
           {
-            "name": "Pay-in transaction on hold example",
+            "name": "Transaction pending example",
             "payload": {
-              "CustomerId": "1234",
-              "CustomerNumber": "ELC-667",
-              "Event": "HoldTransaction",
-              "ExternalPaypointId": "string",
-              "Method": "ach",
-              "Paypoint": "Gruzya Adventure Outfitters",
-              "Text": "A transaction has been held for Gruzya Adventure Outfitters",
-              "TotalAmount": "$3.00",
-              "TransId": "391-991800719eab45ac9f9392d012b6cff2",
+              "AccountCode": "ACC-123",
+              "AccountId": "5678",
+              "Amount": "$99.99",
+              "EventType": "PendingReview",
+              "ExternalId": "string",
+              "MerchantName": "Acme Corp",
+              "Message": "A transaction is pending review for Acme Corp",
+              "PaymentType": "card",
+              "TransactionId": "txn-abc123def456",
             },
           },
         ],
         "headers": [],
-        "id": "payInTransactionOnHoldWebhook",
+        "id": "transactionPendingWebhook",
         "method": "POST",
-        "name": "Pay-in transaction on hold webhook",
+        "name": "Transaction pending webhook",
         "path": [],
         "payload": {
           "description": undefined,
@@ -41,7 +41,7 @@
             "value": {
               "default": undefined,
               "type": "id",
-              "value": "PayInTransactionOnHoldContent",
+              "value": "TransactionPendingPayload",
             },
           },
         },
@@ -75,11 +75,11 @@
   },
   "subpackages": {},
   "types": {
-    "PayInTransactionOnHoldContent": {
+    "TransactionPendingPayload": {
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
-      "name": "PayInTransactionOnHoldContent",
+      "name": "TransactionPendingPayload",
       "shape": {
         "extends": [],
         "extraProperties": undefined,
@@ -87,7 +87,7 @@
           {
             "availability": undefined,
             "description": "The event type",
-            "key": "Event",
+            "key": "EventType",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -107,8 +107,8 @@
           },
           {
             "availability": undefined,
-            "description": "The paypoint name",
-            "key": "Paypoint",
+            "description": "The merchant name",
+            "key": "MerchantName",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -128,8 +128,8 @@
           },
           {
             "availability": undefined,
-            "description": "Description text",
-            "key": "Text",
+            "description": "Description message",
+            "key": "Message",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -150,7 +150,7 @@
           {
             "availability": undefined,
             "description": "Transaction ID",
-            "key": "TransId",
+            "key": "TransactionId",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -170,8 +170,8 @@
           },
           {
             "availability": undefined,
-            "description": "Total amount with currency symbol (e.g., "$3.00")",
-            "key": "TotalAmount",
+            "description": "Amount with currency symbol (e.g., "$99.99")",
+            "key": "Amount",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -191,8 +191,8 @@
           },
           {
             "availability": undefined,
-            "description": "Customer ID",
-            "key": "CustomerId",
+            "description": "Account ID",
+            "key": "AccountId",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -212,8 +212,8 @@
           },
           {
             "availability": undefined,
-            "description": "Customer number",
-            "key": "CustomerNumber",
+            "description": "Account code",
+            "key": "AccountCode",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -233,8 +233,8 @@
           },
           {
             "availability": undefined,
-            "description": "Payment method",
-            "key": "Method",
+            "description": "Payment type",
+            "key": "PaymentType",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -254,8 +254,8 @@
           },
           {
             "availability": undefined,
-            "description": "External paypoint ID",
-            "key": "ExternalPaypointId",
+            "description": "External ID",
+            "key": "ExternalId",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,

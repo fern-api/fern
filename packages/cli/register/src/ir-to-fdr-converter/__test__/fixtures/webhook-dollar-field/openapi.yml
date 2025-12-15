@@ -11,64 +11,64 @@ servers:
 paths: {}
 
 webhooks:
-  PayInTransactionOnHold:
+  TransactionPending:
     post:
-      operationId: payInTransactionOnHoldWebhook
-      summary: Pay-in transaction on hold webhook
-      description: Webhook triggered when a pay-in transaction is held
+      operationId: transactionPendingWebhook
+      summary: Transaction pending webhook
+      description: Webhook triggered when a transaction is pending review
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PayInTransactionOnHoldContent"
+              $ref: "#/components/schemas/TransactionPendingPayload"
             examples:
-              PayInTransactionOnHold:
-                summary: Pay-in transaction on hold example
+              TransactionPending:
+                summary: Transaction pending example
                 value:
-                  Event: HoldTransaction
-                  Paypoint: Gruzya Adventure Outfitters
-                  Text: A transaction has been held for Gruzya Adventure Outfitters
-                  TransId: 391-991800719eab45ac9f9392d012b6cff2
-                  TotalAmount: "$3.00"
-                  CustomerId: "1234"
-                  CustomerNumber: ELC-667
-                  Method: ach
-                  ExternalPaypointId: null
+                  EventType: PendingReview
+                  MerchantName: Acme Corp
+                  Message: A transaction is pending review for Acme Corp
+                  TransactionId: txn-abc123def456
+                  Amount: "$99.99"
+                  AccountId: "5678"
+                  AccountCode: ACC-123
+                  PaymentType: card
+                  ExternalId: null
       responses:
         "200":
           description: Webhook received successfully
 
 components:
   schemas:
-    PayInTransactionOnHoldContent:
+    TransactionPendingPayload:
       type: object
       properties:
-        Event:
+        EventType:
           type: string
           description: The event type
-        Paypoint:
+        MerchantName:
           type: string
-          description: The paypoint name
-        Text:
+          description: The merchant name
+        Message:
           type: string
-          description: Description text
-        TransId:
+          description: Description message
+        TransactionId:
           type: string
           description: Transaction ID
-        TotalAmount:
+        Amount:
           type: string
-          description: Total amount with currency symbol (e.g., "$3.00")
-        CustomerId:
+          description: Amount with currency symbol (e.g., "$99.99")
+        AccountId:
           type: string
-          description: Customer ID
-        CustomerNumber:
+          description: Account ID
+        AccountCode:
           type: string
-          description: Customer number
-        Method:
+          description: Account code
+        PaymentType:
           type: string
-          description: Payment method
-        ExternalPaypointId:
+          description: Payment type
+        ExternalId:
           type: string
           nullable: true
-          description: External paypoint ID
+          description: External ID
