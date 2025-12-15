@@ -10,6 +10,19 @@ export interface GeneratorSelection {
     sdkLanguages: SdkLanguage[];
 }
 
+/**
+ * Check if the current environment is interactive (has a TTY).
+ * Returns false in CI environments or when stdin/stdout are not TTYs.
+ */
+function isInteractiveEnvironment(): boolean {
+    // Check if we're in a CI environment
+    if (process.env.CI != null) {
+        return false;
+    }
+    // Check if stdin and stdout are TTYs
+    return process.stdin.isTTY === true && process.stdout.isTTY === true;
+}
+
 const SDK_LANGUAGE_CHOICES: Array<{ name: string; value: SdkLanguage; description?: string }> = [
     { name: "TypeScript", value: "typescript", description: "Generate a TypeScript SDK" },
     { name: "Python", value: "python", description: "Generate a Python SDK" },
@@ -87,7 +100,16 @@ export async function promptForSdkLanguages(): Promise<SdkLanguage[]> {
     return answer;
 }
 
-export async function promptForGeneratorSelection(): Promise<GeneratorSelection> {
+/**
+ * Prompts the user for generator selection (SDKs/Docs and languages).
+ * Returns undefined in non-interactive environments (CI, no TTY) to use defaults.
+ */
+export async function promptForGeneratorSelection(): Promise<GeneratorSelection | undefined> {
+    // Skip prompts in non-interactive environments
+    if (!isInteractiveEnvironment()) {
+        return undefined;
+    }
+
     const outputType = await promptForOutputType();
 
     let sdkLanguages: SdkLanguage[] = [];
