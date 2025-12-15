@@ -400,7 +400,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0)
+		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL)
 	}
 
 	// Generate the ToHeader method.
@@ -498,7 +498,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL); err != nil {
 		return err
 	}
 
@@ -536,6 +536,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 	auth *ir.ApiAuth,
 	headers []*ir.HttpHeader,
 	asIdempotentRequestOption bool,
+	isMultiURL bool,
 ) error {
 	if err := f.writeOptionStruct("BaseURL", "string", true, asIdempotentRequestOption); err != nil {
 		return err
@@ -555,8 +556,10 @@ func (f *fileWriter) writeRequestOptionStructs(
 	if err := f.writeOptionStruct("MaxAttempts", "uint", true, asIdempotentRequestOption); err != nil {
 		return err
 	}
-	if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
-		return err
+	if isMultiURL {
+		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
+			return err
+		}
 	}
 
 	if auth != nil {
