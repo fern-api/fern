@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix ExampleValidator to validate response examples against their corresponding status code schemas instead of always using the 200/201 success schema. Error response examples (400, 404, 500, etc.) are now correctly validated against their respective schemas.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.21.1
+
+- changelogEntry:
+    - summary: |
         Add a `custom` field to the `page-actions` configuration. This allows users to add custom page actions to the docs.
       type: feat
   irVersion: 62
