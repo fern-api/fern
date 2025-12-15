@@ -155,6 +155,7 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
         if (responseBodyType.ok) {
             return {
                 responseBody: {
+                    docs: undefined,
                     body: HttpResponseBody.json(
                         JsonResponse.response({
                             responseBodyType: responseBodyType.reference,
