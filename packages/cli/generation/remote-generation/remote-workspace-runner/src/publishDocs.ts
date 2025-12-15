@@ -258,7 +258,15 @@ export async function publishDocs({
             }
         },
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
+            // Debug logging for auth scheme description
+            context.logger.info(
+                `[FERN_AUTH_DESC_DEBUG] IR auth schemes: ${ir.auth.schemes.map((s) => `${s.type}(docs=${s.docs ? `"${s.docs.substring(0, 50)}..."` : "undefined"})`).join(", ")}`
+            );
             let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
+            // Debug logging for FDR auth schemes
+            context.logger.info(
+                `[FERN_AUTH_DESC_DEBUG] FDR authSchemes: ${JSON.stringify(apiDefinition.authSchemes?.map((s) => ({ type: s.type, docs: s.docs?.substring(0, 50) })))}`
+            );
 
             const aiEnhancerConfig = getAIEnhancerConfig(
                 withAiExamples,
