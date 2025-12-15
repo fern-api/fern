@@ -1681,7 +1681,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 // Generate AsyncCustomPager.createAsync() call
                 CodeBlock asyncPagerCreation = CodeBlock.builder()
                         .add(
-                                "$T.createAsync($L, $L.httpClient(), $L)",
+                                "$T.createAsync($L, $L, $L)",
                                 asyncPagerClassName,
                                 variables.getParsedResponseVariableName(),
                                 clientOptionsField.name,
@@ -1699,7 +1699,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
             CodeBlock customPagerCreation = CodeBlock.builder()
                     .add(
-                            "$T.create($L, $L.httpClient(), $L)",
+                            "$T.create($L, $L, $L)",
                             customPagerClassName,
                             variables.getParsedResponseVariableName(),
                             clientOptionsField.name,

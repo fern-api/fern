@@ -1,3 +1,13 @@
+- version: 3.24.2
+  changelogEntry:
+    - summary: |
+        Pass full `ClientOptions` instead of just `httpClient()` to custom pagination `create()` method.
+        This gives custom pager implementations access to all client configuration including base URL,
+        headers, and other options needed for making subsequent pagination requests.
+      type: fix
+  createdAt: "2025-12-15"
+  irVersion: 61
+
 - version: 3.24.1
   changelogEntry:
     - summary: |
