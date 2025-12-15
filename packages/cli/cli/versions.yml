@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix OpenAPI example parsing to preserve explicit `null` values. Previously, explicit `null` values in OpenAPI response examples (e.g., `balance_max: null` for unbounded tiers) were being incorrectly replaced with schema example values or generated placeholders.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.21.1
+
+- changelogEntry:
+    - summary: |
         Add a `custom` field to the `page-actions` configuration. This allows users to add custom page actions to the docs.
       type: feat
   irVersion: 62
