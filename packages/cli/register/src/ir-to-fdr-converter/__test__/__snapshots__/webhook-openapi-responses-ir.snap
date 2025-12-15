@@ -1196,16 +1196,19 @@
         "responses": [
           {
             "body": undefined,
+            "docs": "Webhook received successfully (HTTP 204 No Content)",
             "isWildcardStatusCode": undefined,
             "statusCode": 204,
           },
           {
             "body": undefined,
+            "docs": "Invalid payload or authentication failure",
             "isWildcardStatusCode": undefined,
             "statusCode": 400,
           },
           {
             "body": undefined,
+            "docs": "Server error processing webhook",
             "isWildcardStatusCode": undefined,
             "statusCode": 500,
           },

@@ -216,10 +216,12 @@ function convertWebhookResponses({
     if (webhook.response != null) {
         const responseBody = convertWebhookResponseBody({ response: webhook.response, file, typeResolver });
         const statusCode = typeof webhook.response !== "string" ? webhook.response["status-code"] : undefined;
+        const docs = typeof webhook.response !== "string" ? webhook.response.docs : undefined;
         responses.push({
             body: responseBody,
             statusCode,
-            isWildcardStatusCode: undefined
+            isWildcardStatusCode: undefined,
+            docs
         });
     }
 
@@ -231,10 +233,13 @@ function convertWebhookResponses({
             typeResolver
         });
         if (streamResponse != null) {
+            const streamDocs =
+                typeof webhook["response-stream"] !== "string" ? webhook["response-stream"].docs : undefined;
             responses.push({
                 body: HttpResponseBody.streaming(streamResponse),
                 statusCode: undefined,
-                isWildcardStatusCode: undefined
+                isWildcardStatusCode: undefined,
+                docs: streamDocs
             });
         }
     }
