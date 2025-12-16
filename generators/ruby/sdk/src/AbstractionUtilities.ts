@@ -348,7 +348,10 @@ export function generateRootPackage(
                 retriesProperty,
                 timeoutProperty,
                 defaultEnvironment,
-                requestClient.classReference // Pass faradayReference to include faraday_connection parameter
+                new ClassReference({
+                    name: "Faraday::Connection",
+                    import_: new Import({ from: "faraday", isExternal: true })
+                })
             ),
             returnValue: classReference
         })
@@ -433,7 +436,10 @@ export function generateRootPackage(
                 retriesProperty,
                 timeoutProperty,
                 defaultEnvironment,
-                asyncRequestClient.classReference // Pass faradayReference to include faraday_connection parameter
+                new ClassReference({
+                    name: "Faraday::Connection",
+                    import_: new Import({ from: "faraday", isExternal: true })
+                })
             ),
             returnValue: asyncClassReference
         })
