@@ -4,7 +4,6 @@ import static com.fern.java.GeneratorLogging.log;
 import static com.fern.java.GeneratorLogging.logError;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -94,57 +93,27 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
+    /** Loads and preprocesses the IR from file, handling integer overflow values. */
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
             File irFile = new File(generatorConfig.getIrFilepath());
 
-            String irJson = java.nio.file.Files.readString(irFile.toPath());
+            JsonNode rootNode = ObjectMappers.JSON_MAPPER.readTree(irFile);
 
-            String processedJson = preprocessIntegerOverflow(irJson);
+            IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
+            processor.processNodeInPlace(rootNode);
 
-            return ObjectMappers.JSON_MAPPER.readValue(processedJson, IntermediateRepresentation.class);
+            if (processor.getConversions() > 0) {
+                log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
+            }
+
+            return ObjectMappers.JSON_MAPPER.treeToValue(rootNode, IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
     }
 
-    /**
-     * Preprocesses the IR JSON to handle integer overflow in example values.
-     *
-     * <p>OpenAPI specifications may contain example values that exceed Java's Integer limits (e.g., from systems using
-     * 64-bit integers). This method finds such values in fields explicitly typed as "integer" and converts them to
-     * "long" type to preserve the original value while preventing Jackson deserialization failures.
-     *
-     * <p>Note: This only processes integer fields in the IR's example values to avoid modifying actual schema
-     * definitions.
-     */
-    private static String preprocessIntegerOverflow(String json) {
-        if (json == null || json.trim().isEmpty()) {
-            return json;
-        }
-
-        try {
-            return processJsonForIntegerOverflow(json);
-        } catch (Exception e) {
-            log.warn("Failed to preprocess integer overflow, using original JSON", e);
-            return json;
-        }
-    }
-
-    private static String processJsonForIntegerOverflow(String json) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(json);
-
-        IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
-        JsonNode processedNode = processor.processNode(rootNode);
-
-        if (processor.getConversions() > 0) {
-            log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
-        }
-
-        return mapper.writeValueAsString(processedNode);
-    }
-
+    /** Processes JSON nodes in-place to convert integer overflow values to long type. */
     private static class IntegerOverflowProcessor {
         private int conversions = 0;
 
@@ -152,76 +121,79 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             return conversions;
         }
 
-        public JsonNode processNode(JsonNode node) {
+        /**
+         * Processes a node in-place, modifying the tree structure directly. For container nodes (objects/arrays), this
+         * recursively processes children. Only creates new nodes when an actual integer-to-long conversion is needed.
+         */
+        public void processNodeInPlace(JsonNode node) {
             if (node == null) {
-                return node;
+                return;
             }
 
             if (node.isObject()) {
-                return processObjectNode((ObjectNode) node);
+                processObjectNodeInPlace((ObjectNode) node);
             } else if (node.isArray()) {
-                return processArrayNode((ArrayNode) node);
-            } else if (node.isNumber()) {
-                return processNumberNode(node);
-            } else {
-                return node;
+                processArrayNodeInPlace((ArrayNode) node);
             }
+            // Number nodes are handled by their parent containers when replacement is needed
         }
 
-        private JsonNode processObjectNode(ObjectNode objectNode) {
-            ObjectNode result = objectNode.deepCopy();
-
-            if (result.has("integer")) {
-                JsonNode integerNode = result.get("integer");
+        private void processObjectNodeInPlace(ObjectNode objectNode) {
+            // Check for integer overflow pattern: {"integer": <overflow_value>} -> {"long": <value>}
+            if (objectNode.has("integer")) {
+                JsonNode integerNode = objectNode.get("integer");
                 if (integerNode.isNumber() && isIntegerOverflow(integerNode)) {
                     long value = integerNode.asLong();
                     log.debug("Integer overflow detected in IR example value: {}. Converting to long type.", value);
-                    result.remove("integer");
-                    result.put("long", value);
+                    objectNode.remove("integer");
+                    objectNode.put("long", value);
                     conversions++;
                 }
             }
 
-            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> fields = result.fields();
-            while (fields.hasNext()) {
-                java.util.Map.Entry<String, JsonNode> field = fields.next();
-                String fieldName = field.getKey();
-                JsonNode fieldValue = field.getValue();
+            // Collect field names first to avoid ConcurrentModificationException
+            // when we need to replace values during iteration
+            List<String> fieldNames = new ArrayList<>();
+            objectNode.fieldNames().forEachRemaining(fieldNames::add);
 
+            for (String fieldName : fieldNames) {
+                // Skip the integer/long fields we just processed
                 if ("integer".equals(fieldName) || "long".equals(fieldName)) {
                     continue;
                 }
 
-                JsonNode processedValue = processNode(fieldValue);
-                if (processedValue != fieldValue) {
-                    result.set(fieldName, processedValue);
+                JsonNode fieldValue = objectNode.get(fieldName);
+                if (fieldValue == null) {
+                    continue;
+                }
+
+                if (fieldValue.isObject()) {
+                    processObjectNodeInPlace((ObjectNode) fieldValue);
+                } else if (fieldValue.isArray()) {
+                    processArrayNodeInPlace((ArrayNode) fieldValue);
+                } else if (fieldValue.isNumber() && isIntegerOverflow(fieldValue)) {
+                    objectNode.put(fieldName, fieldValue.asLong());
+                    conversions++;
                 }
             }
-
-            return result;
         }
 
-        private JsonNode processArrayNode(ArrayNode arrayNode) {
-            ArrayNode result = arrayNode.deepCopy();
+        private void processArrayNodeInPlace(ArrayNode arrayNode) {
+            for (int i = 0; i < arrayNode.size(); i++) {
+                JsonNode element = arrayNode.get(i);
+                if (element == null) {
+                    continue;
+                }
 
-            for (int i = 0; i < result.size(); i++) {
-                JsonNode element = result.get(i);
-                JsonNode processedElement = processNode(element);
-                if (processedElement != element) {
-                    result.set(i, processedElement);
+                if (element.isObject()) {
+                    processObjectNodeInPlace((ObjectNode) element);
+                } else if (element.isArray()) {
+                    processArrayNodeInPlace((ArrayNode) element);
+                } else if (element.isNumber() && isIntegerOverflow(element)) {
+                    arrayNode.set(i, JsonNodeFactory.instance.numberNode(element.asLong()));
+                    conversions++;
                 }
             }
-
-            return result;
-        }
-
-        private JsonNode processNumberNode(JsonNode numberNode) {
-            if (isIntegerOverflow(numberNode)) {
-                log.debug("Converting overflow integer {} to long", numberNode.asLong());
-                conversions++;
-                return JsonNodeFactory.instance.numberNode(numberNode.asLong());
-            }
-            return numberNode;
         }
 
         private boolean isIntegerOverflow(JsonNode numberNode) {
@@ -293,7 +265,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
-    private static void copyGradleWrapperFromResources(Path outputDirectory) {
+    private static void copyGradleWrapperFromResources(Path outputDirectory, Optional<String> customDistributionUrl) {
         try {
             copyResourceFile("gradle-wrapper/gradlew", outputDirectory.resolve("gradlew"), true);
             copyResourceFile("gradle-wrapper/gradlew.bat", outputDirectory.resolve("gradlew.bat"), false);
@@ -303,10 +275,22 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     "gradle-wrapper/gradle/wrapper/gradle-wrapper.jar",
                     wrapperDir.resolve("gradle-wrapper.jar"),
                     false);
-            copyResourceFile(
-                    "gradle-wrapper/gradle/wrapper/gradle-wrapper.properties",
-                    wrapperDir.resolve("gradle-wrapper.properties"),
-                    false);
+            if (customDistributionUrl.isPresent()) {
+                // Write custom gradle-wrapper.properties with the user-provided distribution URL
+                String propertiesContent = "distributionBase=GRADLE_USER_HOME\n"
+                        + "distributionPath=wrapper/dists\n"
+                        + "distributionUrl=" + customDistributionUrl.get().replace(":", "\\:") + "\n"
+                        + "networkTimeout=10000\n"
+                        + "validateDistributionUrl=true\n"
+                        + "zipStoreBase=GRADLE_USER_HOME\n"
+                        + "zipStorePath=wrapper/dists\n";
+                Files.writeString(wrapperDir.resolve("gradle-wrapper.properties"), propertiesContent);
+            } else {
+                copyResourceFile(
+                        "gradle-wrapper/gradle/wrapper/gradle-wrapper.properties",
+                        wrapperDir.resolve("gradle-wrapper.properties"),
+                        false);
+            }
         } catch (IOException e) {
             throw new RuntimeException("Failed to copy gradle wrapper from resources", e);
         }
@@ -505,7 +489,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
         copyLicenseFile(generatorConfig);
         if (publishResult.generateFullProject()) {
-            copyGradleWrapperFromResources(outputDirectory);
+            copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
         }
     }
 
@@ -547,7 +531,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         copyLicenseFile(generatorConfig);
-        copyGradleWrapperFromResources(outputDirectory);
+        copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
     }
 
     public boolean customConfigPublishToCentral(GeneratorConfig _generatorConfig) {
@@ -590,7 +574,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         copyLicenseFile(generatorConfig);
-        copyGradleWrapperFromResources(outputDirectory);
+        copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
 
         // run publish
         if (!generatorConfig.getDryRun()) {

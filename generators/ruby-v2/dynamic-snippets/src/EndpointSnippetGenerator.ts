@@ -6,6 +6,7 @@ import { ruby } from "@fern-api/ruby-ast";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 
 const CLIENT_VAR_NAME = "client";
+const INSTANCE_CLIENT_VAR_NAME = "@client";
 
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
@@ -53,6 +54,9 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
         options?: Options;
     }): Promise<ruby.AstNode> {
+        if (options?.skipClientInstantiation) {
+            return this.buildCodeBlockWithoutClient({ endpoint, snippet: request });
+        }
         return this.buildCodeBlock({ endpoint, snippet: request });
     }
 
@@ -68,6 +72,22 @@ export class EndpointSnippetGenerator {
             writer.writeNodeStatement(this.constructClient({ endpoint, snippet }));
             writer.newLine();
             writer.writeNodeStatement(this.callMethod({ endpoint, snippet }));
+        });
+    }
+
+    /**
+     * Builds a code block without client instantiation.
+     * Used for wire tests where the client is already instantiated in the test setup.
+     */
+    private buildCodeBlockWithoutClient({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ruby.AstNode {
+        return ruby.codeblock((writer) => {
+            writer.writeNodeStatement(this.callMethodOnExistingClient({ endpoint, snippet }));
         });
     }
 
@@ -343,6 +363,50 @@ export class EndpointSnippetGenerator {
                 break;
             case "body":
                 // Ruby SDK methods use keyword arguments (via **params), not positional arguments
+                invokeMethodArgs.keywordArguments = this.getMethodArgsForBodyRequest({
+                    request: endpoint.request,
+                    snippet
+                });
+                break;
+            default:
+                assertNever(endpoint.request);
+        }
+
+        // Add request_options with additional_headers for unmapped headers (e.g., X-Test-Id)
+        const requestOptions = this.getRequestOptions({ endpoint, snippet });
+        if (requestOptions != null) {
+            invokeMethodArgs.keywordArguments = invokeMethodArgs.keywordArguments ?? [];
+            invokeMethodArgs.keywordArguments.push(requestOptions);
+        }
+
+        return ruby.invokeMethod(invokeMethodArgs);
+    }
+
+    /**
+     * Calls a method on an existing client instance variable (@client).
+     * Used for wire tests where the client is already instantiated in the test setup.
+     */
+    private callMethodOnExistingClient({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ruby.MethodInvocation {
+        const invokeMethodArgs: ruby.MethodInvocation.Args = {
+            on: ruby.codeblock(INSTANCE_CLIENT_VAR_NAME),
+            method: this.getMethod({ endpoint }),
+            arguments_: []
+        };
+
+        switch (endpoint.request.type) {
+            case "inlined":
+                invokeMethodArgs.keywordArguments = this.getMethodArgsForInlinedRequest({
+                    request: endpoint.request,
+                    snippet
+                });
+                break;
+            case "body":
                 invokeMethodArgs.keywordArguments = this.getMethodArgsForBodyRequest({
                     request: endpoint.request,
                     snippet
