@@ -207,6 +207,27 @@ export class DocsDefinitionResolver {
         return parseAudiences(version?.audiences);
     }
 
+    /**
+     * Gets the effective audiences for an API section, inheriting from instance audiences if not specified.
+     * If the API section has its own audiences specified, those take precedence.
+     * If the API section has no audiences (type: "all") and the instance has target audiences,
+     * the instance audiences are inherited.
+     */
+    private getEffectiveAudiencesForApiSection(itemAudiences: docsYml.Audiences): docsYml.Audiences {
+        // If the API section has its own audiences specified, use those
+        if (itemAudiences.type === "select") {
+            return itemAudiences;
+        }
+
+        // If the API section has no audiences (type: "all") and instance has target audiences, inherit them
+        if (this.targetAudiences && this.targetAudiences.length > 0) {
+            return { type: "select", audiences: this.targetAudiences };
+        }
+
+        // Otherwise, return the original "all" audiences
+        return itemAudiences;
+    }
+
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
     private get parsedDocsConfig(): WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> {
         if (this._parsedDocsConfig == null) {
@@ -1136,6 +1157,9 @@ export class DocsDefinitionResolver {
     }): Promise<FernNavigation.V1.ApiReferenceNode> {
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
+        // Get effective audiences, inheriting from instance if not specified on the API section
+        const effectiveAudiences = this.getEffectiveAudiencesForApiSection(item.audiences);
+
         let ir: IntermediateRepresentation | undefined = undefined;
         const workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
             { context: this.taskContext },
@@ -1154,7 +1178,7 @@ export class DocsDefinitionResolver {
                 const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
                 ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
-                    audiences: item.audiences,
+                    audiences: effectiveAudiences,
                     enableUniqueErrorsPerEndpoint: true,
                     generateV1Examples: false,
                     logWarnings: false
@@ -1185,7 +1209,7 @@ export class DocsDefinitionResolver {
         if (ir == null) {
             ir = generateIntermediateRepresentation({
                 workspace,
-                audiences: item.audiences,
+                audiences: effectiveAudiences,
                 generationLanguage: undefined,
                 keywords: undefined,
                 smartCasing: false,

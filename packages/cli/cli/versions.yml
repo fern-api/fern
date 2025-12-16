@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        API references in docs now inherit audiences from their parent instance. When an instance has an audience applied to it, any API reference without its own audiences specified will automatically inherit the instance's audiences. API references with explicit audiences still take precedence.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.23.0
+
+- changelogEntry:
     - summary: Improve dynamic IR generation for inferred auth.
       type: fix
   irVersion: 62
