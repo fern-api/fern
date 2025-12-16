@@ -1,0 +1,74 @@
+name: Create PRs to Remediate vulns
+
+# ============================================================
+# This workflow runs two independent security scans:
+#
+# 1. Dependabot Alerts (create-dependabot-prs job)
+#    - Fetches open Dependabot alerts from GitHub
+#    - Creates PRs for each alert with instructions for Devin AI
+#
+# 2. Grype Container Scan (create-grype-pr-{CONTAINER_NAME} jobs)
+#    - Builds the Docker container
+#    - Scans it with grype for OS and package vulnerabilities
+#    - Creates a PR if actionable vulnerabilities are found
+#
+# TOKEN REQUIREMENTS:
+# - FERN_GITHUB_TOKEN: PAT with `security_events` scope for Dependabot alerts
+# - GITHUB_TOKEN: Default token for creating branches and PRs
+# - DEVIN_AI_PR_BOT_SLACK_TOKEN: For Slack notifications to Devin AI
+# ============================================================
+
+on:
+  #schedule:
+  # Run at 5AM EST (10AM UTC) every day
+  #- cron: "0 10 * * *"
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  create-dependabot-prs:
+    name: Check Dependabot alerts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Fetch Dependabot alerts
+        id: fetch-alerts
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.FERN_GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            // Fetch all open Dependabot alerts using FERN_GITHUB_TOKEN
+            let alerts = [];
+            try {
+              const response = await github.rest.dependabot.listAlertsForRepo({
+                owner,
+                repo,
+                state: 'open',
+                per_page: 100
+              });
+              alerts = response.data;
+            } catch (error) {
+              if (error.status === 403) {
+                console.log('ERROR: Unable to access Dependabot alerts. This is likely because:');
+                console.log('1. The FERN_GITHUB_TOKEN secret is not set, OR');
+                console.log('2. The token does not have the required `security_events` scope');
+                console.log('');
+                console.log('To fix: Ensure FERN_GITHUB_TOKEN is a PAT (classic) with `security_events` scope');
+                core.setOutput('alerts_json', '[]');
+                return;
+              }
+              throw error;
+            }
+
+            if (alerts.length === 0) {
+              console.log('No open Dependabot alerts found.');
+              core.setOutput('alerts_json', '[]');
+              return;
+            }
+
+            console.log(`Found ${alerts.length} open Dependabot alerts.`);
+            core.setOutput('alerts_json', JSON.stringify(alerts));

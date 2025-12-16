@@ -1,7 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
-    - summary: |
-        Add debug logging for `fern docs dev`. Creates a timestamped debug log file in `.fern/app-preview/` that captures frontend metrics (WebSocket connection time, reload cycles, revalidation latency, router refresh time, memory usage) and CLI-side metrics (reload timing, docs generation time, validation time, memory usage).
+    - summary: Update the default page actions to include ChatGPT, Claude, and Cursor.
       type: feat
   irVersion: 62
   createdAt: "2025-12-16"

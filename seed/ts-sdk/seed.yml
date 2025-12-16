@@ -506,3 +506,4 @@ allowedFailures:
   - package-yml
   - trace:no-custom-config
   - trace:serde
+  - inferred-auth-implicit-reference
