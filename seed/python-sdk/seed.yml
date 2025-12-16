@@ -338,6 +338,8 @@ fixtures:
     - customConfig:
         use_typeddict_requests: true
       outputFolder: use-typeddict-requests
+  version:
+    - outputFolder: no-custom-config
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config

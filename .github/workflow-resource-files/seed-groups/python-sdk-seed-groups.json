@@ -186,7 +186,6 @@
         "streaming:skip-pydantic-validation",
         "streaming-parameter",
         "required-nullable",
-        "version",
         "mixed-case",
         "exhaustive:five-second-timeout",
         "objects-with-imports",

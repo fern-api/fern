@@ -39,6 +39,8 @@ scripts:
         - bundle exec rake test
 
 fixtures:
+  version:
+    - outputFolder: no-custom-config
   exhaustive:
     - outputFolder: wire-tests
       customConfig:

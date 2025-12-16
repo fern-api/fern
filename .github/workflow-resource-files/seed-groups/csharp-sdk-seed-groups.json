@@ -90,7 +90,6 @@
     },
     {
       "fixtures": [
-        "version",
         "csharp-grpc-proto-exhaustive:read-only-memory",
         "imdb:no-custom-config",
         "literal:no-custom-config",
