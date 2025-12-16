@@ -19,9 +19,9 @@ name: Create PRs to Remediate vulns
 # ============================================================
 
 on:
-  #schedule:
-  # Run at 5AM EST (10AM UTC) every day
-  #- cron: "0 10 * * *"
+  schedule:
+    # Run at 5AM EST (10AM UTC) every day
+    - cron: "0 10 * * *"
   workflow_dispatch: # Allow manual triggering
 
 jobs:
@@ -362,6 +362,21 @@ jobs:
 
       - name: Build container
         run: docker build -f generators/java/sdk/Dockerfile -t java-sdk:grype-scan .
+
+      - name: Configure AWS Credentials
+        #if: ${{ github.event_name != 'workflow_dispatch' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: "arn:aws:iam::985111089818:role/github-ci"
+          aws-region: "us-east-1"
+
+      - name: Push to ECR (to keep AWS scans up to date)
+        #if: ${{ github.event_name != 'workflow_dispatch' }}
+        run: |
+          aws sts get-caller-identity
+          docker tag java-sdk:grype-scan 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:latest-${{ github.sha }}
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 985111089818.dkr.ecr.us-east-1.amazonaws.com
+          docker push 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:latest-${{ github.sha }}
 
       - name: Install grype
         run: |
