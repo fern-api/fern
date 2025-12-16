@@ -230,7 +230,29 @@ export function isAdditionalPropertiesAny(
         return false;
     }
     if ("allOf" in additionalProperties && additionalProperties.allOf != null) {
-        return false;
+        // Check if allOf contains only empty schemas or schemas with only metadata (example, description, etc.)
+        // If so, treat it as "any" type
+        const hasTypeDefiningSchema = additionalProperties.allOf.some((schema) => {
+            if (isReferenceObject(schema)) {
+                return true; // References define a type
+            }
+            // Check if the schema has type-defining properties
+            return (
+                schema.type != null ||
+                schema.properties != null ||
+                schema.allOf != null ||
+                schema.oneOf != null ||
+                schema.anyOf != null ||
+                schema.enum != null ||
+                "items" in schema ||
+                schema.additionalProperties != null
+            );
+        });
+        if (hasTypeDefiningSchema) {
+            return false;
+        }
+        // All allOf elements are empty or metadata-only, treat as "any"
+        return true;
     }
     if ("enum" in additionalProperties && additionalProperties.enum != null) {
         return false;
