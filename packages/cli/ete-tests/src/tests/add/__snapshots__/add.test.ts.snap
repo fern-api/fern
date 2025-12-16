@@ -100,14 +100,14 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fern-typescript-sdk
         output:
           location: local-file-system
           path: ../sdks/typescript
         version: 2.3.2
   typescript:
     generators:
-      - name: fernapi/fern-typescript
+      - name: fern-typescript
         version: 0.0.247
 ",
         "name": "generators.yml",
