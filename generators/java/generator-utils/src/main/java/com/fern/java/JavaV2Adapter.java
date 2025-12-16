@@ -33,7 +33,9 @@ public class JavaV2Adapter {
         try {
             System.out.println("Generating command for java v2 sdk generation");
             String[] command = new String[] {
-                getNodePath(), args.executable().toString(), args.generatorConfig().toString()
+                getNodePath(),
+                args.executable().toString(),
+                args.generatorConfig().toString()
             };
             System.out.println("Generated command for java v2 sdk generation: " + Arrays.asList(command));
             System.out.println("Calling java v2 generator");
