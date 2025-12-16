@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { vi } from "vitest";
 
@@ -31,7 +31,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test2.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -60,7 +60,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test2" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -101,7 +101,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.mdx" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -124,7 +124,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="pricing.md" tier="enterprise" price="$999" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -145,7 +145,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.md" name="authentication" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -169,7 +169,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.md" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -196,7 +196,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test.md" prop1="value1" prop2='value2' prop3={"value3"} />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -219,7 +219,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test.md" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -242,7 +242,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.md" name="API Keys" level="enterprise" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -271,7 +271,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="plan-tier.mdx" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -300,7 +300,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="details.md" name="API" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -334,7 +334,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="plan-tier.mdx" plan="pro" tier="enterprise" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -358,7 +358,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="static.md" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -380,7 +380,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="outer.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -404,7 +404,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="level1.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -435,7 +435,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="snippetA.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -465,7 +465,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="self-ref.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -489,7 +489,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="outer.md" name="Fern" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -516,7 +516,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="parent.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -550,7 +550,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="snippetA.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -584,7 +584,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="snippetA.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -609,5 +609,145 @@ describe("replaceReferencedMarkdown", () => {
         expect(result.trim()).toContain("Content A");
         expect(result.trim()).toContain("Content B");
         expect(result.trim()).toContain("Content C");
+    });
+
+    it("should track referenced markdown files with their paths and raw content", async () => {
+        const markdown = `
+            <Markdown src="snippet.md" />
+            <Markdown src="nested/other.mdx" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippet.md")) {
+                    return "Snippet content";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/nested/other.mdx")) {
+                    return "Other content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.markdown).toContain("Snippet content");
+        expect(result.markdown).toContain("Other content");
+
+        expect(result.referencedFiles).toHaveLength(2);
+
+        expect(result.referencedFiles).toEqual(
+            expect.arrayContaining([
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippet.md"),
+                    relativeFilePath: RelativeFilePath.of("pages/snippet.md"),
+                    content: "Snippet content"
+                },
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/nested/other.mdx"),
+                    relativeFilePath: RelativeFilePath.of("pages/nested/other.mdx"),
+                    content: "Other content"
+                }
+            ])
+        );
+    });
+
+    it("should deduplicate referenced files when the same file is referenced multiple times", async () => {
+        const markdown = `
+            <Markdown src="snippet.md" />
+            <Markdown src="snippet.md" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippet.md")) {
+                    return "Snippet content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.referencedFiles).toHaveLength(1);
+        expect(result.referencedFiles[0]).toEqual({
+            absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippet.md"),
+            relativeFilePath: RelativeFilePath.of("pages/snippet.md"),
+            content: "Snippet content"
+        });
+    });
+
+    it("should store raw content before variable substitution in referenced files", async () => {
+        const markdown = `
+            <Markdown src="feature.md" plan="pro" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
+                    return "This feature is only available on the {{plan}} plan.";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.markdown).toContain("This feature is only available on the pro plan.");
+
+        expect(result.referencedFiles).toHaveLength(1);
+        expect(result.referencedFiles[0]?.content).toBe("This feature is only available on the {{plan}} plan.");
+    });
+
+    it("should track all referenced files even when circular references are detected", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="snippetA.md" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetA.md")) {
+                    return 'Content A\n<Markdown src="snippetB.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetB.md")) {
+                    return 'Content B\n<Markdown src="snippetA.md" />'; // Circular!
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        // Circular reference should be detected
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(/Circular reference detected.*snippetA\.md.*already being processed/)
+        );
+
+        // Both files should still be tracked in referencedFiles
+        expect(result.referencedFiles).toHaveLength(2);
+        expect(result.referencedFiles).toEqual(
+            expect.arrayContaining([
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippetA.md"),
+                    relativeFilePath: RelativeFilePath.of("pages/snippetA.md"),
+                    content: 'Content A\n<Markdown src="snippetB.md" />'
+                },
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippetB.md"),
+                    relativeFilePath: RelativeFilePath.of("pages/snippetB.md"),
+                    content: 'Content B\n<Markdown src="snippetA.md" />'
+                }
+            ])
+        );
     });
 });
