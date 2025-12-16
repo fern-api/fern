@@ -1253,7 +1253,7 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "test",
-        "Runs tests specified in --command, this spins up a mock server in the background that is terminated upon completion of the tests.",
+        false,
         (yargs) =>
             yargs
                 .option("api", {
@@ -1290,7 +1290,7 @@ function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "mock",
-        "Starts a mock server for an API.",
+        false,
         (yargs) =>
             yargs
                 .option("port", {
