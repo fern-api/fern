@@ -357,6 +357,13 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Configure AWS Credentials
+        #if: ${{ github.event_name != 'workflow_dispatch' }}
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: "arn:aws:iam::985111089818:role/github-ci"
+          aws-region: "us-east-1"
+
       - name: Install
         uses: ./.github/actions/install
 
@@ -368,13 +375,6 @@ jobs:
 
       - name: Build container
         run: docker build -f generators/java/sdk/Dockerfile -t java-sdk:grype-scan .
-
-      - name: Configure AWS Credentials
-        #if: ${{ github.event_name != 'workflow_dispatch' }}
-        uses: aws-actions/configure-aws-credentials@v5
-        with:
-          role-to-assume: "arn:aws:iam::985111089818:role/github-ci"
-          aws-region: "us-east-1"
 
       - name: Push to ECR (to keep AWS scans up to date)
         #if: ${{ github.event_name != 'workflow_dispatch' }}
