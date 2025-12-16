@@ -5,12 +5,11 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	big "math/big"
-	time "time"
-
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
-	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
 	uuid "github.com/google/uuid"
+	big "math/big"
+	common "sdk/common"
+	internal "sdk/internal"
+	time "time"
 )
 
 var (
@@ -3229,20 +3228,20 @@ func (e *ExampleOptionalContainer) String() string {
 }
 
 type ExamplePrimitive struct {
-	Type       string
-	Integer    int
-	Long       int64
-	Uint       int
-	Uint64     int64
-	Float      float64
-	Double     float64
-	Boolean    bool
-	String     *EscapedString
-	Date       time.Time
-	Datetime   *ExampleDatetime
-	Uuid       uuid.UUID
-	Base64     []byte
-	BigInteger string
+	Type        string
+	Integer     int
+	Long        int64
+	Uint        int
+	Uint64      int64
+	Float       float64
+	Double      float64
+	Boolean     bool
+	FieldString *EscapedString
+	Date        time.Time
+	Datetime    *ExampleDatetime
+	Uuid        uuid.UUID
+	Base64      []byte
+	BigInteger  string
 }
 
 func (e *ExamplePrimitive) GetType() string {
@@ -3301,11 +3300,11 @@ func (e *ExamplePrimitive) GetBoolean() bool {
 	return e.Boolean
 }
 
-func (e *ExamplePrimitive) GetString() *EscapedString {
+func (e *ExamplePrimitive) GetFieldString() *EscapedString {
 	if e == nil {
 		return nil
 	}
-	return e.String
+	return e.FieldString
 }
 
 func (e *ExamplePrimitive) GetDate() time.Time {
@@ -3413,12 +3412,12 @@ func (e *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		e.Boolean = valueUnmarshaler.Boolean
 	case "string":
 		var valueUnmarshaler struct {
-			String *EscapedString `json:"string"`
+			FieldString *EscapedString `json:"string"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		e.String = valueUnmarshaler.String
+		e.FieldString = valueUnmarshaler.FieldString
 	case "date":
 		var valueUnmarshaler struct {
 			Date *internal.Date `json:"date" format:"date"`
@@ -3535,13 +3534,13 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	}
-	if e.String != nil {
+	if e.FieldString != nil {
 		var marshaler = struct {
-			Type   string         `json:"type"`
-			String *EscapedString `json:"string"`
+			Type        string         `json:"type"`
+			FieldString *EscapedString `json:"string"`
 		}{
-			Type:   "string",
-			String: e.String,
+			Type:        "string",
+			FieldString: e.FieldString,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -3599,7 +3598,7 @@ type ExamplePrimitiveVisitor interface {
 	VisitFloat(float64) error
 	VisitDouble(float64) error
 	VisitBoolean(bool) error
-	VisitString(*EscapedString) error
+	VisitFieldString(*EscapedString) error
 	VisitDate(time.Time) error
 	VisitDatetime(*ExampleDatetime) error
 	VisitUuid(uuid.UUID) error
@@ -3629,8 +3628,8 @@ func (e *ExamplePrimitive) Accept(visitor ExamplePrimitiveVisitor) error {
 	if e.Boolean != false {
 		return visitor.VisitBoolean(e.Boolean)
 	}
-	if e.String != nil {
-		return visitor.VisitString(e.String)
+	if e.FieldString != nil {
+		return visitor.VisitFieldString(e.FieldString)
 	}
 	if !e.Date.IsZero() {
 		return visitor.VisitDate(e.Date)
@@ -3676,7 +3675,7 @@ func (e *ExamplePrimitive) validate() error {
 	if e.Boolean != false {
 		fields = append(fields, "boolean")
 	}
-	if e.String != nil {
+	if e.FieldString != nil {
 		fields = append(fields, "string")
 	}
 	if !e.Date.IsZero() {
@@ -5140,9 +5139,9 @@ func (j *JsonEncoding) String() string {
 }
 
 type Literal struct {
-	Type    string
-	String  string
-	Boolean bool
+	Type        string
+	FieldString string
+	Boolean     bool
 }
 
 func (l *Literal) GetType() string {
@@ -5152,11 +5151,11 @@ func (l *Literal) GetType() string {
 	return l.Type
 }
 
-func (l *Literal) GetString() string {
+func (l *Literal) GetFieldString() string {
 	if l == nil {
 		return ""
 	}
-	return l.String
+	return l.FieldString
 }
 
 func (l *Literal) GetBoolean() bool {
@@ -5180,12 +5179,12 @@ func (l *Literal) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "string":
 		var valueUnmarshaler struct {
-			String string `json:"string"`
+			FieldString string `json:"string"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		l.String = valueUnmarshaler.String
+		l.FieldString = valueUnmarshaler.FieldString
 	case "boolean":
 		var valueUnmarshaler struct {
 			Boolean bool `json:"boolean"`
@@ -5202,13 +5201,13 @@ func (l Literal) MarshalJSON() ([]byte, error) {
 	if err := l.validate(); err != nil {
 		return nil, err
 	}
-	if l.String != "" {
+	if l.FieldString != "" {
 		var marshaler = struct {
-			Type   string `json:"type"`
-			String string `json:"string"`
+			Type        string `json:"type"`
+			FieldString string `json:"string"`
 		}{
-			Type:   "string",
-			String: l.String,
+			Type:        "string",
+			FieldString: l.FieldString,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -5226,19 +5225,18 @@ func (l Literal) MarshalJSON() ([]byte, error) {
 }
 
 type LiteralVisitor interface {
-	VisitString(string) error
+	VisitFieldString(string) error
 	VisitBoolean(bool) error
 }
 
 func (l *Literal) Accept(visitor LiteralVisitor) error {
-	switch l.Type {
-	default:
-		return fmt.Errorf("invalid type %s in %T", l.Type, l)
-	case "string":
-		return visitor.VisitString(l.String)
-	case "boolean":
+	if l.FieldString != "" {
+		return visitor.VisitFieldString(l.FieldString)
+	}
+	if l.Boolean != false {
 		return visitor.VisitBoolean(l.Boolean)
 	}
+	return fmt.Errorf("type %T does not define a non-empty union type", l)
 }
 
 func (l *Literal) validate() error {
@@ -5246,7 +5244,7 @@ func (l *Literal) validate() error {
 		return fmt.Errorf("type %T is nil", l)
 	}
 	var fields []string
-	if l.String != "" {
+	if l.FieldString != "" {
 		fields = append(fields, "string")
 	}
 	if l.Boolean != false {
@@ -5874,12 +5872,12 @@ func (o *ObjectTypeDeclaration) GetExtendedProperties() []*ObjectProperty {
 	return o.ExtendedProperties
 }
 
-// func (o *ObjectTypeDeclaration) GetExtraProperties() bool {
-// 	if o == nil {
-// 		return false
-// 	}
-// 	return o.ExtraProperties
-// }
+func (o *ObjectTypeDeclaration) GetExtraProperties() bool {
+	if o == nil {
+		return false
+	}
+	return o.ExtraProperties
+}
 
 func (o *ObjectTypeDeclaration) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
@@ -6041,20 +6039,20 @@ func (p *PrimitiveType) String() string {
 }
 
 type PrimitiveTypeV2 struct {
-	Type       string
-	Integer    *IntegerType
-	Long       *LongType
-	Uint       *UintType
-	Uint64     *Uint64Type
-	Float      *FloatType
-	Double     *DoubleType
-	Boolean    *BooleanType
-	String     *StringType
-	Date       *DateType
-	DateTime   *DateTimeType
-	Uuid       *UuidType
-	Base64     *Base64Type
-	BigInteger *BigIntegerType
+	Type        string
+	Integer     *IntegerType
+	Long        *LongType
+	Uint        *UintType
+	Uint64      *Uint64Type
+	Float       *FloatType
+	Double      *DoubleType
+	Boolean     *BooleanType
+	FieldString *StringType
+	Date        *DateType
+	DateTime    *DateTimeType
+	Uuid        *UuidType
+	Base64      *Base64Type
+	BigInteger  *BigIntegerType
 }
 
 func (p *PrimitiveTypeV2) GetType() string {
@@ -6113,11 +6111,11 @@ func (p *PrimitiveTypeV2) GetBoolean() *BooleanType {
 	return p.Boolean
 }
 
-func (p *PrimitiveTypeV2) GetString() *StringType {
+func (p *PrimitiveTypeV2) GetFieldString() *StringType {
 	if p == nil {
 		return nil
 	}
-	return p.String
+	return p.FieldString
 }
 
 func (p *PrimitiveTypeV2) GetDate() *DateType {
@@ -6214,7 +6212,7 @@ func (p *PrimitiveTypeV2) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		p.String = value
+		p.FieldString = value
 	case "date":
 		value := new(DateType)
 		if err := json.Unmarshal(data, &value); err != nil {
@@ -6274,8 +6272,8 @@ func (p PrimitiveTypeV2) MarshalJSON() ([]byte, error) {
 	if p.Boolean != nil {
 		return internal.MarshalJSONWithExtraProperty(p.Boolean, "type", "boolean")
 	}
-	if p.String != nil {
-		return internal.MarshalJSONWithExtraProperty(p.String, "type", "string")
+	if p.FieldString != nil {
+		return internal.MarshalJSONWithExtraProperty(p.FieldString, "type", "string")
 	}
 	if p.Date != nil {
 		return internal.MarshalJSONWithExtraProperty(p.Date, "type", "date")
@@ -6303,7 +6301,7 @@ type PrimitiveTypeV2Visitor interface {
 	VisitFloat(*FloatType) error
 	VisitDouble(*DoubleType) error
 	VisitBoolean(*BooleanType) error
-	VisitString(*StringType) error
+	VisitFieldString(*StringType) error
 	VisitDate(*DateType) error
 	VisitDateTime(*DateTimeType) error
 	VisitUuid(*UuidType) error
@@ -6333,8 +6331,8 @@ func (p *PrimitiveTypeV2) Accept(visitor PrimitiveTypeV2Visitor) error {
 	if p.Boolean != nil {
 		return visitor.VisitBoolean(p.Boolean)
 	}
-	if p.String != nil {
-		return visitor.VisitString(p.String)
+	if p.FieldString != nil {
+		return visitor.VisitFieldString(p.FieldString)
 	}
 	if p.Date != nil {
 		return visitor.VisitDate(p.Date)
@@ -6380,7 +6378,7 @@ func (p *PrimitiveTypeV2) validate() error {
 	if p.Boolean != nil {
 		fields = append(fields, "boolean")
 	}
-	if p.String != nil {
+	if p.FieldString != nil {
 		fields = append(fields, "string")
 	}
 	if p.Date != nil {
@@ -7886,22 +7884,6 @@ type TypeReference struct {
 	Named     *NamedType
 	Primitive *PrimitiveType
 	Unknown   interface{}
-}
-
-func NewTypeReferenceFromContainer(value *ContainerType) *TypeReference {
-	return &TypeReference{Type: "container", Container: value}
-}
-
-func NewTypeReferenceFromNamed(value *NamedType) *TypeReference {
-	return &TypeReference{Type: "named", Named: value}
-}
-
-func NewTypeReferenceFromPrimitive(value *PrimitiveType) *TypeReference {
-	return &TypeReference{Type: "primitive", Primitive: value}
-}
-
-func NewTypeReferenceFromUnknown(value interface{}) *TypeReference {
-	return &TypeReference{Type: "unknown", Unknown: value}
 }
 
 func (t *TypeReference) GetType() string {

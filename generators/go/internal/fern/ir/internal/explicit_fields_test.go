@@ -15,6 +15,7 @@ type testExplicitFieldsStruct struct {
 	Count          *int     `json:"count,omitempty"`
 	Enabled        *bool    `json:"enabled,omitempty"`
 	Tags           []string `json:"tags,omitempty"`
+	//lint:ignore unused this field is intentionally unused for testing
 	unexported     string   `json:"-"`
 	explicitFields *big.Int `json:"-"`
 }
@@ -303,7 +304,7 @@ func TestHandleExplicitFieldsEmbeddedStruct(t *testing.T) {
 		s := &testExplicitFieldsStruct{
 			Count: intPtr(42), // implicit field
 		}
-		s.SetName(nil)        // explicit nil
+		s.SetName(nil)                   // explicit nil
 		s.SetCode(stringPtr("explicit")) // explicit value
 
 		type embed testExplicitFieldsStruct
@@ -322,10 +323,10 @@ func TestHandleExplicitFieldsEmbeddedStruct(t *testing.T) {
 
 func TestHandleExplicitFieldsTagHandling(t *testing.T) {
 	type testStructWithComplexTags struct {
-		Field1         *string `json:"field1,omitempty" url:"field1,omitempty"`
-		Field2         *string `json:"field2,omitempty,string" url:"field2"`
-		Field3         *string `json:"-"`
-		Field4         *string `json:"field4"`
+		Field1         *string  `json:"field1,omitempty" url:"field1,omitempty"`
+		Field2         *string  `json:"field2,omitempty,string" url:"field2"`
+		Field3         *string  `json:"-"`
+		Field4         *string  `json:"field4"`
 		explicitFields *big.Int `json:"-"`
 	}
 
@@ -344,8 +345,8 @@ func TestHandleExplicitFieldsTagHandling(t *testing.T) {
 
 // Test types for nested struct explicit fields testing
 type testNestedStruct struct {
-	NestedName     *string `json:"nested_name,omitempty"`
-	NestedCode     *string `json:"nested_code,omitempty"`
+	NestedName     *string  `json:"nested_name,omitempty"`
+	NestedCode     *string  `json:"nested_code,omitempty"`
 	explicitFields *big.Int `json:"-"`
 }
 

@@ -6,9 +6,8 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	big "math/big"
-
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
-	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
+	common "sdk/common"
+	internal "sdk/internal"
 )
 
 type Auth struct {
@@ -4603,9 +4602,9 @@ func (e *EnumType) String() string {
 }
 
 type LiteralType struct {
-	Type    string
-	Boolean bool
-	String  string
+	Type        string
+	Boolean     bool
+	FieldString string
 }
 
 func (l *LiteralType) GetType() string {
@@ -4622,11 +4621,11 @@ func (l *LiteralType) GetBoolean() bool {
 	return l.Boolean
 }
 
-func (l *LiteralType) GetString() string {
+func (l *LiteralType) GetFieldString() string {
 	if l == nil {
 		return ""
 	}
-	return l.String
+	return l.FieldString
 }
 
 func (l *LiteralType) UnmarshalJSON(data []byte) error {
@@ -4651,12 +4650,12 @@ func (l *LiteralType) UnmarshalJSON(data []byte) error {
 		l.Boolean = valueUnmarshaler.Boolean
 	case "string":
 		var valueUnmarshaler struct {
-			String string `json:"value"`
+			FieldString string `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		l.String = valueUnmarshaler.String
+		l.FieldString = valueUnmarshaler.FieldString
 	}
 	return nil
 }
@@ -4675,13 +4674,13 @@ func (l LiteralType) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	}
-	if l.String != "" {
+	if l.FieldString != "" {
 		var marshaler = struct {
-			Type   string `json:"type"`
-			String string `json:"value"`
+			Type        string `json:"type"`
+			FieldString string `json:"value"`
 		}{
-			Type:   "string",
-			String: l.String,
+			Type:        "string",
+			FieldString: l.FieldString,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -4690,15 +4689,15 @@ func (l LiteralType) MarshalJSON() ([]byte, error) {
 
 type LiteralTypeVisitor interface {
 	VisitBoolean(bool) error
-	VisitString(string) error
+	VisitFieldString(string) error
 }
 
 func (l *LiteralType) Accept(visitor LiteralTypeVisitor) error {
 	if l.Boolean != false {
 		return visitor.VisitBoolean(l.Boolean)
 	}
-	if l.String != "" {
-		return visitor.VisitString(l.String)
+	if l.FieldString != "" {
+		return visitor.VisitFieldString(l.FieldString)
 	}
 	return fmt.Errorf("type %T does not define a non-empty union type", l)
 }
@@ -4711,7 +4710,7 @@ func (l *LiteralType) validate() error {
 	if l.Boolean != false {
 		fields = append(fields, "boolean")
 	}
-	if l.String != "" {
+	if l.FieldString != "" {
 		fields = append(fields, "string")
 	}
 	if len(fields) == 0 {

@@ -6,8 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	big "math/big"
-
-	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
+	internal "sdk/internal"
 )
 
 type EndpointId = string

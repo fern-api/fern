@@ -6,9 +6,8 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	big "math/big"
-
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
-	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
+	common "sdk/common"
+	internal "sdk/internal"
 )
 
 var (
@@ -5316,12 +5315,12 @@ func (i *InlinedRequestBody) GetExtendedProperties() []*ObjectProperty {
 	return i.ExtendedProperties
 }
 
-// func (i *InlinedRequestBody) GetExtraProperties() bool {
-// 	if i == nil {
-// 		return false
-// 	}
-// 	return i.ExtraProperties
-// }
+func (i *InlinedRequestBody) GetExtraProperties() bool {
+	if i == nil {
+		return false
+	}
+	return i.ExtraProperties
+}
 
 func (i *InlinedRequestBody) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties

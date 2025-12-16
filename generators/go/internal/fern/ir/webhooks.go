@@ -6,9 +6,8 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	big "math/big"
-
-	common "github.com/fern-api/fern-go/internal/fern/ir/common"
-	internal "github.com/fern-api/fern-go/internal/fern/ir/internal"
+	common "sdk/common"
+	internal "sdk/internal"
 )
 
 // An example webhook call. For now, this only includes the payload,

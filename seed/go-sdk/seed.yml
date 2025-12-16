@@ -31,6 +31,13 @@ test:
   podman:
     image: fernapi/fern-go-sdk:latest
     command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+  local:
+    workingDirectory: generators/go
+    buildCommand:
+      - go build ./...
+      - pnpm turbo run dist:cli --filter @fern-api/go-sdk
+    runCommand:
+      - make generate
 language: go
 generatorType: SDK
 defaultOutputMode: github
