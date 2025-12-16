@@ -193,6 +193,34 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         }
     }
 
+    public isMultipleBaseUrlsEnvironment(): boolean {
+        return this.ir.environments?.environments.type === "multipleBaseUrls";
+    }
+
+    public getBaseUrlNameForEndpoint(endpoint: HttpEndpoint): string | undefined {
+        if (!this.isMultipleBaseUrlsEnvironment() || this.ir.environments == null) {
+            return undefined;
+        }
+        const baseUrlId = endpoint.baseUrl;
+        if (baseUrlId == null) {
+            return undefined;
+        }
+        const environments = this.ir.environments.environments;
+        if (environments.type !== "multipleBaseUrls") {
+            return undefined;
+        }
+        for (const baseUrl of environments.baseUrls) {
+            if (baseUrl.id === baseUrlId) {
+                return baseUrl.name.pascalCase.unsafeName;
+            }
+        }
+        return undefined;
+    }
+
+    public callResolveEnvironmentBaseURL(arguments_: go.AstNode[]): go.FuncInvocation {
+        return this.callInternalFunc({ name: "ResolveEnvironmentBaseURL", arguments_ });
+    }
+
     public getRootClientDirectory(): RelativeFilePath {
         return RelativeFilePath.of(this.getRootClientPackageName());
     }
