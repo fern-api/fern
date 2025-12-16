@@ -6,14 +6,17 @@ import { type RawResponse } from "../fetcher/index";
  *
  * @template TItem The type of the items in the page.
  * @template TResponse The type of the API response.
+ * @template TClientOptions The type of the normalized client options.
  */
-export class CustomPager<TItem, TResponse> implements AsyncIterable<TItem> {
+export class CustomPager<TItem, TResponse, TClientOptions = unknown> implements AsyncIterable<TItem> {
     /** The items from the current page */
     public data: TItem[];
     /** The raw HTTP response */
     public rawResponse: RawResponse;
     /** The parsed response object */
     public response: TResponse;
+    /** The normalized client options */
+    public clientOptions: TClientOptions;
 
     private sendRequest: (request: Fetcher.Args) => Promise<APIResponse<TResponse, Fetcher.Error>>;
     private nextRequest?: Fetcher.Args;
@@ -30,6 +33,7 @@ export class CustomPager<TItem, TResponse> implements AsyncIterable<TItem> {
         nextRequest?: Fetcher.Args;
         previousRequest?: Fetcher.Args;
         sendRequest: (request: Fetcher.Args) => Promise<APIResponse<TResponse, Fetcher.Error>>;
+        clientOptions: TClientOptions;
     }) {
         this.response = args.response;
         this.rawResponse = args.rawResponse;
@@ -39,6 +43,7 @@ export class CustomPager<TItem, TResponse> implements AsyncIterable<TItem> {
         this.nextRequest = args.nextRequest;
         this.previousRequest = args.previousRequest;
         this.sendRequest = args.sendRequest;
+        this.clientOptions = args.clientOptions;
     }
 
     /**
@@ -83,7 +88,7 @@ export class CustomPager<TItem, TResponse> implements AsyncIterable<TItem> {
         }
         const data = response.body;
         const rawResponse = response.rawResponse;
-        const parsed = await parse<TItem, TResponse>({ request: this.nextRequest, data, rawResponse });
+        const parsed = await parse<TItem, TResponse, TClientOptions>({ request: this.nextRequest, data, rawResponse, clientOptions: this.clientOptions });
         this.response = data;
         this.rawResponse = rawResponse;
         this.data = parsed.items;
@@ -112,7 +117,7 @@ export class CustomPager<TItem, TResponse> implements AsyncIterable<TItem> {
         }
         const data = response.body;
         const rawResponse = response.rawResponse;
-        const parsed = await parse<TItem, TResponse>({ request: this.previousRequest, data, rawResponse });
+        const parsed = await parse<TItem, TResponse, TClientOptions>({ request: this.previousRequest, data, rawResponse, clientOptions: this.clientOptions });
         this.response = data;
         this.rawResponse = rawResponse;
         this.data = parsed.items;
@@ -144,10 +149,11 @@ export class CustomPager<TItem, TResponse> implements AsyncIterable<TItem> {
 
 }
 
-export async function createCustomPager<TItem, TResponse>(
+export async function createCustomPager<TItem, TResponse, TClientOptions = unknown>(
     sendRequest: (request: Fetcher.Args) => Promise<APIResponse<TResponse, Fetcher.Error>>,
     initialHttpRequest: Fetcher.Args,
-): Promise<CustomPager<TItem, TResponse>> {
+    clientOptions: TClientOptions,
+): Promise<CustomPager<TItem, TResponse, TClientOptions>> {
     const response = await sendRequest(initialHttpRequest);
     if (!response.ok) {
         const reason = response.error.reason === "status-code"
@@ -157,7 +163,7 @@ export async function createCustomPager<TItem, TResponse>(
     }
     const data = response.body;
     const rawResponse = response.rawResponse;
-    const parsed = await parse<TItem, TResponse>({ request: initialHttpRequest, data, rawResponse });
+    const parsed = await parse<TItem, TResponse, TClientOptions>({ request: initialHttpRequest, data, rawResponse, clientOptions });
     return new CustomPager({
         response: data,
         rawResponse,
@@ -166,14 +172,16 @@ export async function createCustomPager<TItem, TResponse>(
         hasPreviousPage: parsed.hasPreviousPage,
         nextRequest: parsed.nextRequest,
         previousRequest: parsed.previousRequest,
-        sendRequest: sendRequest
+        sendRequest: sendRequest,
+        clientOptions: clientOptions
     });
 }
 
-async function parse<TItem, TResponse>(args: {
+async function parse<TItem, TResponse, TClientOptions = unknown>(args: {
     request: Fetcher.Args;
     data: TResponse;
     rawResponse: RawResponse;
+    clientOptions: TClientOptions;
 }): Promise<{
     nextRequest?: Fetcher.Args;
     hasNextPage: boolean;

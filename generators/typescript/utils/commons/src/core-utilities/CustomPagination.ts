@@ -10,6 +10,7 @@ export interface CustomPagination {
             responseType: ts.TypeNode;
             sendRequest: ts.Expression;
             initialHttpRequest: ts.Expression;
+            clientOptions: ts.Expression;
         }) => ts.Expression;
         _getReferenceToType: (itemType: ts.TypeNode, responseType: ts.TypeNode) => ts.TypeNode;
     };
@@ -59,17 +60,19 @@ export class CustomPaginationImpl extends CoreUtility implements CustomPaginatio
                         itemType,
                         responseType,
                         sendRequest,
-                        initialHttpRequest
+                        initialHttpRequest,
+                        clientOptions
                     }: {
                         itemType: ts.TypeNode;
                         responseType: ts.TypeNode;
                         sendRequest: ts.Expression;
                         initialHttpRequest: ts.Expression;
+                        clientOptions: ts.Expression;
                     }): ts.Expression => {
                         return ts.factory.createCallExpression(
                             createFunction.getExpression(),
                             [itemType, responseType],
-                            [sendRequest, initialHttpRequest]
+                            [sendRequest, initialHttpRequest, clientOptions]
                         );
                     }
             ),
