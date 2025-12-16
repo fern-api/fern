@@ -53,7 +53,9 @@ class AbstractOrganizationsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "organization_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_organization, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -89,9 +91,13 @@ class AbstractOrganizationsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "organization_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_organization_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -127,9 +133,13 @@ class AbstractOrganizationsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "organization_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             elif parameter_name == "limit":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.search_organizations, "__signature__", endpoint_function.replace(parameters=new_parameters))

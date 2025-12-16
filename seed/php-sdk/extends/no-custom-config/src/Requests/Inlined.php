@@ -25,8 +25,9 @@ class Inlined extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->unique = $values['unique'];$this->name = $values['name'];$this->docs = $values['docs'];
+    ) {
+        $this->unique = $values['unique'];
+        $this->name = $values['name'];
+        $this->docs = $values['docs'];
     }
 }

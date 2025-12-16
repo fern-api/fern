@@ -42,9 +42,9 @@ class UnionWithDuplicativeDiscriminants extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    )
-    {
-        $this->type = $values['type'];$this->value = $values['value'];
+    ) {
+        $this->type = $values['type'];
+        $this->value = $values['value'];
     }
 
     /**
@@ -54,8 +54,10 @@ class UnionWithDuplicativeDiscriminants extends JsonSerializableType
      *   |'_unknown'
      * )
      */
-    public function getType(): string {
-        return $this->type;}
+    public function getType(): string
+    {
+        return $this->type;
+    }
 
     /**
      * @return (
@@ -64,14 +66,17 @@ class UnionWithDuplicativeDiscriminants extends JsonSerializableType
      *   |mixed
      * )
      */
-    public function getValue(): mixed {
-        return $this->value;}
+    public function getValue(): mixed
+    {
+        return $this->value;
+    }
 
     /**
      * @param FirstItemType $firstItemType
      * @return UnionWithDuplicativeDiscriminants
      */
-    public static function firstItemType(FirstItemType $firstItemType): UnionWithDuplicativeDiscriminants {
+    public static function firstItemType(FirstItemType $firstItemType): UnionWithDuplicativeDiscriminants
+    {
         return new UnionWithDuplicativeDiscriminants([
             'type' => 'firstItemType',
             'value' => $firstItemType,
@@ -82,7 +87,8 @@ class UnionWithDuplicativeDiscriminants extends JsonSerializableType
      * @param SecondItemType $secondItemType
      * @return UnionWithDuplicativeDiscriminants
      */
-    public static function secondItemType(SecondItemType $secondItemType): UnionWithDuplicativeDiscriminants {
+    public static function secondItemType(SecondItemType $secondItemType): UnionWithDuplicativeDiscriminants
+    {
         return new UnionWithDuplicativeDiscriminants([
             'type' => 'secondItemType',
             'value' => $secondItemType,
@@ -92,61 +98,67 @@ class UnionWithDuplicativeDiscriminants extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isFirstItemType(): bool {
-        return $this->value instanceof FirstItemType&& $this->type === 'firstItemType';
+    public function isFirstItemType(): bool
+    {
+        return $this->value instanceof FirstItemType && $this->type === 'firstItemType';
     }
 
     /**
      * @return FirstItemType
      */
-    public function asFirstItemType(): FirstItemType {
-        if (!($this->value instanceof FirstItemType&& $this->type === 'firstItemType')){
+    public function asFirstItemType(): FirstItemType
+    {
+        if (!($this->value instanceof FirstItemType && $this->type === 'firstItemType')) {
             throw new Exception(
                 "Expected firstItemType; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-        
+
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isSecondItemType(): bool {
-        return $this->value instanceof SecondItemType&& $this->type === 'secondItemType';
+    public function isSecondItemType(): bool
+    {
+        return $this->value instanceof SecondItemType && $this->type === 'secondItemType';
     }
 
     /**
      * @return SecondItemType
      */
-    public function asSecondItemType(): SecondItemType {
-        if (!($this->value instanceof SecondItemType&& $this->type === 'secondItemType')){
+    public function asSecondItemType(): SecondItemType
+    {
+        if (!($this->value instanceof SecondItemType && $this->type === 'secondItemType')) {
             throw new Exception(
                 "Expected secondItemType; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-        
+
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array {
+    public function jsonSerialize(): array
+    {
         $result = [];
         $result['type'] = $this->type;
-        
+
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-        
-        switch ($this->type){
+
+        switch ($this->type) {
             case 'firstItemType':
                 $value = $this->asFirstItemType()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -157,26 +169,27 @@ class UnionWithDuplicativeDiscriminants extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)){
+                if (is_null($this->value)) {
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType){
+                if ($this->value instanceof JsonSerializableType) {
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)){
+                } elseif (is_array($this->value)) {
                     $result = array_merge($this->value, $result);
                 }
         }
-        
+
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static {
+    public static function fromJson(string $json): static
+    {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)){
+        if (!is_array($decodedJson)) {
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -185,22 +198,23 @@ class UnionWithDuplicativeDiscriminants extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static {
+    public static function jsonDeserialize(array $data): static
+    {
         $args = [];
-        if (!array_key_exists('type', $data)){
+        if (!array_key_exists('type', $data)) {
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))){
+        if (!(is_string($type))) {
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-        
+
         $args['type'] = $type;
-        switch ($type){
+        switch ($type) {
             case 'firstItemType':
                 $args['value'] = FirstItemType::jsonDeserialize($data);
                 break;
@@ -212,7 +226,7 @@ class UnionWithDuplicativeDiscriminants extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-        
+
         // @phpstan-ignore-next-line
         return new static($args);
     }

@@ -1,2 +1,2 @@
-export { CustomPager, type CustomPagerParser } from "./CustomPager";
+export { CustomPager, createCustomPager } from "./CustomPager";
 export { Page } from "./Page";

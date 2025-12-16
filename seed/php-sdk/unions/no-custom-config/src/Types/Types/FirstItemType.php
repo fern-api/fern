@@ -27,15 +27,16 @@ class FirstItemType extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->type = $values['type'] ?? null;$this->name = $values['name'];
+    ) {
+        $this->type = $values['type'] ?? null;
+        $this->name = $values['name'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

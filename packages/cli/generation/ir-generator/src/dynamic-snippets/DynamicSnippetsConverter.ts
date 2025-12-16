@@ -777,8 +777,9 @@ export class DynamicSnippetsConverter {
         }
 
         // Extract credentials from request body
-        if (tokenEndpoint.requestBody != null && tokenEndpoint.requestBody.type === "inlinedRequestBody") {
-            for (const property of tokenEndpoint.requestBody.properties) {
+        if (tokenEndpoint.requestBody != null) {
+            const properties = this.getRequestBodyProperties(tokenEndpoint.requestBody);
+            for (const property of properties) {
                 if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
                     parameters.push({
                         name: {
@@ -818,8 +819,9 @@ export class DynamicSnippetsConverter {
         }
 
         // Extract credentials from request body - use wireValue as key
-        if (tokenEndpoint.requestBody != null && tokenEndpoint.requestBody.type === "inlinedRequestBody") {
-            for (const property of tokenEndpoint.requestBody.properties) {
+        if (tokenEndpoint.requestBody != null) {
+            const properties = this.getRequestBodyProperties(tokenEndpoint.requestBody);
+            for (const property of properties) {
                 if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
                     values[property.name.wireValue] = property.name.wireValue;
                 }
@@ -827,6 +829,24 @@ export class DynamicSnippetsConverter {
         }
 
         return values;
+    }
+
+    private getRequestBodyProperties(requestBody: HttpRequestBody): ObjectProperty[] {
+        const properties: ObjectProperty[] = [];
+
+        if (requestBody.type === "inlinedRequestBody") {
+            properties.push(...requestBody.properties);
+        } else if (requestBody.type === "reference") {
+            const typeReference = requestBody.requestBodyType;
+            if (typeReference.type === "named") {
+                const typeDeclaration = this.ir.types[typeReference.typeId];
+                if (typeDeclaration != null && typeDeclaration.shape.type === "object") {
+                    properties.push(...typeDeclaration.shape.properties);
+                }
+            }
+        }
+
+        return properties;
     }
 
     private convertDeclaration({

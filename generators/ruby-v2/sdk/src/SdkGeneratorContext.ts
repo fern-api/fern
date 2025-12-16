@@ -5,6 +5,7 @@ import { ruby } from "@fern-api/ruby-ast";
 import { ClassReference } from "@fern-api/ruby-ast/src/ast/ClassReference";
 import { AbstractRubyGeneratorContext, AsIsFiles, RubyProject } from "@fern-api/ruby-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleEndpointCall,
     HttpEndpoint,
@@ -379,6 +380,34 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             if (scheme.type === "inferred") {
                 return scheme;
             }
+        }
+        return undefined;
+    }
+
+    public isMultipleBaseUrlsEnvironment(): boolean {
+        return this.ir.environments?.environments.type === "multipleBaseUrls";
+    }
+
+    public getMultipleBaseUrlsEnvironments(): FernIr.MultipleBaseUrlsEnvironments | undefined {
+        if (this.ir.environments?.environments.type === "multipleBaseUrls") {
+            return this.ir.environments.environments;
+        }
+        return undefined;
+    }
+
+    public getDefaultBaseUrlId(): string | undefined {
+        const multiUrlEnvs = this.getMultipleBaseUrlsEnvironments();
+        if (multiUrlEnvs != null && multiUrlEnvs.baseUrls.length > 0) {
+            return multiUrlEnvs.baseUrls[0]?.id;
+        }
+        return undefined;
+    }
+
+    public getBaseUrlName(baseUrlId: string): string | undefined {
+        const multiUrlEnvs = this.getMultipleBaseUrlsEnvironments();
+        if (multiUrlEnvs != null) {
+            const baseUrl = multiUrlEnvs.baseUrls.find((b) => b.id === baseUrlId);
+            return baseUrl?.name.snakeCase.safeName;
         }
         return undefined;
     }

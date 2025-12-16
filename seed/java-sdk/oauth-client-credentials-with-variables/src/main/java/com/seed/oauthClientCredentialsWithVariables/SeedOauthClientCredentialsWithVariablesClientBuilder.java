@@ -19,60 +19,34 @@ public class SeedOauthClientCredentialsWithVariablesClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
-    private String clientId = null;
-
-    private String clientSecret = null;
-
-    private String audience = null;
-
-    private String grantType = null;
-
-    private String scope = null;
-
-    private Environment environment;
+    protected Environment environment;
 
     private OkHttpClient httpClient;
 
     private String rootVariable;
 
     /**
-     * Sets clientId
+     * Creates a builder that uses a pre-generated access token for authentication.
+     * Use this when you already have a valid access token and want to bypass
+     * the OAuth client credentials flow.
+     *
+     * @param token The access token to use for Authorization header
+     * @return A builder configured for token authentication
      */
-    public SeedOauthClientCredentialsWithVariablesClientBuilder clientId(String clientId) {
-        this.clientId = clientId;
-        return this;
+    public static _TokenAuth withToken(String token) {
+        return new _TokenAuth(token);
     }
 
     /**
-     * Sets clientSecret
+     * Creates a builder that uses OAuth client credentials for authentication.
+     * The builder will automatically handle token acquisition and refresh.
+     *
+     * @param clientId The OAuth client ID
+     * @param clientSecret The OAuth client secret
+     * @return A builder configured for OAuth client credentials authentication
      */
-    public SeedOauthClientCredentialsWithVariablesClientBuilder clientSecret(String clientSecret) {
-        this.clientSecret = clientSecret;
-        return this;
-    }
-
-    /**
-     * Sets audience
-     */
-    public SeedOauthClientCredentialsWithVariablesClientBuilder audience(String audience) {
-        this.audience = audience;
-        return this;
-    }
-
-    /**
-     * Sets grantType
-     */
-    public SeedOauthClientCredentialsWithVariablesClientBuilder grantType(String grantType) {
-        this.grantType = grantType;
-        return this;
-    }
-
-    /**
-     * Sets scope
-     */
-    public SeedOauthClientCredentialsWithVariablesClientBuilder scope(String scope) {
-        this.scope = scope;
-        return this;
+    public static _CredentialsAuth withCredentials(String clientId, String clientSecret) {
+        return new _CredentialsAuth(clientId, clientSecret);
     }
 
     public SeedOauthClientCredentialsWithVariablesClientBuilder url(String url) {
@@ -162,19 +136,7 @@ public class SeedOauthClientCredentialsWithVariablesClientBuilder {
      * }
      * }</pre>
      */
-    protected void setAuthentication(ClientOptions.Builder builder) {
-        if (this.clientId != null && this.clientSecret != null) {
-            ClientOptions.Builder authClientOptionsBuilder =
-                    ClientOptions.builder().environment(this.environment);
-            if (this.rootVariable != null) {
-                authClientOptionsBuilder.rootVariable(this.rootVariable);
-            }
-            AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
-            OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(
-                    this.clientId, this.clientSecret, this.audience, this.grantType, this.scope, authClient);
-            builder.addHeader("Authorization", oAuthTokenSupplier);
-        }
-    }
+    protected void setAuthentication(ClientOptions.Builder builder) {}
 
     /**
      * Override this method to configure API variables defined in the specification.
@@ -263,5 +225,63 @@ public class SeedOauthClientCredentialsWithVariablesClientBuilder {
     public SeedOauthClientCredentialsWithVariablesClient build() {
         validateConfiguration();
         return new SeedOauthClientCredentialsWithVariablesClient(buildClientOptions());
+    }
+
+    public static final class _TokenAuth extends SeedOauthClientCredentialsWithVariablesClientBuilder {
+        private final String token;
+
+        _TokenAuth(String token) {
+            this.token = token;
+        }
+
+        @Override
+        protected void setAuthentication(ClientOptions.Builder builder) {
+            builder.addHeader("Authorization", "Bearer " + this.token);
+        }
+    }
+
+    public static final class _CredentialsAuth extends SeedOauthClientCredentialsWithVariablesClientBuilder {
+        private final String clientId;
+
+        private final String clientSecret;
+
+        private String audience = null;
+
+        private String grantType = null;
+
+        private String scope = null;
+
+        _CredentialsAuth(String clientId, String clientSecret) {
+            this.clientId = clientId;
+            this.clientSecret = clientSecret;
+        }
+
+        public _CredentialsAuth audience(String audience) {
+            this.audience = audience;
+            return this;
+        }
+
+        public _CredentialsAuth grantType(String grantType) {
+            this.grantType = grantType;
+            return this;
+        }
+
+        public _CredentialsAuth scope(String scope) {
+            this.scope = scope;
+            return this;
+        }
+
+        @Override
+        protected void setAuthentication(ClientOptions.Builder builder) {
+            ClientOptions.Builder authClientOptionsBuilder =
+                    ClientOptions.builder().environment(this.environment);
+            if (this.rootVariable != null) {
+                authClientOptionsBuilder.rootVariable(this.rootVariable);
+            }
+            AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
+            OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(
+                    this.clientId, this.clientSecret, this.audience, this.grantType, this.scope, authClient);
+            builder.addHeader("Authorization", oAuthTokenSupplier);
+        }
     }
 }

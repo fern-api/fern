@@ -1611,3 +1611,52 @@ client.Users.ListWithGlobalConfig(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.Users.ListWithOptionalData() -> *fern.ListUsersOptionalDataPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersOptionalDataRequest{
+        Page: fern.Int(
+            1,
+        ),
+    }
+client.Users.ListWithOptionalData(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Defaults to first page
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

@@ -271,6 +271,31 @@ types:
           When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
 
           @default: false
+      custom:
+        type: optional<list<CustomPageAction>>
+        docs: |
+          When enabled, displays a custom button that allows users to open the page content in a custom IDE for editing and development.
+          The value of this property should be the name of the custom IDE.
+          Example: `cursor`
+
+  CustomPageAction:
+    docs: A custom page action that can be configured by the user.
+    properties:
+      title:
+        type: string
+        docs: The title of the custom action.
+      subtitle:
+        type: optional<string>
+        docs: The subtitle/helper text of the custom action.
+      url:
+        type: string
+        docs: The URL to navigate to. Use {slug} as a placeholder for the current page slug, {domain} as a placeholder for the current domain, and {url} as a placeholder for the current full URL.
+      icon:
+        type: optional<string>
+        docs: Icon to display for the custom action. Can be a relative filepath, an image URL (starting with http://, https://, or /), or a Font Awesome icon name (e.g., "fa-solid fa-star" or "star").
+      default:
+        type: optional<boolean>
+        docs: Whether this custom action should be the default action.
 
   AIChatConfig:
     properties:
@@ -739,6 +764,12 @@ types:
       tabs: optional<TabsThemeConfig>
       page-actions: optional<PageActionsThemeConfig>
       footer-nav: optional<FooterNavThemeConfig>
+      language-switcher: optional<LanguageSwitcherThemeConfig>
+
+  LanguageSwitcherThemeConfig:
+    enum:
+      - default
+      - minimal
 
   FooterNavThemeConfig:
     enum:

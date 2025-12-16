@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.0
+  changelogEntry:
+    - summary: |
+        Add normalized client options and request options as a parameter to custom pagination.
+        This allows SDK authors to access the client options (including auth provider) when implementing custom pagination logic.
+      type: feat
+  createdAt: "2025-12-16"
+  irVersion: 62
+
+- version: 3.41.0
+  changelogEntry:
+    - summary: Improve the custom pagination code.
+      type: feat
+  createdAt: "2025-12-15"
+  irVersion: 62
+
 - version: 3.40.0
   changelogEntry:
     - summary: |

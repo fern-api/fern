@@ -4,10 +4,14 @@ module Seed
   module S3
     class Client
       # @param client [Seed::Internal::Http::RawClient]
+      # @param base_url [String, nil]
+      # @param environment [Hash[Symbol, String], nil]
       #
       # @return [void]
-      def initialize(client:)
+      def initialize(client:, base_url: nil, environment: nil)
         @client = client
+        @base_url = base_url
+        @environment = environment
       end
 
       # @param request_options [Hash]
@@ -24,7 +28,7 @@ module Seed
         body_bag = params.slice(*body_prop_names)
 
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url],
+          base_url: request_options[:base_url] || @base_url || @environment&.dig(:s_3),
           method: "POST",
           path: "/s3/presigned-url",
           body: Seed::S3::Types::GetPresignedUrlRequest.new(body_bag).to_h,

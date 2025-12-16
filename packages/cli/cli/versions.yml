@@ -1,5 +1,77 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Adds a warning to `fern check` that detects infinite redirect loops.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.23.1
+
+- changelogEntry:
+    - summary: Update the default page actions to include ChatGPT, Claude, and Cursor.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.23.0
+
+- changelogEntry:
+    - summary: Improve dynamic IR generation for inferred auth.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.22.3
+
+- changelogEntry:
+    - summary: |
+        Fix OpenAPI example parsing to preserve explicit `null` values. Previously, explicit `null` values in OpenAPI response examples (e.g., `balance_max: null` for unbounded tiers) were being incorrectly replaced with schema example values or generated placeholders.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.22.2
+
+- changelogEntry:
+    - summary: |
+        Fix OpenAPI 3.1+ parsing to respect `$ref` sibling examples. When a property has both a `$ref` and sibling `example`/`examples` properties, the sibling examples now correctly take precedence over the referenced schema's examples. This fix applies to both the old and new OpenAPI parsers.
+
+        ```yaml
+        # OpenAPI 3.1+ allows $ref siblings like example/examples
+        Company:
+          type: object
+          properties:
+            logo:
+              $ref: '#/components/schemas/File'
+              example:
+                url: https://images.example.com/logo.png  # This example is now used
+        ```
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.22.1
+
+- changelogEntry:
+    - summary: |
+        Share `.fernignore` handling between local and remote task handlers. When running remote generation with `local-file-system` output mode, the `.fernignore` file is now respected, matching the behavior of local generation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.22.0
+
+- changelogEntry:
+    - summary: |
+        Fix ExampleValidator to validate response examples against their corresponding status code schemas instead of always using the 200/201 success schema. Error response examples (400, 404, 500, etc.) are now correctly validated against their respective schemas.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.21.1
+
+- changelogEntry:
+    - summary: |
+        Add a `custom` field to the `page-actions` configuration. This allows users to add custom page actions to the docs.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.21.0
+
+- changelogEntry:
     - summary: |
         Add `docs` field to `HttpResponse` in the IR to capture response descriptions for webhook responses. This enables webhook response descriptions (e.g., for 204, 400, 500 status codes) to be properly propagated from OpenAPI specs to documentation.
       type: feat
