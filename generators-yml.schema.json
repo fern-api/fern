@@ -757,6 +757,24 @@
         "v2"
       ]
     },
+    "generators.InlinePathParameters": {
+      "type": "string",
+      "enum": [
+        "false",
+        "when-body-not-empty",
+        "always"
+      ]
+    },
+    "generators.InlinePathParametersSchema": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/generators.InlinePathParameters"
+        }
+      ]
+    },
     "generators.RemoveDiscriminantsFromSchemas": {
       "type": "string",
       "enum": [
@@ -827,7 +845,7 @@
         "inline-path-parameters": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/generators.InlinePathParametersSchema"
             },
             {
               "type": "null"
@@ -1753,7 +1771,7 @@
         "inline-path-parameters": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/generators.InlinePathParametersSchema"
             },
             {
               "type": "null"
@@ -2234,7 +2252,7 @@
         "inline-path-parameters": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/generators.InlinePathParametersSchema"
             },
             {
               "type": "null"
