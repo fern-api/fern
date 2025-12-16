@@ -24,6 +24,9 @@ on:
     - cron: "0 10 * * *"
   workflow_dispatch: # Allow manual triggering
 
+permissions: # Required for OIDC
+  id-token: write
+
 jobs:
   create-dependabot-prs:
     name: Check Dependabot alerts
@@ -343,7 +346,7 @@ jobs:
   # ============================================================
 
   create-grype-pr-java-sdk:
-    name: Run grype scan - fdr
+    name: Run grype scan - java SDK
     runs-on: Seed
     permissions:
       contents: write
