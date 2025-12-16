@@ -2,8 +2,9 @@
 - version: 1.20.3
   changelogEntry:
     - summary: |
-        Fix OAuth request building to use pointer conversion for optional `client_id` and `client_secret` request fields,
-        and treat `expires_in` response property as a pointer type.
+        Fix OAuth request building to use pointer conversion for optional `client_id` and
+        `client_secret` request fields, and treat `expires_in` response property as a
+        pointer type.
       type: fix
   createdAt: "2025-12-15"
   irVersion: 60

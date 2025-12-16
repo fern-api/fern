@@ -1,9 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.45.11
+  changelogEntry:
+    - summary: |
+        Fix OAuth token provider to handle optional `expires_in` response property by
+        falling back to a default expiration time of 1 hour.
+      type: fix
+  createdAt: "2025-12-15"
+  irVersion: 61
+
 - version: 4.45.10
   changelogEntry:
-    - summary: Fix OAuth token provider to handle optional `expires_in` response property by falling back to a default expiration time of 1 hour.
+    - summary: |
+        Fix retry logic "off-by-two" error. The internal `retries` counter now starts at 0
+        instead of 2, and `max_retries` defaults to 2 when not specified. This ensures users
+        get the expected number of retries (2 by default, or the configured `max_retries` value).
       type: fix
   createdAt: "2025-12-15"
   irVersion: 61

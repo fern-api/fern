@@ -1,3 +1,4 @@
+import type { BaseRequestOptions, NormalizedClientOptions } from "../../BaseClient.js";
 import type { APIResponse } from "../fetcher/APIResponse.js";
 import type { Fetcher } from "../fetcher/Fetcher.js";
 import type { RawResponse } from "../fetcher/index.js";
@@ -141,10 +142,16 @@ export class MyPager<TItem, TResponse> implements AsyncIterable<TItem> {
     }
 }
 
-export async function createMyPager<TItem, TResponse>(
-    sendRequest: (request: Fetcher.Args) => Promise<APIResponse<TResponse, Fetcher.Error>>,
-    initialHttpRequest: Fetcher.Args,
-): Promise<MyPager<TItem, TResponse>> {
+export async function createMyPager<TItem, TResponse>({
+    sendRequest,
+    initialHttpRequest,
+    clientOptions,
+}: {
+    sendRequest: (request: Fetcher.Args) => Promise<APIResponse<TResponse, Fetcher.Error>>;
+    initialHttpRequest: Fetcher.Args;
+    clientOptions: NormalizedClientOptions;
+    requestOptions?: BaseRequestOptions;
+}): Promise<MyPager<TItem, TResponse>> {
     const response = await sendRequest(initialHttpRequest);
     if (!response.ok) {
         const reason =
