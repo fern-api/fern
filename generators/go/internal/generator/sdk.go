@@ -45,6 +45,9 @@ var (
 	//go:embed sdk/internal/http.go
 	httpInternalFile string
 
+	//go:embed sdk/internal/environment.go
+	environmentInternalFile string
+
 	//go:embed sdk/internal/multipart.go
 	multipartFile string
 
