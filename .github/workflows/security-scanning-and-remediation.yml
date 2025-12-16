@@ -371,7 +371,7 @@ jobs:
 
       - name: Configure AWS Credentials
         #if: ${{ github.event_name != 'workflow_dispatch' }}
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: "arn:aws:iam::985111089818:role/github-ci"
           aws-region: "us-east-1"
