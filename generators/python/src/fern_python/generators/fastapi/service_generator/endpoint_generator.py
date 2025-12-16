@@ -280,10 +280,16 @@ class EndpointGenerator:
             for i, parameter in enumerate(self._parameters):
                 writer.write_line(f'elif {PARAMETER_NAME_VARIABLE_NAME} == "{parameter.get_name()}":')
                 with writer.indent():
-                    writer.write(
-                        f"{NEW_PARAMETERS_VARIABLE_NAME}.append(" + f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(default="
-                    )
-                    writer.write_node(parameter.get_default())
+                    python_default = parameter.get_python_default()
+                    writer.write(f"{NEW_PARAMETERS_VARIABLE_NAME}.append(")
+                    writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(")
+                    writer.write("annotation=typing.Annotated[")
+                    writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.annotation, ")
+                    writer.write_node(parameter.get_fastapi_marker())
+                    writer.write("]")
+                    if python_default is not None:
+                        writer.write(", default=")
+                        writer.write_node(python_default)
                     writer.write_line("))")
             writer.write_line("else:")
             with writer.indent():

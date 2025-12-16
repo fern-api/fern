@@ -49,11 +49,22 @@ class AbstractSyspropService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "language":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             elif parameter_name == "num_warm_instances":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="numWarmInstances")]
+                    )
+                )
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.set_num_warm_instances, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -90,7 +101,12 @@ class AbstractSyspropService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "x_random_header":
-                new_parameters.append(parameter.replace(default=fastapi.Header(default=None, alias="X-Random-Header")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_num_warm_instances, "__signature__", endpoint_function.replace(parameters=new_parameters))

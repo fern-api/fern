@@ -1,0 +1,365 @@
+name: Process Grype Vulnerabilities
+description: Process grype scan results and create a PR with vulnerability details
+
+inputs:
+  container_name:
+    description: Name of the container being scanned (used in PR title and branch name for differentiation)
+    required: true
+  grype_report_path:
+    description: Path to the grype JSON report file
+    required: false
+    default: "grype-report.json"
+  base_branch:
+    description: Base branch for the PR
+    required: false
+    default: "main"
+  ignored_cves:
+    description: Newline-separated list of CVE IDs to ignore
+    required: false
+    default: ""
+  devin_prompt:
+    description: Instructions for Devin AI to include in the PR
+    required: false
+    default: |
+      @devin-ai-integration Please remediate the container vulnerabilities found by today's grype scan of the container specified in the summary below.
+
+      **Instructions:**
+      1. Analyze each vulnerability and understand its impact
+      2. For OS-level vulnerabilities, consider updating the base image or specific packages
+      3. For Python dependencies, update the affected packages in pyproject.toml/poetry.lock
+      4. Run tests to ensure the updates don't break anything
+      5. Build the container locally and re-scan to confirm your changes actually address the CVEs.
+      6. Push your fix to this PR branch and tag @davidkonigsberg for review
+      7. Delete the scaffold file (.github/grype-scans/scan-*.md) as part of your fix
+
+      **Vulnerability Details:**
+  slack_token:
+    description: Slack bot token for notifications
+    required: false
+    default: ""
+  github_token:
+    description: GitHub token for creating PRs
+    required: true
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Process vulnerabilities and create PR
+      id: process-vulns
+      uses: actions/github-script@v7
+      env:
+        CONTAINER_NAME: ${{ inputs.container_name }}
+        IGNORED_CVES: ${{ inputs.ignored_cves }}
+        DEVIN_PROMPT: ${{ inputs.devin_prompt }}
+        SLACK_TOKEN: ${{ inputs.slack_token }}
+        GRYPE_REPORT_PATH: ${{ inputs.grype_report_path }}
+        BASE_BRANCH: ${{ inputs.base_branch }}
+      with:
+        github-token: ${{ inputs.github_token }}
+        script: |
+          const fs = require('fs');
+          const containerName = process.env.CONTAINER_NAME;
+          const devinPrompt = process.env.DEVIN_PROMPT;
+          const slackToken = process.env.SLACK_TOKEN;
+          const slackChannelId = 'C0A23CZEFNF';
+          const devinMention = '<@U088PL5FS3B>';
+          const owner = context.repo.owner;
+          const repo = context.repo.repo;
+          const baseBranch = process.env.BASE_BRANCH;
+          const grypeReportPath = process.env.GRYPE_REPORT_PATH;
+
+          // Create a slug from container name for use in branch/file names
+          const containerSlug = containerName
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+            .substring(0, 50);
+
+          console.log(`Processing vulnerabilities for container: ${containerName} (slug: ${containerSlug})`);
+
+          // Parse ignored CVEs from environment variable
+          const ignoredCVEs = new Set(
+            (process.env.IGNORED_CVES || '')
+              .split(/\s+/)
+              .map(s => s.trim())
+              .filter(s => s && !s.startsWith('#'))
+          );
+
+          console.log(`Ignored CVEs: ${[...ignoredCVEs].join(', ') || 'none'}`);
+
+          // Read grype report
+          const report = JSON.parse(fs.readFileSync(grypeReportPath, 'utf8'));
+          const matches = report.matches || [];
+
+          console.log(`Total vulnerabilities found: ${matches.length}`);
+
+          // Filter vulnerabilities:
+          // - Include Critical, High, Medium, Low severities
+          // - Exclude "wont-fix" fix state
+          // - Exclude ignored CVEs
+          // - Only include CVEs that have a fix available
+          const allowedSeverities = new Set(['Critical', 'High', 'Medium', 'Low']);
+
+          const relevant = [];
+          const seen = new Set(); // Deduplicate by CVE + package + version
+
+          for (const match of matches) {
+            const vuln = match.vulnerability || {};
+            const artifact = match.artifact || {};
+            const id = vuln.id;
+            const severity = vuln.severity;
+            const fixState = (vuln.fix?.state || '').toLowerCase();
+            const packageName = artifact.name || 'unknown';
+            const packageVersion = artifact.version || 'unknown';
+            const packageType = artifact.type || 'unknown';
+
+            // Skip if not in allowed severities
+            if (!allowedSeverities.has(severity)) {
+              continue;
+            }
+
+            // Skip if "wont-fix"
+            if (fixState === 'wont-fix') {
+              continue;
+            }
+
+            // Skip if no fix is available
+            const fixVersions = vuln.fix?.versions || [];
+            if (fixVersions.length === 0) {
+              continue;
+            }
+
+            // Skip if in ignored list
+            if (ignoredCVEs.has(id)) {
+              console.log(`Skipping ignored CVE: ${id}`);
+              continue;
+            }
+
+            // Deduplicate
+            const key = `${id}:${packageName}:${packageVersion}`;
+            if (seen.has(key)) {
+              continue;
+            }
+            seen.add(key);
+
+            relevant.push({
+              id,
+              severity,
+              fixState,
+              packageName,
+              packageVersion,
+              packageType,
+              description: vuln.description || 'No description available',
+              fixVersions,
+              dataSource: vuln.dataSource || '',
+            });
+          }
+
+          console.log(`Relevant vulnerabilities after filtering: ${relevant.length}`);
+
+          if (relevant.length === 0) {
+            console.log('No actionable vulnerabilities found. Exiting.');
+            return;
+          }
+
+          // Sort by severity (Critical > High > Medium > Low)
+          const severityOrder = { 'Critical': 0, 'High': 1, 'Medium': 2, 'Low': 3 };
+          relevant.sort((a, b) => (severityOrder[a.severity] || 99) - (severityOrder[b.severity] || 99));
+
+          // Check for existing open PR for this specific container
+          const existingPRs = await github.paginate(github.rest.pulls.list, {
+            owner,
+            repo,
+            state: 'open',
+            per_page: 100
+          });
+
+          const prTitlePrefix = `[Grype Scan][${containerName}]`;
+          const existingGrypePR = existingPRs.find(pr => pr.title.startsWith(prTitlePrefix));
+          if (existingGrypePR) {
+            console.log(`Open Grype scan PR for ${containerName} already exists: #${existingGrypePR.number}. Skipping PR creation.`);
+            return;
+          }
+
+          // Use stable branch name per container (no date) to prevent duplicate PRs
+          // If the workflow runs twice, the same branch name ensures we can detect existing PRs
+          const branchName = `grype-scan-${containerSlug}`;
+          
+          // Generate date string for file naming only (for historical tracking)
+          const now = new Date();
+          const dateStr = now.toISOString().split('T')[0].replace(/-/g, '');
+          const filePath = `.github/grype-scans/scan-${containerSlug}-${dateStr}.md`;
+
+          // Check for existing open PR by head branch (more reliable than title matching)
+          const existingPRByBranch = existingPRs.find(pr => pr.head.ref === branchName);
+          if (existingPRByBranch) {
+            console.log(`Open PR #${existingPRByBranch.number} already exists for branch ${branchName}. Skipping PR creation.`);
+            return;
+          }
+
+          // Check if branch already exists - if so, delete it since there's no open PR
+          try {
+            await github.rest.git.getRef({
+              owner,
+              repo,
+              ref: `heads/${branchName}`,
+            });
+            // Branch exists but no open PR (we already checked above) - safe to delete and recreate
+            console.log(`Branch ${branchName} exists but has no open PR. Deleting to recreate...`);
+            await github.rest.git.deleteRef({
+              owner,
+              repo,
+              ref: `heads/${branchName}`,
+            });
+          } catch (e) {
+            if (e.status !== 404) throw e;
+            // Branch doesn't exist, which is fine
+          }
+
+          // Build vulnerability summary
+          const criticalCount = relevant.filter(v => v.severity === 'Critical').length;
+          const highCount = relevant.filter(v => v.severity === 'High').length;
+          const mediumCount = relevant.filter(v => v.severity === 'Medium').length;
+          const lowCount = relevant.filter(v => v.severity === 'Low').length;
+
+          let vulnDetails = '';
+          for (const v of relevant) {
+            const fixInfo = v.fixVersions.length > 0
+              ? `Fix available: ${v.fixVersions.join(', ')}`
+              : 'No fix available yet';
+
+            vulnDetails += `
+          ### ${v.id} (${v.severity})
+          - **Package:** ${v.packageName} @ ${v.packageVersion} (${v.packageType})
+          - **Status:** ${v.fixState}
+          - **${fixInfo}**
+          - **Source:** ${v.dataSource}
+
+          ${v.description}
+
+          ---
+          `;
+          }
+
+          const prTitle = `${prTitlePrefix} ${relevant.length} vulnerabilities found (${criticalCount} Critical, ${highCount} High, ${mediumCount} Medium, ${lowCount} Low)`;
+
+          const alertContent = `${devinPrompt}
+
+          ## Summary
+          - **Container:** ${containerName}
+          - **Scan Date:** ${now.toISOString()}
+          - **Total Vulnerabilities:** ${relevant.length}
+          - **Critical:** ${criticalCount}
+          - **High:** ${highCount}
+          - **Medium:** ${mediumCount}
+          - **Low:** ${lowCount}
+
+          ## Vulnerabilities
+          ${vulnDetails}
+          `;
+
+          try {
+            // Get base branch ref
+            const baseRef = await github.rest.git.getRef({
+              owner,
+              repo,
+              ref: `heads/${baseBranch}`,
+            });
+            const baseCommitSha = baseRef.data.object.sha;
+
+            const baseCommit = await github.rest.git.getCommit({
+              owner,
+              repo,
+              commit_sha: baseCommitSha,
+            });
+            const baseTreeSha = baseCommit.data.tree.sha;
+
+            // Create blob with alert content
+            const blob = await github.rest.git.createBlob({
+              owner,
+              repo,
+              content: alertContent,
+              encoding: 'utf-8',
+            });
+
+            // Create tree with new file
+            const tree = await github.rest.git.createTree({
+              owner,
+              repo,
+              base_tree: baseTreeSha,
+              tree: [
+                {
+                  path: filePath,
+                  mode: '100644',
+                  type: 'blob',
+                  sha: blob.data.sha,
+                },
+              ],
+            });
+
+            // Create commit
+            const commit = await github.rest.git.createCommit({
+              owner,
+              repo,
+              message: `[Grype Scan][${containerName}] Scaffold PR for ${relevant.length} vulnerabilities`,
+              tree: tree.data.sha,
+              parents: [baseCommitSha],
+            });
+
+            // Create branch
+            await github.rest.git.createRef({
+              owner,
+              repo,
+              ref: `refs/heads/${branchName}`,
+              sha: commit.data.sha,
+            });
+
+            // Create PR
+            const pr = await github.rest.pulls.create({
+              owner,
+              repo,
+              title: prTitle,
+              head: branchName,
+              base: baseBranch,
+              body: alertContent,
+              draft: true,
+            });
+
+            console.log(`Created PR #${pr.data.number}: ${prTitle}`);
+
+            // Send Slack notification
+            if (slackToken) {
+              const message = `${devinMention} *New Grype Container Scan PR Created*\nNew PR created for \`${containerName}\` container security vulnerabilities. Please open a PR into the \`fern\` repo to address the ${relevant.length} vulnerabilities found. Follow the instructions in the <${pr.data.html_url}|PR>.`;
+
+              try {
+                const response = await fetch('https://slack.com/api/chat.postMessage', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${slackToken}`
+                  },
+                  body: JSON.stringify({
+                    channel: slackChannelId,
+                    text: message,
+                    mrkdwn: true
+                  })
+                });
+
+                const result = await response.json();
+                if (result.ok) {
+                  console.log(`Sent Slack notification for PR #${pr.data.number}`);
+                } else {
+                  console.error(`Failed to send Slack notification: ${result.error}`);
+                }
+              } catch (error) {
+                console.error(`Error sending Slack notification: ${error.message}`);
+              }
+            } else {
+              console.log('No Slack token configured, skipping notification');
+            }
+
+          } catch (error) {
+            console.error(`Failed to create PR: ${error.message}`);
+            throw error;
+          }

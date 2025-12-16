@@ -43,9 +43,15 @@ class AbstractServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "endpoint_param":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="endpointParam")]
+                    )
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.post, "__signature__", endpoint_function.replace(parameters=new_parameters))
