@@ -11,9 +11,12 @@ import {
     HttpService,
     Name,
     OAuthScheme,
+    RequestProperty,
+    ResponseProperty,
     ServiceId,
     Subpackage,
-    SubpackageId
+    SubpackageId,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
@@ -437,28 +440,39 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeNode(requestTypeRef);
                 w.writeLine("{");
                 w.indent();
-                // Use pointer conversion for optional request fields
+                // Check if request fields are optional (pointer types) and wrap accordingly
+                const clientIdIsOptional = this.isRequestPropertyOptional(requestProperties.clientId);
+                const clientSecretIsOptional = this.isRequestPropertyOptional(requestProperties.clientSecret);
+
                 w.write(`${clientIdFieldName}: `);
-                w.writeNode(
-                    go.invokeFunc({
-                        func: go.typeReference({
-                            name: "String",
-                            importPath: this.context.getRootImportPath()
-                        }),
-                        arguments_: [go.codeblock("options.ClientID")]
-                    })
-                );
+                if (clientIdIsOptional) {
+                    w.writeNode(
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: "String",
+                                importPath: this.context.getRootImportPath()
+                            }),
+                            arguments_: [go.codeblock("options.ClientID")]
+                        })
+                    );
+                } else {
+                    w.write("options.ClientID");
+                }
                 w.writeLine(",");
                 w.write(`${clientSecretFieldName}: `);
-                w.writeNode(
-                    go.invokeFunc({
-                        func: go.typeReference({
-                            name: "String",
-                            importPath: this.context.getRootImportPath()
-                        }),
-                        arguments_: [go.codeblock("options.ClientSecret")]
-                    })
-                );
+                if (clientSecretIsOptional) {
+                    w.writeNode(
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: "String",
+                                importPath: this.context.getRootImportPath()
+                            }),
+                            arguments_: [go.codeblock("options.ClientSecret")]
+                        })
+                    );
+                } else {
+                    w.write("options.ClientSecret");
+                }
                 w.writeLine(",");
                 w.dedent();
                 w.writeLine("})");
@@ -483,13 +497,27 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.newLine();
                 w.dedent();
                 w.writeLine("}");
-                // Handle ExpiresIn with fallback to default (ExpiresIn is a pointer type)
+                // Handle ExpiresIn with fallback to default
+                // Check if expiresIn is optional (pointer type) to determine how to access it
+                const responseProperties = oauthScheme.configuration.tokenEndpoint.responseProperties;
+                const expiresInIsOptional =
+                    responseProperties.expiresIn != null &&
+                    this.isResponsePropertyOptional(responseProperties.expiresIn);
+
                 w.writeLine("expiresIn := core.DefaultExpirySeconds");
-                w.writeLine("if response.ExpiresIn != nil {");
-                w.indent();
-                w.writeLine("expiresIn = *response.ExpiresIn");
-                w.dedent();
-                w.writeLine("}");
+                if (expiresInIsOptional) {
+                    w.writeLine("if response.ExpiresIn != nil {");
+                    w.indent();
+                    w.writeLine("expiresIn = *response.ExpiresIn");
+                    w.dedent();
+                    w.writeLine("}");
+                } else {
+                    w.writeLine("if response.ExpiresIn > 0 {");
+                    w.indent();
+                    w.writeLine("expiresIn = response.ExpiresIn");
+                    w.dedent();
+                    w.writeLine("}");
+                }
                 w.writeLine("return response.AccessToken, expiresIn, nil");
                 w.dedent();
                 w.writeLine("})");
@@ -512,9 +540,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         return service.endpoints.find((ep) => ep.id === endpointId);
     }
 
-    private getRequestPropertyFieldName(requestProperty: {
-        property: { type: string; name?: { name: Name } };
-    }): string {
+    private getRequestPropertyFieldName(requestProperty: RequestProperty): string {
         // The property can be either "query" or "body" type
         // Both have a name field that contains the Name object
         if (requestProperty.property.type === "body" && requestProperty.property.name != null) {
@@ -525,6 +551,34 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         }
         // Fallback to default names if we can't extract from IR
         return "ClientId";
+    }
+
+    private isRequestPropertyOptional(requestProperty: RequestProperty): boolean {
+        return this.isTypeReferenceOptional(this.getRequestPropertyValueType(requestProperty));
+    }
+
+    private getRequestPropertyValueType(requestProperty: RequestProperty): TypeReference | undefined {
+        if (requestProperty.property.type === "body") {
+            return requestProperty.property.valueType;
+        }
+        if (requestProperty.property.type === "query") {
+            return requestProperty.property.valueType;
+        }
+        return undefined;
+    }
+
+    private isResponsePropertyOptional(responseProperty: ResponseProperty): boolean {
+        return this.isTypeReferenceOptional(responseProperty.property.valueType);
+    }
+
+    private isTypeReferenceOptional(typeRef: TypeReference | undefined): boolean {
+        if (typeRef == null) {
+            return false;
+        }
+        if (typeRef.type === "container") {
+            return typeRef.container.type === "optional";
+        }
+        return false;
     }
 
     private getOAuthClientCredentialsScheme(): OAuthScheme | undefined {
