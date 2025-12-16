@@ -44,10 +44,13 @@ class AbstractUsersService(AbstractFernService):
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The cursor used for pagination in order to fetch\nthe next page of results.",
-                        )
+                        annotation=typing.Annotated[
+                            parameter.annotation,
+                            fastapi.Query(
+                                description="The cursor used for pagination in order to fetch\nthe next page of results."
+                            ),
+                        ],
+                        default=None,
                     )
                 )
             else:
