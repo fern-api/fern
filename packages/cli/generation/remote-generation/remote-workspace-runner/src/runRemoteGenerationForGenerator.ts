@@ -70,6 +70,8 @@ export async function runRemoteGenerationForGenerator({
         organization,
         generatorInvocation: generatorInvocationWithEnvVarSubstitutions
     });
+    
+    const resolvedVersion = version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation }));
 
     const ir = generateIntermediateRepresentation({
         workspace,
@@ -84,7 +86,7 @@ export async function runRemoteGenerationForGenerator({
         audiences,
         readme,
         packageName,
-        version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
+        version: resolvedVersion,
         context: interactiveTaskContext,
         sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
         dynamicGeneratorConfig,
@@ -160,12 +162,12 @@ export async function runRemoteGenerationForGenerator({
     }
 
     // Upload dynamic IR for SDK generation (for dynamic snippets)
-    if (generatorInvocation.language != null && packageName != null && version != null && !isPreview) {
+    if (generatorInvocation.language != null && packageName != null && resolvedVersion != null && !isPreview) {
         try {
             await uploadDynamicIRForSdkGeneration({
                 fdr,
                 organization,
-                version,
+                version: resolvedVersion,
                 language: generatorInvocation.language,
                 packageName,
                 ir,
