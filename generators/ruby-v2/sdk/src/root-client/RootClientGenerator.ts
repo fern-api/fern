@@ -77,6 +77,20 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const authenticationParameters = this.getAuthenticationParameters();
         parameters.push(...authenticationParameters);
 
+        // Add API version parameter if present
+        const apiVersion = this.context.ir.apiVersion;
+        if (apiVersion != null && apiVersion.type === "header") {
+            const headerName = apiVersion.header.name.wireValue;
+            const defaultValue = apiVersion.value.default?.name.wireValue;
+            const versionParameter = ruby.parameters.keyword({
+                name: "version",
+                type: defaultValue != null ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
+                initializer: defaultValue != null ? ruby.TypeLiteral.string(defaultValue) : undefined,
+                docs: `The version of the API to use, sent as the ${headerName} header.`
+            });
+            parameters.push(versionParameter);
+        }
+
         const method = ruby.method({
             name: "initialize",
             kind: ruby.MethodKind.Instance,
@@ -398,6 +412,24 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 default:
                     break;
+            }
+        }
+
+        // Add API version header if present
+        const apiVersion = this.context.ir.apiVersion;
+        if (apiVersion != null && apiVersion.type === "header") {
+            const headerName = apiVersion.header.name.wireValue;
+            const defaultValue = apiVersion.value.default?.name.wireValue;
+            if (defaultValue != null) {
+                headers.push({
+                    key: ruby.TypeLiteral.string(headerName),
+                    value: ruby.TypeLiteral.string(`#{version || "${defaultValue}"}`)
+                });
+            } else {
+                headers.push({
+                    key: ruby.TypeLiteral.string(headerName),
+                    value: ruby.TypeLiteral.string(`#{version}`)
+                });
             }
         }
 
