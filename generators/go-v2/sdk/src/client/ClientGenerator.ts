@@ -437,8 +437,29 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeNode(requestTypeRef);
                 w.writeLine("{");
                 w.indent();
-                w.writeLine(`${clientIdFieldName}: options.ClientID,`);
-                w.writeLine(`${clientSecretFieldName}: options.ClientSecret,`);
+                // Use pointer conversion for optional request fields
+                w.write(`${clientIdFieldName}: `);
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "String",
+                            importPath: this.context.getRootImportPath()
+                        }),
+                        arguments_: [go.codeblock("options.ClientID")]
+                    })
+                );
+                w.writeLine(",");
+                w.write(`${clientSecretFieldName}: `);
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "String",
+                            importPath: this.context.getRootImportPath()
+                        }),
+                        arguments_: [go.codeblock("options.ClientSecret")]
+                    })
+                );
+                w.writeLine(",");
                 w.dedent();
                 w.writeLine("})");
                 w.writeLine("if err != nil {");
@@ -446,7 +467,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.writeLine('return "", 0, err');
                 w.dedent();
                 w.writeLine("}");
-                // Check for empty access token (handles both pointer and non-pointer types)
+                // Check for empty access token
                 w.writeLine('if response.AccessToken == "" {');
                 w.indent();
                 w.write('return "", 0, ');
@@ -462,11 +483,11 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 w.newLine();
                 w.dedent();
                 w.writeLine("}");
-                // Handle ExpiresIn with fallback to default
+                // Handle ExpiresIn with fallback to default (ExpiresIn is a pointer type)
                 w.writeLine("expiresIn := core.DefaultExpirySeconds");
-                w.writeLine("if response.ExpiresIn > 0 {");
+                w.writeLine("if response.ExpiresIn != nil {");
                 w.indent();
-                w.writeLine("expiresIn = response.ExpiresIn");
+                w.writeLine("expiresIn = *response.ExpiresIn");
                 w.dedent();
                 w.writeLine("}");
                 w.writeLine("return response.AccessToken, expiresIn, nil");
