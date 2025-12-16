@@ -21,6 +21,24 @@ export function addDefaultDockerOrgIfNotPresent(generatorName: string): string {
     return `${DEFAULT_DOCKER_ORG}/${generatorName}`;
 }
 
+/**
+ * Removes the default Docker org prefix (fernapi/) from a generator name if present.
+ * If the name has a different org prefix, it is returned as-is.
+ * This is used when writing generator names to generators.yml to use the shorthand format.
+ *
+ * Examples:
+ * - "fernapi/fern-typescript-sdk" -> "fern-typescript-sdk"
+ * - "fern-typescript-sdk" -> "fern-typescript-sdk" (unchanged)
+ * - "myorg/my-generator" -> "myorg/my-generator" (unchanged, different org)
+ */
+export function removeDefaultDockerOrgIfPresent(generatorName: string): string {
+    const prefix = `${DEFAULT_DOCKER_ORG}/`;
+    if (generatorName.startsWith(prefix)) {
+        return generatorName.slice(prefix.length);
+    }
+    return generatorName;
+}
+
 export function getGeneratorNameOrThrow(generatorName: string, context: TaskContext): GeneratorName {
     const normalizedGeneratorName = normalizeGeneratorName(generatorName);
     if (normalizedGeneratorName == null) {
