@@ -1,0 +1,52 @@
+name: Check Devin AI PR Assignee
+
+on:
+  pull_request:
+    types: [opened, reopened, edited]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  check-assignee:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.pull_request.user.login == 'devin-ai-integration[bot]' }}
+    steps:
+      - name: Check for assignee and comment if missing
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const pr = context.payload.pull_request;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const prNumber = pr.number;
+
+            // Check if assignees exist
+            if (!pr.assignees || pr.assignees.length === 0) {
+              // Check if we already commented to avoid duplicate comments
+              const comments = await github.rest.issues.listComments({
+                owner,
+                repo,
+                issue_number: prNumber,
+              });
+
+              const botComment = comments.data.find(comment => 
+                comment.user.type === 'Bot' && 
+                comment.body.includes('**Assignee Required**')
+              );
+
+              if (!botComment) {
+                await github.rest.issues.createComment({
+                  owner,
+                  repo,
+                  issue_number: prNumber,
+                  body: '@devin-ai-integration **Assignee Required**\n\nThis PR was opened by Devin AI but does not have an assignee. Please add an assignee corresponding to the person who requested this PR.\n\nYou can add an assignee using the sidebar on the right side of this page.'
+                });
+                console.log('Added comment requesting assignee');
+              } else {
+                console.log('Comment already exists, skipping');
+              }
+            } else {
+              console.log(`PR has ${pr.assignees.length} assignee(s), no action needed`);
+            }
