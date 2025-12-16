@@ -191,14 +191,11 @@ export class DebugLogger {
     async logFrontendMetrics(message: MetricsMessage): Promise<void> {
         const entry: DebugLogEntry = {
             timestamp: message.timestamp,
-            source: "frontend",
+            source: message.source,
             level: message.level,
             eventType: this.getEventType(message.payload, message.isAggregate),
             isAggregate: message.isAggregate,
-            data: {
-                metricsSource: message.source,
-                payload: message.payload
-            }
+            data: message.payload
         };
 
         await this.writeEntry(entry);
