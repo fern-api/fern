@@ -102,11 +102,19 @@ export interface CliMetricEvent {
  */
 interface DebugLogEntry {
     timestamp: string;
-    source: "frontend" | "cli";
+    source: string;
     level: LogLevel;
     eventType: string;
     isAggregate?: boolean;
     data: unknown;
+}
+
+/**
+ * Get the CLI version source string in the format "cli@x.x.x"
+ */
+function getCliSource(): string {
+    const version = process.env.CLI_VERSION ?? "unknown";
+    return `cli@${version}`;
 }
 
 /**
@@ -202,7 +210,7 @@ export class DebugLogger {
     async logCliMetric(event: CliMetricEvent, level: LogLevel = "info"): Promise<void> {
         const entry: DebugLogEntry = {
             timestamp: event.timestamp,
-            source: "cli",
+            source: getCliSource(),
             level,
             eventType: event.type,
             data: {
