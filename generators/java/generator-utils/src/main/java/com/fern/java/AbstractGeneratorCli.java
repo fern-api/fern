@@ -4,7 +4,6 @@ import static com.fern.java.GeneratorLogging.log;
 import static com.fern.java.GeneratorLogging.logError;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -94,9 +93,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
-    /**
-     * Loads and preprocesses the IR from file, handling integer overflow values.
-     */
+    /** Loads and preprocesses the IR from file, handling integer overflow values. */
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
             File irFile = new File(generatorConfig.getIrFilepath());
@@ -116,9 +113,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
-    /**
-     * Processes JSON nodes in-place to convert integer overflow values to long type.
-     */
+    /** Processes JSON nodes in-place to convert integer overflow values to long type. */
     private static class IntegerOverflowProcessor {
         private int conversions = 0;
 
