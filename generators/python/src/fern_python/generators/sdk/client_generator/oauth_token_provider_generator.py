@@ -9,6 +9,7 @@ import fern.ir.resources as ir_types
 
 DEFAULT_EXPIRES_IN_SECONDS = 3600  # 1 hour
 
+
 class OAuthTokenProviderGenerator:
     CLIENT_CLASS_NAME = "OAuthTokenProvider"
     ASYNC_CLIENT_CLASS_NAME = "AsyncOAuthTokenProvider"
@@ -492,8 +493,16 @@ class OAuthTokenProviderGenerator:
                             "expires_in_seconds",
                             AST.Expression(
                                 property_value
-                                if not property_is_optional else
-                                " ".join([property_value, "if", property_value, "is not None else", str(DEFAULT_EXPIRES_IN_SECONDS)])
+                                if not property_is_optional
+                                else " ".join(
+                                    [
+                                        property_value,
+                                        "if",
+                                        property_value,
+                                        "is not None else",
+                                        str(DEFAULT_EXPIRES_IN_SECONDS),
+                                    ]
+                                )
                             ),
                         ),
                         ("buffer_in_minutes", AST.Expression(f"self.{self._get_buffer_in_minutes_member_name()}")),
