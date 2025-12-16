@@ -415,23 +415,23 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
         }
 
-                // Add API version header if present
-                const apiVersion = this.context.ir.apiVersion;
-                if (apiVersion != null && apiVersion.type === "header") {
-                    const headerName = apiVersion.header.name.wireValue;
-                    const defaultValue = apiVersion.value.default?.name.wireValue;
-                    if (defaultValue != null) {
-                        headers.push({
-                            key: ruby.TypeLiteral.string(headerName),
-                            value: ruby.TypeLiteral.string(`#{version || '${defaultValue}'}`)
-                        });
-                    } else {
-                        headers.push({
-                            key: ruby.TypeLiteral.string(headerName),
-                            value: ruby.TypeLiteral.string(`#{version}`)
-                        });
-                    }
-                }
+        // Add API version header if present
+        const apiVersion = this.context.ir.apiVersion;
+        if (apiVersion != null && apiVersion.type === "header") {
+            const headerName = apiVersion.header.name.wireValue;
+            const defaultValue = apiVersion.value.default?.name.wireValue;
+            if (defaultValue != null) {
+                headers.push({
+                    key: ruby.TypeLiteral.string(headerName),
+                    value: ruby.TypeLiteral.string(`#{version || '${defaultValue}'}`)
+                });
+            } else {
+                headers.push({
+                    key: ruby.TypeLiteral.string(headerName),
+                    value: ruby.TypeLiteral.string(`#{version}`)
+                });
+            }
+        }
 
         return ruby.TypeLiteral.hash(headers);
     }
