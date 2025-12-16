@@ -94,7 +94,8 @@ export class LocalTestRunner extends TestRunner {
                 ai: undefined
             },
             commands,
-            this.generator.workspaceConfig.test.local?.workingDirectory
+            this.generator.workspaceConfig.test.local?.workingDirectory,
+            this.generator.workspaceConfig.test.local?.env
         );
     }
 
