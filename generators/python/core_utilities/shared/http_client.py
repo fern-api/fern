@@ -1,5 +1,6 @@
 import asyncio
 import email.utils
+import json
 import re
 import time
 import typing
@@ -125,6 +126,11 @@ def _stringify_multipart_form_data(data: typing.Mapping[str, typing.Any]) -> typ
     """
     Convert all non-string/bytes form data values to strings for multipart requests.
     httpx requires all form field values to be strings or bytes for multipart/form-data encoding.
+
+    - None values are skipped (not included in result)
+    - str/bytes values pass through unchanged
+    - dict/list values are JSON-encoded to produce a proper wire format
+    - Other values (int, float, bool, etc.) are converted via str()
     """
     result: typing.Dict[str, typing.Any] = {}
     for key, value in data.items():
@@ -132,6 +138,8 @@ def _stringify_multipart_form_data(data: typing.Mapping[str, typing.Any]) -> typ
             continue
         if isinstance(value, (str, bytes)):
             result[key] = value
+        elif isinstance(value, (dict, list)):
+            result[key] = json.dumps(value)
         else:
             result[key] = str(value)
     return result
