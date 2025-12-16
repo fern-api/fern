@@ -76,8 +76,10 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
      */
     private async applyGradleDistributionUrlOverride(): Promise<void> {
         const customUrl = this.context.customConfig["gradle-distribution-url"];
+        this.context.logger.info(`JavaProject: gradle-distribution-url value: ${customUrl ?? "not configured"}`);
+
         if (customUrl == null) {
-            this.context.logger.debug(`JavaProject: No gradle-distribution-url configured, skipping override`);
+            this.context.logger.info(`JavaProject: No gradle-distribution-url configured, using default`);
             return;
         }
 
