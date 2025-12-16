@@ -16,4 +16,9 @@ export interface LogoConfiguration {
     height?: number;
     /** The URL that users will be directed to when clicking the logo. Typically your company's homepage or app. */
     href?: string;
+    /**
+     * Text to display to the right of the logo image. This is useful for adding a tagline or product name next to your logo.
+     * Example: `Docs`
+     */
+    rightText?: string;
 }

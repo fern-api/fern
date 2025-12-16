@@ -2,6 +2,7 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional
 
+import fern_python.generators.sdk.names as names
 from ..environment_generators import (
     GeneratedEnvironment,
     MultipleBaseUrlsEnvironmentGenerator,
@@ -49,10 +50,32 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     BASE_URL_CONSTRUCTOR_PARAMETER_DOCS = "The base url to use for requests from the client."
     BASE_URL_MEMBER_NAME = "_base_url"
 
+    CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS = "The client identifier used for authentication."
+    CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS = "The client secret used for authentication."
+
     HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME = "httpx_client"
+    HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS = (
+        "The httpx client to use for making requests, a preconfigured client is used by default, "
+        "however this is useful should you want to pass in any custom httpx configuration."
+    )
+
+    FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_DOCS = (
+        "Whether the default httpx client follows redirects or not, this is irrelevant "
+        "if a custom httpx client is passed in."
+    )
 
     GET_BASEURL_FUNCTION_NAME = "_get_base_url"
     TOKEN_GETTER_PARAM_NAME = "_token_getter_override"
+    TOKEN_PARAMETER_NAME = "token"
+
+    def _get_wrapper_bearer_token_kwarg_name(self, *, client_wrapper_generator: ClientWrapperGenerator) -> str:
+        """
+        Returns the kwarg name for the bearer token parameter on the generated ClientWrapper.
+        """
+        bearer_auth_scheme = client_wrapper_generator._get_bearer_auth_scheme()
+        if bearer_auth_scheme is None:
+            return "token"
+        return names.get_token_constructor_parameter_name(bearer_auth_scheme)
 
     def __init__(
         self,
@@ -142,12 +165,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
 
         exported_client_class_name = self._context.get_class_name_for_exported_root_client()
+        oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+        is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
         root_client_builder = RootClientGenerator.GeneratedRootClientBuilder(
             # HACK: This is a hack to get the module path for the root client to be from the root of the project
             module_path=self._context.get_module_path_in_project(()),
             class_name=self._context.get_class_name_for_exported_root_client(),
             async_class_name="Async" + exported_client_class_name,
             constructor_parameters=self._root_client_constructor_params,
+            oauth_token_override=is_oauth_client_credentials,
         )
         self._generated_root_client = root_client_builder.build()
 
@@ -178,8 +204,77 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if environments_union.type == "singleBaseUrl":
                 source_file.add_declaration(self._get_base_url_function_declaration(), should_export=False)
 
-    def _write_root_class_docstring(self, writer: AST.NodeWriter) -> None:
+    def _write_root_class_docstring(self, writer: AST.NodeWriter, *, is_async: bool) -> None:
         writer.write_line(self.ROOT_CLASS_DOCSTRING)
+
+        oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+        is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
+
+        # For non client-credentials OAuth, rely on the auto-generated parameter docstring.
+        if not is_oauth_client_credentials:
+            return
+
+        # Custom Parameters section for client-credentials OAuth with token override
+        writer.write_line("")
+        writer.write_line("Parameters")
+        writer.write_line("----------")
+
+        # Use the same constructor parameter definitions that drive the function
+        # signature so types/docs stay in sync with the actual AST.
+        constructor_parameters = self._get_constructor_parameters(is_async=is_async)
+        params_by_name: dict[str, RootClientConstructorParameter] = {
+            param.constructor_parameter_name: param for param in constructor_parameters
+        }
+
+        def write_param_block(param_names: list[str]) -> None:
+            is_first = True
+            for name in param_names:
+                param = params_by_name.get(name)
+                if param is None:
+                    continue
+                if not is_first:
+                    writer.write_line("")
+                is_first = False
+
+                writer.write(f"{param.constructor_parameter_name} : ")
+                if param.type_hint is not None:
+                    if param.constructor_parameter_name in {"client_id", "client_secret"}:
+                        writer.write_node(AST.TypeHint.str_())
+                    elif param.constructor_parameter_name == RootClientGenerator.TOKEN_PARAMETER_NAME:
+                        writer.write_node(AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_()))
+                    else:
+                        writer.write_node(param.type_hint)
+                if param.docs is not None:
+                    with writer.indent():
+                        writer.write_line(param.docs)
+
+        # Overload 1: client_id + client_secret
+        overload_1_param_names: list[str] = [
+            RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+            "client_id",
+            "client_secret",
+            self._timeout_constructor_parameter_name,
+            RootClientGenerator.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
+            RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
+        ]
+        writer.write_line("")
+        write_param_block(overload_1_param_names)
+
+        # Separator between overloads, mirroring Examples section style
+        writer.write_line("")
+        writer.write_line("# or ...")
+        writer.write_line("")
+
+        # Overload 2: token
+        overload_2_param_names: list[str] = [
+            RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+            RootClientGenerator.TOKEN_PARAMETER_NAME,
+            self._timeout_constructor_parameter_name,
+            RootClientGenerator.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
+            RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
+        ]
+        write_param_block(overload_2_param_names)
+        writer.write_line("")
 
     def _create_class_declaration(
         self,
@@ -198,12 +293,26 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             for param in constructor_parameters
         ]
 
-        snippet = self._context.source_file_factory.create_snippet()
-        snippet.add_expression(
-            self._generated_root_client.async_instantiation
+        # Build snippet(s) for the docstring examples
+        instantiations = (
+            self._generated_root_client.async_instantiations
             if is_async
-            else self._generated_root_client.sync_instantiation
+            else self._generated_root_client.sync_instantiations
         )
+        snippet_parts: List[str] = []
+        for instantiation in instantiations:
+            snippet = self._context.source_file_factory.create_snippet()
+            snippet.add_expression(instantiation)
+            snippet_parts.append(snippet.to_str())
+        combined_snippet = "\n# or ...\n\n".join(snippet_parts)
+
+        # Generate constructor overloads for OAuth token override
+        constructor_overloads = self._get_constructor_overloads(is_async=is_async)
+
+        oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+        is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
+        write_parameter_docstring = not is_oauth_client_credentials
+
         class_declaration = AST.ClassDeclaration(
             name=self._async_class_name if is_async else self._class_name,
             constructor=AST.ClassConstructor(
@@ -213,10 +322,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 body=AST.CodeWriter(
                     self._get_write_constructor_body(is_async=is_async),
                 ),
+                overloads=constructor_overloads,
             ),
-            docstring=AST.Docstring(self._write_root_class_docstring),
-            snippet=snippet.to_str(),
-            write_parameter_docstring=True,
+            docstring=AST.Docstring(
+                lambda writer, is_async=is_async: self._write_root_class_docstring(writer, is_async=is_async)
+            ),
+            snippet=combined_snippet,
+            write_parameter_docstring=write_parameter_docstring,
         )
 
         if self._package.service is not None:
@@ -455,15 +567,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         if self._oauth_scheme is not None:
             oauth = self._oauth_scheme.configuration.get_as_union()
             if oauth.type == "clientCredentials":
-                cred_type_hint = AST.TypeHint.str_()
-                add_validation = False
-                if oauth.client_id_env_var is not None:
-                    add_validation = True
-                    cred_type_hint = AST.TypeHint.optional(cred_type_hint)
+                # For OAuth client credentials, make client_id/client_secret optional
+                # so users can provide a token directly instead
+                # client_id is optional with env var fallback
                 parameters.append(
                     RootClientConstructorParameter(
                         constructor_parameter_name="client_id",
-                        type_hint=cred_type_hint,
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                         initializer=(
                             AST.Expression(
                                 AST.FunctionInvocation(
@@ -475,32 +585,16 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                 )
                             )
                             if oauth.client_id_env_var is not None
-                            else None
+                            else AST.Expression("None")
                         ),
-                        validation_check=(
-                            AST.Expression(
-                                AST.CodeWriter(
-                                    self._get_parameter_validation_writer(
-                                        param_name="client_id",
-                                        environment_variable=oauth.client_id_env_var,
-                                    )
-                                )
-                            )
-                            if add_validation and oauth.client_id_env_var is not None
-                            else None
-                        ),
+                        docs=RootClientGenerator.CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS,
                     ),
                 )
-
-                sec_cred_type_hint = AST.TypeHint.str_()
-                sec_add_validation = False
-                if oauth.client_secret_env_var is not None:
-                    sec_add_validation = True
-                    sec_cred_type_hint = AST.TypeHint.optional(sec_cred_type_hint)
+                # client_secret is optional with env var fallback
                 parameters.append(
                     RootClientConstructorParameter(
                         constructor_parameter_name="client_secret",
-                        type_hint=sec_cred_type_hint,
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
                         initializer=(
                             AST.Expression(
                                 AST.FunctionInvocation(
@@ -512,19 +606,22 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                 )
                             )
                             if oauth.client_secret_env_var is not None
-                            else None
+                            else AST.Expression("None")
                         ),
-                        validation_check=(
-                            AST.Expression(
-                                AST.CodeWriter(
-                                    self._get_parameter_validation_writer(
-                                        param_name="client_secret",
-                                        environment_variable=oauth.client_secret_env_var,
-                                    )
-                                )
-                            )
-                            if sec_add_validation and oauth.client_secret_env_var is not None
-                            else None
+                        docs=RootClientGenerator.CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS,
+                    ),
+                )
+                # Add the token parameter for direct token authentication
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name=self.TOKEN_PARAMETER_NAME,
+                        type_hint=AST.TypeHint.optional(
+                            AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
+                        ),
+                        initializer=AST.Expression("None"),
+                        docs=(
+                            "Authenticate by providing a callable that returns a pre-generated bearer token. "
+                            "In this mode, OAuth client credentials are not required."
                         ),
                     ),
                 )
@@ -578,7 +675,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 ),
                 private_member_name=None,
                 initializer=AST.Expression(AST.TypeHint.none()),
-                docs="The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.",
+                docs=RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS,
             )
         )
         parameters.extend(self._get_literal_header_parameters())
@@ -619,6 +716,102 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
         return parameters
 
+    def _get_constructor_overloads(self, *, is_async: bool) -> Optional[List[AST.FunctionSignature]]:
+        """
+        Generate constructor overloads for OAuth client credentials.
+        Returns two overload signatures:
+        1. OAuth client credentials: client_id + client_secret (required, or optional if env vars configured)
+        2. Direct token: token (required)
+        """
+        if self._oauth_scheme is None:
+            return None
+
+        oauth = self._oauth_scheme.configuration.get_as_union()
+        if oauth.type != "clientCredentials":
+            return None
+
+        # Get base parameters (everything except OAuth-specific params)
+        base_params = self._get_non_oauth_constructor_parameters(is_async=is_async)
+
+        # Overload 1: OAuth client credentials
+        # If env vars are configured, make parameters optional with os.getenv() defaults
+        # Otherwise, keep them required
+        client_id_param: AST.NamedFunctionParameter
+        client_secret_param: AST.NamedFunctionParameter
+
+        if oauth.client_id_env_var is not None:
+            # When there is an environment variable default, model client_id
+            # as optional to match os.getenv() return type for mypy compatibility.
+            client_id_param = AST.NamedFunctionParameter(
+                name="client_id",
+                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                initializer=AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                            qualified_name_excluding_import=("getenv",),
+                        ),
+                        args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
+                    )
+                ),
+            )
+        else:
+            client_id_param = AST.NamedFunctionParameter(
+                name="client_id",
+                type_hint=AST.TypeHint.str_(),
+            )
+
+        if oauth.client_secret_env_var is not None:
+            # Same idea as client_id: use optional type to match os.getenv()
+            # return type for mypy compatibility.
+            client_secret_param = AST.NamedFunctionParameter(
+                name="client_secret",
+                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                initializer=AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                            qualified_name_excluding_import=("getenv",),
+                        ),
+                        args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
+                    )
+                ),
+            )
+        else:
+            client_secret_param = AST.NamedFunctionParameter(
+                name="client_secret",
+                type_hint=AST.TypeHint.str_(),
+            )
+
+        oauth_params = base_params + [client_id_param, client_secret_param]
+        oauth_signature = AST.FunctionSignature(named_parameters=oauth_params)
+
+        # Overload 2: Direct token (token required)
+        token_params = base_params + [
+            AST.NamedFunctionParameter(
+                name=self.TOKEN_PARAMETER_NAME,
+                type_hint=AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_()),
+            ),
+        ]
+        token_signature = AST.FunctionSignature(named_parameters=token_params)
+
+        return [oauth_signature, token_signature]
+
+    def _get_non_oauth_constructor_parameters(self, *, is_async: bool) -> List[AST.NamedFunctionParameter]:
+        """Get constructor parameters excluding OAuth-specific ones (client_id, client_secret, token)."""
+        oauth_param_names = {"client_id", "client_secret", self.TOKEN_PARAMETER_NAME, self.TOKEN_GETTER_PARAM_NAME}
+        all_params = self._get_constructor_parameters(is_async=is_async)
+        return [
+            AST.NamedFunctionParameter(
+                name=param.constructor_parameter_name,
+                type_hint=param.type_hint,
+                initializer=param.initializer,
+                docs=param.docs,
+            )
+            for param in all_params
+            if param.constructor_parameter_name not in oauth_param_names
+        ]
+
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             timeout_local_variable = "_defaulted_timeout"
@@ -655,7 +848,20 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 generated_environment=self._generated_environment,
             )
             use_oauth_token_provider = self._oauth_scheme is not None
-            if use_oauth_token_provider:
+            oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+            is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
+
+            if use_oauth_token_provider and is_oauth_client_credentials:
+                # OAuth client credentials mode: users can provide either token OR client_id/client_secret
+                self._write_oauth_token_override_constructor_body(
+                    writer=writer,
+                    client_wrapper_generator=client_wrapper_generator,
+                    timeout_local_variable=timeout_local_variable,
+                    is_async=is_async,
+                    constructor_parameters=constructor_parameters,
+                )
+            elif use_oauth_token_provider:
+                # Standard OAuth mode
                 client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
                     client_wrapper_generator=client_wrapper_generator,
                     environments_config=self._environments_config,
@@ -697,23 +903,43 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     )
                 )
                 writer.write_newline_if_last_line_not()
-            client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
-                client_wrapper_generator=client_wrapper_generator,
-                environments_config=self._environments_config,
-                timeout_local_variable=timeout_local_variable,
-                is_async=is_async,
-                use_oauth_token_provider=use_oauth_token_provider,
-            )
-            for param in constructor_parameters:
-                if param.private_member_name is not None:
-                    writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
-            writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
-            writer.write_node(
-                AST.ClassInstantiation(
-                    self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
-                    kwargs=client_wrapper_constructor_kwargs,
+                client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
+                    client_wrapper_generator=client_wrapper_generator,
+                    environments_config=self._environments_config,
+                    timeout_local_variable=timeout_local_variable,
+                    is_async=is_async,
+                    use_oauth_token_provider=use_oauth_token_provider,
                 )
-            )
+                for param in constructor_parameters:
+                    if param.private_member_name is not None:
+                        writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+                writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                        kwargs=client_wrapper_constructor_kwargs,
+                    )
+                )
+            else:
+                # No OAuth
+                client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
+                    client_wrapper_generator=client_wrapper_generator,
+                    environments_config=self._environments_config,
+                    timeout_local_variable=timeout_local_variable,
+                    is_async=is_async,
+                    use_oauth_token_provider=use_oauth_token_provider,
+                )
+                for param in constructor_parameters:
+                    if param.private_member_name is not None:
+                        writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+                writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                        kwargs=client_wrapper_constructor_kwargs,
+                    )
+                )
+
             if self._package.service is not None:
                 writer.write_newline_if_last_line_not()
                 writer.write_node(
@@ -741,6 +967,133 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._initialize_nested_clients(writer=writer, is_async=is_async, declare_client_wrapper=False)
 
         return _write_constructor_body
+
+    def _write_oauth_token_override_constructor_body(
+        self,
+        *,
+        writer: AST.NodeWriter,
+        client_wrapper_generator: ClientWrapperGenerator,
+        timeout_local_variable: str,
+        is_async: bool,
+        constructor_parameters: List[RootClientConstructorParameter],
+    ) -> None:
+        """
+        Writes the constructor body for OAuth token override mode.
+        This allows users to provide either a direct token OR client_id/client_secret.
+        """
+        # Write private member assignments first
+        for param in constructor_parameters:
+            if param.private_member_name is not None:
+                writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+
+        # if token is not None:
+        writer.write_line(f"if {self.TOKEN_PARAMETER_NAME} is not None:")
+        with writer.indent():
+            # Direct token mode - use the provided callable for the client wrapper
+            client_wrapper_constructor_kwargs = self._get_client_wrapper_kwargs(
+                client_wrapper_generator=client_wrapper_generator,
+                environments_config=self._environments_config,
+                timeout_local_variable=timeout_local_variable,
+                is_async=is_async,
+                exclude_auth=True,
+            )
+            # Add token to kwargs - prefer the explicit override, otherwise use the provided callable
+            wrapper_bearer_token_kwarg_name = self._get_wrapper_bearer_token_kwarg_name(
+                client_wrapper_generator=client_wrapper_generator
+            )
+            client_wrapper_constructor_kwargs.append(
+                (
+                    wrapper_bearer_token_kwarg_name,
+                    AST.Expression(
+                        f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else {self.TOKEN_PARAMETER_NAME}"
+                    ),
+                )
+            )
+            writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+            writer.write_node(
+                AST.ClassInstantiation(
+                    self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                    kwargs=client_wrapper_constructor_kwargs,
+                )
+            )
+            writer.write_newline_if_last_line_not()
+
+        # elif client_id is not None and client_secret is not None:
+        writer.write_line("elif client_id is not None and client_secret is not None:")
+        with writer.indent():
+            # OAuth client credentials mode
+            oauth_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
+                client_wrapper_generator=client_wrapper_generator,
+                environments_config=self._environments_config,
+                timeout_local_variable=timeout_local_variable,
+                is_async=is_async,
+                ignore_httpx_constructor_parameter=True,
+                exclude_auth=True,
+            )
+            writer.write("oauth_token_provider = ")
+            oauth_token_provider_class = (
+                self._context.core_utilities.get_async_oauth_token_provider()
+                if is_async
+                else self._context.core_utilities.get_oauth_token_provider()
+            )
+            writer.write_node(
+                AST.ClassInstantiation(
+                    class_=oauth_token_provider_class,
+                    kwargs=[
+                        (
+                            "client_id",
+                            AST.Expression("client_id"),
+                        ),
+                        (
+                            "client_secret",
+                            AST.Expression("client_secret"),
+                        ),
+                        (
+                            "client_wrapper",
+                            AST.Expression(
+                                AST.ClassInstantiation(
+                                    class_=self._context.core_utilities.get_reference_to_client_wrapper(
+                                        is_async=is_async
+                                    ),
+                                    kwargs=oauth_client_wrapper_kwargs,
+                                ),
+                            ),
+                        ),
+                    ],
+                )
+            )
+            writer.write_newline_if_last_line_not()
+            # Now create the actual client wrapper with oauth token provider
+            final_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
+                client_wrapper_generator=client_wrapper_generator,
+                environments_config=self._environments_config,
+                timeout_local_variable=timeout_local_variable,
+                is_async=is_async,
+                use_oauth_token_provider=True,
+            )
+            writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
+            writer.write_node(
+                AST.ClassInstantiation(
+                    self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async),
+                    kwargs=final_client_wrapper_kwargs,
+                )
+            )
+            writer.write_newline_if_last_line_not()
+
+        # else: raise error
+        writer.write_line("else:")
+        with writer.indent():
+            writer.write("raise ")
+            writer.write_node(
+                self._context.core_utilities.instantiate_api_error(
+                    headers=None,
+                    status_code=None,
+                    body=AST.Expression(
+                        "\"The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'\""
+                    ),
+                )
+            )
+            writer.write_newline_if_last_line_not()
 
     def _get_client_wrapper_kwargs(
         self,
@@ -792,12 +1145,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
 
         if use_oauth_token_provider:
+            wrapper_bearer_token_kwarg_name = self._get_wrapper_bearer_token_kwarg_name(
+                client_wrapper_generator=client_wrapper_generator
+            )
             if is_async:
                 # For async clients, pass the sync token_getter_override to token (if provided)
                 # and the async oauth_token_provider.get_token to async_token
                 client_wrapper_constructor_kwargs.append(
                     (
-                        "token",
+                        wrapper_bearer_token_kwarg_name,
                         AST.Expression(f"{self.TOKEN_GETTER_PARAM_NAME}"),
                     )
                 )
@@ -810,7 +1166,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             else:
                 client_wrapper_constructor_kwargs.append(
                     (
-                        "token",
+                        wrapper_bearer_token_kwarg_name,
                         AST.Expression(
                             f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else oauth_token_provider.get_token"
                         ),
@@ -933,15 +1289,17 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             class_name: str,
             async_class_name: str,
             constructor_parameters: List[ConstructorParameter],
+            oauth_token_override: bool = False,
         ):
             self._module_path = module_path
             self._class_name = class_name
             self._async_class_name = async_class_name
             self._constructor_parameters = constructor_parameters
+            self._oauth_token_override = oauth_token_override
 
         def build(self) -> GeneratedRootClient:
-            def client_snippet_writer(class_name: str) -> typing.Tuple[AST.ClassReference, CodeWriterFunction]:
-                client_class_reference = AST.ClassReference(
+            def create_class_reference(class_name: str) -> AST.ClassReference:
+                return AST.ClassReference(
                     qualified_name_excluding_import=(),
                     import_=AST.ReferenceImport(
                         module=AST.Module.snippet(
@@ -951,25 +1309,52 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ),
                 )
 
+            def create_snippet_writer(
+                class_reference: AST.ClassReference,
+                args: List[AST.Expression],
+            ) -> CodeWriterFunction:
                 def write_client_snippet(writer: AST.NodeWriter) -> None:
                     client_instantiation = AST.ClassInstantiation(
-                        class_=client_class_reference,
-                        args=[
-                            param.initializer for param in self._constructor_parameters if param.initializer is not None
-                        ],
+                        class_=class_reference,
+                        args=args,
                     )
-
                     writer.write("client = ")
                     writer.write_node(AST.Expression(client_instantiation))
                     writer.write_newline_if_last_line_not()
 
-                return client_class_reference, write_client_snippet
+                return write_client_snippet
 
-            async_class_reference, async_class_snippet_writer = client_snippet_writer(self._async_class_name)
-            sync_class_reference, sync_class_snippet_writer = client_snippet_writer(self._class_name)
+            async_class_reference = create_class_reference(self._async_class_name)
+            sync_class_reference = create_class_reference(self._class_name)
+
+            # Default instantiation args (all parameters with initializers)
+            default_args = [
+                param.initializer for param in self._constructor_parameters if param.initializer is not None
+            ]
+
+            async_instantiations: List[AST.Expression] = [
+                AST.Expression(AST.CodeWriter(create_snippet_writer(async_class_reference, default_args)))
+            ]
+            sync_instantiations: List[AST.Expression] = [
+                AST.Expression(AST.CodeWriter(create_snippet_writer(sync_class_reference, default_args)))
+            ]
+
+            # Add token-based instantiation example if oauth_token_override is enabled
+            if self._oauth_token_override:
+                token_args = [
+                    AST.Expression('base_url="https://yourhost.com/path/to/api"'),
+                    AST.Expression('token="YOUR_BEARER_TOKEN"'),
+                ]
+                async_instantiations.append(
+                    AST.Expression(AST.CodeWriter(create_snippet_writer(async_class_reference, token_args)))
+                )
+                sync_instantiations.append(
+                    AST.Expression(AST.CodeWriter(create_snippet_writer(sync_class_reference, token_args)))
+                )
+
             return GeneratedRootClient(
-                async_instantiation=AST.Expression(AST.CodeWriter(async_class_snippet_writer)),
+                async_instantiations=async_instantiations,
                 async_client=RootClient(class_reference=async_class_reference, parameters=self._constructor_parameters),
-                sync_instantiation=AST.Expression(AST.CodeWriter(sync_class_snippet_writer)),
+                sync_instantiations=sync_instantiations,
                 sync_client=RootClient(class_reference=sync_class_reference, parameters=self._constructor_parameters),
             )

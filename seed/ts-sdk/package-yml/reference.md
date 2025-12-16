@@ -51,7 +51,6 @@ await client.echo({
 </dl>
 </details>
 
-## 
 ## Service
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">nop</a>(nestedId) -> void</code></summary>
 <dl>

@@ -546,7 +546,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Successfully subscribed"
           },
           "docs": "Subscribe to receive webhook notifications",
           "v2Examples": {
@@ -624,7 +625,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Successfully subscribed"
               }
             ]
           }

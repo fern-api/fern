@@ -34,15 +34,17 @@ class EmailNotification extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->emailAddress = $values['emailAddress'];$this->subject = $values['subject'];$this->htmlContent = $values['htmlContent'] ?? null;
+    ) {
+        $this->emailAddress = $values['emailAddress'];
+        $this->subject = $values['subject'];
+        $this->htmlContent = $values['htmlContent'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

@@ -435,7 +435,8 @@
               },
               "type": "json"
             },
-            "statusCode": 201
+            "statusCode": 201,
+            "docs": "The sample response"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -715,7 +716,8 @@
               },
               "type": "json"
             },
-            "statusCode": 201
+            "statusCode": 201,
+            "docs": "The sample response"
           },
           "errors": [],
           "userSpecifiedExamples": [],

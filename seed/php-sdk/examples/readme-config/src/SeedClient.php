@@ -19,7 +19,7 @@ use Seed\Types\BasicType;
 use Seed\Types\ComplexType;
 use Seed\Types\Identifier;
 
-class SeedClient 
+class SeedClient
 {
     /**
      * @var FileClient $file
@@ -65,29 +65,28 @@ class SeedClient
     public function __construct(
         ?string $token = null,
         ?array $options = null,
-    )
-    {
+    ) {
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($token != null){
+        if ($token != null) {
             $defaultHeaders['Authorization'] = "Bearer $token";
         }
-        
+
         $this->options = $options ?? [];
-        
+
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-        
+
         $this->client = new RawClient(
             options: $this->options,
         );
-        
+
         $this->file = new FileClient($this->client, $this->options);
         $this->health = new HealthClient($this->client, $this->options);
         $this->service = new ServiceClient($this->client, $this->options);
@@ -107,7 +106,8 @@ class SeedClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function echo_(string $request, ?array $options = null): string {
+    public function echo_(string $request, ?array $options = null): string
+    {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -120,15 +120,15 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -163,7 +163,8 @@ class SeedClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createType(string $request, ?array $options = null): Identifier {
+    public function createType(string $request, ?array $options = null): Identifier
+    {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -176,15 +177,15 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return Identifier::fromJson($json);
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

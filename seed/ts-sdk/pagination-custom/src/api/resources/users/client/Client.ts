@@ -9,7 +9,7 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedPagination from "../../../index.js";
 
 export declare namespace UsersClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
@@ -30,17 +30,10 @@ export class UsersClient {
      *         starting_after: "starting_after"
      *     })
      */
-    public listUsernamesCustom(
+    public async listUsernamesCustom(
         request: SeedPagination.ListUsernamesRequestCustom = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPagination.UsernameCursor> {
-        return core.HttpResponsePromise.fromPromise(this.__listUsernamesCustom(request, requestOptions));
-    }
-
-    private async __listUsernamesCustom(
-        request: SeedPagination.ListUsernamesRequestCustom = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> {
+    ): Promise<core.MyPager<string, SeedPagination.UsernameCursor>> {
         const { starting_after: startingAfter } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (startingAfter != null) {
@@ -48,7 +41,7 @@ export class UsersClient {
         }
 
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
+        const _request = {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
@@ -62,19 +55,26 @@ export class UsersClient {
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
+        };
+        const _sendRequest = async (request: core.Fetcher.Args) => {
+            const _response = await core.fetcher<SeedPagination.UsernameCursor>(request);
+            if (_response.ok) {
+                return _response;
+            }
+            if (_response.error.reason === "status-code") {
+                throw new errors.SeedPaginationError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse,
+                });
+            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+        };
+        return core.createMyPager<string, SeedPagination.UsernameCursor>({
+            sendRequest: _sendRequest,
+            initialHttpRequest: _request,
+            clientOptions: this._options,
+            requestOptions: requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedPagination.UsernameCursor, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPaginationError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
     }
 }

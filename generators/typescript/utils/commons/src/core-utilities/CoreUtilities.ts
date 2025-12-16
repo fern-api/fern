@@ -1,5 +1,6 @@
 import { Auth } from "./Auth";
 import { CallbackQueue } from "./CallbackQueue";
+import { CustomPagination } from "./CustomPagination";
 import { Fetcher } from "./Fetcher";
 import { FileUtils } from "./FileUtils";
 import { FormDataUtils } from "./FormDataUtils";
@@ -21,6 +22,7 @@ export interface CoreUtilities {
     formDataUtils: FormDataUtils;
     runtime: Runtime;
     pagination: Pagination;
+    customPagination: CustomPagination;
     utils: Utils;
     websocket: Websocket;
     fileUtils: FileUtils;

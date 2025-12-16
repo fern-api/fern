@@ -1,0 +1,81 @@
+openapi: 3.0.1
+info:
+  title: Nullable AllOf Extends Test
+  version: ''
+paths:
+  /test:
+    get:
+      description: Returns a RootObject which inherits from a nullable schema.
+      operationId: getTest
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootObject'
+              examples:
+                Example1:
+                  value:
+                    normalField: normalField
+      summary: Get Test
+    post:
+      description: Creates a test object with nullable allOf in request body.
+      operationId: createTest
+      tags:
+        - ''
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RootObject'
+              examples:
+                Example1:
+                  value:
+                    normalField: normalField
+      summary: Create Test
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RootObject'
+            examples:
+              Example1:
+                value: {}
+components:
+  schemas:
+    RootObject:
+      title: RootObject
+      type: object
+      description: Object inheriting from a nullable schema via allOf.
+      properties: {}
+      allOf:
+        - $ref: '#/components/schemas/NormalObject'
+        - $ref: '#/components/schemas/NullableObject'
+    NormalObject:
+      title: NormalObject
+      type: object
+      description: A standard object with no nullable issues.
+      properties:
+        normalField:
+          type: string
+          nullable: true
+    NullableObject:
+      title: NullableObject
+      type: object
+      description: This schema has nullable:true at the top level.
+      properties:
+        nullableField:
+          type: string
+          nullable: true
+  securitySchemes: {}
+servers:
+  - url: https://api.example.com
+    description: Default

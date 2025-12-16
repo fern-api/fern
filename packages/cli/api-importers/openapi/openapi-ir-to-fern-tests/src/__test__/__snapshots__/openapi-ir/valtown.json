@@ -475,11 +475,7 @@
                   "type": "primitive"
                 },
                 "profileImageUrl": {
-                  "value": {
-                    "value": "profileImageUrl",
-                    "type": "string"
-                  },
-                  "type": "primitive"
+                  "type": "null"
                 },
                 "url": {
                   "value": {
@@ -1390,11 +1386,7 @@
                   "type": "primitive"
                 },
                 "profileImageUrl": {
-                  "value": {
-                    "value": "profileImageUrl",
-                    "type": "string"
-                  },
-                  "type": "primitive"
+                  "type": "null"
                 },
                 "url": {
                   "value": {
@@ -3334,11 +3326,7 @@
                   "type": "primitive"
                 },
                 "profileImageUrl": {
-                  "value": {
-                    "value": "profileImageUrl",
-                    "type": "string"
-                  },
-                  "type": "primitive"
+                  "type": "null"
                 },
                 "url": {
                   "value": {
@@ -4606,13 +4594,6 @@
                       "value": {
                         "value": 0,
                         "type": "double"
-                      },
-                      "type": "primitive"
-                    },
-                    "lastInsertRowid": {
-                      "value": {
-                        "value": "lastInsertRowid",
-                        "type": "string"
                       },
                       "type": "primitive"
                     }

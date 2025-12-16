@@ -27,15 +27,16 @@ class ErroredResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->submissionId = $values['submissionId'];$this->errorInfo = $values['errorInfo'];
+    ) {
+        $this->submissionId = $values['submissionId'];
+        $this->errorInfo = $values['errorInfo'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

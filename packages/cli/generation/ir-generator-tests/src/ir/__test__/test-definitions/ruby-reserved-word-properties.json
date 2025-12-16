@@ -1399,7 +1399,8 @@
                             }
                         },
                         "status-code": 201,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],

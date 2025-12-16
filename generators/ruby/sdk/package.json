@@ -20,15 +20,17 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
+    "dist:cli": "node build.mjs",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
+    "publish:cli": "turbo run dist:cli --filter . && npm publish ./dist",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -45,7 +47,6 @@
     "@fern-fern/ir-sdk": "^39",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "tsup": "^8.5.0",
     "typescript": "5.9.3",
     "vitest": "^4.0.8",
     "zod": "^3.22.3"

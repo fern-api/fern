@@ -6,16 +6,19 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { HttpResponseBody } from "./HttpResponseBody";
+import { WithDocs } from "../../commons/types/WithDocs";
 
 export const HttpResponse: core.serialization.ObjectSchema<serializers.HttpResponse.Raw, FernIr.HttpResponse> =
-    core.serialization.objectWithoutOptionalProperties({
-        statusCode: core.serialization.property("status-code", core.serialization.number().optional()),
-        isWildcardStatusCode: core.serialization.boolean().optional(),
-        body: HttpResponseBody.optional(),
-    });
+    core.serialization
+        .objectWithoutOptionalProperties({
+            statusCode: core.serialization.property("status-code", core.serialization.number().optional()),
+            isWildcardStatusCode: core.serialization.boolean().optional(),
+            body: HttpResponseBody.optional(),
+        })
+        .extend(WithDocs);
 
 export declare namespace HttpResponse {
-    export interface Raw {
+    export interface Raw extends WithDocs.Raw {
         "status-code"?: number | null;
         isWildcardStatusCode?: boolean | null;
         body?: HttpResponseBody.Raw | null;

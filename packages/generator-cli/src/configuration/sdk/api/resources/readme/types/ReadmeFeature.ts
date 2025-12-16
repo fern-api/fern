@@ -8,7 +8,7 @@ import * as FernGeneratorCli from "../../../index";
  * A single feature supported by a generator (e.g. PAGINATION).
  */
 export interface ReadmeFeature extends FernGeneratorCli.FeatureSpec {
-    snippets?: string[];
+    snippets?: FernGeneratorCli.Snippet[];
     /**
      * If true, the feature block should be rendered even if we don't receive a snippet for it.
      * This is useful for features that are always supported, but might not require a snippet

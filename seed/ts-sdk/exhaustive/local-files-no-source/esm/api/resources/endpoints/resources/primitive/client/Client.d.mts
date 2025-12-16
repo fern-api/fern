@@ -2,8 +2,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
 export declare namespace PrimitiveClient {
-    interface Options extends BaseClientOptions {
-    }
+    type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }

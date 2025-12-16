@@ -1,5 +1,5 @@
-import { getBinaryResponse } from "./BinaryResponse.js";
 import { fromJson } from "../json.js";
+import { getBinaryResponse } from "./BinaryResponse.js";
 
 export async function getResponseBody(response: Response, responseType?: string): Promise<unknown> {
     switch (responseType) {
@@ -43,7 +43,7 @@ export async function getResponseBody(response: Response, responseType?: string)
         try {
             const responseBody = fromJson(text);
             return responseBody;
-        } catch (err) {
+        } catch (_err) {
             return {
                 ok: false,
                 error: {

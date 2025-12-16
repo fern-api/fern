@@ -213,7 +213,7 @@ export async function parseDocsConfiguration({
 
         aiChatConfig: aiSearch ?? aiChat,
 
-        pageActions: convertPageActions(pageActions),
+        pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
 
         experimental
     };
@@ -228,7 +228,8 @@ function convertLogoReference(
               dark: resolveFilepath(rawLogo.dark, absoluteFilepathToDocsConfig),
               light: resolveFilepath(rawLogo.light, absoluteFilepathToDocsConfig),
               height: rawLogo.height,
-              href: rawLogo.href != null ? CjsFdrSdk.Url(rawLogo.href) : undefined
+              href: rawLogo.href != null ? CjsFdrSdk.Url(rawLogo.href) : undefined,
+              rightText: rawLogo.rightText
           }
         : undefined;
 }
@@ -315,7 +316,8 @@ async function convertJsConfig(
 }
 
 function convertPageActions(
-    pageActions: docsYml.RawSchemas.PageActionsConfig | undefined
+    pageActions: docsYml.RawSchemas.PageActionsConfig | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): docsYml.ParsedDocsConfiguration["pageActions"] {
     if (pageActions == null) {
         return undefined;
@@ -329,10 +331,13 @@ function convertPageActions(
             askAi: pageActions.options?.askAi ?? true,
             copyPage: pageActions.options?.copyPage ?? true,
             viewAsMarkdown: pageActions.options?.viewAsMarkdown ?? true,
-            openAi: pageActions.options?.chatgpt ?? false,
-            claude: pageActions.options?.claude ?? false,
-            cursor: pageActions.options?.cursor ?? false,
-            vscode: pageActions.options?.vscode ?? false
+            openAi: pageActions.options?.chatgpt ?? true,
+            claude: pageActions.options?.claude ?? true,
+            cursor: pageActions.options?.cursor ?? true,
+            vscode: pageActions.options?.vscode ?? false,
+            custom: (pageActions.options?.custom ?? []).map((action) =>
+                convertCustomPageAction(action, absoluteFilepathToDocsConfig)
+            )
         }
     };
 }
@@ -358,6 +363,19 @@ function convertPageActionOption(
         default:
             assertNever(option);
     }
+}
+
+function convertCustomPageAction(
+    customAction: docsYml.RawSchemas.CustomPageAction,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): docsYml.ParsedCustomPageAction {
+    return {
+        title: customAction.title,
+        subtitle: customAction.subtitle,
+        url: customAction.url,
+        icon: resolveIconPath(customAction.icon, absoluteFilepathToDocsConfig),
+        default: customAction.default
+    };
 }
 
 function convertThemeConfig(

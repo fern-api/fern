@@ -26,14 +26,14 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
-    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-java-sdk:latest ../../..",
+    "dist:cli": "node build.mjs",
+    "dockerTagLatest": "docker build -f ./Dockerfile -t fernapi/fern-java-sdk:latest ../../..",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
-    "podmanTagLatest": "pnpm dist:cli && podman build -f ./Dockerfile -t fernapi/fern-java-sdk:latest ../../..",
-    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
+    "podmanTagLatest": "podman build -f ./Dockerfile -t fernapi/fern-java-sdk:latest ../../..",
+    "publish:cli": "turbo run dist:cli --filter . && npm publish ./dist",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -54,7 +54,6 @@
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
-    "tsup": "^8.5.0",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

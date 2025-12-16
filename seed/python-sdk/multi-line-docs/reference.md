@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -74,7 +74,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -> AsyncHttpResponse[User]</code></summary>
 <dl>
 <dd>
 

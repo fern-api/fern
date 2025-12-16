@@ -382,6 +382,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.SdkConfig,
 			g.config.ModuleConfig,
 			g.config.Version,
+			ir.Environments,
 		); err != nil {
 			return nil, err
 		}
@@ -439,7 +440,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers)
+		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers, ir.Environments)
 		if err != nil {
 			return nil, err
 		}
@@ -570,9 +571,15 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newOptionalTestFile(g.coordinator))
 		}
 		files = append(files, newApiErrorFile(g.coordinator))
+		if hasOAuthScheme(ir.Auth) {
+			files = append(files, newOAuthFile(g.coordinator))
+		}
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newHttpCoreFile(g.coordinator))
 		files = append(files, newHttpInternalFile(g.coordinator))
+		if isMultipleBaseUrlsEnvironment(ir.Environments) {
+			files = append(files, newEnvironmentInternalFile(g.coordinator))
+		}
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
@@ -1069,6 +1076,19 @@ func declaredTypeNamesForTypeIDs(ir *fernir.IntermediateRepresentation, typeIDs 
 	return result
 }
 
+// hasOAuthScheme returns true if the auth configuration includes an OAuth scheme.
+func hasOAuthScheme(auth *ir.ApiAuth) bool {
+	if auth == nil {
+		return false
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Oauth != nil {
+			return true
+		}
+	}
+	return false
+}
+
 // newPointerFile returns a *File containing the pointer helper functions
 // used to more easily instantiate pointers to primitive values (e.g. *string).
 //
@@ -1200,6 +1220,14 @@ func newApiErrorFile(coordinator *coordinator.Client) *File {
 	)
 }
 
+func newOAuthFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/oauth.go",
+		[]byte(oauthFile),
+	)
+}
+
 // func newErrorDecoderFile(coordinator *coordinator.Client, baseImportPath string) *File {
 // 	content := replaceCoreImportPath(errorDecoderFile, baseImportPath)
 // 	return NewFile(
@@ -1231,6 +1259,14 @@ func newHttpInternalFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"internal/http.go",
 		[]byte(httpInternalFile),
+	)
+}
+
+func newEnvironmentInternalFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"internal/environment.go",
+		[]byte(environmentInternalFile),
 	)
 }
 

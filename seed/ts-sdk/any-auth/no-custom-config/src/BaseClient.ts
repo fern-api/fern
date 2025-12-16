@@ -7,14 +7,10 @@ import { OAuthAuthProvider } from "./auth/OAuthAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
-export interface BaseClientOptions {
+export type BaseClientOptions = {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    token?: core.Supplier<core.BearerToken | undefined>;
-    apiKey?: core.Supplier<string | undefined>;
-    clientId?: core.Supplier<string>;
-    clientSecret?: core.Supplier<string>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -25,7 +21,7 @@ export interface BaseClientOptions {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
-}
+} & AnyAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */
@@ -40,16 +36,19 @@ export interface BaseRequestOptions {
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
 }
 
-export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
+export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: core.logging.Logger;
     authProvider?: core.AuthProvider;
 };
 
-export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
-    authProvider: core.AuthProvider;
-};
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions> =
+    NormalizedClientOptions<T> & {
+        authProvider: core.AuthProvider;
+    };
 
-export function normalizeClientOptions<T extends BaseClientOptions>(options: T): NormalizedClientOptions<T> {
+export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
+    options: T,
+): NormalizedClientOptions<T> {
     const headers = mergeHeaders(
         {
             "X-Fern-Language": "JavaScript",
@@ -69,7 +68,7 @@ export function normalizeClientOptions<T extends BaseClientOptions>(options: T):
     } as NormalizedClientOptions<T>;
 }
 
-export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
+export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
     options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
@@ -83,14 +82,14 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
             authProviders.push(new HeaderAuthProvider(normalizedWithNoOpAuthProvider));
         }
         if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
-            authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider));
+            authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider));
         }
         return new AnyAuthProvider(authProviders);
     })();
     return normalized;
 }
 
-function withNoOpAuthProvider<T extends BaseClientOptions>(
+function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
     options: NormalizedClientOptions<T>,
 ): NormalizedClientOptionsWithAuth<T> {
     return {

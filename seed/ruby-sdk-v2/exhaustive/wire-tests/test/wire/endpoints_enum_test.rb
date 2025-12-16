@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "test_helper"
+require_relative "wire_helper"
 require "net/http"
 require "json"
 require "uri"
@@ -39,10 +39,13 @@ class EndpointsEnumWireTest < Minitest::Test
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.enum.get_and_return_enum(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                 additional_headers: {
-                                                                   "X-Test-Id" => "endpoints.enum.get_and_return_enum.0"
-                                                                 } })
+    client.endpoints.enum.get_and_return_enum(
+      request: "SUNNY",
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.enum.get_and_return_enum.0"
+                         } }
+    )
 
     verify_request_count(
       test_id: test_id,

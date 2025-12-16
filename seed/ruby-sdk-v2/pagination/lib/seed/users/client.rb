@@ -43,7 +43,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -87,7 +88,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -127,7 +129,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users",
-            body: Seed::Users::Types::ListUsersBodyCursorPaginationRequest.new(body_bag).to_h
+            body: Seed::Users::Types::ListUsersBodyCursorPaginationRequest.new(body_bag).to_h,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -178,7 +181,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -229,7 +233,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -270,7 +275,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/users",
-            body: Seed::Users::Types::ListUsersBodyOffsetPaginationRequest.new(body_bag).to_h
+            body: Seed::Users::Types::ListUsersBodyOffsetPaginationRequest.new(body_bag).to_h,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -319,7 +325,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -368,7 +375,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -412,7 +420,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -456,7 +465,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -500,7 +510,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -544,7 +555,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -587,7 +599,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -597,6 +610,52 @@ module Seed
           code = response.code.to_i
           if code.between?(200, 299)
             Seed::Users::Types::UsernameContainer.load(response.body)
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+      end
+
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer, nil] :page
+      #
+      # @return [Seed::Users::Types::ListUsersOptionalDataPaginationResponse]
+      def list_with_optional_data(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        query_param_names = %i[page]
+        query_params = {}
+        query_params["page"] = params[:page] if params.key?(:page)
+        params.except(*query_param_names)
+
+        Seed::Internal::OffsetItemIterator.new(
+          initial_page: query_params[:page],
+          item_field: :data,
+          has_next_field: nil,
+          step: false
+        ) do |next_page|
+          query_params[:page] = next_page
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "GET",
+            path: "/users/optional-data",
+            query: query_params,
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Users::Types::ListUsersOptionalDataPaginationResponse.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
             raise error_class.new(response.body, code: code)

@@ -4,11 +4,10 @@ import { BearerAuthProvider } from "./auth/BearerAuthProvider.js";
 import * as core from "./core/index.js";
 import type * as environments from "./environments.js";
 
-export interface BaseClientOptions {
+export type BaseClientOptions = {
     environment: core.Supplier<environments.SeedSimpleApiEnvironment | string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    token: core.Supplier<core.BearerToken>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -19,7 +18,7 @@ export interface BaseClientOptions {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
-}
+} & BearerAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */
@@ -34,23 +33,26 @@ export interface BaseRequestOptions {
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
 }
 
-export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
+export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: core.logging.Logger;
     authProvider?: core.AuthProvider;
 };
 
-export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
-    authProvider: core.AuthProvider;
-};
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions> =
+    NormalizedClientOptions<T> & {
+        authProvider: core.AuthProvider;
+    };
 
-export function normalizeClientOptions<T extends BaseClientOptions>(options: T): NormalizedClientOptions<T> {
+export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
+    options: T,
+): NormalizedClientOptions<T> {
     return {
         ...options,
         logging: core.logging.createLogger(options?.logging),
     } as NormalizedClientOptions<T>;
 }
 
-export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
+export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
     options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
@@ -59,7 +61,7 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     return normalized;
 }
 
-function withNoOpAuthProvider<T extends BaseClientOptions>(
+function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
     options: NormalizedClientOptions<T>,
 ): NormalizedClientOptionsWithAuth<T> {
     return {

@@ -134,6 +134,17 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] = this.getOptionalNullableDocumentation();
         }
 
+        // Always show OAuth token override documentation when OAuth client credentials are present
+        if (this.hasOAuthClientCredentials()) {
+            const oauthDoc = this.getOAuthTokenOverrideDocumentation();
+            // Append to existing Usage addendum or create new one
+            if (addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage]) {
+                addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] += "\n\n" + oauthDoc;
+            } else {
+                addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] = oauthDoc;
+            }
+        }
+
         return addendumsByFeatureId;
     }
 
@@ -160,6 +171,44 @@ UpdateRequest request = UpdateRequest.builder()
 
 - **Required fields**: For required fields, you cannot use \`absent()\`. Required fields must always be present with either a non-null value or explicitly set to null using \`ofNull()\`.
 - **Type safety**: \`OptionalNullable<T>\` is not fully type-safe since all three states use the same type, but it provides a cleaner API than nested \`Optional<Optional<T>>\` for handling three-state nullable semantics.`;
+    }
+
+    private hasOAuthClientCredentials(): boolean {
+        for (const authScheme of this.context.ir.auth.schemes) {
+            if (authScheme.type === "oauth") {
+                if (authScheme.configuration.type === "clientCredentials") {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private getOAuthTokenOverrideDocumentation(): string {
+        const clientClassName = this.context.getRootClientClassName();
+        return `## Authentication
+
+This SDK supports two authentication methods:
+
+### Option 1: Direct Bearer Token
+
+If you already have a valid access token, you can use it directly:
+
+\`\`\`java
+${clientClassName} client = ${clientClassName}.withToken("your-access-token")
+    .url("https://api.example.com")
+    .build();
+\`\`\`
+
+### Option 2: OAuth Client Credentials
+
+The SDK can automatically handle token acquisition and refresh:
+
+\`\`\`java
+${clientClassName} client = ${clientClassName}.withCredentials("client-id", "client-secret")
+    .url("https://api.example.com")
+    .build();
+\`\`\``;
     }
 
     private getPrerenderedSnippetsForFeature(
@@ -359,13 +408,16 @@ UpdateRequest request = UpdateRequest.builder()
     }
 
     private renderTimeoutsSnippet(endpoint: EndpointWithFilepath): string {
+        const defaultTimeout = this.context.customConfig?.["default-timeout-in-seconds"] ?? 60;
+        const timeoutValue = String(defaultTimeout);
+
         const requestOptionsClassReference = this.context.getRequestOptionsClassReference();
         const requestOptionsInitialization = java.TypeLiteral.builder({
             classReference: requestOptionsClassReference,
             parameters: [
                 {
                     name: "timeout",
-                    value: java.TypeLiteral.raw(java.codeblock("10"))
+                    value: java.TypeLiteral.raw(java.codeblock(timeoutValue))
                 }
             ]
         });
@@ -381,7 +433,7 @@ UpdateRequest request = UpdateRequest.builder()
             parameters: [
                 {
                     name: "timeout",
-                    value: java.TypeLiteral.raw(java.codeblock("10"))
+                    value: java.TypeLiteral.raw(java.codeblock(timeoutValue))
                 }
             ]
         });

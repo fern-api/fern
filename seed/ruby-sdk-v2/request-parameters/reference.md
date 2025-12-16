@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.create_username(request) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_username</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -61,6 +61,14 @@ client.user.create_username(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -69,7 +77,7 @@ client.user.create_username(
 </dl>
 </details>
 
-<details><summary><code>client.user.create_username_with_referenced_type(request) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_username_with_referenced_type</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -82,7 +90,12 @@ client.user.create_username(
 <dd>
 
 ```ruby
-client.user.create_username_with_referenced_type(tags: ['tags', 'tags']);
+client.user.create_username_with_referenced_type(
+  tags: ['tags', 'tags'],
+  username: 'username',
+  password: 'password',
+  name: 'test'
+);
 ```
 </dd>
 </dl>
@@ -109,6 +122,14 @@ client.user.create_username_with_referenced_type(tags: ['tags', 'tags']);
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -117,7 +138,7 @@ client.user.create_username_with_referenced_type(tags: ['tags', 'tags']);
 </dl>
 </details>
 
-<details><summary><code>client.user.create_username_optional(request) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_username_optional</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -130,7 +151,7 @@ client.user.create_username_with_referenced_type(tags: ['tags', 'tags']);
 <dd>
 
 ```ruby
-client.user.create_username_optional();
+client.user.create_username_optional(request: {});
 ```
 </dd>
 </dl>
@@ -149,6 +170,14 @@ client.user.create_username_optional();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -157,7 +186,7 @@ client.user.create_username_optional();
 </dl>
 </details>
 
-<details><summary><code>client.user.get_username() -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_username</a>() -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -341,6 +370,14 @@ client.user.get_username(
 <dd>
 
 **big_int_param:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>

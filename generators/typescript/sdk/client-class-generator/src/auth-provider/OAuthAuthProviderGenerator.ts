@@ -1,7 +1,7 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
-import { type ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
+import { type ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
-import { Scope, StructureKind, ts } from "ts-morph";
+import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator";
 
@@ -15,7 +15,9 @@ export declare namespace OAuthAuthProviderGenerator {
 }
 
 const CLASS_NAME = "OAuthAuthProvider";
+const TOKEN_OVERRIDE_CLASS_NAME = "OAuthTokenOverrideAuthProvider";
 const OPTIONS_TYPE_NAME = "Options";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 const OPTIONS_PARAM_NAME = "options";
 const CLIENT_ID_VAR_NAME = "clientId";
 const CLIENT_SECRET_VAR_NAME = "clientSecret";
@@ -29,6 +31,8 @@ const AUTH_CLIENT_FIELD_NAME = "_authClient";
 const ACCESS_TOKEN_FIELD_NAME = "_accessToken";
 const EXPIRES_AT_FIELD_NAME = "_expiresAt";
 const REFRESH_PROMISE_FIELD_NAME = "_refreshPromise";
+const TOKEN_FIELD_NAME = "_token";
+const DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME = "token";
 
 export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -69,13 +73,75 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${OPTIONS_TYPE_NAME}`);
     }
 
+    public getAuthOptionsType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        const oauthConfig = this.authScheme.configuration;
+        if (oauthConfig.type !== "clientCredentials") {
+            return undefined;
+        }
+
+        const requestProperties = oauthConfig.tokenEndpoint.requestProperties;
+        const clientIdType = context.type.getReferenceToType(requestProperties.clientId.property.valueType).typeNode;
+        const clientSecretType = context.type.getReferenceToType(
+            requestProperties.clientSecret.property.valueType
+        ).typeNode;
+
+        const clientIdIsOptional = oauthConfig.clientIdEnvVar != null;
+        const clientSecretIsOptional = oauthConfig.clientSecretEnvVar != null;
+
+        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType;
+
+        // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
+        // When there's no env var fallback, use Supplier<T> directly.
+        const clientIdSupplier = supplierType(clientIdType);
+        const clientSecretSupplier = supplierType(clientSecretType);
+
+        // For env var fallback: prop?: Supplier<T> | undefined
+        const clientIdPropertyType = clientIdIsOptional
+            ? ts.factory.createUnionTypeNode([
+                  clientIdSupplier,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : clientIdSupplier;
+
+        const clientSecretPropertyType = clientSecretIsOptional
+            ? ts.factory.createUnionTypeNode([
+                  clientSecretSupplier,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : clientSecretSupplier;
+
+        return [
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(CLIENT_ID_VAR_NAME),
+                hasQuestionToken: clientIdIsOptional,
+                type: getTextOfTsNode(clientIdPropertyType)
+            },
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(CLIENT_SECRET_VAR_NAME),
+                hasQuestionToken: clientSecretIsOptional,
+                type: getTextOfTsNode(clientSecretPropertyType)
+            }
+        ];
+    }
+
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
-        return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(CLASS_NAME), "createInstance"),
+            undefined,
+            constructorArgs
+        );
     }
 
     public writeToFile(context: SdkContext): void {
-        this.writeOptions(context);
         this.writeClass(context);
+        this.writeTokenOverrideClass(context);
+        this.writeOptions(context);
     }
 
     private writeClass(context: SdkContext): void {
@@ -143,6 +209,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
+        const constructorOptionsType = `${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.ClientCredentials`;
+
         let constructorStatements = "";
 
         if (!clientIdIsOptional) {
@@ -198,6 +266,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }> = [
             {
                 name: CLIENT_ID_FIELD_NAME,
+                // When env var fallback exists, use Supplier<T> | undefined to match AuthOptions
                 type: clientIdIsOptional
                     ? `${supplierType}<${clientIdType}> | undefined`
                     : `${supplierType}<${clientIdType}>`,
@@ -206,6 +275,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             },
             {
                 name: CLIENT_SECRET_FIELD_NAME,
+                // When env var fallback exists, use Supplier<T> | undefined to match AuthOptions
                 type: clientSecretIsOptional
                     ? `${supplierType}<${clientSecretType}> | undefined`
                     : `${supplierType}<${clientSecretType}>`,
@@ -270,9 +340,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this.${GET_TOKEN_INTERNAL_METHOD_NAME}(${ENDPOINT_METADATA_ARG_NAME});
         `;
 
+        const clientIdPropertyAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientId");
         const clientIdSupplierCall = getTextOfTsNode(
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientId"),
+                clientIdPropertyAccess,
                 ts.factory.createObjectLiteralExpression([
                     ts.factory.createPropertyAssignment(
                         "endpointMetadata",
@@ -300,9 +371,13 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             : `
         const clientId = ${clientIdSupplierCall};`;
 
+        const clientSecretPropertyAccess = ts.factory.createPropertyAccessExpression(
+            ts.factory.createThis(),
+            "_clientSecret"
+        );
         const clientSecretSupplierCall = getTextOfTsNode(
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientSecret"),
+                clientSecretPropertyAccess,
                 ts.factory.createObjectLiteralExpression([
                     ts.factory.createPropertyAssignment(
                         "endpointMetadata",
@@ -369,10 +444,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this._refreshPromise;
         `;
 
-        const canCreateStatements = this.generatecanCreateStatements(
+        const canCreateStatements = this.generatecanCreateStatementsForTokenOverride(
             oauthConfig.clientIdEnvVar,
             oauthConfig.clientSecretEnvVar
         );
+
+        const canCreateReturnType = `options is ${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.ClientCredentials`;
 
         const methods: Array<{
             kind: StructureKind.Method;
@@ -390,7 +467,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 isStatic: true,
                 name: "canCreate",
                 isAsync: false,
-                returnType: "boolean",
+                returnType: canCreateReturnType,
                 statements: canCreateStatements,
                 parameters: [
                     {
@@ -517,7 +594,119 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     parameters: [
                         {
                             name: "options",
-                            type: getTextOfTsNode(this.getOptionsType())
+                            type: constructorOptionsType
+                        }
+                    ],
+                    statements: [constructorStatements]
+                }
+            ]
+        });
+    }
+
+    private writeTokenOverrideClass(context: SdkContext): void {
+        const oauthConfig = this.authScheme.configuration;
+
+        if (oauthConfig.type !== "clientCredentials") {
+            return;
+        }
+
+        const errorConstructor = getTextOfTsNode(
+            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+        );
+
+        const supplierType = getTextOfTsNode(
+            context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+            )
+        );
+
+        const constructorStatements = `
+        if (${OPTIONS_PARAM_NAME}.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} == null) {
+            throw new ${errorConstructor}({
+                message: "${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}."
+            });
+        }
+        this.${TOKEN_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME};
+        `;
+
+        const tokenPropertyAccess = ts.factory.createPropertyAccessExpression(
+            ts.factory.createThis(),
+            TOKEN_FIELD_NAME
+        );
+        const tokenSupplierCall = getTextOfTsNode(context.coreUtilities.fetcher.Supplier.get(tokenPropertyAccess));
+
+        const properties = [
+            {
+                name: TOKEN_FIELD_NAME,
+                type: supplierType,
+                isReadonly: true,
+                scope: Scope.Private
+            }
+        ];
+
+        const methods = [
+            {
+                kind: StructureKind.Method as const,
+                scope: Scope.Public,
+                isStatic: true,
+                name: "canCreate",
+                isAsync: false,
+                returnType: `options is ${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.TokenOverride`,
+                statements: `return "${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME}" in options && options.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} != null;`,
+                parameters: [
+                    {
+                        name: "options",
+                        type: getTextOfTsNode(this.getOptionsType())
+                    }
+                ]
+            },
+            {
+                kind: StructureKind.Method as const,
+                scope: Scope.Public,
+                name: "getAuthRequest",
+                isAsync: true,
+                parameters: [
+                    {
+                        name: "arg?",
+                        type: getTextOfTsNode(
+                            ts.factory.createTypeLiteralNode([
+                                ts.factory.createPropertySignature(
+                                    undefined,
+                                    "endpointMetadata",
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                    context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                )
+                            ])
+                        )
+                    }
+                ],
+                returnType: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
+                        context.coreUtilities.auth.AuthRequest._getReferenceToType()
+                    ])
+                ),
+                statements: `
+        return {
+            headers: {
+                Authorization: \`Bearer \${${tokenSupplierCall}}\`
+            }
+        };
+        `
+            }
+        ];
+
+        context.sourceFile.addClass({
+            name: TOKEN_OVERRIDE_CLASS_NAME,
+            isExported: true,
+            implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
+            properties,
+            methods,
+            ctors: [
+                {
+                    parameters: [
+                        {
+                            name: "options",
+                            type: `${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.TokenOverride`
                         }
                     ],
                     statements: [constructorStatements]
@@ -542,6 +731,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         clientIdEnvVar: string | undefined,
         clientSecretEnvVar: string | undefined
     ): string {
+        // Without token override, we can access clientId and clientSecret directly
         const clientIdCheck =
             clientIdEnvVar != null
                 ? `(options.clientId != null || process.env?.["${clientIdEnvVar}"] != null)`
@@ -552,7 +742,25 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 ? `(options.clientSecret != null || process.env?.["${clientSecretEnvVar}"] != null)`
                 : `options.clientSecret != null`;
 
-        return `return ${clientIdCheck} && ${clientSecretCheck};`;
+        const oauthCheck = `(${clientIdCheck} && ${clientSecretCheck})`;
+        return `return ${oauthCheck};`;
+    }
+
+    private generatecanCreateStatementsForTokenOverride(
+        clientIdEnvVar: string | undefined,
+        clientSecretEnvVar: string | undefined
+    ): string {
+        const clientIdCheck =
+            clientIdEnvVar != null
+                ? `(("clientId" in options && options.clientId != null) || process.env?.["${clientIdEnvVar}"] != null)`
+                : `"clientId" in options && options.clientId != null`;
+
+        const clientSecretCheck =
+            clientSecretEnvVar != null
+                ? `(("clientSecret" in options && options.clientSecret != null) || process.env?.["${clientSecretEnvVar}"] != null)`
+                : `"clientSecret" in options && options.clientSecret != null`;
+
+        return `return (${clientIdCheck}) && (${clientSecretCheck});`;
     }
 
     private getName(name: FernIr.Name | FernIr.NameAndWireValue): string {
@@ -569,14 +777,34 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
-        context.importsManager.addImportFromRoot("BaseClient", {
-            namedImports: ["BaseClientOptions"]
-        });
-
         const oauthConfig = this.authScheme.configuration;
         if (oauthConfig.type !== "clientCredentials") {
             return;
         }
+
+        // Import BaseClientOptions for Options to extend
+        // OAuthAuthProvider.Options needs to extend BaseClientOptions because it creates an AuthClient
+        context.sourceFile.addImportDeclaration({
+            moduleSpecifier: "../BaseClient.js",
+            namedImports: ["BaseClientOptions"],
+            isTypeOnly: true
+        });
+
+        const supplierType = getTextOfTsNode(
+            context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+            )
+        );
+
+        const errorConstructor = getTextOfTsNode(
+            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+        );
+
+        const clientIdIsOptional = oauthConfig.clientIdEnvVar != null;
+        const clientSecretIsOptional = oauthConfig.clientSecretEnvVar != null;
+
+        const clientIdType = clientIdIsOptional ? `${supplierType} | undefined` : supplierType;
+        const clientSecretType = clientSecretIsOptional ? `${supplierType} | undefined` : supplierType;
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
@@ -584,10 +812,55 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             kind: StructureKind.Module,
             statements: [
                 {
-                    kind: StructureKind.Interface,
+                    kind: StructureKind.TypeAlias,
+                    name: "AuthOptions",
+                    isExported: true,
+                    type: `AuthOptions.ClientCredentials | AuthOptions.TokenOverride`
+                },
+                {
+                    kind: StructureKind.Module,
+                    name: "AuthOptions",
+                    isExported: true,
+                    statements: [
+                        {
+                            kind: StructureKind.Interface,
+                            name: "ClientCredentials",
+                            isExported: true,
+                            properties: [
+                                { name: "clientId", type: clientIdType },
+                                { name: "clientSecret", type: clientSecretType }
+                            ]
+                        },
+                        {
+                            kind: StructureKind.Interface,
+                            name: "TokenOverride",
+                            isExported: true,
+                            properties: [{ name: DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME, type: supplierType }]
+                        }
+                    ]
+                },
+                {
+                    kind: StructureKind.TypeAlias,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    extends: ["BaseClientOptions"]
+                    type: "BaseClientOptions"
+                },
+                {
+                    kind: StructureKind.Function,
+                    name: "createInstance",
+                    isExported: true,
+                    parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
+                    returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
+                    statements: `
+        if (${TOKEN_OVERRIDE_CLASS_NAME}.canCreate(options)) {
+            return new ${TOKEN_OVERRIDE_CLASS_NAME}(options);
+        } else if (${CLASS_NAME}.canCreate(options)) {
+            return new ${CLASS_NAME}(options);
+        }
+        throw new ${errorConstructor}({
+            message: "Insufficient options to create OAuthAuthProvider. Please provide either clientId and clientSecret, or ${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME}."
+        });
+        `
                 }
             ]
         });

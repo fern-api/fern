@@ -5,7 +5,7 @@ import { type NormalizedClientOptions, normalizeClientOptions } from "../../../.
 import { InlineUsersClient as InlineUsersClient_ } from "../resources/inlineUsers/client/Client.js";
 
 export declare namespace InlineUsersClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 }
 
 export class InlineUsersClient {

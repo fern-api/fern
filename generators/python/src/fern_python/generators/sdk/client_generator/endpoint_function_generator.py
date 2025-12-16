@@ -1374,14 +1374,12 @@ class EndpointFunctionGenerator:
                     )
                 )
             else:
-                headers.append(
-                    (
-                        header.name.wire_value,
-                        AST.Expression(
-                            f"str({get_parameter_name(header.name.name)}) if {get_parameter_name(header.name.name)} is not None else None"
-                        ),
-                    )
-                )
+                param_name = get_parameter_name(header.name.name)
+                if self._is_enum_type_with_value(header.value_type, allow_optional=True):
+                    expr = AST.Expression(f"{param_name}.value if {param_name} is not None else None")
+                else:
+                    expr = AST.Expression(f"str({param_name}) if {param_name} is not None else None")
+                headers.append((header.name.wire_value, expr))
 
         if len(headers) == 0:
             return None
@@ -1541,6 +1539,47 @@ class EndpointFunctionGenerator:
 
     def _is_header_literal(self, header: ir_types.HttpHeader) -> bool:
         return self._context.get_literal_header_value(header) is not None
+
+    def _is_enum_type_with_value(
+        self,
+        type_reference: ir_types.TypeReference,
+        *,
+        allow_optional: bool,
+    ) -> bool:
+        """
+        Returns True if the type is an enum that has a .value attribute at runtime.
+        This is False when use_str_enums is True, because enums are represented as
+        Literal types (string literals) which don't have a .value attribute.
+        """
+        # When use_str_enums is True, enums are represented as Literal types, not actual enum classes
+        if self._context.pydantic_generator_context.use_str_enums:
+            return False
+
+        def visit_named_type(type_name: ir_types.NamedType) -> bool:
+            type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(type_name.type_id)
+            return type_declaration.shape.visit(
+                alias=lambda alias: self._is_enum_type_with_value(alias.alias_of, allow_optional=allow_optional),
+                enum=lambda _enum: True,
+                object=lambda _obj: False,
+                union=lambda _union: False,
+                undiscriminated_union=lambda _union: False,
+            )
+
+        return type_reference.visit(
+            container=lambda container: container.visit(
+                list_=lambda _lt: False,
+                set_=lambda _st: False,
+                optional=lambda item_type: allow_optional
+                and self._is_enum_type_with_value(item_type, allow_optional=True),
+                nullable=lambda item_type: allow_optional
+                and self._is_enum_type_with_value(item_type, allow_optional=True),
+                map_=lambda _mt: False,
+                literal=lambda _lit: False,
+            ),
+            named=visit_named_type,
+            primitive=lambda _primitive: False,
+            unknown=lambda: False,
+        )
 
     def _environment_is_enum(self) -> bool:
         return self._context.ir.environments is not None

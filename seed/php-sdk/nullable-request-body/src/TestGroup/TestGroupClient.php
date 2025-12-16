@@ -14,7 +14,7 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class TestGroupClient 
+class TestGroupClient
 {
     /**
      * @var array{
@@ -42,11 +42,10 @@ class TestGroupClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -68,13 +67,14 @@ class TestGroupClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function testMethodName(string $pathParam, TestMethodNameTestGroupRequest $request, ?array $options = null): mixed {
+    public function testMethodName(string $pathParam, TestMethodNameTestGroupRequest $request, ?array $options = null): mixed
+    {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->queryParamObject != null){
+        if ($request->queryParamObject != null) {
             $query['query_param_object'] = $request->queryParamObject;
         }
-        if ($request->queryParamInteger != null){
+        if ($request->queryParamInteger != null) {
             $query['query_param_integer'] = $request->queryParamInteger;
         }
         try {
@@ -89,15 +89,15 @@ class TestGroupClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeMixed($json);
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

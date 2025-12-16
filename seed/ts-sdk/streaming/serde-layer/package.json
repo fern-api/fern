@@ -2,7 +2,10 @@
     "name": "@fern/streaming",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:streaming/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/streaming/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

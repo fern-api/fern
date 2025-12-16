@@ -2,7 +2,10 @@
     "name": "@fern/http-head",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:http-head/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/http-head/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

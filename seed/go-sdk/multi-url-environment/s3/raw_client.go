@@ -38,6 +38,10 @@ func (r *RawClient) GetPresignedUrl(
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
+		internal.ResolveEnvironmentBaseURL(
+			options.Environment,
+			"S3",
+		),
 		r.baseURL,
 		"https://s3.aws.com",
 	)

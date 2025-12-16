@@ -577,6 +577,20 @@ class ClientWrapperGenerator:
         parameters: List[ConstructorParameter] = []
         literal_headers: List[LiteralHeader] = []
 
+        headers_constructor_parameter = ConstructorParameter(
+            constructor_parameter_name=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_NAME,
+            type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
+            private_member_name=ClientWrapperGenerator.HEADERS_MEMBER_NAME,
+            getter_method=AST.FunctionDeclaration(
+                name=ClientWrapperGenerator.GET_CUSTOM_HEADERS_METHOD_NAME,
+                signature=AST.FunctionSignature(
+                    return_type=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
+                ),
+                body=AST.CodeWriter(f"return self.{ClientWrapperGenerator.HEADERS_MEMBER_NAME}"),
+            ),
+            docs=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_DOCS,
+        )
+
         for variable in self._context.ir.variables:
             variable_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 variable.type
@@ -622,6 +636,8 @@ class ClientWrapperGenerator:
             )
 
         if exclude_auth:
+            # Add generic headers parameter even when excluding auth
+            parameters.append(headers_constructor_parameter)
             return ConstructorInfo(
                 constructor_parameters=parameters,
                 literal_headers=literal_headers,
@@ -651,14 +667,18 @@ class ClientWrapperGenerator:
         bearer_auth_scheme = self._get_bearer_auth_scheme()
         if bearer_auth_scheme is not None:
             constructor_parameter_name = names.get_token_constructor_parameter_name(bearer_auth_scheme)
+            # For OAuth flows, the OAuthTokenProvider needs to create a SyncClientWrapper without a token
+            # to fetch the initial token. For plain bearer auth, use the is_auth_mandatory flag.
+            # This matches TypeScript's behavior where the auth client doesn't require a token.
+            is_token_optional = self._has_oauth() or not self._context.ir.sdk_config.is_auth_mandatory
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,
                     private_member_name=names.get_token_member_name(bearer_auth_scheme),
                     type_hint=(
-                        ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                        if self._context.ir.sdk_config.is_auth_mandatory
-                        else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                        AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                        if is_token_optional
+                        else ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                     ),
                     initializer=AST.Expression(
                         f'{constructor_parameter_name}="YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}"',
@@ -668,17 +688,15 @@ class ClientWrapperGenerator:
                         signature=AST.FunctionSignature(
                             parameters=[],
                             return_type=(
-                                AST.TypeHint.str_()
-                                if self._context.ir.sdk_config.is_auth_mandatory
-                                else AST.TypeHint.optional(AST.TypeHint.str_())
+                                AST.TypeHint.optional(AST.TypeHint.str_()) if is_token_optional else AST.TypeHint.str_()
                             ),
                         ),
                         body=AST.CodeWriter(
-                            self._get_required_getter_body_writer(
+                            self._get_optional_getter_body_writer(
                                 member_name=names.get_token_member_name(bearer_auth_scheme)
                             )
-                            if self._context.ir.sdk_config.is_auth_mandatory
-                            else self._get_optional_getter_body_writer(
+                            if is_token_optional
+                            else self._get_required_getter_body_writer(
                                 member_name=names.get_token_member_name(bearer_auth_scheme)
                             )
                         ),
@@ -811,19 +829,6 @@ class ClientWrapperGenerator:
             )
 
         # Add generic headers parameter
-        headers_constructor_parameter = ConstructorParameter(
-            constructor_parameter_name=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_NAME,
-            type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
-            private_member_name=ClientWrapperGenerator.HEADERS_MEMBER_NAME,
-            getter_method=AST.FunctionDeclaration(
-                name=ClientWrapperGenerator.GET_CUSTOM_HEADERS_METHOD_NAME,
-                signature=AST.FunctionSignature(
-                    return_type=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
-                ),
-                body=AST.CodeWriter(f"return self.{ClientWrapperGenerator.HEADERS_MEMBER_NAME}"),
-            ),
-            docs=ClientWrapperGenerator.HEADERS_CONSTRUCTOR_PARAMETER_DOCS,
-        )
         parameters.append(headers_constructor_parameter)
 
         return ConstructorInfo(
@@ -892,6 +897,14 @@ class ClientWrapperGenerator:
                     ),
                 )
         return None
+
+    def _has_oauth(self) -> bool:
+        """Check if the API uses OAuth authentication."""
+        for scheme in self._context.ir.auth.schemes:
+            scheme_as_union = scheme.get_as_union()
+            if scheme_as_union.type == "oauth":
+                return True
+        return False
 
     def _has_basic_auth(self) -> bool:
         return self._get_basic_auth_scheme() is not None

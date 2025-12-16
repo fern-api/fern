@@ -1,0 +1,57 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "360f197a",
+            "id": {
+                "method": "GET",
+                "path": "/test",
+                "identifier_override": "endpoint_.getTest"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getTest();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getTest();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "e0ae4b3",
+            "id": {
+                "method": "GET",
+                "path": "/test",
+                "identifier_override": "endpoint_.getTest"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getTest();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.getTest();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "5f8020d9",
+            "id": {
+                "method": "POST",
+                "path": "/test",
+                "identifier_override": "endpoint_.createTest"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.RootObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createTest(\n            RootObject\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.RootObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createTest(\n            RootObject\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "95833ce9",
+            "id": {
+                "method": "POST",
+                "path": "/test",
+                "identifier_override": "endpoint_.createTest"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.RootObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createTest(\n            RootObject\n                .builder()\n                .normalField(\"normalField\")\n                .nullableField(\"nullableField\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.types.RootObject;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createTest(\n            RootObject\n                .builder()\n                .normalField(\"normalField\")\n                .nullableField(\"nullableField\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

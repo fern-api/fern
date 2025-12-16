@@ -38,7 +38,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedWebsocketAuth;
 
-var client = new SeedWebsocketAuthClient();
+var client = new SeedWebsocketAuthClient("X-Api-Key", "client_id", "client_secret", "scope");
 await client.Auth.GetTokenWithClientCredentialsAsync(
     new GetTokenRequest
     {

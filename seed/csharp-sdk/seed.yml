@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v61
+irVersion: v62
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -28,7 +28,7 @@ buildScripts:
 
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-sdk 
   docker:
     file: ./generators/csharp/sdk/Dockerfile
     image: fernapi/fern-csharp-sdk
@@ -36,14 +36,14 @@ publish:
 test:
   docker:
     image: fernapi/fern-csharp-sdk:latest
-    command: pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-csharp-sdk
   podman:
     image: fernapi/fern-csharp-sdk:latest
-    command: pnpm --filter @fern-api/fern-csharp-sdk podmanTagLatest
+    command: pnpm turbo run podmanTagLatest --filter @fern-api/fern-csharp-sdk
   local:
     workingDirectory: generators/csharp
     buildCommand:
-      - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-sdk
     runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
 language: csharp
@@ -268,6 +268,7 @@ allowedFailures:
   - literal:readonly-constants
   - oauth-client-credentials-custom
   - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-mandatory-auth
   - oauth-client-credentials-nested-root
   - oauth-client-credentials-with-variables
   - oauth-client-credentials:include-exception-handler

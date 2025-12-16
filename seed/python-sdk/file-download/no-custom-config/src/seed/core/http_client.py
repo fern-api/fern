@@ -237,7 +237,7 @@ class HttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
@@ -261,6 +261,26 @@ class HttpClient:
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
+        # Compute encoded params separately to avoid passing empty list to httpx
+        # (httpx strips existing query params from URL when params=[] is passed)
+        _encoded_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    remove_omit_from_dict(
+                        {
+                            **(params if params is not None else {}),
+                            **(
+                                request_options.get("additional_query_parameters", {}) or {}
+                                if request_options is not None
+                                else {}
+                            ),
+                        },
+                        omit,
+                    )
+                )
+            )
+        )
+
         response = self.httpx_client.request(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
@@ -273,23 +293,7 @@ class HttpClient:
                     }
                 )
             ),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        remove_omit_from_dict(
-                            {
-                                **(params if params is not None else {}),
-                                **(
-                                    request_options.get("additional_query_parameters", {}) or {}
-                                    if request_options is not None
-                                    else {}
-                                ),
-                            },
-                            omit,
-                        )
-                    )
-                )
-            ),
+            params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
             content=content,
@@ -297,9 +301,9 @@ class HttpClient:
             timeout=timeout,
         )
 
-        max_retries: int = request_options.get("max_retries", 0) if request_options is not None else 0
+        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
         if _should_retry(response=response):
-            if max_retries > retries:
+            if retries < max_retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
                 return self.request(
                     path=path,
@@ -336,7 +340,7 @@ class HttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> typing.Iterator[httpx.Response]:
@@ -360,6 +364,26 @@ class HttpClient:
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
+        # Compute encoded params separately to avoid passing empty list to httpx
+        # (httpx strips existing query params from URL when params=[] is passed)
+        _encoded_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    remove_omit_from_dict(
+                        {
+                            **(params if params is not None else {}),
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        },
+                        omit,
+                    )
+                )
+            )
+        )
+
         with self.httpx_client.stream(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
@@ -372,23 +396,7 @@ class HttpClient:
                     }
                 )
             ),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        remove_omit_from_dict(
-                            {
-                                **(params if params is not None else {}),
-                                **(
-                                    request_options.get("additional_query_parameters", {})
-                                    if request_options is not None
-                                    else {}
-                                ),
-                            },
-                            omit,
-                        )
-                    )
-                )
-            ),
+            params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
             content=content,
@@ -406,11 +414,18 @@ class AsyncHttpClient:
         base_timeout: typing.Callable[[], typing.Optional[float]],
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
+        async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
+        self.async_base_headers = async_base_headers
         self.httpx_client = httpx_client
+
+    async def _get_headers(self) -> typing.Dict[str, str]:
+        if self.async_base_headers is not None:
+            return await self.async_base_headers()
+        return self.base_headers()
 
     def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
         base_url = maybe_base_url
@@ -439,7 +454,7 @@ class AsyncHttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
@@ -463,6 +478,29 @@ class AsyncHttpClient:
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
+        # Get headers (supports async token providers)
+        _headers = await self._get_headers()
+
+        # Compute encoded params separately to avoid passing empty list to httpx
+        # (httpx strips existing query params from URL when params=[] is passed)
+        _encoded_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    remove_omit_from_dict(
+                        {
+                            **(params if params is not None else {}),
+                            **(
+                                request_options.get("additional_query_parameters", {}) or {}
+                                if request_options is not None
+                                else {}
+                            ),
+                        },
+                        omit,
+                    )
+                )
+            )
+        )
+
         # Add the input to each of these and do None-safety checks
         response = await self.httpx_client.request(
             method=method,
@@ -470,29 +508,13 @@ class AsyncHttpClient:
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        **self.base_headers(),
+                        **_headers,
                         **(headers if headers is not None else {}),
                         **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
                     }
                 )
             ),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        remove_omit_from_dict(
-                            {
-                                **(params if params is not None else {}),
-                                **(
-                                    request_options.get("additional_query_parameters", {}) or {}
-                                    if request_options is not None
-                                    else {}
-                                ),
-                            },
-                            omit,
-                        )
-                    )
-                )
-            ),
+            params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
             content=content,
@@ -500,9 +522,9 @@ class AsyncHttpClient:
             timeout=timeout,
         )
 
-        max_retries: int = request_options.get("max_retries", 0) if request_options is not None else 0
+        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
         if _should_retry(response=response):
-            if max_retries > retries:
+            if retries < max_retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
                 return await self.request(
                     path=path,
@@ -538,7 +560,7 @@ class AsyncHttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> typing.AsyncIterator[httpx.Response]:
@@ -562,35 +584,42 @@ class AsyncHttpClient:
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
+        # Get headers (supports async token providers)
+        _headers = await self._get_headers()
+
+        # Compute encoded params separately to avoid passing empty list to httpx
+        # (httpx strips existing query params from URL when params=[] is passed)
+        _encoded_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    remove_omit_from_dict(
+                        {
+                            **(params if params is not None else {}),
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        },
+                        omit=omit,
+                    )
+                )
+            )
+        )
+
         async with self.httpx_client.stream(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        **self.base_headers(),
+                        **_headers,
                         **(headers if headers is not None else {}),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
             ),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        remove_omit_from_dict(
-                            {
-                                **(params if params is not None else {}),
-                                **(
-                                    request_options.get("additional_query_parameters", {})
-                                    if request_options is not None
-                                    else {}
-                                ),
-                            },
-                            omit=omit,
-                        )
-                    )
-                )
-            ),
+            params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
             content=content,

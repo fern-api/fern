@@ -3,8 +3,7 @@ import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClie
 import * as core from "../../../../../../core/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 export declare namespace UnionClient {
-    interface Options extends BaseClientOptions {
-    }
+    type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }

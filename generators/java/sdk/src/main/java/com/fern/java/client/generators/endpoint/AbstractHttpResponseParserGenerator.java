@@ -37,6 +37,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -565,13 +566,23 @@ public abstract class AbstractHttpResponseParserGenerator {
                             .get(responseError.getError().getErrorId()))
                     .sorted(Comparator.comparingInt(ErrorDeclaration::getStatusCode))
                     .collect(Collectors.toList());
-            if (!errorDeclarations.isEmpty()) {
-                boolean multipleErrors = errorDeclarations.size() > 1;
+
+            // Deduplicate by status code, keeping the first declaration for each code.
+            // This prevents duplicate case labels in switch statements when multiple
+            // error types map to the same HTTP status code.
+            Map<Integer, ErrorDeclaration> dedupedByStatusCode = new LinkedHashMap<>();
+            for (ErrorDeclaration errorDeclaration : errorDeclarations) {
+                dedupedByStatusCode.putIfAbsent(errorDeclaration.getStatusCode(), errorDeclaration);
+            }
+            List<ErrorDeclaration> uniqueErrorDeclarations = new ArrayList<>(dedupedByStatusCode.values());
+
+            if (!uniqueErrorDeclarations.isEmpty()) {
+                boolean multipleErrors = uniqueErrorDeclarations.size() > 1;
                 httpResponseBuilder.beginControlFlow("try");
                 if (multipleErrors) {
                     httpResponseBuilder.beginControlFlow("switch ($L.code())", variables.getResponseName());
                 }
-                errorDeclarations.forEach(errorDeclaration -> {
+                uniqueErrorDeclarations.forEach(errorDeclaration -> {
                     GeneratedJavaFile generatedError =
                             generatedErrors.get(errorDeclaration.getName().getErrorId());
                     ClassName errorClassName = generatedError.getClassName();
@@ -1670,7 +1681,7 @@ public abstract class AbstractHttpResponseParserGenerator {
                 // Generate AsyncCustomPager.createAsync() call
                 CodeBlock asyncPagerCreation = CodeBlock.builder()
                         .add(
-                                "$T.createAsync($L, $L.httpClient(), $L)",
+                                "$T.createAsync($L, $L, $L)",
                                 asyncPagerClassName,
                                 variables.getParsedResponseVariableName(),
                                 clientOptionsField.name,
@@ -1688,7 +1699,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
             CodeBlock customPagerCreation = CodeBlock.builder()
                     .add(
-                            "$T.create($L, $L.httpClient(), $L)",
+                            "$T.create($L, $L, $L)",
                             customPagerClassName,
                             variables.getParsedResponseVariableName(),
                             clientOptionsField.name,

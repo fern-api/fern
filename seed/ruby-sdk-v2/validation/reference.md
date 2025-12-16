@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.create(request) -> Seed::Types::Type</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">create</a>(request) -> Seed::Types::Type</code></summary>
 <dl>
 <dd>
 
@@ -15,7 +15,8 @@
 client.create(
   decimal: 2.2,
   even: 100,
-  name: 'fern'
+  name: 'fern',
+  shape: 'SQUARE'
 );
 ```
 </dd>
@@ -59,6 +60,14 @@ client.create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -67,7 +76,7 @@ client.create(
 </dl>
 </details>
 
-<details><summary><code>client.get() -> Seed::Types::Type</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">get</a>() -> Seed::Types::Type</code></summary>
 <dl>
 <dd>
 
@@ -116,6 +125,14 @@ client.get(
 <dd>
 
 **name:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

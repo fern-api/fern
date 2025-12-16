@@ -832,7 +832,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 };
             } else {
                 const propExampleFromParent = exampleObj[key];
-                const propertyExample = propExampleFromParent ?? this.maybeResolveSchemaExample(property);
+                // Use the example from parent if it exists (including explicit null values)
+                // Only fall back to schema example if the property is truly undefined
+                const propertyExample =
+                    propExampleFromParent !== undefined
+                        ? propExampleFromParent
+                        : this.maybeResolveSchemaExample(property);
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, key],
                     context: this.context,
@@ -888,39 +893,52 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         // Handle additional properties
         const additionalPropertiesResults: Array<{ key: string; result: ExampleConverter.Output }> = [];
-        if (resolvedSchema.additionalProperties !== false) {
-            const additionalPropertiesSchema: OpenAPIV3_1.SchemaObject =
-                typeof resolvedSchema.additionalProperties === "object"
-                    ? resolvedSchema.additionalProperties
-                    : ({
-                          oneOf: [
-                              { type: "string" },
-                              { type: "number" },
-                              { type: "boolean" },
-                              { type: "object" },
-                              { type: "array" }
-                          ]
-                          // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                      } as any);
 
-            // Find properties in the example that are not defined in the schema
-            const definedPropertyKeys = new Set(Object.keys(example ?? {}));
-            const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
+        // Find properties in the example that are not defined in the schema
+        const definedPropertyKeys = new Set(Object.keys(resolvedSchema.properties ?? {}));
+        const additionalPropertyKeys = Object.keys(exampleObj).filter((key) => !definedPropertyKeys.has(key));
 
-            additionalPropertyKeys.forEach((key) => {
-                const exampleConverter = new ExampleConverter({
-                    breadcrumbs: [...this.breadcrumbs, key],
-                    context: this.context,
-                    schema: additionalPropertiesSchema,
-                    example: exampleObj[key],
-                    depth: this.depth + 1,
-                    generateOptionalProperties: false,
-                    exampleGenerationStrategy: this.exampleGenerationStrategy,
-                    seenRefs: this.getMaybeUpdatedSeenRefs()
+        if (additionalPropertyKeys.length > 0) {
+            if (resolvedSchema.additionalProperties === false) {
+                // Additional properties are not allowed, create errors for each extra property
+                additionalPropertyKeys.forEach((key) => {
+                    const breadcrumbPath = [...this.breadcrumbs, key].join(".");
+                    const error = {
+                        message: `Found unexpected property '${key}' in example. This property does not exist in the schema${breadcrumbPath ? ` at path: ${breadcrumbPath}` : ""}`,
+                        path: [...this.breadcrumbs, key]
+                    };
+                    additionalPropertiesResults.push({
+                        key,
+                        result: {
+                            isValid: false,
+                            coerced: false,
+                            usedProvidedExample: true,
+                            validExample: undefined,
+                            errors: [error]
+                        }
+                    });
                 });
-                const result = exampleConverter.convert();
-                additionalPropertiesResults.push({ key, result });
-            });
+            } else {
+                // Additional properties are allowed, but create warning errors for unexpected properties
+                // We'll add these as separate warning results that don't affect validation
+                additionalPropertyKeys.forEach((key) => {
+                    const breadcrumbPath = [...this.breadcrumbs, key].join(".");
+                    const warningError = {
+                        message: `Additional property ${key} is not allowed`,
+                        path: [...this.breadcrumbs, key]
+                    };
+                    additionalPropertiesResults.push({
+                        key,
+                        result: {
+                            isValid: true, // Keep as valid since additional properties are allowed
+                            coerced: false,
+                            usedProvidedExample: true,
+                            validExample: undefined, // Don't provide a valid example to avoid further validation
+                            errors: [warningError] // Include as warning error
+                        }
+                    });
+                });
+            }
         }
 
         // Add additional properties to the example
@@ -948,7 +966,8 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             validExample: example,
             errors: [
                 ...resultsByKey.flatMap(({ result }) => result.errors),
-                ...allOfResults.flatMap((result) => result.errors)
+                ...allOfResults.flatMap((result) => result.errors),
+                ...additionalPropertiesResults.flatMap(({ result }) => result.errors)
             ]
         };
     }
@@ -1174,6 +1193,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private maybeResolveSchemaExample<Type>(
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     ): Type | undefined {
+        // In OpenAPI 3.1+, $ref siblings are supported. Check for sibling examples first
+        // before falling back to the referenced schema's examples.
+        if ("example" in schema) {
+            return schema.example as Type;
+        }
+        if ("examples" in schema) {
+            const examples = schema.examples;
+            if (Array.isArray(examples) && examples.length > 0) {
+                return examples[0] as Type;
+            }
+            if (examples != null && typeof examples === "object") {
+                return Object.values(examples)[0] as Type;
+            }
+        }
+
+        // Fall back to the resolved schema's examples
         const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
             schemaOrReference: schema,
             breadcrumbs: this.breadcrumbs,

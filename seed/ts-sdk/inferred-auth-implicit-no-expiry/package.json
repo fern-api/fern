@@ -2,7 +2,10 @@
     "name": "@fern/inferred-auth-implicit-no-expiry",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:inferred-auth-implicit-no-expiry/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/inferred-auth-implicit-no-expiry/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

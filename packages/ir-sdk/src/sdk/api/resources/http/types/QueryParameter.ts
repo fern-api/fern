@@ -9,4 +9,5 @@ export interface QueryParameter extends FernIr.Declaration {
     valueType: FernIr.TypeReference;
     allowMultiple: boolean;
     v2Examples: FernIr.V2SchemaExamples | undefined;
+    explode: boolean | undefined;
 }

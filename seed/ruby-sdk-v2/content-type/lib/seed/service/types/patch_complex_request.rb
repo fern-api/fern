@@ -8,17 +8,13 @@ module Seed
         field :name, -> { String }, optional: true, nullable: false
         field :age, -> { Integer }, optional: true, nullable: false
         field :active, -> { Internal::Types::Boolean }, optional: true, nullable: false
-        field :metadata, -> {
-          Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
-        }, optional: true, nullable: false
+        field :metadata, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
         field :tags, -> { Internal::Types::Array[String] }, optional: true, nullable: false
         field :email, -> { String }, optional: true, nullable: false
         field :nickname, -> { String }, optional: true, nullable: false
         field :bio, -> { String }, optional: true, nullable: false
         field :profile_image_url, -> { String }, optional: true, nullable: false, api_name: "profileImageUrl"
-        field :settings, -> {
-          Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
-        }, optional: true, nullable: false
+        field :settings, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
       end
     end
   end

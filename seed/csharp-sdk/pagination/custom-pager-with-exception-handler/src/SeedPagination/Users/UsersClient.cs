@@ -742,6 +742,60 @@ public partial class UsersClient
             .ConfigureAwait(false);
     }
 
+    private async Task<ListUsersOptionalDataPaginationResponse> ListWithOptionalDataInternalAsync(
+        ListUsersOptionalDataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _query = new Dictionary<string, object>();
+                if (request.Page != null)
+                {
+                    _query["page"] = request.Page.Value.ToString();
+                }
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = "/users/optional-data",
+                            Query = _query,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<ListUsersOptionalDataPaginationResponse>(
+                            responseBody
+                        )!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedPaginationException("Failed to deserialize response", e);
+                    }
+                }
+
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedPaginationApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
     /// <example><code>
     /// await client.Users.ListWithCursorPaginationAsync(
     ///     new SeedPagination.ListUsersCursorPaginationRequest
@@ -1331,6 +1385,47 @@ public partial class UsersClient
                         },
                         null,
                         response => response.Results?.ToList(),
+                        null,
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                return pager;
+            })
+            .ConfigureAwait(false);
+    }
+
+    /// <example><code>
+    /// await client.Users.ListWithOptionalDataAsync(new ListUsersOptionalDataRequest { Page = 1 });
+    /// </code></example>
+    public async Task<Pager<User>> ListWithOptionalDataAsync(
+        ListUsersOptionalDataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                request = request with { };
+                var pager = await OffsetPager<
+                    ListUsersOptionalDataRequest,
+                    RequestOptions?,
+                    ListUsersOptionalDataPaginationResponse,
+                    int?,
+                    object,
+                    User
+                >
+                    .CreateInstanceAsync(
+                        request,
+                        options,
+                        ListWithOptionalDataInternalAsync,
+                        request => request.Page ?? 0,
+                        (request, offset) =>
+                        {
+                            request.Page = offset;
+                        },
+                        null,
+                        response => response.Data?.ToList(),
                         null,
                         cancellationToken
                     )

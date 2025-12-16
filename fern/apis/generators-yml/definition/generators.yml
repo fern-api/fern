@@ -37,6 +37,11 @@ types:
       reviewers:
         type: optional<reviewers.ReviewersSchema>
       ai: optional<ai.AIServicesSchema>
+      autorelease:
+        type: optional<boolean>
+        docs: |
+          If true, automatically release SDKs when changes are detected.
+          Can be overridden at the individual generator level.
       openapi:
         type: optional<GeneratorsOpenAPISchema>
         availability: deprecated
@@ -453,6 +458,12 @@ types:
           If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
           This is useful for organizations with multiple APIs deployed to the same set of environments.
         default: false
+      default-integer-format:
+        type: optional<DefaultIntegerFormat>
+        docs: |
+          The default format to use for integer types when no format is specified in the OpenAPI schema.
+          Defaults to int32.
+        default: int32
 
   ResolveAliases:
     discriminated: false
@@ -470,6 +481,13 @@ types:
     enum:
       - form
       - json
+
+  DefaultIntegerFormat:
+    enum:
+      - int32
+      - int64
+      - uint32
+      - uint64
 
   OpenAPIExampleGenerationSchema:
     properties:

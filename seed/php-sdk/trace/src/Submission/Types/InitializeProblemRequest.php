@@ -27,15 +27,16 @@ class InitializeProblemRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->problemId = $values['problemId'];$this->problemVersion = $values['problemVersion'] ?? null;
+    ) {
+        $this->problemId = $values['problemId'];
+        $this->problemVersion = $values['problemVersion'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }
