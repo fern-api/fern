@@ -12,6 +12,7 @@ import { AuthImpl } from "./Auth";
 import { CallbackQueueImpl } from "./CallbackQueue";
 import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
+import { CustomPaginationImpl } from "./CustomPagination";
 import { FetcherImpl } from "./Fetcher";
 import { FileUtilsImpl } from "./FileUtils";
 import { FormDataUtilsImpl } from "./FormDataUtils";
@@ -51,6 +52,7 @@ export class CoreUtilitiesManager {
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly generateEndpointMetadata: boolean;
+    private readonly customPagerName: string;
 
     constructor({
         streamType,
@@ -58,7 +60,8 @@ export class CoreUtilitiesManager {
         fetchSupport,
         relativePackagePath = DEFAULT_PACKAGE_PATH,
         relativeTestPath = DEFAULT_TEST_PATH,
-        generateEndpointMetadata
+        generateEndpointMetadata,
+        customPagerName
     }: {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
@@ -66,6 +69,7 @@ export class CoreUtilitiesManager {
         relativePackagePath?: string;
         relativeTestPath?: string;
         generateEndpointMetadata: boolean;
+        customPagerName: string;
     }) {
         this.streamType = streamType;
         this.formDataSupport = formDataSupport;
@@ -73,6 +77,7 @@ export class CoreUtilitiesManager {
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
         this.generateEndpointMetadata = generateEndpointMetadata;
+        this.customPagerName = customPagerName;
     }
 
     public getCoreUtilities({
@@ -108,6 +113,11 @@ export class CoreUtilitiesManager {
                 getReferenceToExport,
                 generateEndpointMetadata: this.generateEndpointMetadata
             }),
+            customPagination: new CustomPaginationImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata,
+                customPagerName: this.customPagerName
+            }),
             utils: new UtilsImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
             websocket: new WebsocketImpl({
                 getReferenceToExport,
@@ -130,15 +140,12 @@ export class CoreUtilitiesManager {
 
     public finalize(exportsManager: ExportsManager, dependencyManager: DependencyManager): void {
         for (const utility of Object.values(this.referencedCoreUtilities)) {
-            exportsManager.addExportsForDirectories(
-                [
-                    {
-                        nameOnDisk: "core"
-                    },
-                    utility.pathInCoreUtilities
-                ],
-                true
-            );
+            exportsManager.addExportsForDirectories([
+                {
+                    nameOnDisk: "core"
+                },
+                utility.pathInCoreUtilities
+            ]);
             utility.addDependencies?.(dependencyManager, {
                 streamType: this.streamType,
                 formDataSupport: this.formDataSupport,
@@ -230,6 +237,22 @@ export class CoreUtilitiesManager {
                     await writeFile(destPath, content);
                 })
             );
+        }
+
+        if (this.referencedCoreUtilities["customPagination"] != null) {
+            let contents = await readFile(path.join(UTILITIES_PATH, "src/core/pagination/CustomPager.ts"), "utf8");
+            contents = contents.replaceAll("CustomPager", this.customPagerName);
+            const customPagerPath = path.join(
+                pathToRoot,
+                this.getPackagePathImport(),
+                "core",
+                "pagination",
+                `${this.customPagerName}.ts`
+            );
+            await mkdir(path.dirname(customPagerPath), { recursive: true });
+            await writeFile(customPagerPath, contents, {
+                encoding: "utf8"
+            });
         }
     }
 

@@ -4,16 +4,16 @@ import { FolderAClient } from "./api/resources/folderA/client/Client.js";
 import { FolderDClient } from "./api/resources/folderD/client/Client.js";
 import { FooClient } from "./api/resources/foo/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedCrossPackageTypeNamesClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedCrossPackageTypeNamesClient {
-    protected readonly _options: SeedCrossPackageTypeNamesClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedCrossPackageTypeNamesClient.Options>;
     protected _folderA: FolderAClient | undefined;
     protected _folderD: FolderDClient | undefined;
     protected _foo: FooClient | undefined;

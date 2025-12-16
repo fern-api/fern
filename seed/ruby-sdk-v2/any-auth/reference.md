@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.get_token(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,10 +14,10 @@
 
 ```ruby
 client.auth.get_token(
-  clientId: 'client_id',
-  clientSecret: 'client_secret',
+  client_id: 'client_id',
+  client_secret: 'client_secret',
   audience: 'https://api.example.com',
-  grantType: 'client_credentials',
+  grant_type: 'client_credentials',
   scope: 'scope'
 );
 ```
@@ -70,6 +70,14 @@ client.auth.get_token(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Auth::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -79,7 +87,7 @@ client.auth.get_token(
 </details>
 
 ## User
-<details><summary><code>client.user.get() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -99,12 +107,27 @@ client.user.get();
 </dd>
 </dl>
 
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
 
 </dd>
 </dl>
 </details>
 
-<details><summary><code>client.user.get_admins() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_admins</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -119,6 +142,21 @@ client.user.get();
 ```ruby
 client.user.get_admins();
 ```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
 </dd>
 </dl>
 </dd>

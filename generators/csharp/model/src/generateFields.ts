@@ -51,18 +51,22 @@ export function generateField(
     let initializer: ast.CodeBlock | undefined = maybeLiteralInitializer;
     let useRequired = true;
 
+    // Read-only properties should not be required since users cannot set them
+    if ("propertyAccess" in property && property.propertyAccess === "READ_ONLY") {
+        useRequired = false;
+    }
+
     if (context.generation.settings.enableReadonlyConstants && maybeLiteralInitializer) {
         accessors = {
             get: (writer: Writer) => {
                 writer.writeNode(maybeLiteralInitializer);
             },
             set: (writer: Writer) => {
-                writer.write("value.Assert(value ==");
+                writer.write("value.Assert(value == ");
                 writer.writeNode(maybeLiteralInitializer);
-                writer.write(`, "'${property.name}' must be " + `);
-
+                writer.write(`, string.Format("'${property.name.name.pascalCase.safeName}' must be {0}", `);
                 writer.writeNode(maybeLiteralInitializer);
-                writer.write(")");
+                writer.write("))");
             }
         };
         initializer = undefined;

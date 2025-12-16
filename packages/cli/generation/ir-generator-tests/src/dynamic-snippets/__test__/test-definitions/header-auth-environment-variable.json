@@ -1,0 +1,123 @@
+{
+    "version": "1.0.0",
+    "types": {},
+    "headers": [],
+    "endpoints": {
+        "endpoint_service.getWithBearerToken": {
+            "auth": {
+                "type": "header",
+                "header": {
+                    "name": {
+                        "name": {
+                            "originalName": "Header Token Auth",
+                            "camelCase": {
+                                "unsafeName": "headerTokenAuth",
+                                "safeName": "headerTokenAuth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "header_token_auth",
+                                "safeName": "header_token_auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEADER_TOKEN_AUTH",
+                                "safeName": "HEADER_TOKEN_AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "HeaderTokenAuth",
+                                "safeName": "HeaderTokenAuth"
+                            }
+                        },
+                        "wireValue": "x-api-key"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getWithBearerToken",
+                    "camelCase": {
+                        "unsafeName": "getWithBearerToken",
+                        "safeName": "getWithBearerToken"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_with_bearer_token",
+                        "safeName": "get_with_bearer_token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_WITH_BEARER_TOKEN",
+                        "safeName": "GET_WITH_BEARER_TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetWithBearerToken",
+                        "safeName": "GetWithBearerToken"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/apiKey"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

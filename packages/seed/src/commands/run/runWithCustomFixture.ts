@@ -1,7 +1,10 @@
 import { GeneratorGroup, GeneratorInvocation } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
-import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import {
+    AbstractAPIWorkspace,
+    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
+} from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
 import { FixtureConfigurations } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
@@ -44,7 +47,7 @@ export async function runWithCustomFixture({
     let scriptRunner: ScriptRunner | undefined = undefined;
 
     if (!skipScripts) {
-        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext);
+        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext, logLevel);
     }
 
     if (local) {
@@ -122,7 +125,8 @@ export async function runWithCustomFixture({
             configuration: runFixtureConfig,
             inspect,
             absolutePathToApiDefinition: pathToFixture,
-            outputDir: absolutePathToOutput
+            outputDir: absolutePathToOutput,
+            generatorInvocation: generatorGroup.invocation
         });
 
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);

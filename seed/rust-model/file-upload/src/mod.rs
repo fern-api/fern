@@ -1,3 +1,13 @@
+//! Request and response types for the FileUpload
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 8 types for API operations
+//! - **Model Types**: 7 types for data representation
+
 pub mod service_id;
 pub mod service_my_object_with_optional;
 pub mod service_my_alias_object;

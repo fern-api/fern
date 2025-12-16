@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.send_() -> </code></summary>
+<details><summary><code>client.headers.<a href="/lib/seed/headers/client.rb">send_</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -14,9 +14,9 @@
 
 ```ruby
 client.headers.send_(
-  operand: ,
-  maybeOperand: ,
-  operandOrColor: 
+  operand: '>',
+  maybe_operand: '>',
+  operand_or_color: 'red'
 );
 ```
 </dd>
@@ -60,6 +60,14 @@ client.headers.send_(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Headers::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -69,7 +77,7 @@ client.headers.send_(
 </details>
 
 ## InlinedRequest
-<details><summary><code>client.inlined_request.send_(request) -> </code></summary>
+<details><summary><code>client.inlined_request.<a href="/lib/seed/inlined_request/client.rb">send_</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -83,8 +91,8 @@ client.headers.send_(
 
 ```ruby
 client.inlined_request.send_(
-  operand: ,
-  operandOrColor: 
+  operand: '>',
+  operand_or_color: 'red'
 );
 ```
 </dd>
@@ -125,6 +133,14 @@ client.inlined_request.send_(
 <dd>
 
 **maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::InlinedRequest::RequestOptions` 
     
 </dd>
 </dl>
@@ -138,7 +154,7 @@ client.inlined_request.send_(
 
 ## MultipartForm
 ## PathParam
-<details><summary><code>client.path_param.send_(operand, operand_or_color) -> </code></summary>
+<details><summary><code>client.path_param.<a href="/lib/seed/path_param/client.rb">send_</a>(operand, operand_or_color) -> </code></summary>
 <dl>
 <dd>
 
@@ -151,7 +167,10 @@ client.inlined_request.send_(
 <dd>
 
 ```ruby
-client.path_param.send_();
+client.path_param.send_(
+  operand: '>',
+  operand_or_color: 'red'
+);
 ```
 </dd>
 </dl>
@@ -178,6 +197,14 @@ client.path_param.send_();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::PathParam::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -187,7 +214,7 @@ client.path_param.send_();
 </details>
 
 ## QueryParam
-<details><summary><code>client.query_param.send_() -> </code></summary>
+<details><summary><code>client.query_param.<a href="/lib/seed/query_param/client.rb">send_</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -201,8 +228,8 @@ client.path_param.send_();
 
 ```ruby
 client.query_param.send_(
-  operand: ,
-  operandOrColor: 
+  operand: '>',
+  operand_or_color: 'red'
 );
 ```
 </dd>
@@ -246,6 +273,14 @@ client.query_param.send_(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::QueryParam::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -254,7 +289,7 @@ client.query_param.send_(
 </dl>
 </details>
 
-<details><summary><code>client.query_param.send_list() -> </code></summary>
+<details><summary><code>client.query_param.<a href="/lib/seed/query_param/client.rb">send_list</a>() -> </code></summary>
 <dl>
 <dd>
 
@@ -267,12 +302,7 @@ client.query_param.send_(
 <dd>
 
 ```ruby
-client.query_param.send_list(
-  operand: ,
-  maybeOperand: ,
-  operandOrColor: ,
-  maybeOperandOrColor: 
-);
+client.query_param.send_list();
 ```
 </dd>
 </dl>
@@ -312,6 +342,14 @@ client.query_param.send_list(
 <dd>
 
 **maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::QueryParam::RequestOptions` 
     
 </dd>
 </dl>

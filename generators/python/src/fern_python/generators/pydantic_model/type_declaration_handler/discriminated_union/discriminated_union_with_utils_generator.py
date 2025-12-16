@@ -61,7 +61,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         kwargs=[
                             (
                                 "discriminant",
-                                AST.Expression(f'"{self._union.discriminant.wire_value}"'),
+                                AST.Expression(f'"{self._get_discriminant_attr_name()}"'),
                             )
                         ],
                     )

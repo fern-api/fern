@@ -2,10 +2,13 @@
 
 # isort: skip_file
 
-from . import realtime
+from . import realtime, realtime_no_auth
 from .realtime import ReceiveEvent, ReceiveEvent2, ReceiveEvent3, ReceiveSnakeCase, SendEvent, SendEvent2, SendSnakeCase
+from .realtime_no_auth import NoAuthReceiveEvent, NoAuthSendEvent
 
 __all__ = [
+    "NoAuthReceiveEvent",
+    "NoAuthSendEvent",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",
@@ -14,4 +17,5 @@ __all__ = [
     "SendEvent2",
     "SendSnakeCase",
     "realtime",
+    "realtime_no_auth",
 ]

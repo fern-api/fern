@@ -47,6 +47,7 @@ exports.InlinedRequestsClient = void 0;
 const BaseClient_js_1 = require("../../../../BaseClient.js");
 const headers_js_1 = require("../../../../core/headers.js");
 const core = __importStar(require("../../../../core/index.js"));
+const handleNonStatusCodeError_js_1 = require("../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../errors/index.js"));
 const SeedExhaustive = __importStar(require("../../../index.js"));
 class InlinedRequestsClient {
@@ -123,21 +124,7 @@ class InlinedRequestsClient {
                         });
                 }
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /req-bodies/object.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/req-bodies/object");
         });
     }
 }

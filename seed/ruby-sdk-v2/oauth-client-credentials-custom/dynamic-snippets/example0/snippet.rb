@@ -10,8 +10,8 @@ client.auth.get_token_with_client_credentials(
   cid: 'cid',
   csr: 'csr',
   scp: 'scp',
-  entityId: 'entity_id',
+  entity_id: 'entity_id',
   audience: 'https://api.example.com',
-  grantType: 'client_credentials',
+  grant_type: 'client_credentials',
   scope: 'scope'
 );

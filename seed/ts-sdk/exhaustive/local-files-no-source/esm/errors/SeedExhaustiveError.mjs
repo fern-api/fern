@@ -3,7 +3,11 @@ import { toJson } from "../core/json.mjs";
 export class SeedExhaustiveError extends Error {
     constructor({ message, statusCode, body, rawResponse, }) {
         super(buildMessage({ message, statusCode, body }));
-        Object.setPrototypeOf(this, SeedExhaustiveError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+        this.name = this.constructor.name;
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;

@@ -20,9 +20,9 @@ func do() {
     )
     request := []*types.NestedObjectWithRequiredField{
         &types.NestedObjectWithRequiredField{
-            String: "string",
+            FieldString: "string",
             NestedObject: &types.ObjectWithOptionalField{
-                String: fern.String(
+                FieldString: fern.String(
                     "string",
                 ),
                 Integer: fern.Int(
@@ -69,9 +69,9 @@ func do() {
             },
         },
         &types.NestedObjectWithRequiredField{
-            String: "string",
+            FieldString: "string",
             NestedObject: &types.ObjectWithOptionalField{
-                String: fern.String(
+                FieldString: fern.String(
                     "string",
                 ),
                 Integer: fern.Int(

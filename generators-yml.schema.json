@@ -64,6 +64,22 @@
         }
       ]
     },
+    "aliases": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "groups": {
       "oneOf": [
         {
@@ -91,6 +107,16 @@
       "oneOf": [
         {
           "$ref": "#/definitions/ai.AIServicesSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "autorelease": {
+      "oneOf": [
+        {
+          "type": "boolean"
         },
         {
           "type": "null"
@@ -1602,6 +1628,15 @@
         }
       ]
     },
+    "generators.DefaultIntegerFormat": {
+      "type": "string",
+      "enum": [
+        "int32",
+        "int64",
+        "uint32",
+        "uint64"
+      ]
+    },
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
@@ -1859,6 +1894,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-integer-format": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.DefaultIntegerFormat"
             },
             {
               "type": "null"
@@ -2336,6 +2381,16 @@
             }
           ]
         },
+        "default-integer-format": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.DefaultIntegerFormat"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "respect-nullable-schemas": {
           "oneOf": [
             {
@@ -2502,6 +2557,19 @@
           "oneOf": [
             {
               "$ref": "#/definitions/fernDefinition.auth.ApiAuthSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "auth-schemes": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.auth.AuthSchemeDeclarationSchema"
+              }
             },
             {
               "type": "null"
@@ -3205,6 +3273,13 @@
         }
       ]
     },
+    "group.GithubSelfhostedMode": {
+      "type": "string",
+      "enum": [
+        "pull-request",
+        "push"
+      ]
+    },
     "license.GithubLicenseType": {
       "type": "string",
       "enum": [
@@ -3246,7 +3321,17 @@
         "mode": {
           "oneOf": [
             {
-              "const": "pull-request"
+              "$ref": "#/definitions/group.GithubSelfhostedMode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "branch": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
@@ -3532,10 +3617,33 @@
             }
           ]
         },
+        "auth-schemes": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.auth.AuthSchemeDeclarationSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "settings": {
           "oneOf": [
             {
-              "$ref": "#/definitions/generators.APIDefinitionSettingsSchema"
+              "$ref": "#/definitions/generators.APIConfigurationV2SettingsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "specs": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.APIConfigurationV2SpecsSchema"
             },
             {
               "type": "null"
@@ -3668,6 +3776,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/group.GeneratorPublishMetadataSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "autorelease": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"

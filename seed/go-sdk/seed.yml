@@ -7,16 +7,19 @@ buildScripts:
   compileScript:
     commands:
       - go build -v ./...
+  lintScript:
+    commands:
+      - golangci-lint run --timeout=5m
   testScript:
     commands:
       - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
       - go test -v ./...
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi 
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
 publish:
   workingDirectory: generators/go
   preBuildCommands:
     - go build ./...
-    - pnpm --filter @fern-api/go-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/go-sdk
   docker:
     file: ./generators/go/sdk/Dockerfile
     image: fernapi/fern-go-sdk
@@ -24,10 +27,10 @@ publish:
 test:
   docker:
     image: fernapi/fern-go-sdk:latest
-    command: pnpm --filter @fern-api/go-sdk dist:cli && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
   podman:
     image: fernapi/fern-go-sdk:latest
-    command: pnpm --filter @fern-api/go-sdk dist:cli && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
 language: go
 generatorType: SDK
 defaultOutputMode: github
@@ -106,6 +109,7 @@ fixtures:
       customConfig:
         enableWireTests: true
         packageName: testPackageName
+        errorCodes: per-endpoint
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
@@ -186,6 +190,20 @@ fixtures:
         packageName: stream
         module:
           path: github.com/fern-api/stream-go
+  server-sent-event-examples:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
+        packageName: sse
+        module:
+          path: github.com/fern-api/sse-examples-go
+  server-sent-events:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
+        packageName: sse
+        module:
+          path: github.com/fern-api/sse-go
   idempotency-headers:
     - outputFolder: .
       outputVersion: 0.0.1
@@ -206,12 +224,20 @@ fixtures:
   nullable-request-body:
     - outputFolder: dynamic-snippets-disabled
       disableDynamicSnippetTests: true
+  oauth-client-credentials-mandatory-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
+  pagination-custom:
+    - outputFolder: .
+      customConfig:
+        customPagerName: PayrocPager
 scripts:
   - image: fernapi/go-seed:1.0.0
     commands:
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
-      - CGO_ENABLED=0 go test ./...
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
+      test:
+        - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
+        - CGO_ENABLED=0 go test ./...
+        - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
 allowedFailures:
   - alias-extends
   - bytes-download
@@ -221,10 +247,11 @@ allowedFailures:
   - literal
   - mixed-case:no-custom-config
   - mixed-case:default-values
-  - pagination-custom
   - request-parameters
   - reserved-keywords
   - streaming-parameter
+  - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
+  - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
   - property-access
 
@@ -243,3 +270,5 @@ allowedFailures:
   - file-upload:no-custom-config 
   - file-upload:package-name 
   - file-upload-openapi
+
+  - pagination-custom:.

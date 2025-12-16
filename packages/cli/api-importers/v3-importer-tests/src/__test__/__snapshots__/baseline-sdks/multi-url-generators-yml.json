@@ -465,7 +465,8 @@
       "type": {
         "type": "unknown"
       },
-      "examples": []
+      "examples": [],
+      "headers": []
     },
     "error_:NotFoundError": {
       "name": {
@@ -521,7 +522,8 @@
       "type": {
         "type": "unknown"
       },
-      "examples": []
+      "examples": [],
+      "headers": []
     }
   },
   "services": {
@@ -618,7 +620,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "Successful response"
           },
           "errors": [
             {
@@ -900,7 +903,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "Successful response"
           },
           "errors": [
             {
@@ -1036,7 +1040,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "Successful response"
           },
           "errors": [
             {

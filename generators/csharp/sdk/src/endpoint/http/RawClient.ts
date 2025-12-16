@@ -220,7 +220,9 @@ export class RawClient extends WithGeneration {
                 propertyName = property.value.key.name.pascalCase.safeName;
                 partName = property.value.key.wireValue;
                 contentType = property.value.contentType;
-                csharpType = this.context.csharpTypeMapper.convertFromFileProperty({ property: property.value });
+                csharpType = this.context.csharpTypeMapper.convertFromFileProperty({
+                    property: property.value
+                });
                 break;
             case "bodyProperty": {
                 propertyName = property.name.name.pascalCase.safeName;
@@ -275,11 +277,13 @@ export class RawClient extends WithGeneration {
     /**
      * Creates an HTTP request using the RawClient.
      */
-    public createHttpRequest({ clientReference, request }: RawClient.CreateHttpRequestArgs): ast.MethodInvocation {
+    public createHttpRequestAsync({ clientReference, request }: RawClient.CreateHttpRequestArgs): ast.MethodInvocation {
         return this.csharp.invokeMethod({
             on: this.csharp.codeblock(clientReference),
-            method: "CreateHttpRequest",
-            arguments_: [request]
+            method: "CreateHttpRequestAsync",
+            arguments_: [request],
+            async: true,
+            configureAwait: true
         });
     }
 

@@ -78,30 +78,6 @@ public class AsyncServiceClient {
         return this.rawClient.justFileWithQueryParams(request, requestOptions).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<Void> justFileWithQueryParams(InputStream stream, String filename) {
-        return this.rawClient.justFileWithQueryParams(stream, filename).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> justFileWithQueryParams(InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient
-                .justFileWithQueryParams(stream, filename, mediaType)
-                .thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> justFileWithQueryParams(
-            InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient
-                .justFileWithQueryParams(stream, filename, requestOptions)
-                .thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> justFileWithQueryParams(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        return this.rawClient
-                .justFileWithQueryParams(stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
-    }
-
     public CompletableFuture<Void> withContentType(WithContentTypeRequest request) {
         return this.rawClient.withContentType(request).thenApply(response -> response.body());
     }

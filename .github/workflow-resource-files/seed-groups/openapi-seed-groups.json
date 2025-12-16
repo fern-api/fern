@@ -35,7 +35,7 @@
     },
     {
       "fixtures": [
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "oauth-client-credentials",
         "literal",
         "nullable-optional",
@@ -144,7 +144,7 @@
         "multi-url-environment-no-default",
         "streaming",
         "server-sent-events",
-        "custom-auth"
+        "header-auth"
       ],
       "groupTotalTimeSeconds": 90
     }

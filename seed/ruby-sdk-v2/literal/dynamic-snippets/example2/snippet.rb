@@ -6,11 +6,11 @@ client.inlined.send_(
   temperature: 10.1,
   prompt: 'You are a helpful assistant',
   context: "You're super wise",
-  aliasedContext: "You're super wise",
-  maybeContext: "You're super wise",
-  objectWithLiteral: {
-    nestedLiteral: {
-      myLiteral: 'How super cool'
+  aliased_context: "You're super wise",
+  maybe_context: "You're super wise",
+  object_with_literal: {
+    nested_literal: {
+      my_literal: 'How super cool'
     }
   },
   stream: false,

@@ -13,6 +13,7 @@ export const baseGoCustomConfigSchema = z.object({
     clientConstructorName: z.string().optional(),
     clientName: z.string().optional(),
     enableExplicitNull: z.boolean().optional(),
+    errorCodes: z.enum(["per-endpoint", "global"]).optional(),
     exportedClientName: z.string().optional(),
     includeLegacyClientOptions: z.boolean().optional(),
     inlinePathParameters: z.boolean().optional(),
@@ -23,7 +24,8 @@ export const baseGoCustomConfigSchema = z.object({
     gettersPassByValue: z.boolean().optional(),
     enableWireTests: z.boolean().optional(),
     exportAllRequestsAtRoot: z.boolean().optional(),
-    customReadmeSections: z.array(CustomReadmeSectionSchema).optional()
+    customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
+    customPagerName: z.string().optional()
 });
 
 export type BaseGoCustomConfigSchema = z.infer<typeof baseGoCustomConfigSchema>;

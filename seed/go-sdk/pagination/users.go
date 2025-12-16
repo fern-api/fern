@@ -38,6 +38,33 @@ func (l *ListUsernamesRequest) SetStartingAfter(startingAfter *string) {
 }
 
 var (
+	listUsernamesWithOptionalResponseRequestFieldStartingAfter = big.NewInt(1 << 0)
+)
+
+type ListUsernamesWithOptionalResponseRequest struct {
+	// The cursor used for pagination in order to fetch
+	// the next page of results.
+	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsernamesWithOptionalResponseRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsernamesWithOptionalResponseRequest) SetStartingAfter(startingAfter *string) {
+	l.StartingAfter = startingAfter
+	l.require(listUsernamesWithOptionalResponseRequestFieldStartingAfter)
+}
+
+var (
 	listUsersBodyCursorPaginationRequestFieldPagination = big.NewInt(1 << 0)
 )
 
@@ -454,6 +481,32 @@ func (l *ListUsersOffsetStepPaginationRequest) SetOrder(order *Order) {
 }
 
 var (
+	listUsersOptionalDataRequestFieldPage = big.NewInt(1 << 0)
+)
+
+type ListUsersOptionalDataRequest struct {
+	// Defaults to first page
+	Page *int `json:"-" url:"page,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsersOptionalDataRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOptionalDataRequest) SetPage(page *int) {
+	l.Page = page
+	l.require(listUsersOptionalDataRequestFieldPage)
+}
+
+var (
 	listUsersExtendedOptionalListResponseFieldData       = big.NewInt(1 << 0)
 	listUsersExtendedOptionalListResponseFieldNext       = big.NewInt(1 << 1)
 	listUsersExtendedOptionalListResponseFieldTotalCount = big.NewInt(1 << 2)
@@ -758,6 +811,133 @@ func (l *ListUsersMixedTypePaginationResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (l *ListUsersMixedTypePaginationResponse) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	listUsersOptionalDataPaginationResponseFieldHasNextPage = big.NewInt(1 << 0)
+	listUsersOptionalDataPaginationResponseFieldPage        = big.NewInt(1 << 1)
+	listUsersOptionalDataPaginationResponseFieldTotalCount  = big.NewInt(1 << 2)
+	listUsersOptionalDataPaginationResponseFieldData        = big.NewInt(1 << 3)
+)
+
+type ListUsersOptionalDataPaginationResponse struct {
+	HasNextPage *bool `json:"hasNextPage,omitempty" url:"hasNextPage,omitempty"`
+	Page        *Page `json:"page,omitempty" url:"page,omitempty"`
+	// The totall number of /users
+	TotalCount int     `json:"total_count" url:"total_count"`
+	Data       []*User `json:"data,omitempty" url:"data,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) GetHasNextPage() *bool {
+	if l == nil {
+		return nil
+	}
+	return l.HasNextPage
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) GetPage() *Page {
+	if l == nil {
+		return nil
+	}
+	return l.Page
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) GetTotalCount() int {
+	if l == nil {
+		return 0
+	}
+	return l.TotalCount
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) GetData() []*User {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) GetExtraProperties() map[string]interface{} {
+	return l.extraProperties
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetHasNextPage sets the HasNextPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOptionalDataPaginationResponse) SetHasNextPage(hasNextPage *bool) {
+	l.HasNextPage = hasNextPage
+	l.require(listUsersOptionalDataPaginationResponseFieldHasNextPage)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOptionalDataPaginationResponse) SetPage(page *Page) {
+	l.Page = page
+	l.require(listUsersOptionalDataPaginationResponseFieldPage)
+}
+
+// SetTotalCount sets the TotalCount field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOptionalDataPaginationResponse) SetTotalCount(totalCount int) {
+	l.TotalCount = totalCount
+	l.require(listUsersOptionalDataPaginationResponseFieldTotalCount)
+}
+
+// SetData sets the Data field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsersOptionalDataPaginationResponse) SetData(data []*User) {
+	l.Data = data
+	l.require(listUsersOptionalDataPaginationResponseFieldData)
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersOptionalDataPaginationResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersOptionalDataPaginationResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) MarshalJSON() ([]byte, error) {
+	type embed ListUsersOptionalDataPaginationResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) String() string {
 	if len(l.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
 			return value

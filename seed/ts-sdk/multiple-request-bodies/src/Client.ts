@@ -2,23 +2,24 @@
 
 import type * as SeedApi from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "./core/headers.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as environments from "./environments.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedApiClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedApiClient {
-    protected readonly _options: SeedApiClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedApiClient.Options>;
 
     constructor(options: SeedApiClient.Options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     /**
@@ -39,9 +40,10 @@ export class SeedApiClient {
         request: SeedApi.UploadDocumentRequest = {},
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.UploadDocumentResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -75,21 +77,7 @@ export class SeedApiClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /documents/upload.");
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/documents/upload");
     }
 
     /**
@@ -108,9 +96,10 @@ export class SeedApiClient {
         requestOptions?: SeedApiClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.UploadDocumentResponse>> {
         const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             _binaryUploadRequest.headers,
             requestOptions?.headers,
         );
@@ -146,24 +135,6 @@ export class SeedApiClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /documents/upload.");
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
-    }
-
-    protected async _getAuthorizationHeader(): Promise<string> {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/documents/upload");
     }
 }

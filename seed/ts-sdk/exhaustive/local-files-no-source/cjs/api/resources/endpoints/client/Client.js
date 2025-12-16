@@ -15,7 +15,7 @@ const Client_js_9 = require("../resources/union/client/Client.js");
 const Client_js_10 = require("../resources/urls/client/Client.js");
 class EndpointsClient {
     constructor(options) {
-        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
+        this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
     }
     get container() {
         var _a;

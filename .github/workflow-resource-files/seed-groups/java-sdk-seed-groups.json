@@ -90,7 +90,7 @@
         "bearer-token-environment-variable",
         "undiscriminated-unions",
         "cross-package-type-names",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "mixed-file-directory",
         "literal",
         "multi-url-environment-no-default",
@@ -156,7 +156,7 @@
     {
       "fixtures": [
         "bytes-upload",
-        "custom-auth:custom-auth",
+        "header-auth:header-auth",
         "any-auth",
         "file-upload-openapi",
         "unions:default",

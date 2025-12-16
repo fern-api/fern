@@ -1,5 +1,6 @@
 [project]
 name = "fern_multiple-request-bodies"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_multiple-request-bodies"

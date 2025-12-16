@@ -22,6 +22,10 @@ def copy_to_project(*, project: Project) -> None:
     # Add more files you need to copy as is
     # This file is really to simplify the process of copying, leaving core utilities for files
     # that need to be referenced within the project, and more complex cases.
+
+    # Use the full module path including package_path for import replacements
+    module_path = project.get_module_path_for_imports()
+
     AS_IS_FILES = [
         AsIsFile(
             from_="tests/utils/__init__.py",
@@ -31,22 +35,22 @@ def copy_to_project(*, project: Project) -> None:
             from_="tests/utils/test_query_encoding.py",
             to="tests/utils/test_query_encoding",
             replacements={
-                "core_utilities.shared.query_encoder": f"{project._relative_path_to_project}.core.query_encoder",
+                "core_utilities.shared.query_encoder": f"{module_path}.core.query_encoder",
             },
         ),
         AsIsFile(
             from_="tests/utils/test_http_client.py",
             to="tests/utils/test_http_client",
             replacements={
-                "core_utilities.shared.request_options": f"{project._relative_path_to_project}.core.request_options",
-                "core_utilities.shared.http_client": f"{project._relative_path_to_project}.core.http_client",
+                "core_utilities.shared.request_options": f"{module_path}.core.request_options",
+                "core_utilities.shared.http_client": f"{module_path}.core.http_client",
             },
         ),
         AsIsFile(
             from_="tests/utils/test_serialization.py",
             to="tests/utils/test_serialization",
             replacements={
-                ".typeddict_models.types.core.serialization": f"{project._relative_path_to_project}.core.serialization",
+                ".typeddict_models.types.core.serialization": f"{module_path}.core.serialization",
                 ".typeddict_models.types": ".assets.models",
             },
         ),
@@ -54,7 +58,7 @@ def copy_to_project(*, project: Project) -> None:
             from_="tests/utils/typeddict_models/types/resources/types/color.py",
             to="tests/utils/assets/models/color",
             replacements={
-                ".typeddict_models.types.core.serialization": f"{project._relative_path_to_project}.core.serialization",
+                ".typeddict_models.types.core.serialization": f"{module_path}.core.serialization",
                 ".typeddict_models.types": ".assets.models",
             },
         ),
@@ -65,7 +69,7 @@ def copy_to_project(*, project: Project) -> None:
             from_="tests/utils/typeddict_models/types/resources/types/requests",
             to="tests/utils/assets/models",
             replacements={
-                "....core.serialization": f"{project._relative_path_to_project}.core.serialization",
+                "....core.serialization": f"{module_path}.core.serialization",
                 "..color": ".color",
             },
         ),

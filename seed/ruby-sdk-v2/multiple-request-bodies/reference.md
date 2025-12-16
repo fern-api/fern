@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.upload_json_document(request) -> Seed::Types::UploadDocumentResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">upload_json_document</a>(request) -> Seed::Types::UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -44,6 +44,14 @@ client.upload_json_document();
 <dd>
 
 **title:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

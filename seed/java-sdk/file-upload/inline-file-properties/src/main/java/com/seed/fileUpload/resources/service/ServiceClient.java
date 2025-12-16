@@ -73,25 +73,6 @@ public class ServiceClient {
         this.rawClient.justFileWithQueryParams(request, requestOptions).body();
     }
 
-    public void justFileWithQueryParams(InputStream stream, String filename) {
-        this.rawClient.justFileWithQueryParams(stream, filename).body();
-    }
-
-    public void justFileWithQueryParams(InputStream stream, String filename, MediaType mediaType) {
-        this.rawClient.justFileWithQueryParams(stream, filename, mediaType).body();
-    }
-
-    public void justFileWithQueryParams(InputStream stream, String filename, RequestOptions requestOptions) {
-        this.rawClient.justFileWithQueryParams(stream, filename, requestOptions).body();
-    }
-
-    public void justFileWithQueryParams(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        this.rawClient
-                .justFileWithQueryParams(stream, filename, mediaType, requestOptions)
-                .body();
-    }
-
     public void withContentType(WithContentTypeRequest request) {
         this.rawClient.withContentType(request).body();
     }

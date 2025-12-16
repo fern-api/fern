@@ -7,7 +7,7 @@ client = Seed::Client.new(
 
 client.users.list_with_cursor_pagination(
   page: 1.1,
-  perPage: 1.1,
-  order: ,
-  startingAfter: 'starting_after'
+  per_page: 1.1,
+  order: 'asc',
+  starting_after: 'starting_after'
 );

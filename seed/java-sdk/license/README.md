@@ -142,7 +142,6 @@ SeedLicenseClient client = SeedLicenseClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.license.SeedLicenseClient;
 import com.seed.license.core.RequestOptions;
@@ -150,7 +149,7 @@ import com.seed.license.core.RequestOptions;
 // Client level
 SeedLicenseClient client = SeedLicenseClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -158,7 +157,7 @@ client.get(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

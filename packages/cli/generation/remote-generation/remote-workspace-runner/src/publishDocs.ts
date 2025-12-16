@@ -2,7 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { MediaType } from "@fern-api/core-utils";
+import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
 
@@ -58,7 +58,7 @@ export async function publishDocs({
     isPrivate = false,
     disableTemplates = false,
     skipUpload = false,
-    withAiExamples = false,
+    withAiExamples = true,
     targetAudiences
 }: {
     token: FernToken;
@@ -260,7 +260,10 @@ export async function publishDocs({
         registerApi: async ({ ir, snippetsConfig, playgroundConfig, apiName, workspace }) => {
             let apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, playgroundConfig, context });
 
-            const aiEnhancerConfig = getAIEnhancerConfig(withAiExamples);
+            const aiEnhancerConfig = getAIEnhancerConfig(
+                withAiExamples,
+                docsWorkspace.config.experimental?.aiExampleStyleInstructions
+            );
             if (aiEnhancerConfig && workspace) {
                 const sources = workspace.getSources();
                 const openApiSource = sources.find((source) => source.type === "openapi");
@@ -320,16 +323,23 @@ export async function publishDocs({
                             "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
                         );
                     }
-                    default:
+                    default: {
+                        const errorDetails = extractErrorDetails(response.error);
+                        context.logger.error(
+                            `FDR registerApiDefinition failed. Error details:\n${JSON.stringify(errorDetails, undefined, 2)}`
+                        );
                         if (apiName != null) {
                             return context.failAndThrow(
-                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
+                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com`,
+                                errorDetails
                             );
                         } else {
                             return context.failAndThrow(
-                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
+                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com`,
+                                errorDetails
                             );
                         }
+                    }
                 }
             }
         },
@@ -338,8 +348,20 @@ export async function publishDocs({
 
     context.logger.info("Resolving docs definition...");
     const resolveStart = performance.now();
-    const docsDefinition = await resolver.resolve();
+    let docsDefinition = await resolver.resolve();
     const resolveTime = performance.now() - resolveStart;
+
+    if (docsWorkspace.config.settings?.substituteEnvVars) {
+        context.logger.debug("Applying environment variable substitution to docs definition...");
+        // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
+        const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
+        const substitutedDocs = replaceEnvVariables(
+            docsWithoutJsFiles,
+            { onError: (e) => context.failAndThrow(e) },
+            { substituteAsEmpty: false }
+        );
+        docsDefinition = { ...substitutedDocs, jsFiles };
+    }
 
     const pageCount = Object.keys(docsDefinition.pages).length;
     const apiWorkspaceCount = apiWorkspaces.length;
@@ -756,7 +778,7 @@ async function updateAiChatFromDocsDefinition({
     }
 }
 
-function getAIEnhancerConfig(withAiExamples: boolean): AIExampleEnhancerConfig | undefined {
+function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string): AIExampleEnhancerConfig | undefined {
     if (!withAiExamples) {
         return undefined;
     }
@@ -765,6 +787,29 @@ function getAIEnhancerConfig(withAiExamples: boolean): AIExampleEnhancerConfig |
         enabled: true,
         model: process.env.FERN_AI_MODEL || "gpt-4o-mini",
         maxRetries: parseInt(process.env.FERN_AI_MAX_RETRIES || "3"),
-        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000")
+        requestTimeoutMs: parseInt(process.env.FERN_AI_TIMEOUT_MS || "25000"),
+        styleInstructions
+    };
+}
+
+/**
+ * Extracts detailed error information from an FDR SDK error response.
+ * This helps debug network/fetch failures by providing structured error details
+ * including status codes, error messages, and any underlying cause information.
+ */
+function extractErrorDetails(error: unknown): Record<string, unknown> {
+    const errorObj = error as Record<string, unknown>;
+    const content = errorObj?.content as Record<string, unknown> | undefined;
+
+    return {
+        errorType: errorObj?.error,
+        statusCode: errorObj?.statusCode ?? content?.statusCode,
+        reason: content?.reason,
+        errorMessage: content?.errorMessage ?? content?.message,
+        body: content?.body,
+        // Include any underlying error/cause information
+        cause: content?.cause,
+        // Include the raw error for complete debugging if needed
+        rawError: error
     };
 }

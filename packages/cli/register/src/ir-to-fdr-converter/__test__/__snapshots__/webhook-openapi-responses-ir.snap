@@ -1,0 +1,1240 @@
+{
+  "apiDisplayName": undefined,
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "originalName": "",
+    "pascalCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "screamingSnakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+    "snakeCase": {
+      "safeName": "",
+      "unsafeName": "",
+    },
+  },
+  "apiPlayground": undefined,
+  "apiVersion": undefined,
+  "audiences": undefined,
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": undefined,
+  "environments": {
+    "defaultEnvironment": "Production server",
+    "environments": {
+      "_visit": [Function],
+      "environments": [
+        {
+          "docs": "Production server",
+          "id": "Production server",
+          "name": {
+            "camelCase": {
+              "safeName": "productionServer",
+              "unsafeName": "productionServer",
+            },
+            "originalName": "Production server",
+            "pascalCase": {
+              "safeName": "ProductionServer",
+              "unsafeName": "ProductionServer",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PRODUCTION_SERVER",
+              "unsafeName": "PRODUCTION_SERVER",
+            },
+            "snakeCase": {
+              "safeName": "production_server",
+              "unsafeName": "production_server",
+            },
+          },
+          "url": "https://api.example.com/v1",
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {},
+  "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": undefined,
+  "readmeConfig": undefined,
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": undefined,
+    "subpackages": [
+      "subpackage_paymentSessions",
+    ],
+    "types": [
+      "PaymentSession",
+      "PaymentSessionCompletedEvent",
+    ],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": "",
+      "userAgent": undefined,
+    },
+  },
+  "selfHosted": false,
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {},
+  "sourceConfig": undefined,
+  "subpackages": {
+    "subpackage_paymentSessions": {
+      "displayName": undefined,
+      "docs": undefined,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "paymentSessions",
+              "unsafeName": "paymentSessions",
+            },
+            "originalName": "paymentSessions",
+            "pascalCase": {
+              "safeName": "PaymentSessions",
+              "unsafeName": "PaymentSessions",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PAYMENT_SESSIONS",
+              "unsafeName": "PAYMENT_SESSIONS",
+            },
+            "snakeCase": {
+              "safeName": "payment_sessions",
+              "unsafeName": "payment_sessions",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "paymentSessions",
+            "unsafeName": "paymentSessions",
+          },
+          "originalName": "paymentSessions",
+          "pascalCase": {
+            "safeName": "PaymentSessions",
+            "unsafeName": "PaymentSessions",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PAYMENT_SESSIONS",
+            "unsafeName": "PAYMENT_SESSIONS",
+          },
+          "snakeCase": {
+            "safeName": "payment_sessions",
+            "unsafeName": "payment_sessions",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": false,
+      "name": {
+        "camelCase": {
+          "safeName": "paymentSessions",
+          "unsafeName": "paymentSessions",
+        },
+        "originalName": "paymentSessions",
+        "pascalCase": {
+          "safeName": "PaymentSessions",
+          "unsafeName": "PaymentSessions",
+        },
+        "screamingSnakeCase": {
+          "safeName": "PAYMENT_SESSIONS",
+          "unsafeName": "PAYMENT_SESSIONS",
+        },
+        "snakeCase": {
+          "safeName": "payment_sessions",
+          "unsafeName": "payment_sessions",
+        },
+      },
+      "navigationConfig": undefined,
+      "service": undefined,
+      "subpackages": [],
+      "types": [],
+      "webhooks": "Payment Sessions",
+      "websocket": undefined,
+    },
+  },
+  "types": {
+    "PaymentSession": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "paymentSession",
+            "unsafeName": "paymentSession",
+          },
+          "originalName": "PaymentSession",
+          "pascalCase": {
+            "safeName": "PaymentSession",
+            "unsafeName": "PaymentSession",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PAYMENT_SESSION",
+            "unsafeName": "PAYMENT_SESSION",
+          },
+          "snakeCase": {
+            "safeName": "payment_session",
+            "unsafeName": "payment_session",
+          },
+        },
+        "typeId": "PaymentSession",
+      },
+      "referencedTypes": Set {
+        "PaymentSessionStatus",
+      },
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Unique payment session identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "PaymentSessionId_example_0": "ps_abc123",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Current status of the payment session",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+                "originalName": "status",
+                "pascalCase": {
+                  "safeName": "Status",
+                  "unsafeName": "Status",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "STATUS",
+                  "unsafeName": "STATUS",
+                },
+                "snakeCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+              },
+              "wireValue": "status",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "PaymentSessionStatus_example_autogenerated": "pending",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "paymentSessionStatus",
+                  "unsafeName": "paymentSessionStatus",
+                },
+                "originalName": "PaymentSessionStatus",
+                "pascalCase": {
+                  "safeName": "PaymentSessionStatus",
+                  "unsafeName": "PaymentSessionStatus",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PAYMENT_SESSION_STATUS",
+                  "unsafeName": "PAYMENT_SESSION_STATUS",
+                },
+                "snakeCase": {
+                  "safeName": "payment_session_status",
+                  "unsafeName": "payment_session_status",
+                },
+              },
+              "type": "named",
+              "typeId": "PaymentSessionStatus",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Payment amount",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+                "originalName": "amount",
+                "pascalCase": {
+                  "safeName": "Amount",
+                  "unsafeName": "Amount",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "AMOUNT",
+                  "unsafeName": "AMOUNT",
+                },
+                "snakeCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+              },
+              "wireValue": "amount",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "PaymentSessionAmount_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "DOUBLE",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "double",
+                  "validation": {
+                    "exclusiveMax": undefined,
+                    "exclusiveMin": undefined,
+                    "max": undefined,
+                    "min": undefined,
+                    "multipleOf": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Currency code",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "currency",
+                  "unsafeName": "currency",
+                },
+                "originalName": "currency",
+                "pascalCase": {
+                  "safeName": "Currency",
+                  "unsafeName": "Currency",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CURRENCY",
+                  "unsafeName": "CURRENCY",
+                },
+                "snakeCase": {
+                  "safeName": "currency",
+                  "unsafeName": "currency",
+                },
+              },
+              "wireValue": "currency",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "PaymentSessionCurrency_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Customer identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "customerId",
+                  "unsafeName": "customerId",
+                },
+                "originalName": "customerId",
+                "pascalCase": {
+                  "safeName": "CustomerId",
+                  "unsafeName": "CustomerId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CUSTOMER_ID",
+                  "unsafeName": "CUSTOMER_ID",
+                },
+                "snakeCase": {
+                  "safeName": "customer_id",
+                  "unsafeName": "customer_id",
+                },
+              },
+              "wireValue": "customerId",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "PaymentSessionCustomerId_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "When the session was created",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "createdAt",
+                  "unsafeName": "createdAt",
+                },
+                "originalName": "createdAt",
+                "pascalCase": {
+                  "safeName": "CreatedAt",
+                  "unsafeName": "CreatedAt",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATED_AT",
+                  "unsafeName": "CREATED_AT",
+                },
+                "snakeCase": {
+                  "safeName": "created_at",
+                  "unsafeName": "created_at",
+                },
+              },
+              "wireValue": "createdAt",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "PaymentSessionCreatedAt_example_autogenerated": "2024-01-15T09:30:00Z",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "DATE_TIME",
+                "v2": {
+                  "_visit": [Function],
+                  "type": "dateTime",
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "PaymentSession_example_autogenerated": {
+            "amount": 1.1,
+            "createdAt": "2024-01-15T09:30:00Z",
+            "currency": "string",
+            "id": "ps_abc123",
+            "status": "pending",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "PaymentSessionCompletedEvent": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "paymentSessionCompletedEvent",
+            "unsafeName": "paymentSessionCompletedEvent",
+          },
+          "originalName": "PaymentSessionCompletedEvent",
+          "pascalCase": {
+            "safeName": "PaymentSessionCompletedEvent",
+            "unsafeName": "PaymentSessionCompletedEvent",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PAYMENT_SESSION_COMPLETED_EVENT",
+            "unsafeName": "PAYMENT_SESSION_COMPLETED_EVENT",
+          },
+          "snakeCase": {
+            "safeName": "payment_session_completed_event",
+            "unsafeName": "payment_session_completed_event",
+          },
+        },
+        "typeId": "PaymentSessionCompletedEvent",
+      },
+      "referencedTypes": Set {
+        "PaymentSessionCompletedEventEventType",
+      },
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Unique event identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "eventId",
+                  "unsafeName": "eventId",
+                },
+                "originalName": "eventId",
+                "pascalCase": {
+                  "safeName": "EventId",
+                  "unsafeName": "EventId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT_ID",
+                  "unsafeName": "EVENT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "event_id",
+                  "unsafeName": "event_id",
+                },
+              },
+              "wireValue": "eventId",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {
+                "PaymentSessionCompletedEventEventId_example_0": "evt_xyz789",
+              },
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Type of the event",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "eventType",
+                  "unsafeName": "eventType",
+                },
+                "originalName": "eventType",
+                "pascalCase": {
+                  "safeName": "EventType",
+                  "unsafeName": "EventType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT_TYPE",
+                  "unsafeName": "EVENT_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "event_type",
+                  "unsafeName": "event_type",
+                },
+              },
+              "wireValue": "eventType",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "PaymentSessionCompletedEventEventType_example_autogenerated": "payment_session.completed",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "paymentSessionCompletedEventEventType",
+                  "unsafeName": "paymentSessionCompletedEventEventType",
+                },
+                "originalName": "PaymentSessionCompletedEventEventType",
+                "pascalCase": {
+                  "safeName": "PaymentSessionCompletedEventEventType",
+                  "unsafeName": "PaymentSessionCompletedEventEventType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PAYMENT_SESSION_COMPLETED_EVENT_EVENT_TYPE",
+                  "unsafeName": "PAYMENT_SESSION_COMPLETED_EVENT_EVENT_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "payment_session_completed_event_event_type",
+                  "unsafeName": "payment_session_completed_event_event_type",
+                },
+              },
+              "type": "named",
+              "typeId": "PaymentSessionCompletedEventEventType",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "paymentSession",
+                  "unsafeName": "paymentSession",
+                },
+                "originalName": "paymentSession",
+                "pascalCase": {
+                  "safeName": "PaymentSession",
+                  "unsafeName": "PaymentSession",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PAYMENT_SESSION",
+                  "unsafeName": "PAYMENT_SESSION",
+                },
+                "snakeCase": {
+                  "safeName": "payment_session",
+                  "unsafeName": "payment_session",
+                },
+              },
+              "wireValue": "paymentSession",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {},
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "paymentSession",
+                  "unsafeName": "paymentSession",
+                },
+                "originalName": "PaymentSession",
+                "pascalCase": {
+                  "safeName": "PaymentSession",
+                  "unsafeName": "PaymentSession",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PAYMENT_SESSION",
+                  "unsafeName": "PAYMENT_SESSION",
+                },
+                "snakeCase": {
+                  "safeName": "payment_session",
+                  "unsafeName": "payment_session",
+                },
+              },
+              "type": "named",
+              "typeId": "PaymentSession",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "When the event occurred",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "timestamp",
+                  "unsafeName": "timestamp",
+                },
+                "originalName": "timestamp",
+                "pascalCase": {
+                  "safeName": "Timestamp",
+                  "unsafeName": "Timestamp",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TIMESTAMP",
+                  "unsafeName": "TIMESTAMP",
+                },
+                "snakeCase": {
+                  "safeName": "timestamp",
+                  "unsafeName": "timestamp",
+                },
+              },
+              "wireValue": "timestamp",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "PaymentSessionCompletedEventTimestamp_example_autogenerated": "2024-01-15T09:30:00Z",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "DATE_TIME",
+                "v2": {
+                  "_visit": [Function],
+                  "type": "dateTime",
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "PaymentSessionCompletedEvent_example_autogenerated": {
+            "eventId": "evt_xyz789",
+            "eventType": "payment_session.completed",
+            "paymentSession": {
+              "amount": 1.1,
+              "createdAt": "2024-01-15T09:30:00Z",
+              "currency": "string",
+              "id": "ps_abc123",
+              "status": "pending",
+            },
+            "timestamp": "2024-01-15T09:30:00Z",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "PaymentSessionCompletedEventEventType": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Type of the event",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "paymentSessionCompletedEventEventType",
+            "unsafeName": "paymentSessionCompletedEventEventType",
+          },
+          "originalName": "PaymentSessionCompletedEventEventType",
+          "pascalCase": {
+            "safeName": "PaymentSessionCompletedEventEventType",
+            "unsafeName": "PaymentSessionCompletedEventEventType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PAYMENT_SESSION_COMPLETED_EVENT_EVENT_TYPE",
+            "unsafeName": "PAYMENT_SESSION_COMPLETED_EVENT_EVENT_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "payment_session_completed_event_event_type",
+            "unsafeName": "payment_session_completed_event_event_type",
+          },
+        },
+        "typeId": "PaymentSessionCompletedEventEventType",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "paymentSessionCompleted",
+                  "unsafeName": "paymentSessionCompleted",
+                },
+                "originalName": "payment_session.completed",
+                "pascalCase": {
+                  "safeName": "PaymentSessionCompleted",
+                  "unsafeName": "PaymentSessionCompleted",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PAYMENT_SESSION_COMPLETED",
+                  "unsafeName": "PAYMENT_SESSION_COMPLETED",
+                },
+                "snakeCase": {
+                  "safeName": "payment_session_completed",
+                  "unsafeName": "payment_session_completed",
+                },
+              },
+              "wireValue": "payment_session.completed",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "PaymentSessionCompletedEventEventType_example_autogenerated": "payment_session.completed",
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "PaymentSessionStatus": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Current status of the payment session",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "paymentSessionStatus",
+            "unsafeName": "paymentSessionStatus",
+          },
+          "originalName": "PaymentSessionStatus",
+          "pascalCase": {
+            "safeName": "PaymentSessionStatus",
+            "unsafeName": "PaymentSessionStatus",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PAYMENT_SESSION_STATUS",
+            "unsafeName": "PAYMENT_SESSION_STATUS",
+          },
+          "snakeCase": {
+            "safeName": "payment_session_status",
+            "unsafeName": "payment_session_status",
+          },
+        },
+        "typeId": "PaymentSessionStatus",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "pending",
+                  "unsafeName": "pending",
+                },
+                "originalName": "pending",
+                "pascalCase": {
+                  "safeName": "Pending",
+                  "unsafeName": "Pending",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PENDING",
+                  "unsafeName": "PENDING",
+                },
+                "snakeCase": {
+                  "safeName": "pending",
+                  "unsafeName": "pending",
+                },
+              },
+              "wireValue": "pending",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "processing",
+                  "unsafeName": "processing",
+                },
+                "originalName": "processing",
+                "pascalCase": {
+                  "safeName": "Processing",
+                  "unsafeName": "Processing",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PROCESSING",
+                  "unsafeName": "PROCESSING",
+                },
+                "snakeCase": {
+                  "safeName": "processing",
+                  "unsafeName": "processing",
+                },
+              },
+              "wireValue": "processing",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "completed",
+                  "unsafeName": "completed",
+                },
+                "originalName": "completed",
+                "pascalCase": {
+                  "safeName": "Completed",
+                  "unsafeName": "Completed",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "COMPLETED",
+                  "unsafeName": "COMPLETED",
+                },
+                "snakeCase": {
+                  "safeName": "completed",
+                  "unsafeName": "completed",
+                },
+              },
+              "wireValue": "completed",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "failed",
+                  "unsafeName": "failed",
+                },
+                "originalName": "failed",
+                "pascalCase": {
+                  "safeName": "Failed",
+                  "unsafeName": "Failed",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FAILED",
+                  "unsafeName": "FAILED",
+                },
+                "snakeCase": {
+                  "safeName": "failed",
+                  "unsafeName": "failed",
+                },
+              },
+              "wireValue": "failed",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "PaymentSessionStatus_example_autogenerated": "pending",
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {
+    "Payment Sessions": [
+      {
+        "availability": undefined,
+        "displayName": "Payment session completed webhook",
+        "docs": "Webhook triggered when a payment session is completed",
+        "examples": [],
+        "headers": [],
+        "id": "Payment Sessions.paymentSessionCompletedWebhook",
+        "method": "POST",
+        "name": {
+          "camelCase": {
+            "safeName": "paymentSessionCompletedWebhook",
+            "unsafeName": "paymentSessionCompletedWebhook",
+          },
+          "originalName": "paymentSessionCompletedWebhook",
+          "pascalCase": {
+            "safeName": "PaymentSessionCompletedWebhook",
+            "unsafeName": "PaymentSessionCompletedWebhook",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PAYMENT_SESSION_COMPLETED_WEBHOOK",
+            "unsafeName": "PAYMENT_SESSION_COMPLETED_WEBHOOK",
+          },
+          "snakeCase": {
+            "safeName": "payment_session_completed_webhook",
+            "unsafeName": "payment_session_completed_webhook",
+          },
+        },
+        "payload": {
+          "_visit": [Function],
+          "docs": undefined,
+          "payloadType": {
+            "_visit": [Function],
+            "default": undefined,
+            "displayName": undefined,
+            "fernFilepath": {
+              "allParts": [],
+              "file": undefined,
+              "packagePath": [],
+            },
+            "inline": false,
+            "name": {
+              "camelCase": {
+                "safeName": "paymentSessionCompletedEvent",
+                "unsafeName": "paymentSessionCompletedEvent",
+              },
+              "originalName": "PaymentSessionCompletedEvent",
+              "pascalCase": {
+                "safeName": "PaymentSessionCompletedEvent",
+                "unsafeName": "PaymentSessionCompletedEvent",
+              },
+              "screamingSnakeCase": {
+                "safeName": "PAYMENT_SESSION_COMPLETED_EVENT",
+                "unsafeName": "PAYMENT_SESSION_COMPLETED_EVENT",
+              },
+              "snakeCase": {
+                "safeName": "payment_session_completed_event",
+                "unsafeName": "payment_session_completed_event",
+              },
+            },
+            "type": "named",
+            "typeId": "PaymentSessionCompletedEvent",
+          },
+          "type": "reference",
+        },
+        "responses": [
+          {
+            "body": undefined,
+            "docs": "Webhook received successfully (HTTP 204 No Content)",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 204,
+          },
+          {
+            "body": undefined,
+            "docs": "Invalid payload or authentication failure",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 400,
+          },
+          {
+            "body": undefined,
+            "docs": "Server error processing webhook",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 500,
+          },
+        ],
+        "v2Examples": {
+          "autogeneratedExamples": {
+            "paymentSessionsPaymentSessionCompletedWebhookExample": {
+              "name": "paymentSessionsPaymentSessionCompletedWebhookExample",
+              "payload": {
+                "eventId": "evt_xyz789",
+                "eventType": "payment_session.completed",
+                "paymentSession": {
+                  "amount": 1.1,
+                  "createdAt": "2024-01-15T09:30:00Z",
+                  "currency": "string",
+                  "id": "ps_abc123",
+                  "status": "pending",
+                },
+                "timestamp": "2024-01-15T09:30:00Z",
+              },
+            },
+          },
+          "userSpecifiedExamples": {},
+        },
+      },
+    ],
+  },
+  "websocketChannels": undefined,
+}

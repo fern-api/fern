@@ -4,6 +4,7 @@ export interface AIExampleEnhancerConfig {
     model?: string; // Default: "gpt-4o-mini"
     maxRetries?: number; // Default: 3
     requestTimeoutMs?: number; // Default: 30000
+    styleInstructions?: string; // Custom styling instructions for AI-generated examples (max 500 chars)
 }
 
 export interface EnhancedExample {
@@ -24,6 +25,7 @@ export interface ExampleEnhancementRequest {
     originalRequestExample?: unknown;
     originalResponseExample?: unknown;
     openApiSpec?: string;
+    exampleStyleInstructions?: string;
 }
 
 export interface ExampleEnhancementResponse {

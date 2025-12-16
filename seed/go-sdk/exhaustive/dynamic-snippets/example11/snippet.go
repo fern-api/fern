@@ -17,7 +17,7 @@ func do() {
         ),
     )
     request := &types.ObjectWithRequiredField{
-        String: "string",
+        FieldString: "string",
     }
     client.Endpoints.HttpMethods.TestPost(
         context.TODO(),

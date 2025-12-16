@@ -32,19 +32,19 @@ export class FilePropertyMapper {
             switch (property.type) {
                 case "file":
                     result.fileFields.push({
-                        name: this.context.getTypeName(property.name),
+                        name: this.context.getFieldName(property.name),
                         value: this.getSingleFileProperty({ property, record })
                     });
                     break;
                 case "fileArray":
                     result.fileFields.push({
-                        name: this.context.getTypeName(property.name),
+                        name: this.context.getFieldName(property.name),
                         value: this.getArrayFileProperty({ property, record })
                     });
                     break;
                 case "bodyProperty":
                     result.bodyPropertyFields.push({
-                        name: this.context.getTypeName(property.name.name),
+                        name: this.context.getFieldName(property.name.name),
                         value: this.getBodyProperty({ property, record })
                     });
                     break;

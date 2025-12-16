@@ -16,6 +16,7 @@ import {
     HttpEndpoint,
     HttpHeader,
     HttpRequestBody,
+    InferredAuthScheme,
     IntermediateRepresentation,
     Literal,
     Name,
@@ -62,6 +63,8 @@ export class DynamicSnippetsConverter {
     private readonly auth: DynamicSnippets.Auth | undefined;
     private readonly authValues: DynamicSnippets.AuthValues | undefined;
     private readonly generatorConfig: dynamic.GeneratorConfig | undefined;
+    // Types that are extended by other types (have self-interfaces in Java)
+    private readonly extendedTypeIds: Set<TypeId>;
 
     constructor(args: DynamicSnippetsConverter.Args) {
         this.ir = args.ir;
@@ -73,6 +76,24 @@ export class DynamicSnippetsConverter {
         });
         this.auth = this.convertAuth(this.ir.auth);
         this.authValues = this.getAuthValues(this.ir.auth);
+        this.extendedTypeIds = this.computeExtendedTypeIds();
+    }
+
+    /**
+     * Computes the set of type IDs that are extended by other types.
+     * In Java, these types get self-interfaces generated for them, which affects
+     * the field ordering in staged builders.
+     */
+    private computeExtendedTypeIds(): Set<TypeId> {
+        const extendedTypeIds = new Set<TypeId>();
+        for (const typeDeclaration of Object.values(this.ir.types)) {
+            if (typeDeclaration.shape.type === "object") {
+                for (const extended of typeDeclaration.shape.extends) {
+                    extendedTypeIds.add(extended.typeId);
+                }
+            }
+        }
+        return extendedTypeIds;
     }
 
     public convert({
@@ -442,7 +463,11 @@ export class DynamicSnippetsConverter {
             case "enum":
                 return this.convertEnum({ declaration, enum_: typeDeclaration.shape });
             case "object":
-                return this.convertObject({ declaration, object: typeDeclaration.shape });
+                return this.convertObject({
+                    declaration,
+                    object: typeDeclaration.shape,
+                    typeId: typeDeclaration.name.typeId
+                });
             case "union":
                 return this.convertDiscriminatedUnion({ declaration, union: typeDeclaration.shape });
             case "undiscriminatedUnion":
@@ -480,12 +505,20 @@ export class DynamicSnippetsConverter {
 
     private convertObject({
         declaration,
-        object
+        object,
+        typeId
     }: {
         declaration: DynamicSnippets.Declaration;
         object: ObjectTypeDeclaration;
+        typeId: TypeId;
     }): DynamicSnippets.NamedType {
-        const properties = [...(object.extendedProperties ?? []), ...object.properties];
+        // If this type is extended by other types, its own properties should come first,
+        // followed by inherited properties. This ordering is required for languages with
+        // staged builders (like Java) where method call order is enforced at compile time.
+        const hasSelfInterface = this.extendedTypeIds.has(typeId);
+        const properties = hasSelfInterface
+            ? [...object.properties, ...(object.extendedProperties ?? [])]
+            : [...(object.extendedProperties ?? []), ...object.properties];
         return this.convertObjectProperties({
             declaration,
             properties,
@@ -673,7 +706,9 @@ export class DynamicSnippetsConverter {
                     clientSecret: this.casingsGenerator.generateName("clientSecret")
                 });
             case "inferred":
-                return DynamicSnippets.Auth.inferred({});
+                return DynamicSnippets.Auth.inferred({
+                    parameters: this.getInferredAuthParameters(scheme)
+                });
             default:
                 assertNever(scheme);
         }
@@ -704,10 +739,114 @@ export class DynamicSnippetsConverter {
                     clientSecret: "<clientSecret>"
                 });
             case "inferred":
-                return DynamicSnippets.AuthValues.inferred({});
+                return DynamicSnippets.AuthValues.inferred({
+                    values: this.getInferredAuthValues(scheme)
+                });
             default:
                 assertNever(scheme);
         }
+    }
+
+    private getInferredAuthParameters(scheme: InferredAuthScheme): DynamicSnippets.NamedParameter[] {
+        const parameters: DynamicSnippets.NamedParameter[] = [];
+
+        // Get the token endpoint
+        const tokenEndpoint = Object.values(this.ir.services)
+            .flatMap((service) => service.endpoints)
+            .find((endpoint) => {
+                return endpoint.id === scheme.tokenEndpoint.endpoint.endpointId;
+            });
+
+        if (tokenEndpoint == null) {
+            return parameters;
+        }
+
+        // Extract credentials from headers
+        for (const header of tokenEndpoint.headers) {
+            if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
+                parameters.push({
+                    name: {
+                        name: header.name.name,
+                        wireValue: header.name.wireValue
+                    },
+                    typeReference: this.convertTypeReference(header.valueType),
+                    propertyAccess: undefined,
+                    variable: undefined
+                });
+            }
+        }
+
+        // Extract credentials from request body
+        if (tokenEndpoint.requestBody != null) {
+            const properties = this.getRequestBodyProperties(tokenEndpoint.requestBody);
+            for (const property of properties) {
+                if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
+                    parameters.push({
+                        name: {
+                            name: property.name.name,
+                            wireValue: property.name.wireValue
+                        },
+                        typeReference: this.convertTypeReference(property.valueType),
+                        propertyAccess: undefined,
+                        variable: undefined
+                    });
+                }
+            }
+        }
+
+        return parameters;
+    }
+
+    private getInferredAuthValues(scheme: InferredAuthScheme): Record<string, unknown> {
+        const values: Record<string, unknown> = {};
+
+        // Get the token endpoint
+        const tokenEndpoint = Object.values(this.ir.services)
+            .flatMap((service) => service.endpoints)
+            .find((endpoint) => {
+                return endpoint.id === scheme.tokenEndpoint.endpoint.endpointId;
+            });
+
+        if (tokenEndpoint == null) {
+            return values;
+        }
+
+        // Extract credentials from headers - use wireValue as key
+        for (const header of tokenEndpoint.headers) {
+            if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
+                values[header.name.wireValue] = header.name.wireValue;
+            }
+        }
+
+        // Extract credentials from request body - use wireValue as key
+        if (tokenEndpoint.requestBody != null) {
+            const properties = this.getRequestBodyProperties(tokenEndpoint.requestBody);
+            for (const property of properties) {
+                if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
+                    values[property.name.wireValue] = property.name.wireValue;
+                }
+            }
+        }
+
+        return values;
+    }
+
+    private getRequestBodyProperties(requestBody: HttpRequestBody): ObjectProperty[] {
+        const properties: ObjectProperty[] = [];
+
+        if (requestBody.type === "inlinedRequestBody") {
+            properties.push(...requestBody.properties);
+        } else if (requestBody.type === "reference") {
+            const typeReference = requestBody.requestBodyType;
+            if (typeReference.type === "named") {
+                const typeDeclaration = this.ir.types[typeReference.typeId];
+                if (typeDeclaration != null && typeDeclaration.shape.type === "object") {
+                    properties.push(...typeDeclaration.shape.properties);
+                }
+            }
+        }
+
+        return properties;
     }
 
     private convertDeclaration({

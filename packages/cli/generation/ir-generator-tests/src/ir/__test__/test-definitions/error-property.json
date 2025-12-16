@@ -252,6 +252,7 @@
                 "wireValue": "PropertyBasedErrorTest"
             },
             "statusCode": 400,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -324,6 +325,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         }
     },
@@ -454,7 +456,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [

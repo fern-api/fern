@@ -6,9 +6,9 @@ export const REMOTE_GROUP_NAME = "remote";
 export const LOCAL_GROUP_NAME = "local";
 
 // Source of truth: const arrays (enables runtime iteration)
-export const ALL_GENERATOR_NICKNAMES = ["ts-sdk", "java-sdk", "go-sdk", "python-sdk"] as const;
+export const ALL_GENERATOR_NICKNAMES = ["ts-sdk", "java-sdk", "go-sdk", "python-sdk", "php-sdk"] as const;
 export const ALL_TEST_FIXTURES = ["imdb"] as const;
-export const ALL_OUTPUT_MODES = ["github", "local"] as const;
+export const ALL_OUTPUT_MODES = ["github"] as const;
 export const ALL_GENERATION_MODES = ["local", "remote"] as const;
 
 // Derived types (enables type safety in switch statements)
@@ -21,12 +21,14 @@ export type GeneratorName =
     | "fernapi/fern-typescript-sdk"
     | "fernapi/fern-java-sdk"
     | "fernapi/fern-go-sdk"
+    | "fernapi/fern-php-sdk"
     | "fernapi/fern-python-sdk";
 
 export const GeneratorNameFromNickname: Record<GeneratorNickname, GeneratorName> = {
     "ts-sdk": "fernapi/fern-typescript-sdk",
     "java-sdk": "fernapi/fern-java-sdk",
     "go-sdk": "fernapi/fern-go-sdk",
+    "php-sdk": "fernapi/fern-php-sdk",
     "python-sdk": "fernapi/fern-python-sdk"
 };
 

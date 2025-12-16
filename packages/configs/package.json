@@ -4,6 +4,8 @@
   "private": true,
   "license": "MIT",
   "devDependencies": {
+    "esbuild-plugin-polyfill-node": "^0.3.0",
+    "tsup": "^8.5.0",
     "vitest": "^4.0.8"
   }
 }

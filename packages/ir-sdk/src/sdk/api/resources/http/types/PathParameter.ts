@@ -10,4 +10,5 @@ export interface PathParameter extends FernIr.WithDocs {
     location: FernIr.PathParameterLocation;
     variable: FernIr.VariableId | undefined;
     v2Examples: FernIr.V2SchemaExamples | undefined;
+    explode: boolean | undefined;
 }

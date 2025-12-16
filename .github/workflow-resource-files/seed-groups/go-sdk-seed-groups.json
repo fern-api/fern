@@ -4,7 +4,6 @@
     {
       "fixtures": [
         "version",
-        "server-sent-events",
         "simple-api",
         "oauth-client-credentials",
         "imdb:deep-package-path",
@@ -54,7 +53,7 @@
     },
     {
       "fixtures": [
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "extends",
         "single-url-environment-no-default",
         "undiscriminated-unions:v0",
@@ -64,7 +63,7 @@
         "examples:client-name",
         "optional",
         "any-auth",
-        "pagination-custom"
+        "pagination-custom:."
       ],
       "groupTotalTimeSeconds": 839
     },
@@ -120,13 +119,12 @@
       "fixtures": [
         "query-parameters-openapi-as-objects",
         "imdb:with-wiremock-tests",
-        "server-sent-event-examples",
         "mixed-file-directory",
         "idempotency-headers:.",
         "enum",
         "file-upload:package-name",
         "multi-line-docs",
-        "custom-auth",
+        "header-auth",
         "examples:always-send-required-properties",
         "nullable-optional",
         "variables",

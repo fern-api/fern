@@ -8,7 +8,12 @@ import type * as SeedTrace from "../../../index";
 export class PlaylistIdNotFoundError extends errors.SeedTraceError {
     constructor(private readonly body: SeedTrace.PlaylistIdNotFoundErrorBody) {
         super("PlaylistIdNotFoundError");
-        Object.setPrototypeOf(this, PlaylistIdNotFoundError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 
     public async send(res: express.Response): Promise<void> {

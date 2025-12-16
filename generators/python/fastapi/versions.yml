@@ -1,5 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.13.2
+  changelogEntry:
+    - summary: |
+        Include enum helper file in FastAPI core package for StrEnum support. This fixes a bug where
+        generated FastAPI code would fail to import the enum module from the core package.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 1.13.1
+  changelogEntry:
+    - summary: Fix forward ref detection for complex circular type cycles.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
+- version: 1.13.0
+  changelogEntry:
+    - summary: |
+        Add `coerce_numbers_to_str` option to `pydantic_config`. When enabled, numeric types (int, float, Decimal)
+        will be coerced to strings during validation. This is useful for APIs that return numeric values as strings.
+      type: feat
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 1.12.2
+  changelogEntry:
+    - summary: |
+        Fix Python 3.11+ enum compatibility by using StrEnum for Python >= 3.11 and the (str, Enum)
+        mixin for older versions. This resolves compatibility issues with Python 3.11's stricter
+        enum mixin handling.
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 61
+
+- version: 1.12.1
+  changelogEntry:
+    - summary: Fix discriminated union Field(discriminator=...) and UnionMetadata(discriminant=...) to use Python field names instead of JSON aliases for Pydantic v2 compatibility.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
 - version: 1.12.0
   changelogEntry:
     - summary: Add pytest-xdist for parallel test execution and upgrade CI Python version to 3.9 in generated SDKs.

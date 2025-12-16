@@ -1,4 +1,5 @@
 import type { BaseClientOptions } from "../../../../BaseClient.mjs";
+import { type NormalizedClientOptionsWithAuth } from "../../../../BaseClient.mjs";
 import { ContainerClient } from "../resources/container/client/Client.mjs";
 import { ContentTypeClient } from "../resources/contentType/client/Client.mjs";
 import { EnumClient } from "../resources/enum/client/Client.mjs";
@@ -10,11 +11,10 @@ import { PutClient } from "../resources/put/client/Client.mjs";
 import { UnionClient } from "../resources/union/client/Client.mjs";
 import { UrlsClient } from "../resources/urls/client/Client.mjs";
 export declare namespace EndpointsClient {
-    interface Options extends BaseClientOptions {
-    }
+    type Options = BaseClientOptions;
 }
 export declare class EndpointsClient {
-    protected readonly _options: EndpointsClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<EndpointsClient.Options>;
     protected _container: ContainerClient | undefined;
     protected _contentType: ContentTypeClient | undefined;
     protected _enum: EnumClient | undefined;

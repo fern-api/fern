@@ -28,10 +28,10 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedPagination
+        run: dotnet restore src/SeedPagination/SeedPagination.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedPagination -c Release --no-restore
+        run: dotnet build src/SeedPagination/SeedPagination.csproj -c Release --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -53,13 +53,13 @@ jobs:
           dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore src/SeedPagination.Test/SeedPagination.Test.csproj
 
       - name: Build Release
-        run: dotnet build src -c Release --no-restore
+        run: dotnet build src/SeedPagination.Test/SeedPagination.Test.csproj -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test src -c Release --no-build --no-restore
+        run: dotnet test src/SeedPagination.Test/SeedPagination.Test.csproj -c Release --no-build --no-restore
 
 
   publish:
@@ -83,15 +83,15 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedPagination
+        run: dotnet restore src/SeedPagination/SeedPagination.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedPagination -c Release --no-restore
+        run: dotnet build src/SeedPagination/SeedPagination.csproj -c Release --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
-          dotnet pack src/SeedPagination -c Release --no-build --no-restore
+          dotnet pack src/SeedPagination/SeedPagination.csproj -c Release --no-build --no-restore
           dotnet nuget push src/SeedPagination/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 

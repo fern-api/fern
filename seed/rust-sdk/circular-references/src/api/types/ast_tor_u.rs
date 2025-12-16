@@ -3,9 +3,9 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum TorU {
-    T(T),
+    T(Box<T>),
 
-    U(U),
+    U(Box<U>),
 }
 
 impl TorU {
@@ -17,7 +17,7 @@ impl TorU {
         matches!(self, Self::U(_))
     }
 
-    pub fn as_t(&self) -> Option<&T> {
+    pub fn as_t(&self) -> Option<&Box<T>> {
         match self {
             Self::T(value) => Some(value),
             _ => None,
@@ -26,12 +26,12 @@ impl TorU {
 
     pub fn into_t(self) -> Option<T> {
         match self {
-            Self::T(value) => Some(value),
+            Self::T(value) => Some(*value),
             _ => None,
         }
     }
 
-    pub fn as_u(&self) -> Option<&U> {
+    pub fn as_u(&self) -> Option<&Box<U>> {
         match self {
             Self::U(value) => Some(value),
             _ => None,
@@ -40,7 +40,7 @@ impl TorU {
 
     pub fn into_u(self) -> Option<U> {
         match self {
-            Self::U(value) => Some(value),
+            Self::U(value) => Some(*value),
             _ => None,
         }
     }

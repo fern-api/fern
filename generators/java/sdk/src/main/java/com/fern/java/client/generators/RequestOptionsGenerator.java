@@ -467,7 +467,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
 
         @Override
         public RequestOption visitInferred(InferredAuthScheme inferred) {
-            throw new UnsupportedOperationException("Inferred auth schemes are not supported");
+            return null;
         }
 
         @Override

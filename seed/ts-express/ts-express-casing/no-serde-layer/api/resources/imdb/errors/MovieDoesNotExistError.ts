@@ -7,7 +7,12 @@ import type * as SeedApi from "../../../index";
 export class MovieDoesNotExistError extends errors.SeedApiError {
     constructor(private readonly body: SeedApi.MovieId) {
         super("MovieDoesNotExistError");
-        Object.setPrototypeOf(this, MovieDoesNotExistError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 
     public async send(res: express.Response): Promise<void> {

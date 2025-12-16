@@ -1,0 +1,420 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_sessions",
+    ],
+    "types": [
+      "CreateSessionRequest",
+      "CreateSessionResponse",
+      "ErrorResponse",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {
+    "subpackage_sessions": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "authV2": undefined,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": "Creates a new session. Demonstrates response examples for multiple status codes.",
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [
+            {
+              "availability": undefined,
+              "description": "Bad Request",
+              "examples": [
+                {
+                  "description": undefined,
+                  "name": "validationerror",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "error": "ValidationError",
+                      "message": "Bad Request",
+                    },
+                  },
+                },
+              ],
+              "headers": undefined,
+              "isWildcard": undefined,
+              "name": "BadRequestError",
+              "statusCode": 400,
+              "type": {
+                "type": "alias",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "ErrorResponse",
+                },
+              },
+            },
+            {
+              "availability": undefined,
+              "description": "Not Found",
+              "examples": [
+                {
+                  "description": undefined,
+                  "name": "notfound",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "error": "NotFound",
+                      "message": "Resource not found",
+                    },
+                  },
+                },
+              ],
+              "headers": undefined,
+              "isWildcard": undefined,
+              "name": "NotFoundError",
+              "statusCode": 404,
+              "type": {
+                "type": "alias",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "ErrorResponse",
+                },
+              },
+            },
+            {
+              "availability": undefined,
+              "description": "Method Not Allowed",
+              "examples": [
+                {
+                  "description": undefined,
+                  "name": "methodnotallowed",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "error": "MethodNotAllowed",
+                      "message": "Method not allowed",
+                    },
+                  },
+                },
+              ],
+              "headers": undefined,
+              "isWildcard": undefined,
+              "name": "MethodNotAllowedError",
+              "statusCode": 405,
+              "type": {
+                "type": "alias",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "ErrorResponse",
+                },
+              },
+            },
+            {
+              "availability": undefined,
+              "description": "Internal Server Error",
+              "examples": [
+                {
+                  "description": undefined,
+                  "name": "servererror",
+                  "responseBody": {
+                    "type": "json",
+                    "value": {
+                      "error": "ServerError",
+                      "message": "Internal server error",
+                    },
+                  },
+                },
+              ],
+              "headers": undefined,
+              "isWildcard": undefined,
+              "name": "InternalServerError",
+              "statusCode": 500,
+              "type": {
+                "type": "alias",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "ErrorResponse",
+                },
+              },
+            },
+          ],
+          "examples": [
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": undefined,
+              "path": "/sessions/create",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": {
+                "amount": 1,
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "amount": 1,
+                },
+              },
+              "responseBody": {
+                "id": "string",
+                "redirect_url": "string",
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "string",
+                  "redirect_url": "string",
+                },
+              },
+              "responseStatusCode": 200,
+            },
+          ],
+          "headers": [],
+          "id": "createSession",
+          "includeInApiExplorer": undefined,
+          "method": "POST",
+          "multiAuth": undefined,
+          "name": "Create Session",
+          "originalEndpointId": "endpoint_sessions.createSession",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/sessions/create",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "protocol": {
+            "type": "rest",
+          },
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "type": {
+              "contentType": "application/json",
+              "description": undefined,
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "CreateSessionRequest",
+                },
+              },
+              "type": "json",
+            },
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "description": undefined,
+                "type": {
+                  "contentType": "application/json",
+                  "description": undefined,
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "default": undefined,
+                      "type": "id",
+                      "value": "CreateSessionRequest",
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+            ],
+          },
+          "response": {
+            "description": "Successful response",
+            "isWildcard": undefined,
+            "statusCode": 200,
+            "type": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "CreateSessionResponse",
+              },
+            },
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "description": "Successful response",
+                "isWildcard": undefined,
+                "statusCode": 200,
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "CreateSessionResponse",
+                  },
+                },
+              },
+            ],
+          },
+          "slug": undefined,
+        },
+      ],
+      "name": "sessions",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_sessions",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "CreateSessionRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "CreateSessionRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "The amount in cents",
+            "key": "amount",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "integer",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "CreateSessionResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "CreateSessionResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "The unique ID for this session",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The URL to redirect the user to",
+            "key": "redirect_url",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ErrorResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ErrorResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "The error code",
+            "key": "error",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "The error message",
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

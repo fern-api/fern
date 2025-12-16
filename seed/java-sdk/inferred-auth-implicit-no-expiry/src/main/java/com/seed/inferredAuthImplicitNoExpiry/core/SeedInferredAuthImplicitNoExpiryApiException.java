@@ -66,9 +66,9 @@ public class SeedInferredAuthImplicitNoExpiryApiException extends SeedInferredAu
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedInferredAuthImplicitNoExpiryApiException{" + "message: " + getMessage() + ", statusCode: "
-                + statusCode + ", body: " + body + "}";
+                + statusCode + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

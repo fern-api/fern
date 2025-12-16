@@ -5,6 +5,23 @@
 
 The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Aborting Requests](#aborting-requests)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Logging](#logging)
+  - [Runtime Compatibility](#runtime-compatibility)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -20,7 +37,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { SeedSimpleApiEnvironment, SeedSimpleApiClient } from "@fern-api/dummy";
+import { SeedSimpleApiClient, SeedSimpleApiEnvironment } from "@fern-api/dummy";
 
 const client = new SeedSimpleApiClient({ environment: SeedSimpleApiEnvironment.Production, token: "YOUR_TOKEN" });
 await client.user.get("id");
@@ -53,6 +70,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedSimpleApiClient } from "@fern-api/dummy";
+
+const client = new SeedSimpleApiClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.user.get(..., {
     headers: {
         'X-Custom-Header': 'custom value'

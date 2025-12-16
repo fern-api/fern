@@ -6,6 +6,7 @@ package com.seed.unions;
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.Suppliers;
 import com.seed.unions.resources.bigunion.BigunionClient;
+import com.seed.unions.resources.types.TypesClient;
 import com.seed.unions.resources.union.UnionClient;
 import java.util.function.Supplier;
 
@@ -14,16 +15,23 @@ public class SeedUnionsClient {
 
     protected final Supplier<BigunionClient> bigunionClient;
 
+    protected final Supplier<TypesClient> typesClient;
+
     protected final Supplier<UnionClient> unionClient;
 
     public SeedUnionsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.bigunionClient = Suppliers.memoize(() -> new BigunionClient(clientOptions));
+        this.typesClient = Suppliers.memoize(() -> new TypesClient(clientOptions));
         this.unionClient = Suppliers.memoize(() -> new UnionClient(clientOptions));
     }
 
     public BigunionClient bigunion() {
         return this.bigunionClient.get();
+    }
+
+    public TypesClient types() {
+        return this.typesClient.get();
     }
 
     public UnionClient union() {

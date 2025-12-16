@@ -26,10 +26,10 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap && cp -R ../base/src/asIs dist && cp -R ../base/src/template dist",
-    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-swift-sdk:latest ../../..",
-    "podmanTagLatest": "pnpm dist:cli && podman build -f ./Dockerfile -t fernapi/fern-swift-sdk:latest ../../..",
-    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
+    "dist:cli": "node build.mjs",
+    "dockerTagLatest": "docker build -f ./Dockerfile -t fernapi/fern-swift-sdk:latest ../../..",
+    "podmanTagLatest": "podman build -f ./Dockerfile -t fernapi/fern-swift-sdk:latest ../../..",
+    "publish:cli": "turbo run dist:cli --filter . && npm publish ./dist",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
@@ -54,7 +54,6 @@
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
-    "tsup": "^8.5.0",
     "typescript": "5.9.2",
     "vitest": "^4.0.8",
     "zod": "^3.25.75"

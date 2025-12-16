@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { assertNever, isPlainObject } from "@fern-api/core-utils";
+import { assertNever, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -213,7 +213,7 @@ export async function parseDocsConfiguration({
 
         aiChatConfig: aiSearch ?? aiChat,
 
-        pageActions: convertPageActions(pageActions),
+        pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
 
         experimental
     };
@@ -228,7 +228,8 @@ function convertLogoReference(
               dark: resolveFilepath(rawLogo.dark, absoluteFilepathToDocsConfig),
               light: resolveFilepath(rawLogo.light, absoluteFilepathToDocsConfig),
               height: rawLogo.height,
-              href: rawLogo.href != null ? CjsFdrSdk.Url(rawLogo.href) : undefined
+              href: rawLogo.href != null ? CjsFdrSdk.Url(rawLogo.href) : undefined,
+              rightText: rawLogo.rightText
           }
         : undefined;
 }
@@ -315,7 +316,8 @@ async function convertJsConfig(
 }
 
 function convertPageActions(
-    pageActions: docsYml.RawSchemas.PageActionsConfig | undefined
+    pageActions: docsYml.RawSchemas.PageActionsConfig | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): docsYml.ParsedDocsConfiguration["pageActions"] {
     if (pageActions == null) {
         return undefined;
@@ -332,7 +334,10 @@ function convertPageActions(
             openAi: pageActions.options?.chatgpt ?? false,
             claude: pageActions.options?.claude ?? false,
             cursor: pageActions.options?.cursor ?? false,
-            vscode: pageActions.options?.vscode ?? false
+            vscode: pageActions.options?.vscode ?? false,
+            custom: (pageActions.options?.custom ?? []).map((action) =>
+                convertCustomPageAction(action, absoluteFilepathToDocsConfig)
+            )
         }
     };
 }
@@ -358,6 +363,19 @@ function convertPageActionOption(
         default:
             assertNever(option);
     }
+}
+
+function convertCustomPageAction(
+    customAction: docsYml.RawSchemas.CustomPageAction,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): docsYml.ParsedCustomPageAction {
+    return {
+        title: customAction.title,
+        subtitle: customAction.subtitle,
+        url: customAction.url,
+        icon: resolveIconPath(customAction.icon, absoluteFilepathToDocsConfig),
+        default: customAction.default
+    };
 }
 
 function convertThemeConfig(
@@ -475,7 +493,17 @@ async function getVersionedNavigationConfiguration({
     for (const version of versions) {
         const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
         const versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
-        const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(versionContent);
+
+        // Sanitize null/undefined values before parsing
+        const removedPaths: string[][] = [];
+        const sanitizedVersionContent = sanitizeNullValues(versionContent, [], removedPaths);
+        if (removedPaths.length > 0) {
+            context.logger.warn(
+                `Version file ${version.path} contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
+            );
+        }
+
+        const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(sanitizedVersionContent);
         const versionNavigation = await convertNavigationConfiguration({
             tabs: versionResult.tabs,
             rawNavigationConfig: versionResult.navigation,
@@ -492,7 +520,8 @@ async function getVersionedNavigationConfiguration({
             hidden: version.hidden,
             viewers: parseRoles(version.viewers),
             orphaned: version.orphaned,
-            featureFlags: convertFeatureFlag(version.featureFlag)
+            featureFlags: convertFeatureFlag(version.featureFlag),
+            announcement: version.announcement
         });
     }
     return {
@@ -537,7 +566,17 @@ async function getNavigationConfiguration({
                 const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
 
                 const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
-                const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(content);
+
+                // Sanitize null/undefined values before parsing
+                const removedPaths: string[][] = [];
+                const sanitizedContent = sanitizeNullValues(content, [], removedPaths);
+                if (removedPaths.length > 0) {
+                    context.logger.warn(
+                        `Product file ${product.path} contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
+                    );
+                }
+
+                const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(sanitizedContent);
 
                 // If the product has versions defined, process them
                 if (product.versions != null && product.versions.length > 0) {
@@ -568,7 +607,8 @@ async function getNavigationConfiguration({
                     image: productImageFile,
                     viewers: parseRoles(product.viewers),
                     orphaned: product.orphaned,
-                    featureFlags: convertFeatureFlag(product.featureFlag)
+                    featureFlags: convertFeatureFlag(product.featureFlag),
+                    announcement: product.announcement
                 });
             } else if ("href" in product && product.href != null) {
                 productNavbars.push({
@@ -989,6 +1029,7 @@ async function convertNavigationItem({
                     : { type: "all" },
             availability: rawConfig.availability,
             showErrors: rawConfig.displayErrors ?? true,
+            tagDescriptionPages: rawConfig.tagDescriptionPages ?? false,
             snippetsConfiguration:
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })

@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.get_token_with_client_credentials(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">get_token_with_client_credentials</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,11 +14,11 @@
 
 ```ruby
 client.auth.get_token_with_client_credentials(
-  xApiKey: 'X-Api-Key',
-  clientId: 'client_id',
-  clientSecret: 'client_secret',
+  x_api_key: 'X-Api-Key',
+  client_id: 'client_id',
+  client_secret: 'client_secret',
   audience: 'https://api.example.com',
-  grantType: 'client_credentials',
+  grant_type: 'client_credentials',
   scope: 'scope'
 );
 ```
@@ -79,6 +79,14 @@ client.auth.get_token_with_client_credentials(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Auth::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -87,7 +95,7 @@ client.auth.get_token_with_client_credentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.refresh_token(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="/lib/seed/auth/client.rb">refresh_token</a>(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -101,12 +109,12 @@ client.auth.get_token_with_client_credentials(
 
 ```ruby
 client.auth.refresh_token(
-  xApiKey: 'X-Api-Key',
-  clientId: 'client_id',
-  clientSecret: 'client_secret',
-  refreshToken: 'refresh_token',
+  x_api_key: 'X-Api-Key',
+  client_id: 'client_id',
+  client_secret: 'client_secret',
+  refresh_token: 'refresh_token',
   audience: 'https://api.example.com',
-  grantType: 'refresh_token',
+  grant_type: 'refresh_token',
   scope: 'scope'
 );
 ```
@@ -172,6 +180,14 @@ client.auth.refresh_token(
 <dd>
 
 **scope:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Auth::RequestOptions` 
     
 </dd>
 </dl>

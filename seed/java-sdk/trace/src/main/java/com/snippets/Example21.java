@@ -29,7 +29,8 @@ public class Example21 {
                                 .problemName("problemName")
                                 .problemDescription(ProblemDescription.builder()
                                         .boards(Arrays.asList(
-                                                ProblemDescriptionBoard.html(), ProblemDescriptionBoard.html()))
+                                                ProblemDescriptionBoard.html("boards"),
+                                                ProblemDescriptionBoard.html("boards")))
                                         .build())
                                 .outputType(VariableType.integerType())
                                 .methodName("methodName")
@@ -68,19 +69,19 @@ public class Example21 {
                                                 .testCase(TestCase.builder()
                                                         .id("id")
                                                         .params(Arrays.asList(
-                                                                VariableValue.integerValue(),
-                                                                VariableValue.integerValue()))
+                                                                VariableValue.integerValue(1),
+                                                                VariableValue.integerValue(1)))
                                                         .build())
-                                                .expectedResult(VariableValue.integerValue())
+                                                .expectedResult(VariableValue.integerValue(1))
                                                 .build(),
                                         TestCaseWithExpectedResult.builder()
                                                 .testCase(TestCase.builder()
                                                         .id("id")
                                                         .params(Arrays.asList(
-                                                                VariableValue.integerValue(),
-                                                                VariableValue.integerValue()))
+                                                                VariableValue.integerValue(1),
+                                                                VariableValue.integerValue(1)))
                                                         .build())
-                                                .expectedResult(VariableValue.integerValue())
+                                                .expectedResult(VariableValue.integerValue(1))
                                                 .build()))
                                 .build());
     }

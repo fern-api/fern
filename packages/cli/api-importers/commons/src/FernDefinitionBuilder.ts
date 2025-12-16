@@ -98,6 +98,13 @@ export interface FernDefinitionBuilder {
 
     addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void;
 
+    /**
+     * Optimizes service-level auth by moving endpoint-level auth to service-level when all endpoints have auth: true.
+     * If all endpoints in a service have exactly `auth: true` (not false, undefined, or an array),
+     * sets service auth to true and removes endpoint-level auth.
+     */
+    optimizeServiceAuth(): void;
+
     build(): FernDefinition;
 
     readonly enableUniqueErrorsPerEndpoint: boolean;
@@ -472,6 +479,30 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.channel.messages = {};
         }
         fernFile.channel.messages[messageId] = message;
+    }
+
+    public optimizeServiceAuth(): void {
+        const allFiles = [this.packageMarkerFile, ...Object.values(this.root.getAllFiles())];
+
+        for (const file of allFiles) {
+            if (file.service == null) {
+                continue;
+            }
+
+            const endpoints = Object.values(file.service.endpoints);
+            if (endpoints.length === 0) {
+                continue;
+            }
+
+            const allEndpointsHaveAuthTrue = endpoints.every((endpoint) => endpoint.auth === true);
+
+            if (allEndpointsHaveAuthTrue) {
+                file.service.auth = true;
+                for (const endpoint of Object.values(file.service.endpoints)) {
+                    delete endpoint.auth;
+                }
+            }
+        }
     }
 
     public build(): FernDefinition {

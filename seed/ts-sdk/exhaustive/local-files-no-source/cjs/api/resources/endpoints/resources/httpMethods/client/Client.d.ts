@@ -1,14 +1,14 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
+import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 export declare namespace HttpMethodsClient {
-    interface Options extends BaseClientOptions {
-    }
+    type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }
 export declare class HttpMethodsClient {
-    protected readonly _options: HttpMethodsClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<HttpMethodsClient.Options>;
     constructor(options: HttpMethodsClient.Options);
     /**
      * @param {string} id
@@ -77,5 +77,4 @@ export declare class HttpMethodsClient {
      */
     testDelete(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<boolean>;
     private __testDelete;
-    protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

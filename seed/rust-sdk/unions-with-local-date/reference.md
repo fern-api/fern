@@ -144,6 +144,98 @@ async fn main() {
 </dl>
 </details>
 
+## Types
+<details><summary><code>client.types.<a href="/src/api/resources/types/client.rs">get</a>(id: String) -> Result<UnionWithTime, ApiError></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UnionsClient::new(config).expect("Failed to build client");
+    client.types.get(&"date-example".to_string(), None).await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.types.<a href="/src/api/resources/types/client.rs">update</a>(request: UnionWithTime) -> Result<bool, ApiError></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_unions::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = UnionsClient::new(config).expect("Failed to build client");
+    client
+        .types
+        .update(
+            &UnionWithTime::Date {
+                value: NaiveDate::parse_from_str("2024-01-01", "%Y-%m-%d").unwrap(),
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Union
 <details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get</a>(id: String) -> Result<Shape, ApiError></code></summary>
 <dl>

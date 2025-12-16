@@ -5,9 +5,9 @@
 import * as FernDefinition from "../../../index";
 
 export interface ApiConfigurationV2Schema
-    extends FernDefinition.fernDefinition.WithHeadersSchema,
-        FernDefinition.fernDefinition.WithEnvironmentsSchema {
+    extends FernDefinition.fernDefinition.WithHeadersSchema, FernDefinition.fernDefinition.WithEnvironmentsSchema {
     auth?: FernDefinition.fernDefinition.ApiAuthSchema;
+    "auth-schemes"?: Record<string, FernDefinition.fernDefinition.AuthSchemeDeclarationSchema>;
     specs: FernDefinition.ApiConfigurationV2SpecsSchema;
     settings?: FernDefinition.ApiConfigurationV2SettingsSchema;
 }

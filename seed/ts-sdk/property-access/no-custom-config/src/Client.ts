@@ -2,19 +2,20 @@
 
 import type * as SeedPropertyAccess from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedPropertyAccessClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedPropertyAccessClient {
-    protected readonly _options: SeedPropertyAccessClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedPropertyAccessClient.Options>;
 
     constructor(options: SeedPropertyAccessClient.Options) {
         this._options = normalizeClientOptions(options);
@@ -80,20 +81,6 @@ export class SeedPropertyAccessClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPropertyAccessError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPropertyAccessTimeoutError("Timeout exceeded when calling POST /users.");
-            case "unknown":
-                throw new errors.SeedPropertyAccessError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users");
     }
 }

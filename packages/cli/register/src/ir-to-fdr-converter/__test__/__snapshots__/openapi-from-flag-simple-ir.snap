@@ -118,6 +118,8 @@
       "displayName": "BadRequestError",
       "docs": "Invalid user data",
       "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "CreateUserRequestBadRequestError",
         "fernFilepath": {
@@ -209,6 +211,8 @@
       "displayName": "ServiceUnavailableError",
       "docs": "Service is unhealthy",
       "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetHealthRequestServiceUnavailableError",
         "fernFilepath": {
@@ -300,6 +304,8 @@
       "displayName": "NotFoundError",
       "docs": "User not found",
       "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetUserRequestNotFoundError",
         "fernFilepath": {
@@ -552,6 +558,8 @@
                 },
               },
             },
+            "docs": "Service is healthy",
+            "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
           "retries": undefined,
@@ -657,6 +665,8 @@
                     },
                   },
                 },
+                "docs": "Service is healthy",
+                "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
             ],
@@ -666,6 +676,7 @@
           "allPathParameters": [
             {
               "docs": "The unique identifier of the user",
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -799,6 +810,7 @@
           "pathParameters": [
             {
               "docs": "The unique identifier of the user",
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -851,6 +863,7 @@
               "allowMultiple": false,
               "availability": undefined,
               "docs": "Whether to include user metadata",
+              "explode": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -957,6 +970,8 @@
                 },
               },
             },
+            "docs": "User found successfully",
+            "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
           "retries": undefined,
@@ -1070,6 +1085,8 @@
                     },
                   },
                 },
+                "docs": "User found successfully",
+                "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
             ],
@@ -1253,6 +1270,8 @@
                 },
               },
             },
+            "docs": "User created successfully",
+            "isWildcardStatusCode": undefined,
             "statusCode": 201,
           },
           "retries": undefined,
@@ -1413,6 +1432,8 @@
                     },
                   },
                 },
+                "docs": "User created successfully",
+                "isWildcardStatusCode": undefined,
                 "statusCode": 201,
               },
             ],

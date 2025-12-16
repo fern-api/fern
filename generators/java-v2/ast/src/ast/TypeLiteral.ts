@@ -187,7 +187,7 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "date":
-                writer.write(`"${this.internalType.value}"`);
+                this.writeDate({ writer, date: this.internalType });
                 break;
             case "dateTime":
                 this.writeDateTime({ writer, dateTime: this.internalType });
@@ -578,6 +578,16 @@ export class TypeLiteral extends AstNode {
         );
     }
 
+    private writeDate({ writer, date }: { writer: Writer; date: Date }): void {
+        writer.writeNode(
+            java.invokeMethod({
+                on: LocalDateClassReference,
+                method: "parse",
+                arguments_: [TypeLiteral.string(date.value)]
+            })
+        );
+    }
+
     private writeDateTime({ writer, dateTime }: { writer: Writer; dateTime: DateTime }): void {
         writer.writeNode(
             java.invokeMethod({
@@ -809,6 +819,11 @@ export const HashSetClassReference = new ClassReference({
 export const ListClassReference = new ClassReference({
     name: "List",
     packageName: "java.util"
+});
+
+export const LocalDateClassReference = new ClassReference({
+    name: "LocalDate",
+    packageName: "java.time"
 });
 
 export const MapClassReference = new ClassReference({

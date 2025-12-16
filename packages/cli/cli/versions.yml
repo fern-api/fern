@@ -1,5 +1,771 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: Improve dynamic IR generation for inferred auth.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.22.3
+
+- changelogEntry:
+    - summary: |
+        Fix OpenAPI example parsing to preserve explicit `null` values. Previously, explicit `null` values in OpenAPI response examples (e.g., `balance_max: null` for unbounded tiers) were being incorrectly replaced with schema example values or generated placeholders.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.22.2
+
+- changelogEntry:
+    - summary: |
+        Fix OpenAPI 3.1+ parsing to respect `$ref` sibling examples. When a property has both a `$ref` and sibling `example`/`examples` properties, the sibling examples now correctly take precedence over the referenced schema's examples. This fix applies to both the old and new OpenAPI parsers.
+
+        ```yaml
+        # OpenAPI 3.1+ allows $ref siblings like example/examples
+        Company:
+          type: object
+          properties:
+            logo:
+              $ref: '#/components/schemas/File'
+              example:
+                url: https://images.example.com/logo.png  # This example is now used
+        ```
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.22.1
+
+- changelogEntry:
+    - summary: |
+        Share `.fernignore` handling between local and remote task handlers. When running remote generation with `local-file-system` output mode, the `.fernignore` file is now respected, matching the behavior of local generation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.22.0
+
+- changelogEntry:
+    - summary: |
+        Fix ExampleValidator to validate response examples against their corresponding status code schemas instead of always using the 200/201 success schema. Error response examples (400, 404, 500, etc.) are now correctly validated against their respective schemas.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.21.1
+
+- changelogEntry:
+    - summary: |
+        Add a `custom` field to the `page-actions` configuration. This allows users to add custom page actions to the docs.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.21.0
+
+- changelogEntry:
+    - summary: |
+        Add `docs` field to `HttpResponse` in the IR to capture response descriptions for webhook responses. This enables webhook response descriptions (e.g., for 204, 400, 500 status codes) to be properly propagated from OpenAPI specs to documentation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-15"
+  version: 3.20.0
+
+- changelogEntry:
+    - summary: |
+        Add `explode` field to PathParameter and QueryParameter types in the IR for OpenAPI parameter serialization control.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-14"
+  version: 3.19.0
+
+- changelogEntry:
+    - summary: |
+        Revert regex parsing of `<Code>` components.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.4
+
+- changelogEntry:
+    - summary: |
+        Fix duplicate type declarations when OpenAPI specs use `allOf` references in inline request bodies.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.3
+
+- changelogEntry:
+    - summary: |
+        Remove `fern check` validation rule that rejected HEAD endpoints with response bodies. HEAD endpoints can now define response bodies without triggering validation errors.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.2
+
+- changelogEntry:
+    - summary: |
+        Fix `fern check` errors when OpenAPI specs use `allOf` with multiple schemas that share the same property names in inline request bodies. The OpenAPI importer now correctly inlines conflicting schemas instead of extending them, preventing duplicate property errors.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-13"
+  version: 3.18.1
+
+- changelogEntry:
+    - summary: |
+        Add `ai-example-style-instructions` field to docs.yml experimental config. This allows providing custom styling instructions for AI-generated examples to guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-12"
+  version: 3.18.0
+
+- changelogEntry:
+    - summary: |
+        Enable AI-generated endpoint examples by default. To disable, set ai-examples to false in docs.yml's `experimental` settings.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-12"
+  version: 3.17.0
+
+- changelogEntry:
+    - summary: |
+        Include examples for AI processing if 30% or more of the values are generic.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-12"
+  version: 3.16.1
+
+- changelogEntry:
+    - summary: |
+        Docs linting (`fern check`) now respects `settings.substitute-env-vars` and throws errors for missing environment variables, matching the behavior of `fern generate --docs`. The full `instances:` config including custom domains now goes through env var substitution when this setting is enabled.
+      type: feat
+    - summary: |
+        Improved error logging for docs publishing failures. When API definition registration fails with a "fetch failed" error, the CLI now logs detailed error information including status code, error type, reason, and error message to help debug network issues.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-12"
+  version: 3.16.0
+
+- changelogEntry:
+    - summary: |
+        Use Venus JWT for AI example enhancement requests.
+      type: chore
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.15.1
+
+- changelogEntry:
+    - summary: |
+        Add `fern overrides compare` command to generate OpenAPI overrides by diffing two specs. This enables a new workflow where you can copy your OpenAPI spec, edit the copy directly, and compile the differences into an overrides file.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-12"
+  version: 3.15.0
+
+- changelogEntry:
+    - summary: |
+        Fix `coerce-enums-to-literals: false` setting not being respected for SDK generation. Single-value enums are now correctly preserved as enum types instead of being coerced to literals.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.14.0
+
+- changelogEntry:
+    - summary: |
+        Add support for autorelease flag in generators.yml.
+        See: https://buildwithfern.com/learn/sdks/overview/autorelease#disable-autorelease
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.13.0
+
+- changelogEntry:
+    - summary: |
+        Add inferred auth parameters to the dynamic IR so dynamic snippet generators can consume them.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.12.0
+
+- changelogEntry:
+    - summary: |
+        Fully propagate webhook responses (e.g., 204, 400, 500 status codes) from OpenAPI specs from IR to FDR.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.11.0
+
+- changelogEntry:
+    - summary: |
+        Adds new `right-text` field to logo configuration in docs.yml. This allows users to display custom text to the right of the logo image.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-11"
+  version: 3.10.0
+
+- changelogEntry:
+    - summary: |
+        Propagate webhook responses (e.g., 204, 400, 500 status codes) from OpenAPI specs to the IR. Webhook endpoints can now define expected response status codes and descriptions, which are captured in the IR for use by generators and documentation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.9.0
+
+- changelogEntry:
+    - summary: |
+        Test automated CLI publishing.
+      type: chore
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.8.0-rc0
+
+- changelogEntry:
+    - summary: |
+        Include -y flag for the upgrade for non-interactive environments.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.8.0
+
+- changelogEntry:
+    - summary: |
+        Add API flag `default-integer-format` to configure which format is assumed for `type: "integer"`
+        properties in OpenAPI that do not specify a format.
+
+        ```yml
+        # generators.yml
+        api:
+          specs:
+            - openapi: openapi.yml
+              settings:
+                default-integer-format: int64
+        ```
+
+        Possible values are `int32`, `int64`, `uint32`, and `uint64`; defaults to `int32`.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.7.0
+
+- changelogEntry:
+    - summary: |
+        Validate examples in `fern check` against OpenAPI schemas.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-10"
+  version: 3.6.0
+
+- changelogEntry:
+    - summary: |
+        Add support for vendor-specific JSON content types in example validation. Content types like `application/vnd.bc.v1+json` are now accepted as valid JSON content types when validating examples against `literal<"application/json">` types.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-09"
+  version: 3.5.0
+
+- changelogEntry:
+    - summary: |
+        Fix parsing of `<Code>` components with `for` attribute for synced tabs. The `for` attribute is now properly preserved when converting `<Code>` components to markdown code blocks, allowing synced tabs to work correctly across multiple `<CodeGroup>` sections.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-08"
+  version: 3.4.5
+
+- changelogEntry:
+    - summary: |
+        Fallback to variant type for display name if title and mapping are not present.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-08"
+  version: 3.4.4
+
+- changelogEntry:
+    - summary: |
+        Disallow absolute URLs as redirects in frontmatter slug definitions. `links` should be used in the navigation instead.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-08"
+  version: 3.4.3
+
+- changelogEntry:
+    - summary: |
+        Fix `fern generate` crash when inheriting from a schema with top-level `nullable: true` via `allOf`. The OpenAPI importer now correctly strips nullable wrappers from type references in extends lists.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-06"
+  version: 3.4.2
+
+- changelogEntry:
+    - summary: |
+        Map error response headers from IR to FDR for docs display.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.4.1
+
+- changelogEntry:
+    - summary: |
+        Upgrade `@fern-api/fdr-sdk` to version `0.142.1-b1f6b6363` which adds support for error response headers.
+      type: chore
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.4.0
+
+- changelogEntry:
+    - summary: |
+        Extend `substitute-env-vars` to apply to API specs (OpenAPI and Fern definitions) when generating docs. Environment variables using `${VAR_NAME}` syntax in API spec descriptions, examples, and other string fields are now substituted when `substitute-env-vars: true` is set in `docs.yml`.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.3.0
+
+- changelogEntry:
+    - summary: |
+        Add recursive markdown snippet resolution for docs. Markdown snippets can now reference other markdown snippets, with automatic detection and warning for circular references to prevent infinite loops.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.2.0
+
+- changelogEntry:
+    - summary: |
+        Preserve error response headers (e.g., Retry-After for 429 errors) from OpenAPI specs in the IR.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.1.0
+
+- changelogEntry:
+    - summary: |
+        Fix AsyncAPI validation: exclude AsyncAPI files from OpenAPI-specific validation rules
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.0.5
+
+- changelogEntry:
+    - summary: |
+        Fix error response examples not displaying in docs when examples are defined at the property level in OpenAPI specs.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.0.4
+
+- changelogEntry:
+    - summary: |
+        Add basic preprocessing of names in the IR parser; for starters, `[]` -> `Array`.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-04"
+  version: 3.0.3
+
+- changelogEntry:
+    - summary: |
+        Fix OpenAPI parsing to properly handle `allOf` with `$ref` references inside `oneOf`/`anyOf` schemas. Previously, inline objects with `allOf` references but no direct properties were incorrectly converted to `map<string, any>`. Now they are properly preserved as named types with inheritance.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-04"
+  version: 3.0.2
+
+- changelogEntry:
+    - summary: |
+        Fix `substitute-env-vars` not applying to arrays in docs configuration. The `replaceEnvVariables` function now recursively processes array elements, enabling environment variable substitution in arrays of strings, arrays of objects, and deeply nested array structures (such as navigation items, navbar links, footer links, redirects, etc.).
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.1
+
+- changelogEntry:
+    - summary: |
+        **Breaking Change**: Enable `smart-casing` by default for all generators.
+
+        Smart-casing improves naming conventions in generated SDKs by:
+        - Capitalizing common initialisms like API, HTTP, ID, UUID, URL, HTML, JSON, XML, etc. in camelCase and PascalCase identifiers
+        - Better handling of number-letter combinations (e.g., `v2` stays as `v2` instead of becoming `v_2`, `md5` stays as `md5` instead of `md_5`)
+
+        **Migration Behavior**: The CLI will automatically upgrade your `generators.yml` to explicitly set `smart-casing: false` for all existing generators that don't have it configured. This preserves backwards compatibility for existing projects while enabling the improved naming for new projects.
+
+        **Opting In**: To enable smart-casing for existing generators, remove the `smart-casing: false` line that the migration adds, or explicitly set `smart-casing: true`.
+      type: break
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.0
+
+- changelogEntry:
+    - summary: |
+        Improve enum validation error messages to show which enum value has an invalid name. When the API source is OpenAPI, the error message now includes guidance about using the `x-fern-enum` extension to specify valid names.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 2.18.1
+
+- changelogEntry:
+    - summary: |
+        Add `--fernignore` CLI option for remote generation. This allows users to provide a custom `.fernignore` file that will replace the existing one on the main branch during remote generation. The custom fernignore will be applied during generation and committed to the repository.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 2.18.0
+
+- changelogEntry:
+    - summary: |
+        Gracefully handle null values in docs.yml structure.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.3
+
+- changelogEntry:
+    - summary: |
+        Escape `$` when inferring examples from literals that start with `$`.
+        This fixes validation issues like `Example $ending is malformed. Examples should be formatted like $YourType.ExampleName`.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.2
+
+- changelogEntry:
+    - summary: |
+        Fix file scope type resolution for inline request properties
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.1
+
+- changelogEntry:
+    - summary: |
+        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`,
+        environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
+        including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+        Use `\$\{VAR\}` to escape and output literal `${VAR}` without substitution.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.0
+
+- changelogEntry:
+    - summary: |
+        Add support for aliases in generators.yml. You can now define aliases that map to multiple groups, allowing you to run multiple groups with a single command.
+
+        ```yaml
+        # generators.yml
+        aliases:
+          all: ["php-sdk", "ts-sdk", "go-sdk"]
+
+        groups:
+          php-sdk:
+            generators: ...
+          ts-sdk:
+            generators: ...
+          go-sdk:
+            generators: ...
+        ```
+
+        Then run `fern generate all` to generate all three SDKs at once.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.16.0
+
+- changelogEntry:
+    - summary: |
+        Fix `fern check` incorrectly reporting SDK method conflicts for endpoints with the same `x-fern-sdk-group-name` and `x-fern-sdk-method-name` when they are in different namespaces. The validator now correctly allows duplicate SDK method names across different namespaces, matching the generator behavior where namespace is prepended to the SDK group name.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.2
+
+- changelogEntry:
+    - summary: |
+        Improve CI environment detection to properly detect Azure Pipelines and other CI systems. This prevents unnecessary prompts when running `fern generate --docs` in CI environments.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.1
+
+- changelogEntry:
+    - summary: |
+        Infer example for literal and enum types when generating IR from OpenAPI and Fern Definition.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.0
+
+- changelogEntry:
+    - summary: |
+        Fix 2.0.0-rc0 CLI migration to properly migrate `coerce-enums-to-literals` setting for AsyncAPI specs. Previously, the migration only handled this setting for OpenAPI specs.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.14.1
+
+- changelogEntry:
+    - summary: |
+        Log the pull request URL when an SDK is generated with self-hosted GitHub pull-request mode.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-01"
+  version: 2.14.0
+
+- changelogEntry:
+    - summary: |
+        Respect generators.yml auth-schemes override.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-01"
+  version: 2.13.1
+
+- changelogEntry:
+    - summary: Allow all API settings to be overridden at the generator level in generators.yml.
+      type: feat
+    - summary: |
+        Add CLI migration to automatically convert deprecated generator-level API settings keys to their new equivalents: `use-title` to `title-as-schema-name`, and `unions: v1` to `prefer-undiscriminated-unions-with-literals: true`.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.13.0
+
+- changelogEntry:
+    - summary: |
+        Support per-generator auth-schemes override in generators.yml. Generators can now define their own `auth-schemes` at the generator level, which takes precedence over top-level definitions.
+
+        ```yml
+        # generators.yml
+        api:
+          auth: Bearer
+          auth-schemes:
+            Bearer:
+              scheme: bearer
+
+        groups:
+          php-sdk:
+            generators:
+              - name: fernapi/fern-php-sdk
+                version: 1.23.0
+                api:
+                  auth: Bearer
+                  auth-schemes:
+                    Bearer:
+                      scheme: bearer
+                      get-token: POST /authorize
+        ```
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.12.0
+
+- changelogEntry:
+    - summary: |
+        When converting OpenAPI to Fern Definition, if all endpoints in a service have `auth: true`, set the `auth: true` at the service level, and remove it from individual endpoints.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-26"
+  version: 2.11.0
+
+- changelogEntry:
+    - summary: |
+        Support per-generator specs override in generators.yml. Generators can now redefine the `api.specs` configuration at the individual generator level, allowing different specs configurations for different generators.
+
+        ```yml
+        # generators.yml
+        api:
+          specs:
+            - openapi: openapi.yml
+
+        groups:
+          php-sdk:
+            generators:
+              - name: fernapi/fern-php-sdk
+                version: 1.23.1
+                api:
+                  specs:
+                    - openapi: custom-openapi.yml
+        ```
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.10.0
+
+- changelogEntry:
+    - summary: |
+        When importing OpenAPI specs, endpoints now properly inherit authentication requirements defined at the global level.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-26"
+  version: 2.9.0
+
+- changelogEntry:
+    - summary: |
+        Fix dynamic snippet property ordering for types with inheritance. Types that are extended by other types now have their own properties ordered before inherited properties in the Dynamic IR. This fixes Java SDK staged builder compilation errors where method call order is enforced at compile time.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.8.2
+
+- changelogEntry:
+    - summary: |
+        Support a `lines` prop for the `<Code />` component to extract specific lines from a code snippet.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.8.1
+
+- changelogEntry:
+    - summary: |
+        Adds an option for `api.tag-description-pages: true` to create summary pages from tag descriptions within an API reference.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.8.0
+
+- changelogEntry:
+    - summary: |
+        Fix fern docs dev bug on Windows where asset paths were not parsing correctly
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.7.1
+
+- changelogEntry:
+    - summary: |
+        Support per-generator auth overrides in generators.yml.
+        In the following example the TypeScript SDK generator will use Basic auth while the rest of the APIs use OAuth.
+
+        ```yml
+        # generators.yml
+        auth-schemes:
+          OAuth:
+            scheme: oauth
+            type: client-credentials
+            get-token:
+              endpoint: POST /authorize
+          Basic:
+            scheme: basic
+
+        api:
+          auth: OAuth
+          specs:
+            - openapi: openapi.yml
+
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-sdk
+                version: 3.33.0
+                api:
+                  auth: Basic
+        ```
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.7.0
+
+- changelogEntry:
+    - summary: |
+        Support generating examples for `x-fern-type: literal<...>` values in OpenAPI specs. Parameters with literal type annotations now generate examples using the underlying literal value.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.6.2
+
+- changelogEntry:
+    - summary: |
+        Fix docs broken-links validator incorrectly flagging external URLs that contain the docs domain in query parameters.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.6.1
+
+- changelogEntry:
+    - summary: |
+        Support 4XX and 5XX patterns in OpenAPI specs for docs.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-24"
+  version: 2.6.0
+
+- changelogEntry:
+    - summary: |
+        Remove spammy "Cannot resolve source" warnings for OpenAPI sources in unioned API configurations with dependencies.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-25"
+  version: 2.5.2
+
+- changelogEntry:
+    - summary: |
+        Add validation for instance URLs to ensure they are valid.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-24"
+  version: 2.5.1
+
+- changelogEntry:
+    - summary: |
+        Support product and version-specific announcements in `docs.yml`.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-24"
+  version: 2.5.0
+
+- changelogEntry:
+    - summary: |
+        Update local development refresh behavior when updating the `sidebar-title` override, or a `slug` override of a page. The preview should now navigate to the new slug instead of showing a 404.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-23"
+  version: 2.2.6
+
+- changelogEntry:
+    - summary: |
+        Revert "fix(openapi): handle situations where discriminated unions reference unknown variants"
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.5
+
+- changelogEntry:
+    - summary: |
+        Re-publish CLI.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.4
+
+- changelogEntry:
+    - summary: |
+        Support `<Code />` components with props formatted on multiple lines.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.3
+
+- changelogEntry:
+    - summary: |
+        Add branch support to self-hosted GitHub generation. Users can now specify a target branch in their generators.yml configuration using the `branch` field. When specified, generated code will be pushed to that branch instead of the default branch.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.4.0
+
+- changelogEntry:
+    - summary: |
+        Add messaging about AI example generation to the CLI.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.3.0
+
+- changelogEntry:
+    - summary: |
+        Add clarified output for unchanged generator versions (i.e., generators already on the latest version) to `fern generator upgrade`.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.1
+
+- changelogEntry:
+    - summary: |
+        Support x-code-samples in OpenAPI specs on the latest version of the OpenAPI parser.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.0
+
 - changelogEntry:
     - summary: |
         Add detailed output to `fern generator upgrade` showing which generators were upgraded, their version changes, and changelog links. The command now displays a summary grouped by workspace and group, or reports "All generators are already up to date" when no upgrades are applied.
@@ -157,7 +923,7 @@
 
 - changelogEntry:
     - summary: |
-        Add external configuration to tsup build to prevent dev-only dependencies (prettier, vitest, typescript, tsup, depcheck, @types/*) from being accidentally bundled. 
+        Add external configuration to tsup build to prevent dev-only dependencies (prettier, vitest, typescript, tsup, depcheck, @types/*) from being accidentally bundled.
         This ensures the CLI bundle only includes runtime dependencies and enables metafile generation for bundle analysis.
       type: feat
   irVersion: 61
@@ -192,8 +958,8 @@
 - changelogEntry:
     - summary: |
         Add `fern self-update` command to update the globally installed Fern CLI.
-        The command detects how the CLI was installed (npm, pnpm, yarn, bun, or brew) and runs the appropriate update command. 
-        Supports updating to a specific version (e.g., `fern self-update 0.85.0`) or the latest version (e.g., `fern self-update`). 
+        The command detects how the CLI was installed (npm, pnpm, yarn, bun, or brew) and runs the appropriate update command.
+        Supports updating to a specific version (e.g., `fern self-update 0.85.0`) or the latest version (e.g., `fern self-update`).
         Includes `--dry-run` flag to preview the update command without executing it.
       type: feat
   irVersion: 61
@@ -3875,7 +4641,7 @@
 - changelogEntry:
     - summary: |
         Improve server handling in OpenAPI imports by exploding servers with enum variables into multiple servers,
-        one for each enum value. For example, a server with URL "https://{region}.example.com" where region
+        one for each enum value. For example, a server with URL `https://{region}.example.com` where region
         is an enum ["us", "eu"] will be exploded into two servers: "https://us.example.com" and "https://eu.example.com".
       type: feat
   irVersion: 57

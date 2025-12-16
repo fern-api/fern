@@ -114,6 +114,10 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         return false;
     }
 
+    protected shouldSkipNpmPkgFix(_customConfig: ExpressCustomConfig): boolean {
+        return false;
+    }
+
     protected publishToJsr(_customConfig: ExpressCustomConfig): boolean {
         return false;
     }

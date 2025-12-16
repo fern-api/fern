@@ -31,19 +31,21 @@ export function generateRustTypeForTypeReference(
                 map: (mapType) =>
                     rust.Type.hashMap(
                         generateRustTypeForTypeReference(mapType.keyType, context, false),
-                        generateRustTypeForTypeReference(mapType.valueType, context, false)
+                        // Propagate wrapInBox to the value type for recursive maps
+                        generateRustTypeForTypeReference(mapType.valueType, context, wrapInBox)
                     ),
                 set: (setType) => {
                     // Rust doesn't have a built-in Set, use HashSet
+                    // Propagate wrapInBox to the element type
                     const elementType = isFloatingPointType(setType)
                         ? rust.Type.reference(
                               rust.reference({
                                   name: "OrderedFloat",
                                   module: "ordered_float",
-                                  genericArgs: [generateRustTypeForTypeReference(setType, context, false)]
+                                  genericArgs: [generateRustTypeForTypeReference(setType, context, wrapInBox)]
                               })
                           )
-                        : generateRustTypeForTypeReference(setType, context, false);
+                        : generateRustTypeForTypeReference(setType, context, wrapInBox);
 
                     return rust.Type.reference(
                         rust.reference({
@@ -57,8 +59,9 @@ export function generateRustTypeForTypeReference(
                 optional: (optionalType) =>
                     rust.Type.option(generateRustTypeForTypeReference(optionalType, context, wrapInBox)),
                 list: (listType) =>
-                    // Vec already heap-allocates, no need to propagate Box into Vec
-                    rust.Type.vec(generateRustTypeForTypeReference(listType, context, false)),
+                    // Vec is heap-allocated, but we need to Box the inner type if it's recursive
+                    // This generates Vec<Box<T>> for recursive types, not Box<Vec<T>>
+                    rust.Type.vec(generateRustTypeForTypeReference(listType, context, wrapInBox)),
                 _other: () => {
                     // Fallback for unknown container types
                     return rust.Type.reference(

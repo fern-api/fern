@@ -48,11 +48,9 @@ public class RawSimpleClient {
                 return new SeedInferredAuthImplicitHttpResponse<>(null, response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedInferredAuthImplicitApiException(
-                    "Error with status code " + response.code(),
-                    response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                    response);
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
         } catch (IOException e) {
             throw new SeedInferredAuthImplicitException("Network error executing HTTP request", e);
         }

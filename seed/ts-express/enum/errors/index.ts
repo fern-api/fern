@@ -1,1 +1,0 @@
-export { SeedEnumError } from "./SeedEnumError";

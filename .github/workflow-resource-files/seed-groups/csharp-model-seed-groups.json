@@ -94,7 +94,7 @@
     {
       "fixtures": [
         "alias-extends",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "nullable",
         "path-parameters",
         "plain-text",
@@ -143,7 +143,7 @@
         "websocket-bearer-auth",
         "streaming-parameter",
         "basic-auth-environment-variables",
-        "custom-auth",
+        "header-auth",
         "websocket",
         "trace"
       ],

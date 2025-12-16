@@ -2,20 +2,20 @@
 
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedBearerTokenEnvironmentVariableClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedBearerTokenEnvironmentVariableClient {
-    protected readonly _options: SeedBearerTokenEnvironmentVariableClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedBearerTokenEnvironmentVariableClient.Options>;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedBearerTokenEnvironmentVariableClient.Options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get service(): ServiceClient {

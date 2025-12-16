@@ -8,7 +8,7 @@ use Seed\Playlist\Requests\CreatePlaylistRequest;
 use Seed\Playlist\Types\Playlist;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\Types\Constant;
+use Seed\Core\Json\JsonSerializer;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Environments;
 use Seed\Core\Client\HttpMethod;
@@ -28,7 +28,7 @@ class PlaylistClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -76,9 +76,9 @@ class PlaylistClient
     {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        $query['datetime'] = $request->datetime->format(Constant::DateTimeFormat);
+        $query['datetime'] = JsonSerializer::serializeDateTime($request->datetime);
         if ($request->optionalDatetime != null) {
-            $query['optionalDatetime'] = $request->optionalDatetime;
+            $query['optionalDatetime'] = JsonSerializer::serializeDateTime($request->optionalDatetime);
         }
         try {
             $response = $this->client->sendRequest(

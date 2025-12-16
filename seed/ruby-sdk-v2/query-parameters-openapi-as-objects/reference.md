@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.search() -> Seed::Types::SearchResponse</code></summary>
+<details><summary><code>client.<a href="/lib/seed/client.rb">search</a>() -> Seed::Types::SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -22,27 +22,30 @@ client.search(
     name: 'name',
     tags: ['tags', 'tags']
   },
-  userList: ,
-  optionalDeadline: '2024-01-15T09:30:00Z',
-  keyValue: {
+  optional_deadline: '2024-01-15T09:30:00Z',
+  key_value: {
     keyValue: 'keyValue'
   },
-  optionalString: 'optionalString',
-  nestedUser: {
+  optional_string: 'optionalString',
+  nested_user: {
     name: 'name',
     user: {
       name: 'name',
       tags: ['tags', 'tags']
     }
   },
-  optionalUser: {
+  optional_user: {
     name: 'name',
     tags: ['tags', 'tags']
   },
-  excludeUser: ,
-  filter: ,
-  neighbor: ,
-  neighborRequired: 
+  neighbor: {
+    name: 'name',
+    tags: ['tags', 'tags']
+  },
+  neighbor_required: {
+    name: 'name',
+    tags: ['tags', 'tags']
+  }
 );
 ```
 </dd>
@@ -179,6 +182,14 @@ client.search(
 <dd>
 
 **neighbor_required:** `Seed::Types::SearchRequestNeighborRequired` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::RequestOptions` 
     
 </dd>
 </dl>

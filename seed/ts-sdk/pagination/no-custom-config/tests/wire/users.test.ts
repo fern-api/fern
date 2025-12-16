@@ -568,6 +568,35 @@ describe("UsersClient", () => {
         expect(expected.cursor.data).toEqual(nextPage.data);
     });
 
+    test("listUsernamesWithOptionalResponse", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { cursor: { after: "after", data: ["data", "data"] } };
+        server
+            .mockEndpoint({ once: false })
+            .get("/users")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const expected = {
+            cursor: {
+                after: "after",
+                data: ["data", "data"],
+            },
+        };
+        const page = await client.users.listUsernamesWithOptionalResponse({
+            starting_after: "starting_after",
+        });
+
+        expect(expected.cursor.data).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.cursor.data).toEqual(nextPage.data);
+    });
+
     test("listWithGlobalConfig", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
@@ -592,5 +621,82 @@ describe("UsersClient", () => {
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.results).toEqual(nextPage.data);
+    });
+
+    test("listWithOptionalData (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            hasNextPage: true,
+            page: { page: 1, next: { page: 2, starting_after: "next_cursor" }, per_page: 10, total_page: 5 },
+            total_count: 50,
+            data: [
+                { name: "Alice", id: 1 },
+                { name: "Bob", id: 2 },
+            ],
+        };
+        server
+            .mockEndpoint({ once: false })
+            .get("/users/optional-data")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const expected = {
+            hasNextPage: true,
+            page: {
+                page: 1,
+                next: {
+                    page: 2,
+                    starting_after: "next_cursor",
+                },
+                per_page: 10,
+                total_page: 5,
+            },
+            total_count: 50,
+            data: [
+                {
+                    name: "Alice",
+                    id: 1,
+                },
+                {
+                    name: "Bob",
+                    id: 2,
+                },
+            ],
+        };
+        const page = await client.users.listWithOptionalData({
+            page: 1,
+        });
+
+        expect(expected.data).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
+    });
+
+    test("listWithOptionalData (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = {
+            hasNextPage: false,
+            page: { page: 1, next: { page: 2, starting_after: "next_cursor" }, per_page: 10, total_page: 1 },
+            total_count: 0,
+        };
+        server
+            .mockEndpoint({ once: false })
+            .get("/users/optional-data")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const page = await client.users.listWithOptionalData({
+            page: 1,
+        });
+        expect(page.data).toEqual([]);
     });
 });

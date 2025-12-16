@@ -5,7 +5,8 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.service.update_user({
+client.service.update_user(
+  user_id: 'userId',
   email: 'email',
   email_verified: true,
   username: 'username',
@@ -15,4 +16,4 @@ client.service.update_user({
   app_metadata: {},
   password: 'password',
   blocked: true
-});
+);

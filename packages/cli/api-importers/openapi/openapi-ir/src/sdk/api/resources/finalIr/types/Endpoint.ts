@@ -5,12 +5,19 @@
 import * as FernOpenapiIr from "../../../index";
 
 export interface Endpoint
-    extends FernOpenapiIr.WithDescription,
+    extends
+        FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithSource,
         FernOpenapiIr.WithNamespace {
     authed: boolean;
-    security: FernOpenapiIr.EndpointSecurity;
+    /**
+     * Security requirements for this endpoint.
+     * This is populated from the OpenAPI `security` field.
+     * When absent, it inherits from the global security requirements.
+     * When an empty list is provided, it means no security is required.
+     */
+    security: FernOpenapiIr.EndpointSecurity | undefined;
     internal: boolean | undefined;
     idempotent: boolean | undefined;
     method: FernOpenapiIr.HttpMethod;

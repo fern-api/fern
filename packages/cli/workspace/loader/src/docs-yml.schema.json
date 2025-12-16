@@ -929,6 +929,16 @@
               "type": "null"
             }
           ]
+        },
+        "announcement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.AnnouncementConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1033,6 +1043,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "announcement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.AnnouncementConfig"
             },
             {
               "type": "null"
@@ -2090,6 +2110,16 @@
           ]
         },
         "display-errors": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tag-description-pages": {
           "oneOf": [
             {
               "type": "boolean"
@@ -3467,6 +3497,52 @@
         "vscode"
       ]
     },
+    "docs.CustomPageAction": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": "string"
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "title",
+        "url"
+      ],
+      "additionalProperties": false
+    },
     "docs.PageActionOptions": {
       "type": "object",
       "properties": {
@@ -3534,6 +3610,19 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "custom": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.CustomPageAction"
+              }
             },
             {
               "type": "null"
@@ -3629,6 +3718,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ai-example-style-instructions": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
@@ -4022,6 +4121,16 @@
           ]
         },
         "href": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "right-text": {
           "oneOf": [
             {
               "type": "string"
@@ -4654,6 +4763,16 @@
               "type": "null"
             }
           ]
+        },
+        "substitute-env-vars": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -4687,6 +4806,13 @@
       ]
     },
     "docs.FooterNavThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "minimal"
+      ]
+    },
+    "docs.LanguageSwitcherThemeConfig": {
       "type": "string",
       "enum": [
         "default",
@@ -4740,6 +4866,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.FooterNavThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "language-switcher": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LanguageSwitcherThemeConfig"
             },
             {
               "type": "null"

@@ -3,6 +3,9 @@ features:
     description: |
       Instantiate and use the client with the following:
 
+  - id: AUTHENTICATION
+    description: ""
+
   - id: REQUEST_AND_RESPONSE_TYPES
     description: |
       The SDK exports all request and response types as TypeScript interfaces. Simply import them with the

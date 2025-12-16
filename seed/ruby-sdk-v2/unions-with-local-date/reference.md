@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.bigunion.get(id) -> Seed::Bigunion::Types::BigUnion</code></summary>
+<details><summary><code>client.bigunion.<a href="/lib/seed/bigunion/client.rb">get</a>(id) -> Seed::Bigunion::Types::BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.bigunion.get();
+client.bigunion.get(id: 'id');
 ```
 </dd>
 </dl>
@@ -32,6 +32,14 @@ client.bigunion.get();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Bigunion::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -40,7 +48,7 @@ client.bigunion.get();
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.update(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.bigunion.<a href="/lib/seed/bigunion/client.rb">update</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -72,6 +80,14 @@ client.bigunion.update();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Bigunion::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -80,7 +96,7 @@ client.bigunion.update();
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.update_many(request) -> Internal::Types::Hash[String, Internal::Types::Boolean]</code></summary>
+<details><summary><code>client.bigunion.<a href="/lib/seed/bigunion/client.rb">update_many</a>(request) -> Internal::Types::Hash[String, Internal::Types::Boolean]</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +109,7 @@ client.bigunion.update();
 <dd>
 
 ```ruby
-client.bigunion.update_many();
+client.bigunion.update_many(request: []);
 ```
 </dd>
 </dl>
@@ -112,6 +128,14 @@ client.bigunion.update_many();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Bigunion::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -120,8 +144,8 @@ client.bigunion.update_many();
 </dl>
 </details>
 
-## Union
-<details><summary><code>client.union.get(id) -> Seed::Union::Types::Shape</code></summary>
+## Types
+<details><summary><code>client.types.<a href="/lib/seed/types/client.rb">get</a>(id) -> Seed::Types::Types::UnionWithTime</code></summary>
 <dl>
 <dd>
 
@@ -134,7 +158,7 @@ client.bigunion.update_many();
 <dd>
 
 ```ruby
-client.bigunion.get();
+client.types.get(id: 'date-example');
 ```
 </dd>
 </dl>
@@ -153,6 +177,14 @@ client.bigunion.get();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Types::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -161,7 +193,7 @@ client.bigunion.get();
 </dl>
 </details>
 
-<details><summary><code>client.union.update(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.types.<a href="/lib/seed/types/client.rb">update</a>(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -174,7 +206,104 @@ client.bigunion.get();
 <dd>
 
 ```ruby
-client.bigunion.update();
+client.types.update(request: {});
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Seed::Types::Types::UnionWithTime` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Types::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Union
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">get</a>(id) -> Seed::Union::Types::Shape</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.bigunion.get(id: 'id');
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Union::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union.<a href="/lib/seed/union/client.rb">update</a>(request) -> Internal::Types::Boolean</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.union.update();
 ```
 </dd>
 </dl>
@@ -190,6 +319,14 @@ client.bigunion.update();
 <dd>
 
 **request:** `Seed::Union::Types::Shape` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Union::RequestOptions` 
     
 </dd>
 </dl>

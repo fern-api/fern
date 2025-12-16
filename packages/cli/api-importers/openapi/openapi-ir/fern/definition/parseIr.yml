@@ -23,7 +23,13 @@ types:
       - commons.WithNamespace
     properties:
       authed: boolean
-      security: finalIr.EndpointSecurity
+      security:
+        docs: |
+          Security requirements for this endpoint.
+          This is populated from the OpenAPI `security` field.
+          When absent, it inherits from the global security requirements.
+          When an empty list is provided, it means no security is required.
+        type: optional<finalIr.EndpointSecurity>
       internal: optional<boolean>
       idempotent: optional<boolean>
       method: finalIr.HttpMethod
@@ -82,6 +88,7 @@ types:
         docs: |
           Populated as ${operationId}Payload
       payload: SchemaWithExample
+      response: optional<ResponseWithExample>
       examples: list<finalIr.WebhookExampleCall>
 
   HttpErrorWithExample:
@@ -168,6 +175,10 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      explode:
+        type: optional<boolean>
+        docs: |
+          Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style.
 
   QueryParameterWithExample:
     extends:
@@ -181,6 +192,10 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      explode:
+        type: optional<boolean>
+        docs: |
+          Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style.
 
   HeaderWithExample:
     extends:

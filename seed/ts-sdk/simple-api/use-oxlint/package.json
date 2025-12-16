@@ -2,7 +2,10 @@
     "name": "@fern/simple-api",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:simple-api/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/simple-api/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
@@ -51,8 +54,8 @@
         "@types/node": "^18.19.70",
         "typescript": "~5.7.2",
         "@biomejs/biome": "2.3.1",
-        "oxlint": "1.25.0",
-        "oxlint-tsgolint": "0.4.0"
+        "oxlint": "1.32.0",
+        "oxlint-tsgolint": "0.8.4"
     },
     "browser": {
         "fs": false,

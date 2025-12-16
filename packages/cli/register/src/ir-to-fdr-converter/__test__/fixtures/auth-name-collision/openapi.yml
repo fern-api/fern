@@ -1,0 +1,45 @@
+openapi: 3.0.3
+info:
+  title: Auth Name Collision Test API
+  version: 1.0.0
+  description: OpenAPI spec with security scheme that has same name as generators.yml auth scheme
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /protected:
+    get:
+      operationId: getProtected
+      summary: Get resource protected by conflicting auth scheme name
+      security:
+        - bearerAuth: [] # Same name as in generators.yml
+      responses:
+        "200":
+          description: Protected resource
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "protected data"
+
+  /public:
+    get:
+      operationId: getPublic
+      summary: Get public resource (should inherit from generators.yml)
+      responses:
+        "200":
+          description: Public resource
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "public data"
+
+components:
+  securitySchemes:
+    bearerAuth: # Same name as in generators.yml but different config
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OpenAPI version of bearerAuth (should be different from generators.yml version)

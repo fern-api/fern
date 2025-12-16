@@ -1,6 +1,7 @@
 import {
     ContainerType,
     CursorPagination,
+    CustomPagination,
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
@@ -132,6 +133,12 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     return this.getOffsetPaginationInfo({
                         context,
                         offset: this.endpoint.pagination,
+                        successReturnType
+                    });
+                case "custom":
+                    return this.getCustomPaginationInfo({
+                        context,
+                        custom: this.endpoint.pagination,
                         successReturnType
                     });
             }
@@ -350,7 +357,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                       ts.factory.createBinaryExpression(
                                           stepPropertyAccess,
                                           ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                          ts.factory.createNumericLiteral("1")
+                                          ts.factory.createNumericLiteral(
+                                              this.getDefaultPaginationValue({
+                                                  type: offset.step.property.valueType
+                                              })
+                                          )
                                       )
                                   )
                               ]
@@ -441,6 +452,68 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         return {
             type: offset.step != null && this.offsetSemantics === "item-index" ? "offset-step" : "offset",
             initializeOffset,
+            itemType: itemType,
+            responseType: successReturnType,
+            hasNextPage,
+            getItems,
+            loadPage
+        };
+    }
+
+    private getCustomPaginationInfo({
+        context,
+        custom,
+        successReturnType
+    }: {
+        context: SdkContext;
+        custom: CustomPagination;
+        successReturnType: ts.TypeNode;
+    }): PaginationResponseInfo | undefined {
+        const itemValueType = custom.results.property.valueType;
+
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        if (itemTypeReference == null) {
+            return undefined;
+        }
+
+        const itemType = getElementTypeFromArrayType(
+            removeUndefinedAndNullFromTypeNode(
+                context.type.getReferenceToResponsePropertyType({
+                    responseType: successReturnType,
+                    property: custom.results
+                })
+            )
+        );
+
+        // For custom pagination, hasNextPage always returns false
+        // The SDK author is responsible for implementing the pagination logic
+        const hasNextPage = ts.factory.createFalse();
+
+        // getItems gets the items from the results property
+        const getItems = ts.factory.createBinaryExpression(
+            context.type.generateGetterForResponseProperty({
+                property: custom.results,
+                variable: "response",
+                isVariableOptional: true
+            }),
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createArrayLiteralExpression([], false)
+        );
+
+        // For custom pagination, loadPage throws an error
+        // The SDK author is responsible for implementing the pagination logic
+        const loadPage = [
+            ts.factory.createThrowStatement(
+                ts.factory.createNewExpression(ts.factory.createIdentifier("Error"), undefined, [
+                    ts.factory.createStringLiteral(
+                        "Custom pagination requires manual implementation. Override the loadPage method to implement pagination."
+                    )
+                ])
+            )
+        ];
+
+        return {
+            type: "custom",
             itemType: itemType,
             responseType: successReturnType,
             hasNextPage,
@@ -925,69 +998,21 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getThrowsForNonStatusCodeErrors(context: SdkContext): ts.Statement[] {
         const referenceToError = this.getReferenceToError(context);
         const referenceToRawResponse = this.getReferenceToRawResponse(context);
+
+        const handleNonStatusCodeErrorReference =
+            context.nonStatusCodeErrorHandler.getReferenceToHandleNonStatusCodeError({
+                importsManager: context.importsManager,
+                exportsManager: context.exportsManager,
+                sourceFile: context.sourceFile
+            });
+
         return [
-            ts.factory.createSwitchStatement(
-                ts.factory.createPropertyAccessExpression(
+            ts.factory.createReturnStatement(
+                ts.factory.createCallExpression(handleNonStatusCodeErrorReference.getExpression(), undefined, [
                     referenceToError,
-                    context.coreUtilities.fetcher.Fetcher.Error.reason
-                ),
-                ts.factory.createCaseBlock([
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.NonJsonError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                                    message: undefined,
-                                    statusCode: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.NonJsonError.statusCode
-                                    ),
-                                    responseBody: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.NonJsonError.rawBody
-                                    ),
-                                    rawResponse: referenceToRawResponse
-                                })
-                            )
-                        ]
-                    ),
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.TimeoutSdkError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.timeoutSdkError
-                                    .getGeneratedTimeoutSdkError()
-                                    .build(
-                                        context,
-                                        `Timeout exceeded when calling ${this.endpoint.method} ${getFullPathForEndpoint(
-                                            this.endpoint
-                                        )}.`
-                                    )
-                            )
-                        ]
-                    ),
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.UnknownError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                                    message: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.UnknownError.message
-                                    ),
-                                    statusCode: undefined,
-                                    responseBody: undefined,
-                                    rawResponse: referenceToRawResponse
-                                })
-                            )
-                        ]
-                    )
+                    referenceToRawResponse,
+                    ts.factory.createStringLiteral(this.endpoint.method),
+                    ts.factory.createStringLiteral(getFullPathForEndpoint(this.endpoint))
                 ])
             )
         ];

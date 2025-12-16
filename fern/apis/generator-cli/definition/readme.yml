@@ -56,19 +56,58 @@ types:
       installationToken:
         docs: The token used to clone the GitHub repository.
         type: string
+      branch:
+        docs: The branch to clone from. If not specified, the default branch will be used.
+        type: optional<string>
 
   ReadmeFeature:
     docs: |
       A single feature supported by a generator (e.g. PAGINATION).
     extends: feature.FeatureSpec
     properties:
-      snippets: optional<list<string>>
+      snippets: optional<list<Snippet>>
       snippetsAreOptional:
         docs: |
           If true, the feature block should be rendered even if we don't receive a snippet for it.
           This is useful for features that are always supported, but might not require a snippet
           to explain.
         type: boolean
+
+  Snippet:
+    docs: |
+      A snippet that can be either a plain string (treated as code in the generator's language),
+      markdown content, or a code block with optional language override.
+      Plain strings are supported for backwards compatibility.
+    discriminated: false
+    union:
+      - string
+      - MarkdownSnippet
+      - CodeSnippet
+
+  MarkdownSnippet:
+    docs: |
+      A markdown snippet that will be rendered as-is without code fences.
+    properties:
+      type:
+        docs: |
+          Discriminator field to identify this as a markdown snippet.
+        type: literal<"markdown">
+      content: string
+
+  CodeSnippet:
+    docs: |
+      A code snippet that will be wrapped in a code fence with the specified language.
+      If no language is specified, the generator's language will be used.
+    properties:
+      type:
+        docs: |
+          Discriminator field to identify this as a code snippet.
+        type: literal<"code">
+      content: string
+      language:
+        docs: |
+          The language for the code fence. If not specified, the generator's language will be used.
+        type: optional<string>
 
   LanguageInfo:
     docs: |

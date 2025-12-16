@@ -258,7 +258,8 @@ export function parseAsyncAPIV3({
                     schema: parameterSchema,
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
-                    source
+                    source,
+                    explode: undefined
                 };
 
                 if (type === "header") {

@@ -271,6 +271,31 @@ types:
           When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
 
           @default: false
+      custom:
+        type: optional<list<CustomPageAction>>
+        docs: |
+          When enabled, displays a custom button that allows users to open the page content in a custom IDE for editing and development.
+          The value of this property should be the name of the custom IDE.
+          Example: `cursor`
+
+  CustomPageAction:
+    docs: A custom page action that can be configured by the user.
+    properties:
+      title:
+        type: string
+        docs: The title of the custom action.
+      subtitle:
+        type: optional<string>
+        docs: The subtitle/helper text of the custom action.
+      url:
+        type: string
+        docs: The URL to navigate to. Use {slug} as a placeholder for the current page slug, {domain} as a placeholder for the current domain, and {url} as a placeholder for the current full URL.
+      icon:
+        type: optional<string>
+        docs: Icon to display for the custom action. Can be a relative filepath, an image URL (starting with http://, https://, or /), or a Font Awesome icon name (e.g., "fa-solid fa-star" or "star").
+      default:
+        type: optional<boolean>
+        docs: Whether this custom action should be the default action.
 
   AIChatConfig:
     properties:
@@ -423,6 +448,7 @@ types:
         type: optional<boolean>
         docs: |
           If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL.
+      announcement: optional<AnnouncementConfig>
 
   Availability:
     enum:
@@ -519,6 +545,11 @@ types:
       href:
         type: optional<string>
         docs: The URL that users will be directed to when clicking the logo. Typically your company's homepage or app.
+      right-text:
+        type: optional<string>
+        docs: |
+          Text to display to the right of the logo image. This is useful for adding a tagline or product name next to your logo.
+          Example: `Docs`
 
   BackgroundImageConfiguration:
     docs: This background image is used to customize the appearance of your docs site.
@@ -717,6 +748,14 @@ types:
           @default: false
       disable-analytics: optional<boolean>
       language: optional<Language>
+      substitute-env-vars:
+        type: optional<boolean>
+        docs: |
+          When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,
+          including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+          Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
+
+          @default: false
 
   ThemeConfig:
     properties:
@@ -725,6 +764,12 @@ types:
       tabs: optional<TabsThemeConfig>
       page-actions: optional<PageActionsThemeConfig>
       footer-nav: optional<FooterNavThemeConfig>
+      language-switcher: optional<LanguageSwitcherThemeConfig>
+
+  LanguageSwitcherThemeConfig:
+    enum:
+      - default
+      - minimal
 
   FooterNavThemeConfig:
     enum:
@@ -1006,6 +1051,9 @@ types:
       display-errors:
         type: optional<boolean>
         docs: Defaults to false
+      tag-description-pages:
+        type: optional<boolean>
+        docs: If true, a page will be created for each tag in the OpenAPI spec that contains a description.
       snippets: optional<SnippetsConfiguration>
       postman:
         type: optional<string>
@@ -1560,6 +1608,11 @@ types:
         availability: pre-release
         docs: |
           Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+      ai-example-style-instructions:
+        type: optional<string>
+        availability: pre-release
+        docs: |
+          Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
   PlaygroundSettings:
     properties:
@@ -1634,6 +1687,7 @@ types:
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
+      announcement: optional<AnnouncementConfig>
 
   ExternalProduct:
     extends: [ProductConfigBase]

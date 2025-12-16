@@ -15,6 +15,43 @@ public class BaseMockServerTest
 
     protected static RequestOptions RequestOptions { get; set; } = new();
 
+    private void MockInferredAuthEndpoint()
+    {
+        const string requestJson = """
+            {
+              "client_id": "client_id",
+              "client_secret": "client_secret",
+              "audience": "https://api.example.com",
+              "grant_type": "client_credentials",
+              "scope": "scope"
+            }
+            """;
+
+        const string mockResponse = """
+            {
+              "access_token": "access_token",
+              "expires_in": 1,
+              "refresh_token": "refresh_token"
+            }
+            """;
+
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/token")
+                    .WithHeader("X-Api-Key", "X-Api-Key")
+                    .UsingPost()
+                    .WithBodyAsJson(requestJson)
+            )
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
+    }
+
     [OneTimeSetUp]
     public void GlobalSetup()
     {
@@ -25,8 +62,13 @@ public class BaseMockServerTest
 
         // Initialize the Client
         Client = new SeedInferredAuthExplicitClient(
+            "X-Api-Key",
+            "client_id",
+            "client_secret",
+            "scope",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
+        MockInferredAuthEndpoint();
     }
 
     [OneTimeTearDown]

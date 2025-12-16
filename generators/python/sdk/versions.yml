@@ -1,5 +1,308 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 4.45.10
+  changelogEntry:
+    - summary: |
+        Fix retry logic "off-by-two" error. The internal `retries` counter now starts at 0
+        instead of 2, and `max_retries` defaults to 2 when not specified. This ensures users
+        get the expected number of retries (2 by default, or the configured `max_retries` value).
+      type: fix
+  createdAt: "2025-12-15"
+  irVersion: 61
+
+- version: 4.45.9
+  changelogEntry:
+    - summary: |
+        Fix empty query params stripping existing URL query strings. When `params` and
+        `additional_query_parameters` are both empty, httpx now receives `params=None` instead
+        of `params=[]`, preserving any query parameters already present in the URL (e.g.,
+        pagination cursors like `?after=123`).
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 61
+
+- version: 4.45.8
+  changelogEntry:
+    - summary: Ensures the root client always exposes a headers parameter and forwards it to the underlying ClientWrapper.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 61
+
+- version: 4.45.7
+  changelogEntry:
+    - summary: Fix client wrapper instantiation to use the correct bearer token parameter name, preventing incorrect `token=` references when custom auth parameter names are configured.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 61
+
+- version: 4.45.6
+  changelogEntry:
+    - summary: Fix failing wire tests under `pytest-xdist` by using a single shared WireMock plugin.
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 4.45.5
+  changelogEntry:
+    - summary: |
+        Fix file upload conditional check using wire_value instead of snake_case parameter name,
+        which caused mypy "name not defined" errors when the API field name differed from the
+        Python parameter name (e.g., `MyFile` vs `my_file`).
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 4.45.4
+  changelogEntry:
+    - summary: Fix offset pagination to handle None items when calculating next page offset.
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 4.45.3
+  changelogEntry:
+    - summary: Add return types to reference.md method signatures for consistency with other SDK generators.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
+- version: 4.45.2
+  changelogEntry:
+    - summary: Fix Python wire test generation by schema-based path/body name deconfliction and aligning client class resolution with the SDK's custom config rules.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
+- version: 4.45.1
+  changelogEntry:
+    - summary: Fix forward ref detection for complex circular type cycles.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
+- version: 4.45.0
+  changelogEntry:
+    - summary: |
+        Add `coerce_numbers_to_str` option to `pydantic_config`. When enabled, numeric types (int, float, Decimal)
+        will be coerced to strings during validation. This is useful for APIs that return numeric values as strings.
+      type: feat
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 4.44.2
+  changelogEntry:
+    - summary: |
+        Fix enum-typed headers to use `.value` instead of `str()` for consistent wire format across
+        all Python versions. Previously, `str(enum)` returned the enum name (e.g., `Operand.GREATER_THAN`)
+        on Python `< 3.11`, but the wire value (e.g., `>`) on Python `>= 3.11` with StrEnum.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 4.44.1
+  changelogEntry:
+    - summary: |
+        Remove `oauth-token-override` config flag. OAuth token override is now always enabled for OAuth client
+        credentials flows, allowing users to authenticate with either client_id/client_secret OR a pre-generated
+        bearer token directly via the `token` parameter without any configuration.
+      type: fix
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 4.44.0
+  changelogEntry:
+    - summary: |
+        Add Python 3.11+ StrEnum compatibility. Generated enums now use StrEnum for Python >= 3.11
+        and the (str, Enum) mixin for older versions, fixing compatibility issues with Python 3.11's
+        stricter enum mixin handling.
+      type: feat
+  createdAt: "2025-12-08"
+  irVersion: 61
+
+- version: 4.43.0
+  changelogEntry:
+    - summary: |
+        Add OAuth token override support. When `oauth-token-override: true` is configured, users can authenticate
+        with either OAuth client credentials or a pre-generated bearer token directly via the `token` parameter.
+      type: feat
+  createdAt: "2025-12-06"
+  irVersion: 61
+
+- version: 4.42.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth flow regression where `SyncClientWrapper` and `AsyncClientWrapper` required a `token` parameter.
+        The token parameter is now optional only for OAuth flows (matching TypeScript's behavior), while plain
+        bearer auth continues to require a token when `isAuthMandatory` is true.
+      type: fix
+  createdAt: "2025-12-05"
+  irVersion: 61
+
+- version: 4.42.0
+  changelogEntry:
+    - summary: |
+        Add async support for OAuth token provider. The generated SDK now includes an AsyncOAuthTokenProvider
+        class that uses asyncio.Lock for async-safe token refresh, alongside the existing sync OAuthTokenProvider
+        that uses threading.Lock. The async client now uses the async token provider for proper async token management.
+      type: feat
+  createdAt: "2025-11-28"
+  irVersion: 61
+
+- version: 4.41.11
+  changelogEntry:
+    - summary: |
+        Fix backslash escaping in endpoint and websocket docstrings. OpenAPI descriptions containing
+        backslash sequences like `DOMAIN\username` now properly escape backslashes to avoid Python
+        SyntaxError from invalid unicode escape sequences.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 4.41.10
+  changelogEntry:
+    - summary: |
+        Adds `dynamic = ["version"]` to `pyproject.toml`, allowing for `uv` commands such as `uv sync` to work out-of-the-box.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 4.41.9
+  changelogEntry:
+    - summary: |
+        Fix wire test WireMock container lifecycle to be compatible with pytest-xdist parallelization.
+        The container is now started/stopped using pytest_configure/pytest_unconfigure hooks instead of
+        a session-scoped fixture, ensuring only the controller process manages the container.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 4.41.8
+  changelogEntry:
+    - summary: |
+        Fix duplicate field names in discriminated union types.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 4.41.7
+  changelogEntry:
+    - summary: |
+        Fix paginated response handling when response type is optional or nullable.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 4.41.6
+  changelogEntry:
+    - summary: |
+        Fix Python wire test generation to drop literal-only params and fill in required file arguments so tests match the generated SDK signatures.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 4.41.5
+  changelogEntry:
+    - summary: |
+        The `package_path` configuration now works as a suffix within the module hierarchy instead of a prefix.
+        For example, `package_path: sub/dir` now generates to `src/name/sub/dir/...` enabling imports like
+        `from name.sub.dir import Client`.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 4.41.4
+  changelogEntry:
+    - summary: |
+        Ensure `UncheckedBaseModel.model_validate` in Pydantic v2 respects `FieldMetadata(alias=...)` so aliased fields validate correctly from JSON.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 4.41.3
+  changelogEntry:
+    - summary: |
+        Fix multipart form data requests to omit None values instead of converting them to empty strings.
+        This prevents httpx from sending empty strings for optional parameters that should be absent.
+      type: fix
+  createdAt: "2025-11-28"
+  irVersion: 61
+
+- version: 4.41.2
+  changelogEntry:
+    - summary: More fixes and improvements to wire tests.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 61
+
+- version: 4.41.1
+  changelogEntry:
+    - summary: More fixes and improvements to wire tests.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 61
+
+- version: 4.41.0
+  changelogEntry:
+    - summary: |
+        `package_path: sub/directory` generates the SDK into the specified subdirectory.
+        Only top-level concerns (`pyproject.toml`, `README.md`, etc.) are exempt.
+      type: feat
+  createdAt: "2025-11-26"
+  irVersion: 61
+
+- version: 4.40.0
+  changelogEntry:
+    - summary: |
+        Add support for X-RateLimit-Reset header
+        Retry strategy matches other SDKs (1s initial delay, 60s max delay).
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 4.39.2
+  changelogEntry:
+    - summary: More fixes and improvements to wire tests.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 4.39.1
+  changelogEntry:
+    - summary: Various fixes and improvements to wire tests.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 4.39.0
+  changelogEntry:
+    - summary: Add environment_class_name config option to customize the environment class name. Default remains `{ClientName}Environment`.
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 4.38.5
+  changelogEntry:
+    - summary: Fix discriminated union Field(discriminator=...) and UnionMetadata(discriminant=...) to use Python field names instead of JSON aliases for Pydantic v2 compatibility.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
+- version: 4.38.4
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 4.38.3-rc1
+  changelogEntry:
+    - summary: Add wire test generation behind `enable_wire_tests` flag.
+      type: feat
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 4.38.3-rc0
   changelogEntry:
     - summary: Add support for custom pagination
@@ -174,7 +477,7 @@
 - version: 4.31.0
   changelogEntry:
     - summary: |
-        - Removed external dependency on httpx-sse by bringing SSE handling in-house. 
+        - Removed external dependency on httpx-sse by bringing SSE handling in-house.
         - Fixed SSE handling of events longer than or containing escaped newlines.
       type: feat
   createdAt: "2025-10-06"
@@ -498,7 +801,7 @@
 - version: 4.22.1-rc0
   changelogEntry:
     - summary: |
-        Lazily validate model serialization to reduce memory consumption. Pydantic 2.11.0 introduced an issue where the model_serializer 
+        Lazily validate model serialization to reduce memory consumption. Pydantic 2.11.0 introduced an issue where the model_serializer
         decorator set to wrap mode forced it to eagerly do schema validation at import time. Because we had this decorator on the UniversalBaseModel,
         it would try to validate the schemas of all the Model types at import time. This caused massive memory spikes for more complex SDKs, up to 2.6GB
         in some cases. This change essentially accomplishes the same logic of wrapping the serialization process and modifying the serialization
@@ -616,8 +919,8 @@
 - version: 4.19.5
   changelogEntry:
     - summary: |
-        Fix naming conflicts in streaming endpoints by renaming the stream method to _stream in raw clients, 
-        preventing collisions with endpoint parameters that might also be named "stream", 
+        Fix naming conflicts in streaming endpoints by renaming the stream method to _stream in raw clients,
+        preventing collisions with endpoint parameters that might also be named "stream",
         while maintaining proper functionality for streaming responses.
       type: fix
   createdAt: "2025-05-11"
@@ -626,7 +929,7 @@
 - version: 4.19.4
   changelogEntry:
     - summary: |
-        Fix handling of optional file parameters in multipart form data requests with httpx by properly checking 
+        Fix handling of optional file parameters in multipart form data requests with httpx by properly checking
         for None values before attempting to include them in the request, preventing errors when optional file parameters are not provided.
       type: feat
   createdAt: "2025-05-11"
@@ -667,7 +970,7 @@
 - version: 4.18.6
   changelogEntry:
     - summary: |
-        Fix string enum generation to properly handle enum values containing quotes by automatically escaping them, 
+        Fix string enum generation to properly handle enum values containing quotes by automatically escaping them,
         ensuring valid Python syntax for both single and double quoted string literals.
       type: fix
   createdAt: "2025-05-08"
@@ -964,8 +1267,8 @@
   changelogEntry:
     - type: fix
       summary: |
-        Fix an issue where the `request_options` parameter name is now properly respected when it's 
-        renamed due to conflicts with other parameter names. Previously, the code would still reference the 
+        Fix an issue where the `request_options` parameter name is now properly respected when it's
+        renamed due to conflicts with other parameter names. Previously, the code would still reference the
         original parameter name internally, causing errors.
 
 - version: 4.3.17
@@ -973,7 +1276,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by 
+        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by
         prepending an underscore to the `request_options` parameter name.
 
 - version: 4.3.16

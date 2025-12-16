@@ -140,6 +140,8 @@ export function getPackageOutputConfig(
                     location: PACKAGE_LOCATION_MAVEN,
                     coordinate: JAVA_SDK_MAVEN_COORDINATE
                 };
+            case "php-sdk":
+                return undefined;
             case "python-sdk":
                 return {
                     location: PACKAGE_LOCATION_PYPI,

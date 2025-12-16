@@ -69,7 +69,7 @@ export declare namespace ExpressGenerator {
         noOptionalProperties: boolean;
         packagePath: string | undefined;
         packageManager: "pnpm" | "yarn";
-        formatter: "prettier" | "biome" | "oxfmt";
+        formatter: "prettier" | "biome" | "oxfmt" | "none";
         linter: "biome" | "oxlint" | "none";
         enableForwardCompatibleEnums: boolean;
     }
@@ -134,7 +134,8 @@ export class ExpressGenerator {
             fetchSupport: "node-fetch",
             relativePackagePath: this.getRelativePackagePath(),
             relativeTestPath: this.getRelativeTestPath(),
-            generateEndpointMetadata: false
+            generateEndpointMetadata: false,
+            customPagerName: "CustomPager"
         });
         this.asIsManager = new AsIsManager({
             useBigInt: config.useBigInt,

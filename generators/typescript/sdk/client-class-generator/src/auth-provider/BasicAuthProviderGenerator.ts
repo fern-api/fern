@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
-import { PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
+import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
 
@@ -15,6 +15,7 @@ const CLASS_NAME = "BasicAuthProvider";
 const USERNAME_FIELD_NAME = "username";
 const PASSWORD_FIELD_NAME = "password";
 const OPTIONS_TYPE_NAME = "Options";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -48,6 +49,52 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${OPTIONS_TYPE_NAME}`);
     }
 
+    public getAuthOptionsType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
+        const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
+
+        // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
+        // When there's no env var fallback, use Supplier<T> directly.
+        const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+        const supplierType = context.coreUtilities.fetcher.Supplier._getReferenceToType(stringType);
+
+        // For env var fallback: prop?: Supplier<T> | undefined
+        const usernamePropertyType = hasUsernameEnv
+            ? ts.factory.createUnionTypeNode([
+                  supplierType,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : supplierType;
+
+        const passwordPropertyType = hasPasswordEnv
+            ? ts.factory.createUnionTypeNode([
+                  supplierType,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : supplierType;
+
+        return [
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(this.authScheme.username.camelCase.safeName),
+                hasQuestionToken: hasUsernameEnv,
+                type: getTextOfTsNode(usernamePropertyType),
+                docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
+            },
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(this.authScheme.password.camelCase.safeName),
+                hasQuestionToken: hasPasswordEnv,
+                type: getTextOfTsNode(passwordPropertyType),
+                docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
+            }
+        ];
+    }
+
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
         return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
     }
@@ -61,33 +108,23 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
         const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
 
+        // For class fields, use Supplier<T> | undefined when env var fallback exists
+        const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+        const supplierType = context.coreUtilities.fetcher.Supplier._getReferenceToType(stringType);
+
         const usernameFieldType = hasUsernameEnv
             ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                      ts.factory.createUnionTypeNode([
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                      ])
-                  ),
+                  supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-              );
+            : supplierType;
 
         const passwordFieldType = hasPasswordEnv
             ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                      ts.factory.createUnionTypeNode([
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                      ])
-                  ),
+                  supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-              );
+            : supplierType;
 
         context.sourceFile.addClass({
             name: CLASS_NAME,
@@ -227,42 +264,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
-        const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
-        const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
-
-        const usernameProperty: PropertySignatureStructure = {
-            kind: StructureKind.PropertySignature,
-            name: getPropertyKey(this.authScheme.username.camelCase.safeName),
-            hasQuestionToken: hasUsernameEnv,
-            type: getTextOfTsNode(
-                context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                    hasUsernameEnv
-                        ? ts.factory.createUnionTypeNode([
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                          ])
-                        : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                )
-            ),
-            docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
-        };
-
-        const passwordProperty: PropertySignatureStructure = {
-            kind: StructureKind.PropertySignature,
-            name: getPropertyKey(this.authScheme.password.camelCase.safeName),
-            hasQuestionToken: hasPasswordEnv,
-            type: getTextOfTsNode(
-                context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                    hasPasswordEnv
-                        ? ts.factory.createUnionTypeNode([
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                          ])
-                        : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                )
-            ),
-            docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
-        };
+        const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
@@ -271,9 +273,15 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
             statements: [
                 {
                     kind: StructureKind.Interface,
+                    name: AUTH_OPTIONS_TYPE_NAME,
+                    isExported: true,
+                    properties: authOptionsProperties
+                },
+                {
+                    kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    properties: [usernameProperty, passwordProperty]
+                    extends: [AUTH_OPTIONS_TYPE_NAME]
                 }
             ]
         });

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.get_resource(resource_id) -> Seed::Service::Types::Resource</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">get_resource</a>(resource_id) -> Seed::Service::Types::Resource</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.get_resource();
+client.service.get_resource(resource_id: 'rsc-xyz');
 ```
 </dd>
 </dl>
@@ -32,6 +32,14 @@ client.service.get_resource();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -40,7 +48,7 @@ client.service.get_resource();
 </dl>
 </details>
 
-<details><summary><code>client.service.list_resources() -> Internal::Types::Array[Seed::Service::Types::Resource]</code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">list_resources</a>() -> Internal::Types::Array[Seed::Service::Types::Resource]</code></summary>
 <dl>
 <dd>
 
@@ -54,8 +62,8 @@ client.service.get_resource();
 
 ```ruby
 client.service.list_resources(
-  pageLimit: 10,
-  beforeDate: '2023-01-01'
+  page_limit: 10,
+  before_date: '2023-01-01'
 );
 ```
 </dd>
@@ -80,6 +88,14 @@ client.service.list_resources(
 <dd>
 
 **before_date:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>

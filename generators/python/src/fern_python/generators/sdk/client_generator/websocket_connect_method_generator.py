@@ -4,6 +4,7 @@ from typing import Dict, List, Optional, Set, Tuple, Union
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
+from fern_python.codegen.ast.nodes.docstring import escape_docstring
 from fern_python.external_dependencies import Contextlib, HttpX, Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import EndpointFunctionGenerator
@@ -412,7 +413,7 @@ class WebsocketConnectMethodGenerator:
 
         def write(writer: AST.NodeWriter) -> None:
             if websocket.docs is not None:
-                writer.write_line(websocket.docs)
+                writer.write_line(escape_docstring(websocket.docs))
             if len(parameters) == 0:
                 return
             if websocket.docs is not None:
@@ -562,7 +563,7 @@ class WebsocketConnectMethodGenerator:
         split = docs.split("\n")
         with writer.indent():
             for i, line in enumerate(split):
-                writer.write(line)
+                writer.write(escape_docstring(line))
                 if i < len(split) - 1:
                     writer.write_line()
 
@@ -639,19 +640,22 @@ class WebsocketConnectMethodGenerator:
         *,
         websocket: ir_types.WebSocketChannel,
     ) -> Optional[AST.Expression]:
-        headers: List[Tuple[str, AST.Expression]] = []
+        headers: List[Tuple[str, AST.Expression, bool]] = []
 
         for header in websocket.headers:
             literal_header_value = self._context.get_literal_header_value(header)
             if literal_header_value is not None and type(literal_header_value) is str:
-                headers.append((header.name.wire_value, AST.Expression(f'"{literal_header_value}"')))
+                headers.append((header.name.wire_value, AST.Expression(f'"{literal_header_value}"'), False))
             elif literal_header_value is not None and type(literal_header_value) is bool:
-                headers.append((header.name.wire_value, AST.Expression(f'"{str(literal_header_value).lower()}"')))
+                headers.append(
+                    (header.name.wire_value, AST.Expression(f'"{str(literal_header_value).lower()}"'), False)
+                )
             else:
                 headers.append(
                     (
                         header.name.wire_value,
                         AST.Expression(get_parameter_name(header.name.name)),
+                        self._is_enum_type_with_value(header.value_type, allow_optional=True),
                     )
                 )
 
@@ -659,14 +663,19 @@ class WebsocketConnectMethodGenerator:
             return None
 
         def write_headers_dict(writer: AST.NodeWriter) -> None:
-            for _, (header_key, header_value) in enumerate(headers):
+            for _, (header_key, header_value, is_enum) in enumerate(headers):
                 writer.write("if ")
                 writer.write_node(header_value)
                 writer.write_line(" is not None:")
                 with writer.indent():
-                    writer.write(f'headers["{header_key}"] = str(')
-                    writer.write_node(header_value)
-                    writer.write(")")
+                    writer.write(f'headers["{header_key}"] = ')
+                    if is_enum:
+                        writer.write_node(header_value)
+                        writer.write(".value")
+                    else:
+                        writer.write("str(")
+                        writer.write_node(header_value)
+                        writer.write(")")
                     writer.write_line()
 
         return AST.Expression(AST.CodeWriter(write_headers_dict))
@@ -709,6 +718,47 @@ class WebsocketConnectMethodGenerator:
 
     def _is_header_literal(self, header: ir_types.HttpHeader) -> bool:
         return self._context.get_literal_header_value(header) is not None
+
+    def _is_enum_type_with_value(
+        self,
+        type_reference: ir_types.TypeReference,
+        *,
+        allow_optional: bool,
+    ) -> bool:
+        """
+        Returns True if the type is an enum that has a .value attribute at runtime.
+        This is False when use_str_enums is True, because enums are represented as
+        Literal types (string literals) which don't have a .value attribute.
+        """
+        # When use_str_enums is True, enums are represented as Literal types, not actual enum classes
+        if self._context.pydantic_generator_context.use_str_enums:
+            return False
+
+        def visit_named_type(type_name: ir_types.NamedType) -> bool:
+            type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(type_name.type_id)
+            return type_declaration.shape.visit(
+                alias=lambda alias: self._is_enum_type_with_value(alias.alias_of, allow_optional=allow_optional),
+                enum=lambda _enum: True,
+                object=lambda _obj: False,
+                union=lambda _union: False,
+                undiscriminated_union=lambda _union: False,
+            )
+
+        return type_reference.visit(
+            container=lambda container: container.visit(
+                list_=lambda _lt: False,
+                set_=lambda _st: False,
+                optional=lambda item_type: allow_optional
+                and self._is_enum_type_with_value(item_type, allow_optional=True),
+                nullable=lambda item_type: allow_optional
+                and self._is_enum_type_with_value(item_type, allow_optional=True),
+                map_=lambda _mt: False,
+                literal=lambda _lit: False,
+            ),
+            named=visit_named_type,
+            primitive=lambda _primitive: False,
+            unknown=lambda: False,
+        )
 
     def _is_datetime(
         self,

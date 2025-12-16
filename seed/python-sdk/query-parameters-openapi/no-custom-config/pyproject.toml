@@ -1,5 +1,6 @@
 [project]
 name = "fern_query-parameters-openapi"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_query-parameters-openapi"

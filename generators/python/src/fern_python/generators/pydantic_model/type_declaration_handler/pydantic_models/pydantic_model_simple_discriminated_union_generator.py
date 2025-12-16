@@ -12,6 +12,7 @@ from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
 )
 from fern_python.generators.pydantic_model.type_declaration_handler.discriminated_union.simple_discriminated_union_generator import (
+    get_discriminant_parameter_name,
     get_single_union_type_class_name,
 )
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
@@ -76,7 +77,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                         kwargs=[
                             (
                                 "discriminant",
-                                AST.Expression(f'"{self._union.discriminant.wire_value}"'),
+                                AST.Expression(f'"{get_discriminant_parameter_name(self._union.discriminant)}"'),
                             )
                         ],
                     )
@@ -88,7 +89,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             kwargs=[
                 (
                     "discriminator",
-                    AST.Expression(f'"{self._union.discriminant.wire_value}"'),
+                    AST.Expression(f'"{get_discriminant_parameter_name(self._union.discriminant)}"'),
                 )
             ],
         )
@@ -211,23 +212,20 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             no_properties=lambda: OrderedSet(),
         )
 
-        # Check if any referenced types are self-referencing union members
-        union_self_referencing_members = self._context.get_union_self_referencing_members_from_types()
+        # Check if any referenced types are in a cycle with this union type
         ghost_reference_type_ids: List[ir_types.TypeId] = []
 
         for referenced_type_id in referenced_type_ids:
-            if self._context.does_type_reference_other_type(
-                type_id=referenced_type_id, other_type_id=self._name.type_id
+            # Check if this referenced type is in a mutual reference cycle with the union
+            types_in_cycle = self._context.get_types_in_cycle_with(referenced_type_id)
+            if self._name.type_id in types_in_cycle or self._context.do_types_reference_each_other(
+                referenced_type_id, self._name.type_id
             ):
-                # Check if this is a self-referencing union member
-                if self._name.type_id in union_self_referencing_members:
-                    self_ref_members = union_self_referencing_members[self._name.type_id]
-                    if referenced_type_id in self_ref_members:
-                        ghost_reference_type_ids.append(referenced_type_id)
-                        # Add as ghost reference so it gets imported
-                        internal_pydantic_model_for_single_union_type.add_ghost_reference(
-                            self._context.get_class_reference_for_type_id(referenced_type_id, as_request=False)
-                        )
+                ghost_reference_type_ids.append(referenced_type_id)
+                # Add as ghost reference so it gets imported
+                internal_pydantic_model_for_single_union_type.add_ghost_reference(
+                    self._context.get_class_reference_for_type_id(referenced_type_id, as_request=False)
+                )
 
         # If we have ghost references, use the special update method; otherwise use regular
         if ghost_reference_type_ids:

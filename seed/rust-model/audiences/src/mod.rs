@@ -1,3 +1,13 @@
+//! Request and response types for the Audiences API
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 4 types for API operations
+//! - **Model Types**: 6 types for data representation
+
 pub mod commons_imported;
 pub mod folder_a_service_response;
 pub mod folder_b_common_foo;

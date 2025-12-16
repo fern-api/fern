@@ -575,7 +575,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200
+                        "status-code": 200,
+                        "isWildcardStatusCode": null,
+                        "docs": "Successful response"
                     },
                     "v2Responses": null,
                     "errors": [],

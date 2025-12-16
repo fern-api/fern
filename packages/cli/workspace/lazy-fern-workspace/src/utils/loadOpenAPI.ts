@@ -139,7 +139,7 @@ export async function loadOpenAPI({
         }
         context.logger.debug(`Processed AI examples from ${aiExamplesOverrideFilepath}`);
     } catch (error) {
-        context.logger.debug(`No AI examples override file found at ${aiExamplesOverrideFilepath}`);
+        // Silently ignore if AI examples override file doesn't exist
     }
 
     if (overridesFilepath != null || result !== parsed) {

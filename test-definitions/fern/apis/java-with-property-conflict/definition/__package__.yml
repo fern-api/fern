@@ -1,0 +1,21 @@
+# Test case for Jackson fluent setter conflict
+# When a property starts with "with" (e.g., withLabel) and another property
+# matches the suffix (e.g., label), Jackson interprets withLabel(T) as a
+# fluent setter for label, causing deserialization conflicts.
+
+types:
+  ConfigurableProp:
+    docs: A type with both 'label' and 'withLabel' properties that triggers Jackson conflict
+    properties:
+      name:
+        type: string
+        docs: The name of the prop
+      label:
+        type: optional<string>
+        docs: The display label
+      withLabel:
+        type: optional<boolean>
+        docs: If true, requires label-value format
+      description:
+        type: optional<string>
+        docs: A description of the prop

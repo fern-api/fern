@@ -11,7 +11,10 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        nil,
+        option.WithClientCredentials(
+            "<clientId>",
+            "<clientSecret>",
+        ),
     )
     client.Service.Post(
         context.TODO(),

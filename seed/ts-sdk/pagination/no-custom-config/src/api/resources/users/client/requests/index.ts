@@ -1,4 +1,5 @@
 export type { ListUsernamesRequest } from "./ListUsernamesRequest.js";
+export type { ListUsernamesWithOptionalResponseRequest } from "./ListUsernamesWithOptionalResponseRequest.js";
 export type { ListUsersBodyCursorPaginationRequest } from "./ListUsersBodyCursorPaginationRequest.js";
 export type { ListUsersBodyOffsetPaginationRequest } from "./ListUsersBodyOffsetPaginationRequest.js";
 export type { ListUsersCursorPaginationRequest } from "./ListUsersCursorPaginationRequest.js";
@@ -8,5 +9,6 @@ export type { ListUsersExtendedRequestForOptionalData } from "./ListUsersExtende
 export type { ListUsersMixedTypeCursorPaginationRequest } from "./ListUsersMixedTypeCursorPaginationRequest.js";
 export type { ListUsersOffsetPaginationRequest } from "./ListUsersOffsetPaginationRequest.js";
 export type { ListUsersOffsetStepPaginationRequest } from "./ListUsersOffsetStepPaginationRequest.js";
+export type { ListUsersOptionalDataRequest } from "./ListUsersOptionalDataRequest.js";
 export type { ListWithGlobalConfigRequest } from "./ListWithGlobalConfigRequest.js";
 export type { ListWithOffsetPaginationHasNextPageRequest } from "./ListWithOffsetPaginationHasNextPageRequest.js";

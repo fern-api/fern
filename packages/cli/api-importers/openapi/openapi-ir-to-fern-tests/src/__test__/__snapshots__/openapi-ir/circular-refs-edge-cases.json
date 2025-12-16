@@ -56,7 +56,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/node",
       "examples": [
@@ -148,7 +147,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/author",
       "examples": [
@@ -264,7 +262,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/tree",
       "examples": [

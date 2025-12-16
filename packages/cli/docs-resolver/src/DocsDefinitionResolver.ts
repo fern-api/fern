@@ -1,7 +1,8 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
-import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
+    isValidRelativeSlug,
     parseImagePaths,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -282,51 +283,36 @@ export class DocsDefinitionResolver {
             this.taskContext.logger.debug(`Visited navigation AST in ${navTime.toFixed(0)}ms`);
         }
 
-        // create a map of markdown files to their URL pathnames
+        // create maps of markdown files to their frontmatter values
         // this will be used to resolve relative markdown links to their final URLs
         this.taskContext.logger.debug("Building markdown file maps...");
         const mapStart = performance.now();
-        this.markdownFilesToFullSlugs = await this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
-
-        // create a map of markdown files to their sidebar titles
-        this.markdownFilesToSidebarTitle = await this.getMarkdownFilesToSidebarTitle(this.parsedDocsConfig.pages);
-
-        // create a map of markdown files to their noindex values
-        this.markdownFilesToNoIndex = await this.getMarkdownFilesToNoIndex(this.parsedDocsConfig.pages);
-
-        // create a map of markdown files to their tags
-        this.markdownFilesToTags = await this.getMarkdownFilesToTags(this.parsedDocsConfig.pages);
+        this.extractAllFrontmatterData(this.parsedDocsConfig.pages);
         const mapTime = performance.now() - mapStart;
         this.taskContext.logger.debug(`Built markdown file maps in ${mapTime.toFixed(0)}ms`);
 
-        // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
-        // this should happen before we parse image paths, as the referenced markdown files may contain images.
-        this.taskContext.logger.debug("Replacing referenced markdown files...");
-        const refMdStart = performance.now();
+        // Replace all instances of <Markdown src="..."/> and <Code src="..."/> with their content
+        // This should happen before we parse image paths, as the referenced files may contain images.
+        this.taskContext.logger.debug("Replacing referenced markdown and code files...");
+        const refStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
+            // First replace markdown includes, then code includes (order matters: snippets can contain code)
+            let newMarkdown = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
-        }
-        const refMdTime = performance.now() - refMdStart;
-        this.taskContext.logger.debug(`Replaced referenced markdown in ${refMdTime.toFixed(0)}ms`);
-
-        // replaces all instances of <Code src="path/to/file.js" /> with the content of the referenced code file
-        this.taskContext.logger.debug("Replacing referenced code files...");
-        const refCodeStart = performance.now();
-        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
-                markdown,
+            newMarkdown = await replaceReferencedCode({
+                markdown: newMarkdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
+            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
         }
-        const refCodeTime = performance.now() - refCodeStart;
-        this.taskContext.logger.debug(`Replaced referenced code in ${refCodeTime.toFixed(0)}ms`);
+        const refTime = performance.now() - refStart;
+        this.taskContext.logger.debug(`Replaced referenced content in ${refTime.toFixed(0)}ms`);
 
         this.taskContext.logger.debug("Collecting files from docs config...");
         const collectStart = performance.now();
@@ -506,87 +492,54 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Creates a map of markdown files to their full slugs specified in the frontmatter only
-     * @param pages - the pages to convert to slugs
-     * @returns a map of markdown files to their full slugs
+     * Extracts all frontmatter data (slug, sidebar-title, noindex, tags) from pages in a single pass.
+     * This is more efficient than parsing frontmatter multiple times for each field.
+     * @param pages - the pages to extract frontmatter from
      */
-    private async getMarkdownFilesToFullSlugs(
-        pages: Record<RelativeFilePath, string>
-    ): Promise<Map<AbsoluteFilePath, string>> {
-        const mdxFilePathToSlug = new Map<AbsoluteFilePath, string>();
+    private extractAllFrontmatterData(pages: Record<RelativeFilePath, string>): void {
         for (const [relativePath, markdown] of Object.entries(pages)) {
             const frontmatter = matter(markdown);
+            const absolutePath = this.resolveFilepath(relativePath);
+
+            // Extract slug
             const slug = frontmatter.data.slug;
             if (typeof slug === "string" && slug.trim().length > 0) {
-                mdxFilePathToSlug.set(this.resolveFilepath(relativePath), slug.trim());
+                const trimmedSlug = slug.trim();
+                if (isValidRelativeSlug(trimmedSlug)) {
+                    this.markdownFilesToFullSlugs.set(absolutePath, trimmedSlug);
+                } else {
+                    this.taskContext.logger.warn(
+                        `Ignoring absolute URL slug "${trimmedSlug}" in ${relativePath}. Absolute URLs are not allowed for frontmatter slugs.`
+                    );
+                }
             }
-        }
-        return mdxFilePathToSlug;
-    }
 
-    /**
-     * Creates a map of markdown files to their sidebar titles specified in the frontmatter only
-     * @param pages - the pages to convert to sidebar titles
-     * @returns a map of markdown files to their sidebar titles
-     */
-    private async getMarkdownFilesToSidebarTitle(
-        pages: Record<RelativeFilePath, string>
-    ): Promise<Map<AbsoluteFilePath, string>> {
-        const mdxFilePathToSidebarTitle = new Map<AbsoluteFilePath, string>();
-        for (const [relativePath, markdown] of Object.entries(pages)) {
-            const frontmatter = matter(markdown);
+            // Extract sidebar-title
             const sidebarTitle = frontmatter.data["sidebar-title"];
             if (typeof sidebarTitle === "string" && sidebarTitle.trim().length > 0) {
-                mdxFilePathToSidebarTitle.set(this.resolveFilepath(relativePath), sidebarTitle.trim());
+                this.markdownFilesToSidebarTitle.set(absolutePath, sidebarTitle.trim());
             }
-        }
-        return mdxFilePathToSidebarTitle;
-    }
 
-    /**
-     * Creates a list of markdown files that have noindex:true specified in the frontmatter
-     * @param pages - the pages to check
-     * @returns a map of markdown files to their noindex value
-     */
-    private async getMarkdownFilesToNoIndex(
-        pages: Record<RelativeFilePath, string>
-    ): Promise<Map<AbsoluteFilePath, boolean>> {
-        const mdxFilePathToNoIndex = new Map<AbsoluteFilePath, boolean>();
-        for (const [relativePath, markdown] of Object.entries(pages)) {
-            const frontmatter = matter(markdown);
+            // Extract noindex
             const noindex = frontmatter.data.noindex;
             if (typeof noindex === "boolean") {
-                mdxFilePathToNoIndex.set(this.resolveFilepath(relativePath), noindex);
+                this.markdownFilesToNoIndex.set(absolutePath, noindex);
             }
-        }
-        return mdxFilePathToNoIndex;
-    }
 
-    /**
-     * Creates a map of markdown files to their tags specified in the frontmatter
-     * @param pages - the pages to check
-     * @returns a map of markdown files to their tags
-     */
-    private async getMarkdownFilesToTags(
-        pages: Record<RelativeFilePath, string>
-    ): Promise<Map<AbsoluteFilePath, string[]>> {
-        const mdxFilePathToTags = new Map<AbsoluteFilePath, string[]>();
-        for (const [relativePath, markdown] of Object.entries(pages)) {
-            const frontmatter = matter(markdown);
+            // Extract tags
             const tags = frontmatter.data.tags;
             if (typeof tags === "string") {
-                mdxFilePathToTags.set(
-                    this.resolveFilepath(relativePath),
+                this.markdownFilesToTags.set(
+                    absolutePath,
                     tags
                         .split(",")
                         .map((item) => item.trim())
                         .filter((item) => item.length > 0)
                 );
             } else if (Array.isArray(tags)) {
-                mdxFilePathToTags.set(this.resolveFilepath(relativePath), tags);
+                this.markdownFilesToTags.set(absolutePath, tags);
             }
         }
-        return mdxFilePathToTags;
     }
 
     /**
@@ -641,6 +594,7 @@ export class DocsDefinitionResolver {
             title: this.parsedDocsConfig.title,
             logoHeight: this.parsedDocsConfig.logo?.height,
             logoHref: this.parsedDocsConfig.logo?.href ? DocsV1Write.Url(this.parsedDocsConfig.logo?.href) : undefined,
+            logoRightText: this.parsedDocsConfig.logo?.rightText,
             favicon: this.getFileId(this.parsedDocsConfig.favicon),
             navigation: undefined, // <-- this is now deprecated
             root,
@@ -729,7 +683,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            pageActions: this.parsedDocsConfig.pageActions,
+            pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
                     ? {
@@ -737,7 +691,8 @@ export class DocsDefinitionResolver {
                           body: this.parsedDocsConfig.theme.body,
                           tabs: this.parsedDocsConfig.theme.tabs,
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
-                          footerNav: this.parsedDocsConfig.theme.footerNav
+                          footerNav: this.parsedDocsConfig.theme.footerNav,
+                          "language-switcher": this.parsedDocsConfig.theme.languageSwitcher
                       }
                     : undefined,
             // deprecated
@@ -978,7 +933,8 @@ export class DocsDefinitionResolver {
                 pointsTo: undefined,
                 viewers: product.viewers,
                 orphaned: product.orphaned,
-                featureFlags: product.featureFlags
+                featureFlags: product.featureFlags,
+                announcement: product.announcement != null ? { text: product.announcement.message } : undefined
             };
         } else {
             return {
@@ -1028,7 +984,8 @@ export class DocsDefinitionResolver {
             orphaned: version.orphaned,
             icon: undefined,
             pointsTo: undefined,
-            featureFlags: version.featureFlags
+            featureFlags: version.featureFlags,
+            announcement: version.announcement != null ? { text: version.announcement.message } : undefined
         };
     }
 
@@ -1206,6 +1163,24 @@ export class DocsDefinitionResolver {
                 // noop
             }
         }
+
+        // Extract OpenAPI IR tags when tag description pages are enabled
+        let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
+        if (item.tagDescriptionPages && useV3Parser) {
+            try {
+                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                const openApiIr = await openapiWorkspace.getOpenAPIIr({ context: this.taskContext });
+                if (openApiIr.tags.tagsById) {
+                    openApiTags = Object.fromEntries(
+                        Object.entries(openApiIr.tags.tagsById)
+                            .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
+                            .map(([tagId, tag]) => [tagId, { id: String(tag.id), description: tag.description }])
+                    );
+                }
+            } catch (error) {
+                this.taskContext.logger.warn("Failed to extract OpenAPI tags for tag description pages", String(error));
+            }
+        }
         // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
         if (ir == null) {
             ir = generateIntermediateRepresentation({
@@ -1225,6 +1200,19 @@ export class DocsDefinitionResolver {
                 context: this.taskContext,
                 sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
             });
+        }
+
+        // Apply environment variable substitution to the IR if enabled in docs.yml settings
+        // This allows ${VAR} patterns in OpenAPI specs and Fern definitions to be replaced
+        if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+            ir = replaceEnvVariables(
+                ir,
+                {
+                    onError: (e) =>
+                        this.taskContext.failAndThrow(`Error substituting environment variables in API spec: ${e}`)
+                },
+                { substituteAsEmpty: false }
+            );
         }
 
         const apiDefinitionId = await this.registerApi({
@@ -1254,8 +1242,37 @@ export class DocsDefinitionResolver {
             this.collectedFileIds,
             workspace,
             hideChildren,
-            parentAvailability ?? item.availability
+            parentAvailability ?? item.availability,
+            openApiTags
         );
+
+        // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
+        const tagDescriptionContent = node.getTagDescriptionContent();
+        for (const [absolutePath, content] of tagDescriptionContent.entries()) {
+            // Extract just the filename from the absolute path (e.g., "/tag-users.md" -> "tag-users.md")
+            const filename = absolutePath.split("/").pop() || absolutePath;
+            const relativePath = RelativeFilePath.of(filename);
+
+            // Apply environment variable substitution if enabled
+            let processedContent = content;
+            if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+                processedContent = replaceEnvVariables(
+                    content,
+                    {
+                        onError: (e) =>
+                            this.taskContext.logger.error(
+                                `Error in tag description environment variable substitution: ${e}`
+                            )
+                    },
+                    { substituteAsEmpty: false }
+                );
+            }
+
+            // Add to both collections so the file appears in the final pages output
+            this.rawMarkdownFiles[relativePath] = processedContent;
+            this.parsedDocsConfig.pages[relativePath] = processedContent;
+        }
+
         return node.get();
     }
 
@@ -1530,6 +1547,32 @@ export class DocsDefinitionResolver {
         }
 
         return iconPath as string;
+    }
+
+    private convertPageActions(): DocsV1Write.PageActionsConfig | undefined {
+        if (this.parsedDocsConfig.pageActions == null) {
+            return undefined;
+        }
+
+        return {
+            default: this.parsedDocsConfig.pageActions.default,
+            options: {
+                askAi: this.parsedDocsConfig.pageActions.options.askAi,
+                copyPage: this.parsedDocsConfig.pageActions.options.copyPage,
+                viewAsMarkdown: this.parsedDocsConfig.pageActions.options.viewAsMarkdown,
+                openAi: this.parsedDocsConfig.pageActions.options.openAi,
+                claude: this.parsedDocsConfig.pageActions.options.claude,
+                cursor: this.parsedDocsConfig.pageActions.options.cursor,
+                vscode: this.parsedDocsConfig.pageActions.options.vscode,
+                custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
+                    title: customAction.title,
+                    subtitle: customAction.subtitle,
+                    url: customAction.url,
+                    icon: this.resolveIconFileId(customAction.icon),
+                    default: customAction.default
+                }))
+            }
+        };
     }
 
     private convertColorConfigImageReferences(): DocsV1Write.ColorsConfigV3 | undefined {

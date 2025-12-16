@@ -14,9 +14,10 @@ const SEMVER_PATTERN = /^(v)?(\d+)\.(\d+)\.(\d+)(?:-([\w.-]+))?(?:\+([\w.-]+))?$
 
 /**
  * Checks if the given version string is the AUTO version indicator.
+ * This check is case-insensitive, so "AUTO", "auto", "Auto", etc. are all valid.
  */
 export function isAutoVersion(version: string): boolean {
-    return AUTO_VERSION === version;
+    return AUTO_VERSION.toLowerCase() === version.toLowerCase();
 }
 
 /**

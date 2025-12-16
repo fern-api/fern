@@ -28,10 +28,10 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedNullable
+        run: dotnet restore src/SeedNullable/SeedNullable.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedNullable -c Release --no-restore
+        run: dotnet build src/SeedNullable/SeedNullable.csproj -c Release --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -53,13 +53,13 @@ jobs:
           dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore src/SeedNullable.Test/SeedNullable.Test.csproj
 
       - name: Build Release
-        run: dotnet build src -c Release --no-restore
+        run: dotnet build src/SeedNullable.Test/SeedNullable.Test.csproj -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test src -c Release --no-build --no-restore
+        run: dotnet test src/SeedNullable.Test/SeedNullable.Test.csproj -c Release --no-build --no-restore
 
 
   publish:
@@ -83,15 +83,15 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedNullable
+        run: dotnet restore src/SeedNullable/SeedNullable.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedNullable -c Release --no-restore
+        run: dotnet build src/SeedNullable/SeedNullable.csproj -c Release --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
-          dotnet pack src/SeedNullable -c Release --no-build --no-restore
+          dotnet pack src/SeedNullable/SeedNullable.csproj -c Release --no-build --no-restore
           dotnet nuget push src/SeedNullable/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 

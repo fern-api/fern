@@ -1075,7 +1075,9 @@
                     },
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],

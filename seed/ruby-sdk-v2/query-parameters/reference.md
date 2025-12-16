@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.get_username() -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_username</a>() -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -23,31 +23,29 @@ client.user.get_username(
     name: 'name',
     tags: ['tags', 'tags']
   },
-  userList: [{
+  user_list: [{
     name: 'name',
     tags: ['tags', 'tags']
   }, {
     name: 'name',
     tags: ['tags', 'tags']
   }],
-  optionalDeadline: '2024-01-15T09:30:00Z',
-  keyValue: {
+  optional_deadline: '2024-01-15T09:30:00Z',
+  key_value: {
     keyValue: 'keyValue'
   },
-  optionalString: 'optionalString',
-  nestedUser: {
+  optional_string: 'optionalString',
+  nested_user: {
     name: 'name',
     user: {
       name: 'name',
       tags: ['tags', 'tags']
     }
   },
-  optionalUser: {
+  optional_user: {
     name: 'name',
     tags: ['tags', 'tags']
-  },
-  excludeUser: ,
-  filter: 
+  }
 );
 ```
 </dd>
@@ -168,6 +166,14 @@ client.user.get_username(
 <dd>
 
 **filter:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>

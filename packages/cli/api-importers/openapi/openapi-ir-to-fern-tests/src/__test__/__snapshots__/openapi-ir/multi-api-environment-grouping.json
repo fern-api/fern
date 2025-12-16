@@ -121,7 +121,6 @@
       },
       "errors": {},
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/wallets",
       "examples": [
@@ -231,7 +230,6 @@
       },
       "errors": {},
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/wallets/{walletId}",
       "examples": [
@@ -347,7 +345,6 @@
       },
       "errors": {},
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/wallets/{walletId}/balance",
       "examples": [
@@ -445,7 +442,6 @@
       },
       "errors": {},
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/accounts",
       "examples": [
@@ -534,7 +530,6 @@
       },
       "errors": {},
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/transactions",
       "examples": [
@@ -648,7 +643,6 @@
       },
       "errors": {},
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/transactions/{transactionId}",
       "examples": [
@@ -771,7 +765,6 @@
       },
       "errors": {},
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/payments",
       "examples": [
@@ -911,7 +904,6 @@
       },
       "errors": {},
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/payments/{paymentId}/refund",
       "examples": [
@@ -1018,7 +1010,6 @@
       },
       "errors": {},
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/refunds",
       "examples": [

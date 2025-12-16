@@ -19,9 +19,9 @@ func do() {
         ),
     )
     request := &types.NestedObjectWithRequiredField{
-        String: "string",
+        FieldString: "string",
         NestedObject: &types.ObjectWithOptionalField{
-            String: fern.String(
+            FieldString: fern.String(
                 "string",
             ),
             Integer: fern.Int(

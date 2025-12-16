@@ -102,3 +102,7 @@ seed/**/.pytest_cache/
 seed/**/.mypy_cache/
 seed/**/.ruff_cache/
 seed/**/*.egg-info/
+
+# Seed remote-local test outputs, except for seed.yml files
+seed-remote-local/*
+!seed-remote-local/**/seed.yml

@@ -15,6 +15,7 @@ export declare namespace BaseOpenAPIWorkspace {
         respectNullableSchemas: boolean | undefined;
         wrapReferencesToNullableInOptional: boolean | undefined;
         coerceOptionalSchemasToNullable: boolean | undefined;
+        coerceEnumsToLiterals: boolean | undefined;
         exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
         useBytesForBinaryResponse: boolean | undefined;
         respectForwardCompatibleEnums: boolean | undefined;
@@ -22,6 +23,7 @@ export declare namespace BaseOpenAPIWorkspace {
         resolveAliases: generatorsYml.ResolveAliases | undefined;
         groupEnvironmentsByHost: boolean | undefined;
         removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
+        defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -35,6 +37,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly respectNullableSchemas: boolean | undefined;
     public readonly wrapReferencesToNullableInOptional: boolean | undefined;
     public readonly coerceOptionalSchemasToNullable: boolean | undefined;
+    public readonly coerceEnumsToLiterals: boolean | undefined;
     public readonly exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     public readonly useBytesForBinaryResponse: boolean | undefined;
     public readonly respectForwardCompatibleEnums: boolean | undefined;
@@ -42,6 +45,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly resolveAliases: generatorsYml.ResolveAliases | undefined;
     public readonly groupEnvironmentsByHost: boolean | undefined;
     public readonly removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
+    public readonly defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     private readonly converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -53,6 +57,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.respectNullableSchemas = args.respectNullableSchemas;
         this.wrapReferencesToNullableInOptional = args.wrapReferencesToNullableInOptional;
         this.coerceOptionalSchemasToNullable = args.coerceOptionalSchemasToNullable;
+        this.coerceEnumsToLiterals = args.coerceEnumsToLiterals;
         this.exampleGeneration = args.exampleGeneration;
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
@@ -60,6 +65,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.resolveAliases = args.resolveAliases;
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
         this.removeDiscriminantsFromSchemas = args.removeDiscriminantsFromSchemas;
+        this.defaultIntegerFormat = args.defaultIntegerFormat;
         this.converter = new FernDefinitionConverter(args);
     }
 
@@ -86,7 +92,8 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
 
     public async toFernWorkspace(
         { context }: { context: TaskContext },
-        settings?: BaseOpenAPIWorkspace.Settings
+        settings?: BaseOpenAPIWorkspace.Settings,
+        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<FernWorkspace> {
         const definition = await this.getDefinition({ context }, settings);
         return new FernWorkspace({
@@ -124,6 +131,8 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public respectForwardCompatibleEnums: boolean | undefined;
     public resolveAliases: generatorsYml.ResolveAliases | undefined;
     public groupEnvironmentsByHost: boolean | undefined;
+    public defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
+    public coerceEnumsToLiterals: boolean | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -136,6 +145,8 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
         this.resolveAliases = args.resolveAliases;
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
+        this.defaultIntegerFormat = args.defaultIntegerFormat;
+        this.coerceEnumsToLiterals = args.coerceEnumsToLiterals;
         this.converter = new FernDefinitionConverter(args);
     }
 

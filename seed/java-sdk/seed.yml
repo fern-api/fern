@@ -12,7 +12,7 @@ publish:
   workingDirectory: generators/java
   preBuildCommands:
     - ./gradlew :sdk:distTar
-    - pnpm --filter @fern-api/java-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/java-sdk
   docker:
     file: ./generators/java/sdk/Dockerfile
     image: fernapi/fern-java-sdk
@@ -25,7 +25,7 @@ test:
       - cd generators/java
       - ./gradlew :sdk:distTar
       - cd ../../
-      - pnpm --filter @fern-api/java-sdk dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/java-sdk
       - docker build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
   podman:
     image: fernapi/fern-java-sdk:latest
@@ -34,7 +34,7 @@ test:
       - cd generators/java
       - ./gradlew :sdk:distTar
       - cd ../../
-      - pnpm --filter @fern-api/java-sdk dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/java-sdk
       - podman build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
   local:
     workingDirectory: generators/java
@@ -265,10 +265,13 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: oauth-client-credentials
-  custom-auth:
+  oauth-client-credentials-mandatory-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+  header-auth:
     - customConfig:
         enable-wire-tests: true
-      outputFolder: custom-auth
+      outputFolder: header-auth
   nullable-optional:
     - customConfig:
         use-nullable-annotation: true
@@ -287,6 +290,17 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: streaming
+  java-optional-nullable-query-params:
+    - customConfig:
+        use-default-request-parameter-values: true
+        collapse-optional-nullable: true
+      outputFolder: default
+  java-default-timeout:
+    - customConfig:
+        default-timeout-in-seconds: 120
+      outputFolder: default
+  java-with-property-conflict:
+    - outputFolder: default
 scripts:
   - image: fernapi/java-seed
     commands:
@@ -295,7 +309,6 @@ allowedFailures:
   - alias-extends
   - enum:forward-compatible-enums
   - enum:no-custom-config
-  - errors
   - examples:default
   - examples:inline-file-properties
   - examples:no-custom-config
@@ -304,36 +317,28 @@ allowedFailures:
   - exhaustive:publish-to
   - exhaustive:signed_publish
   - extends
-  - inferred-auth-explicit
-  - inferred-auth-implicit
-  - inferred-auth-implicit-no-expiry
   - java-inline-types:no-wrapped-aliases
-  - literal
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
+  - oauth-client-credentials
   - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-mandatory-auth:no-custom-config
+  - oauth-client-credentials-nested-root
   - oauth-client-credentials-with-variables
-  - query-parameters-openapi
-  - query-parameters-openapi-as-objects
   - request-parameters
   - streaming-parameter
-  - trace
-  - websocket-inferred-auth
+  - inferred-auth-implicit-reference
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
   - any-auth
-  - extra-properties
   - java-inline-types:inline
   - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - nullable:no-custom-config
-  - oauth-client-credentials
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
   - pagination-custom
-  - query-parameters
 
   - java-pagination-deep-cursor-path:wire-tests
 

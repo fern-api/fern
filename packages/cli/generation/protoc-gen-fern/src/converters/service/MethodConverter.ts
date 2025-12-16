@@ -162,7 +162,9 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                             v2Examples: undefined
                         })
                     ),
-                    statusCode: undefined
+                    statusCode: undefined,
+                    isWildcardStatusCode: undefined,
+                    docs: undefined
                 },
                 responseExample: undefined
             };

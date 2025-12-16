@@ -45,6 +45,13 @@ export class ReadmeConfigBuilder {
                 }
             }
 
+            // Customize description for Timeouts when default-timeout-in-seconds is configured
+            if (feature.id === FernGeneratorCli.StructuredFeatureId.Timeouts) {
+                const customConfig = parseCustomConfigOrUndefined(context.logger, context.config.customConfig);
+                const defaultTimeout = customConfig?.["default-timeout-in-seconds"] ?? 60;
+                description = `The SDK defaults to a ${defaultTimeout} second timeout. You can configure this with a timeout option at the client or request level.`;
+            }
+
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
@@ -130,6 +137,9 @@ function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.Custo
 }
 
 function parseCustomConfigOrUndefined(logger: Logger, customConfig: unknown): SdkCustomConfigSchema | undefined {
+    if (customConfig == null) {
+        return undefined;
+    }
     try {
         return SdkCustomConfigSchema.parse(customConfig);
     } catch (error) {

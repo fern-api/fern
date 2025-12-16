@@ -380,7 +380,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Successful operation"
           },
           "errors": [],
           "userSpecifiedExamples": [],

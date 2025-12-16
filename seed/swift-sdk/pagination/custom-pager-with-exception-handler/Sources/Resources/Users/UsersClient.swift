@@ -148,6 +148,18 @@ public final class UsersClient: Sendable {
         )
     }
 
+    public func listUsernamesWithOptionalResponse(startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UsernameCursor? {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "starting_after": startingAfter.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: UsernameCursor?.self
+        )
+    }
+
     public func listWithGlobalConfig(offset: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> UsernameContainerType {
         return try await httpClient.performRequest(
             method: .get,
@@ -157,6 +169,18 @@ public final class UsersClient: Sendable {
             ],
             requestOptions: requestOptions,
             responseType: UsernameContainerType.self
+        )
+    }
+
+    public func listWithOptionalData(page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersOptionalDataPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users/optional-data",
+            queryParams: [
+                "page": page.map { .int($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersOptionalDataPaginationResponse.self
         )
     }
 }

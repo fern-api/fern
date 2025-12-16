@@ -83,7 +83,8 @@ export abstract class AbstractParameterConverter<
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
                         }),
-                        availability
+                        availability,
+                        explode: this.getExplodeForQueryParameter()
                     },
                     inlinedTypes
                 };
@@ -116,7 +117,8 @@ export abstract class AbstractParameterConverter<
                         variable: undefined,
                         v2Examples: this.convertParameterExamples({
                             schema: parameterSchemaWithExampleOverride ?? schema
-                        })
+                        }),
+                        explode: this.getExplodeForPathParameter()
                     },
                     inlinedTypes
                 };
@@ -213,5 +215,54 @@ export abstract class AbstractParameterConverter<
             });
         }
         return convertedExample;
+    }
+
+    /**
+     * Gets the explode value for a query parameter, applying smart default logic.
+     * Only returns a value when it differs from the OpenAPI default for the style.
+     *
+     * OpenAPI defaults:
+     * - form style (default for query): explode = true
+     * - All other styles: explode = false
+     */
+    private getExplodeForQueryParameter(): boolean | undefined {
+        const style = this.parameter.style ?? "form";
+        const explode = this.parameter.explode;
+
+        // If explode is not specified, return undefined (use default)
+        if (explode === undefined) {
+            return undefined;
+        }
+
+        // For form style, default explode is true
+        // Only preserve explode if it differs from the default
+        if (style === "form") {
+            return explode === true ? undefined : explode;
+        }
+
+        // For all other styles (spaceDelimited, pipeDelimited, deepObject), default explode is false
+        return explode === false ? undefined : explode;
+    }
+
+    /**
+     * Gets the explode value for a path parameter, applying smart default logic.
+     * Only returns a value when it differs from the OpenAPI default for the style.
+     *
+     * OpenAPI defaults:
+     * - simple style (default for path): explode = false
+     * - label style: explode = false
+     * - matrix style: explode = false
+     */
+    private getExplodeForPathParameter(): boolean | undefined {
+        const explode = this.parameter.explode;
+
+        // If explode is not specified, return undefined (use default)
+        if (explode === undefined) {
+            return undefined;
+        }
+
+        // For path parameters, all styles (simple, label, matrix) have default explode = false
+        // Only preserve explode if it differs from the default
+        return explode === false ? undefined : explode;
     }
 }

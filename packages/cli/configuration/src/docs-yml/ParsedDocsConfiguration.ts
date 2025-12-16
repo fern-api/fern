@@ -15,6 +15,28 @@ import {
     VersionAvailability
 } from "./schemas";
 
+export interface ParsedCustomPageAction {
+    title: string;
+    subtitle: string | undefined;
+    url: string;
+    icon: string | AbsoluteFilePath | undefined;
+    default: boolean | undefined;
+}
+
+export interface ParsedPageActionsConfig {
+    default: CjsFdrSdk.docs.v1.commons.PageActionOption | undefined;
+    options: {
+        askAi: boolean;
+        copyPage: boolean;
+        viewAsMarkdown: boolean;
+        openAi: boolean;
+        claude: boolean;
+        cursor: boolean;
+        vscode: boolean;
+        custom: ParsedCustomPageAction[];
+    };
+}
+
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
     title: string | undefined;
@@ -60,7 +82,7 @@ export interface ParsedDocsConfiguration {
 
     experimental: ExperimentalConfig | undefined;
 
-    pageActions: CjsFdrSdk.docs.v1.commons.PageActionsConfig | undefined;
+    pageActions: ParsedPageActionsConfig | undefined;
 }
 
 export interface AbsoluteJsFileConfig {
@@ -101,6 +123,7 @@ export interface Logo {
     light: AbsoluteFilePath | undefined;
     height: CjsFdrSdk.docs.v1.write.Height | undefined;
     href: CjsFdrSdk.Url | undefined;
+    rightText: string | undefined;
 }
 
 export interface BackgroundImage {
@@ -170,6 +193,7 @@ export interface VersionInfo
     availability: VersionAvailability | undefined;
     slug: string | undefined;
     hidden: boolean | undefined;
+    announcement: AnnouncementConfig | undefined;
 }
 
 export type ProductInfo = InternalProduct | ExternalProduct;
@@ -185,6 +209,7 @@ export interface InternalProduct
     slug: string | undefined;
     icon: string | AbsoluteFilePath;
     image: AbsoluteFilePath | undefined;
+    announcement: AnnouncementConfig | undefined;
 }
 
 export interface ExternalProduct
@@ -308,6 +333,7 @@ export declare namespace DocsNavigationItem {
         audiences: Audiences;
         availability: Availability | undefined;
         showErrors: boolean;
+        tagDescriptionPages: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
         postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;

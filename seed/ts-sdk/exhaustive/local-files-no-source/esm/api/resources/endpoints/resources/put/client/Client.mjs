@@ -8,13 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { normalizeClientOptions } from "../../../../../../BaseClient.mjs";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.mjs";
+import { normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
+import { mergeHeaders } from "../../../../../../core/headers.mjs";
 import * as core from "../../../../../../core/index.mjs";
+import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
 export class PutClient {
     constructor(options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
     /**
      * @param {SeedExhaustive.endpoints.PutRequest} request
@@ -32,7 +33,8 @@ export class PutClient {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             const { id } = request;
-            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `${core.url.encodePathParam(id)}`),
                 method: "PUT",
@@ -54,30 +56,7 @@ export class PutClient {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /{id}.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        });
-    }
-    _getAuthorizationHeader() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const bearer = yield core.Supplier.get(this._options.token);
-            if (bearer != null) {
-                return `Bearer ${bearer}`;
-            }
-            return undefined;
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/{id}");
         });
     }
 }

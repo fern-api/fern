@@ -17,6 +17,7 @@ import {
     constructNpmPackage,
     constructNpmPackageArgs,
     constructNpmPackageFromArgs,
+    getRepoUrlFromUrl,
     NpmPackage,
     PersistedTypescriptProject
 } from "@fern-typescript/commons";
@@ -84,14 +85,25 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 parse: serialization.IntermediateRepresentation.parse
             });
 
-            const npmPackage = ir.selfHosted
-                ? constructNpmPackageFromArgs(
-                      npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
-                  )
-                : constructNpmPackage({
-                      generatorConfig: config,
-                      isPackagePrivate: this.isPackagePrivate(customConfig)
-                  });
+            let npmPackage: NpmPackage | undefined;
+            if (ir.selfHosted) {
+                // Try to construct package from publish config
+                npmPackage = constructNpmPackageFromArgs(
+                    npmPackageInfoFromPublishConfig(config, ir.publishConfig, this.isPackagePrivate(customConfig))
+                );
+                // Fall back to generator config if publish config doesn't have the necessary info
+                if (npmPackage == null) {
+                    npmPackage = constructNpmPackage({
+                        generatorConfig: config,
+                        isPackagePrivate: this.isPackagePrivate(customConfig)
+                    });
+                }
+            } else {
+                npmPackage = constructNpmPackage({
+                    generatorConfig: config,
+                    isPackagePrivate: this.isPackagePrivate(customConfig)
+                });
+            }
 
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
@@ -133,6 +145,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 }
             });
 
+            // Run npm pkg fix to normalize package.json (enabled by default)
+            if (!this.shouldSkipNpmPkgFix(customConfig)) {
+                await typescriptProject.fixPackageJson(logger);
+            }
+
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await typescriptProject.installDependencies(logger);
@@ -173,16 +190,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         zipFilename: OUTPUT_ZIP_FILENAME,
                         unzipOutput: options?.unzipOutput
                     });
-                    if (ir.selfHosted) {
-                        const tmpDir = await tmp.dir();
-                        await typescriptProject.copyProjectTo({
-                            destinationPath: AbsoluteFilePath.of(tmpDir.path),
-                            zipFilename: OUTPUT_ZIP_FILENAME,
-                            unzipOutput: true,
-                            logger
-                        });
-                        await this.pushToGitHub(ir, tmpDir.path, logger);
-                    }
                 },
                 downloadFiles: async () => {
                     await typescriptProject.installDependencies(logger);
@@ -258,6 +265,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract getPackageManager(customConfig: CustomConfig): "pnpm" | "yarn";
     protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
+    protected abstract shouldSkipNpmPkgFix(customConfig: CustomConfig): boolean;
 
     private shouldGenerateFullProject(ir: IntermediateRepresentation): boolean {
         const publishConfig = ir.publishConfig;
@@ -314,22 +322,54 @@ function npmPackageInfoFromPublishConfig(
     publishConfig: FernIr.PublishingConfig | undefined,
     isPackagePrivate: boolean
 ): constructNpmPackageArgs {
-    let args = {};
-    if (publishConfig?.type === "github") {
-        if (publishConfig.target?.type === "npm") {
-            const repoUrl =
-                publishConfig.repo != null && publishConfig.owner != null
-                    ? `https://github.com/${publishConfig.owner}/${publishConfig.repo}`
-                    : publishConfig.uri;
-            args = {
-                packageName: publishConfig.target.packageName,
-                version: publishConfig.target.version,
-                repoUrl,
-                publishInfo: undefined,
-                licenseConfig: config.license
-            };
+    let args: Partial<constructNpmPackageArgs> = {};
+
+    if (publishConfig != null) {
+        switch (publishConfig.type) {
+            case "github":
+                if (publishConfig.target?.type === "npm") {
+                    const repoUrl =
+                        publishConfig.repo != null && publishConfig.owner != null
+                            ? `https://github.com/${publishConfig.owner}/${publishConfig.repo}`
+                            : publishConfig.uri;
+                    args = {
+                        packageName: publishConfig.target.packageName,
+                        version: publishConfig.target.version,
+                        repoUrl,
+                        publishInfo: undefined,
+                        licenseConfig: config.license
+                    };
+                }
+                break;
+            case "direct":
+                if (publishConfig.target?.type === "npm") {
+                    args = {
+                        packageName: publishConfig.target.packageName,
+                        version: publishConfig.target.version,
+                        repoUrl: undefined,
+                        publishInfo: undefined,
+                        licenseConfig: config.license
+                    };
+                }
+                break;
+            case "filesystem":
+                if (publishConfig.publishTarget?.type === "npm") {
+                    args = {
+                        packageName: publishConfig.publishTarget.packageName,
+                        version: publishConfig.publishTarget.version,
+                        repoUrl: undefined,
+                        publishInfo: undefined,
+                        licenseConfig: config.license
+                    };
+                }
+                break;
         }
     }
+
+    if (args.repoUrl) {
+        args.repoUrl = getRepoUrlFromUrl(args.repoUrl);
+    }
+
     return {
         ...args,
         isPackagePrivate

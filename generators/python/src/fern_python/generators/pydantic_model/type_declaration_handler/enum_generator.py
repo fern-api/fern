@@ -64,13 +64,7 @@ class EnumGenerator(AbstractTypeGenerator):
             enum_class = AST.ClassDeclaration(
                 name=self._class_name,
                 extends=[
-                    AST.ClassReference(
-                        qualified_name_excluding_import=("str",),
-                    ),
-                    AST.ClassReference(
-                        import_=AST.ReferenceImport(module=AST.Module.built_in(("enum",))),
-                        qualified_name_excluding_import=("Enum",),
-                    ),
+                    self._context.core_utilities.get_fern_enum(),
                 ],
                 docstring=AST.Docstring(self._docs) if self._docs is not None else None,
                 snippet=self._snippet,

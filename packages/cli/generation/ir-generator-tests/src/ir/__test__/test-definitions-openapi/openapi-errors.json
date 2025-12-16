@@ -83,12 +83,14 @@
                 "wireValue": "BadRequestError"
             },
             "statusCode": 400,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "unknown"
             },
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": "Invalid request URI. The message will vary depending on the cause."
         },
         "error_:UnauthorizedError": {
@@ -142,12 +144,14 @@
                 "wireValue": "UnauthorizedError"
             },
             "statusCode": 401,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "unknown"
             },
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": "Invalid token."
         },
         "error_:ForbiddenError": {
@@ -201,12 +205,14 @@
                 "wireValue": "ForbiddenError"
             },
             "statusCode": 403,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "unknown"
             },
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": "Insufficient scope, expected: read:actions."
         },
         "error_:TooManyRequestsError": {
@@ -260,12 +266,14 @@
                 "wireValue": "TooManyRequestsError"
             },
             "statusCode": 429,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "unknown"
             },
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
         }
     },
@@ -367,7 +375,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200
+                        "status-code": 200,
+                        "isWildcardStatusCode": null,
+                        "docs": "getFooResponse"
                     },
                     "v2Responses": null,
                     "errors": [
@@ -1023,7 +1033,9 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 201
+                        "status-code": 201,
+                        "isWildcardStatusCode": null,
+                        "docs": "Foo created."
                     },
                     "v2Responses": null,
                     "errors": [

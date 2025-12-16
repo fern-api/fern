@@ -64,7 +64,7 @@
     {
       "fixtures": [
         "errors",
-        "custom-auth",
+        "header-auth",
         "accept-header",
         "oauth-client-credentials-default",
         "http-head",
@@ -115,7 +115,7 @@
         "validation",
         "license",
         "cross-package-type-names",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "variables",
         "literal"
       ],

@@ -19,6 +19,7 @@ import resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import resources.users.types.ListUsersExtendedOptionalListResponse;
 import resources.users.types.ListUsersExtendedResponse;
 import resources.users.types.ListUsersMixedTypePaginationResponse;
+import resources.users.types.ListUsersOptionalDataPaginationResponse;
 import resources.users.types.ListUsersPaginationResponse;
 import resources.users.types.Order;
 import resources.users.types.UsernameContainer;
@@ -118,5 +119,19 @@ public interface UsersService {
       value = "",
       produces = "application/json"
   )
+  Optional<UsernameCursor> listUsernamesWithOptionalResponse(
+      @RequestParam("starting_after") Optional<String> startingAfter);
+
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
   UsernameContainer listWithGlobalConfig(@RequestParam("offset") Optional<Integer> offset);
+
+  @GetMapping(
+      value = "/optional-data",
+      produces = "application/json"
+  )
+  ListUsersOptionalDataPaginationResponse listWithOptionalData(
+      @RequestParam("page") Optional<Integer> page);
 }

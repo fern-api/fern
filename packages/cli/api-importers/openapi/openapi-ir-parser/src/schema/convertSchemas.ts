@@ -110,6 +110,17 @@ export function convertSchema(
 ): SchemaWithExample {
     const source = getSourceExtension(schema) ?? fileSource;
     const encoding = getEncoding({ schema, logger: context.logger });
+
+    // In OpenAPI 3.1+, $ref siblings are supported. Extract sibling examples from reference objects
+    // before resolving the reference, so they take precedence over the referenced schema's examples.
+    let effectiveFallback = fallback;
+    if (isReferenceObject(schema)) {
+        const siblingExample = getSiblingExampleFromRef(schema);
+        if (siblingExample !== undefined) {
+            effectiveFallback = siblingExample;
+        }
+    }
+
     if (isReferenceObject(schema)) {
         const schemaId = getSchemaIdFromReference(schema);
         if (schemaId != null) {
@@ -127,7 +138,7 @@ export function convertSchema(
                     namespace,
                     propertiesToExclude,
                     referencedAsRequest,
-                    fallback
+                    effectiveFallback
                 );
             }
 
@@ -160,7 +171,7 @@ export function convertSchema(
             namespace,
             propertiesToExclude,
             referencedAsRequest,
-            fallback
+            effectiveFallback
         );
     }
     return convertSchemaObject(
@@ -176,6 +187,41 @@ export function convertSchema(
         referencedAsRequest,
         fallback
     );
+}
+
+// Helper function to extract sibling example/examples from a reference object
+// In OpenAPI 3.1+, $ref can have sibling properties like example/examples
+function getSiblingExampleFromRef(
+    schema: OpenAPIV3.ReferenceObject
+): string | number | boolean | unknown[] | undefined {
+    // Check for sibling 'example' property (OpenAPI 3.1+ allows $ref siblings)
+    if ("example" in schema && schema.example !== undefined) {
+        const example = schema.example as unknown;
+        if (
+            typeof example === "string" ||
+            typeof example === "number" ||
+            typeof example === "boolean" ||
+            Array.isArray(example)
+        ) {
+            return example;
+        }
+    }
+    // Check for sibling 'examples' property
+    if ("examples" in schema) {
+        const examples = schema.examples as unknown;
+        if (Array.isArray(examples) && examples.length > 0) {
+            const firstExample = examples[0];
+            if (
+                typeof firstExample === "string" ||
+                typeof firstExample === "number" ||
+                typeof firstExample === "boolean" ||
+                Array.isArray(firstExample)
+            ) {
+                return firstExample;
+            }
+        }
+    }
+    return undefined;
 }
 
 export function convertReferenceObject(
@@ -560,7 +606,8 @@ export function convertSchemaObject(
                 wrapAsNullable,
                 example: getExampleAsNumber({ schema, logger: context.logger, fallback }),
                 namespace,
-                groupName
+                groupName,
+                defaultIntegerFormat: context.options.defaultIntegerFormat
             });
         }
 

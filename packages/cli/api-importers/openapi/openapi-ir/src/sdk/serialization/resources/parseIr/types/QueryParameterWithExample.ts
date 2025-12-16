@@ -17,6 +17,7 @@ export const QueryParameterWithExample: core.serialization.ObjectSchema<
         name: core.serialization.string(),
         schema: core.serialization.lazy(() => serializers.SchemaWithExample),
         parameterNameOverride: core.serialization.string().optional(),
+        explode: core.serialization.boolean().optional(),
     })
     .extend(WithDescription)
     .extend(WithAvailability)
@@ -27,5 +28,6 @@ export declare namespace QueryParameterWithExample {
         name: string;
         schema: serializers.SchemaWithExample.Raw;
         parameterNameOverride?: string | null;
+        explode?: boolean | null;
     }
 }

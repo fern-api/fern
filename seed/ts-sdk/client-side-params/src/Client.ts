@@ -2,16 +2,16 @@
 
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedClientSideParamsClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedClientSideParamsClient {
-    protected readonly _options: SeedClientSideParamsClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedClientSideParamsClient.Options>;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedClientSideParamsClient.Options) {

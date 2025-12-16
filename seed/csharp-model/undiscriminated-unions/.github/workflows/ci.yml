@@ -28,10 +28,10 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedUndiscriminatedUnions
+        run: dotnet restore src/SeedUndiscriminatedUnions/SeedUndiscriminatedUnions.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedUndiscriminatedUnions -c Release --no-restore
+        run: dotnet build src/SeedUndiscriminatedUnions/SeedUndiscriminatedUnions.csproj -c Release --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -53,13 +53,13 @@ jobs:
           dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore src/SeedUndiscriminatedUnions.Test/SeedUndiscriminatedUnions.Test.csproj
 
       - name: Build Release
-        run: dotnet build src -c Release --no-restore
+        run: dotnet build src/SeedUndiscriminatedUnions.Test/SeedUndiscriminatedUnions.Test.csproj -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test src -c Release --no-build --no-restore
+        run: dotnet test src/SeedUndiscriminatedUnions.Test/SeedUndiscriminatedUnions.Test.csproj -c Release --no-build --no-restore
 
 
   publish:
@@ -83,15 +83,15 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedUndiscriminatedUnions
+        run: dotnet restore src/SeedUndiscriminatedUnions/SeedUndiscriminatedUnions.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedUndiscriminatedUnions -c Release --no-restore
+        run: dotnet build src/SeedUndiscriminatedUnions/SeedUndiscriminatedUnions.csproj -c Release --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
-          dotnet pack src/SeedUndiscriminatedUnions -c Release --no-build --no-restore
+          dotnet pack src/SeedUndiscriminatedUnions/SeedUndiscriminatedUnions.csproj -c Release --no-build --no-restore
           dotnet nuget push src/SeedUndiscriminatedUnions/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 

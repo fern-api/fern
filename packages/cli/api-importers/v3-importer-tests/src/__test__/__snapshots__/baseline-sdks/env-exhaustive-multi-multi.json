@@ -142,7 +142,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "A response"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -263,7 +264,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "A response"
           },
           "errors": [],
           "userSpecifiedExamples": [],

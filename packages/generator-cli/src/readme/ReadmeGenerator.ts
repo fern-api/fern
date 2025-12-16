@@ -193,7 +193,24 @@ export class ReadmeGenerator {
             if (index > 0) {
                 await writer.writeLine();
             }
-            await writer.writeCodeBlock(this.readmeConfig.language.type, snippet);
+            if (typeof snippet === "string") {
+                // Backwards compatibility: plain strings are treated as code snippets
+                await writer.writeCodeBlock(this.readmeConfig.language.type, snippet);
+            } else {
+                switch (snippet.type) {
+                    case "markdown":
+                        await writer.writeLine(snippet.content);
+                        break;
+                    case "code":
+                        await writer.writeCodeBlock(
+                            snippet.language ?? this.readmeConfig.language.type,
+                            snippet.content
+                        );
+                        break;
+                    default:
+                        assertNever(snippet);
+                }
+            }
         }
         if (feature.addendum != null) {
             await writer.writeLine(feature.addendum);
@@ -231,6 +248,17 @@ export class ReadmeGenerator {
                 githubRepository: this.readmeConfig.remote.repoUrl,
                 installationToken: this.readmeConfig.remote.installationToken
             });
+            // If a specific branch is specified, checkout that branch to get the README from it
+            if (this.readmeConfig.remote.branch != null) {
+                try {
+                    await clonedRepository.checkout(this.readmeConfig.remote.branch);
+                } catch (error) {
+                    // If checkout fails (e.g., branch doesn't exist), fall back to the default branch
+                    console.warn(
+                        `Failed to checkout branch ${this.readmeConfig.remote.branch}, using default branch instead`
+                    );
+                }
+            }
             return await clonedRepository.getReadme();
         }
         return undefined;

@@ -2,15 +2,18 @@
 
 import type express from "express";
 import type { BigunionService } from "./api/resources/bigunion/service/BigunionService";
+import type { TypesService } from "./api/resources/types/service/TypesService";
 import type { UnionService } from "./api/resources/union/service/UnionService";
 
 export function register(
     expressApp: express.Express | express.Router,
     services: {
         bigunion: BigunionService;
+        types: TypesService;
         union: UnionService;
     },
 ): void {
     (expressApp as any).use("/", services.bigunion.toRouter());
+    (expressApp as any).use("/time", services.types.toRouter());
     (expressApp as any).use("/", services.union.toRouter());
 }

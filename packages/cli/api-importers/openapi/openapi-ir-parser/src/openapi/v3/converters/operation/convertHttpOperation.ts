@@ -101,7 +101,8 @@ export function convertHttpOperation({
                         availability: undefined,
                         title: undefined
                     }),
-                    description: undefined
+                    description: undefined,
+                    explode: undefined
                 });
             }
         }
@@ -349,8 +350,8 @@ function createOperationSdkMethodName({
     };
 }
 
-function generateSecurity(operation: OpenAPIV3.OperationObject): EndpointSecurity {
-    return operation.security ?? [];
+function generateSecurity(operation: OpenAPIV3.OperationObject): EndpointSecurity | undefined {
+    return operation.security;
 }
 
 function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {

@@ -379,7 +379,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/search",
       "examples": [

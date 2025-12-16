@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.list_usernames_custom() -> Seed::Types::UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="/lib/seed/users/client.rb">list_usernames_custom</a>() -> Seed::Types::UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.users.list_usernames_custom(startingAfter: 'starting_after');
+client.users.list_usernames_custom(starting_after: 'starting_after');
 ```
 </dd>
 </dl>
@@ -32,6 +32,14 @@ client.users.list_usernames_custom(startingAfter: 'starting_after');
 
 The cursor used for pagination in order to fetch
 the next page of results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Users::RequestOptions` 
     
 </dd>
 </dl>

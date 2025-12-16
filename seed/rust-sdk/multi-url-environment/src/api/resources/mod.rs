@@ -1,3 +1,10 @@
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Ec2**
+//! - **S3**
+
 use crate::{ApiError, ClientConfig};
 
 pub mod ec_2;

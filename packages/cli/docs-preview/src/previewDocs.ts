@@ -1,3 +1,4 @@
+import { replaceEnvVariables } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
@@ -21,6 +22,7 @@ import grayMatter from "gray-matter";
 import { v4 as uuidv4 } from "uuid";
 
 import {
+    isValidRelativeSlug,
     parseImagePaths,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -28,6 +30,8 @@ import {
 } from "../../docs-markdown-utils/src";
 
 const frontmatterPositionCache = new Map<string, number | undefined>();
+const frontmatterSidebarTitleCache = new Map<string, string | undefined>();
+const frontmatterSlugCache = new Map<string, string | undefined>();
 
 /**
  * Extracts and normalizes the position field from markdown frontmatter.
@@ -46,6 +50,58 @@ function extractFrontmatterPosition(markdown: string): number | undefined {
 
         if (typeof position === "number" && Number.isFinite(position)) {
             return position;
+        }
+
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * Extracts the sidebar-title field from markdown frontmatter.
+ * Returns the string value if present, undefined otherwise.
+ */
+function extractFrontmatterSidebarTitle(markdown: string): string | undefined {
+    try {
+        const { data } = grayMatter(markdown);
+
+        if (data["sidebar-title"] == null) {
+            return undefined;
+        }
+
+        const sidebarTitle = data["sidebar-title"];
+
+        if (typeof sidebarTitle === "string") {
+            return sidebarTitle;
+        }
+
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * Extracts the slug field from markdown frontmatter.
+ * Returns the string value if present and is a valid relative path, undefined otherwise.
+ * Absolute URLs (e.g., https://google.com) are not valid slugs.
+ */
+function extractFrontmatterSlug(markdown: string): string | undefined {
+    try {
+        const { data } = grayMatter(markdown);
+
+        if (data.slug == null) {
+            return undefined;
+        }
+
+        const slug = data.slug;
+
+        if (typeof slug === "string" && slug.trim().length > 0) {
+            const trimmedSlug = slug.trim();
+            if (isValidRelativeSlug(trimmedSlug)) {
+                return trimmedSlug;
+            }
         }
 
         return undefined;
@@ -102,7 +158,21 @@ export async function getPreviewDocsDefinition({
                 navAffectingChange = true;
             }
 
+            const currentSidebarTitle = extractFrontmatterSidebarTitle(markdown);
+            const cachedSidebarTitle = frontmatterSidebarTitleCache.get(absoluteFilePath);
+            if (cachedSidebarTitle !== currentSidebarTitle) {
+                navAffectingChange = true;
+            }
+
+            const currentSlug = extractFrontmatterSlug(markdown);
+            const cachedSlug = frontmatterSlugCache.get(absoluteFilePath);
+            if (cachedSlug !== currentSlug) {
+                navAffectingChange = true;
+            }
+
             frontmatterPositionCache.set(absoluteFilePath, currentPosition);
+            frontmatterSidebarTitleCache.set(absoluteFilePath, currentSidebarTitle);
+            frontmatterSlugCache.set(absoluteFilePath, currentSlug);
 
             if (isNewFile) {
                 continue;
@@ -214,15 +284,21 @@ export async function getPreviewDocsDefinition({
     });
 
     frontmatterPositionCache.clear();
+    frontmatterSidebarTitleCache.clear();
+    frontmatterSlugCache.clear();
     for (const [pageId, page] of Object.entries(dbDocsDefinition.pages)) {
         if (page.rawMarkdown != null) {
             const absolutePath = AbsoluteFilePath.of(`${docsWorkspace.absoluteFilePath}/${pageId.replace("api/", "")}`);
             const position = extractFrontmatterPosition(page.rawMarkdown);
+            const sidebarTitle = extractFrontmatterSidebarTitle(page.rawMarkdown);
+            const slug = extractFrontmatterSlug(page.rawMarkdown);
             frontmatterPositionCache.set(absolutePath, position);
+            frontmatterSidebarTitleCache.set(absolutePath, sidebarTitle);
+            frontmatterSlugCache.set(absolutePath, slug);
         }
     }
 
-    return {
+    let docsDefinition: DocsV1Read.DocsDefinition = {
         apis: apiCollector.getAPIsForDefinition(),
         apisV2: apiCollectorV2.getAPIsForDefinition(),
         config: readDocsConfig,
@@ -232,6 +308,19 @@ export async function getPreviewDocsDefinition({
         jsFiles: dbDocsDefinition.jsFiles,
         id: undefined
     };
+
+    if (docsWorkspace.config.settings?.substituteEnvVars) {
+        // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
+        const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
+        const substitutedDocs = replaceEnvVariables(
+            docsWithoutJsFiles,
+            { onError: (e) => context.logger.error(e ?? "Unknown error during environment variable substitution") },
+            { substituteAsEmpty: true }
+        );
+        docsDefinition = { ...substitutedDocs, jsFiles };
+    }
+
+    return docsDefinition;
 }
 
 type APIDefinitionID = string;

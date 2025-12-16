@@ -5,11 +5,11 @@ changelogLocation: ../../generators/typescript-mcp/model/versions.yml
 test:
   docker:
     image: fernapi/fern-typescript-mcp-server:latest
-    command: pnpm --filter @fern-api/typescript-mcp-server dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/typescript-mcp-server
   local:
     workingDirectory: generators/typescript-mcp
     buildCommand:
-      - pnpm --filter @fern-api/typescript-mcp-server dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/typescript-mcp-server
     runCommand: node --enable-source-maps server/dist/cli.cjs {CONFIG_PATH}
 language: typescript
 generatorType: SDK

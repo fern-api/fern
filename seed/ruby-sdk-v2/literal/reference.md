@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.send_(request) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.headers.<a href="/lib/seed/headers/client.rb">send_</a>(request) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,7 @@
 
 ```ruby
 client.headers.send_(
-  endpointVersion: '02-12-2024',
+  endpoint_version: '02-12-2024',
   async: true,
   query: 'What is the weather today'
 );
@@ -52,6 +52,14 @@ client.headers.send_(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Headers::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -61,7 +69,7 @@ client.headers.send_(
 </details>
 
 ## Inlined
-<details><summary><code>client.inlined.send_(request) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.inlined.<a href="/lib/seed/inlined/client.rb">send_</a>(request) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -78,11 +86,11 @@ client.inlined.send_(
   temperature: 10.1,
   prompt: 'You are a helpful assistant',
   context: "You're super wise",
-  aliasedContext: "You're super wise",
-  maybeContext: "You're super wise",
-  objectWithLiteral: {
-    nestedLiteral: {
-      myLiteral: 'How super cool'
+  aliased_context: "You're super wise",
+  maybe_context: "You're super wise",
+  object_with_literal: {
+    nested_literal: {
+      my_literal: 'How super cool'
     }
   },
   stream: false,
@@ -162,6 +170,14 @@ client.inlined.send_(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Inlined::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -171,7 +187,7 @@ client.inlined.send_(
 </details>
 
 ## Path
-<details><summary><code>client.path.send_(id) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.path.<a href="/lib/seed/path/client.rb">send_</a>(id) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -184,7 +200,7 @@ client.inlined.send_(
 <dd>
 
 ```ruby
-client.path.send_();
+client.path.send_(id: '123');
 ```
 </dd>
 </dl>
@@ -203,6 +219,14 @@ client.path.send_();
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Path::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -212,7 +236,7 @@ client.path.send_();
 </details>
 
 ## Query
-<details><summary><code>client.query.send_() -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.query.<a href="/lib/seed/query/client.rb">send_</a>() -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -227,13 +251,13 @@ client.path.send_();
 ```ruby
 client.query.send_(
   prompt: 'You are a helpful assistant',
-  optionalPrompt: 'You are a helpful assistant',
-  aliasPrompt: 'You are a helpful assistant',
-  aliasOptionalPrompt: 'You are a helpful assistant',
+  optional_prompt: 'You are a helpful assistant',
+  alias_prompt: 'You are a helpful assistant',
+  alias_optional_prompt: 'You are a helpful assistant',
   stream: false,
-  optionalStream: false,
-  aliasStream: false,
-  aliasOptionalStream: false,
+  optional_stream: false,
+  alias_stream: false,
+  alias_optional_stream: false,
   query: 'What is the weather today'
 );
 ```
@@ -318,6 +342,14 @@ client.query.send_(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Query::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -327,7 +359,7 @@ client.query.send_(
 </details>
 
 ## Reference
-<details><summary><code>client.reference.send_(request) -> Seed::Types::SendResponse</code></summary>
+<details><summary><code>client.reference.<a href="/lib/seed/reference/client.rb">send_</a>(request) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -340,19 +372,19 @@ client.query.send_(
 <dd>
 
 ```ruby
-client.reference.send_({
+client.reference.send_(
   prompt: 'You are a helpful assistant',
+  query: 'What is the weather today',
   stream: false,
   context: "You're super wise",
-  query: 'What is the weather today',
-  containerObject: {
-    nestedObjects: [{
-      literal1: 'literal1',
-      literal2: 'literal2',
-      strProp: 'strProp'
+  container_object: {
+    nested_objects: [{
+      literal_1: 'literal1',
+      literal_2: 'literal2',
+      str_prop: 'strProp'
     }]
   }
-});
+);
 ```
 </dd>
 </dl>
@@ -368,6 +400,14 @@ client.reference.send_({
 <dd>
 
 **request:** `Seed::Reference::Types::SendRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Reference::RequestOptions` 
     
 </dd>
 </dl>

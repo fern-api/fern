@@ -3,6 +3,7 @@
 namespace Seed;
 
 use Seed\Bigunion\BigunionClient;
+use Seed\Types\TypesClient;
 use Seed\Union\UnionClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
@@ -13,6 +14,11 @@ class SeedClient
      * @var BigunionClient $bigunion
      */
     public BigunionClient $bigunion;
+
+    /**
+     * @var TypesClient $types
+     */
+    public TypesClient $types;
 
     /**
      * @var UnionClient $union
@@ -26,7 +32,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -55,6 +61,7 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
+
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
@@ -65,6 +72,7 @@ class SeedClient
         );
 
         $this->bigunion = new BigunionClient($this->client, $this->options);
+        $this->types = new TypesClient($this->client, $this->options);
         $this->union = new UnionClient($this->client, $this->options);
     }
 }

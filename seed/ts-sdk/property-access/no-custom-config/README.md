@@ -5,6 +5,23 @@
 
 The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Aborting Requests](#aborting-requests)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Logging](#logging)
+  - [Runtime Compatibility](#runtime-compatibility)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -64,6 +81,15 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedPropertyAccessClient } from "@fern/property-access";
+
+const client = new SeedPropertyAccessClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.createUser(..., {
     headers: {
         'X-Custom-Header': 'custom value'

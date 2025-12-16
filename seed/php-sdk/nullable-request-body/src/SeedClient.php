@@ -20,7 +20,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -49,6 +49,7 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
+
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
