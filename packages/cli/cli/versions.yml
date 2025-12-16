@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.24.2
+  changelogEntry:
+    - summary: |
+        Fix handling of empty allOf in additionalProperties by treating schemas with only metadata (example, description) as "any" type.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 62
+
 - changelogEntry:
     - summary: |
         Collects `fern docs dev` metrics in `.fern/app-preview/<timestamp>.debug.log` file.
