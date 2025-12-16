@@ -174,7 +174,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="userId")])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -210,7 +212,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -246,9 +250,13 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="userId")])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -284,13 +292,26 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "limit":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "offset":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "include_deleted":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="includeDeleted")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="includeDeleted")],
+                        default=None,
+                    )
+                )
             elif parameter_name == "sort_by":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="sortBy")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="sortBy")], default=None
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.list_users, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -326,13 +347,23 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "query":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()])
+                )
             elif parameter_name == "department":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "role":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "is_active":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="isActive")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="isActive")], default=None
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.search_users, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -368,7 +399,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_complex_profile, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -404,7 +437,11 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "profile_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="profileId")]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_complex_profile, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -440,9 +477,15 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             elif parameter_name == "profile_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="profileId")]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_complex_profile, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -478,7 +521,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_deserialization, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -514,11 +559,20 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "role":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "status":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "secondary_role":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="secondaryRole")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="secondaryRole")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.filter_by_role, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -554,7 +608,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="userId")])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_notification_settings, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -590,9 +646,13 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="userId")])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_tags, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -628,7 +688,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_search_results, "__signature__", endpoint_function.replace(parameters=new_parameters))
