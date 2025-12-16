@@ -28,6 +28,7 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
+import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview";
 import { downgrade } from "./commands/downgrade/downgrade";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
@@ -1472,13 +1473,40 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
 function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("docs", "Commands for managing your docs", (yargs) => {
         // Add subcommands directly
-        addDocsPreviewCommand(yargs, cliContext);
+        addDocsDevCommand(yargs, cliContext);
         addDocsBrokenLinksCommand(yargs, cliContext);
+        addDocsPreviewSubcommand(yargs, cliContext);
         return yargs;
     });
 }
 
-function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addDocsPreviewSubcommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("preview", "Commands for managing preview deployments", (yargs) => {
+        yargs.command(
+            "delete <url>",
+            "Delete a preview deployment",
+            (yargs) =>
+                yargs.positional("url", {
+                    type: "string",
+                    description:
+                        "The FQDN of the preview deployment to delete (e.g. acme-preview-abc123.docs.buildwithfern.com)",
+                    demandOption: true
+                }),
+            async (argv) => {
+                await cliContext.instrumentPostHogEvent({
+                    command: "fern docs preview delete"
+                });
+                await deleteDocsPreview({
+                    cliContext,
+                    previewUrl: argv.url
+                });
+            }
+        );
+        return yargs;
+    });
+}
+
+function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "dev",
         "Run a local development server to preview your docs",
