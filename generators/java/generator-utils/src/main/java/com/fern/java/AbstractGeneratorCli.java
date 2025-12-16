@@ -94,58 +94,31 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
+    /**
+     * Loads and preprocesses the IR from file, handling integer overflow values.
+     */
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
             File irFile = new File(generatorConfig.getIrFilepath());
 
-            String irJson = java.nio.file.Files.readString(irFile.toPath());
+            JsonNode rootNode = ObjectMappers.JSON_MAPPER.readTree(irFile);
 
-            String processedJson = preprocessIntegerOverflow(irJson);
+            IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
+            processor.processNodeInPlace(rootNode);
 
-            return ObjectMappers.JSON_MAPPER.readValue(processedJson, IntermediateRepresentation.class);
+            if (processor.getConversions() > 0) {
+                log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
+            }
+
+            return ObjectMappers.JSON_MAPPER.treeToValue(rootNode, IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
     }
 
     /**
-     * Preprocesses the IR JSON to handle integer overflow in example values.
-     *
-     * <p>OpenAPI specifications may contain example values that exceed Java's Integer limits (e.g., from systems using
-     * 64-bit integers). This method finds such values in fields explicitly typed as "integer" and converts them to
-     * "long" type to preserve the original value while preventing Jackson deserialization failures.
-     *
-     * <p>Note: This only processes integer fields in the IR's example values to avoid modifying actual schema
-     * definitions.
+     * Processes JSON nodes in-place to convert integer overflow values to long type.
      */
-    private static String preprocessIntegerOverflow(String json) {
-        if (json == null || json.trim().isEmpty()) {
-            return json;
-        }
-
-        try {
-            return processJsonForIntegerOverflow(json);
-        } catch (Exception e) {
-            log.warn("Failed to preprocess integer overflow, using original JSON", e);
-            return json;
-        }
-    }
-
-    private static String processJsonForIntegerOverflow(String json) throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(json);
-
-        IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
-        processor.processNodeInPlace(rootNode);
-
-        if (processor.getConversions() > 0) {
-            log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
-        }
-
-        return mapper.writeValueAsString(rootNode);
-    }
-
-    /** Processes JSON nodes in-place to convert integer overflow values to long type. */
     private static class IntegerOverflowProcessor {
         private int conversions = 0;
 
