@@ -77,7 +77,11 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             coerceOptionalSchemasToNullable: specs.every((spec) => spec.settings?.coerceOptionalSchemasToNullable),
             coerceEnumsToLiterals: specs.every((spec) => spec.settings?.coerceEnumsToLiterals),
             onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
-            inlinePathParameters: specs[0]?.settings?.inlinePathParameters,
+            inlinePathParameters: (() => {
+                const values = specs.map((spec) => spec.settings?.inlinePathParameters);
+                const firstValue = values[0];
+                return values.every((v) => v === firstValue) ? firstValue : undefined;
+            })(),
             objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
             useBytesForBinaryResponse: specs
                 .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
