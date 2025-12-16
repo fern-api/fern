@@ -560,7 +560,7 @@ export async function runAppPreviewServer({
     const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
     // Initialize the debug logger for metrics collection
-    const debugLogger = new DebugLogger(absoluteFilePathToFern);
+    const debugLogger = new DebugLogger();
     await debugLogger.initialize();
     const debugLogPath = debugLogger.getLogFilePath();
     if (debugLogPath) {
