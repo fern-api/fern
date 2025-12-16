@@ -150,7 +150,6 @@ SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.stagedBuilderOrdering.SeedStagedBuilderOrderingClient;
 import com.seed.stagedBuilderOrdering.core.RequestOptions;
@@ -158,7 +157,7 @@ import com.seed.stagedBuilderOrdering.core.RequestOptions;
 // Client level
 SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -166,7 +165,7 @@ client.service().createSimple(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```
