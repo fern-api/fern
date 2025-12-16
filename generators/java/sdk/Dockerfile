@@ -22,11 +22,12 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
        /opt/gradle/lib/plugins/eddsa-*.jar \
        /opt/gradle/lib/kotlin-stdlib-*.jar
 
-# Remove vulnerable packages not needed at runtime
+# Remove vulnerable packages not needed at runtime and update vulnerable packages
 # CVE-2025-8291, CVE-2025-6075: python3.10 zipfile/expandvars vulnerabilities
 # CVE-2024-46901: subversion vulnerability
 # Go stdlib CVEs (60+): git-lfs 3.0.2 embeds Go 1.18.1 with many critical vulnerabilities
 # CVE-2024-10524, CVE-2021-31879: wget vulnerabilities
+# CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506: libpng16-16 vulnerabilities
 # Use purge instead of remove to fully remove packages from dpkg database
 # Add retry logic for apt-get update to handle transient mirror sync issues
 RUN set -eux; \
@@ -41,6 +42,7 @@ RUN set -eux; \
       echo "apt-get update failed, retrying in 20s..."; \
       sleep 20; \
     done; \
+    apt-get install -y --only-upgrade libpng16-16 && \
     apt-get purge -y --allow-remove-essential \
         python3.10 python3.10-minimal \
         python3 python3-minimal \
@@ -49,22 +51,6 @@ RUN set -eux; \
         git-lfs \
         wget && \
     apt-get autoremove -y --purge && \
-    rm -rf /var/lib/apt/lists/*
-
-# Update libpng16-16 to fix CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506
-RUN set -eux; \
-    max=5; \
-    count=0; \
-    until apt-get update; do \
-      count=$((count + 1)); \
-      if [ "$count" -ge "$max" ]; then \
-        echo "apt-get update failed after ${count} attempts"; \
-        exit 1; \
-      fi; \
-      echo "apt-get update failed, retrying in 20s..."; \
-      sleep 20; \
-    done; \
-    apt-get install -y --only-upgrade libpng16-16 && \
     rm -rf /var/lib/apt/lists/*
 
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
