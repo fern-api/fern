@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, doesPathExist, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { appendFile, mkdir, writeFile } from "fs/promises";
 import path from "path";
 
@@ -124,7 +124,11 @@ export class DebugLogger {
             return;
         }
 
-        const appPreviewDir = join(this.fernFolderPath, ".fern", "app-preview");
+        const appPreviewDir = join(
+            this.fernFolderPath,
+            RelativeFilePath.of(".fern"),
+            RelativeFilePath.of("app-preview")
+        );
 
         if (!(await doesPathExist(appPreviewDir))) {
             await mkdir(appPreviewDir, { recursive: true });
@@ -132,7 +136,7 @@ export class DebugLogger {
 
         const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
         const logFileName = `${timestamp}.debug.log`;
-        this.logFilePath = join(appPreviewDir, logFileName) as AbsoluteFilePath;
+        this.logFilePath = join(appPreviewDir, RelativeFilePath.of(logFileName));
 
         const header = [
             "================================================================================",
