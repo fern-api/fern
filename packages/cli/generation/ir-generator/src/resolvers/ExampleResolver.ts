@@ -211,7 +211,7 @@ function isValidTypeNameStart(name: string): boolean {
     if (name.length === 0) {
         return false;
     }
-    const firstChar = name[0];
+    const firstChar = name.charAt(0);
     // Type names must start with a letter (a-z or A-Z)
     return (firstChar >= "a" && firstChar <= "z") || (firstChar >= "A" && firstChar <= "Z");
 }

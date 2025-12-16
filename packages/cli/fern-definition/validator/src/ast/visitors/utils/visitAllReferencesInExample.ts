@@ -40,7 +40,7 @@ function startsWithLetter(str: string): boolean {
     if (str.length === 0) {
         return false;
     }
-    const firstChar = str[0];
+    const firstChar = str.charAt(0);
     return (firstChar >= "a" && firstChar <= "z") || (firstChar >= "A" && firstChar <= "Z");
 }
 
