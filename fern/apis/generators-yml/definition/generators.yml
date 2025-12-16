@@ -187,8 +187,13 @@ types:
         type: optional<boolean>
         docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
       inline-path-parameters:
-        type: optional<boolean>
-        docs: Whether to include path parameters within the generated in-lined request. Defaults to true.
+        type: optional<InlinePathParametersSchema>
+        docs: |
+          Controls whether path parameters are inlined into the request object.
+          - `false`: Never inline path parameters (they remain as positional arguments)
+          - `when-body-not-empty`: Only inline path parameters when the request has a body, query params, or headers (default)
+          - `true`: Alias for `when-body-not-empty`
+          - `always`: Always inline path parameters, even when there's no body
       idiomatic-request-names:
         type: optional<boolean>
         docs: Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to true.
@@ -227,6 +232,30 @@ types:
           - `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})
           - `spec-order`: Use the order path parameters are defined in the spec
           Defaults to `url-order`.
+
+  InlinePathParameters:
+    docs: |
+      Controls whether path parameters are inlined into the request object.
+      - `false`: Never inline path parameters (they remain as positional arguments)
+      - `when-body-not-empty`: Only inline path parameters when the request has a body, query params, or headers (default)
+      - `true`: Alias for `when-body-not-empty`
+      - `always`: Always inline path parameters, even when there's no body
+    enum:
+      - name: doNotInline
+        value: "false"
+      - name: whenBodyNotEmpty
+        value: when-body-not-empty
+      - name: always
+        value: always
+
+  InlinePathParametersSchema:
+    docs: |
+      Controls whether path parameters are inlined into the request object.
+      Accepts boolean for backward compatibility or string enum values.
+    discriminated: false
+    union:
+      - boolean
+      - InlinePathParameters
 
   RemoveDiscriminantsFromSchemas:
     docs: |
@@ -396,8 +425,13 @@ types:
         type: optional<boolean>
         docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
       inline-path-parameters:
-        type: optional<boolean>
-        docs: Whether to include path parameters within the generated in-lined request. Defaults to true.
+        type: optional<InlinePathParametersSchema>
+        docs: |
+          Controls whether path parameters are inlined into the request object.
+          - `false`: Never inline path parameters (they remain as positional arguments)
+          - `when-body-not-empty`: Only inline path parameters when the request has a body, query params, or headers (default)
+          - `true`: Alias for `when-body-not-empty`
+          - `always`: Always inline path parameters, even when there's no body
       prefer-undiscriminated-unions-with-literals:
         type: optional<boolean>
         docs: Whether to prefer undiscriminated unions with literals. Defaults to false.

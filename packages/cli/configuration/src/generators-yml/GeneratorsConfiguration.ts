@@ -11,6 +11,7 @@ import {
     ApiDefinitionSettingsSchema,
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
+    InlinePathParameters,
     OpenApiFilterSchema,
     ReadmeSchema,
     RemoveDiscriminantsFromSchemas
@@ -74,7 +75,7 @@ export interface APIDefinitionSettings {
     respectReadonlySchemas: boolean | undefined;
     respectNullableSchemas: boolean | undefined;
     onlyIncludeReferencedSchemas: boolean | undefined;
-    inlinePathParameters: boolean | undefined;
+    inlinePathParameters: InlinePathParameters | undefined;
     useBytesForBinaryResponse: boolean | undefined;
     respectForwardCompatibleEnums: boolean | undefined;
     filter: OpenApiFilterSchema | undefined;

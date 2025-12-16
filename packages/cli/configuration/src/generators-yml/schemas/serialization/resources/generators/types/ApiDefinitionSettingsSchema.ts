@@ -7,6 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { UnionSettingsSchema } from "./UnionSettingsSchema";
 import { MessageNamingSettingsSchema } from "./MessageNamingSettingsSchema";
+import { InlinePathParametersSchema } from "./InlinePathParametersSchema";
 import { RemoveDiscriminantsFromSchemas } from "./RemoveDiscriminantsFromSchemas";
 import { PathParameterOrder } from "./PathParameterOrder";
 
@@ -19,7 +20,7 @@ export const ApiDefinitionSettingsSchema: core.serialization.ObjectSchema<
     "message-naming": MessageNamingSettingsSchema.optional(),
     "respect-nullable-schemas": core.serialization.boolean().optional(),
     "only-include-referenced-schemas": core.serialization.boolean().optional(),
-    "inline-path-parameters": core.serialization.boolean().optional(),
+    "inline-path-parameters": InlinePathParametersSchema.optional(),
     "idiomatic-request-names": core.serialization.boolean().optional(),
     "wrap-references-to-nullable-in-optional": core.serialization.boolean().optional(),
     "coerce-optional-schemas-to-nullable": core.serialization.boolean().optional(),
@@ -35,7 +36,7 @@ export declare namespace ApiDefinitionSettingsSchema {
         "message-naming"?: MessageNamingSettingsSchema.Raw | null;
         "respect-nullable-schemas"?: boolean | null;
         "only-include-referenced-schemas"?: boolean | null;
-        "inline-path-parameters"?: boolean | null;
+        "inline-path-parameters"?: InlinePathParametersSchema.Raw | null;
         "idiomatic-request-names"?: boolean | null;
         "wrap-references-to-nullable-in-optional"?: boolean | null;
         "coerce-optional-schemas-to-nullable"?: boolean | null;

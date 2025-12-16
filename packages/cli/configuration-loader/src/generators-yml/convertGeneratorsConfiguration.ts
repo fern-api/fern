@@ -97,7 +97,7 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
-        inlinePathParameters: settings?.["inline-path-parameters"],
+        inlinePathParameters: parseInlinePathParameters(settings?.["inline-path-parameters"]),
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
         removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
             settings?.["remove-discriminants-from-schemas"]
@@ -114,7 +114,7 @@ function parseOpenApiDefinitionSettingsSchema(
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         objectQueryParameters: settings?.["object-query-parameters"],
         respectReadonlySchemas: settings?.["respect-readonly-schemas"],
-        inlinePathParameters: settings?.["inline-path-parameters"],
+        inlinePathParameters: parseInlinePathParameters(settings?.["inline-path-parameters"]),
         filter: settings?.filter,
         exampleGeneration: settings?.["example-generation"],
         defaultFormParameterEncoding: settings?.["default-form-parameter-encoding"],
@@ -169,6 +169,28 @@ function parseRemoveDiscriminantsFromSchemas(
         return generatorsYml.RemoveDiscriminantsFromSchemas.Never;
     }
     throw new Error(`Unknown value for generators.yml API setting: remove-discriminants-from-schemas: ${option}`);
+}
+
+function parseInlinePathParameters(
+    option: generatorsYml.InlinePathParametersSchema | undefined
+): generatorsYml.InlinePathParameters | undefined {
+    if (option == null) {
+        return undefined;
+    }
+    if (typeof option === "boolean") {
+        if (option === false) {
+            return generatorsYml.InlinePathParameters.DoNotInline;
+        }
+        return generatorsYml.InlinePathParameters.WhenBodyNotEmpty;
+    }
+    if (option === generatorsYml.InlinePathParameters.DoNotInline) {
+        return generatorsYml.InlinePathParameters.DoNotInline;
+    } else if (option === generatorsYml.InlinePathParameters.WhenBodyNotEmpty) {
+        return generatorsYml.InlinePathParameters.WhenBodyNotEmpty;
+    } else if (option === generatorsYml.InlinePathParameters.Always) {
+        return generatorsYml.InlinePathParameters.Always;
+    }
+    throw new Error(`Unknown value for generators.yml API setting: inline-path-parameters: ${option}`);
 }
 
 /**

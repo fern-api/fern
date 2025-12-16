@@ -35,9 +35,12 @@ export interface ConvertOpenAPIOptions {
     onlyIncludeReferencedSchemas: boolean;
 
     /**
-     * If true, the converter will include path parameters in the in-lined request.
+     * Controls whether path parameters are inlined into the request object.
+     * - `false`: Never inline path parameters (they remain as positional arguments)
+     * - `when-body-not-empty`: Only inline path parameters when the request has a body, query params, or headers (default)
+     * - `always`: Always inline path parameters, even when there's no body
      */
-    inlinePathParameters: boolean;
+    inlinePathParameters: generatorsYml.InlinePathParameters;
 
     /**
      * If true, the converter will use the `bytes` type for binary responses.
@@ -100,7 +103,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     respectReadonlySchemas: false,
     respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,
-    inlinePathParameters: true,
+    inlinePathParameters: generatorsYml.InlinePathParameters.WhenBodyNotEmpty,
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
     wrapReferencesToNullableInOptional: false,

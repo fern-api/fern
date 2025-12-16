@@ -1,4 +1,4 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { HttpEndpointSecurity } from "@fern-api/fern-definition-schema/src/schemas";
@@ -151,6 +151,15 @@ export function buildEndpoint({
 
     if (endpoint.request != null) {
         context.setInState(State.Request);
+        const hasQueryParams = Object.keys(queryParameters).length > 0;
+        const hasHeaders = Object.keys(headers).length > 0;
+        const shouldInlinePathParams = shouldInlinePathParameters({
+            inlinePathParameters: context.options.inlinePathParameters,
+            hasPathParams: Object.keys(pathParameters).length > 0,
+            hasBody: true,
+            hasQueryParams,
+            hasHeaders
+        });
         const convertedRequest = getRequest({
             endpoint,
             context,
@@ -158,13 +167,10 @@ export function buildEndpoint({
             request: endpoint.request,
             generatedRequestName: endpoint.generatedRequestName,
             requestNameOverride: endpoint.requestNameOverride ?? undefined,
-            pathParameters:
-                context.options.inlinePathParameters && Object.keys(pathParameters).length > 0
-                    ? pathParameters
-                    : undefined,
-            queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
+            pathParameters: shouldInlinePathParams ? pathParameters : undefined,
+            queryParameters: hasQueryParams ? queryParameters : undefined,
             nonRequestReferencedSchemas: Array.from(nonRequestReferencedSchemas),
-            headers: Object.keys(headers).length > 0 ? headers : undefined,
+            headers: hasHeaders ? headers : undefined,
             usedNames: names,
             namespace: maybeEndpointNamespace
         });
@@ -172,16 +178,23 @@ export function buildEndpoint({
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
         context.unsetInState(State.Request);
     } else {
-        const hasPathParams = context.options.inlinePathParameters && Object.keys(pathParameters).length > 0;
         const hasQueryParams = Object.keys(queryParameters).length > 0;
         const hasHeaders = Object.keys(headers).length > 0;
+        const hasPathParams = Object.keys(pathParameters).length > 0;
+        const shouldInlinePathParams = shouldInlinePathParameters({
+            inlinePathParameters: context.options.inlinePathParameters,
+            hasPathParams,
+            hasBody: false,
+            hasQueryParams,
+            hasHeaders
+        });
 
         const convertedRequest: RawSchemas.HttpRequestSchema = {};
 
-        if (hasPathParams || hasQueryParams || hasHeaders) {
+        if (shouldInlinePathParams || hasQueryParams || hasHeaders) {
             convertedRequest.name = endpoint.requestNameOverride ?? endpoint.generatedRequestName;
         }
-        if (hasPathParams) {
+        if (shouldInlinePathParams) {
             convertedRequest["path-parameters"] = pathParameters;
         }
         if (hasQueryParams) {
@@ -843,6 +856,34 @@ function getRequest({
     }
 }
 
+function shouldInlinePathParameters({
+    inlinePathParameters,
+    hasPathParams,
+    hasBody,
+    hasQueryParams,
+    hasHeaders
+}: {
+    inlinePathParameters: generatorsYml.InlinePathParameters;
+    hasPathParams: boolean;
+    hasBody: boolean;
+    hasQueryParams: boolean;
+    hasHeaders: boolean;
+}): boolean {
+    if (!hasPathParams) {
+        return false;
+    }
+    switch (inlinePathParameters) {
+        case generatorsYml.InlinePathParameters.DoNotInline:
+            return false;
+        case generatorsYml.InlinePathParameters.WhenBodyNotEmpty:
+            return hasBody || hasQueryParams || hasHeaders;
+        case generatorsYml.InlinePathParameters.Always:
+            return true;
+        default:
+            assertNever(inlinePathParameters);
+    }
+}
+
 function endpointRequestSupportsInlinedPathParameters({
     context,
     request
@@ -850,7 +891,7 @@ function endpointRequestSupportsInlinedPathParameters({
     context: OpenApiIrConverterContext;
     request: Request | undefined;
 }): boolean {
-    if (!context.options.inlinePathParameters) {
+    if (context.options.inlinePathParameters === generatorsYml.InlinePathParameters.DoNotInline) {
         return false;
     }
     if (request == null) {
