@@ -1,6 +1,5 @@
 import { FernToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
-import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { askToLogin } from "@fern-api/login";
 import chalk from "chalk";
 
@@ -28,7 +27,7 @@ export async function deleteDocsPreview({
         const fdr = createFdrService({ token: token.value });
 
         const deleteResponse = await fdr.docs.v2.write.deleteDocsSite({
-            url: CjsFdrSdk.Url(previewUrl)
+            url: previewUrl as Parameters<typeof fdr.docs.v2.write.deleteDocsSite>[0]["url"]
         });
 
         if (deleteResponse.ok) {
@@ -36,7 +35,6 @@ export async function deleteDocsPreview({
         } else {
             switch (deleteResponse.error.error) {
                 case "UnauthorizedError":
-                case "UserNotInOrgError":
                     return context.failAndThrow(
                         "You do not have permissions to delete this preview site. Reach out to support@buildwithfern.com"
                     );

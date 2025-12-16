@@ -4511,6 +4511,9 @@ importers:
       '@fern-api/docs-validator':
         specifier: workspace:*
         version: link:../yaml/docs-validator
+      '@fern-api/fdr-sdk':
+        specifier: 0.142.14-5a24815a8
+        version: 0.142.14-5a24815a8(typescript@5.9.3)
       '@fern-api/fern-definition-formatter':
         specifier: workspace:*
         version: link:../fern-definition/formatter
