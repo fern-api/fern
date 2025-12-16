@@ -467,9 +467,10 @@ class ClientWrapperGenerator:
                 header_version_scheme = api_version.get_as_union()
                 if header_version_scheme.type == "header":
                     header_name = header_version_scheme.header.name.wire_value
-                    default_value = header_version_scheme.value.default
-                    if default_value is not None:
-                        writer.write_line(f'headers["{header_name}"] = "{default_value}"')
+                    default_enum_value = header_version_scheme.value.default
+                    if default_enum_value is not None:
+                        default_wire_value = default_enum_value.name.wire_value
+                        writer.write_line(f'headers["{header_name}"] = "{default_wire_value}"')
                     else:
                         param_name = header_version_scheme.header.name.name.snake_case.safe_name
                         writer.write_line(f"if self._{param_name} is not None:")
