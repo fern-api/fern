@@ -91,6 +91,13 @@ export interface ConvertOpenAPIOptions {
      * Defaults to `always`.
      */
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas;
+
+    /**
+     * If true, request body schemas will always be emitted as top-level types (grouped schemas) rather than being inlined.
+     * This ensures consistent behavior for both JSON/form and multipart request bodies.
+     * Defaults to false.
+     */
+    requestBodyAsGroupedSchema: boolean;
 }
 
 export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
@@ -106,7 +113,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     wrapReferencesToNullableInOptional: false,
     coerceOptionalSchemasToNullable: false,
     groupEnvironmentsByHost: false,
-    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
+    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
+    requestBodyAsGroupedSchema: false
 };
 
 function mergeOptions<T extends object>(params: {
