@@ -44,9 +44,10 @@ jobs:
               'kenny@buildwithfern.com': 'kennyderek',
             };
 
-            // Parse "Requested by:" from PR body
+            // Parse "Requested by:" from PR body - look for the line at the end that starts with "Requested by:"
+            // Use multiline matching to find the line that starts with "Requested by:" (not example text in the description)
             const body = pr.body || '';
-            const requestedByMatch = body.match(/Requested by:.*?\(([^)]+)\)/i);
+            const requestedByMatch = body.match(/^Requested by:.*?\(([^)]+@[^)]+)\)/im);
             
             if (!requestedByMatch) {
               console.log('Could not find "Requested by:" in PR description');
