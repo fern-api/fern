@@ -1,6 +1,8 @@
 - version: 3.24.3
   changelogEntry:
-    - summary: Fix OAuth token provider to handle optional `expires_in` response property by falling back to a default expiration time of 1 hour.
+    - summary: |
+        Fix OAuth token provider to handle optional `expires_in` response property by falling back to a default expiration time of 1 hour.
+        Also fix OAuth request building to skip literal properties that are hardcoded in the request class.
       type: fix
   createdAt: "2025-12-15"
   irVersion: 61

@@ -1,7 +1,9 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - version: 1.20.3
   changelogEntry:
-    - summary: Fix OAuth token provider to handle optional `expires_in` response property by falling back to a default expiration time of 1 hour.
+    - summary: |
+        Fix OAuth request building to use pointer conversion for optional `client_id` and `client_secret` request fields,
+        and treat `expires_in` response property as a pointer type.
       type: fix
   createdAt: "2025-12-15"
   irVersion: 60
