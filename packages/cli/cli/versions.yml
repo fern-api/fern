@@ -1,12 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
-    - summary: Improve dynamic IR generation for inferred auth.
-      type: fix
-  irVersion: 62
-  createdAt: "2025-12-11"
-  version: 3.22.3
-
-- changelogEntry:
     - summary: |
         Add `request-body-as-grouped-schema` setting to OpenAPI import configuration. When enabled, request body schemas are always emitted as top-level types (grouped schemas) rather than being inlined. This ensures consistent behavior for both JSON/form and multipart request bodies.
 
@@ -21,6 +14,13 @@
       type: feat
   irVersion: 62
   createdAt: "2025-12-16"
+  version: 3.22.4
+
+- changelogEntry:
+    - summary: Improve dynamic IR generation for inferred auth.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-11"
   version: 3.22.3
 
 - changelogEntry:
