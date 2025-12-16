@@ -5,8 +5,8 @@ import { createFdrService, createVenusService } from "@fern-api/core";
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { FernIr } from "@fern-api/ir-sdk";
+import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { dynamic, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -157,6 +157,21 @@ export async function runRemoteGenerationForGenerator({
 
         interactiveTaskContext.logger.debug("Setting IR source configuration ...");
         ir.sourceConfig = sourceConfig;
+    }
+
+    // Upload dynamic IR for SDK generation (for dynamic snippets)
+    if (generatorInvocation.language != null && packageName != null && version != null && !isPreview) {
+        await uploadDynamicIRForSdkGeneration({
+            fdr,
+            organization,
+            version,
+            language: generatorInvocation.language,
+            packageName,
+            ir,
+            smartCasing: generatorInvocation.smartCasing,
+            dynamicGeneratorConfig,
+            context: interactiveTaskContext
+        });
     }
 
     const job = await createAndStartJob({
@@ -335,3 +350,79 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     features: undefined,
     exampleStyle: undefined
 };
+
+/**
+ * Uploads dynamic IR for SDK generation to enable dynamic snippets.
+ * This calls the getSdkDynamicIrUploadUrls endpoint to get presigned S3 URLs,
+ * generates the dynamic IR, and uploads it.
+ */
+async function uploadDynamicIRForSdkGeneration({
+    fdr,
+    organization,
+    version,
+    language,
+    packageName,
+    ir,
+    smartCasing,
+    dynamicGeneratorConfig,
+    context
+}: {
+    fdr: FdrClient;
+    organization: string;
+    version: string;
+    language: generatorsYml.GenerationLanguage;
+    packageName: string;
+    ir: IntermediateRepresentation;
+    smartCasing: boolean | undefined;
+    dynamicGeneratorConfig: dynamic.GeneratorConfig | undefined;
+    context: InteractiveTaskContext;
+}): Promise<void> {
+    context.logger.debug(`Uploading dynamic IR for ${language} SDK...`);
+
+    // Get presigned upload URLs from FDR
+    const uploadUrlsResponse = await fdr.api.v1.register.getSdkDynamicIrUploadUrls({
+        orgId: FdrAPI.OrgId(organization),
+        version,
+        snippetConfiguration: {
+            [language]: packageName
+        }
+    });
+
+    if (!uploadUrlsResponse.ok) {
+        // Log warning but don't fail the generation - dynamic IR upload is optional
+        context.logger.warn(`Failed to get dynamic IR upload URLs: ${uploadUrlsResponse.error.error}`);
+        return;
+    }
+
+    const uploadUrl = uploadUrlsResponse.body.uploadUrls[language]?.uploadUrl;
+    if (uploadUrl == null) {
+        context.logger.warn(`No upload URL returned for ${language}`);
+        return;
+    }
+
+    // Generate the dynamic IR
+    const dynamicIR = convertIrToDynamicSnippetsIr({
+        ir,
+        disableExamples: true,
+        smartCasing,
+        generationLanguage: language,
+        generatorConfig: dynamicGeneratorConfig
+    });
+
+    // Upload the dynamic IR to S3
+    const dynamicIRJson = JSON.stringify(dynamicIR);
+    const uploadResponse = await fetch(uploadUrl, {
+        method: "PUT",
+        body: dynamicIRJson,
+        headers: {
+            "Content-Type": "application/octet-stream",
+            "Content-Length": dynamicIRJson.length.toString()
+        }
+    });
+
+    if (uploadResponse.ok) {
+        context.logger.debug(`Successfully uploaded dynamic IR for ${language}`);
+    } else {
+        context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
+    }
+}

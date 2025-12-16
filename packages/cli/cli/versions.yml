@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Upload dynamic IR during SDK generation (`fern generate --group`) to enable dynamic snippets. This uploads language-specific IR to FDR for each generator, allowing dynamic code snippet generation in documentation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.24.0
+
+- changelogEntry:
     - summary: Update the default page actions to include ChatGPT, Claude, and Cursor.
       type: feat
   irVersion: 62
