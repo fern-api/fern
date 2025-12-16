@@ -8,7 +8,7 @@ import { OpenAPISettings } from "./OpenAPISettings";
 
 export declare namespace BaseOpenAPIWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
-        inlinePathParameters: boolean | undefined;
+        inlinePathParameters: generatorsYml.InlinePathParameters | undefined;
         objectQueryParameters: boolean | undefined;
         onlyIncludeReferencedSchemas: boolean | undefined;
         respectReadonlySchemas: boolean | undefined;
@@ -30,7 +30,7 @@ export declare namespace BaseOpenAPIWorkspace {
 }
 
 export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpenAPIWorkspace.Settings> {
-    public readonly inlinePathParameters: boolean | undefined;
+    public readonly inlinePathParameters: generatorsYml.InlinePathParameters | undefined;
     public readonly objectQueryParameters: boolean | undefined;
     public readonly onlyIncludeReferencedSchemas: boolean | undefined;
     public readonly respectReadonlySchemas: boolean | undefined;
@@ -123,7 +123,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
 }
 
 export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<BaseOpenAPIWorkspace.Settings> {
-    public inlinePathParameters: boolean | undefined;
+    public inlinePathParameters: generatorsYml.InlinePathParameters | undefined;
     public objectQueryParameters: boolean | undefined;
     public onlyIncludeReferencedSchemas: boolean | undefined;
     public respectReadonlySchemas: boolean | undefined;
