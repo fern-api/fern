@@ -98,6 +98,7 @@ runs:
           // - Include Critical, High, Medium, Low severities
           // - Exclude "wont-fix" fix state
           // - Exclude ignored CVEs
+          // - Only include CVEs that have a fix available
           const allowedSeverities = new Set(['Critical', 'High', 'Medium', 'Low']);
 
           const relevant = [];
@@ -123,6 +124,12 @@ runs:
               continue;
             }
 
+            // Skip if no fix is available
+            const fixVersions = vuln.fix?.versions || [];
+            if (fixVersions.length === 0) {
+              continue;
+            }
+
             // Skip if in ignored list
             if (ignoredCVEs.has(id)) {
               console.log(`Skipping ignored CVE: ${id}`);
@@ -144,7 +151,7 @@ runs:
               packageVersion,
               packageType,
               description: vuln.description || 'No description available',
-              fixVersions: vuln.fix?.versions || [],
+              fixVersions,
               dataSource: vuln.dataSource || '',
             });
           }
