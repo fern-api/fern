@@ -185,7 +185,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 // Handle optional expires_in with default fallback
                 // In Java, optional fields return Optional<T>, so use .orElse()
                 getMethodSpecBuilder.addStatement(
-                        "this.$L = $L(authResponse.get$L().orElse((int) $L))",
+                        "this.$L = $L(authResponse.get$L().orElse($L))",
                         EXPIRES_AT_FIELD_NAME,
                         GET_EXPIRES_AT_METHOD_NAME,
                         tokenPropertyName,
