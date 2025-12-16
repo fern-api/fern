@@ -28,6 +28,7 @@ class ConstructorParameter(BaseClientGeneratorConstructorParameter):
     is_basic: bool = False
     docs: typing.Optional[str] = None
     template: typing.Optional[Template] = None
+    header_default_value: typing.Optional[str] = None
 
 
 @dataclass
@@ -530,11 +531,16 @@ class ClientWrapperGenerator:
                                 writer.write_line(
                                     f"{param.constructor_parameter_name} = self.{param.getter_method.name}()"
                                 )
-                                writer.write_line(f"if {param.constructor_parameter_name} is not None:")
-                                with writer.indent():
+                                if param.header_default_value is not None:
                                     writer.write_line(
-                                        f'headers["{param.header_key}"] = {param.constructor_parameter_name}'
+                                        f'headers["{param.header_key}"] = {param.constructor_parameter_name} if {param.constructor_parameter_name} is not None else "{param.header_default_value}"'
                                     )
+                                else:
+                                    writer.write_line(f"if {param.constructor_parameter_name} is not None:")
+                                    with writer.indent():
+                                        writer.write_line(
+                                            f'headers["{param.header_key}"] = {param.constructor_parameter_name}'
+                                        )
                             else:
                                 writer.write_line(f'headers["{param.header_key}"] = self.{param.getter_method.name}()')
                         elif param.private_member_name is not None:
@@ -827,6 +833,55 @@ class ClientWrapperGenerator:
                     password_constructor_parameter,
                 ]
             )
+
+        # Add API version parameter if present
+        api_version = self._context.ir.api_version
+        if api_version is not None:
+            header_scheme = api_version.get_as_union()
+            if header_scheme.type == "header":
+                header_name = header_scheme.header.name.wire_value
+                enum_values = header_scheme.value.values
+                default_value = header_scheme.value.default
+
+                # Build the Literal type hint from enum values
+                version_values = [f'"{enum_value.name.wire_value}"' for enum_value in enum_values]
+                version_literal_expr = AST.Expression(", ".join(version_values))
+                version_type_hint = AST.TypeHint.literal(version_literal_expr)
+
+                # Make optional if there's a default value
+                if default_value is not None:
+                    version_type_hint = AST.TypeHint.optional(version_type_hint)
+
+                # Find the default value string
+                default_value_str = None
+                if default_value is not None:
+                    default_value_str = default_value.name.wire_value
+
+                version_constructor_parameter_name = "version"
+                version_private_member_name = "_version"
+
+                parameters.append(
+                    ConstructorParameter(
+                        constructor_parameter_name=version_constructor_parameter_name,
+                        private_member_name=version_private_member_name,
+                        type_hint=version_type_hint,
+                        initializer=(
+                            AST.Expression(f'{version_constructor_parameter_name}="{default_value_str}"')
+                            if default_value_str is not None
+                            else None
+                        ),
+                        getter_method=AST.FunctionDeclaration(
+                            name="get_version",
+                            signature=AST.FunctionSignature(
+                                return_type=version_type_hint,
+                            ),
+                            body=AST.CodeWriter(f"return self.{version_private_member_name}"),
+                        ),
+                        header_key=header_name,
+                        header_default_value=default_value_str,
+                        docs=f"The version of the API to use, sent as the {header_name} header.",
+                    )
+                )
 
         # Add generic headers parameter
         parameters.append(headers_constructor_parameter)

@@ -255,6 +255,9 @@ fixtures:
   csharp-xml-entities:
     - customConfig: null
       outputFolder: no-custom-config
+  version:
+    - customConfig: null
+      outputFolder: no-custom-config
 allowedFailures:
   - any-auth
   - csharp-namespace-collision:fully-qualified-namespaces

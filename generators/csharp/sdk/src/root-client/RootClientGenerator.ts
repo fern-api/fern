@@ -259,6 +259,24 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 value: this.csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
             });
         }
+
+        // Add API version header if present
+        const apiVersion = this.context.ir.apiVersion;
+        if (apiVersion != null && apiVersion.type === "header") {
+            const headerName = apiVersion.header.name.wireValue;
+            const defaultValue = apiVersion.value.default?.name.wireValue;
+            if (defaultValue != null) {
+                headerEntries.push({
+                    key: this.csharp.codeblock(`"${headerName}"`),
+                    value: this.csharp.codeblock(`version ?? "${defaultValue}"`)
+                });
+            } else {
+                headerEntries.push({
+                    key: this.csharp.codeblock(`"${headerName}"`),
+                    value: this.csharp.codeblock('version ?? ""')
+                });
+            }
+        }
         const headerDictionary = this.csharp.dictionary({
             keyType: this.Primitive.string,
             valueType: this.Primitive.string,
@@ -569,6 +587,26 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         }
         for (const header of this.context.ir.headers) {
             allParameters.push(this.getParameterForHeader(header));
+        }
+
+        // Add API version parameter if present
+        const apiVersion = this.context.ir.apiVersion;
+        if (apiVersion != null && apiVersion.type === "header") {
+            const headerName = apiVersion.header.name.wireValue;
+            const defaultValue = apiVersion.value.default?.name.wireValue;
+            allParameters.push({
+                name: "version",
+                docs: `The version of the API to use, sent as the ${headerName} header.`,
+                isOptional: defaultValue != null,
+                typeReference: TypeReference.primitive({
+                    v1: PrimitiveTypeV1.String,
+                    v2: PrimitiveTypeV2.string({
+                        default: undefined,
+                        validation: undefined
+                    })
+                }),
+                type: this.Primitive.string
+            });
         }
 
         for (const param of allParameters) {
