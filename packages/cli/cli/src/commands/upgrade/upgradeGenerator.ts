@@ -1,4 +1,5 @@
 import {
+    addDefaultDockerOrgIfNotPresent,
     getGeneratorNameOrThrow,
     getLatestGeneratorVersion,
     getPathToGeneratorsConfiguration,
@@ -135,7 +136,10 @@ export async function loadAndUpdateGenerators({
             }
             const generatorName = generator.get("name") as string;
 
-            if (generatorFilter != null && generatorName !== generatorFilter) {
+            // Normalize the generator filter to add default Docker org prefix if not present
+            const normalizedGeneratorFilter =
+                generatorFilter != null ? addDefaultDockerOrgIfNotPresent(generatorFilter) : undefined;
+            if (normalizedGeneratorFilter != null && generatorName !== normalizedGeneratorFilter) {
                 context.logger.debug(
                     `Skipping generator ${generatorName} as it does not match the filter: ${generatorFilter}`
                 );
