@@ -41,12 +41,8 @@ test:
     buildCommand:
       - ./gradlew :sdk:distTar
       - chmod +x install-gradle.sh && ./install-gradle.sh
-      - cd sdk
-      - tar -xvf build/distributions/sdk.tar -C .
-      # Build the v2 TypeScript generator
-      - cd ../../
-      - pnpm turbo run compile --filter @fern-api/java-sdk
-      - pnpm turbo run dist:cli --filter @fern-api/java-sdk
+      - cd sdk && tar -xvf build/distributions/sdk.tar -C .
+      - pnpm turbo run compile --filter @fern-api/java-sdk && pnpm turbo run dist:cli --filter @fern-api/java-sdk
     runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli {CONFIG_PATH}
     env:
       # Path to Node.js executable (uses system node)
