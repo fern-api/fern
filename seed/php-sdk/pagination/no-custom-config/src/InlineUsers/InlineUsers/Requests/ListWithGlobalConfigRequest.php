@@ -18,8 +18,7 @@ class ListWithGlobalConfigRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    )
-    {
+    ) {
         $this->offset = $values['offset'] ?? null;
     }
 }

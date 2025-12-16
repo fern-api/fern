@@ -148,7 +148,6 @@ SeedErrorsClient client = SeedErrorsClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.errors.SeedErrorsClient;
 import com.seed.errors.core.RequestOptions;
@@ -156,7 +155,7 @@ import com.seed.errors.core.RequestOptions;
 // Client level
 SeedErrorsClient client = SeedErrorsClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -164,7 +163,7 @@ client.simple().fooWithoutEndpointError(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

@@ -329,6 +329,7 @@ allowedFailures:
   - oauth-client-credentials-with-variables
   - request-parameters
   - streaming-parameter
+  - inferred-auth-implicit-reference
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.

@@ -18,8 +18,7 @@ class GetAttemptedMigrationsRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
+    ) {
         $this->adminKeyHeader = $values['adminKeyHeader'];
     }
 }

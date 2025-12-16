@@ -32,8 +32,9 @@ class CreatePlaylistRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->datetime = $values['datetime'];$this->optionalDatetime = $values['optionalDatetime'] ?? null;$this->body = $values['body'];
+    ) {
+        $this->datetime = $values['datetime'];
+        $this->optionalDatetime = $values['optionalDatetime'] ?? null;
+        $this->body = $values['body'];
     }
 }

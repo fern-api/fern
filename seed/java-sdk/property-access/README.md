@@ -165,7 +165,6 @@ SeedPropertyAccessClient client = SeedPropertyAccessClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.propertyAccess.SeedPropertyAccessClient;
 import com.seed.propertyAccess.core.RequestOptions;
@@ -173,7 +172,7 @@ import com.seed.propertyAccess.core.RequestOptions;
 // Client level
 SeedPropertyAccessClient client = SeedPropertyAccessClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -181,7 +180,7 @@ client.createUser(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

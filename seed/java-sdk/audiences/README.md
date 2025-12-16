@@ -165,7 +165,6 @@ SeedAudiencesClient client = SeedAudiencesClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.audiences.SeedAudiencesClient;
 import com.seed.audiences.core.RequestOptions;
@@ -173,7 +172,7 @@ import com.seed.audiences.core.RequestOptions;
 // Client level
 SeedAudiencesClient client = SeedAudiencesClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -181,7 +180,7 @@ client.foo().find(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

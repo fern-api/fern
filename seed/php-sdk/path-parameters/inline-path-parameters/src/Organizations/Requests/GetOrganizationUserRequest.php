@@ -30,8 +30,9 @@ class GetOrganizationUserRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->tenantId = $values['tenantId'];$this->organizationId = $values['organizationId'];$this->userId = $values['userId'];
+    ) {
+        $this->tenantId = $values['tenantId'];
+        $this->organizationId = $values['organizationId'];
+        $this->userId = $values['userId'];
     }
 }

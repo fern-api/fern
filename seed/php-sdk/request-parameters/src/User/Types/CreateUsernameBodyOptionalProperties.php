@@ -34,15 +34,17 @@ class CreateUsernameBodyOptionalProperties extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    )
-    {
-        $this->username = $values['username'] ?? null;$this->password = $values['password'] ?? null;$this->name = $values['name'] ?? null;
+    ) {
+        $this->username = $values['username'] ?? null;
+        $this->password = $values['password'] ?? null;
+        $this->name = $values['name'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }
