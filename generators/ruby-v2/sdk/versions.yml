@@ -5,8 +5,8 @@
   changelogEntry:
     - type: feat
       summary: |
-        Add `enablePublishWorkflow` config option for RubyGems.org OIDC publishing:
-        - When enabled, generates a `publish` job in CI that uses `rubygems/release-gem@v1` for OIDC trusted publishing
+        Add RubyGems.org OIDC publishing workflow to generated CI:
+        - Generates a `publish` job in CI that uses `rubygems/release-gem@v1` for OIDC trusted publishing
         - Publish job runs on tag pushes after lint and test jobs pass
         - Simplify wire tests execution by running them inline with regular tests using `RUN_WIRE_TESTS=true` env var instead of a separate CI job
   irVersion: 61

@@ -35,3 +35,26 @@ jobs:
       - name: Run Tests
         run: RUN_WIRE_TESTS=true bundle exec rake test
 
+  publish:
+    name: Publish to RubyGems.org
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+
+    permissions:
+      id-token: write
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Publish to RubyGems
+        uses: rubygems/release-gem@v1
+
