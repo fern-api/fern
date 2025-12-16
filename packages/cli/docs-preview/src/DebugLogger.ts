@@ -1,6 +1,10 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { appendFile, mkdir, writeFile } from "fs/promises";
+import { homedir } from "os";
 import path from "path";
+
+const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
+const APP_PREVIEW_FOLDER_NAME = "app-preview";
 
 /**
  * Log level for debug messages
@@ -112,7 +116,7 @@ export class DebugLogger {
     private initialized = false;
     private sessionStartTime: number;
 
-    constructor(private fernFolderPath: AbsoluteFilePath) {
+    constructor() {
         this.sessionStartTime = Date.now();
     }
 
@@ -124,11 +128,9 @@ export class DebugLogger {
             return;
         }
 
-        const appPreviewDir = join(
-            this.fernFolderPath,
-            RelativeFilePath.of(".fern"),
-            RelativeFilePath.of("app-preview")
-        );
+        // Use the same location as the bundle download: ~/.fern/app-preview/
+        const localStorageFolder = join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
+        const appPreviewDir = join(localStorageFolder, RelativeFilePath.of(APP_PREVIEW_FOLDER_NAME));
 
         if (!(await doesPathExist(appPreviewDir))) {
             await mkdir(appPreviewDir, { recursive: true });
