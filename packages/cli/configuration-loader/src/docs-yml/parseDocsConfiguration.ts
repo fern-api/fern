@@ -331,9 +331,9 @@ function convertPageActions(
             askAi: pageActions.options?.askAi ?? true,
             copyPage: pageActions.options?.copyPage ?? true,
             viewAsMarkdown: pageActions.options?.viewAsMarkdown ?? true,
-            openAi: pageActions.options?.chatgpt ?? false,
-            claude: pageActions.options?.claude ?? false,
-            cursor: pageActions.options?.cursor ?? false,
+            openAi: pageActions.options?.chatgpt ?? true,
+            claude: pageActions.options?.claude ?? true,
+            cursor: pageActions.options?.cursor ?? true,
             vscode: pageActions.options?.vscode ?? false,
             custom: (pageActions.options?.custom ?? []).map((action) =>
                 convertCustomPageAction(action, absoluteFilepathToDocsConfig)
