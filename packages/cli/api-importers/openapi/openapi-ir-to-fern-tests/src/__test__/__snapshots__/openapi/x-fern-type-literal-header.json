@@ -1,0 +1,130 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "get_user": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "headers": {
+                    "X-Optional-String": "[object Object]",
+                    "X-Required-Literal": "required-value",
+                    "x-extend-api-version": "2025-04-21",
+                  },
+                  "path-parameters": {
+                    "userId": "userId",
+                  },
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/user/{userId}",
+              "request": {
+                "name": "GetUserRequest",
+                "path-parameters": {
+                  "userId": "string",
+                },
+              },
+              "response": {
+                "docs": "Success!",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get_user:
+      path: /user/{userId}
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetUserRequest
+        path-parameters:
+          userId: string
+      response:
+        docs: Success!
+        type: string
+        status-code: 200
+      examples:
+        - path-parameters:
+            userId: userId
+          headers:
+            x-extend-api-version: '2025-04-21'
+            X-Required-Literal: required-value
+            X-Optional-String: '[object Object]'
+          response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test x-fern-type literal on header parameters",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "headers": {
+        "X-Optional-String": {
+          "name": "optionalString",
+          "type": "optional<string>",
+        },
+        "X-Required-Literal": {
+          "name": "requiredLiteral",
+          "type": "literal<"required-value">",
+        },
+        "x-extend-api-version": {
+          "docs": "API version to use for the request. If you do not specify a version, you will either receive a `400 Bad Request` or be set to a previous legacy version.",
+          "name": "extendApiVersion",
+          "type": "literal<"2025-04-21">",
+        },
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test x-fern-type literal on header parameters
+headers:
+  x-extend-api-version:
+    type: literal<"2025-04-21">
+    name: extendApiVersion
+    docs: >-
+      API version to use for the request. If you do not specify a version, you
+      will either receive a `400 Bad Request` or be set to a previous legacy
+      version.
+  X-Required-Literal:
+    type: literal<"required-value">
+    name: requiredLiteral
+  X-Optional-String:
+    type: optional<string>
+    name: optionalString
+",
+  },
+}

@@ -66,9 +66,18 @@ export function convertParameters({
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
         const generatedName = getGeneratedTypeName(parameterBreadcrumbs, context.options.preserveSchemaIds);
 
+        // Check if the parameter's schema has x-fern-type that is a literal type.
+        // Literal types should not be wrapped in optional/nullable since they have a fixed value.
+        const fernType = getExtension<string>(
+            resolvedParameter.schema ?? resolvedParameter,
+            FernOpenAPIExtension.TYPE_DEFINITION
+        );
+        const isLiteralFernType = fernType != null && fernType.startsWith("literal<");
+        const treatAsRequired = isRequired || isLiteralFernType;
+
         const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
-            ? [false, !isRequired]
-            : [!isRequired, false];
+            ? [false, !treatAsRequired]
+            : [!treatAsRequired, false];
 
         let schema =
             resolvedParameter.schema != null

@@ -1,0 +1,45 @@
+openapi: 3.1.0
+info:
+  title: Test x-fern-type literal on header parameters
+  version: 1.0.0
+components:
+  parameters:
+    ApiVersion:
+      name: x-extend-api-version
+      in: header
+      x-fern-type: literal<"2025-04-21">
+      schema:
+        type: string
+        x-fern-type: literal<"2025-04-21">
+      description: API version to use for the request. If you do not specify a version, you will either receive a `400 Bad Request` or be set to a previous legacy version.
+      example: "2025-04-21"
+paths:
+  "/user/{userId}":
+    get:
+      operationId: get_user
+      parameters:
+        - $ref: "#/components/parameters/ApiVersion"
+        - in: path
+          name: userId
+          schema:
+            type: string
+          required: true
+        - in: header
+          name: X-Required-Literal
+          x-fern-type: literal<"required-value">
+          schema:
+            type: string
+            x-fern-type: literal<"required-value">
+          required: true
+        - in: header
+          name: X-Optional-String
+          schema:
+            type: string
+          required: false
+      responses:
+        "200":
+          description: "Success!"
+          content:
+            application/json:
+              schema:
+                type: string
