@@ -34,6 +34,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "resolve-aliases": ResolveAliases.optional(),
         "group-multi-api-environments": core.serialization.boolean().optional(),
         "default-integer-format": DefaultIntegerFormat.optional(),
+        "request-body-as-grouped-schema": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -56,5 +57,6 @@ export declare namespace OpenApiSettingsSchema {
         "resolve-aliases"?: ResolveAliases.Raw | null;
         "group-multi-api-environments"?: boolean | null;
         "default-integer-format"?: DefaultIntegerFormat.Raw | null;
+        "request-body-as-grouped-schema"?: boolean | null;
     }
 }

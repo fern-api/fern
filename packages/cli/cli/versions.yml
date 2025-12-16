@@ -1,6 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add `request-body-as-grouped-schema` setting to OpenAPI import configuration. When enabled, request body schemas are always emitted as top-level types (grouped schemas) rather than being inlined. This ensures consistent behavior for both JSON/form and multipart request bodies.
+
+        ```yaml
+        # generators.yml
+        api:
+          specs:
+            - openapi: openapi.yml
+              settings:
+                request-body-as-grouped-schema: true
+        ```
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.22.3
+
+- changelogEntry:
+    - summary: |
         Fix OpenAPI example parsing to preserve explicit `null` values. Previously, explicit `null` values in OpenAPI response examples (e.g., `balance_max: null` for unbounded tiers) were being incorrectly replaced with schema example values or generated placeholders.
       type: fix
   irVersion: 62

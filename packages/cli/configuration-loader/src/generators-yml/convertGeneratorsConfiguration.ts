@@ -36,7 +36,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     coerceOptionalSchemasToNullable: undefined,
     removeDiscriminantsFromSchemas: undefined,
     pathParameterOrder: undefined,
-    defaultIntegerFormat: undefined
+    defaultIntegerFormat: undefined,
+    requestBodyAsGroupedSchema: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -127,7 +128,8 @@ function parseOpenApiDefinitionSettingsSchema(
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
-        defaultIntegerFormat: settings?.["default-integer-format"]
+        defaultIntegerFormat: settings?.["default-integer-format"],
+        requestBodyAsGroupedSchema: settings?.["request-body-as-grouped-schema"]
     };
 }
 

@@ -464,6 +464,13 @@ types:
           The default format to use for integer types when no format is specified in the OpenAPI schema.
           Defaults to int32.
         default: int32
+      request-body-as-grouped-schema:
+        type: optional<boolean>
+        docs: |
+          If true, request body schemas will always be emitted as top-level types (grouped schemas) rather than being inlined.
+          This ensures consistent behavior for both JSON/form and multipart request bodies.
+          Defaults to false.
+        default: false
 
   ResolveAliases:
     discriminated: false

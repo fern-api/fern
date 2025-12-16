@@ -355,7 +355,9 @@ export function convertRequest({
 
         return RequestWithExample.multipart({
             name:
-                isReferenceObject(multipartSchema) && context.getNumberOfOccurrencesForRef(multipartSchema) === 1
+                isReferenceObject(multipartSchema) &&
+                context.getNumberOfOccurrencesForRef(multipartSchema) === 1 &&
+                !context.options.requestBodyAsGroupedSchema
                     ? resolvedMultipartSchema.id
                     : undefined,
             description: resolvedMultipartSchema.schema.description,

@@ -60,4 +60,10 @@ export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSch
      * Defaults to int32.
      */
     "default-integer-format"?: FernDefinition.DefaultIntegerFormat;
+    /**
+     * If true, request body schemas will always be emitted as top-level types (grouped schemas) rather than being inlined.
+     * This ensures consistent behavior for both JSON/form and multipart request bodies.
+     * Defaults to false.
+     */
+    "request-body-as-grouped-schema"?: boolean;
 }
