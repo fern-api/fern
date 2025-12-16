@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: AllOf Ref Nullable Test API
+  version: 1.0.0
+  description: Test API for allOf with single $ref and nullable (resolves to any bug)
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /customer:
+    get:
+      tags:
+        - Customer
+      summary: Get customer information
+      description: Demonstrates allOf with single $ref and nullable pattern
+      operationId: getCustomer
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetCustomerResponse"
+
+components:
+  schemas:
+    CustomerInfo:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+      required:
+        - id
+        - name
+      additionalProperties: false
+
+    GetCustomerResponse:
+      type: object
+      properties:
+        customer:
+          allOf:
+            - $ref: "#/components/schemas/CustomerInfo"
+          nullable: true
+          description: The object representing the customer, will be null on the first purchase.
+      required:
+        - customer
+      additionalProperties: false

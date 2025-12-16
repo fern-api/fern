@@ -7,10 +7,11 @@
     "endpoints": [],
     "pointsTo": undefined,
     "subpackages": [
-      "subpackage_contact",
+      "subpackage_customer",
     ],
     "types": [
-      "AddContactArgs",
+      "CustomerInfo",
+      "GetCustomerResponse",
     ],
     "webhooks": [],
     "websockets": [],
@@ -27,7 +28,7 @@
     "typescriptSdk": undefined,
   },
   "subpackages": {
-    "subpackage_contact": {
+    "subpackage_customer": {
       "description": undefined,
       "displayName": undefined,
       "endpoints": [
@@ -36,7 +37,7 @@
           "authV2": undefined,
           "availability": undefined,
           "defaultEnvironment": "https://api.example.com/v1",
-          "description": "Demonstrates allOf containing anyOf pattern",
+          "description": "Demonstrates allOf with single $ref and nullable pattern",
           "environments": [
             {
               "baseUrl": "https://api.example.com/v1",
@@ -51,37 +52,38 @@
               "description": "",
               "headers": {},
               "name": undefined,
-              "path": "/contact",
+              "path": "/customer",
               "pathParameters": {},
               "queryParameters": {},
-              "requestBody": {
-                "phoneNumber": "string",
-              },
-              "requestBodyV3": {
-                "type": "json",
-                "value": {
-                  "phoneNumber": "string",
-                },
-              },
+              "requestBody": undefined,
+              "requestBodyV3": undefined,
               "responseBody": {
-                "success": true,
+                "customer": {
+                  "email": "string",
+                  "id": "string",
+                  "name": "string",
+                },
               },
               "responseBodyV3": {
                 "type": "json",
                 "value": {
-                  "success": true,
+                  "customer": {
+                    "email": "string",
+                    "id": "string",
+                    "name": "string",
+                  },
                 },
               },
               "responseStatusCode": 200,
             },
           ],
           "headers": [],
-          "id": "addContact",
+          "id": "getCustomer",
           "includeInApiExplorer": undefined,
-          "method": "POST",
+          "method": "GET",
           "multiAuth": undefined,
-          "name": "Add contact information",
-          "originalEndpointId": "endpoint_contact.addContact",
+          "name": "Get customer information",
+          "originalEndpointId": "endpoint_customer.getCustomer",
           "path": {
             "parts": [
               {
@@ -90,7 +92,7 @@
               },
               {
                 "type": "literal",
-                "value": "/contact",
+                "value": "/customer",
               },
             ],
             "pathParameters": [],
@@ -99,41 +101,9 @@
             "type": "rest",
           },
           "queryParameters": [],
-          "request": {
-            "description": undefined,
-            "type": {
-              "contentType": "application/json",
-              "description": undefined,
-              "shape": {
-                "type": "reference",
-                "value": {
-                  "default": undefined,
-                  "type": "id",
-                  "value": "AddContactArgs",
-                },
-              },
-              "type": "json",
-            },
-          },
+          "request": undefined,
           "requestsV2": {
-            "requests": [
-              {
-                "description": undefined,
-                "type": {
-                  "contentType": "application/json",
-                  "description": undefined,
-                  "shape": {
-                    "type": "reference",
-                    "value": {
-                      "default": undefined,
-                      "type": "id",
-                      "value": "AddContactArgs",
-                    },
-                  },
-                  "type": "json",
-                },
-              },
-            ],
+            "requests": undefined,
           },
           "response": {
             "description": "Success",
@@ -144,7 +114,7 @@
               "value": {
                 "default": undefined,
                 "type": "id",
-                "value": "Contact_addContact_Response_200",
+                "value": "GetCustomerResponse",
               },
             },
           },
@@ -159,7 +129,7 @@
                   "value": {
                     "default": undefined,
                     "type": "id",
-                    "value": "Contact_addContact_Response_200",
+                    "value": "GetCustomerResponse",
                   },
                 },
               },
@@ -168,9 +138,9 @@
           "slug": undefined,
         },
       ],
-      "name": "contact",
+      "name": "customer",
       "pointsTo": undefined,
-      "subpackageId": "subpackage_contact",
+      "subpackageId": "subpackage_customer",
       "subpackages": [],
       "types": [],
       "webhooks": [],
@@ -178,44 +148,11 @@
     },
   },
   "types": {
-    "AddContactArgs": {
+    "CustomerInfo": {
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
-      "name": "AddContactArgs",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "availability": undefined,
-            "description": undefined,
-            "displayName": "AddContactArgs0",
-            "type": {
-              "default": undefined,
-              "type": "id",
-              "value": "AddContactArgs0",
-            },
-            "typeName": "AddContactArgs0",
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "displayName": "AddContactArgs1",
-            "type": {
-              "default": undefined,
-              "type": "id",
-              "value": "AddContactArgs1",
-            },
-            "typeName": "AddContactArgs1",
-          },
-        ],
-      },
-    },
-    "AddContactArgs0": {
-      "availability": undefined,
-      "description": undefined,
-      "displayName": undefined,
-      "name": "AddContactArgs0",
+      "name": "CustomerInfo",
       "shape": {
         "extends": [],
         "extraProperties": undefined,
@@ -223,79 +160,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "merchantId",
-            "propertyAccess": undefined,
-            "valueType": {
-              "defaultValue": undefined,
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "default": undefined,
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "regex": undefined,
-                  "type": "string",
-                },
-              },
-              "type": "optional",
-            },
-          },
-          {
-            "availability": undefined,
-            "description": "Phone number",
-            "key": "phoneNumber",
-            "propertyAccess": undefined,
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": "^\d{10}$",
-                "type": "string",
-              },
-            },
-          },
-        ],
-        "type": "object",
-      },
-    },
-    "AddContactArgs1": {
-      "availability": undefined,
-      "description": undefined,
-      "displayName": undefined,
-      "name": "AddContactArgs1",
-      "shape": {
-        "extends": [],
-        "extraProperties": undefined,
-        "properties": [
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "merchantId",
-            "propertyAccess": undefined,
-            "valueType": {
-              "defaultValue": undefined,
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "default": undefined,
-                  "format": undefined,
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "regex": undefined,
-                  "type": "string",
-                },
-              },
-              "type": "optional",
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "email",
+            "key": "id",
             "propertyAccess": undefined,
             "valueType": {
               "type": "primitive",
@@ -309,23 +174,27 @@
               },
             },
           },
-        ],
-        "type": "object",
-      },
-    },
-    "Contact_addContact_Response_200": {
-      "availability": undefined,
-      "description": undefined,
-      "displayName": undefined,
-      "name": "Contact_addContact_Response_200",
-      "shape": {
-        "extends": [],
-        "extraProperties": undefined,
-        "properties": [
           {
             "availability": undefined,
             "description": undefined,
-            "key": "success",
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "email",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -333,10 +202,41 @@
                 "type": "primitive",
                 "value": {
                   "default": undefined,
-                  "type": "boolean",
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
                 },
               },
               "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "GetCustomerResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "GetCustomerResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "The object representing the customer, will be null on the first purchase.",
+            "key": "customer",
+            "propertyAccess": undefined,
+            "valueType": {
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "CustomerInfo",
+              },
+              "type": "nullable",
             },
           },
         ],

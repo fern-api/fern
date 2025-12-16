@@ -2412,18 +2412,18 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/company-file-ref-examples-ir.snap");
     });
 
-    it("should handle OpenAPI with allOf containing anyOf (undiscriminated union)", async () => {
-        // Test OpenAPI spec with allOf that contains anyOf as one of its items
-        // This pattern results in allOf resolving to any in an undiscriminated union context
+    it("should handle OpenAPI with allOf wrapping single $ref with nullable", async () => {
+        // Test OpenAPI spec with allOf containing a single $ref plus nullable/description
+        // This pattern can incorrectly resolve to any in docs (customer-reported bug)
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
-                RelativeFilePath.of("fixtures/allOf-anyOf-undiscriminated")
+                RelativeFilePath.of("fixtures/allOf-ref-nullable")
             ),
             context,
             cliVersion: "0.0.0",
-            workspaceName: "allOf-anyOf-undiscriminated"
+            workspaceName: "allOf-ref-nullable"
         });
 
         expect(workspace.didSucceed).toBe(true);
@@ -2473,9 +2473,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(services.length).toBeGreaterThan(0);
 
         // Snapshot the complete output for regression testing
-        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/allOf-anyOf-undiscriminated-fdr.snap");
-        await expect(intermediateRepresentation).toMatchFileSnapshot(
-            "__snapshots__/allOf-anyOf-undiscriminated-ir.snap"
-        );
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/allOf-ref-nullable-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/allOf-ref-nullable-ir.snap");
     });
 });
