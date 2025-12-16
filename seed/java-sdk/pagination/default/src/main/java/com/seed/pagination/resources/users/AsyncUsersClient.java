@@ -17,6 +17,7 @@ import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForO
 import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.User;
@@ -232,5 +233,18 @@ public class AsyncUsersClient {
     public CompletableFuture<SyncPagingIterable<String>> listWithGlobalConfig(
             ListWithGlobalConfigRequest request, RequestOptions requestOptions) {
         return this.rawClient.listWithGlobalConfig(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithOptionalData() {
+        return this.rawClient.listWithOptionalData().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithOptionalData(ListUsersOptionalDataRequest request) {
+        return this.rawClient.listWithOptionalData(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<SyncPagingIterable<User>> listWithOptionalData(
+            ListUsersOptionalDataRequest request, RequestOptions requestOptions) {
+        return this.rawClient.listWithOptionalData(request, requestOptions).thenApply(response -> response.body());
     }
 }

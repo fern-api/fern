@@ -2272,6 +2272,160 @@
               "_postman_previewlanguage": "json"
             }
           ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "List With Optional Data",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users/optional-data?page=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "optional-data"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "description": "Defaults to first page",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users/optional-data?page=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    "optional-data"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "description": "Defaults to first page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 2,\n            \"starting_after\": \"next_cursor\"\n        },\n        \"per_page\": 10,\n        \"total_page\": 5\n    },\n    \"total_count\": 50,\n    \"data\": [\n        {\n            \"name\": \"Alice\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"Bob\",\n            \"id\": 2\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users/optional-data?page=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    "optional-data"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "description": "Defaults to first page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"hasNextPage\": false,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 2,\n            \"starting_after\": \"next_cursor\"\n        },\n        \"per_page\": 10,\n        \"total_page\": 1\n    },\n    \"total_count\": 0\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users/optional-data?page=1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    "optional-data"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "description": "Defaults to first page",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"hasNextPage\": true,\n    \"page\": {\n        \"page\": 1,\n        \"next\": {\n            \"page\": 1,\n            \"starting_after\": \"starting_after\"\n        },\n        \"per_page\": 1,\n        \"total_page\": 1\n    },\n    \"total_count\": 1,\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

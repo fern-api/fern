@@ -29,15 +29,16 @@ class NonVoidFunctionSignature extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->parameters = $values['parameters'];$this->returnType = $values['returnType'];
+    ) {
+        $this->parameters = $values['parameters'];
+        $this->returnType = $values['returnType'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

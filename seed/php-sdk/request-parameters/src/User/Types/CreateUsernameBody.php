@@ -34,15 +34,17 @@ class CreateUsernameBody extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->username = $values['username'];$this->password = $values['password'];$this->name = $values['name'];
+    ) {
+        $this->username = $values['username'];
+        $this->password = $values['password'];
+        $this->name = $values['name'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

@@ -1688,6 +1688,67 @@ the next page of results.
 </dl>
 </details>
 
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_usernames_with_optional_response</a>(starting_after: Option<Option<String>>) -> Result<Option<UsernameCursor>, ApiError></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_cursor_pagination(
+            &ListWithCursorPaginationQueryRequest {
+                starting_after: Some("starting_after".to_string()),
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**starting_after:** `Option<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_global_config</a>(offset: Option<Option<i64>>) -> Result<UsernameContainer, ApiError></code></summary>
 <dl>
 <dd>
@@ -1730,6 +1791,59 @@ async fn main() {
 <dd>
 
 **offset:** `Option<i64>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_optional_data</a>(page: Option<Option<i64>>) -> Result<ListUsersOptionalDataPaginationResponse, ApiError></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_optional_data(&ListWithOptionalDataQueryRequest { page: Some(1) }, None)
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Option<i64>` — Defaults to first page
     
 </dd>
 </dl>

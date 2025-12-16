@@ -33,8 +33,9 @@ class FindRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    )
-    {
-        $this->optionalString = $values['optionalString'] ?? null;$this->publicProperty = $values['publicProperty'] ?? null;$this->privateProperty = $values['privateProperty'] ?? null;
+    ) {
+        $this->optionalString = $values['optionalString'] ?? null;
+        $this->publicProperty = $values['publicProperty'] ?? null;
+        $this->privateProperty = $values['privateProperty'] ?? null;
     }
 }

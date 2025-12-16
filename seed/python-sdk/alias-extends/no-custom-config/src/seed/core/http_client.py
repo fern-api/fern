@@ -261,6 +261,26 @@ class HttpClient:
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
+        # Compute encoded params separately to avoid passing empty list to httpx
+        # (httpx strips existing query params from URL when params=[] is passed)
+        _encoded_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    remove_omit_from_dict(
+                        {
+                            **(params if params is not None else {}),
+                            **(
+                                request_options.get("additional_query_parameters", {}) or {}
+                                if request_options is not None
+                                else {}
+                            ),
+                        },
+                        omit,
+                    )
+                )
+            )
+        )
+
         response = self.httpx_client.request(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
@@ -273,23 +293,7 @@ class HttpClient:
                     }
                 )
             ),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        remove_omit_from_dict(
-                            {
-                                **(params if params is not None else {}),
-                                **(
-                                    request_options.get("additional_query_parameters", {}) or {}
-                                    if request_options is not None
-                                    else {}
-                                ),
-                            },
-                            omit,
-                        )
-                    )
-                )
-            ),
+            params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
             content=content,
@@ -360,6 +364,26 @@ class HttpClient:
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
+        # Compute encoded params separately to avoid passing empty list to httpx
+        # (httpx strips existing query params from URL when params=[] is passed)
+        _encoded_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    remove_omit_from_dict(
+                        {
+                            **(params if params is not None else {}),
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        },
+                        omit,
+                    )
+                )
+            )
+        )
+
         with self.httpx_client.stream(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
@@ -372,23 +396,7 @@ class HttpClient:
                     }
                 )
             ),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        remove_omit_from_dict(
-                            {
-                                **(params if params is not None else {}),
-                                **(
-                                    request_options.get("additional_query_parameters", {})
-                                    if request_options is not None
-                                    else {}
-                                ),
-                            },
-                            omit,
-                        )
-                    )
-                )
-            ),
+            params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
             content=content,
@@ -473,6 +481,26 @@ class AsyncHttpClient:
         # Get headers (supports async token providers)
         _headers = await self._get_headers()
 
+        # Compute encoded params separately to avoid passing empty list to httpx
+        # (httpx strips existing query params from URL when params=[] is passed)
+        _encoded_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    remove_omit_from_dict(
+                        {
+                            **(params if params is not None else {}),
+                            **(
+                                request_options.get("additional_query_parameters", {}) or {}
+                                if request_options is not None
+                                else {}
+                            ),
+                        },
+                        omit,
+                    )
+                )
+            )
+        )
+
         # Add the input to each of these and do None-safety checks
         response = await self.httpx_client.request(
             method=method,
@@ -486,23 +514,7 @@ class AsyncHttpClient:
                     }
                 )
             ),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        remove_omit_from_dict(
-                            {
-                                **(params if params is not None else {}),
-                                **(
-                                    request_options.get("additional_query_parameters", {}) or {}
-                                    if request_options is not None
-                                    else {}
-                                ),
-                            },
-                            omit,
-                        )
-                    )
-                )
-            ),
+            params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
             content=content,
@@ -575,6 +587,26 @@ class AsyncHttpClient:
         # Get headers (supports async token providers)
         _headers = await self._get_headers()
 
+        # Compute encoded params separately to avoid passing empty list to httpx
+        # (httpx strips existing query params from URL when params=[] is passed)
+        _encoded_params = encode_query(
+            jsonable_encoder(
+                remove_none_from_dict(
+                    remove_omit_from_dict(
+                        {
+                            **(params if params is not None else {}),
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        },
+                        omit=omit,
+                    )
+                )
+            )
+        )
+
         async with self.httpx_client.stream(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
@@ -587,23 +619,7 @@ class AsyncHttpClient:
                     }
                 )
             ),
-            params=encode_query(
-                jsonable_encoder(
-                    remove_none_from_dict(
-                        remove_omit_from_dict(
-                            {
-                                **(params if params is not None else {}),
-                                **(
-                                    request_options.get("additional_query_parameters", {})
-                                    if request_options is not None
-                                    else {}
-                                ),
-                            },
-                            omit=omit,
-                        )
-                    )
-                )
-            ),
+            params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
             content=content,

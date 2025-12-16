@@ -6,7 +6,13 @@ public partial class SeedWebsocketAuthClient
 {
     private readonly RawClient _client;
 
-    public SeedWebsocketAuthClient(ClientOptions? clientOptions = null)
+    public SeedWebsocketAuthClient(
+        string xApiKey,
+        string clientId,
+        string clientSecret,
+        string? scope = null,
+        ClientOptions? clientOptions = null
+    )
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
@@ -25,6 +31,19 @@ public partial class SeedWebsocketAuthClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
+        var inferredAuthProvider = new InferredAuthTokenProvider(
+            xApiKey,
+            clientId,
+            clientSecret,
+            scope,
+            new AuthClient(new RawClient(clientOptions.Clone()))
+        );
+        clientOptions.Headers["Authorization"] =
+            new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+                (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))
+                    .First()
+                    .Value
+            );
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
     }

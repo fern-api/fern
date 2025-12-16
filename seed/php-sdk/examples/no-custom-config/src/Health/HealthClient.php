@@ -6,7 +6,7 @@ use Seed\Health\Service\ServiceClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class HealthClient 
+class HealthClient
 {
     /**
      * @var ServiceClient $service
@@ -39,11 +39,10 @@ class HealthClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->service = new ServiceClient($this->client, $this->options);
