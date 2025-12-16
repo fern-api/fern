@@ -126,6 +126,7 @@
     "wrapReferencesToNullableInOptional": false,
     "coerceOptionalSchemasToNullable": false,
     "removeDiscriminantsFromSchemas": "always",
-    "defaultIntegerFormat": "int32"
+    "defaultIntegerFormat": "int32",
+    "requestBodyAsGroupedSchema": false
   }
 }
