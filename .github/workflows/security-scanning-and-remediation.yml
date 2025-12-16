@@ -354,6 +354,9 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Install
+        uses: ./.github/actions/install
+
       - name: Build the Java SDK distribution tar (Gradle)
         run: cd generators/java && ./gradlew :sdk:distTar
 
