@@ -183,15 +183,6 @@ class EndpointGenerator:
             )
             writer.write_line()
 
-            writer.write_line("# this is necessary for FastAPI to find forward-ref'ed type hints.")
-            writer.write_line("# https://github.com/tiangolo/fastapi/pull/5077")
-            writer.write_line(
-                f"{_TRY_EXCEPT_WRAPPER_NAME}.__globals__.update("
-                + self._get_reference_to_method_on_cls()
-                + ".__globals__)"
-            )
-            writer.write_line()
-
             writer.write(f"{EndpointGenerator._INIT_ENDPOINT_ROUTER_ARG}.")
             writer.write(convert_http_method_to_fastapi_method_name(self._endpoint.method))
             writer.write_line("(")

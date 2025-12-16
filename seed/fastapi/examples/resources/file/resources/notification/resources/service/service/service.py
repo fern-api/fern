@@ -68,10 +68,6 @@ class AbstractFileNotificationServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_exception.__globals__)
-
         router.get(
             path="/file/notification/{notification_id}",
             response_model=Exception,
