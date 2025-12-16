@@ -358,22 +358,24 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     }
 
     private boolean isLiteralProperty(RequestProperty requestProperty) {
-        TypeReference valueType = requestProperty.getProperty().visit(new RequestPropertyValue.Visitor<TypeReference>() {
-            @Override
-            public TypeReference visitQuery(QueryParameter query) {
-                return query.getValueType();
-            }
+        TypeReference valueType = requestProperty
+                .getProperty()
+                .visit(new RequestPropertyValue.Visitor<TypeReference>() {
+                    @Override
+                    public TypeReference visitQuery(QueryParameter query) {
+                        return query.getValueType();
+                    }
 
-            @Override
-            public TypeReference visitBody(ObjectProperty body) {
-                return body.getValueType();
-            }
+                    @Override
+                    public TypeReference visitBody(ObjectProperty body) {
+                        return body.getValueType();
+                    }
 
-            @Override
-            public TypeReference _visitUnknown(Object unknownType) {
-                return null;
-            }
-        });
+                    @Override
+                    public TypeReference _visitUnknown(Object unknownType) {
+                        return null;
+                    }
+                });
         if (valueType == null) {
             return false;
         }

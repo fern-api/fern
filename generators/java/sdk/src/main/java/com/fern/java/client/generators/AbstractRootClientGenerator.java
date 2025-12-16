@@ -37,9 +37,9 @@ import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.http.RequestProperty;
 import com.fern.ir.model.http.RequestPropertyValue;
 import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.TypeReference;
-import com.fern.ir.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
@@ -1488,8 +1488,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             }
 
             private boolean isLiteralProperty(RequestProperty requestProperty) {
-                TypeReference valueType =
-                        requestProperty.getProperty().visit(new RequestPropertyValue.Visitor<TypeReference>() {
+                TypeReference valueType = requestProperty
+                        .getProperty()
+                        .visit(new RequestPropertyValue.Visitor<TypeReference>() {
                             @Override
                             public TypeReference visitQuery(QueryParameter query) {
                                 return query.getValueType();
