@@ -5,6 +5,7 @@ import path from "path";
 
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 const APP_PREVIEW_FOLDER_NAME = "app-preview";
+const LOGS_FOLDER_NAME = "logs";
 
 /**
  * Log level for debug messages
@@ -130,14 +131,15 @@ export class DebugLogger {
 
         const localStorageFolder = join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
         const appPreviewDir = join(localStorageFolder, RelativeFilePath.of(APP_PREVIEW_FOLDER_NAME));
+        const logsDir = join(appPreviewDir, RelativeFilePath.of(LOGS_FOLDER_NAME));
 
-        if (!(await doesPathExist(appPreviewDir))) {
-            await mkdir(appPreviewDir, { recursive: true });
+        if (!(await doesPathExist(logsDir))) {
+            await mkdir(logsDir, { recursive: true });
         }
 
         const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
         const logFileName = `${timestamp}.debug.log`;
-        this.logFilePath = join(appPreviewDir, RelativeFilePath.of(logFileName));
+        this.logFilePath = join(logsDir, RelativeFilePath.of(logFileName));
 
         const header = [
             "================================================================================",
