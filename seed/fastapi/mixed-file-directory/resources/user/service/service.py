@@ -48,7 +48,10 @@ class AbstractUserService(AbstractFernService):
             elif parameter_name == "limit":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(default=None, description="The maximum number of results to return.")
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Query(description="The maximum number of results to return.")
+                        ],
+                        default=None,
                     )
                 )
             else:
