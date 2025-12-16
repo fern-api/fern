@@ -8,6 +8,13 @@
   version: 3.24.0
 
 - changelogEntry:
+    - summary: Upload dynamic IR during SDK generation (`fern generate --group`) to enable dynamic snippets. This uploads language-specific IR to FDR for each generator, allowing dynamic code snippet generation in documentation.
+      type: chore
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.23.3
+
+- changelogEntry:
     - summary: Hide `fern mock` and `fern test` commands from the main CLI help output.
       type: chore
   irVersion: 62
