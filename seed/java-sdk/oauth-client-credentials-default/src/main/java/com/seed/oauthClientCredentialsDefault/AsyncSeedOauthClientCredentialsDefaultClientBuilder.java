@@ -225,16 +225,9 @@ public class AsyncSeedOauthClientCredentialsDefaultClientBuilder {
 
         private final String clientSecret;
 
-        private String grantType = null;
-
         _CredentialsAuth(String clientId, String clientSecret) {
             this.clientId = clientId;
             this.clientSecret = clientSecret;
-        }
-
-        public _CredentialsAuth grantType(String grantType) {
-            this.grantType = grantType;
-            return this;
         }
 
         @Override
@@ -243,7 +236,7 @@ public class AsyncSeedOauthClientCredentialsDefaultClientBuilder {
                     ClientOptions.builder().environment(this.environment);
             AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
             OAuthTokenSupplier oAuthTokenSupplier =
-                    new OAuthTokenSupplier(this.clientId, this.clientSecret, this.grantType, authClient);
+                    new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
             builder.addHeader("Authorization", oAuthTokenSupplier);
         }
     }
