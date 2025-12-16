@@ -1,4 +1,5 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { Audiences } from "@fern-api/configuration";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
@@ -219,14 +220,11 @@ export class DocsDefinitionResolver {
      * If the API section has `audiences: instance` (or `audiences: ["instance"]`), it will
      * inherit the instance's target audiences. Otherwise, the API section's own audiences are used.
      */
-    private getEffectiveAudiencesForApiSection(itemAudiences: { type: "all" | "select"; audiences?: string[] }): {
-        type: "all" | "select";
-        audiences?: string[];
-    } {
+    private getEffectiveAudiencesForApiSection(itemAudiences: Audiences): Audiences {
         // Check if the API section uses the special "instance" keyword
         if (
             itemAudiences.type === "select" &&
-            itemAudiences.audiences?.length === 1 &&
+            itemAudiences.audiences.length === 1 &&
             itemAudiences.audiences[0] === DocsDefinitionResolver.INSTANCE_AUDIENCE_KEYWORD
         ) {
             // Inherit from instance's target audiences
