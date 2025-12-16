@@ -479,7 +479,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                         responseType: paginationInfo.responseType,
                         sendRequest: ts.factory.createIdentifier("_sendRequest"),
                         initialHttpRequest: ts.factory.createIdentifier("_request"),
-                        clientOptions: this.generatedSdkClientClass.getReferenceToOptions()
+                        clientOptions: this.generatedSdkClientClass.getReferenceToOptions(),
+                        requestOptions: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME)
                     })
                 )
             );
