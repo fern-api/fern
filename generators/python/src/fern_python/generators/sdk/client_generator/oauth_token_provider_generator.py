@@ -477,6 +477,9 @@ class OAuthTokenProviderGenerator:
             property_name = expires_in_property.property.name.name.snake_case.safe_name
             # Extract names from PropertyPathItem objects
             property_path_names = [item.name for item in property_path] if property_path else None
+            property_value = f"token_response.{self._get_response_property_path(property_path_names)}{property_name}"
+            property_type = expires_in_property.property.value_type
+            writer.write(f"# property_type: {property_type}\n")
             writer.write(f"self.{member_name} = ")
             writer.write_node(
                 node=AST.FunctionInvocation(
