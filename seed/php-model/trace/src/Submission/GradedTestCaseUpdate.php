@@ -27,15 +27,16 @@ class GradedTestCaseUpdate extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->testCaseId = $values['testCaseId'];$this->grade = $values['grade'];
+    ) {
+        $this->testCaseId = $values['testCaseId'];
+        $this->grade = $values['grade'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

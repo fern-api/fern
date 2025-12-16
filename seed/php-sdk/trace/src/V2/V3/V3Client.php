@@ -6,7 +6,7 @@ use Seed\V2\V3\Problem\ProblemClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class V3Client 
+class V3Client
 {
     /**
      * @var ProblemClient $problem
@@ -39,11 +39,10 @@ class V3Client
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->problem = new ProblemClient($this->client, $this->options);

@@ -199,7 +199,6 @@ SeedExamplesClient client = SeedExamplesClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.examples.SeedExamplesClient;
 import com.seed.examples.core.RequestOptions;
@@ -207,7 +206,7 @@ import com.seed.examples.core.RequestOptions;
 // Client level
 SeedExamplesClient client = SeedExamplesClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -215,7 +214,7 @@ client.service().getMovie(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```
@@ -227,7 +226,7 @@ import com.seed.examples.core.RequestOptions;
 // Client level
 SeedExamplesClient client = SeedExamplesClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -235,7 +234,7 @@ client.service().createMovie(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

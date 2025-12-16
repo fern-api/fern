@@ -63,8 +63,7 @@ public class RawUsersClient {
                 UsernameCursor parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameCursor.class);
                 return new SeedPaginationHttpResponse<>(
-                        FernCustomPaginator.create(parsedResponse, clientOptions.httpClient(), requestOptions),
-                        response);
+                        FernCustomPaginator.create(parsedResponse, clientOptions, requestOptions), response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(

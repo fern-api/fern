@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string"
+    },
+    "client_secret": {
+      "type": "string"
+    },
+    "refresh_token": {
+      "type": "string"
+    },
+    "audience": {
+      "const": "https://api.example.com"
+    },
+    "grant_type": {
+      "const": "refresh_token"
+    },
+    "scope": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "client_id",
+    "client_secret",
+    "refresh_token",
+    "audience",
+    "grant_type"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

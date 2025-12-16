@@ -55,19 +55,30 @@ class AbstractRootService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "optional_baz":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="An optional baz"))
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="An optional baz")],
+                        default=None,
+                    )
                 )
             elif parameter_name == "optional_nullable_baz":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="An optional baz"))
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="An optional baz")],
+                        default=None,
+                    )
                 )
             elif parameter_name == "required_baz":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=..., description="A required baz"))
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="A required baz")]
+                    )
                 )
             elif parameter_name == "required_nullable_baz":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="A required baz"))
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="A required baz")],
+                        default=None,
+                    )
                 )
             else:
                 new_parameters.append(parameter)
@@ -104,11 +115,19 @@ class AbstractRootService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             elif parameter_name == "x_idempotency_key":
-                new_parameters.append(parameter.replace(default=fastapi.Header(alias="X-Idempotency-Key")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Idempotency-Key")]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_foo, "__signature__", endpoint_function.replace(parameters=new_parameters))

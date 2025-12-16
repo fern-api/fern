@@ -832,7 +832,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 };
             } else {
                 const propExampleFromParent = exampleObj[key];
-                const propertyExample = propExampleFromParent ?? this.maybeResolveSchemaExample(property);
+                // Use the example from parent if it exists (including explicit null values)
+                // Only fall back to schema example if the property is truly undefined
+                const propertyExample =
+                    propExampleFromParent !== undefined
+                        ? propExampleFromParent
+                        : this.maybeResolveSchemaExample(property);
                 const exampleConverter = new ExampleConverter({
                     breadcrumbs: [...this.breadcrumbs, key],
                     context: this.context,
@@ -1188,6 +1193,22 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     private maybeResolveSchemaExample<Type>(
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     ): Type | undefined {
+        // In OpenAPI 3.1+, $ref siblings are supported. Check for sibling examples first
+        // before falling back to the referenced schema's examples.
+        if ("example" in schema) {
+            return schema.example as Type;
+        }
+        if ("examples" in schema) {
+            const examples = schema.examples;
+            if (Array.isArray(examples) && examples.length > 0) {
+                return examples[0] as Type;
+            }
+            if (examples != null && typeof examples === "object") {
+                return Object.values(examples)[0] as Type;
+            }
+        }
+
+        // Fall back to the resolved schema's examples
         const resolvedSchema = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
             schemaOrReference: schema,
             breadcrumbs: this.breadcrumbs,

@@ -171,4 +171,16 @@ public final class UsersClient: Sendable {
             responseType: UsernameContainerType.self
         )
     }
+
+    public func listWithOptionalData(page: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> ListUsersOptionalDataPaginationResponse {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users/optional-data",
+            queryParams: [
+                "page": page.map { .int($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: ListUsersOptionalDataPaginationResponse.self
+        )
+    }
 }

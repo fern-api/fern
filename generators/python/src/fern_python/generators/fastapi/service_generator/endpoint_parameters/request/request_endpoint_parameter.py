@@ -14,5 +14,5 @@ class RequestEndpointParameter(EndpointParameter):
     def _get_unsafe_name(self) -> str:
         return self._get_request_param_name()
 
-    def get_default(self) -> AST.Expression:
+    def get_fastapi_marker(self) -> AST.Expression:
         return FastAPI.Body()

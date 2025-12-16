@@ -82,15 +82,13 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
     public getSignature(context: SdkContext): GeneratedEndpointImplementation.EndpointSignature {
         const paginationInfo = this.response.getPaginationInfo(context);
-        const requestParameter = this.request.getRequestParameter(context);
         let mainReturnType: ts.TypeNode;
         const parameters = [...this.request.getEndpointParameters(context)];
 
         if (paginationInfo != null) {
-            if (paginationInfo.type === "custom" && requestParameter != null) {
-                mainReturnType = context.coreUtilities.pagination.CustomPager._getReferenceToType(
+            if (paginationInfo.type === "custom") {
+                mainReturnType = context.coreUtilities.customPagination.CustomPager._getReferenceToType(
                     paginationInfo.itemType,
-                    requestParameter,
                     paginationInfo.responseType
                 );
             } else {
@@ -342,6 +340,155 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
+        const paginationInfo = this.response.getPaginationInfo(context);
+        const responseReturnType = this.response.getReturnType(context);
+
+        if (paginationInfo != null && paginationInfo.type === "custom") {
+            // For custom pagination, follow the C# pattern:
+            // 1. Build Fetcher.Args (prepared HTTP request)
+            // 2. Create sendRequest function that takes Fetcher.Args and sends it
+            // 3. Call CustomPager.create with sendRequest, initialHttpRequest, and parser
+
+            const statements: ts.Statement[] = [];
+
+            // Add endpoint metadata if needed
+            if (this.generateEndpointMetadata) {
+                statements.push(
+                    ...generateEndpointMetadata({
+                        httpEndpoint: this.endpoint,
+                        context
+                    })
+                );
+            }
+
+            // Add request building statements
+            statements.push(...this.request.getBuildRequestStatements(context));
+
+            // Build the Fetcher.Args object (the prepared HTTP request)
+            const fetcherArgs = this.buildFetcherArgs(context);
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier("_request"),
+                                undefined,
+                                undefined,
+                                fetcherArgs
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+
+            // Create the sendRequest function that takes Fetcher.Args and returns APIResponse
+            // This wraps the fetcher with error handling to throw errors on non-ok responses
+            const sendRequestFn = ts.factory.createArrowFunction(
+                [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                undefined,
+                [
+                    ts.factory.createParameterDeclaration(
+                        undefined,
+                        undefined,
+                        undefined,
+                        ts.factory.createIdentifier("request"),
+                        undefined,
+                        context.coreUtilities.fetcher.Fetcher.Args._getReferenceToType(),
+                        undefined
+                    )
+                ],
+                undefined,
+                ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                ts.factory.createBlock(
+                    [
+                        // Call the fetcher with generic type argument
+                        ts.factory.createVariableStatement(
+                            undefined,
+                            ts.factory.createVariableDeclarationList(
+                                [
+                                    ts.factory.createVariableDeclaration(
+                                        this.response.getResponseVariableName(),
+                                        undefined,
+                                        undefined,
+                                        ts.factory.createAwaitExpression(
+                                            ts.factory.createCallExpression(
+                                                context.coreUtilities.fetcher.fetcher._getReferenceTo(),
+                                                [responseReturnType], // Generic type argument
+                                                [ts.factory.createIdentifier("request")]
+                                            )
+                                        )
+                                    )
+                                ],
+                                ts.NodeFlags.Const
+                            )
+                        ),
+                        // If ok, return the APIResponse; otherwise throw errors
+                        ts.factory.createIfStatement(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier(this.response.getResponseVariableName()),
+                                ts.factory.createIdentifier("ok")
+                            ),
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createReturnStatement(
+                                        ts.factory.createIdentifier(this.response.getResponseVariableName())
+                                    )
+                                ],
+                                true
+                            )
+                        ),
+                        // Include error handling for non-ok responses
+                        ...this.response.getReturnResponseStatements(context).slice(1) // Skip the first statement which is the "if (response.ok)" check
+                    ],
+                    true
+                )
+            );
+
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier("_sendRequest"),
+                                undefined,
+                                undefined,
+                                sendRequestFn
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+
+            // Create a default parser that extracts items but sets hasNextPage to false
+            const getItemsLambda = this.createLambdaWithResponse({ body: paginationInfo.getItems });
+            const itemsExpr = ts.factory.createCallExpression(getItemsLambda, undefined, [
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier("response"),
+                    ts.factory.createIdentifier("data")
+                )
+            ]);
+
+            statements.push(
+                ts.factory.createReturnStatement(
+                    context.coreUtilities.customPagination.CustomPager._create({
+                        itemType: paginationInfo.itemType,
+                        responseType: paginationInfo.responseType,
+                        sendRequest: ts.factory.createIdentifier("_sendRequest"),
+                        initialHttpRequest: ts.factory.createIdentifier("_request"),
+                        clientOptions: this.generatedSdkClientClass.getReferenceToOptions(),
+                        requestOptions: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME)
+                    })
+                )
+            );
+
+            return statements;
+        }
+
+        // Non-custom pagination or no pagination
         const listFnName = "list";
         const body = [
             ...(this.generateEndpointMetadata
@@ -355,8 +502,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         ];
 
         const requestParameter = this.request.getRequestParameter(context);
-        const paginationInfo = this.response.getPaginationInfo(context);
-        const responseReturnType = this.response.getReturnType(context);
         if (paginationInfo != null && requestParameter != null) {
             const listFn = ts.factory.createVariableDeclarationList(
                 [
@@ -426,106 +571,115 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     )
                 )
             );
-            if (paginationInfo.type === "custom") {
-                // For custom pagination, use CustomPager.create with a default parser
-                // Note: We don't need the initial _dataWithRawResponse call here since
-                // CustomPager.create will make the first request itself
-
-                // Create a lambda that extracts items from the response
-                // paginationInfo.getItems expects a variable named "response" of type TResponse
-                // but the parser receives WithRawResponse<TResponse>, so we need to pass response.data
-                const getItemsLambda = this.createLambdaWithResponse({ body: paginationInfo.getItems });
-
-                // Create the items expression that calls the lambda with response.data
-                const itemsExpr = ts.factory.createCallExpression(getItemsLambda, undefined, [
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier("response"),
-                        ts.factory.createIdentifier("data")
-                    )
-                ]);
-
-                // Create a default parser that extracts items but sets hasNextPage to false
-                const defaultParserExpr = ts.factory.createArrowFunction(
-                    [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
-                    undefined,
-                    [
-                        ts.factory.createParameterDeclaration(
-                            undefined,
-                            undefined,
-                            undefined,
-                            ts.factory.createIdentifier("_request"),
-                            undefined,
-                            requestParameter,
-                            undefined
-                        ),
-                        ts.factory.createParameterDeclaration(
-                            undefined,
-                            undefined,
-                            undefined,
-                            ts.factory.createIdentifier("response"),
-                            undefined,
-                            context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
-                                responseReturnType
-                            ),
-                            undefined
-                        )
-                    ],
-                    undefined,
-                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                    ts.factory.createParenthesizedExpression(
-                        ts.factory.createObjectLiteralExpression(
-                            [
-                                ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier("hasNextPage"),
-                                    ts.factory.createFalse()
-                                ),
-                                ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier("hasPreviousPage"),
-                                    ts.factory.createFalse()
-                                ),
-                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("items"), itemsExpr)
-                            ],
-                            true
-                        )
-                    )
-                );
-
-                // For custom pagination, we skip the initial _dataWithRawResponse call
-                // and just return CustomPager.create directly (it makes the first request)
-                return [
-                    ts.factory.createVariableStatement(undefined, listFn),
-                    ts.factory.createReturnStatement(
-                        context.coreUtilities.pagination.CustomPager._create({
-                            itemType: paginationInfo.itemType,
-                            requestType: requestParameter,
-                            responseType: paginationInfo.responseType,
-                            sendRequest: ts.factory.createIdentifier(listFnName),
-                            initialRequest: ts.factory.createIdentifier("request"),
-                            parse: defaultParserExpr
+            statements.push(
+                ts.factory.createReturnStatement(
+                    context.coreUtilities.pagination.Page._construct({
+                        itemType: paginationInfo.itemType,
+                        responseType: paginationInfo.responseType,
+                        response: ts.factory.createPropertyAccessExpression(initialResponseVar, "data"),
+                        rawResponse: ts.factory.createPropertyAccessExpression(initialResponseVar, "rawResponse"),
+                        hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
+                        getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
+                        loadPage: this.createLambdaWithResponse({
+                            body: ts.factory.createBlock(paginationInfo.loadPage),
+                            ignoreResponse: paginationInfo.type === "offset"
                         })
-                    )
-                ];
-            } else {
-                statements.push(
-                    ts.factory.createReturnStatement(
-                        context.coreUtilities.pagination.Page._construct({
-                            itemType: paginationInfo.itemType,
-                            responseType: paginationInfo.responseType,
-                            response: ts.factory.createPropertyAccessExpression(initialResponseVar, "data"),
-                            rawResponse: ts.factory.createPropertyAccessExpression(initialResponseVar, "rawResponse"),
-                            hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
-                            getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
-                            loadPage: this.createLambdaWithResponse({
-                                body: ts.factory.createBlock(paginationInfo.loadPage),
-                                ignoreResponse: paginationInfo.type === "offset"
-                            })
-                        })
-                    )
-                );
-            }
+                    })
+                )
+            );
             return statements;
         }
         return body;
+    }
+
+    private buildFetcherArgs(context: SdkContext): ts.Expression {
+        const requestArgs = this.request.getFetcherRequestArgs(context);
+        const fetcherArgs: Record<string, ts.Expression> = {
+            url: this.getReferenceToBaseUrl(context),
+            method: ts.factory.createStringLiteral(this.endpoint.method)
+        };
+
+        // Add request args, filtering out undefined values
+        if (requestArgs.headers != null) {
+            fetcherArgs.headers = requestArgs.headers;
+        }
+        if (requestArgs.queryParameters != null) {
+            fetcherArgs.queryParameters = requestArgs.queryParameters;
+        }
+        if (requestArgs.body != null) {
+            fetcherArgs.body = requestArgs.body;
+        }
+        if (requestArgs.contentType != null) {
+            fetcherArgs.contentType =
+                typeof requestArgs.contentType === "string"
+                    ? ts.factory.createStringLiteral(requestArgs.contentType)
+                    : requestArgs.contentType;
+        }
+        if (requestArgs.requestType != null) {
+            fetcherArgs.requestType = ts.factory.createStringLiteral(requestArgs.requestType);
+        }
+
+        const timeoutExpression = getTimeoutExpression({
+            defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
+            timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
+                this.generatedSdkClientClass
+            ),
+            referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions()
+        });
+        if (timeoutExpression != null) {
+            fetcherArgs.timeoutMs = timeoutExpression;
+        }
+
+        const maxRetriesExpression = getMaxRetriesExpression({
+            maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
+                this.generatedSdkClientClass
+            ),
+            referenceToOptions: this.generatedSdkClientClass.getReferenceToOptions()
+        });
+        if (maxRetriesExpression != null) {
+            fetcherArgs.maxRetries = maxRetriesExpression;
+        }
+
+        const abortSignalExpression = getAbortSignalExpression({
+            abortSignalReference: this.generatedSdkClientClass.getReferenceToAbortSignal.bind(
+                this.generatedSdkClientClass
+            )
+        });
+        if (abortSignalExpression != null) {
+            fetcherArgs.abortSignal = abortSignalExpression;
+        }
+
+        const fetchFn = this.generatedSdkClientClass.getReferenceToFetch();
+        if (fetchFn != null) {
+            fetcherArgs.fetchFn = fetchFn;
+        }
+
+        const logging = this.generatedSdkClientClass.getReferenceToLogger(context);
+        if (logging != null) {
+            fetcherArgs.logging = logging;
+        }
+
+        if (this.includeCredentialsOnCrossOriginRequests) {
+            fetcherArgs.withCredentials = ts.factory.createTrue();
+        }
+
+        if (this.generateEndpointMetadata) {
+            const metadata = this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier();
+            if (metadata != null) {
+                fetcherArgs.endpointMetadata = metadata;
+            }
+        }
+
+        if (this.endpoint.response?.body?.type === "text") {
+            fetcherArgs.responseType = ts.factory.createStringLiteral("text");
+        }
+
+        return ts.factory.createObjectLiteralExpression(
+            Object.entries(fetcherArgs).map(([key, value]) =>
+                ts.factory.createPropertyAssignment(ts.factory.createIdentifier(key), value)
+            ),
+            true
+        );
     }
 
     private createLambdaWithResponse({

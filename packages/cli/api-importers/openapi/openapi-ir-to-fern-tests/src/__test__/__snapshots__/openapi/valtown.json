@@ -999,7 +999,7 @@ API endpoints",
                       "links": {
                         "self": "self",
                       },
-                      "profileImageUrl": "profileImageUrl",
+                      "profileImageUrl": null,
                       "url": "https://val.town/u/tmcw",
                       "username": "tmcw",
                     },
@@ -1303,7 +1303,7 @@ service:
               id: 00000000-0000-0000-0000-000000000000
               bio: Hello world
               username: tmcw
-              profileImageUrl: profileImageUrl
+              profileImageUrl: null
               url: https://val.town/u/tmcw
               links:
                 self: self
@@ -2534,7 +2534,7 @@ give access to details and data from the requesting user.",
                       "links": {
                         "self": "self",
                       },
-                      "profileImageUrl": "profileImageUrl",
+                      "profileImageUrl": null,
                       "tier": "pro",
                       "url": "url",
                       "username": "tmcw",
@@ -3304,7 +3304,7 @@ service:
               id: 00000000-0000-0000-0000-000000000000
               bio: Hello world
               username: tmcw
-              profileImageUrl: profileImageUrl
+              profileImageUrl: null
               url: url
               links:
                 self: self
@@ -3728,7 +3728,6 @@ docs: Search
                         "columns": [
                           "id",
                         ],
-                        "lastInsertRowid": "lastInsertRowid",
                         "rows": [
                           [
                             1,
@@ -4238,7 +4237,6 @@ service:
                 rows:
                   - - 1
                 rowsAffected: 0
-                lastInsertRowid: lastInsertRowid
   source:
     openapi: ../openapi.yml
   display-name: sqlite
@@ -4272,7 +4270,7 @@ docs: SQLite
                       "links": {
                         "self": "self",
                       },
-                      "profileImageUrl": "profileImageUrl",
+                      "profileImageUrl": null,
                       "url": "https://val.town/u/tmcw",
                       "username": "tmcw",
                     },
@@ -4441,7 +4439,7 @@ service:
               id: 00000000-0000-0000-0000-000000000000
               bio: Hello world
               username: tmcw
-              profileImageUrl: profileImageUrl
+              profileImageUrl: null
               url: https://val.town/u/tmcw
               links:
                 self: self

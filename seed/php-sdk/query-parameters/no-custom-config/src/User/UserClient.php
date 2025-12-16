@@ -15,7 +15,7 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class UserClient 
+class UserClient
 {
     /**
      * @var array{
@@ -43,11 +43,10 @@ class UserClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -66,7 +65,8 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUsername(GetUsersRequest $request, ?array $options = null): User {
+    public function getUsername(GetUsersRequest $request, ?array $options = null): User
+    {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['limit'] = $request->limit;
@@ -80,13 +80,13 @@ class UserClient
         $query['nestedUser'] = $request->nestedUser;
         $query['excludeUser'] = $request->excludeUser;
         $query['filter'] = $request->filter;
-        if ($request->optionalDeadline != null){
+        if ($request->optionalDeadline != null) {
             $query['optionalDeadline'] = JsonSerializer::serializeDateTime($request->optionalDeadline);
         }
-        if ($request->optionalString != null){
+        if ($request->optionalString != null) {
             $query['optionalString'] = $request->optionalString;
         }
-        if ($request->optionalUser != null){
+        if ($request->optionalUser != null) {
             $query['optionalUser'] = $request->optionalUser;
         }
         try {
@@ -100,15 +100,15 @@ class UserClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return User::fromJson($json);
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

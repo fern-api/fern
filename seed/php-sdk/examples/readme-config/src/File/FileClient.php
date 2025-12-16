@@ -7,7 +7,7 @@ use Seed\File\Service\ServiceClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class FileClient 
+class FileClient
 {
     /**
      * @var NotificationClient $notification
@@ -45,11 +45,10 @@ class FileClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->notification = new NotificationClient($this->client, $this->options);
