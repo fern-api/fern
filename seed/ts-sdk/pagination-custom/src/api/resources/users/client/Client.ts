@@ -70,6 +70,11 @@ export class UsersClient {
             }
             return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
         };
-        return core.createMyPager<string, SeedPagination.UsernameCursor>(_sendRequest, _request);
+        return core.createMyPager<string, SeedPagination.UsernameCursor>({
+            sendRequest: _sendRequest,
+            initialHttpRequest: _request,
+            clientOptions: this._options,
+            requestOptions: requestOptions,
+        });
     }
 }
