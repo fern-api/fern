@@ -19,8 +19,7 @@ class JustFileRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
+    ) {
         $this->file = $values['file'];
     }
 }

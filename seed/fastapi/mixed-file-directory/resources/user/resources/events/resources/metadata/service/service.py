@@ -46,7 +46,9 @@ class AbstractUserEventsMetadataService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_metadata, "__signature__", endpoint_function.replace(parameters=new_parameters))

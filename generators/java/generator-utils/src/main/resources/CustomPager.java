@@ -55,14 +55,14 @@ public class CustomPager<T> implements BiDirectionalPage<T>, Iterable<T> {
      * Create a CustomPager from an initial response.
      *
      * @param initialResponse The first page response from the API
-     * @param client The HTTP client to use for subsequent requests
+     * @param clientOptions The client options containing HTTP client and other configuration
      * @param requestOptions Request options for authentication, headers, etc.
      * @return A new CustomPager instance
      * @throws IOException if the request fails
      */
     public static <T> CustomPager<T> create(
             Object initialResponse,
-            okhttp3.OkHttpClient client,
+            ClientOptions clientOptions,
             Object requestOptions) throws IOException {
         throw new UnsupportedOperationException(
             "CustomPager must be implemented. " +

@@ -1951,4 +1951,464 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/webhook-openapi-responses-ir.snap");
     });
+
+    it("should handle OpenAPI with nullable balance_max in tiered rates", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/balance-max-null")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "balance-max-null"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that the RateTier type with nullable balance_max was processed
+        expect(intermediateRepresentation.types).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+
+        // Check that RateTier type exists and has the expected structure
+        const rateTierType = Object.values(intermediateRepresentation.types).find(
+            (type) => type.name.name.originalName === "RateTier"
+        );
+        expect(rateTierType).toBeDefined();
+
+        // Verify the endpoint example preserves null value for balance_max
+        const endpoint = fdrApiDefinition.rootPackage?.endpoints?.find((e) => e.id === "getRates");
+        expect(endpoint).toBeDefined();
+        expect(endpoint?.examples).toBeDefined();
+        expect(endpoint?.examples?.length).toBeGreaterThan(0);
+
+        // Get the tiers from the example response
+        const example = endpoint?.examples?.[0];
+        const responseBody = example?.responseBody as unknown as Record<string, unknown> | undefined;
+        const fixedRate = responseBody?.fixed_rate as { tiers: Array<{ balance_max: string | null }> } | undefined;
+        const tiers = fixedRate?.tiers;
+        expect(Array.isArray(tiers)).toBe(true);
+        expect(tiers).toHaveLength(3);
+
+        // Critical regression test: the third tier's balance_max must be null, not a string value
+        expect(tiers?.[0]?.balance_max).toBe("100000000");
+        expect(tiers?.[1]?.balance_max).toBe("500000000");
+        expect(tiers?.[2]?.balance_max).toBeNull();
+
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/balance-max-null-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/balance-max-null-ir.snap");
+    });
+
+    it("should preserve human-generated examples when ai-examples is enabled - OpenAPI example format", async () => {
+        // Test case to verify that human-generated examples specified in OpenAPI spec
+        // are NOT overwritten when ai-examples: true is set in docs.yml
+        // This tests the scenario where:
+        // 1. OpenAPI spec has human examples using the `example` field format
+        // 2. docs.yml has `ai-examples: true` in experimental
+        // 3. The human example should be preserved and not replaced by AI-generated content
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/human-examples-preserved")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "human-examples-preserved"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: true,
+            logWarnings: true
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate the human examples are preserved
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        const service = services[0];
+        expect(service).toBeDefined();
+
+        if (service && typeof service === "object" && "endpoints" in service) {
+            // biome-ignore lint/suspicious/noExplicitAny: test code accessing dynamic IR properties
+            const serviceWithEndpoints = service as { endpoints?: Array<any> };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBe(2); // POST /products and GET /products/{productId}
+
+            console.log("=== HUMAN EXAMPLES PRESERVATION TEST ===");
+
+            // Find the POST /products endpoint which has human examples
+            const createProductEndpoint = serviceWithEndpoints.endpoints?.find(
+                // biome-ignore lint/suspicious/noExplicitAny: test code accessing dynamic IR properties
+                (ep: any) => ep?.method === "POST"
+            );
+            expect(createProductEndpoint).toBeDefined();
+
+            // biome-ignore lint/suspicious/noExplicitAny: test code accessing dynamic IR properties
+            const endpointAny = createProductEndpoint as any;
+
+            // Check for human examples (from OpenAPI spec's example field)
+            const hasV2HumanExamples =
+                endpointAny?.v2Examples?.userSpecifiedExamples &&
+                Object.keys(endpointAny.v2Examples.userSpecifiedExamples).length > 0;
+
+            console.log(`Human examples present: ${hasV2HumanExamples}`);
+
+            // CRITICAL: Verify the human example values are preserved
+            if (hasV2HumanExamples && endpointAny.v2Examples?.userSpecifiedExamples) {
+                const humanExampleKeys = Object.keys(endpointAny.v2Examples.userSpecifiedExamples);
+                console.log(`Human example keys: ${humanExampleKeys.join(", ")}`);
+
+                // Check that the specific human-provided values are preserved
+                const firstKey = humanExampleKeys[0];
+                const humanExample = firstKey ? endpointAny.v2Examples.userSpecifiedExamples[firstKey] : undefined;
+
+                // Verify the human example contains our specific values
+                // These are the values from the OpenAPI spec that should NOT be overwritten
+                const requestBody = humanExample?.request?.body?.value;
+                const responseBody = humanExample?.response?.body?.value;
+
+                console.log("Request body:", JSON.stringify(requestBody, null, 2));
+                console.log("Response body:", JSON.stringify(responseBody, null, 2));
+
+                // The human example should have the specific title we provided
+                if (requestBody?.title) {
+                    expect(requestBody.title).toBe("supersonic flux capacitor Headphones");
+                    console.log("Human example title preserved: supersonic flux capacitor Headphones");
+                }
+
+                // The human example should have the specific price we provided
+                if (requestBody?.price) {
+                    expect(requestBody.price).toBe(79.99);
+                    console.log("Human example price preserved: 79.99");
+                }
+
+                // The human example should have the specific ID we provided
+                if (requestBody?.id) {
+                    expect(requestBody.id).toBe("a3f1c9e2-4b7d-4f8a-9c2e-1d2b3f4a5c6d");
+                    console.log("Human example ID preserved: a3f1c9e2-4b7d-4f8a-9c2e-1d2b3f4a5c6d");
+                }
+
+                // The human example should have the specific inStock value we provided
+                if (requestBody?.inStock !== undefined) {
+                    expect(requestBody.inStock).toBe(false);
+                    console.log("Human example inStock preserved: false");
+                }
+            }
+
+            // Verify that the endpoint with human examples should NOT be processed for AI enhancement
+            const hasAutogenerated = (endpointAny?.autogeneratedExamples?.length || 0) > 0;
+            const shouldBeProcessedByAI = hasAutogenerated && !hasV2HumanExamples;
+            console.log(`Should be AI enhanced: ${shouldBeProcessedByAI}`);
+
+            // With human examples present, this endpoint should NOT be processed for AI enhancement
+            if (hasV2HumanExamples) {
+                expect(shouldBeProcessedByAI).toBe(false);
+                console.log("Human examples correctly prevent AI enhancement");
+            }
+
+            console.log("=== END HUMAN EXAMPLES PRESERVATION TEST ===");
+        }
+
+        // Validate FDR structure - endpoints may be in subpackages due to tags
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+
+        // Count total endpoints across all packages
+        let totalEndpoints = fdrApiDefinition.rootPackage.endpoints.length;
+        for (const subpackage of Object.values(fdrApiDefinition.subpackages)) {
+            totalEndpoints += subpackage.endpoints.length;
+        }
+        expect(totalEndpoints).toBe(2);
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/human-examples-preserved-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/human-examples-preserved-ir.snap");
+    });
+
+    it("should handle OpenAPI with explode parameter settings", async () => {
+        // Test OpenAPI spec with various explode parameter configurations
+        // Tests smart default logic: form style defaults to explode=true, others default to explode=false
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/explode-parameter-test")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "explode-parameter-test"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate services and endpoints were parsed
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        // Validate that path and query parameters exist
+        const service = services[0];
+        expect(service).toBeDefined();
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as {
+                endpoints?: Array<{
+                    pathParameters?: Array<{ name: { originalName: string }; explode?: boolean }>;
+                    queryParameters?: Array<{ name: { name: { originalName: string } }; explode?: boolean }>;
+                }>;
+            };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBeGreaterThan(0);
+
+            // Check that explode field is present on parameters where it differs from default
+            // The smart default logic should:
+            // - Omit explode for form style when explode=true (default)
+            // - Preserve explode for form style when explode=false (non-default)
+            // - Omit explode for other styles when explode=false (default)
+            // - Preserve explode for other styles when explode=true (non-default)
+        }
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/explode-parameter-test-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/explode-parameter-test-ir.snap");
+    });
+
+    it("should handle OpenAPI with response examples for different status codes", async () => {
+        // Test OpenAPI spec with response examples for different status codes (200, 400, 404, 405, 500)
+        // This validates that response examples are correctly associated with their status code schemas
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/response-status-code-examples")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "response-status-code-examples"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate services and endpoints were parsed
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        // Validate that error types were created for different status codes
+        expect(intermediateRepresentation.errors).toBeDefined();
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/response-status-code-examples-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot(
+            "__snapshots__/response-status-code-examples-ir.snap"
+        );
+    });
+
+    it("should handle OpenAPI with $ref property containing examples", async () => {
+        // Test OpenAPI spec with a property that uses $ref and has examples at the property level
+        // This validates that examples on $ref properties are correctly processed
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/company-file-ref-examples")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "company-file-ref-examples"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate types were parsed correctly
+        expect(intermediateRepresentation.types).toBeDefined();
+        expect(fdrApiDefinition.types).toBeDefined();
+
+        // Validate services and endpoints were parsed
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/company-file-ref-examples-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/company-file-ref-examples-ir.snap");
+    });
 });

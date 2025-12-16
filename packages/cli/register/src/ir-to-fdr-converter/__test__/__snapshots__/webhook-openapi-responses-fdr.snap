@@ -73,7 +73,41 @@
               },
             },
           },
-          "responses": undefined,
+          "responses": [
+            {
+              "description": "Webhook received successfully (HTTP 204 No Content)",
+              "isWildcard": undefined,
+              "statusCode": 204,
+              "type": {
+                "extends": [],
+                "extraProperties": undefined,
+                "properties": [],
+                "type": "object",
+              },
+            },
+            {
+              "description": "Invalid payload or authentication failure",
+              "isWildcard": undefined,
+              "statusCode": 400,
+              "type": {
+                "extends": [],
+                "extraProperties": undefined,
+                "properties": [],
+                "type": "object",
+              },
+            },
+            {
+              "description": "Server error processing webhook",
+              "isWildcard": undefined,
+              "statusCode": 500,
+              "type": {
+                "extends": [],
+                "extraProperties": undefined,
+                "properties": [],
+                "type": "object",
+              },
+            },
+          ],
         },
       ],
       "websockets": [],

@@ -109,6 +109,7 @@ fixtures:
       customConfig:
         enableWireTests: true
         packageName: testPackageName
+        errorCodes: per-endpoint
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path

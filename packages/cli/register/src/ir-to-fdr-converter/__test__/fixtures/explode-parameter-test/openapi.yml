@@ -1,0 +1,156 @@
+openapi: 3.0.3
+info:
+  title: Explode Parameter Test
+  version: 1.0.0
+  description: Tests the explode parameter handling with smart default logic
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths:
+  /items/{itemId}:
+    get:
+      operationId: getItem
+      summary: Get item by ID
+      description: Tests path parameter with explode=true (non-default)
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: The item ID
+          explode: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Item found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /search:
+    get:
+      operationId: searchItems
+      summary: Search items
+      description: Tests query parameters with various explode settings
+      parameters:
+        - name: tags
+          in: query
+          required: false
+          description: Filter by tags (form style, explode=true is default, should be omitted)
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: categories
+          in: query
+          required: false
+          description: Filter by categories (form style, explode=false is non-default, should be preserved)
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: ids
+          in: query
+          required: false
+          description: Filter by IDs (pipeDelimited style, explode=false is default, should be omitted)
+          style: pipeDelimited
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: names
+          in: query
+          required: false
+          description: Filter by names (spaceDelimited style, explode=true is non-default, should be preserved)
+          style: spaceDelimited
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: limit
+          in: query
+          required: false
+          description: Limit results (no explode specified, should be omitted)
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+
+  /items/{itemId}/details:
+    get:
+      operationId: getItemDetails
+      summary: Get item details
+      description: Tests path parameter with default explode (should be omitted)
+      parameters:
+        - name: itemId
+          in: path
+          required: true
+          description: The item ID (simple style, explode=false is default)
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Item details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemDetails"
+
+components:
+  schemas:
+    Item:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: Item ID
+        name:
+          type: string
+          description: Item name
+        tags:
+          type: array
+          items:
+            type: string
+          description: Item tags
+
+    ItemDetails:
+      type: object
+      required:
+        - id
+        - name
+        - description
+      properties:
+        id:
+          type: string
+          description: Item ID
+        name:
+          type: string
+          description: Item name
+        description:
+          type: string
+          description: Item description
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Additional metadata

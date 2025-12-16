@@ -134,7 +134,8 @@ export class ExpressGenerator {
             fetchSupport: "node-fetch",
             relativePackagePath: this.getRelativePackagePath(),
             relativeTestPath: this.getRelativeTestPath(),
-            generateEndpointMetadata: false
+            generateEndpointMetadata: false,
+            customPagerName: "CustomPager"
         });
         this.asIsManager = new AsIsManager({
             useBigInt: config.useBigInt,

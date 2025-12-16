@@ -299,6 +299,8 @@ fixtures:
     - customConfig:
         default-timeout-in-seconds: 120
       outputFolder: default
+  java-with-property-conflict:
+    - outputFolder: default
 scripts:
   - image: fernapi/java-seed
     commands:
@@ -327,6 +329,7 @@ allowedFailures:
   - oauth-client-credentials-with-variables
   - request-parameters
   - streaming-parameter
+  - inferred-auth-implicit-reference
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_with_bearer_token</a>()</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_with_bearer_token</a>() -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 

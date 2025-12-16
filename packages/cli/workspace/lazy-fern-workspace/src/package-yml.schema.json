@@ -3244,6 +3244,26 @@
         "payload": {
           "$ref": "#/definitions/webhooks.WebhookPayloadSchema"
         },
+        "response": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.HttpResponseSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "response-stream": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.HttpResponseStreamSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "examples": {
           "oneOf": [
             {

@@ -13,6 +13,9 @@ type RequestOption interface {
 	applyRequestOptions(*RequestOptions)
 }
 
+// TokenGetter is a function that returns an access token.
+type TokenGetter func() (string, error)
+
 // RequestOptions defines all of the possible request options.
 //
 // This type is primarily used by the generated code and is not meant
@@ -24,6 +27,7 @@ type RequestOptions struct {
 	BodyProperties  map[string]interface{}
 	QueryParameters url.Values
 	MaxAttempts     uint
+	tokenGetter     TokenGetter
 	Token           string
 	ApiKey          string
 	ClientID        string
@@ -167,4 +171,10 @@ type ClientCredentialsOption struct {
 func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {
 	opts.ClientID = c.ClientID
 	opts.ClientSecret = c.ClientSecret
+}
+
+// SetTokenGetter sets the token getter function for OAuth.
+// This is an internal method and should not be called directly.
+func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {
+	r.tokenGetter = getter
 }

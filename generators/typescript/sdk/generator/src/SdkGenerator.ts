@@ -160,7 +160,7 @@ export declare namespace SdkGenerator {
         formatter: "prettier" | "biome" | "oxfmt" | "none";
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
-        customPagerName: string | undefined;
+        customPagerName: string;
     }
 }
 

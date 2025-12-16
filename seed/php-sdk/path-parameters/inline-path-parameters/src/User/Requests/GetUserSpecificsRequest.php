@@ -36,8 +36,10 @@ class GetUserSpecificsRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->tenantId = $values['tenantId'];$this->userId = $values['userId'];$this->version = $values['version'];$this->thought = $values['thought'];
+    ) {
+        $this->tenantId = $values['tenantId'];
+        $this->userId = $values['userId'];
+        $this->version = $values['version'];
+        $this->thought = $values['thought'];
     }
 }

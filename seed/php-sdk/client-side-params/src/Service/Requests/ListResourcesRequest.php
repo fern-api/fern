@@ -54,8 +54,13 @@ class ListResourcesRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->page = $values['page'];$this->perPage = $values['perPage'];$this->sort = $values['sort'];$this->order = $values['order'];$this->includeTotals = $values['includeTotals'];$this->fields = $values['fields'] ?? null;$this->search = $values['search'] ?? null;
+    ) {
+        $this->page = $values['page'];
+        $this->perPage = $values['perPage'];
+        $this->sort = $values['sort'];
+        $this->order = $values['order'];
+        $this->includeTotals = $values['includeTotals'];
+        $this->fields = $values['fields'] ?? null;
+        $this->search = $values['search'] ?? null;
     }
 }

@@ -31,8 +31,9 @@ class UpdateUserRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->tenantId = $values['tenantId'];$this->userId = $values['userId'];$this->body = $values['body'];
+    ) {
+        $this->tenantId = $values['tenantId'];
+        $this->userId = $values['userId'];
+        $this->body = $values['body'];
     }
 }

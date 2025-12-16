@@ -1,4 +1,44 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth token handling for optional expires_in field with default fallback.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 62
+
+- version: 3.42.0
+  changelogEntry:
+    - summary: |
+        Add normalized client options and request options as a parameter to custom pagination.
+        This allows SDK authors to access the client options (including auth provider) when implementing custom pagination logic.
+      type: feat
+  createdAt: "2025-12-16"
+  irVersion: 62
+
+- version: 3.41.0
+  changelogEntry:
+    - summary: Improve the custom pagination code.
+      type: feat
+  createdAt: "2025-12-15"
+  irVersion: 62
+
+- version: 3.40.0
+  changelogEntry:
+    - summary: |
+        Run `npm pkg fix` after saving package.json to disk to normalize the package.json file.
+        This is enabled by default and can be disabled by setting `skipNpmPkgFix: true` in the generator config.
+      type: feat
+  createdAt: "2025-12-12"
+  irVersion: 62
+
+- version: 3.39.3
+  changelogEntry:
+    - summary: Fix missing information in generated package.json.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 62
+
 - version: 3.39.2
   changelogEntry:
     - summary: |

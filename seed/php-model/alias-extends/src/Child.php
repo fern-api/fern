@@ -24,15 +24,16 @@ class Child extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->parent = $values['parent'];$this->child = $values['child'];
+    ) {
+        $this->parent = $values['parent'];
+        $this->child = $values['child'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

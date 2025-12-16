@@ -529,7 +529,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "Plant details"
           },
           "errors": [],
           "userSpecifiedExamples": [],

@@ -106,7 +106,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             rawClient: RawClient;
         }
     ) {
-        const endpointSignatureInfo = this.getUnpagedEndpointSignatureInfo({ serviceId, endpoint });
+        const endpointSignatureInfo = this.getUnpagedEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(this.getRequestOptionsParameter({ endpoint }));
         parameters.push(
@@ -365,7 +368,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 value._visit({
                     json: (jsonChunk) => {
                         readLineFromResponse();
-                        const payloadType = context.csharpTypeMapper.convert({ reference: jsonChunk.payload });
+                        const payloadType = context.csharpTypeMapper.convert({
+                            reference: jsonChunk.payload
+                        });
                         deserializeJsonChunk(
                             payloadType,
                             context.generation.Types.JsonUtils,
@@ -389,7 +394,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.popScope();
                     },
                     sse: (sseChunk) => {
-                        const payloadType = context.csharpTypeMapper.convert({ reference: sseChunk.payload });
+                        const payloadType = context.csharpTypeMapper.convert({
+                            reference: sseChunk.payload
+                        });
                         writer.writeLine(`if (${names.variables.response}.StatusCode is >= 200 and < 400)`);
                         writer.pushScope();
 
@@ -445,7 +452,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.popScope();
                 },
                 json: (reference) => {
-                    const astType = this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
+                    const astType = this.context.csharpTypeMapper.convert({
+                        reference: reference.responseBodyType
+                    });
                     writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
                     writer.pushScope();
 
@@ -511,9 +520,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     ) {
         this.assertHasPagination(endpoint);
-        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
         const parameters = [...endpointSignatureInfo.baseParameters];
-        const optionsParamName = this.getRequestOptionsParamNameForEndpoint({ endpoint });
+        const optionsParamName = this.getRequestOptionsParamNameForEndpoint({
+            endpoint
+        });
         const requestOptionsParam = this.getRequestOptionsParameter({ endpoint });
         parameters.push(requestOptionsParam);
         parameters.push(
@@ -529,7 +543,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const snippet = this.getHttpPagerMethodSnippet({ endpoint });
         const body = this.csharp.codeblock((writer) => {
             const requestParameter = endpointSignatureInfo.requestParameter;
-            const unpagedEndpointResponseType = getEndpointReturnType({ context: this.context, endpoint });
+            const unpagedEndpointResponseType = getEndpointReturnType({
+                context: this.context,
+                endpoint
+            });
             if (!unpagedEndpointResponseType) {
                 throw new Error("Internal error; a response type is required for pagination endpoints");
             }
@@ -844,10 +861,18 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         rawClientReference: string;
         writer: Writer;
     }): void {
-        const endpointSignatureInfo = this.getEndpointSignatureInfo({ serviceId, endpoint });
-        const optionsParamName = this.getRequestOptionsParamNameForEndpoint({ endpoint });
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
+        const optionsParamName = this.getRequestOptionsParamNameForEndpoint({
+            endpoint
+        });
         const itemType = this.getPaginationItemType(endpoint);
-        const unpagedEndpointResponseType = getEndpointReturnType({ context: this.context, endpoint });
+        const unpagedEndpointResponseType = getEndpointReturnType({
+            context: this.context,
+            endpoint
+        });
         if (!unpagedEndpointResponseType) {
             throw new Error("Internal error; a response type is required for pagination endpoints");
         }
@@ -880,7 +905,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
         writer.write(`var ${this.names.variables.httpRequest} = `);
         writer.writeNodeStatement(
-            rawClient.createHttpRequest({
+            rawClient.createHttpRequestAsync({
                 request: apiRequestCodeBlock.requestReference,
                 clientReference: rawClientReference
             })
@@ -940,7 +965,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             : fail(`Expected ClassReference, got ${encType.fullyQualifiedName}`);
 
         if (!propertyPath || propertyPath.length === 0) {
-            return { code: this.csharp.getPropertyName(enclosingType, property), enclosingType };
+            return {
+                code: this.csharp.getPropertyName(enclosingType, property),
+                enclosingType
+            };
         }
         let optional = "";
 
@@ -951,7 +979,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     const propertyName = this.csharp.getPropertyName(enclosingType, val);
 
                     // get the type of the current property
-                    let typeOfValue = this.context.csharpTypeMapper.convert({ reference: val.type });
+                    let typeOfValue = this.context.csharpTypeMapper.convert({
+                        reference: val.type
+                    });
                     optional = allowOptional && is.Optional(typeOfValue) ? "?" : "";
                     typeOfValue = typeOfValue.asNonOptional();
 
@@ -1098,7 +1128,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }): ast.MethodInvocation | undefined {
         const service = this.context.getHttpService(serviceId) ?? fail(`Service with id ${serviceId} not found`);
         const serviceFilePath = service.name.fernFilepath;
-        const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes });
+        const args = this.getNonEndpointArguments({
+            endpoint,
+            example,
+            parseDatetimes
+        });
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);

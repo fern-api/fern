@@ -27,15 +27,16 @@ class SecondItemType extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->type = $values['type'] ?? null;$this->title = $values['title'];
+    ) {
+        $this->type = $values['type'] ?? null;
+        $this->title = $values['title'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

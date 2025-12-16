@@ -25,4 +25,9 @@ export interface GeneratorInvocationSchema {
     "disable-examples"?: boolean;
     /** Deprecated, use `metadata` on the output block instead. */
     "publish-metadata"?: FernDefinition.GeneratorPublishMetadataSchema;
+    /**
+     * If true, automatically release this SDK when changes are detected.
+     * Overrides the top-level autorelease setting if specified.
+     */
+    autorelease?: boolean;
 }

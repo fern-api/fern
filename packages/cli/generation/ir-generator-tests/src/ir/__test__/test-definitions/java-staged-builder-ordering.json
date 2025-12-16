@@ -2087,7 +2087,8 @@
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -4096,7 +4097,8 @@
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -6321,7 +6323,8 @@
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -10571,7 +10574,8 @@
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -13895,7 +13899,8 @@
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],

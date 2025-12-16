@@ -7,7 +7,7 @@ use Seed\A\C\CClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class AClient 
+class AClient
 {
     /**
      * @var BClient $b
@@ -45,11 +45,10 @@ class AClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->b = new BClient($this->client, $this->options);

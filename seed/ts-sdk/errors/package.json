@@ -2,7 +2,10 @@
     "name": "@fern/errors",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:errors/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/errors/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

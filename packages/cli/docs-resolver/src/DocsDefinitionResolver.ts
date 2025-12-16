@@ -4,6 +4,7 @@ import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion
 import {
     isValidRelativeSlug,
     parseImagePaths,
+    type ReferencedMarkdownFile,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown
@@ -220,9 +221,13 @@ export class DocsDefinitionResolver {
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
     private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
     private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
+    private referencedMarkdownFiles: ReferencedMarkdownFile[] = [];
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         const resolveStartTime = performance.now();
         const startMemory = process.memoryUsage();
+
+        // Reset referenced markdown files to prevent accumulation if resolver is reused
+        this.referencedMarkdownFiles = [];
 
         this.taskContext.logger.debug("Parsing docs configuration...");
         const parseStart = performance.now();
@@ -293,18 +298,25 @@ export class DocsDefinitionResolver {
 
         // Replace all instances of <Markdown src="..."/> and <Code src="..."/> with their content
         // This should happen before we parse image paths, as the referenced files may contain images.
+        // Also collects all referenced markdown files to store in jsFiles
         this.taskContext.logger.debug("Replacing referenced markdown and code files...");
         const refStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             // First replace markdown includes, then code includes (order matters: snippets can contain code)
-            let newMarkdown = await replaceReferencedMarkdown({
+            const result = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
-            newMarkdown = await replaceReferencedCode({
-                markdown: newMarkdown,
+            // Collect referenced markdown files (deduplicated by absolute path)
+            for (const refFile of result.referencedFiles) {
+                if (!this.referencedMarkdownFiles.some((f) => f.absoluteFilePath === refFile.absoluteFilePath)) {
+                    this.referencedMarkdownFiles.push(refFile);
+                }
+            }
+            const newMarkdown = await replaceReferencedCode({
+                markdown: result.markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
@@ -312,7 +324,9 @@ export class DocsDefinitionResolver {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
         }
         const refTime = performance.now() - refStart;
-        this.taskContext.logger.debug(`Replaced referenced content in ${refTime.toFixed(0)}ms`);
+        this.taskContext.logger.debug(
+            `Replaced referenced content in ${refTime.toFixed(0)}ms, found ${this.referencedMarkdownFiles.length} referenced markdown files`
+        );
 
         this.taskContext.logger.debug("Collecting files from docs config...");
         const collectStart = performance.now();
@@ -462,6 +476,17 @@ export class DocsDefinitionResolver {
             this.taskContext.logger.debug(
                 `Processed ${jsFilePaths.size} MDX component files in ${mdxTime.toFixed(0)}ms`
             );
+        }
+
+        // Add referenced markdown files to jsFiles so they are preserved in the docs definition
+        if (this.referencedMarkdownFiles.length > 0) {
+            this.taskContext.logger.debug(
+                `Adding ${this.referencedMarkdownFiles.length} referenced markdown files to jsFiles...`
+            );
+            for (const refFile of this.referencedMarkdownFiles) {
+                // Use the relative path as the key, and the raw content as the value
+                jsFiles[refFile.relativeFilePath] = refFile.content;
+            }
         }
 
         const totalResolveTime = performance.now() - resolveStartTime;
@@ -683,7 +708,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
-            pageActions: this.parsedDocsConfig.pageActions,
+            pageActions: this.convertPageActions(),
             theme:
                 this.parsedDocsConfig.theme != null
                     ? {
@@ -691,7 +716,8 @@ export class DocsDefinitionResolver {
                           body: this.parsedDocsConfig.theme.body,
                           tabs: this.parsedDocsConfig.theme.tabs,
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
-                          footerNav: this.parsedDocsConfig.theme.footerNav
+                          footerNav: this.parsedDocsConfig.theme.footerNav,
+                          "language-switcher": this.parsedDocsConfig.theme.languageSwitcher
                       }
                     : undefined,
             // deprecated
@@ -1546,6 +1572,32 @@ export class DocsDefinitionResolver {
         }
 
         return iconPath as string;
+    }
+
+    private convertPageActions(): DocsV1Write.PageActionsConfig | undefined {
+        if (this.parsedDocsConfig.pageActions == null) {
+            return undefined;
+        }
+
+        return {
+            default: this.parsedDocsConfig.pageActions.default,
+            options: {
+                askAi: this.parsedDocsConfig.pageActions.options.askAi,
+                copyPage: this.parsedDocsConfig.pageActions.options.copyPage,
+                viewAsMarkdown: this.parsedDocsConfig.pageActions.options.viewAsMarkdown,
+                openAi: this.parsedDocsConfig.pageActions.options.openAi,
+                claude: this.parsedDocsConfig.pageActions.options.claude,
+                cursor: this.parsedDocsConfig.pageActions.options.cursor,
+                vscode: this.parsedDocsConfig.pageActions.options.vscode,
+                custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
+                    title: customAction.title,
+                    subtitle: customAction.subtitle,
+                    url: customAction.url,
+                    icon: this.resolveIconFileId(customAction.icon),
+                    default: customAction.default
+                }))
+            }
+        };
     }
 
     private convertColorConfigImageReferences(): DocsV1Write.ColorsConfigV3 | undefined {

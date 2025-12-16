@@ -1,3 +1,48 @@
+- version: 3.24.5
+  changelogEntry:
+    - summary: |
+        Fix OAuth token handling for optional expires_in field with default fallback, and skip
+        literal properties in OAuth request building.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.4
+  changelogEntry:
+    - summary: |
+        Mitigate OutOfMemoryError when generating SDKs for large specs. (Specifically, the IR preprocessing
+        preprocessing step now modifies the JSON tree in-place and avoids calling `.deepCopy()`.)
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.3
+  changelogEntry:
+    - summary: |
+        Update libpng16-16 in container to fix CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.2
+  changelogEntry:
+    - summary: |
+        Pass full `ClientOptions` instead of just `httpClient()` to custom pagination `create()` method.
+        This gives custom pager implementations access to all client configuration including base URL,
+        headers, and other options needed for making subsequent pagination requests.
+      type: fix
+  createdAt: "2025-12-15"
+  irVersion: 61
+
+- version: 3.24.1
+  changelogEntry:
+    - summary: |
+        Fix Jackson deserialization conflict when a property starts with `with` (e.g., `withLabel`) and
+        another property matches the suffix (e.g., `label`).
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
 - version: 3.24.0
   changelogEntry:
     - summary: |

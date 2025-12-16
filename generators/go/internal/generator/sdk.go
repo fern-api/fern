@@ -45,6 +45,9 @@ var (
 	//go:embed sdk/internal/http.go
 	httpInternalFile string
 
+	//go:embed sdk/internal/environment.go
+	environmentInternalFile string
+
 	//go:embed sdk/internal/multipart.go
 	multipartFile string
 
@@ -293,6 +296,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	sdkConfig *ir.SdkConfig,
 	moduleConfig *ModuleConfig,
 	sdkVersion string,
+	environmentsConfig *common.EnvironmentsConfig,
 ) error {
 	importPath := path.Join(f.baseImportPath, "core")
 	f.P("// RequestOption adapts the behavior of the client or an individual request.")
@@ -311,12 +315,17 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		f.P()
 	}
 
+	isMultiURL := isMultipleBaseUrlsEnvironment(environmentsConfig)
+
 	f.P("// RequestOptions defines all of the possible request options.")
 	f.P("//")
 	f.P("// This type is primarily used by the generated code and is not meant")
 	f.P("// to be used directly; use the option package instead.")
 	f.P("type RequestOptions struct {")
 	f.P("BaseURL string")
+	if isMultiURL {
+		f.P("Environment interface{}")
+	}
 	f.P("HTTPClient HTTPClient")
 	f.P("HTTPHeader http.Header")
 	f.P("BodyProperties map[string]interface{}")
@@ -394,7 +403,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0)
+		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL)
 	}
 
 	// Generate the ToHeader method.
@@ -492,7 +501,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL); err != nil {
 		return err
 	}
 
@@ -530,6 +539,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 	auth *ir.ApiAuth,
 	headers []*ir.HttpHeader,
 	asIdempotentRequestOption bool,
+	isMultiURL bool,
 ) error {
 	if err := f.writeOptionStruct("BaseURL", "string", true, asIdempotentRequestOption); err != nil {
 		return err
@@ -548,6 +558,11 @@ func (f *fileWriter) writeRequestOptionStructs(
 	}
 	if err := f.writeOptionStruct("MaxAttempts", "uint", true, asIdempotentRequestOption); err != nil {
 		return err
+	}
+	if isMultiURL {
+		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
+			return err
+		}
 	}
 
 	if auth != nil {
@@ -734,6 +749,7 @@ func (f *fileWriter) WriteIdempotentRequestOptions(
 func (f *fileWriter) WriteRequestOptions(
 	auth *ir.ApiAuth,
 	headers []*ir.HttpHeader,
+	environmentsConfig *common.EnvironmentsConfig,
 ) (*GeneratedAuth, error) {
 	// Now that we know where the types will be generated, format the generated type names as needed.
 	var (
@@ -798,6 +814,20 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("}")
 	f.P("}")
 	f.P()
+
+	// Generate the WithEnvironment option for multi-URL environments.
+	if isMultipleBaseUrlsEnvironment(environmentsConfig) {
+		// Import the root package to get the Environment type
+		rootImportPath := f.baseImportPath
+		f.P("// WithEnvironment sets the environment for the client, which determines")
+		f.P("// the base URL for each endpoint.")
+		f.P("func WithEnvironment(environment ", f.scope.AddImport(rootImportPath), ".Environment) *core.EnvironmentOption {")
+		f.P("return &core.EnvironmentOption{")
+		f.P("Environment: environment,")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
 
 	// Generate the auth functional options.
 	includeCustomAuthDocs := auth.Docs != nil && len(*auth.Docs) > 0
@@ -1170,9 +1200,7 @@ func (f *fileWriter) WriteClient(
 		f.P("authClient := ", authPackage, ".NewClient(authOptions)")
 		// Set up the token getter function that will be called by ToHeader()
 		f.P("options.SetTokenGetter(func() (string, error) {")
-		f.P("if token := oauthTokenProvider.GetToken(); token != \"\" {")
-		f.P("return token, nil")
-		f.P("}")
+		f.P("return oauthTokenProvider.GetOrFetch(func() (string, int, error) {")
 		// Fetch a new token from the auth endpoint
 		fernImportPath := f.baseImportPath
 		fernPackage := f.scope.AddImport(fernImportPath)
@@ -1181,10 +1209,18 @@ func (f *fileWriter) WriteClient(
 		f.P("ClientSecret: options.ClientSecret,")
 		f.P("})")
 		f.P("if err != nil {")
-		f.P("return \"\", err")
+		f.P("return \"\", 0, err")
 		f.P("}")
-		f.P("oauthTokenProvider.SetToken(response.AccessToken, response.ExpiresIn)")
-		f.P("return response.AccessToken, nil")
+		errorsPackage := f.scope.AddImport("errors")
+		f.P("if response.AccessToken == nil {")
+		f.P("return \"\", 0, ", errorsPackage, ".New(\"oauth response missing access token\")")
+		f.P("}")
+		f.P("expiresIn := core.DefaultExpirySeconds")
+		f.P("if response.ExpiresIn != nil {")
+		f.P("expiresIn = *response.ExpiresIn")
+		f.P("}")
+		f.P("return *response.AccessToken, expiresIn, nil")
+		f.P("})")
 		f.P("})")
 	}
 	f.P("return &", clientName, "{")
@@ -1223,13 +1259,22 @@ func (f *fileWriter) WriteClient(
 		}
 		f.P(") ", endpoint.ReturnValues, " {")
 		f.P("options := ", endpoint.OptionConstructor)
-		f.P("baseURL := internal.ResolveBaseURL(")
-		f.P("options.BaseURL,")
-		f.P(receiver, ".baseURL,")
-		f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
-		f.P(")")
-		baseURLVariable := "baseURL"
-		if len(endpoint.PathSuffix) > 0 {
+			if endpoint.BaseURLName != "" {
+				f.P("baseURL := internal.ResolveBaseURL(")
+				f.P("options.BaseURL,")
+				f.P(fmt.Sprintf("internal.ResolveEnvironmentBaseURL(options.Environment, %q),", endpoint.BaseURLName))
+				f.P(receiver, ".baseURL,")
+				f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
+				f.P(")")
+			} else {
+				f.P("baseURL := internal.ResolveBaseURL(")
+				f.P("options.BaseURL,")
+				f.P(receiver, ".baseURL,")
+				f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
+				f.P(")")
+			}
+			baseURLVariable := "baseURL"
+			if len(endpoint.PathSuffix) > 0 {
 			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
 		}
 		if len(endpoint.PathParameterNames) > 0 {
@@ -2455,6 +2500,7 @@ type endpoint struct {
 	SuccessfulReturnValues      string
 	ErrorReturnValues           string
 	BaseURL                     string
+	BaseURLName                 string // For multi-URL environments, the name of the base URL field (e.g., "Ec2", "S3")
 	OptionConstructor           string
 	PathSuffix                  string
 	Method                      string
@@ -2776,6 +2822,13 @@ func (f *fileWriter) endpointFromIR(
 	if err != nil {
 		return nil, err
 	}
+	// For multi-URL environments, get the base URL name (e.g., "Ec2", "S3")
+	// Use irEndpoint.BaseUrl directly since it contains the base URL ID (e.g., "ec2"),
+	// not the environment ID (e.g., "production")
+	var baseURLName string
+	if irEndpoint.BaseUrl != nil {
+		baseURLName = baseURLNameFromID(irEnvironmentsConfig, *irEndpoint.BaseUrl)
+	}
 
 	// Consolidate the irEndpoint's full path into a path suffix that
 	// can be applied to the irEndpoint at construction time.
@@ -2860,6 +2913,7 @@ func (f *fileWriter) endpointFromIR(
 		ErrorReturnValues:           errorReturnValues,
 		OptionConstructor:           optionConstructor,
 		BaseURL:                     baseURL,
+		BaseURLName:                 baseURLName,
 		PathSuffix:                  pathSuffix,
 		Method:                      irMethodToMethodEnum(irEndpoint.Method),
 		ErrorDecoderParameterName:   errorDecoderParameterName,
@@ -3263,15 +3317,34 @@ func environmentsToEnvironmentsVariable(
 	writer *fileWriter,
 	useCore bool,
 ) (*GeneratedEnvironment, error) {
+	importPath := writer.baseImportPath
+	if useCore {
+		importPath = path.Join(importPath, "core")
+	}
+
+	isMultiURL := environmentsConfig.Environments.MultipleBaseUrls != nil
+
+	if isMultiURL {
+		multiURLEnvs := environmentsConfig.Environments.MultipleBaseUrls
+		baseURLs := make(map[common.EnvironmentBaseUrlId]string)
+		for _, baseURL := range multiURLEnvs.BaseUrls {
+			baseURLs[baseURL.Id] = baseURL.Name.PascalCase.UnsafeName
+		}
+
+		writer.P("// Environment defines the environment with multiple base URLs.")
+		writer.P("type Environment struct {")
+		for _, baseURL := range multiURLEnvs.BaseUrls {
+			writer.P(baseURL.Name.PascalCase.UnsafeName, " string")
+		}
+		writer.P("}")
+		writer.P()
+	}
+
 	writer.P("// Environments defines all of the API environments.")
 	writer.P("// These values can be used with the WithBaseURL")
 	writer.P("// RequestOption to override the client's default environment,")
 	writer.P("// if any.")
 	writer.P("var Environments = struct {")
-	importPath := writer.baseImportPath
-	if useCore {
-		importPath = path.Join(importPath, "core")
-	}
 	declarationVisitor := &environmentsDeclarationVisitor{
 		types:      writer.types,
 		writer:     writer,
@@ -3350,10 +3423,6 @@ func (e *environmentsDeclarationVisitor) VisitSingleBaseUrl(url *common.SingleBa
 }
 
 func (e *environmentsDeclarationVisitor) VisitMultipleBaseUrls(url *common.MultipleBaseUrlsEnvironments) error {
-	baseURLs := make(map[common.EnvironmentBaseUrlId]string)
-	for _, baseURL := range url.BaseUrls {
-		baseURLs[baseURL.Id] = baseURL.Name.PascalCase.UnsafeName
-	}
 	for i, environment := range url.Environments {
 		if i == 0 {
 			e.value = ast.NewImportedReference(
@@ -3362,11 +3431,7 @@ func (e *environmentsDeclarationVisitor) VisitMultipleBaseUrls(url *common.Multi
 			)
 		}
 		e.writer.WriteDocs(environment.Docs)
-		e.writer.P(environment.Name.PascalCase.UnsafeName, " struct {")
-		for _, environmentURL := range environmentURLMapToSortedSlice(environment.Urls) {
-			e.writer.P(baseURLs[environmentURL.ID], " string")
-		}
-		e.writer.P("}")
+		e.writer.P(environment.Name.PascalCase.UnsafeName, " Environment")
 	}
 	return nil
 }
@@ -3390,11 +3455,7 @@ func (e *environmentsValueVisitor) VisitMultipleBaseUrls(url *common.MultipleBas
 	}
 	for _, environment := range url.Environments {
 		environmentURLs := environmentURLMapToSortedSlice(environment.Urls)
-		e.writer.P(environment.Name.PascalCase.UnsafeName, ": struct {")
-		for _, environmentURL := range environmentURLs {
-			e.writer.P(baseURLs[environmentURL.ID], " string")
-		}
-		e.writer.P("}{")
+		e.writer.P(environment.Name.PascalCase.UnsafeName, ": Environment{")
 		for _, environmentURL := range environmentURLs {
 			e.writer.P(baseURLs[environmentURL.ID], fmt.Sprintf(": %q,", environmentURL.URL))
 		}
@@ -3414,6 +3475,22 @@ func environmentURLFromID(environmentsConfig *common.EnvironmentsConfig, id comm
 		return "", err
 	}
 	return urlVisitor.value, nil
+}
+
+func baseURLNameFromID(environmentsConfig *common.EnvironmentsConfig, id common.EnvironmentBaseUrlId) string {
+	if environmentsConfig == nil || environmentsConfig.Environments.MultipleBaseUrls == nil {
+		return ""
+	}
+	for _, baseURL := range environmentsConfig.Environments.MultipleBaseUrls.BaseUrls {
+		if baseURL.Id == id {
+			return baseURL.Name.PascalCase.UnsafeName
+		}
+	}
+	return ""
+}
+
+func isMultipleBaseUrlsEnvironment(environmentsConfig *common.EnvironmentsConfig) bool {
+	return environmentsConfig != nil && environmentsConfig.Environments.MultipleBaseUrls != nil
 }
 
 type environmentsURLVisitor struct {

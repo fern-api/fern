@@ -520,7 +520,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "A list of pets"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -803,7 +804,8 @@
               },
               "type": "json"
             },
-            "statusCode": 201
+            "statusCode": 201,
+            "docs": "Pet created"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -989,7 +991,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "A list of pets"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -1272,7 +1275,8 @@
               },
               "type": "json"
             },
-            "statusCode": 201
+            "statusCode": 201,
+            "docs": "Pet created"
           },
           "errors": [],
           "userSpecifiedExamples": [],

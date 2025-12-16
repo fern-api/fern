@@ -107,7 +107,8 @@ export function parseAsyncAPIV2({
                               }),
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
-                    source
+                    source,
+                    explode: undefined
                 });
             }
         }
@@ -184,7 +185,8 @@ export function parseAsyncAPIV2({
                             description: resolvedSchema.description,
                             parameterNameOverride: undefined,
                             availability: convertAvailability(resolvedSchema),
-                            source
+                            source,
+                            explode: undefined
                         });
                         continue;
                     }
@@ -206,7 +208,8 @@ export function parseAsyncAPIV2({
                         description: schema.description,
                         parameterNameOverride: undefined,
                         availability: convertAvailability(schema),
-                        source
+                        source,
+                        explode: undefined
                     });
                 }
             }

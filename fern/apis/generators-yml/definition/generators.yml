@@ -37,6 +37,11 @@ types:
       reviewers:
         type: optional<reviewers.ReviewersSchema>
       ai: optional<ai.AIServicesSchema>
+      autorelease:
+        type: optional<boolean>
+        docs: |
+          If true, automatically release SDKs when changes are detected.
+          Can be overridden at the individual generator level.
       openapi:
         type: optional<GeneratorsOpenAPISchema>
         availability: deprecated

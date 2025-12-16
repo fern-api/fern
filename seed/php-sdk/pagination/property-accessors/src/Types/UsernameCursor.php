@@ -20,27 +20,32 @@ class UsernameCursor extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
+    ) {
         $this->cursor = $values['cursor'];
     }
 
     /**
      * @return UsernamePage
      */
-    public function getCursor(): UsernamePage {
-        return $this->cursor;}
+    public function getCursor(): UsernamePage
+    {
+        return $this->cursor;
+    }
 
     /**
      * @param UsernamePage $value
      */
-    public function setCursor(UsernamePage $value): self {
-        $this->cursor = $value;return $this;}
+    public function setCursor(UsernamePage $value): self
+    {
+        $this->cursor = $value;
+        return $this;
+    }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

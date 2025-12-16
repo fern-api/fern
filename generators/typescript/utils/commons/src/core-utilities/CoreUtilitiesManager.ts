@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp, mkdir, readFile, rm, writeFile } from "fs/promises";
+import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import { glob } from "glob";
 import path, { join } from "path";
 import { SourceFile } from "ts-morph";
@@ -12,6 +12,7 @@ import { AuthImpl } from "./Auth";
 import { CallbackQueueImpl } from "./CallbackQueue";
 import { CoreUtilities } from "./CoreUtilities";
 import { CoreUtility, CoreUtilityName } from "./CoreUtility";
+import { CustomPaginationImpl } from "./CustomPagination";
 import { FetcherImpl } from "./Fetcher";
 import { FileUtilsImpl } from "./FileUtils";
 import { FormDataUtilsImpl } from "./FormDataUtils";
@@ -51,7 +52,7 @@ export class CoreUtilitiesManager {
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly generateEndpointMetadata: boolean;
-    private readonly customPagerName: string | undefined;
+    private readonly customPagerName: string;
 
     constructor({
         streamType,
@@ -68,7 +69,7 @@ export class CoreUtilitiesManager {
         relativePackagePath?: string;
         relativeTestPath?: string;
         generateEndpointMetadata: boolean;
-        customPagerName?: string;
+        customPagerName: string;
     }) {
         this.streamType = streamType;
         this.formDataSupport = formDataSupport;
@@ -110,6 +111,10 @@ export class CoreUtilitiesManager {
             runtime: new RuntimeImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
             pagination: new PaginationImpl({
                 getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            customPagination: new CustomPaginationImpl({
+                getReferenceToExport,
                 generateEndpointMetadata: this.generateEndpointMetadata,
                 customPagerName: this.customPagerName
             }),
@@ -135,15 +140,12 @@ export class CoreUtilitiesManager {
 
     public finalize(exportsManager: ExportsManager, dependencyManager: DependencyManager): void {
         for (const utility of Object.values(this.referencedCoreUtilities)) {
-            exportsManager.addExportsForDirectories(
-                [
-                    {
-                        nameOnDisk: "core"
-                    },
-                    utility.pathInCoreUtilities
-                ],
-                true
-            );
+            exportsManager.addExportsForDirectories([
+                {
+                    nameOnDisk: "core"
+                },
+                utility.pathInCoreUtilities
+            ]);
             utility.addDependencies?.(dependencyManager, {
                 streamType: this.streamType,
                 formDataSupport: this.formDataSupport,
@@ -237,53 +239,20 @@ export class CoreUtilitiesManager {
             );
         }
 
-        // Rename CustomPager to custom name if customPagerName is set
-        // This renames the class and types inside the file, not just aliasing
-        if (
-            this.referencedCoreUtilities["pagination"] != null &&
-            this.customPagerName != null &&
-            this.customPagerName !== "CustomPager"
-        ) {
-            const pagerFileName = this.customPagerName;
-            const paginationDir = path.join(pathToSrc, "core", "pagination");
-            const customPagerPath = path.join(paginationDir, "CustomPager.ts");
-
-            // Read the generated CustomPager.ts file
-            let contents = await readFile(customPagerPath, "utf8");
-
-            // Step 1: Remove 'export' from CustomPagerParser and CustomPagerContext
-            // These are internal types that don't need to be exported
-            contents = contents.replace("export type CustomPagerParser", "type CustomPagerParser");
-            contents = contents.replace("export interface CustomPagerContext", "interface CustomPagerContext");
-
-            // Step 2: Global replacement of CustomPager -> custom name
-            // This renames the class, types, and all references
-            contents = contents.replaceAll("CustomPager", pagerFileName);
-
-            // Write the renamed file
-            const pagerFilePath = path.join(paginationDir, `${pagerFileName}.ts`);
-            await writeFile(pagerFilePath, contents);
-
-            // Delete the original CustomPager.ts
-            await rm(customPagerPath);
-
-            // Rewrite pagination/index.ts to only export Page and the custom pager class
-            const paginationIndexPath = path.join(paginationDir, "index.ts");
-            const indexContents = [
-                `export { Page } from "./Page.js";`,
-                `export { ${pagerFileName} } from "./${pagerFileName}.js";`,
-                ""
-            ].join("\n");
-            await writeFile(paginationIndexPath, indexContents);
-
-            // Rewrite pagination/exports.ts to only export Page and the custom pager class
-            const exportsPath = path.join(paginationDir, "exports.ts");
-            const exportsContents = [
-                `export { Page } from "./Page.js";`,
-                `export { ${pagerFileName} } from "./${pagerFileName}.js";`,
-                ""
-            ].join("\n");
-            await writeFile(exportsPath, exportsContents);
+        if (this.referencedCoreUtilities["customPagination"] != null) {
+            let contents = await readFile(path.join(UTILITIES_PATH, "src/core/pagination/CustomPager.ts"), "utf8");
+            contents = contents.replaceAll("CustomPager", this.customPagerName);
+            const customPagerPath = path.join(
+                pathToRoot,
+                this.getPackagePathImport(),
+                "core",
+                "pagination",
+                `${this.customPagerName}.ts`
+            );
+            await mkdir(path.dirname(customPagerPath), { recursive: true });
+            await writeFile(customPagerPath, contents, {
+                encoding: "utf8"
+            });
         }
     }
 

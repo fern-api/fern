@@ -25,11 +25,13 @@ import com.seed.pagination.resources.users.requests.ListUsersExtendedRequestForO
 import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.ListUsersExtendedOptionalListResponse;
 import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
 import com.seed.pagination.resources.users.types.ListUsersMixedTypePaginationResponse;
+import com.seed.pagination.resources.users.types.ListUsersOptionalDataPaginationResponse;
 import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
 import com.seed.pagination.resources.users.types.NextPage;
 import com.seed.pagination.resources.users.types.Page;
@@ -1115,6 +1117,83 @@ public class AsyncRawUsersClient {
                                 new SyncPagingIterable<String>(true, result, parsedResponse, () -> {
                                     try {
                                         return listWithGlobalConfig(nextRequest, requestOptions)
+                                                .get()
+                                                .body();
+                                    } catch (InterruptedException | ExecutionException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }),
+                                response));
+                        return;
+                    }
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                    future.completeExceptionally(new SeedPaginationApiException(
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
+                    return;
+                } catch (IOException e) {
+                    future.completeExceptionally(
+                            new SeedPaginationException("Network error executing HTTP request", e));
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                future.completeExceptionally(new SeedPaginationException("Network error executing HTTP request", e));
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalData() {
+        return listWithOptionalData(ListUsersOptionalDataRequest.builder().build());
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalData(
+            ListUsersOptionalDataRequest request) {
+        return listWithOptionalData(request, null);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalData(
+            ListUsersOptionalDataRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegments("optional-data");
+        if (request.getPage().isPresent()) {
+            QueryStringMapper.addQueryParameter(
+                    httpUrl, "page", request.getPage().get(), false);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> future = new CompletableFuture<>();
+        client.newCall(okhttpRequest).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    if (response.isSuccessful()) {
+                        ListUsersOptionalDataPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                                responseBodyString, ListUsersOptionalDataPaginationResponse.class);
+                        int newPageNumber = request.getPage()
+                                .map((Integer page) -> page + 1)
+                                .orElse(1);
+                        ListUsersOptionalDataRequest nextRequest = ListUsersOptionalDataRequest.builder()
+                                .from(request)
+                                .page(newPageNumber)
+                                .build();
+                        List<User> result = parsedResponse.getData().orElse(Collections.emptyList());
+                        future.complete(new SeedPaginationHttpResponse<>(
+                                new SyncPagingIterable<User>(true, result, parsedResponse, () -> {
+                                    try {
+                                        return listWithOptionalData(nextRequest, requestOptions)
                                                 .get()
                                                 .body();
                                     } catch (InterruptedException | ExecutionException e) {
