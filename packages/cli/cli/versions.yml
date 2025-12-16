@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        API references in docs can now inherit audiences from their parent instance using the special `instance` keyword. When an API reference specifies `audiences: instance`, it will inherit the instance's target audiences. This enables centralized audience configuration at the instance level while giving explicit control over which API references should inherit.
+        API references in docs can now inherit audiences from their parent instance using the special `instance` keyword. When an API reference's audiences array contains `instance`, that keyword is expanded to include the instance's target audiences. This can be combined with other audiences, e.g., `audiences: [instance, beta]` will include both the instance's audiences and `beta`.
       type: feat
   irVersion: 62
   createdAt: "2025-12-16"

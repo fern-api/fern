@@ -214,29 +214,55 @@ export class DocsDefinitionResolver {
     private static readonly INSTANCE_AUDIENCE_KEYWORD = "instance";
 
     /**
-     * Gets the effective audiences for an API section, inheriting from instance audiences
-     * when the special "instance" keyword is used.
+     * Gets the effective audiences for an API section, expanding the special "instance" keyword
+     * with the instance's target audiences.
      *
-     * If the API section has `audiences: instance` (or `audiences: ["instance"]`), it will
-     * inherit the instance's target audiences. Otherwise, the API section's own audiences are used.
+     * If the API section's audiences array contains "instance", that keyword is replaced with
+     * the instance's target audiences and combined with any other specified audiences.
+     * For example: ["instance", "beta"] becomes ["audience1", "audience2", "beta"] if the
+     * instance has audiences ["audience1", "audience2"].
      */
     private getEffectiveAudiencesForApiSection(itemAudiences: Audiences): Audiences {
-        // Check if the API section uses the special "instance" keyword
-        if (
-            itemAudiences.type === "select" &&
-            itemAudiences.audiences.length === 1 &&
-            itemAudiences.audiences[0] === DocsDefinitionResolver.INSTANCE_AUDIENCE_KEYWORD
-        ) {
-            // Inherit from instance's target audiences
-            if (this.targetAudiences && this.targetAudiences.length > 0) {
-                return { type: "select", audiences: this.targetAudiences };
+        // Only process "select" type audiences that have an array
+        if (itemAudiences.type !== "select") {
+            return itemAudiences;
+        }
+
+        // Check if the "instance" keyword is present in the audiences array
+        if (!itemAudiences.audiences.includes(DocsDefinitionResolver.INSTANCE_AUDIENCE_KEYWORD)) {
+            return itemAudiences;
+        }
+
+        // Expand "instance" keyword in-place with instance's target audiences
+        const expandedAudiences: string[] = [];
+        const seen = new Set<string>();
+
+        for (const audience of itemAudiences.audiences) {
+            if (audience === DocsDefinitionResolver.INSTANCE_AUDIENCE_KEYWORD) {
+                // Replace "instance" with the instance's target audiences
+                if (this.targetAudiences && this.targetAudiences.length > 0) {
+                    for (const targetAudience of this.targetAudiences) {
+                        if (!seen.has(targetAudience)) {
+                            seen.add(targetAudience);
+                            expandedAudiences.push(targetAudience);
+                        }
+                    }
+                }
+            } else {
+                // Keep other audiences, deduplicating
+                if (!seen.has(audience)) {
+                    seen.add(audience);
+                    expandedAudiences.push(audience);
+                }
             }
-            // If no instance audiences, treat as "all" (no filtering)
+        }
+
+        // If expansion results in empty array, treat as "all" (no filtering)
+        if (expandedAudiences.length === 0) {
             return { type: "all" };
         }
 
-        // Otherwise, return the original audiences unchanged
-        return itemAudiences;
+        return { type: "select", audiences: expandedAudiences };
     }
 
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
