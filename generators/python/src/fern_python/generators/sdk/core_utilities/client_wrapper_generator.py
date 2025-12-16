@@ -462,6 +462,19 @@ class ClientWrapperGenerator:
             writer.write_line("**(self.get_custom_headers() or {}),")
             writer.write_line("}")
             writer.write_newline_if_last_line_not()
+            api_version = self._context.ir.api_version
+            if api_version is not None:
+                header_version_scheme = api_version.get_as_union()
+                if header_version_scheme.type == "header":
+                    header_name = header_version_scheme.header.name.wire_value
+                    default_value = header_version_scheme.value.default
+                    if default_value is not None:
+                        writer.write_line(f'headers["{header_name}"] = "{default_value}"')
+                    else:
+                        param_name = header_version_scheme.header.name.name.snake_case.safe_name
+                        writer.write_line(f"if self._{param_name} is not None:")
+                        with writer.indent():
+                            writer.write_line(f'headers["{header_name}"] = self._{param_name}')
             basic_auth_scheme = self._get_basic_auth_scheme()
             if basic_auth_scheme is not None:
                 if not self._context.ir.sdk_config.is_auth_mandatory:
@@ -607,6 +620,23 @@ class ClientWrapperGenerator:
                     docs=variable.docs,
                 )
             )
+
+        api_version = self._context.ir.api_version
+        if api_version is not None:
+            header_version_scheme = api_version.get_as_union()
+            if header_version_scheme.type == "header":
+                default_value = header_version_scheme.value.default
+                if default_value is None:
+                    param_name = header_version_scheme.header.name.name.snake_case.safe_name
+                    parameters.append(
+                        ConstructorParameter(
+                            constructor_parameter_name=param_name,
+                            private_member_name=f"_{param_name}",
+                            type_hint=AST.TypeHint.str_(),
+                            header_key=header_version_scheme.header.name.wire_value,
+                            docs=f"The API version to use for requests. Sent as the {header_version_scheme.header.name.wire_value} header.",
+                        )
+                    )
 
         # TODO(dsinghvi): Support suppliers for global headers
         for header in self._context.ir.headers:
