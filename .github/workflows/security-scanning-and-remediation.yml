@@ -26,6 +26,7 @@ on:
 
 permissions: # Required for OIDC
   id-token: write
+  contents: read
 
 jobs:
   create-dependabot-prs:
