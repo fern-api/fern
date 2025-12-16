@@ -33,8 +33,12 @@ import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.commons.WebSocketChannelId;
 import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.http.RequestProperty;
+import com.fern.ir.model.http.RequestPropertyValue;
 import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.ir.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
@@ -1181,6 +1185,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 if (requestProperties.getCustomProperties().isPresent()) {
                     for (RequestProperty customProp :
                             requestProperties.getCustomProperties().get()) {
+                        // Skip literal properties - they are hardcoded in the request class
+                        if (isLiteralProperty(customProp)) {
+                            continue;
+                        }
                         String propName = customProp
                                 .getProperty()
                                 .visit(new RequestPropertyToNameVisitor())
@@ -1477,6 +1485,33 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             @Override
             public Void _visitUnknown(Object unknownType) {
                 throw new RuntimeException("Encountered unknown oauth scheme" + unknownType);
+            }
+
+            private boolean isLiteralProperty(RequestProperty requestProperty) {
+                TypeReference valueType =
+                        requestProperty.getProperty().visit(new RequestPropertyValue.Visitor<TypeReference>() {
+                            @Override
+                            public TypeReference visitQuery(QueryParameter query) {
+                                return query.getValueType();
+                            }
+
+                            @Override
+                            public TypeReference visitBody(ObjectProperty body) {
+                                return body.getValueType();
+                            }
+
+                            @Override
+                            public TypeReference _visitUnknown(Object unknownType) {
+                                return null;
+                            }
+                        });
+                if (valueType == null) {
+                    return false;
+                }
+                if (valueType.isContainer()) {
+                    return valueType.getContainer().get().isLiteral();
+                }
+                return false;
             }
         }
 

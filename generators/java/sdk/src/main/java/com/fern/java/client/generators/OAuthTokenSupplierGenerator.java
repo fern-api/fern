@@ -8,12 +8,15 @@ import com.fern.ir.model.http.HttpEndpoint;
 import com.fern.ir.model.http.HttpResponseBody;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.JsonResponseBody;
+import com.fern.ir.model.http.QueryParameter;
 import com.fern.ir.model.http.RequestProperty;
+import com.fern.ir.model.http.RequestPropertyValue;
 import com.fern.ir.model.http.ResponseProperty;
 import com.fern.ir.model.http.SdkRequestBodyType;
 import com.fern.ir.model.http.SdkRequestShape.Visitor;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
@@ -52,6 +55,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private static final String FETCH_TOKEN_METHOD_NAME = "fetchToken";
     private static final String GET_METHOD_NAME = "get";
     private static final String GET_EXPIRES_AT_METHOD_NAME = "getExpiresAt";
+    private static final long DEFAULT_EXPIRES_IN_SECONDS = 3600; // 1 hour
 
     private final OAuthClientCredentials clientCredentials;
     private final ClientGeneratorContext clientGeneratorContext;
@@ -103,6 +107,10 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         if (requestProperties.getCustomProperties().isPresent()) {
             for (RequestProperty customProp :
                     requestProperties.getCustomProperties().get()) {
+                // Skip literal properties - they are hardcoded in the request class
+                if (isLiteralProperty(customProp)) {
+                    continue;
+                }
                 String propName = customProp
                         .getProperty()
                         .visit(new RequestPropertyToNameVisitor())
@@ -164,18 +172,31 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addStatement(
                         "this.$L = authResponse.get$L()", ACCESS_TOKEN_FIELD_NAME, accessTokenResponsePropertyName);
         if (refreshRequired) {
-            String tokenPropertyName = expiryResponseProperty
-                    .get()
+            ResponseProperty expiresInProperty = expiryResponseProperty.get();
+            String tokenPropertyName = expiresInProperty
                     .getProperty()
                     .getName()
                     .getName()
                     .getPascalCase()
                     .getUnsafeName();
-            getMethodSpecBuilder.addStatement(
-                    "this.$L = $L(authResponse.get$L())",
-                    EXPIRES_AT_FIELD_NAME,
-                    GET_EXPIRES_AT_METHOD_NAME,
-                    tokenPropertyName);
+            TypeReference expiresInType = expiresInProperty.getProperty().getValueType();
+            boolean isOptional = isOptionalType(expiresInType);
+            if (isOptional) {
+                // Handle optional expires_in with default fallback
+                // In Java, optional fields return Optional<T>, so use .orElse()
+                getMethodSpecBuilder.addStatement(
+                        "this.$L = $L(authResponse.get$L().orElse((int) $L))",
+                        EXPIRES_AT_FIELD_NAME,
+                        GET_EXPIRES_AT_METHOD_NAME,
+                        tokenPropertyName,
+                        DEFAULT_EXPIRES_IN_SECONDS);
+            } else {
+                getMethodSpecBuilder.addStatement(
+                        "this.$L = $L(authResponse.get$L())",
+                        EXPIRES_AT_FIELD_NAME,
+                        GET_EXPIRES_AT_METHOD_NAME,
+                        tokenPropertyName);
+            }
         }
         getMethodSpecBuilder
                 .endControlFlow()
@@ -327,5 +348,38 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 throw new RuntimeException("Unknown SdkRequestShape: " + unknownType);
             }
         });
+    }
+
+    private boolean isOptionalType(TypeReference typeReference) {
+        if (typeReference.isContainer()) {
+            return typeReference.getContainer().get().isOptional();
+        }
+        return false;
+    }
+
+    private boolean isLiteralProperty(RequestProperty requestProperty) {
+        TypeReference valueType = requestProperty.getProperty().visit(new RequestPropertyValue.Visitor<TypeReference>() {
+            @Override
+            public TypeReference visitQuery(QueryParameter query) {
+                return query.getValueType();
+            }
+
+            @Override
+            public TypeReference visitBody(ObjectProperty body) {
+                return body.getValueType();
+            }
+
+            @Override
+            public TypeReference _visitUnknown(Object unknownType) {
+                return null;
+            }
+        });
+        if (valueType == null) {
+            return false;
+        }
+        if (valueType.isContainer()) {
+            return valueType.getContainer().get().isLiteral();
+        }
+        return false;
     }
 }
