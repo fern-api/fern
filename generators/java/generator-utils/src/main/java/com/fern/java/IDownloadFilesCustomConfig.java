@@ -43,4 +43,7 @@ public interface IDownloadFilesCustomConfig {
     default ICustomConfig.PackageLayout packageLayout() {
         return ICustomConfig.PackageLayout.NESTED;
     }
+
+    @JsonProperty("gradle-distribution-url")
+    Optional<String> gradleDistributionUrl();
 }
