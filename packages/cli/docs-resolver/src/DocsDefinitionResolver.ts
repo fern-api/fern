@@ -208,23 +208,36 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Gets the effective audiences for an API section, inheriting from instance audiences if not specified.
-     * If the API section has its own audiences specified, those take precedence.
-     * If the API section has no audiences (type: "all") and the instance has target audiences,
-     * the instance audiences are inherited.
+     * Special audience keyword that triggers inheritance from the instance's target audiences.
      */
-    private getEffectiveAudiencesForApiSection(itemAudiences: docsYml.Audiences): docsYml.Audiences {
-        // If the API section has its own audiences specified, use those
-        if (itemAudiences.type === "select") {
-            return itemAudiences;
+    private static readonly INSTANCE_AUDIENCE_KEYWORD = "instance";
+
+    /**
+     * Gets the effective audiences for an API section, inheriting from instance audiences
+     * when the special "instance" keyword is used.
+     *
+     * If the API section has `audiences: instance` (or `audiences: ["instance"]`), it will
+     * inherit the instance's target audiences. Otherwise, the API section's own audiences are used.
+     */
+    private getEffectiveAudiencesForApiSection(itemAudiences: { type: "all" | "select"; audiences?: string[] }): {
+        type: "all" | "select";
+        audiences?: string[];
+    } {
+        // Check if the API section uses the special "instance" keyword
+        if (
+            itemAudiences.type === "select" &&
+            itemAudiences.audiences?.length === 1 &&
+            itemAudiences.audiences[0] === DocsDefinitionResolver.INSTANCE_AUDIENCE_KEYWORD
+        ) {
+            // Inherit from instance's target audiences
+            if (this.targetAudiences && this.targetAudiences.length > 0) {
+                return { type: "select", audiences: this.targetAudiences };
+            }
+            // If no instance audiences, treat as "all" (no filtering)
+            return { type: "all" };
         }
 
-        // If the API section has no audiences (type: "all") and instance has target audiences, inherit them
-        if (this.targetAudiences && this.targetAudiences.length > 0) {
-            return { type: "select", audiences: this.targetAudiences };
-        }
-
-        // Otherwise, return the original "all" audiences
+        // Otherwise, return the original audiences unchanged
         return itemAudiences;
     }
 
