@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Allow omitting the `fernapi/` prefix in generator names in `generators.yml`. The prefix is now inferred by default, so `fern-typescript-sdk` is equivalent to `fernapi/fern-typescript-sdk`. Custom Docker orgs can still be specified explicitly (e.g., `myorg/my-generator`).
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.23.0
+
+- changelogEntry:
     - summary: Improve dynamic IR generation for inferred auth.
       type: fix
   irVersion: 62

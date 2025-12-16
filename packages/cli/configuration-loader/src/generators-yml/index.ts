@@ -6,7 +6,7 @@ export {
 } from "./convertGeneratorsConfiguration";
 export { GeneratorName } from "./GeneratorName";
 export { GENERATOR_INVOCATIONS } from "./generatorInvocations";
-export { getGeneratorNameOrThrow } from "./getGeneratorName";
+export { addDefaultDockerOrgIfNotPresent, getGeneratorNameOrThrow } from "./getGeneratorName";
 export { getLatestGeneratorVersion } from "./getGeneratorVersions";
 export {
     getPathToGeneratorsConfiguration,
