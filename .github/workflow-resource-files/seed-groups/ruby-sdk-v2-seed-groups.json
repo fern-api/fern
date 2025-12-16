@@ -45,9 +45,8 @@
     },
     {
       "fixtures": [
-        "alias-extends",
-        "version",
-        "streaming",
+                "alias-extends",
+                "streaming",
         "single-url-environment-no-default",
         "inferred-auth-explicit",
         "literals-unions",
