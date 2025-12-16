@@ -6,6 +6,7 @@ import static com.fern.java.GeneratorLogging.logError;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
@@ -202,6 +203,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     processObjectNodeInPlace((ObjectNode) fieldValue);
                 } else if (fieldValue.isArray()) {
                     processArrayNodeInPlace((ArrayNode) fieldValue);
+                } else if (fieldValue.isNumber() && isIntegerOverflow(fieldValue)) {
+                    objectNode.put(fieldName, fieldValue.asLong());
+                    conversions++;
                 }
             }
         }
@@ -217,6 +221,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     processObjectNodeInPlace((ObjectNode) element);
                 } else if (element.isArray()) {
                     processArrayNodeInPlace((ArrayNode) element);
+                } else if (element.isNumber() && isIntegerOverflow(element)) {
+                    arrayNode.set(i, JsonNodeFactory.instance.numberNode(element.asLong()));
+                    conversions++;
                 }
             }
         }
