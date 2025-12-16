@@ -6,7 +6,7 @@ public partial class SeedVersionClient
 {
     private readonly RawClient _client;
 
-    public SeedVersionClient(ClientOptions? clientOptions = null)
+    public SeedVersionClient(string version, ClientOptions? clientOptions = null)
     {
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
@@ -15,6 +15,7 @@ public partial class SeedVersionClient
                 { "X-Fern-SDK-Name", "SeedVersion" },
                 { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernversion-no-default/0.0.1" },
+                { "X-API-Version", version ?? "" },
             }
         );
         clientOptions ??= new ClientOptions();
