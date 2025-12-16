@@ -161,17 +161,23 @@ export async function runRemoteGenerationForGenerator({
 
     // Upload dynamic IR for SDK generation (for dynamic snippets)
     if (generatorInvocation.language != null && packageName != null && version != null && !isPreview) {
-        await uploadDynamicIRForSdkGeneration({
-            fdr,
-            organization,
-            version,
-            language: generatorInvocation.language,
-            packageName,
-            ir,
-            smartCasing: generatorInvocation.smartCasing,
-            dynamicGeneratorConfig,
-            context: interactiveTaskContext
-        });
+        try {
+            await uploadDynamicIRForSdkGeneration({
+                fdr,
+                organization,
+                version,
+                language: generatorInvocation.language,
+                packageName,
+                ir,
+                smartCasing: generatorInvocation.smartCasing,
+                dynamicGeneratorConfig,
+                context: interactiveTaskContext
+            });
+        } catch (error) {
+            interactiveTaskContext.logger.warn(
+                `Failed to upload dynamic IR for SDK generation: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
     }
 
     const job = await createAndStartJob({
