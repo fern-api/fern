@@ -704,4 +704,50 @@ describe("replaceReferencedMarkdown", () => {
         expect(result.referencedFiles).toHaveLength(1);
         expect(result.referencedFiles[0]?.content).toBe("This feature is only available on the {{plan}} plan.");
     });
+
+    it("should track all referenced files even when circular references are detected", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="snippetA.md" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetA.md")) {
+                    return 'Content A\n<Markdown src="snippetB.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetB.md")) {
+                    return 'Content B\n<Markdown src="snippetA.md" />'; // Circular!
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        // Circular reference should be detected
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(/Circular reference detected.*snippetA\.md.*already being processed/)
+        );
+
+        // Both files should still be tracked in referencedFiles
+        expect(result.referencedFiles).toHaveLength(2);
+        expect(result.referencedFiles).toEqual(
+            expect.arrayContaining([
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippetA.md"),
+                    relativeFilePath: RelativeFilePath.of("pages/snippetA.md"),
+                    content: 'Content A\n<Markdown src="snippetB.md" />'
+                },
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippetB.md"),
+                    relativeFilePath: RelativeFilePath.of("pages/snippetB.md"),
+                    content: 'Content B\n<Markdown src="snippetA.md" />'
+                }
+            ])
+        );
+    });
 });
