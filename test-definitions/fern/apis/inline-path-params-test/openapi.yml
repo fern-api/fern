@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  title: Inline Path Parameters Test
+  version: 1.0.0
+tags:
+  - name: Users
+    description: User operations
+paths:
+  /users/{user_id}:
+    get:
+      operationId: getUser
+      summary: Get a user by ID
+      description: Returns the user with the provided user ID. This endpoint has only a path parameter and no body.
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: string
+          required: true
+          description: The ID of the user to retrieve
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/{user_id}/profile:
+    get:
+      operationId: getUserProfile
+      summary: Get a user's profile
+      description: Returns the profile for the user. This endpoint has a path parameter and a query parameter but no body.
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: include_details
+          schema:
+            type: boolean
+          required: false
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+  /users/{user_id}/settings:
+    put:
+      operationId: updateUserSettings
+      summary: Update user settings
+      description: Updates the settings for a user. This endpoint has a path parameter AND a body.
+      tags:
+        - Users
+      parameters:
+        - in: path
+          name: user_id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSettings'
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - name
+    UserProfile:
+      type: object
+      properties:
+        bio:
+          type: string
+        avatar_url:
+          type: string
+    UserSettings:
+      type: object
+      properties:
+        notifications_enabled:
+          type: boolean
+        theme:
+          type: string
+          enum:
+            - light
+            - dark

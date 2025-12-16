@@ -23,7 +23,7 @@ export interface ParseOpenAPIOptions {
     /* Whether or not to only include endpoint referenced schemas */
     onlyIncludeReferencedSchemas: boolean;
     /* Whether or not to include path parameters in the in-lined request */
-    inlinePathParameters: boolean;
+    inlinePathParameters: generatorsYml.InlinePathParameters;
     /* Whether or not to preserve original schema Ids in the IR */
     preserveSchemaIds: boolean;
     /* Whether or not to parse object query parameters. */
@@ -109,7 +109,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     respectReadonlySchemas: false,
     respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,
-    inlinePathParameters: true,
+    inlinePathParameters: generatorsYml.InlinePathParameters.WhenBodyNotEmpty,
     preserveSchemaIds: false,
     objectQueryParameters: true,
     shouldUseUndiscriminatedUnionsWithLiterals: false,

@@ -98,6 +98,15 @@ func (r *Retrier) run(
 		return nil, err
 	}
 
+	// Reset the request body for retries since the body may have already been read.
+	if retryAttempt > 0 && request.GetBody != nil {
+		requestBody, err := request.GetBody()
+		if err != nil {
+			return nil, err
+		}
+		request.Body = requestBody
+	}
+
 	response, err := fn(request)
 	if err != nil {
 		return nil, err

@@ -3885,7 +3885,11 @@ func needsRequestParameter(
 	}
 	onlyPathParameters := endpoint.GetSdkRequest().GetShape().GetWrapper().GetOnlyPathParameters()
 	if onlyPathParameters != nil && *onlyPathParameters {
-		return false
+		// When inlinePathParameters is enabled and the request only has path parameters,
+		// we still need a request parameter to inline the path parameters into.
+		// When inlinePathParameters is disabled, we don't need a request parameter
+		// because the path parameters will be positional arguments.
+		return inlinePathParameters
 	}
 	return true
 }

@@ -24,8 +24,14 @@ export interface ApiDefinitionSettingsSchema {
     "respect-nullable-schemas"?: boolean;
     /** Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false. */
     "only-include-referenced-schemas"?: boolean;
-    /** Whether to include path parameters within the generated in-lined request. Defaults to true. */
-    "inline-path-parameters"?: boolean;
+    /**
+     * Controls whether path parameters are inlined into the request object.
+     * - `false`: Never inline path parameters (they remain as positional arguments)
+     * - `when-body-not-empty`: Only inline path parameters when the request has a body, query params, or headers (default)
+     * - `true`: Alias for `when-body-not-empty`
+     * - `always`: Always inline path parameters, even when there's no body
+     */
+    "inline-path-parameters"?: FernDefinition.InlinePathParametersSchema;
     /** Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to true. */
     "idiomatic-request-names"?: boolean;
     /**

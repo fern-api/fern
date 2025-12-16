@@ -1,5 +1,6 @@
 /* eslint-disable jest/no-conditional-expect */
 
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -686,7 +687,9 @@ describe("convertGeneratorsConfiguration", () => {
             if (converted.api?.type === "singleNamespace") {
                 expect(converted.api.definitions[0]?.settings?.shouldUseTitleAsName).toBe(true);
                 expect(converted.api.definitions[0]?.settings?.onlyIncludeReferencedSchemas).toBe(true);
-                expect(converted.api.definitions[0]?.settings?.inlinePathParameters).toBe(true);
+                expect(converted.api.definitions[0]?.settings?.inlinePathParameters).toBe(
+                    generatorsYml.InlinePathParameters.WhenBodyNotEmpty
+                );
             }
         });
 
