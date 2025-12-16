@@ -225,6 +225,9 @@ export class DocsDefinitionResolver {
         const resolveStartTime = performance.now();
         const startMemory = process.memoryUsage();
 
+        // Reset referenced markdown files to prevent accumulation if resolver is reused
+        this.referencedMarkdownFiles = [];
+
         this.taskContext.logger.debug("Parsing docs configuration...");
         const parseStart = performance.now();
         this._parsedDocsConfig = await parseDocsConfiguration({

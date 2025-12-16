@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { vi } from "vitest";
 
@@ -609,5 +609,99 @@ describe("replaceReferencedMarkdown", () => {
         expect(result.trim()).toContain("Content A");
         expect(result.trim()).toContain("Content B");
         expect(result.trim()).toContain("Content C");
+    });
+
+    it("should track referenced markdown files with their paths and raw content", async () => {
+        const markdown = `
+            <Markdown src="snippet.md" />
+            <Markdown src="nested/other.mdx" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippet.md")) {
+                    return "Snippet content";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/nested/other.mdx")) {
+                    return "Other content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.markdown).toContain("Snippet content");
+        expect(result.markdown).toContain("Other content");
+
+        expect(result.referencedFiles).toHaveLength(2);
+
+        expect(result.referencedFiles).toEqual(
+            expect.arrayContaining([
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippet.md"),
+                    relativeFilePath: RelativeFilePath.of("pages/snippet.md"),
+                    content: "Snippet content"
+                },
+                {
+                    absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/nested/other.mdx"),
+                    relativeFilePath: RelativeFilePath.of("pages/nested/other.mdx"),
+                    content: "Other content"
+                }
+            ])
+        );
+    });
+
+    it("should deduplicate referenced files when the same file is referenced multiple times", async () => {
+        const markdown = `
+            <Markdown src="snippet.md" />
+            <Markdown src="snippet.md" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippet.md")) {
+                    return "Snippet content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.referencedFiles).toHaveLength(1);
+        expect(result.referencedFiles[0]).toEqual({
+            absoluteFilePath: AbsoluteFilePath.of("/path/to/fern/pages/snippet.md"),
+            relativeFilePath: RelativeFilePath.of("pages/snippet.md"),
+            content: "Snippet content"
+        });
+    });
+
+    it("should store raw content before variable substitution in referenced files", async () => {
+        const markdown = `
+            <Markdown src="feature.md" plan="pro" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/feature.md")) {
+                    return "This feature is only available on the {{plan}} plan.";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result.markdown).toContain("This feature is only available on the pro plan.");
+
+        expect(result.referencedFiles).toHaveLength(1);
+        expect(result.referencedFiles[0]?.content).toBe("This feature is only available on the {{plan}} plan.");
     });
 });
