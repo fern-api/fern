@@ -2,7 +2,7 @@ name: Check Devin AI PR Assignee
 
 on:
   pull_request:
-    types: [opened, reopened, edited]
+    types: [opened, reopened]
 
 permissions:
   pull-requests: write
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.pull_request.user.login == 'devin-ai-integration[bot]' }}
     steps:
-      - name: Check for assignee and comment if missing
+      - name: Auto-assign requester from PR description
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -22,31 +22,67 @@ jobs:
             const repo = context.repo.repo;
             const prNumber = pr.number;
 
-            // Check if assignees exist
-            if (!pr.assignees || pr.assignees.length === 0) {
-              // Check if we already commented to avoid duplicate comments
-              const comments = await github.rest.issues.listComments({
+            // Check if assignees already exist
+            if (pr.assignees && pr.assignees.length > 0) {
+              console.log(`PR has ${pr.assignees.length} assignee(s), no action needed`);
+              return;
+            }
+
+            // Email to GitHub username mapping for fern-api org members
+            const emailToUsername = {
+              'catherine@buildwithfern.com': 'chdeskur',
+              'danny@buildwithfern.com': 'dannysheridan',
+              'deep@buildwithfern.com': 'dsinghvi',
+              'alex@buildwithfern.com': 'alecharmon',
+              'armando@buildwithfern.com': 'armando-fern',
+              'ryan@buildwithfern.com': 'ryan-fern',
+              'sahil@buildwithfern.com': 'sahil485',
+              'jon@buildwithfern.com': 'jon-fern',
+              'patrick@buildwithfern.com': 'patrickthornton',
+              'matt@buildwithfern.com': 'mattblank11',
+              'colton@buildwithfern.com': 'coltondotio',
+              'kenny@buildwithfern.com': 'kennyderek',
+            };
+
+            // Parse "Requested by:" from PR body
+            const body = pr.body || '';
+            const requestedByMatch = body.match(/Requested by:.*?\(([^)]+)\)/i);
+            
+            if (!requestedByMatch) {
+              console.log('Could not find "Requested by:" in PR description');
+              return;
+            }
+
+            const email = requestedByMatch[1].toLowerCase();
+            const username = emailToUsername[email];
+
+            if (!username) {
+              console.log(`No GitHub username mapping found for email: ${email}`);
+              // Post a comment asking for manual assignment
+              await github.rest.issues.createComment({
                 owner,
                 repo,
                 issue_number: prNumber,
+                body: `**Assignee Required**\n\nThis PR was opened by Devin AI but the requester's email (${email}) is not in the username mapping. Please add an assignee manually.`
               });
+              return;
+            }
 
-              const botComment = comments.data.find(comment => 
-                comment.user.type === 'Bot' && 
-                comment.body.includes('**Assignee Required**')
-              );
-
-              if (!botComment) {
-                await github.rest.issues.createComment({
-                  owner,
-                  repo,
-                  issue_number: prNumber,
-                  body: '@devin-ai-integration **Assignee Required**\n\nThis PR was opened by Devin AI but does not have an assignee. Please add an assignee corresponding to the person who requested this PR.\n\nYou can add an assignee using the sidebar on the right side of this page.'
-                });
-                console.log('Added comment requesting assignee');
-              } else {
-                console.log('Comment already exists, skipping');
-              }
-            } else {
-              console.log(`PR has ${pr.assignees.length} assignee(s), no action needed`);
+            // Add the assignee
+            try {
+              await github.rest.issues.addAssignees({
+                owner,
+                repo,
+                issue_number: prNumber,
+                assignees: [username]
+              });
+              console.log(`Successfully assigned ${username} to PR #${prNumber}`);
+            } catch (error) {
+              console.log(`Failed to assign ${username}: ${error.message}`);
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: prNumber,
+                body: `**Assignee Required**\n\nFailed to auto-assign ${username}. Please add an assignee manually.`
+              });
             }
