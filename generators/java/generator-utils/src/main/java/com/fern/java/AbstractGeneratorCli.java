@@ -136,15 +136,18 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         JsonNode rootNode = mapper.readTree(json);
 
         IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
-        JsonNode processedNode = processor.processNode(rootNode);
+        processor.processNodeInPlace(rootNode);
 
         if (processor.getConversions() > 0) {
             log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
         }
 
-        return mapper.writeValueAsString(processedNode);
+        return mapper.writeValueAsString(rootNode);
     }
 
+    /**
+     * Processes JSON nodes in-place to convert integer overflow values to long type.
+     */
     private static class IntegerOverflowProcessor {
         private int conversions = 0;
 
@@ -152,76 +155,74 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             return conversions;
         }
 
-        public JsonNode processNode(JsonNode node) {
+        /**
+         * Processes a node in-place, modifying the tree structure directly.
+         * For container nodes (objects/arrays), this recursively processes children.
+         * Only creates new nodes when an actual integer-to-long conversion is needed.
+         */
+        public void processNodeInPlace(JsonNode node) {
             if (node == null) {
-                return node;
+                return;
             }
 
             if (node.isObject()) {
-                return processObjectNode((ObjectNode) node);
+                processObjectNodeInPlace((ObjectNode) node);
             } else if (node.isArray()) {
-                return processArrayNode((ArrayNode) node);
-            } else if (node.isNumber()) {
-                return processNumberNode(node);
-            } else {
-                return node;
+                processArrayNodeInPlace((ArrayNode) node);
             }
+            // Number nodes are handled by their parent containers when replacement is needed
         }
 
-        private JsonNode processObjectNode(ObjectNode objectNode) {
-            ObjectNode result = objectNode.deepCopy();
-
-            if (result.has("integer")) {
-                JsonNode integerNode = result.get("integer");
+        private void processObjectNodeInPlace(ObjectNode objectNode) {
+            // Check for integer overflow pattern: {"integer": <overflow_value>} -> {"long": <value>}
+            if (objectNode.has("integer")) {
+                JsonNode integerNode = objectNode.get("integer");
                 if (integerNode.isNumber() && isIntegerOverflow(integerNode)) {
                     long value = integerNode.asLong();
                     log.debug("Integer overflow detected in IR example value: {}. Converting to long type.", value);
-                    result.remove("integer");
-                    result.put("long", value);
+                    objectNode.remove("integer");
+                    objectNode.put("long", value);
                     conversions++;
                 }
             }
 
-            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> fields = result.fields();
-            while (fields.hasNext()) {
-                java.util.Map.Entry<String, JsonNode> field = fields.next();
-                String fieldName = field.getKey();
-                JsonNode fieldValue = field.getValue();
+            // Collect field names first to avoid ConcurrentModificationException
+            // when we need to replace values during iteration
+            List<String> fieldNames = new ArrayList<>();
+            objectNode.fieldNames().forEachRemaining(fieldNames::add);
 
+            for (String fieldName : fieldNames) {
+                // Skip the integer/long fields we just processed
                 if ("integer".equals(fieldName) || "long".equals(fieldName)) {
                     continue;
                 }
 
-                JsonNode processedValue = processNode(fieldValue);
-                if (processedValue != fieldValue) {
-                    result.set(fieldName, processedValue);
+                JsonNode fieldValue = objectNode.get(fieldName);
+                if (fieldValue == null) {
+                    continue;
+                }
+
+                if (fieldValue.isObject()) {
+                    processObjectNodeInPlace((ObjectNode) fieldValue);
+                } else if (fieldValue.isArray()) {
+                    processArrayNodeInPlace((ArrayNode) fieldValue);
                 }
             }
-
-            return result;
         }
 
-        private JsonNode processArrayNode(ArrayNode arrayNode) {
-            ArrayNode result = arrayNode.deepCopy();
+        private void processArrayNodeInPlace(ArrayNode arrayNode) {
+            for (int i = 0; i < arrayNode.size(); i++) {
+                JsonNode element = arrayNode.get(i);
+                if (element == null) {
+                    continue;
+                }
 
-            for (int i = 0; i < result.size(); i++) {
-                JsonNode element = result.get(i);
-                JsonNode processedElement = processNode(element);
-                if (processedElement != element) {
-                    result.set(i, processedElement);
+                if (element.isObject()) {
+                    processObjectNodeInPlace((ObjectNode) element);
+                } else if (element.isArray()) {
+                    processArrayNodeInPlace((ArrayNode) element);
                 }
             }
-
-            return result;
-        }
-
-        private JsonNode processNumberNode(JsonNode numberNode) {
-            if (isIntegerOverflow(numberNode)) {
-                log.debug("Converting overflow integer {} to long", numberNode.asLong());
-                conversions++;
-                return JsonNodeFactory.instance.numberNode(numberNode.asLong());
-            }
-            return numberNode;
         }
 
         private boolean isIntegerOverflow(JsonNode numberNode) {
