@@ -6,7 +6,6 @@ import static com.fern.java.GeneratorLogging.logError;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
@@ -145,9 +144,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         return mapper.writeValueAsString(rootNode);
     }
 
-    /**
-     * Processes JSON nodes in-place to convert integer overflow values to long type.
-     */
+    /** Processes JSON nodes in-place to convert integer overflow values to long type. */
     private static class IntegerOverflowProcessor {
         private int conversions = 0;
 
@@ -156,9 +153,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
 
         /**
-         * Processes a node in-place, modifying the tree structure directly.
-         * For container nodes (objects/arrays), this recursively processes children.
-         * Only creates new nodes when an actual integer-to-long conversion is needed.
+         * Processes a node in-place, modifying the tree structure directly. For container nodes (objects/arrays), this
+         * recursively processes children. Only creates new nodes when an actual integer-to-long conversion is needed.
          */
         public void processNodeInPlace(JsonNode node) {
             if (node == null) {
