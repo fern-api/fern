@@ -4,7 +4,21 @@
       type: chore
   irVersion: 62
   createdAt: "2025-12-16"
-  version: 3.22.4
+  version: 3.23.2
+
+- changelogEntry:
+    - summary: Adds a warning to `fern check` that detects infinite redirect loops.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.23.1
+
+- changelogEntry:
+    - summary: Update the default page actions to include ChatGPT, Claude, and Cursor.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.23.0
 
 - changelogEntry:
     - summary: Improve dynamic IR generation for inferred auth.

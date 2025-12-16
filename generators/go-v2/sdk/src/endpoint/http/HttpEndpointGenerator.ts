@@ -571,21 +571,45 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage: Subpackage | undefined;
         rawClient?: boolean;
     }): go.CodeBlock {
+        const baseUrlName = this.context.getBaseUrlNameForEndpoint(endpoint);
         return go.codeblock((writer) => {
             writer.write("baseURL := ");
-            writer.writeNode(
-                this.context.callResolveBaseURL([
-                    go.selector({
-                        on: go.codeblock("options"),
-                        selector: go.codeblock("BaseURL")
-                    }),
-                    go.selector({
-                        on: this.getReceiverCodeBlock({ subpackage, rawClient }),
-                        selector: go.codeblock("baseURL")
-                    }),
-                    this.context.getDefaultBaseUrlTypeInstantiation(endpoint)
-                ])
-            );
+            if (baseUrlName != null) {
+                writer.writeNode(
+                    this.context.callResolveBaseURL([
+                        go.selector({
+                            on: go.codeblock("options"),
+                            selector: go.codeblock("BaseURL")
+                        }),
+                        this.context.callResolveEnvironmentBaseURL([
+                            go.selector({
+                                on: go.codeblock("options"),
+                                selector: go.codeblock("Environment")
+                            }),
+                            go.TypeInstantiation.string(baseUrlName)
+                        ]),
+                        go.selector({
+                            on: this.getReceiverCodeBlock({ subpackage, rawClient }),
+                            selector: go.codeblock("baseURL")
+                        }),
+                        this.context.getDefaultBaseUrlTypeInstantiation(endpoint)
+                    ])
+                );
+            } else {
+                writer.writeNode(
+                    this.context.callResolveBaseURL([
+                        go.selector({
+                            on: go.codeblock("options"),
+                            selector: go.codeblock("BaseURL")
+                        }),
+                        go.selector({
+                            on: this.getReceiverCodeBlock({ subpackage, rawClient }),
+                            selector: go.codeblock("baseURL")
+                        }),
+                        this.context.getDefaultBaseUrlTypeInstantiation(endpoint)
+                    ])
+                );
+            }
         });
     }
 
