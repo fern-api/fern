@@ -311,12 +311,26 @@ function getOverridableRootHeaders({
         const header = generatedVersion.getHeader();
         const headerName = getOptionKeyForHeader(header);
 
+        const requestOptionsExpr = ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(headerName)
+        );
+
         headers.push({
             header: header.name.wireValue,
-            value: ts.factory.createPropertyAccessChain(
-                ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                ts.factory.createIdentifier(headerName)
+            value: ts.factory.createBinaryExpression(
+                requestOptionsExpr,
+                ts.SyntaxKind.QuestionQuestionToken,
+                ts.factory.createPropertyAccessChain(
+                    ts.factory.createPropertyAccessChain(
+                        ts.factory.createThis(),
+                        undefined,
+                        GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                    ts.factory.createIdentifier(headerName)
+                )
             )
         });
     }

@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.1
+  changelogEntry:
+    - summary: |
+        Fix API version header not being injected when using `x-fern-version`. The version header now correctly
+        falls back to the client options value when not specified in request options, ensuring the default version
+        is sent on every request as documented.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 62
+
 - version: 3.42.0
   changelogEntry:
     - summary: |
