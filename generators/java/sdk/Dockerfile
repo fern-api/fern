@@ -51,6 +51,22 @@ RUN set -eux; \
     apt-get autoremove -y --purge && \
     rm -rf /var/lib/apt/lists/*
 
+# Update libpng16-16 to fix CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506
+RUN set -eux; \
+    max=5; \
+    count=0; \
+    until apt-get update; do \
+      count=$((count + 1)); \
+      if [ "$count" -ge "$max" ]; then \
+        echo "apt-get update failed after ${count} attempts"; \
+        exit 1; \
+      fi; \
+      echo "apt-get update failed, retrying in 20s..."; \
+      sleep 20; \
+    done; \
+    apt-get install -y --only-upgrade libpng16-16 && \
+    rm -rf /var/lib/apt/lists/*
+
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
 RUN cd / \
     && tar -xvf sdk.tar \
