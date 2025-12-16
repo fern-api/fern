@@ -70,7 +70,7 @@ export async function runRemoteGenerationForGenerator({
         organization,
         generatorInvocation: generatorInvocationWithEnvVarSubstitutions
     });
-    
+
     const resolvedVersion = version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation }));
 
     const ir = generateIntermediateRepresentation({
