@@ -1,9 +1,8 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { appendFile, mkdir, writeFile } from "fs/promises";
-import { homedir } from "os";
 import path from "path";
 
-const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
+const FERN_HIDDEN_FOLDER = ".fern";
 const APP_PREVIEW_FOLDER_NAME = "app-preview";
 
 /**
@@ -116,7 +115,7 @@ export class DebugLogger {
     private initialized = false;
     private sessionStartTime: number;
 
-    constructor() {
+    constructor(private fernConfigDir: AbsoluteFilePath) {
         this.sessionStartTime = Date.now();
     }
 
@@ -128,9 +127,9 @@ export class DebugLogger {
             return;
         }
 
-        // Use the same location as the bundle download: ~/.fern/app-preview/
-        const localStorageFolder = join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
-        const appPreviewDir = join(localStorageFolder, RelativeFilePath.of(APP_PREVIEW_FOLDER_NAME));
+        const projectRoot = this.getProjectRoot();
+        const fernHiddenDir = join(projectRoot, RelativeFilePath.of(FERN_HIDDEN_FOLDER));
+        const appPreviewDir = join(fernHiddenDir, RelativeFilePath.of(APP_PREVIEW_FOLDER_NAME));
 
         if (!(await doesPathExist(appPreviewDir))) {
             await mkdir(appPreviewDir, { recursive: true });
@@ -289,9 +288,14 @@ export class DebugLogger {
         await this.logCliMetric(event);
     }
 
-    /**
-     * Extract event type from payload
-     */
+    private getProjectRoot(): AbsoluteFilePath {
+        const configDirBasename = path.basename(this.fernConfigDir);
+        if (configDirBasename === "fern") {
+            return dirname(this.fernConfigDir);
+        }
+        return this.fernConfigDir;
+    }
+
     private getEventType(payload: MetricEvent | MetricSummary, isAggregate: boolean): string {
         if (isAggregate) {
             return "aggregate_summary";
