@@ -12,7 +12,7 @@ class AuthEndpointParameter(EndpointParameter):
     def get_type(self) -> AST.TypeHint:
         return SecurityFileGenerator.get_reference_to_parsed_auth(context=self._context)
 
-    def get_default(self) -> AST.Expression:
+    def get_fastapi_marker(self) -> AST.Expression:
         return SecurityFileGenerator.get_reference_to_fern_auth_dependency(context=self._context)
 
     @staticmethod
