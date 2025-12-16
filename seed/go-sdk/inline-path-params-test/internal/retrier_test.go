@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/path-parameters/fern/core"
+	"github.com/inline-path-params-test/fern/core"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

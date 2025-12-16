@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.21.3
+  changelogEntry:
+    - summary: |
+        Fix inline-path-parameters to generate a request parameter when an endpoint has only path
+        parameters and no request body. Previously, path parameters remained positional even when
+        inline-path-parameters was enabled.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 60
+
 - version: 1.21.2
   changelogEntry:
     - summary: |
