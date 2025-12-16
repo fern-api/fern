@@ -3,6 +3,7 @@
  */
 package com.seed.pagination.core.pagination;
 
+import com.seed.pagination.core.ClientOptions;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -60,13 +61,13 @@ public class FernCustomPaginator<T> implements BiDirectionalPage<T>, Iterable<T>
      * Create a CustomPager from an initial response.
      *
      * @param initialResponse The first page response from the API
-     * @param client The HTTP client to use for subsequent requests
+     * @param clientOptions The client options containing HTTP client and other configuration
      * @param requestOptions Request options for authentication, headers, etc.
      * @return A new FernCustomPaginator instance
      * @throws IOException if the request fails
      */
     public static <T> FernCustomPaginator<T> create(
-            Object initialResponse, okhttp3.OkHttpClient client, Object requestOptions) throws IOException {
+            Object initialResponse, ClientOptions clientOptions, Object requestOptions) throws IOException {
         throw new UnsupportedOperationException("FernCustomPaginator must be implemented. "
                 + "Please implement this class in core/FernCustomPaginator.java to define your pagination logic. "
                 + "This file has been added to .fernignore and will not be overwritten. "

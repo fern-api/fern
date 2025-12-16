@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth token handling for optional expires_in field with default fallback.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 62
+
 - version: 3.42.0
   changelogEntry:
     - summary: |

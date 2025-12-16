@@ -72,8 +72,7 @@ public class AsyncRawUsersClient {
                         UsernameCursor parsedResponse =
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameCursor.class);
                         future.complete(new SeedPaginationHttpResponse<>(
-                                AsyncFernCustomPaginator.createAsync(
-                                        parsedResponse, clientOptions.httpClient(), requestOptions),
+                                AsyncFernCustomPaginator.createAsync(parsedResponse, clientOptions, requestOptions),
                                 response));
                         return;
                     }

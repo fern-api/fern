@@ -33,6 +33,7 @@ const EXPIRES_AT_FIELD_NAME = "_expiresAt";
 const REFRESH_PROMISE_FIELD_NAME = "_refreshPromise";
 const TOKEN_FIELD_NAME = "_token";
 const DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME = "token";
+const DEFAULT_EXPIRES_IN_SECONDS = 3600; // 1 hour
 
 export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -192,13 +193,20 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         });
 
         const hasExpiration = responseProperties.expiresIn != null;
-        const expiresInProperty =
+        const expiresInPropertyRaw =
             hasExpiration && responseProperties.expiresIn != null
                 ? context.type.generateGetterForResponsePropertyAsString({
                       property: responseProperties.expiresIn,
                       variable: this.neverThrowErrors ? "tokenResponse.body" : "tokenResponse"
                   })
                 : "";
+        const expiresInIsOptional =
+            hasExpiration && responseProperties.expiresIn != null
+                ? context.type.isOptional(responseProperties.expiresIn.property.valueType)
+                : false;
+        const expiresInProperty = expiresInIsOptional
+            ? `(${expiresInPropertyRaw} ?? ${DEFAULT_EXPIRES_IN_SECONDS})`
+            : expiresInPropertyRaw;
 
         const neverThrowErrorHandler = this.getNeverThrowErrorsHandler(context);
 

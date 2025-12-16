@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Collects `fern docs dev` metrics in `.fern/app-preview/<timestamp>.debug.log` file.
+      type: chore
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.24.1
+
+- changelogEntry:
+    - summary: |
         Store referenced markdown snippet files (from `<Markdown src="..."/>` components) in the docs definition's jsFiles map. This allows downstream consumers like docs-loader to access the original snippet contents by file path, preserving references that were previously lost during markdown replacement.
       type: feat
   irVersion: 62
