@@ -3,6 +3,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, writeFile } from "fs/promises";
+import path from "path";
 import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext";
 
 /**
@@ -74,26 +75,22 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
      * that cannot access services.gradle.org.
      */
     private async applyGradleDistributionUrlOverride(): Promise<void> {
-        // Log the entire customConfig for debugging
-        this.context.logger.debug(
-            `JavaProject: customConfig keys: ${Object.keys(this.context.customConfig).join(", ")}`
-        );
-        this.context.logger.debug(
-            `JavaProject: gradle-distribution-url value: ${this.context.customConfig["gradle-distribution-url"]}`
-        );
-
         const customUrl = this.context.customConfig["gradle-distribution-url"];
         if (customUrl == null) {
             this.context.logger.debug(`JavaProject: No gradle-distribution-url configured, skipping override`);
             return;
         }
 
-        this.context.logger.debug(`JavaProject: Applying gradle-distribution-url override: ${customUrl}`);
+        this.context.logger.info(`JavaProject: Applying gradle-distribution-url override: ${customUrl}`);
 
         const wrapperPropertiesPath = join(
             this.absolutePathToOutputDirectory,
             RelativeFilePath.of("gradle/wrapper/gradle-wrapper.properties")
         );
+
+        // Ensure the gradle/wrapper directory exists
+        const wrapperDir = path.dirname(wrapperPropertiesPath);
+        await mkdir(wrapperDir, { recursive: true });
 
         // Escape colons in the URL as required by Java properties file format
         const escapedUrl = customUrl.replace(/:/g, "\\:");
@@ -108,6 +105,8 @@ zipStorePath=wrapper/dists
 `;
 
         await writeFile(wrapperPropertiesPath, propertiesContent);
-        this.context.logger.debug(`JavaProject: Successfully wrote custom gradle-wrapper.properties`);
+        this.context.logger.info(
+            `JavaProject: Successfully wrote custom gradle-wrapper.properties to ${wrapperPropertiesPath}`
+        );
     }
 }
