@@ -100,7 +100,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await mkdir(githubWorkflowsDir, { recursive: true });
         const githubCiTemplate = (await readFile(getAsIsFilepath(AsIsFiles.GithubCiYml))).toString();
 
-        // Use enableWireTests config to conditionally include wire-tests job
+        // Use enableWireTests config to conditionally include wire-tests in the test command
         const enableWireTests = this.rubyContext.customConfig.enableWireTests ?? false;
 
         const githubCiContents = template(githubCiTemplate)({ enableWireTests });
