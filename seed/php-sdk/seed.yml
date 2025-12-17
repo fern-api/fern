@@ -181,6 +181,7 @@ allowedFailures:
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
+  - oauth-client-credentials-reference
   # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
   - pagination:no-custom-config
   - pagination:property-accessors

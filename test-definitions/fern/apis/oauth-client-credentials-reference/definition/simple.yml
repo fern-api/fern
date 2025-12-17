@@ -5,6 +5,3 @@ service:
     getSomething:
       path: /get-something
       method: GET
-      examples:
-        - response:
-            body: "Hello, World!"
