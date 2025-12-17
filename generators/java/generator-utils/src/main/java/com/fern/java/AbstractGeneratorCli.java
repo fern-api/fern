@@ -530,11 +530,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 || customConfigPublishToCentral(generatorConfig);
         // add project level files
         addRootProjectFiles(
-                maybeMavenCoordinate,
-                true,
-                addSignatureBlock,
-                generatorConfig,
-                customConfig.gradlePluginManagement());
+                maybeMavenCoordinate, true, addSignatureBlock, generatorConfig, customConfig.gradlePluginManagement());
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
