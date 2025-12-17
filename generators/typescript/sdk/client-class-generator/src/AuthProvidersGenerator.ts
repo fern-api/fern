@@ -10,13 +10,14 @@ import {
     BearerAuthProviderGenerator,
     HeaderAuthProviderGenerator,
     InferredAuthProviderGenerator,
-    OAuthAuthProviderGenerator
+    OAuthAuthProviderGenerator,
+    RoutingAuthProviderGenerator
 } from "./auth-provider";
 
 export declare namespace AuthProvidersGenerator {
     export interface Init {
         ir: IntermediateRepresentation;
-        authScheme: AuthScheme | { type: "any" };
+        authScheme: AuthScheme | { type: "any" } | { type: "routing" };
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
     }
@@ -29,6 +30,10 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
             switch (authScheme.type) {
                 case "any":
                     return new AnyAuthProviderGenerator({
+                        ir
+                    });
+                case "routing":
+                    return new RoutingAuthProviderGenerator({
                         ir
                     });
                 case "inferred":

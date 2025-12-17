@@ -1405,18 +1405,18 @@ export class SdkGenerator {
                 });
             }
 
-            // Now generate the AnyAuthProvider that aggregates all the individual providers
-            const anyAuthProvidersGenerator = new AuthProvidersGenerator({
+            // Now generate the RoutingAuthProvider that routes to the correct provider based on endpoint security
+            const routingAuthProvidersGenerator = new AuthProvidersGenerator({
                 ir: this.intermediateRepresentation,
-                authScheme: { type: "any" },
+                authScheme: { type: "routing" },
                 neverThrowErrors: this.config.neverThrowErrors,
                 includeSerdeLayer: this.config.includeSerdeLayer
             });
             this.withSourceFile({
-                filepath: anyAuthProvidersGenerator.getFilePath(),
+                filepath: routingAuthProvidersGenerator.getFilePath(),
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
-                    anyAuthProvidersGenerator.writeToFile(context);
+                    routingAuthProvidersGenerator.writeToFile(context);
                 }
             });
         } else {

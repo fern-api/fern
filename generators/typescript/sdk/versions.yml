@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.0
+  changelogEntry:
+    - summary: |
+        Add RoutingAuthProvider that routes to the correct auth provider based on endpoint security requirements.
+        When multiple auth schemes are defined (ANY auth), the RoutingAuthProvider uses endpoint metadata to determine
+        which auth provider to use, enabling per-endpoint auth scheme selection. This replaces the AnyAuthProvider
+        for better endpoint-specific auth routing.
+      type: feat
+  createdAt: "2025-12-17"
+  irVersion: 62
+
 - version: 3.42.5
   changelogEntry:
     - summary: |

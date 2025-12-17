@@ -44,13 +44,13 @@ import {
 } from "ts-morph";
 import { Code, code } from "ts-poet";
 import {
-    AnyAuthProviderInstance,
     AuthProviderInstance,
     BasicAuthProviderInstance,
     BearerAuthProviderInstance,
     HeaderAuthProviderInstance,
     InferredAuthProviderInstance,
-    OAuthAuthProviderInstance
+    OAuthAuthProviderInstance,
+    RoutingAuthProviderInstance
 } from "./auth-provider";
 import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
@@ -419,6 +419,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         const isAnyAuth = intermediateRepresentation.auth.requirement === "ANY";
         const anyAuthProviders: AuthProviderInstance[] = [];
+        const routingAuthProviders: Map<string, AuthProviderInstance> = new Map();
 
         const getAuthProvider = (authScheme: AuthScheme): AuthProviderInstance =>
             AuthScheme._visit<AuthProviderInstance>(authScheme, {
@@ -436,15 +437,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             if (isAnyAuth) {
                 const authProvider = getAuthProvider(authScheme);
                 anyAuthProviders.push(authProvider);
+                // Also add to routing map for endpoint-specific auth routing
+                routingAuthProviders.set(authScheme.key, authProvider);
             } else {
                 this.authProvider = getAuthProvider(authScheme);
                 break;
             }
         }
 
-        // After the loop, if isAnyAuth, create AnyAuthProviderInstance with all collected providers
-        if (isAnyAuth && anyAuthProviders.length > 0) {
-            this.authProvider = new AnyAuthProviderInstance(anyAuthProviders);
+        // After the loop, if isAnyAuth, create RoutingAuthProviderInstance with all collected providers
+        // This allows routing to the correct auth provider based on endpoint security requirements
+        if (isAnyAuth && routingAuthProviders.size > 0) {
+            this.authProvider = new RoutingAuthProviderInstance(routingAuthProviders);
         }
     }
 
