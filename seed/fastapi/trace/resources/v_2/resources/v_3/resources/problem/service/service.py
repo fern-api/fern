@@ -97,10 +97,6 @@ class AbstractV2V3ProblemService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_lightweight_problems.__globals__)
-
         router.get(
             path="/problems-v2/lightweight-problem-info",
             response_model=typing.Sequence[LightweightProblemInfoV2],
@@ -137,10 +133,6 @@ class AbstractV2V3ProblemService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_problems.__globals__)
 
         router.get(
             path="/problems-v2/problem-info",
@@ -184,10 +176,6 @@ class AbstractV2V3ProblemService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_latest_problem.__globals__)
 
         router.get(
             path="/problems-v2/problem-info/{problem_id}",
@@ -237,10 +225,6 @@ class AbstractV2V3ProblemService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_problem_version.__globals__)
 
         router.get(
             path="/problems-v2/problem-info/{problem_id}/version/{problem_version}",

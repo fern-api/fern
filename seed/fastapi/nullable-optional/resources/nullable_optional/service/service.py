@@ -193,10 +193,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_user.__globals__)
-
         router.get(
             path="/api/users/{user_id}",
             response_model=UserResponse,
@@ -230,10 +226,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_user.__globals__)
 
         router.post(
             path="/api/users",
@@ -272,10 +264,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_user.__globals__)
 
         router.patch(
             path="/api/users/{user_id}",
@@ -328,10 +316,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_users.__globals__)
-
         router.get(
             path="/api/users",
             response_model=typing.Sequence[UserResponse],
@@ -380,10 +364,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.search_users.__globals__)
-
         router.get(
             path="/api/users/search",
             response_model=typing.Sequence[UserResponse],
@@ -417,10 +397,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_complex_profile.__globals__)
 
         router.post(
             path="/api/profiles/complex",
@@ -457,10 +433,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_complex_profile.__globals__)
 
         router.get(
             path="/api/profiles/complex/{profile_id}",
@@ -502,10 +474,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_complex_profile.__globals__)
-
         router.patch(
             path="/api/profiles/complex/{profile_id}",
             response_model=ComplexProfile,
@@ -539,10 +507,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_deserialization.__globals__)
 
         router.post(
             path="/api/test/deserialization",
@@ -589,10 +553,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.filter_by_role.__globals__)
-
         router.get(
             path="/api/users/filter",
             response_model=typing.Sequence[UserResponse],
@@ -626,10 +586,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_notification_settings.__globals__)
 
         router.get(
             path="/api/users/{user_id}/notifications",
@@ -669,10 +625,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_tags.__globals__)
-
         router.put(
             path="/api/users/{user_id}/tags",
             response_model=typing.Sequence[str],
@@ -706,10 +658,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_search_results.__globals__)
 
         router.post(
             path="/api/search",

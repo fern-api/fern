@@ -58,7 +58,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const baseUrlParameter = ruby.parameters.keyword({
             name: "base_url",
             type: ruby.Type.nilable(ruby.Type.string()),
-            initializer: undefined,
+            initializer: ruby.nilValue(),
             docs: "Override the default base URL for the API, e.g., `https://api.example.com`"
         });
         parameters.push(baseUrlParameter);

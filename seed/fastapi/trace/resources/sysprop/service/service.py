@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -81,14 +80,10 @@ class AbstractSyspropService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.set_num_warm_instances.__globals__)
-
         router.put(
             path="/sysprop/num-warm-instances/{language}/{num_warm_instances}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractSyspropService.set_num_warm_instances.__doc__,
             **get_route_args(cls.set_num_warm_instances, default_tag="sysprop"),
         )(wrapper)
@@ -122,10 +117,6 @@ class AbstractSyspropService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_num_warm_instances.__globals__)
 
         router.get(
             path="/sysprop/num-warm-instances",

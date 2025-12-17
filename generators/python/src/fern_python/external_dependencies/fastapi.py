@@ -6,7 +6,8 @@ FAST_API_MODULE = AST.Module.external(
     module_path=("fastapi",),
     dependency=AST.Dependency(
         name="fastapi",
-        version="^0.111.0",
+        version="0.123.5",
+        compatibility=AST.DependencyCompatibility.GREATER_THAN_OR_EQUAL,
     ),
 )
 
@@ -76,6 +77,8 @@ class FastAPI:
     Request = AST.TypeHint(type=_export("requests", "Request"))
 
     HTTPException = _export("HTTPException")
+
+    HTTP_204_NO_CONTENT = _export("status", "HTTP_204_NO_CONTENT")
 
     HTTPBasic = _export("security", "HTTPBasic")
 

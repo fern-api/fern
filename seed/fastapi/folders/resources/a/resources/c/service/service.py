@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ......core.abstract_fern_service import AbstractFernService
 from ......core.exceptions.fern_http_exception import FernHTTPException
 from ......core.route_args import get_route_args
@@ -57,14 +56,10 @@ class AbstractACService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.foo.__globals__)
-
         router.post(
             path="/",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractACService.foo.__doc__,
             **get_route_args(cls.foo, default_tag="a.c"),
         )(wrapper)
