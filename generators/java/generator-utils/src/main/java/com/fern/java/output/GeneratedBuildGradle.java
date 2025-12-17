@@ -52,9 +52,8 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
     public abstract Optional<GradlePublishingConfig> gradlePublishingConfig();
 
     /**
-     * When true, skip generating the repositories block in build.gradle.
-     * This is required when using central dependency management with
-     * RepositoriesMode.FAIL_ON_PROJECT_REPOS in settings.gradle.
+     * When true, skip generating the repositories block in build.gradle. This is required when using central dependency
+     * management with RepositoriesMode.FAIL_ON_PROJECT_REPOS in settings.gradle.
      */
     @Value.Default
     public Boolean skipRepositories() {
