@@ -1,6 +1,14 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    dirname,
+    doesPathExist,
+    join,
+    listFiles,
+    RelativeFilePath,
+    resolve
+} from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
@@ -14,7 +22,7 @@ import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 
 import { DebugLogger } from "./DebugLogger";
-import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle";
+import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
@@ -373,11 +381,11 @@ export async function runAppPreviewServer({
     bundlePath?: string;
     backendPort: number;
 }): Promise<void> {
-    // Clear any previous app-preview cache to ensure a fresh start
-    const appPreviewPath = getPathToPreviewFolder({ app: true });
-    if (await doesPathExist(appPreviewPath)) {
-        context.logger.debug(`Clearing previous app-preview cache at: ${appPreviewPath}`);
-        await rm(appPreviewPath, { recursive: true });
+    // Clear the Next.js cache to ensure a fresh start (preserves the downloaded bundle)
+    const nextCachePath = join(getPathToBundleFolder({ app: true }), RelativeFilePath.of("cache"));
+    if (await doesPathExist(nextCachePath)) {
+        context.logger.debug(`Clearing Next.js cache at: ${nextCachePath}`);
+        await rm(nextCachePath, { recursive: true, force: true });
     }
 
     if (bundlePath != null) {
