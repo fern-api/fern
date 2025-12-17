@@ -781,6 +781,7 @@ export async function runAppPreviewServer({
     });
 
     // Now start Next.js after backend is ready
+    context.logger.info("Starting Next.js server...");
     const env = {
         ...process.env,
         PORT: port.toString(),
