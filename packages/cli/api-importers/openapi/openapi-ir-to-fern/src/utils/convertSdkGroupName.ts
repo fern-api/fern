@@ -18,15 +18,23 @@ export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupNam
     const fileNames: string[] = [];
     for (const [index, group] of cleanedGroupName.entries()) {
         if (typeof group === "string") {
-            fileNames.push(camelCase(group));
+            const camelCased = camelCase(group);
+            if (camelCased.length > 0) {
+                fileNames.push(camelCased);
+            }
         } else if (typeof group === "object") {
             switch (group.type) {
                 case "namespace": {
+                    const camelCased = camelCase(group.name);
                     if (index < cleanedGroupName.length - 1) {
-                        fileNames.push(camelCase(group.name));
+                        if (camelCased.length > 0) {
+                            fileNames.push(camelCased);
+                        }
                     } else {
                         // For the last namespace, make it a true namespace (ie. a directory with it's contents in the root package marker)
-                        fileNames.push(...[group.name, FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION]);
+                        if (group.name.trim().length > 0) {
+                            fileNames.push(...[group.name, FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION]);
+                        }
                     }
                     break;
                 }
@@ -38,6 +46,9 @@ export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupNam
         }
     }
 
+    if (fileNames.length === 0) {
+        return FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION;
+    }
     return fileNames.join("/");
 }
 

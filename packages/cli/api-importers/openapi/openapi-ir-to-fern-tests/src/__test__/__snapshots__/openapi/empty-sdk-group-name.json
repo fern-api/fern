@@ -1,0 +1,190 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "get": {
+              "auth": undefined,
+              "docs": "This endpoint has an underscore-only group name (lodash strips this)",
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/underscore-only",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /underscore-only
+      method: GET
+      docs: This endpoint has an underscore-only group name (lodash strips this)
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Success
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+    "valid/group.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "get": {
+              "auth": undefined,
+              "docs": "This endpoint has an array with mixed empty and non-empty elements",
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/mixed-empty-array",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /mixed-empty-array
+      method: GET
+      docs: This endpoint has an array with mixed empty and non-empty elements
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Success
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+    "validGroup.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "get": {
+              "auth": undefined,
+              "docs": "This endpoint has a valid group name for comparison",
+              "examples": [
+                {
+                  "response": {
+                    "body": "string",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/valid",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "string",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /valid
+      method: GET
+      docs: This endpoint has a valid group name for comparison
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Success
+        type: string
+        status-code: 200
+      examples:
+        - response:
+            body: string
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Test empty x-fern-sdk-group-name values",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test empty x-fern-sdk-group-name values
+",
+  },
+}

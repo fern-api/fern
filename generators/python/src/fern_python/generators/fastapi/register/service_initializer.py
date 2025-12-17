@@ -20,6 +20,11 @@ class ServiceInitializer:
         )
 
     def get_parameter_name(self) -> str:
-        if len(self._service.name.fern_filepath.all_parts) == 0:
+        parts = [
+            part.snake_case.unsafe_name
+            for part in self._service.name.fern_filepath.all_parts
+            if part.snake_case.unsafe_name
+        ]
+        if len(parts) == 0:
             return "root"
-        return "_".join(part.snake_case.unsafe_name for part in self._service.name.fern_filepath.all_parts)
+        return "_".join(parts)

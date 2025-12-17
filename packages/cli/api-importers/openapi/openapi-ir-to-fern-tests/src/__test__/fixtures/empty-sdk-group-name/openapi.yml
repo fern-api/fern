@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  title: Test empty x-fern-sdk-group-name values
+  version: 1.0.0
+paths:
+  /empty-string:
+    get:
+      description: This endpoint has an empty string group name
+      x-fern-sdk-group-name: ""
+      x-fern-sdk-method-name: get
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /empty-array-element:
+    get:
+      description: This endpoint has an array with empty string element
+      x-fern-sdk-group-name: [""]
+      x-fern-sdk-method-name: get
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /mixed-empty-array:
+    get:
+      description: This endpoint has an array with mixed empty and non-empty elements
+      x-fern-sdk-group-name: ["valid", "", "group"]
+      x-fern-sdk-method-name: get
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /whitespace-only:
+    get:
+      description: This endpoint has a whitespace-only group name
+      x-fern-sdk-group-name: "   "
+      x-fern-sdk-method-name: get
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /underscore-only:
+    get:
+      description: This endpoint has an underscore-only group name (lodash strips this)
+      x-fern-sdk-group-name: "_"
+      x-fern-sdk-method-name: get
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /valid:
+    get:
+      description: This endpoint has a valid group name for comparison
+      x-fern-sdk-group-name: validGroup
+      x-fern-sdk-method-name: get
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: string

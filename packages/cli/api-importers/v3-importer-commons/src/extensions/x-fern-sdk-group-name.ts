@@ -26,8 +26,8 @@ export class SdkGroupNameExtension extends AbstractExtension<SdkGroupNameExtensi
         }
 
         const groups = Array.isArray(extensionValue)
-            ? extensionValue.filter((name): name is string => typeof name === "string")
-            : typeof extensionValue === "string"
+            ? extensionValue.filter((name): name is string => typeof name === "string" && name.trim().length > 0)
+            : typeof extensionValue === "string" && extensionValue.trim().length > 0
               ? [extensionValue]
               : [];
 
