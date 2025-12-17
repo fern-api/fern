@@ -57,10 +57,10 @@ require_relative "seed/service/types/get_connection_request"
 require_relative "seed/service/types/list_clients_request"
 require_relative "seed/service/types/get_client_request"
 
-# Load user-defined extensions if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/extensions.rb
+# Load user-defined custom integration if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/custom_integration.rb
 begin
-  require_relative "seed/extensions"
+  require_relative "custom_integration"
 rescue LoadError
-  # No extensions file found - this is expected and fine
+  # No custom integration file found - this is expected and fine
 end

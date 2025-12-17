@@ -57,4 +57,3 @@ jobs:
 
       - name: Publish to RubyGems
         uses: rubygems/release-gem@v1
-

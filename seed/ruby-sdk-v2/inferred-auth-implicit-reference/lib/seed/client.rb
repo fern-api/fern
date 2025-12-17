@@ -5,7 +5,7 @@ module Seed
     # @param base_url [String, nil]
     #
     # @return [void]
-    def initialize(base_url:)
+    def initialize(base_url: nil)
       # Create an unauthenticated client for the auth endpoint
       auth_raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
