@@ -63,11 +63,13 @@ types:
           multipleOf: 2
       name:
         type: string
-        default: fern
+        default: |
+          line1
+          line2
         validation:
           minLength: 3
-          maxLength: 10
-          pattern: "^[a-z]+$"
+          maxLength: 15
+          pattern: "^[a-z\n]+$"
           format: custom
       shape:
         type: Shape
@@ -77,7 +79,9 @@ types:
         value:
           decimal: 1.1
           even: 2
-          name: rules
+          name: |
+            example
+            text
           shape: SQUARE
 
 service:
@@ -111,11 +115,13 @@ service:
                 multipleOf: 2
             name:
               type: string
-              default: fern
+              default: |
+                line1
+                line2
               validation:
                 minLength: 3
-                maxLength: 10
-                pattern: "^[a-z]+$"
+                maxLength: 15
+                pattern: "^[a-z\n]+$"
                 format: custom
             shape:
               type: Shape
@@ -148,10 +154,12 @@ service:
               multipleOf: 2
           name:
             type: string
-            default: fern
+            default: |
+              line1
+              line2
             validation:
               minLength: 3
-              maxLength: 10
-              pattern: "^[a-z]+$"
+              maxLength: 15
+              pattern: "^[a-z\n]+$"
               format: custom
       response: Type

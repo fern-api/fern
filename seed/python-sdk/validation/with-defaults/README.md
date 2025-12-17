@@ -42,7 +42,7 @@ client = SeedValidation(
 client.create(
     decimal=2.2,
     even=100,
-    name="fern",
+    name="line1\nline2\n",
     shape="SQUARE",
 )
 ```
@@ -65,7 +65,7 @@ async def main() -> None:
     await client.create(
         decimal=2.2,
         even=100,
-        name="fern",
+        name="line1\nline2\n",
         shape="SQUARE",
     )
 

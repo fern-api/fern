@@ -83,7 +83,7 @@ class SeedValidation:
         *,
         decimal: float = 1.1,
         even: int = 42,
-        name: str = "fern",
+        name: str = "line1\nline2\n",
         shape: Shape,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Type:
@@ -115,7 +115,7 @@ class SeedValidation:
         client.create(
             decimal=2.2,
             even=100,
-            name="fern",
+            name="line1\nline2\n",
             shape="SQUARE",
         )
         """
@@ -129,7 +129,7 @@ class SeedValidation:
         *,
         decimal: float = 1.1,
         even: int = 42,
-        name: str = "fern",
+        name: str = "line1\nline2\n",
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Type:
         """
@@ -158,7 +158,7 @@ class SeedValidation:
         client.get(
             decimal=2.2,
             even=100,
-            name="fern",
+            name="line1\nline2\n",
         )
         """
         _response = self._raw_client.get(decimal=decimal, even=even, name=name, request_options=request_options)
@@ -235,7 +235,7 @@ class AsyncSeedValidation:
         *,
         decimal: float = 1.1,
         even: int = 42,
-        name: str = "fern",
+        name: str = "line1\nline2\n",
         shape: Shape,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Type:
@@ -272,7 +272,7 @@ class AsyncSeedValidation:
             await client.create(
                 decimal=2.2,
                 even=100,
-                name="fern",
+                name="line1\nline2\n",
                 shape="SQUARE",
             )
 
@@ -289,7 +289,7 @@ class AsyncSeedValidation:
         *,
         decimal: float = 1.1,
         even: int = 42,
-        name: str = "fern",
+        name: str = "line1\nline2\n",
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Type:
         """
@@ -323,7 +323,7 @@ class AsyncSeedValidation:
             await client.get(
                 decimal=2.2,
                 even=100,
-                name="fern",
+                name="line1\nline2\n",
             )
 
 
