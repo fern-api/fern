@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Add `fern docs preview delete <url>` command to delete preview deployments. This allows users to clean up preview sites that were generated with `fern generate --docs --preview`.
+      type: feat
+    - summary: |
+        Add `fern docs preview list` command to list all preview deployments with pagination support via `--limit` and `--page` options.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.25.0
+
 - version: 3.24.2
   changelogEntry:
     - summary: |
@@ -6,14 +17,6 @@
       type: fix
   createdAt: "2025-12-16"
   irVersion: 62
-
-- changelogEntry:
-    - summary: |
-        Add `fern docs preview delete <url>` command to delete preview deployments. This allows users to clean up preview sites that were generated with `fern generate --docs --preview`.
-      type: feat
-  irVersion: 62
-  createdAt: "2025-12-16"
-  version: 3.25.0
 
 - changelogEntry:
     - summary: |
