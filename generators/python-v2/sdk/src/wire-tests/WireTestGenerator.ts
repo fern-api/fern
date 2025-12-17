@@ -118,6 +118,13 @@ export class WireTestGenerator {
     }
 
     /**
+     * Checks if an example has an error response (non-2xx status code).
+     */
+    private isErrorResponse(example: ExampleEndpointCall): boolean {
+        return example.response.type === "error";
+    }
+
+    /**
      * Converts a static IR example to a wire test example format.
      */
     private convertStaticExampleToWireTest(
@@ -176,6 +183,7 @@ export class WireTestGenerator {
             example: WireTestExample;
             service: HttpService;
             exampleIndex: number;
+            isErrorResponse: boolean;
         }> = [];
 
         for (const endpoint of endpoints) {
@@ -192,7 +200,14 @@ export class WireTestGenerator {
             const staticExample = this.getStaticIrExample(endpoint);
             if (staticExample) {
                 const wireTestExample = this.convertStaticExampleToWireTest(endpoint, staticExample);
-                endpointTestCases.push({ endpoint, example: wireTestExample, service, exampleIndex: 0 });
+                const isErrorResponse = this.isErrorResponse(staticExample);
+                endpointTestCases.push({
+                    endpoint,
+                    example: wireTestExample,
+                    service,
+                    exampleIndex: 0,
+                    isErrorResponse
+                });
             }
         }
 
@@ -224,6 +239,7 @@ export class WireTestGenerator {
             example: WireTestExample;
             service: HttpService;
             exampleIndex: number;
+            isErrorResponse: boolean;
         }>
     ): python.PythonFile {
         const statements: python.AstNode[] = [];
@@ -237,13 +253,14 @@ export class WireTestGenerator {
         statements.push(this.createImportRegistration());
 
         // Add test functions for each endpoint
-        for (const { endpoint, example, service, exampleIndex } of testCases) {
+        for (const { endpoint, example, service, exampleIndex, isErrorResponse } of testCases) {
             const testFunction = this.generateEndpointTestFunction(
                 serviceName,
                 endpoint,
                 example,
                 service,
-                exampleIndex
+                exampleIndex,
+                isErrorResponse
             );
             if (testFunction) {
                 statements.push(testFunction);
@@ -269,6 +286,10 @@ export class WireTestGenerator {
         node.addReference(python.reference({ name: "get_client", modulePath: [".conftest"] }));
         node.addReference(python.reference({ name: "verify_request_count", modulePath: [".conftest"] }));
 
+        // Import ApiError from the SDK's core module for error response tests
+        const orgName = this.context.config.organization;
+        node.addReference(python.reference({ name: "ApiError", modulePath: [orgName, "core"] }));
+
         return node;
     }
 
@@ -281,7 +302,8 @@ export class WireTestGenerator {
         endpoint: HttpEndpoint,
         example: WireTestExample,
         service: HttpService,
-        exampleIndex: number
+        exampleIndex: number,
+        isErrorResponse: boolean
     ): python.Method | null {
         try {
             const testName = this.getTestFunctionName(serviceName, endpoint);
@@ -303,13 +325,27 @@ export class WireTestGenerator {
             // Generate the API call AST directly
             const apiCallAst = this.generateApiCallAst(endpoint, example);
 
-            // For streaming responses (fileDownload, bytes, streaming, streamParameter),
-            // we need to consume the iterator to actually trigger the HTTP request
-            if (this.isStreamingResponse(endpoint)) {
-                // Wrap in list() to consume the generator and trigger the HTTP request
-                statements.push(python.codeBlock(`list(${apiCallAst.toString()})`));
+            // For error responses, wrap in pytest.raises() to expect the exception
+            if (isErrorResponse) {
+                // For streaming responses, we need to consume the iterator inside pytest.raises
+                if (this.isStreamingResponse(endpoint)) {
+                    statements.push(
+                        python.codeBlock(`with pytest.raises(ApiError):\n        list(${apiCallAst.toString()})`)
+                    );
+                } else {
+                    statements.push(
+                        python.codeBlock(`with pytest.raises(ApiError):\n        ${apiCallAst.toString()}`)
+                    );
+                }
             } else {
-                statements.push(apiCallAst);
+                // For streaming responses (fileDownload, bytes, streaming, streamParameter),
+                // we need to consume the iterator to actually trigger the HTTP request
+                if (this.isStreamingResponse(endpoint)) {
+                    // Wrap in list() to consume the generator and trigger the HTTP request
+                    statements.push(python.codeBlock(`list(${apiCallAst.toString()})`));
+                } else {
+                    statements.push(apiCallAst);
+                }
             }
 
             // Verify request count using test ID for filtering
@@ -523,9 +559,6 @@ export class WireTestGenerator {
             basePath = "/" + basePath;
         }
 
-        // Store the full path with fragment for WireMock mapping lookup
-        const fullPathWithFragment = basePath;
-
         // Strip URL fragment - fragments are never sent to the server in HTTP requests
         // e.g., "/oauth2/token#refresh" -> "/oauth2/token"
         const fragmentIndex = basePath.indexOf("#");
@@ -534,10 +567,10 @@ export class WireTestGenerator {
         }
 
         // Substitute path parameters with actual values from WireMock mapping
-        // Use the full path (with fragment) to look up the mapping, since that's how mappings are keyed
+        // Use the path WITHOUT fragment to look up the mapping, since mock-utils strips fragments
         const mappingKey = this.wiremockMappingKey({
             requestMethod: endpoint.method,
-            requestUrlPathTemplate: fullPathWithFragment
+            requestUrlPathTemplate: basePath
         });
 
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
