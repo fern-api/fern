@@ -35,16 +35,16 @@ export interface BaseRequestOptions {
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
 }
 
-export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
+export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: core.logging.Logger;
     authProvider?: core.AuthProvider;
 }
 
-export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions> = NormalizedClientOptions<T> & {
     authProvider: core.AuthProvider;
 }
 
-export function normalizeClientOptions<T extends BaseClientOptions>(
+export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
     options: T
 ): NormalizedClientOptions<T> {
     const headers = mergeHeaders(
@@ -59,7 +59,7 @@ export function normalizeClientOptions<T extends BaseClientOptions>(
     } as NormalizedClientOptions<T>;
 }
 
-export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
+export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
     options: T
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
@@ -68,7 +68,7 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     return normalized;
 }
 
-function withNoOpAuthProvider<T extends BaseClientOptions>(
+function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
     options: NormalizedClientOptions<T>
 ): NormalizedClientOptionsWithAuth<T> {
     return {

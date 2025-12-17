@@ -80,6 +80,14 @@ export class DynamicTypeMapper {
     }
 
     private convertUnknown(): java.Type {
+        if (this.context.customConfig?.["generate-unknown-as-json-node"] === true) {
+            return java.Type.reference(
+                java.classReference({
+                    name: "JsonNode",
+                    packageName: "com.fasterxml.jackson.databind"
+                })
+            );
+        }
         return java.Type.object();
     }
 

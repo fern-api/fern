@@ -48,9 +48,17 @@ class AbstractFileServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "filename":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Path(description="This is a filename")
+                        ]
+                    )
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_file, "__signature__", endpoint_function.replace(parameters=new_parameters))

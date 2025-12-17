@@ -42,7 +42,9 @@ class AbstractPackageService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "for_":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=..., alias="for")))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="for")])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.test, "__signature__", endpoint_function.replace(parameters=new_parameters))
