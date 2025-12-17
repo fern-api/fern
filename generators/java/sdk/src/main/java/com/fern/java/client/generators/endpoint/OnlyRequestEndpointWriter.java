@@ -34,7 +34,9 @@ import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
+import java.util.Map;
 import java.util.Optional;
+import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -244,6 +246,20 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
             Optional<String> requestBodyGetterName = getRequestBodyGetterName();
 
+            CodeBlock requestBodyGetter = CodeBlock.of("request");
+
+            if (requestBodyGetterName.isPresent()) {
+                requestBodyGetter = isOptional
+                        ? CodeBlock.of("request.$L().get()", requestBodyGetterName.get())
+                        : CodeBlock.of("request.$L()", requestBodyGetterName.get());
+            }
+
+            // Handle form-urlencoded content type
+            if (contentType.equals("application/x-www-form-urlencoded")) {
+                initializeFormUrlEncodedBody(codeBlock, requestBodyGetter, isOptional, requestBodyGetterName);
+                return null;
+            }
+
             codeBlock
                     .addStatement("$T $L", RequestBody.class, variables.getOkhttpRequestBodyName())
                     .beginControlFlow("try");
@@ -257,14 +273,6 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 } else {
                     codeBlock.beginControlFlow("if ($N.isPresent())", "request");
                 }
-            }
-
-            CodeBlock requestBodyGetter = CodeBlock.of("request");
-
-            if (requestBodyGetterName.isPresent()) {
-                requestBodyGetter = isOptional
-                        ? CodeBlock.of("request.$L().get()", requestBodyGetterName.get())
-                        : CodeBlock.of("request.$L()", requestBodyGetterName.get());
             }
 
             CodeBlock requestBodyContentType = CodeBlock.of(
@@ -294,6 +302,65 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     .addStatement("throw new $T($S, e)", baseErrorClassName, "Failed to serialize request")
                     .endControlFlow();
             return null;
+        }
+
+        private void initializeFormUrlEncodedBody(
+                CodeBlock.Builder codeBlock,
+                CodeBlock requestBodyGetter,
+                boolean isOptional,
+                Optional<String> requestBodyGetterName) {
+            codeBlock.addStatement(
+                    "$T.Builder $L = new $T.Builder()",
+                    FormBody.class,
+                    variables.getOkhttpRequestBodyName() + "Builder",
+                    FormBody.class);
+            codeBlock.beginControlFlow("try");
+
+            if (isOptional) {
+                if (requestBodyGetterName.isPresent()) {
+                    codeBlock.beginControlFlow("if (request.$L().isPresent())", requestBodyGetterName.get());
+                } else {
+                    codeBlock.beginControlFlow("if ($N.isPresent())", "request");
+                }
+            }
+
+            // Convert the request object to a Map using Jackson, preserving wire names from @JsonProperty
+            codeBlock.addStatement(
+                    "$T<$T, $T> formParams = $T.$L.convertValue($L, new com.fasterxml.jackson.core.type.TypeReference<$T<$T, $T>>() {})",
+                    Map.class,
+                    String.class,
+                    Object.class,
+                    generatedObjectMapper.getClassName(),
+                    generatedObjectMapper.jsonMapperStaticField().name,
+                    requestBodyGetter,
+                    Map.class,
+                    String.class,
+                    Object.class);
+
+            codeBlock.beginControlFlow(
+                    "for ($T.Entry<$T, $T> entry : formParams.entrySet())", Map.class, String.class, Object.class);
+            codeBlock.beginControlFlow("if (entry.getValue() != null)");
+            codeBlock.addStatement(
+                    "$L.add(entry.getKey(), $T.valueOf(entry.getValue()))",
+                    variables.getOkhttpRequestBodyName() + "Builder",
+                    String.class);
+            codeBlock.endControlFlow();
+            codeBlock.endControlFlow();
+
+            if (isOptional) {
+                codeBlock.endControlFlow();
+            }
+
+            codeBlock.endControlFlow();
+            codeBlock.beginControlFlow("catch($T e)", Exception.class);
+            codeBlock.addStatement("throw new $T($S, e)", baseErrorClassName, "Failed to serialize request");
+            codeBlock.endControlFlow();
+
+            codeBlock.addStatement(
+                    "$T $L = $L.build()",
+                    RequestBody.class,
+                    variables.getOkhttpRequestBodyName(),
+                    variables.getOkhttpRequestBodyName() + "Builder");
         }
 
         @Override

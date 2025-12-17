@@ -13,6 +13,7 @@ import path from "path";
 import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 
+import { DebugLogger } from "./DebugLogger";
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
@@ -157,17 +158,7 @@ class SlugChangeTracker {
             const oldSlug = this.pageSlugMap.get(pageId);
 
             if (oldSlug && oldSlug !== newSlug) {
-                this.context.logger.debug(
-                    `[SlugTracker] SLUG CHANGE: ${pageId} changed from "${oldSlug}" to "${newSlug}"`
-                );
                 changes.push({ oldSlug, newSlug });
-            }
-        }
-
-        // Also check for pages that were removed from navigation (though this shouldn't happen in normal cases)
-        for (const [pageId, oldSlug] of this.pageSlugMap.entries()) {
-            if (!newSlugMap.has(pageId)) {
-                this.context.logger.debug(`[SlugTracker] PAGE REMOVED: ${pageId} (was "${oldSlug}")`);
             }
         }
 
@@ -186,14 +177,9 @@ class SlugChangeTracker {
                 docsDefinition.config.root
             );
             this.pageSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
-            this.context.logger.debug(`[SlugTracker] INITIALIZED with ${this.pageSlugMap.size} slug mappings:`);
-            for (const [pageId, slug] of this.pageSlugMap.entries()) {
-                this.context.logger.debug(`[SlugTracker]   ${pageId} -> ${slug}`);
-            }
         } else {
             // Initialize empty map, will be populated when navigation is ready during change detection
             this.pageSlugMap = new Map();
-            this.context.logger.debug(`[SlugTracker] INITIALIZED with empty slug map (no navigation root)`);
         }
     }
 }
@@ -558,6 +544,14 @@ export async function runAppPreviewServer({
 
     const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
+    // Initialize the debug logger for metrics collection
+    const debugLogger = new DebugLogger();
+    await debugLogger.initialize();
+    const debugLogPath = debugLogger.getLogFilePath();
+    if (debugLogPath) {
+        context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
+    }
+
     const app = express();
     const httpServer = http.createServer(app);
     const wss = new WebSocketServer({
@@ -639,6 +633,9 @@ export async function runAppPreviewServer({
                 if (parsed.type === "pong") {
                     metadata.isAlive = true;
                     metadata.lastPong = Date.now();
+                } else if (DebugLogger.isMetricsMessage(parsed)) {
+                    // Handle metrics messages from the frontend
+                    void debugLogger.logFrontendMetrics(parsed);
                 }
             } catch (error) {
                 context.logger.debug(`Failed to parse message from ${connectionId}: ${error}`);
@@ -685,6 +682,10 @@ export async function runAppPreviewServer({
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]) => {
         context.logger.info("Reloading docs...");
         const startTime = Date.now();
+
+        // Log CLI reload start
+        void debugLogger.logCliReloadStart();
+
         try {
             project = await reloadProject();
 
@@ -693,17 +694,24 @@ export async function runAppPreviewServer({
 
             // Start validation in background - don't block the reload
             const validationStartTime = Date.now();
-            void validateProject(project).catch((err) => {
-                const validationTime = Date.now() - validationStartTime;
-                context.logger.error(
-                    `Validation failed (took ${validationTime}ms): ${err instanceof Error ? err.message : String(err)}`
-                );
-                // Still log validation errors to help developers
-                if (err instanceof Error && err.stack) {
-                    context.logger.debug(`Validation error stack: ${err.stack}`);
-                }
-            });
+            void validateProject(project)
+                .then(() => {
+                    const validationTime = Date.now() - validationStartTime;
+                    void debugLogger.logCliValidation(validationTime, true);
+                })
+                .catch((err) => {
+                    const validationTime = Date.now() - validationStartTime;
+                    void debugLogger.logCliValidation(validationTime, false);
+                    context.logger.error(
+                        `Validation failed (took ${validationTime}ms): ${err instanceof Error ? err.message : String(err)}`
+                    );
+                    // Still log validation errors to help developers
+                    if (err instanceof Error && err.stack) {
+                        context.logger.debug(`Validation error stack: ${err.stack}`);
+                    }
+                });
 
+            const docsGenStartTime = Date.now();
             const newDocsDefinition = await getPreviewDocsDefinition({
                 domain: `${instance.host}${instance.pathname}`,
                 project,
@@ -711,9 +719,34 @@ export async function runAppPreviewServer({
                 previousDocsDefinition: docsDefinition,
                 editedAbsoluteFilepaths
             });
-            context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
+            const docsGenTime = Date.now() - docsGenStartTime;
+
+            // Log CLI docs generation time
+            void debugLogger.logCliDocsGeneration(docsGenTime, {
+                filesEdited: editedAbsoluteFilepaths?.length ?? 0
+            });
+
+            const totalTime = Date.now() - startTime;
+            context.logger.info(`Reload completed in ${totalTime}ms`);
+
+            // Log CLI reload finish with total time and memory
+            void debugLogger.logCliReloadFinish(totalTime, {
+                docsGenerationMs: docsGenTime,
+                filesEdited: editedAbsoluteFilepaths?.length ?? 0
+            });
+            void debugLogger.logCliMemory();
+
             return newDocsDefinition;
         } catch (err) {
+            const totalTime = Date.now() - startTime;
+
+            // Log CLI reload finish even on error
+            void debugLogger.logCliReloadFinish(totalTime, {
+                error: true,
+                errorMessage: err instanceof Error ? err.message : String(err)
+            });
+            void debugLogger.logCliMemory();
+
             if (docsDefinition == null) {
                 context.logger.error("Failed to read docs configuration. Rendering blank page.");
             } else {
@@ -749,6 +782,11 @@ export async function runAppPreviewServer({
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
+        // Ignore changes to .fern/logs/ directory (contains debug logs)
+        if (targetPath.includes(".fern/logs/") || targetPath.includes(".fern\\logs\\")) {
+            return;
+        }
+
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
 
         if (isReloading) {

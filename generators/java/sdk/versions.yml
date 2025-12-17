@@ -1,3 +1,78 @@
+- version: 3.26.0
+  changelogEntry:
+    - summary: |
+        Add `gradle-plugin-management` configuration option to inject custom plugin management
+        and dependency resolution configuration into `settings.gradle`. This enables SDK generation
+        on enterprise networks that cannot access the Gradle Plugin Portal (`plugins.gradle.org`)
+        by configuring internal Artifactory/Nexus repositories for plugin resolution.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-plugin-management: |
+            pluginManagement {
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/gradle-plugins/' }
+                }
+            }
+            dependencyResolutionManagement {
+                repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/maven-releases/' }
+                }
+            }
+        ```
+      type: feat
+    - summary: |
+        Fix `gradle-distribution-url` override in Java V2 generator to properly create the
+        `gradle/wrapper` directory before writing `gradle-wrapper.properties`.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 61
+
+- version: 3.25.1
+  changelogEntry:
+    - summary: |
+        Fix form-urlencoded request body handling to properly serialize request objects using
+        Jackson's convertValue, preserving wire names from @JsonProperty annotations.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 61
+
+- version: 3.25.0
+  changelogEntry:
+    - summary: |
+        Add `gradle-distribution-url` configuration option to allow overriding the Gradle wrapper
+        distribution URL. This enables SDK generation on enterprise networks that cannot access
+        `services.gradle.org` by pointing to an internal Gradle distribution mirror.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-distribution-url: https://internal-mirror.example.com/gradle/gradle-8.14.3-bin.zip
+        ```
+      type: feat
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.5
+  changelogEntry:
+    - summary: |
+        Fix OAuth token handling for optional expires_in field with default fallback, and skip
+        literal properties in OAuth request building.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.4
+  changelogEntry:
+    - summary: |
+        Mitigate OutOfMemoryError when generating SDKs for large specs. (Specifically, the IR preprocessing
+        preprocessing step now modifies the JSON tree in-place and avoids calling `.deepCopy()`.)
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
 - version: 3.24.3
   changelogEntry:
     - summary: |
