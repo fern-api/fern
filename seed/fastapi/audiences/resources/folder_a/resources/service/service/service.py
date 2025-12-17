@@ -42,9 +42,13 @@ class AbstractFolderAServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "ids":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=[])))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=[])
+                )
             elif parameter_name == "tags":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=[])))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=[])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_direct_thread, "__signature__", endpoint_function.replace(parameters=new_parameters))

@@ -50,11 +50,6 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
 
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
         const nonBodyKeys = generatedRequestWrapper.getNonBodyKeysWithData(context);
-
-        if (nonBodyKeys.length === 0) {
-            return [];
-        }
-
         const usedNames = new Set(variablesInScope);
         const getNonConflictingName = (name: string) => {
             while (usedNames.has(name)) {
@@ -94,24 +89,26 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             );
         });
 
-        if (this.endpoint.requestBody != null) {
-            if (generatedRequestWrapper.areBodyPropertiesInlined()) {
-                bindingElements.push(
-                    ts.factory.createBindingElement(
-                        ts.factory.createToken(ts.SyntaxKind.DotDotDotToken),
-                        undefined,
-                        RequestWrapperParameter.BODY_VARIABLE_NAME
-                    )
-                );
-            } else {
-                bindingElements.push(
-                    ts.factory.createBindingElement(
-                        undefined,
-                        generatedRequestWrapper.getReferencedBodyPropertyName(),
-                        RequestWrapperParameter.BODY_VARIABLE_NAME
-                    )
-                );
-            }
+        if (generatedRequestWrapper.hasBodyProperty(context)) {
+            bindingElements.push(
+                ts.factory.createBindingElement(
+                    undefined,
+                    generatedRequestWrapper.getReferencedBodyPropertyName(),
+                    RequestWrapperParameter.BODY_VARIABLE_NAME
+                )
+            );
+        } else if (nonBodyKeys.length > 0 && generatedRequestWrapper.areBodyPropertiesInlined()) {
+            bindingElements.push(
+                ts.factory.createBindingElement(
+                    ts.factory.createToken(ts.SyntaxKind.DotDotDotToken),
+                    undefined,
+                    RequestWrapperParameter.BODY_VARIABLE_NAME
+                )
+            );
+        }
+
+        if (bindingElements.length === 0) {
+            return [];
         }
 
         return [
@@ -136,7 +133,10 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
-        if (this.getGeneratedRequestWrapper(context).getNonBodyKeys(context).length > 0) {
+        const requestWrapper = this.getGeneratedRequestWrapper(context);
+        const nonBodyKeys = requestWrapper.getNonBodyKeys(context);
+        const areBodyPropertiesInlined = requestWrapper.areBodyPropertiesInlined();
+        if (requestWrapper.hasBodyProperty(context) || (nonBodyKeys.length > 0 && areBodyPropertiesInlined)) {
             return ts.factory.createIdentifier(RequestWrapperParameter.BODY_VARIABLE_NAME);
         } else {
             return ts.factory.createIdentifier(this.getRequestParameterName());

@@ -13,7 +13,6 @@ from .endpoint_parameters import (
 )
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
-from fern_python.external_dependencies.starlette import Starlette
 from fern_python.generators.fastapi.service_generator.endpoint_parameters.request.file_upload_request_endpoint_parameter import (
     FileUploadRequestEndpointParameters,
 )
@@ -183,15 +182,6 @@ class EndpointGenerator:
             )
             writer.write_line()
 
-            writer.write_line("# this is necessary for FastAPI to find forward-ref'ed type hints.")
-            writer.write_line("# https://github.com/tiangolo/fastapi/pull/5077")
-            writer.write_line(
-                f"{_TRY_EXCEPT_WRAPPER_NAME}.__globals__.update("
-                + self._get_reference_to_method_on_cls()
-                + ".__globals__)"
-            )
-            writer.write_line()
-
             writer.write(f"{EndpointGenerator._INIT_ENDPOINT_ROUTER_ARG}.")
             writer.write(convert_http_method_to_fastapi_method_name(self._endpoint.method))
             writer.write_line("(")
@@ -212,7 +202,7 @@ class EndpointGenerator:
 
                 if self._endpoint.response is None or self._endpoint.response.body is None:
                     writer.write("status_code=")
-                    writer.write_node(AST.TypeHint(Starlette.HTTP_204_NO_CONTENT))
+                    writer.write_node(AST.TypeHint(FastAPI.HTTP_204_NO_CONTENT))
                     writer.write_line(",")
                 writer.write(f"description={class_declaration.name}.{self._get_method_name()}.__doc__")
                 writer.write_line(",")
@@ -280,10 +270,16 @@ class EndpointGenerator:
             for i, parameter in enumerate(self._parameters):
                 writer.write_line(f'elif {PARAMETER_NAME_VARIABLE_NAME} == "{parameter.get_name()}":')
                 with writer.indent():
-                    writer.write(
-                        f"{NEW_PARAMETERS_VARIABLE_NAME}.append(" + f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(default="
-                    )
-                    writer.write_node(parameter.get_default())
+                    python_default = parameter.get_python_default()
+                    writer.write(f"{NEW_PARAMETERS_VARIABLE_NAME}.append(")
+                    writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(")
+                    writer.write("annotation=typing.Annotated[")
+                    writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.annotation, ")
+                    writer.write_node(parameter.get_fastapi_marker())
+                    writer.write("]")
+                    if python_default is not None:
+                        writer.write(", default=")
+                        writer.write_node(python_default)
                     writer.write_line("))")
             writer.write_line("else:")
             with writer.indent():

@@ -47,6 +47,14 @@ public interface JavaSdkDownloadFilesCustomConfig extends IDownloadFilesCustomCo
         return false;
     }
 
+    @Override
+    @JsonProperty("gradle-distribution-url")
+    Optional<String> gradleDistributionUrl();
+
+    @Override
+    @JsonProperty("gradle-plugin-management")
+    Optional<String> gradlePluginManagement();
+
     static ImmutableJavaSdkDownloadFilesCustomConfig.Builder builder() {
         return ImmutableJavaSdkDownloadFilesCustomConfig.builder();
     }

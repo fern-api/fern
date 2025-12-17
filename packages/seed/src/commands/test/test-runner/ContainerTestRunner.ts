@@ -73,7 +73,8 @@ export class ContainerTestRunner extends TestRunner {
         readme,
         shouldGenerateDynamicSnippetTests,
         inspect = false,
-        license
+        license,
+        smartCasing
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
@@ -91,7 +92,8 @@ export class ContainerTestRunner extends TestRunner {
                     irVersion,
                     publishMetadata,
                     readme,
-                    license
+                    license,
+                    smartCasing
                 })
             ]
         };

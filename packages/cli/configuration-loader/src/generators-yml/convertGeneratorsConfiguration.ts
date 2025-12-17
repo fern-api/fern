@@ -8,6 +8,8 @@ import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMeta
 import { readFile } from "fs/promises";
 import path from "path";
 
+import { addDefaultDockerOrgIfNotPresent } from "./getGeneratorName";
+
 const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     shouldUseTitleAsName: undefined,
     shouldUseUndiscriminatedUnionsWithLiterals: undefined,
@@ -544,9 +546,11 @@ async function convertGenerator({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<generatorsYml.GeneratorInvocation> {
+    // Normalize the generator name by adding the default Docker org prefix if not present
+    const normalizedName = addDefaultDockerOrgIfNotPresent(generator.name);
     return {
         raw: generator,
-        name: generator.name,
+        name: normalizedName,
         version: generator.version,
         config: generator.config,
         outputMode: await convertOutputMode({
@@ -568,7 +572,7 @@ async function convertGenerator({
             generator.snippets?.path != null
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.snippets.path)
                 : undefined,
-        language: getLanguageFromGeneratorName(generator.name),
+        language: getLanguageFromGeneratorName(normalizedName),
         irVersionOverride: generator["ir-version"] ?? undefined,
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,

@@ -1,5 +1,51 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc71
+  createdAt: "2025-12-17"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Make the base_url parameter optional in the main client.rb. The parameter now has a default
+        value of nil, allowing users to instantiate the client without explicitly providing a base_url
+        when using environment-based configuration.
+  irVersion: 61
+
+- version: 1.0.0-rc70
+  createdAt: "2025-12-17"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix inferred auth base URL resolution and add absolute URL support:
+        - Auth raw client now properly falls back to default environment when base_url is not provided
+        - RawClient.build_url now handles absolute URLs (e.g., HATEOAS pagination links) directly
+        - Added attr_reader :base_url to RawClient for external access
+        - Removed unnecessary base_url override in InferredAuthProvider.refresh since auth_client
+          is already configured with the correct base URL
+  irVersion: 61
+
+- version: 1.0.0-rc69
+  createdAt: "2025-12-16"
+  changelogEntry:
+    - type: chore
+      summary: |
+        Improve wire test generation with client reuse and AST-level snippet handling.
+        The client is now instantiated once in the setup method and reused across all tests,
+        following the PHP/Python pattern for better performance. Replaced fragile regex-based
+        snippet patching with AST-level code generation using skipClientInstantiation option.
+        Helper methods are now centralized in a WireMockTestCase base class.
+  irVersion: 61
+
+- version: 1.0.0-rc68
+  createdAt: "2025-12-15"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add RubyGems.org OIDC publishing workflow to generated CI:
+        - Generates a `publish` job in CI that uses `rubygems/release-gem@v1` for OIDC trusted publishing
+        - Publish job runs on tag pushes after lint and test jobs pass
+        - Simplify wire tests execution by running them inline with regular tests using `RUN_WIRE_TESTS=true` env var instead of a separate CI job
+  irVersion: 61
+
 - version: 1.0.0-rc67
   createdAt: "2025-12-15"
   changelogEntry:

@@ -80,6 +80,14 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    @Override
+    @JsonProperty("gradle-distribution-url")
+    Optional<String> gradleDistributionUrl();
+
+    @Override
+    @JsonProperty("gradle-plugin-management")
+    Optional<String> gradlePluginManagement();
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }
