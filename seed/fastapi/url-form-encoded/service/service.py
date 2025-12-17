@@ -62,10 +62,6 @@ class AbstractRootService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.submit_form_data.__globals__)
-
         router.post(
             path="/submit",
             response_model=PostSubmitResponse,

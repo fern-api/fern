@@ -69,10 +69,6 @@ class AbstractRootService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_test.__globals__)
-
         router.get(
             path="/test",
             response_model=RootObject,
@@ -106,10 +102,6 @@ class AbstractRootService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_test.__globals__)
 
         router.post(
             path="/test",

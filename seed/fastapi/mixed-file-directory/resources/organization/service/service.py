@@ -66,10 +66,6 @@ class AbstractOrganizationService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create.__globals__)
-
         router.post(
             path="/organizations/",
             response_model=Organization,
