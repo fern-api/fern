@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
-- version: 1.15.0
+- version: 2.0.0
   changelogEntry:
     - type: break
       summary: Minimum FastAPI and Starlette version requirements increased
