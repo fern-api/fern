@@ -11,6 +11,10 @@ export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
+
+    export interface PostRequestOptions extends RequestOptions {
+        rootVariable?: string;
+    }
 }
 
 export class ServiceClient {
@@ -26,17 +30,17 @@ export class ServiceClient {
      * @example
      *     await client.service.post()
      */
-    public post(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
+    public post(requestOptions?: ServiceClient.PostRequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__post(requestOptions));
     }
 
-    private async __post(requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+    private async __post(requestOptions?: ServiceClient.PostRequestOptions): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.rootVariable)}`,
+                `/${core.url.encodePathParam(requestOptions?.rootVariable ?? this._options.rootVariable)}`,
             ),
             method: "POST",
             headers: _headers,

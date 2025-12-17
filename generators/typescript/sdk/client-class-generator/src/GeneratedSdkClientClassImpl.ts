@@ -820,6 +820,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             serviceModule.statements.push(this.generateIdempotentRequestOptionsInterface(context));
         }
 
+        for (const endpoint of this.generatedEndpointImplementations) {
+            const endpointRequestOptions = endpoint.endpoint.idempotent
+                ? this.generateIdempotentEndpointRequestOptionsInterface(context, endpoint.endpoint)
+                : this.generateEndpointRequestOptionsInterface(context, endpoint.endpoint);
+            if (endpointRequestOptions != null) {
+                serviceModule.statements.push(endpointRequestOptions);
+            }
+        }
+
         for (const wrappedService of this.generatedWrappedServices) {
             wrappedService.addToServiceClass({
                 isRoot: this.isRoot,
@@ -904,6 +913,64 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
             properties: [],
             extends: [getTextOfTsNode(context.sdkClientClass.getReferenceToBaseRequestOptions().getTypeNode())],
+            isExported: true
+        };
+    }
+
+    private generateEndpointRequestOptionsInterface(
+        context: SdkContext,
+        endpoint: HttpEndpoint
+    ): InterfaceDeclarationStructure | undefined {
+        const variables = this.getVariablesForEndpoint(endpoint);
+        if (variables.length === 0) {
+            return undefined;
+        }
+
+        const properties = variables.map((variable) => {
+            const variableType = context.type.getReferenceToType(variable.type);
+            return {
+                kind: StructureKind.PropertySignature as const,
+                name: getPropertyKey(this.getOptionNameForVariable(variable)),
+                type: getTextOfTsNode(variableType.typeNodeWithoutUndefined),
+                hasQuestionToken: true
+            };
+        });
+
+        const endpointName = endpoint.name.pascalCase.unsafeName;
+        return {
+            kind: StructureKind.Interface,
+            name: `${endpointName}RequestOptions`,
+            properties,
+            extends: [GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME],
+            isExported: true
+        };
+    }
+
+    private generateIdempotentEndpointRequestOptionsInterface(
+        context: SdkContext,
+        endpoint: HttpEndpoint
+    ): InterfaceDeclarationStructure | undefined {
+        const variables = this.getVariablesForEndpoint(endpoint);
+        if (variables.length === 0) {
+            return undefined;
+        }
+
+        const properties = variables.map((variable) => {
+            const variableType = context.type.getReferenceToType(variable.type);
+            return {
+                kind: StructureKind.PropertySignature as const,
+                name: getPropertyKey(this.getOptionNameForVariable(variable)),
+                type: getTextOfTsNode(variableType.typeNodeWithoutUndefined),
+                hasQuestionToken: true
+            };
+        });
+
+        const endpointName = endpoint.name.pascalCase.unsafeName;
+        return {
+            kind: StructureKind.Interface,
+            name: `${endpointName}IdempotentRequestOptions`,
+            properties,
+            extends: [GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME],
             isExported: true
         };
     }
@@ -1012,14 +1079,25 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public getReferenceToRequestOptions(endpoint: HttpEndpoint): ts.TypeReferenceNode {
+        const variables = this.getVariablesForEndpoint(endpoint);
+        const hasVariables = variables.length > 0;
+        const endpointName = endpoint.name.pascalCase.unsafeName;
+
+        let interfaceName: string;
+        if (endpoint.idempotent) {
+            interfaceName = hasVariables
+                ? `${endpointName}IdempotentRequestOptions`
+                : GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME;
+        } else {
+            interfaceName = hasVariables
+                ? `${endpointName}RequestOptions`
+                : GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME;
+        }
+
         return ts.factory.createTypeReferenceNode(
             ts.factory.createQualifiedName(
                 ts.factory.createIdentifier(this.serviceClassName),
-                ts.factory.createIdentifier(
-                    endpoint.idempotent
-                        ? GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME
-                        : GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME
-                )
+                ts.factory.createIdentifier(interfaceName)
             )
         );
     }
@@ -1181,6 +1259,49 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     private getOptionNameForVariable(variable: VariableDeclaration): string {
         return variable.name.camelCase.unsafeName;
+    }
+
+    public getVariablesForEndpoint(endpoint: HttpEndpoint): VariableDeclaration[] {
+        const service = this.packageResolver.getServiceDeclaration(this.packageId);
+        if (service == null) {
+            return [];
+        }
+
+        const allPathParameters = [...service.pathParameters, ...endpoint.pathParameters];
+        const variableIds = new Set<VariableId>();
+
+        for (const pathParameter of allPathParameters) {
+            if (pathParameter.variable != null) {
+                variableIds.add(pathParameter.variable);
+            }
+        }
+
+        return this.intermediateRepresentation.variables.filter((v) => variableIds.has(v.id));
+    }
+
+    public getReferenceToVariableWithRequestOptions(
+        variableId: VariableId,
+        requestOptionsReference: ts.Expression
+    ): ts.Expression {
+        const variable = this.intermediateRepresentation.variables.find((v) => v.id === variableId);
+        if (variable == null) {
+            throw new Error("Variable does not exist: " + variableId);
+        }
+        const optionName = this.getOptionNameForVariable(variable);
+
+        const requestOptionsValue = ts.factory.createPropertyAccessChain(
+            requestOptionsReference,
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(optionName)
+        );
+
+        const clientOptionsValue = this.getReferenceToOption(optionName);
+
+        return ts.factory.createBinaryExpression(
+            requestOptionsValue,
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            clientOptionsValue
+        );
     }
 
     public hasAnyEndpointsWithAuth(): boolean {
