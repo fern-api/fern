@@ -2,9 +2,9 @@
 - version: 3.24.3
   changelogEntry:
     - summary: |
-        Fix discriminated unions with nullable object types to use samePropertiesAsObject instead of wrapping in a value property.
+        Use Set for O(1) deduplication of referenced markdown files in `fern docs dev` to improve hot reload performance.
       type: fix
-  createdAt: "2025-12-16"
+  createdAt: "2025-12-17"
   irVersion: 62
 
 - version: 3.24.2
