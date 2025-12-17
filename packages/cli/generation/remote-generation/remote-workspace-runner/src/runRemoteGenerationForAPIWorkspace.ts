@@ -16,6 +16,8 @@ export interface RemoteGenerationForAPIWorkspaceResponse {
     snippetsProducedBy: generatorsYml.GeneratorInvocation[];
 }
 
+export type PullRequestState = "draft" | "ready";
+
 export async function runRemoteGenerationForAPIWorkspace({
     projectConfig,
     organization,
@@ -28,6 +30,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     whitelabel,
     absolutePathToPreview,
     mode,
+    prState,
     fernignorePath
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
@@ -41,6 +44,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: "pull-request" | undefined;
+    prState: PullRequestState | undefined;
     fernignorePath: string | undefined;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
