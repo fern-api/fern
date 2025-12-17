@@ -149,6 +149,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const service = this.context.ir.services[tokenEndpointReference.serviceId];
         const subpackageId = service?.name.fernFilepath.packagePath[0]?.pascalCase.safeName ?? "Auth";
 
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+
         return ruby.codeblock((writer) => {
             // Create an unauthenticated raw client for the auth endpoint
             writer.writeLine(`# Create an unauthenticated client for the auth endpoint`);
@@ -156,7 +159,26 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.writeNode(this.context.getRawClientClassReference());
             writer.writeLine(`.new(`);
             writer.indent();
-            writer.writeLine(`base_url: base_url,`);
+
+            // Resolve base URL with proper fallback to default environment
+            if (isMultiUrl) {
+                const multiUrlEnvs = this.context.getMultipleBaseUrlsEnvironments();
+                const defaultBaseUrlId = multiUrlEnvs?.baseUrls[0]?.id;
+                const defaultBaseUrlName =
+                    defaultBaseUrlId != null ? this.context.getBaseUrlName(defaultBaseUrlId) : undefined;
+                if (defaultBaseUrlName != null) {
+                    writer.writeLine(`base_url: base_url || environment&.dig(:${defaultBaseUrlName}),`);
+                } else {
+                    writer.writeLine(`base_url: base_url,`);
+                }
+            } else {
+                writer.write(`base_url: base_url`);
+                if (defaultEnvironmentReference != null) {
+                    writer.write(" || ");
+                    writer.writeNode(defaultEnvironmentReference);
+                }
+                writer.writeLine(`,`);
+            }
             writer.writeLine(`headers: {`);
             writer.indent();
 
