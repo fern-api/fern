@@ -654,19 +654,19 @@ class ModuleFile {
                 .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
                 .join("\n");
 
-        // Add optional user extensions hook at the end
+        // Add optional user custom integration hook at the end
         // This allows users to add custom code (e.g., Sentry integration) without fernignoring generated files
-        const extensionsHook = `
+        const customIntegrationHook = `
 
-# Load user-defined extensions if present (e.g., for Sentry integration)
-# To use: create a file at lib/${this.context.getRootFolderName()}/extensions.rb
+# Load user-defined custom integration if present (e.g., for Sentry integration)
+# To use: create a file at lib/${this.context.getRootFolderName()}/custom_integration.rb
 begin
-  require_relative '${this.context.getRootFolderName()}/extensions'
+  require_relative 'custom_integration'
 rescue LoadError
-  # No extensions file found - this is expected and fine
+  # No custom integration file found - this is expected and fine
 end`;
 
-        return dedent`${contents}` + extensionsHook;
+        return dedent`${contents}` + customIntegrationHook;
     }
 
     public async writeFile(): Promise<void> {

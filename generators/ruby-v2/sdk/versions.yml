@@ -5,10 +5,10 @@
   changelogEntry:
     - type: feat
       summary: |
-        Add user extensions hook to generated SDK entrypoint. The gem entrypoint now includes
-        an optional require for `lib/<gem>/extensions.rb` that allows users to add custom code
-        (e.g., Sentry integration) without needing to fernignore generated files. If the
-        extensions file doesn't exist, the require is silently skipped.
+        Add custom integration hook to generated SDK entrypoint. The gem entrypoint now includes
+        an optional require for `lib/<gem>/custom_integration.rb` that allows users to add custom
+        code (e.g., Sentry integration) without needing to fernignore generated files. If the
+        custom_integration file doesn't exist, the require is silently skipped.
   irVersion: 61
 
 - version: 1.0.0-rc69
