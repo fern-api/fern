@@ -658,6 +658,15 @@ export function ${functionName}(server: MockServer): void {
                             // noop
                         }
                     });
+
+                    // Provide fallback values if clientId/clientSecret weren't extracted from the example
+                    // This is needed for wire tests to work with OAuth client credentials flow
+                    if (authOptions.clientId == null) {
+                        authOptions.clientId = code`"test_client_id"`;
+                    }
+                    if (authOptions.clientSecret == null) {
+                        authOptions.clientSecret = code`"test_client_secret"`;
+                    }
                 },
                 inferred: (auth) => {
                     const service = this.ir.services[auth.tokenEndpoint.endpoint.serviceId];
@@ -794,6 +803,15 @@ export function ${functionName}(server: MockServer): void {
                         });
                     }
                 });
+
+                // Provide fallback values if client_id/client_secret weren't in the example
+                // This ensures the mock server expects these fields when the test client sends them
+                if (!(clientIdPropertyName in minimalProperties)) {
+                    minimalProperties[clientIdPropertyName] = code`"test_client_id"`;
+                }
+                if (!(clientSecretPropertyName in minimalProperties)) {
+                    minimalProperties[clientSecretPropertyName] = code`"test_client_secret"`;
+                }
 
                 return code`${literalOf(minimalProperties)}`;
             },
