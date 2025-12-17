@@ -483,7 +483,12 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         .build());
 
         if (publishResult.generateFullProject()) {
-            addRootProjectFiles(publishResult.mavenCoordinate(), true, false, generatorConfig);
+            addRootProjectFiles(
+                    publishResult.mavenCoordinate(),
+                    true,
+                    false,
+                    generatorConfig,
+                    customConfig.gradlePluginManagement());
         }
         generatedFiles.forEach(
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
@@ -524,7 +529,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         && mavenGithubPublishInfo.get().getSignature().isPresent())
                 || customConfigPublishToCentral(generatorConfig);
         // add project level files
-        addRootProjectFiles(maybeMavenCoordinate, true, addSignatureBlock, generatorConfig);
+        addRootProjectFiles(
+                maybeMavenCoordinate, true, addSignatureBlock, generatorConfig, customConfig.gradlePluginManagement());
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
@@ -570,7 +576,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 Optional.of(mavenCoordinate),
                 false,
                 mavenRegistryConfigV2.getSignature().isPresent(),
-                generatorConfig);
+                generatorConfig,
+                customConfig.gradlePluginManagement());
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         copyLicenseFile(generatorConfig);
@@ -636,7 +643,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             Optional<MavenCoordinate> maybeMavenCoordinate,
             boolean addTestBlock,
             boolean addSignaturePlugin,
-            GeneratorConfig generatorConfig) {
+            GeneratorConfig generatorConfig,
+            Optional<String> gradlePluginManagement) {
         String repositoryUrl = addSignaturePlugin
                 ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
                 : "https://s01.oss.sonatype.org/content/repositories/releases/";
@@ -704,18 +712,26 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
 
         addGeneratedFile(buildGradle.build());
-        String settingsGradleContents = "";
-        if (maybeMavenCoordinate.isPresent()) {
-            settingsGradleContents +=
-                    "rootProject.name = '" + maybeMavenCoordinate.get().getArtifact() + "'\n\n";
+        StringBuilder settingsGradleContents = new StringBuilder();
+
+        // Add plugin management block if configured (for enterprise environments)
+        if (gradlePluginManagement.isPresent()) {
+            settingsGradleContents.append(gradlePluginManagement.get()).append("\n\n");
         }
-        settingsGradleContents += getSubProjects().stream()
+
+        if (maybeMavenCoordinate.isPresent()) {
+            settingsGradleContents
+                    .append("rootProject.name = '")
+                    .append(maybeMavenCoordinate.get().getArtifact())
+                    .append("'\n\n");
+        }
+        settingsGradleContents.append(getSubProjects().stream()
                 .map(project -> "include '" + project + "'")
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining("\n")));
 
         addGeneratedFile(RawGeneratedFile.builder()
                 .filename("settings.gradle")
-                .contents(settingsGradleContents)
+                .contents(settingsGradleContents.toString())
                 .build());
         addGeneratedFile(GitIgnoreGenerator.getGitignore());
     }

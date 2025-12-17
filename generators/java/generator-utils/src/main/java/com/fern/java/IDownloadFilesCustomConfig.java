@@ -46,4 +46,7 @@ public interface IDownloadFilesCustomConfig {
 
     @JsonProperty("gradle-distribution-url")
     Optional<String> gradleDistributionUrl();
+
+    @JsonProperty("gradle-plugin-management")
+    Optional<String> gradlePluginManagement();
 }

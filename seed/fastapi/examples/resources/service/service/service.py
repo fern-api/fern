@@ -89,10 +89,6 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_movie.__globals__)
-
         router.get(
             path="/movie/{movie_id}",
             response_model=Movie,
@@ -126,10 +122,6 @@ class AbstractServiceService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_movie.__globals__)
 
         router.post(
             path="/movie",
@@ -175,10 +167,6 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_metadata.__globals__)
-
         router.get(
             path="/metadata",
             response_model=Metadata,
@@ -213,10 +201,6 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_big_entity.__globals__)
-
         router.post(
             path="/big-entity",
             response_model=Response,
@@ -250,10 +234,6 @@ class AbstractServiceService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.refresh_token.__globals__)
 
         router.post(
             path="/refresh-token",
