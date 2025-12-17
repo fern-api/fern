@@ -42,11 +42,3 @@ require_relative "seed/types/account"
 require_relative "seed/types/resource_list"
 require_relative "seed/types/base_resource"
 require_relative "seed/types/memo"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

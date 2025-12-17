@@ -39,11 +39,3 @@ require_relative "seed/types/document_metadata"
 require_relative "seed/types/document_upload_result"
 require_relative "seed/types/upload_document_response"
 require_relative "seed/environment"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

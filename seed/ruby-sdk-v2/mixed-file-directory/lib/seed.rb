@@ -49,11 +49,3 @@ require_relative "seed/user/events/client"
 require_relative "seed/user/events/types/list_user_events_request"
 require_relative "seed/user/events/metadata/client"
 require_relative "seed/user/events/metadata/types/get_event_metadata_request"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

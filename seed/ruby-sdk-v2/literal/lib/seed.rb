@@ -56,11 +56,3 @@ require_relative "seed/path/client"
 require_relative "seed/query/client"
 require_relative "seed/query/types/send_literals_in_query_request"
 require_relative "seed/reference/client"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

@@ -40,11 +40,3 @@ require_relative "seed/simple/types/foo_request"
 require_relative "seed/simple/types/foo_response"
 require_relative "seed/client"
 require_relative "seed/simple/client"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

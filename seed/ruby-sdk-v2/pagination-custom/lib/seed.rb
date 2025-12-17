@@ -41,11 +41,3 @@ require_relative "seed/types/username_cursor"
 require_relative "seed/client"
 require_relative "seed/users/client"
 require_relative "seed/users/types/list_usernames_request_custom"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

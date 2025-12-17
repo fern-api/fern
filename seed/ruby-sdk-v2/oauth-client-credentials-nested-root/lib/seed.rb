@@ -44,11 +44,3 @@ require_relative "seed/nested_no_auth/api/client"
 require_relative "seed/nested/client"
 require_relative "seed/nested/api/client"
 require_relative "seed/simple/client"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

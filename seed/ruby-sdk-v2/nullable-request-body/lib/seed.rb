@@ -39,11 +39,3 @@ require_relative "seed/types/plain_object"
 require_relative "seed/client"
 require_relative "seed/test_group/client"
 require_relative "seed/test_group/types/test_method_name_test_group_request"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end
