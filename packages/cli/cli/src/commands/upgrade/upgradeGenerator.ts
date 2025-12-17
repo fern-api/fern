@@ -1,4 +1,5 @@
 import {
+    addDefaultDockerOrgIfNotPresent,
     getGeneratorNameOrThrow,
     getLatestGeneratorVersion,
     getPathToGeneratorsConfiguration,
@@ -134,15 +135,20 @@ export async function loadAndUpdateGenerators({
                 );
             }
             const generatorName = generator.get("name") as string;
+            // Normalize the generator name to add default Docker org prefix if not present
+            // This is needed because the YAML may contain shorthand names like "fern-csharp-sdk"
+            const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
 
-            if (generatorFilter != null && generatorName !== generatorFilter) {
+            // Normalize the generator filter to add default Docker org prefix if not present
+            const normalizedGeneratorFilter =
+                generatorFilter != null ? addDefaultDockerOrgIfNotPresent(generatorFilter) : undefined;
+            // Compare normalized names so both shorthand and full names work
+            if (normalizedGeneratorFilter != null && normalizedGeneratorName !== normalizedGeneratorFilter) {
                 context.logger.debug(
                     `Skipping generator ${generatorName} as it does not match the filter: ${generatorFilter}`
                 );
                 continue;
             }
-
-            const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
 
             const currentGeneratorVersion = generator.get("version") as string;
 
@@ -309,7 +315,8 @@ export async function upgradeGenerator({
                             `  - ${upgrade.generatorName}: ${chalk.dim(upgrade.previousVersion)} → ${upgrade.newVersion}`
                         )
                     );
-                    const changelogUrl = getChangelogUrl(upgrade.generatorName);
+                    // Use normalized name for changelog lookup since the map uses fernapi/... keys
+                    const changelogUrl = getChangelogUrl(addDefaultDockerOrgIfNotPresent(upgrade.generatorName));
                     if (changelogUrl != null) {
                         cliContext.logger.info(chalk.dim(`    Changelog: ${changelogUrl}`));
                     }
@@ -360,7 +367,8 @@ export async function upgradeGenerator({
                     ? `fern generator upgrade --generator ${upgrade.generatorName} --include-major`
                     : `fern generator upgrade --include-major`;
             cliContext.logger.info(chalk.yellow(`    Run: ${upgradeCommand}`));
-            const changelogUrl = getChangelogUrl(upgrade.generatorName);
+            // Use normalized name for changelog lookup since the map uses fernapi/... keys
+            const changelogUrl = getChangelogUrl(addDefaultDockerOrgIfNotPresent(upgrade.generatorName));
             if (changelogUrl != null) {
                 cliContext.logger.info(chalk.yellow(`    Changelog: ${changelogUrl}`));
             }

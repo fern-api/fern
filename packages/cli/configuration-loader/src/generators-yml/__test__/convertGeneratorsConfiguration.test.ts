@@ -746,4 +746,128 @@ describe("convertGeneratorsConfiguration", () => {
             }
         });
     });
+
+    describe("generator name normalization", () => {
+        it("normalizes shorthand generator names to full names", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "fern-typescript-sdk",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.name).toEqual("fernapi/fern-typescript-sdk");
+        });
+
+        it("preserves full generator names with fernapi/ prefix", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "fernapi/fern-python-sdk",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.name).toEqual("fernapi/fern-python-sdk");
+        });
+
+        it("preserves custom org generator names", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "myorg/my-generator",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.name).toEqual("myorg/my-generator");
+        });
+
+        it("normalizes multiple generators with mixed formats", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "fern-typescript-sdk",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                },
+                                {
+                                    name: "fernapi/fern-python-sdk",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                },
+                                {
+                                    name: "myorg/custom-generator",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.name).toEqual("fernapi/fern-typescript-sdk");
+            expect(converted.groups[0]?.generators[1]?.name).toEqual("fernapi/fern-python-sdk");
+            expect(converted.groups[0]?.generators[2]?.name).toEqual("myorg/custom-generator");
+        });
+    });
 });
