@@ -44,6 +44,109 @@
                 "openapi": "../openapi.yml",
               },
             },
+            "createExtendedWithAny": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "id": "id",
+                    "name": "name",
+                  },
+                  "response": {
+                    "body": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/extended-with-any",
+              "request": {
+                "body": "ExtendedWithAdditionalPropertiesAny",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "ExtendedWithAdditionalPropertiesAny",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createExtendedWithRef": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "id": "id",
+                  },
+                  "response": {
+                    "body": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "primaryUser": {
+                        "id": "id",
+                        "name": "name",
+                      },
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/extended-with-ref",
+              "request": {
+                "body": "ExtendedWithAdditionalPropertiesRef",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "ExtendedWithAdditionalPropertiesRef",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createExtendedWithTyped": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "id": "id",
+                  },
+                  "response": {
+                    "body": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/extended-with-typed",
+              "request": {
+                "body": "ExtendedWithAdditionalPropertiesTyped",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "ExtendedWithAdditionalPropertiesTyped",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
             "createFlexible": {
               "auth": undefined,
               "docs": undefined,
@@ -208,6 +311,69 @@
         },
         "types": {
           "ArrayMap": "map<string, list<string>>",
+          "BaseObject": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "createdAt": "optional<datetime>",
+              "id": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ExtendedOnlyRefWithAdditionalProperties": {
+            "docs": "Options with only ref-based inheritance and additionalProperties",
+            "extends": [
+              "BaseObject",
+            ],
+            "extra-properties": true,
+            "inline": undefined,
+            "properties": {},
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ExtendedWithAdditionalPropertiesAny": {
+            "docs": undefined,
+            "extends": [
+              "BaseObject",
+            ],
+            "extra-properties": true,
+            "inline": undefined,
+            "properties": {
+              "name": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ExtendedWithAdditionalPropertiesRef": {
+            "docs": undefined,
+            "extends": [
+              "BaseObject",
+            ],
+            "inline": undefined,
+            "properties": {
+              "primaryUser": "optional<User>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ExtendedWithAdditionalPropertiesTyped": {
+            "docs": undefined,
+            "extends": [
+              "BaseObject",
+            ],
+            "inline": undefined,
+            "properties": {
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "FlexibleObject": {
             "docs": undefined,
             "extra-properties": true,
@@ -384,6 +550,69 @@
             body:
               key:
                 - value
+    createExtendedWithAny:
+      path: /extended-with-any
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: ExtendedWithAdditionalPropertiesAny
+        content-type: application/json
+      response:
+        docs: Success
+        type: ExtendedWithAdditionalPropertiesAny
+        status-code: 200
+      examples:
+        - request:
+            id: id
+            name: name
+          response:
+            body:
+              id: id
+              createdAt: '2024-01-15T09:30:00Z'
+              name: name
+    createExtendedWithTyped:
+      path: /extended-with-typed
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: ExtendedWithAdditionalPropertiesTyped
+        content-type: application/json
+      response:
+        docs: Success
+        type: ExtendedWithAdditionalPropertiesTyped
+        status-code: 200
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              id: id
+              createdAt: '2024-01-15T09:30:00Z'
+              name: name
+    createExtendedWithRef:
+      path: /extended-with-ref
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: ExtendedWithAdditionalPropertiesRef
+        content-type: application/json
+      response:
+        docs: Success
+        type: ExtendedWithAdditionalPropertiesRef
+        status-code: 200
+      examples:
+        - request:
+            id: id
+          response:
+            body:
+              id: id
+              createdAt: '2024-01-15T09:30:00Z'
+              primaryUser:
+                id: id
+                name: name
   source:
     openapi: ../openapi.yml
 types:
@@ -421,6 +650,42 @@ types:
       openapi: ../openapi.yml
   UserMap: map<string, User>
   ArrayMap: map<string, list<string>>
+  BaseObject:
+    properties:
+      id: string
+      createdAt: optional<datetime>
+    source:
+      openapi: ../openapi.yml
+  ExtendedWithAdditionalPropertiesAny:
+    properties:
+      name: string
+    extends:
+      - BaseObject
+    extra-properties: true
+    source:
+      openapi: ../openapi.yml
+  ExtendedWithAdditionalPropertiesTyped:
+    properties:
+      name: optional<string>
+    extends:
+      - BaseObject
+    source:
+      openapi: ../openapi.yml
+  ExtendedWithAdditionalPropertiesRef:
+    properties:
+      primaryUser: optional<User>
+    extends:
+      - BaseObject
+    source:
+      openapi: ../openapi.yml
+  ExtendedOnlyRefWithAdditionalProperties:
+    docs: Options with only ref-based inheritance and additionalProperties
+    properties: {}
+    extends:
+      - BaseObject
+    extra-properties: true
+    source:
+      openapi: ../openapi.yml
 ",
     },
   },

@@ -7,8 +7,16 @@
         Add `fern docs preview list` command to list all preview deployments with pagination support via `--limit` and `--page` options.
       type: feat
   irVersion: 62
-  createdAt: "2025-12-16"
+  createdAt: "2025-12-17"
   version: 3.25.0
+
+- version: 3.24.3
+  changelogEntry:
+    - summary: |
+        Use Set for O(1) deduplication of referenced markdown files in `fern docs dev` to improve hot reload performance.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 62
 
 - version: 3.24.2
   changelogEntry:
@@ -17,6 +25,14 @@
       type: fix
   createdAt: "2025-12-16"
   irVersion: 62
+
+- changelogEntry:
+    - summary: |
+        Prevents incorrect collapsing of an `allOf` with `additionalProperties: true` into a `map`.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-16"
+  version: 3.24.2
 
 - changelogEntry:
     - summary: |
