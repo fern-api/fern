@@ -56,3 +56,11 @@ require_relative "seed/path/client"
 require_relative "seed/query/client"
 require_relative "seed/query/types/send_literals_in_query_request"
 require_relative "seed/reference/client"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

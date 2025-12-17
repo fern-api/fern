@@ -653,7 +653,20 @@ class ModuleFile {
                 .filter((importPath) => importPath.endsWith(".rb"))
                 .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
                 .join("\n");
-        return dedent`${contents}`;
+
+        // Add optional user extensions hook at the end
+        // This allows users to add custom code (e.g., Sentry integration) without fernignoring generated files
+        const extensionsHook = `
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/${this.context.getRootFolderName()}/extensions.rb
+begin
+  require_relative '${this.context.getRootFolderName()}/extensions'
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end`;
+
+        return dedent`${contents}` + extensionsHook;
     }
 
     public async writeFile(): Promise<void> {

@@ -53,3 +53,11 @@ require_relative "seed/path_param/client"
 require_relative "seed/query_param/client"
 require_relative "seed/query_param/types/send_enum_as_query_param_request"
 require_relative "seed/query_param/types/send_enum_list_as_query_param_request"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

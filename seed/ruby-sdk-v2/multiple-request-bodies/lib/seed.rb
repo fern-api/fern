@@ -39,3 +39,11 @@ require_relative "seed/types/document_metadata"
 require_relative "seed/types/document_upload_result"
 require_relative "seed/types/upload_document_response"
 require_relative "seed/environment"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

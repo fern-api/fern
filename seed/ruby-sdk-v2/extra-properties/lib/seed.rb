@@ -40,3 +40,11 @@ require_relative "seed/user/types/user"
 require_relative "seed/client"
 require_relative "seed/user/client"
 require_relative "seed/user/types/create_user_request"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

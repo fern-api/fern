@@ -40,3 +40,11 @@ require_relative "seed/optional/types/deploy_params"
 require_relative "seed/optional/types/deploy_response"
 require_relative "seed/client"
 require_relative "seed/optional/client"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

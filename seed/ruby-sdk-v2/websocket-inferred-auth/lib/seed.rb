@@ -48,3 +48,11 @@ require_relative "seed/auth/client"
 require_relative "seed/auth/types/get_token_request"
 require_relative "seed/auth/types/refresh_token_request"
 require_relative "seed/internal/inferred_auth_provider"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

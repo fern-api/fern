@@ -42,3 +42,11 @@ require_relative "seed/types/account"
 require_relative "seed/types/resource_list"
 require_relative "seed/types/base_resource"
 require_relative "seed/types/memo"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

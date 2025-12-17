@@ -41,3 +41,11 @@ require_relative "seed/types/tree"
 require_relative "seed/file/types/file_info"
 require_relative "seed/file/types/file"
 require_relative "seed/file/directory/types/directory"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

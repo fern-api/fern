@@ -42,3 +42,11 @@ require_relative "seed/types/admin"
 require_relative "seed/types/user_or_admin"
 require_relative "seed/types/foo"
 require_relative "seed/types/user_or_admin_discriminated"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

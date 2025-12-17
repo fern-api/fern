@@ -47,3 +47,11 @@ require_relative "seed/ast/types/container_value"
 require_relative "seed/ast/types/field_value"
 require_relative "seed/ast/types/json_like"
 require_relative "seed/ast/types/json_like_with_null_and_undefined"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

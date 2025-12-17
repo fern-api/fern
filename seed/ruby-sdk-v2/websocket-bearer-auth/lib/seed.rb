@@ -44,3 +44,11 @@ require_relative "seed/realtime/types/receive_snake_case"
 require_relative "seed/realtime/types/send_event_2"
 require_relative "seed/realtime/types/receive_event_2"
 require_relative "seed/realtime/types/receive_event_3"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

@@ -39,3 +39,11 @@ require_relative "seed/types/docs"
 require_relative "seed/types/example_type"
 require_relative "seed/types/json"
 require_relative "seed/types/nested_type"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

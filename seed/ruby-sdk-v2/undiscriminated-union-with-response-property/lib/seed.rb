@@ -41,3 +41,11 @@ require_relative "seed/types/variant_c"
 require_relative "seed/types/my_union"
 require_relative "seed/types/union_response"
 require_relative "seed/types/union_list_response"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

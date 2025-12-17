@@ -42,3 +42,11 @@ require_relative "seed/types/word"
 require_relative "seed/types/sentence"
 require_relative "seed/types/shape"
 require_relative "seed/types/type"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

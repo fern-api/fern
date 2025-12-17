@@ -41,3 +41,11 @@ require_relative "seed/ec_2/types/boot_instance_request"
 require_relative "seed/s_3/client"
 require_relative "seed/s_3/types/get_presigned_url_request"
 require_relative "seed/environment"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

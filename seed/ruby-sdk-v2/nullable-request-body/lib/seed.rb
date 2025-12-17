@@ -39,3 +39,11 @@ require_relative "seed/types/plain_object"
 require_relative "seed/client"
 require_relative "seed/test_group/client"
 require_relative "seed/test_group/types/test_method_name_test_group_request"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end

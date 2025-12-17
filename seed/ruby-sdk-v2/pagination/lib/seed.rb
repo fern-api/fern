@@ -111,3 +111,11 @@ require_relative "seed/users/types/list_usernames_request"
 require_relative "seed/users/types/list_usernames_with_optional_response_request"
 require_relative "seed/users/types/list_with_global_config_request"
 require_relative "seed/users/types/list_users_optional_data_request"
+
+# Load user-defined extensions if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/extensions.rb
+begin
+  require_relative "seed/extensions"
+rescue LoadError
+  # No extensions file found - this is expected and fine
+end
