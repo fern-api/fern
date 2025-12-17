@@ -1,3 +1,35 @@
+- version: 3.26.0
+  changelogEntry:
+    - summary: |
+        Add `gradle-plugin-management` configuration option to inject custom plugin management
+        and dependency resolution configuration into `settings.gradle`. This enables SDK generation
+        on enterprise networks that cannot access the Gradle Plugin Portal (`plugins.gradle.org`)
+        by configuring internal Artifactory/Nexus repositories for plugin resolution.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-plugin-management: |
+            pluginManagement {
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/gradle-plugins/' }
+                }
+            }
+            dependencyResolutionManagement {
+                repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/maven-releases/' }
+                }
+            }
+        ```
+      type: feat
+    - summary: |
+        Fix `gradle-distribution-url` override in Java V2 generator to properly create the
+        `gradle/wrapper` directory before writing `gradle-wrapper.properties`.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 61
+
 - version: 3.25.1
   changelogEntry:
     - summary: |
