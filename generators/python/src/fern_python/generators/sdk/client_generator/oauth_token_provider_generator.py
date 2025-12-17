@@ -7,6 +7,8 @@ from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunc
 
 import fern.ir.resources as ir_types
 
+DEFAULT_EXPIRES_IN_SECONDS = 3600  # 1 hour
+
 
 class OAuthTokenProviderGenerator:
     CLIENT_CLASS_NAME = "OAuthTokenProvider"
@@ -477,6 +479,9 @@ class OAuthTokenProviderGenerator:
             property_name = expires_in_property.property.name.name.snake_case.safe_name
             # Extract names from PropertyPathItem objects
             property_path_names = [item.name for item in property_path] if property_path else None
+            property_value = f"token_response.{self._get_response_property_path(property_path_names)}{property_name}"
+            property_type = expires_in_property.property.value_type
+            property_is_optional = self._context.resolved_schema_is_optional_or_unknown(property_type)
             writer.write(f"self.{member_name} = ")
             writer.write_node(
                 node=AST.FunctionInvocation(
@@ -487,7 +492,17 @@ class OAuthTokenProviderGenerator:
                         (
                             "expires_in_seconds",
                             AST.Expression(
-                                f"token_response.{self._get_response_property_path(property_path_names)}{property_name}"
+                                property_value
+                                if not property_is_optional
+                                else " ".join(
+                                    [
+                                        property_value,
+                                        "if",
+                                        property_value,
+                                        "is not None else",
+                                        str(DEFAULT_EXPIRES_IN_SECONDS),
+                                    ]
+                                )
                             ),
                         ),
                         ("buffer_in_minutes", AST.Expression(f"self.{self._get_buffer_in_minutes_member_name()}")),

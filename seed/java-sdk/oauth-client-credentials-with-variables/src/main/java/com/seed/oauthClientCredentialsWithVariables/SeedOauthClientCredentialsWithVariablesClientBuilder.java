@@ -245,25 +245,11 @@ public class SeedOauthClientCredentialsWithVariablesClientBuilder {
 
         private final String clientSecret;
 
-        private String audience = null;
-
-        private String grantType = null;
-
         private String scope = null;
 
         _CredentialsAuth(String clientId, String clientSecret) {
             this.clientId = clientId;
             this.clientSecret = clientSecret;
-        }
-
-        public _CredentialsAuth audience(String audience) {
-            this.audience = audience;
-            return this;
-        }
-
-        public _CredentialsAuth grantType(String grantType) {
-            this.grantType = grantType;
-            return this;
         }
 
         public _CredentialsAuth scope(String scope) {
@@ -279,8 +265,8 @@ public class SeedOauthClientCredentialsWithVariablesClientBuilder {
                 authClientOptionsBuilder.rootVariable(this.rootVariable);
             }
             AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
-            OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(
-                    this.clientId, this.clientSecret, this.audience, this.grantType, this.scope, authClient);
+            OAuthTokenSupplier oAuthTokenSupplier =
+                    new OAuthTokenSupplier(this.clientId, this.clientSecret, this.scope, authClient);
             builder.addHeader("Authorization", oAuthTokenSupplier);
         }
     }

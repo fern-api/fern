@@ -2,6 +2,7 @@ import { Rule } from "./Rule";
 import { AccentColorContrastRule } from "./rules/accent-color-contrast";
 import { AllRolesMustBeDeclaredRule } from "./rules/all-roles-must-be-declared";
 import { FilepathsExistRule } from "./rules/filepaths-exist";
+import { NoCircularRedirectsRule } from "./rules/no-circular-redirects";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs";
 import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs";
 import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation";
@@ -25,6 +26,7 @@ const allRules = [
     ValidateVersionFileRule,
     ValidateProductFileRule,
     ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
+    NoCircularRedirectsRule, // Detect circular redirect chains
     AccentColorContrastRule,
     ValidMarkdownLinks,
     ValidFileTypes,
