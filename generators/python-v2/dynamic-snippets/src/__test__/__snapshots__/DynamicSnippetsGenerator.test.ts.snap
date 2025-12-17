@@ -152,7 +152,7 @@ client.endpoints.object.get_and_return_with_optional_field(
     long=1000000,
     double=1.1,
     bool=True,
-    datetime=datetime.fromisoformat("2024-01-15T09:30:00Z"),
+    datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     date=date.fromisoformat("2023-01-15"),
     uuid=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     base64="SGVsbG8gd29ybGQh",
@@ -410,8 +410,8 @@ client.nullable.create_user(
         "admin"
     ],
     metadata={
-        "created_at": datetime.fromisoformat("1980-01-01T00:00:00Z"),
-        "updated_at": datetime.fromisoformat("1980-01-01T00:00:00Z"),
+        "created_at": datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
+        "updated_at": datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
         "avatar": None,
         "activated": None
     },
