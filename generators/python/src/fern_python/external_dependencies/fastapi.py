@@ -78,6 +78,8 @@ class FastAPI:
 
     HTTPException = _export("HTTPException")
 
+    HTTP_204_NO_CONTENT = _export("status", "HTTP_204_NO_CONTENT")
+
     HTTPBasic = _export("security", "HTTPBasic")
 
     HTTPBasicCredentials = _export("security", "HTTPBasicCredentials")

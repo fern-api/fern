@@ -13,7 +13,6 @@ from .endpoint_parameters import (
 )
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
-from fern_python.external_dependencies.starlette import Starlette
 from fern_python.generators.fastapi.service_generator.endpoint_parameters.request.file_upload_request_endpoint_parameter import (
     FileUploadRequestEndpointParameters,
 )
@@ -203,7 +202,7 @@ class EndpointGenerator:
 
                 if self._endpoint.response is None or self._endpoint.response.body is None:
                     writer.write("status_code=")
-                    writer.write_node(AST.TypeHint(Starlette.HTTP_204_NO_CONTENT))
+                    writer.write_node(AST.TypeHint(FastAPI.HTTP_204_NO_CONTENT))
                     writer.write_line(",")
                 writer.write(f"description={class_declaration.name}.{self._get_method_name()}.__doc__")
                 writer.write_line(",")
