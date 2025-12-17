@@ -53,6 +53,9 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+    - outputFolder: custom-integration
+      customConfig:
+        customIntegrationPath: custom_integration
     - outputFolder: readme-config
       customConfig:
         customReadmeSections:
