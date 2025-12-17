@@ -114,7 +114,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fern-typescript-sdk
         output:
           location: local-file-system
           path: ../sdks/typescript
@@ -203,7 +203,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fern-typescript-sdk
         output:
           location: local-file-system
           path: ../sdks/typescript
@@ -435,7 +435,7 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fern-typescript-sdk
         output:
           location: local-file-system
           path: ../sdks/typescript

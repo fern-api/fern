@@ -294,19 +294,19 @@ fixtures:
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: no-inline-path-parameters
+      customConfig:
+        inlinePathParameters: false
+    - outputFolder: no-inline-path-parameters-serde
+      customConfig:
+        inlinePathParameters: false
+        noSerdeLayer: false
+    - outputFolder: no-inline-path-parameters-retain-original-casing
+      customConfig:
+        inlinePathParameters: false
+        retainOriginalCasing: true
     - outputFolder: retain-original-casing
       customConfig:
-        retainOriginalCasing: true
-    - outputFolder: inline-path-parameters
-      customConfig:
-        inlinePathParameters: true
-    - outputFolder: inline-path-parameters-serde
-      customConfig:
-        inlinePathParameters: true
-        noSerdeLayer: false
-    - outputFolder: inline-path-parameters-retain-original-casing
-      customConfig:
-        inlinePathParameters: true
         retainOriginalCasing: true
     - outputFolder: parameter-naming-original-name
       customConfig:
