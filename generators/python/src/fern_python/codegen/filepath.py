@@ -21,11 +21,8 @@ class Filepath:
     def to_module(self) -> AST.Module:
         # Filter out empty or underscore-only module names from directories to avoid invalid imports like "._.types"
         # Always include the file part (it's the actual file name)
-        module_names = [
-            part.module_name
-            for part in self.directories
-            if part.module_name and part.module_name != "_"
-        ]
+        module_names = [part.module_name for part in self.directories if part.module_name and part.module_name != "_"]
+
         # Always include the file part
         if self.file.module_name:
             module_names.append(self.file.module_name)
@@ -33,11 +30,7 @@ class Filepath:
 
     def __str__(self) -> str:
         # Filter out empty or underscore-only module names from directories
-        parts = [
-            dir.module_name
-            for dir in self.directories
-            if dir.module_name and dir.module_name != "_"
-        ]
+        parts = [dir.module_name for dir in self.directories if dir.module_name and dir.module_name != "_"]
         # Always include the file part
         if self.file.module_name:
             parts.append(self.file.module_name + ".py")
