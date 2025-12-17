@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.24.4
+  changelogEntry:
+    - summary: |
+        Fix discriminated unions with nullable object types to use samePropertiesAsObject instead of wrapping in a value property.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 62
+
 - version: 3.24.3
   changelogEntry:
     - summary: |

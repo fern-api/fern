@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation: filter out headers with null/undefined values to prevent invalid assertions, and allow empty form body in mock server when expected body is empty.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 62
+
 - version: 3.42.2
   changelogEntry:
     - summary: |
