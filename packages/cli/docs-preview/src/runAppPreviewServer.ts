@@ -7,14 +7,14 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
-import { readFile } from "fs/promises";
+import { readFile, rm } from "fs/promises";
 import http from "http";
 import path from "path";
 import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 
 import { DebugLogger } from "./DebugLogger";
-import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
+import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
@@ -373,6 +373,13 @@ export async function runAppPreviewServer({
     bundlePath?: string;
     backendPort: number;
 }): Promise<void> {
+    // Clear any previous app-preview cache to ensure a fresh start
+    const appPreviewPath = getPathToPreviewFolder({ app: true });
+    if (await doesPathExist(appPreviewPath)) {
+        context.logger.debug(`Clearing previous app-preview cache at: ${appPreviewPath}`);
+        await rm(appPreviewPath, { recursive: true });
+    }
+
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
     } else {
