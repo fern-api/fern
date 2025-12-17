@@ -2,6 +2,14 @@
 - version: 3.24.3
   changelogEntry:
     - summary: |
+        Use Set for O(1) deduplication of referenced markdown files in `fern docs dev` to improve hot reload performance.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 62
+
+- version: 3.24.2
+  changelogEntry:
+    - summary: |
         Fix handling of empty allOf in additionalProperties by treating schemas with only metadata (example, description) as "any" type.
       type: fix
   createdAt: "2025-12-16"
