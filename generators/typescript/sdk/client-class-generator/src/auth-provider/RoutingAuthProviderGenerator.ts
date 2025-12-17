@@ -197,7 +197,6 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
 
     private generateGetAuthRequestStatements(): string {
         const providerMap = `this.${AUTH_PROVIDERS_FIELD_NAME}`;
-        const authSchemeKeys = this.getAuthSchemeKeys();
         const errorHandling = this.ir.sdkConfig.isAuthMandatory
             ? `throw new Error("No authentication credentials provided. Please provide one of the supported authentication methods.");`
             : `return { headers: {} };`;
