@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.46.2
+  changelogEntry:
+    - summary: |
+        Fix handling of newlines in default values for strings when using `config.pydantic_config.use_provided_defaults`.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
 
 - version: 4.46.2
   changelogEntry:
