@@ -105,7 +105,7 @@ jobs:
             const devinMention = '<@U088PL5FS3B>';
             const owner = context.repo.owner;
             const repo = context.repo.repo;
-            const baseBranch = 'app';
+            const baseBranch = 'main';
 
             const alerts = JSON.parse(process.env.ALERTS_JSON || '[]');
             if (alerts.length === 0) {
