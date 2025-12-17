@@ -145,7 +145,6 @@ SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.unknownAsAny.SeedUnknownAsAnyClient;
 import com.seed.unknownAsAny.core.RequestOptions;
@@ -153,7 +152,7 @@ import com.seed.unknownAsAny.core.RequestOptions;
 // Client level
 SeedUnknownAsAnyClient client = SeedUnknownAsAnyClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -161,7 +160,7 @@ client.unknown().post(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

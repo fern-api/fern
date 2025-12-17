@@ -2,6 +2,7 @@ import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-sch
 import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";
+import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getAvailability } from "../../utils/getAvailability";
 import { getDisplayName } from "../../utils/getDisplayName";
@@ -153,12 +154,14 @@ export function getSingleUnionTypeProperties({
     const singlePropertyKey = typeof rawSingleUnionType !== "string" ? rawSingleUnionType.key : undefined;
 
     const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawValueType, file });
+    // Unwrap nullable/optional containers to check the underlying type
+    const unwrappedType = unwrapNullableAndOptional(resolvedType);
     if (
-        resolvedType._type === "named" &&
-        isRawObjectDefinition(resolvedType.declaration) &&
+        unwrappedType._type === "named" &&
+        isRawObjectDefinition(unwrappedType.declaration) &&
         singlePropertyKey == null
     ) {
-        return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);
+        return SingleUnionTypeProperties.samePropertiesAsObject(unwrappedType.name);
     }
     return SingleUnionTypeProperties.singleProperty({
         name: file.casingsGenerator.generateNameAndWireValue({
@@ -191,4 +194,18 @@ function getSinglePropertyKeyValue(
         return rawSingleUnionType.value;
     }
     return DEFAULT_UNION_VALUE_PROPERTY_VALUE;
+}
+
+/**
+ * Unwraps nullable and optional containers to get the underlying type.
+ * This is needed because nullable object types should still be treated as
+ * `samePropertiesAsObject` in discriminated unions, not wrapped in a `value` property.
+ */
+function unwrapNullableAndOptional(resolvedType: ResolvedType): ResolvedType {
+    if (resolvedType._type === "container") {
+        if (resolvedType.container._type === "nullable" || resolvedType.container._type === "optional") {
+            return unwrapNullableAndOptional(resolvedType.container.itemType);
+        }
+    }
+    return resolvedType;
 }

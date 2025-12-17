@@ -142,7 +142,6 @@ SeedPlainTextClient client = SeedPlainTextClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.plainText.SeedPlainTextClient;
 import com.seed.plainText.core.RequestOptions;
@@ -150,7 +149,7 @@ import com.seed.plainText.core.RequestOptions;
 // Client level
 SeedPlainTextClient client = SeedPlainTextClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -158,7 +157,7 @@ client.service().getText(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

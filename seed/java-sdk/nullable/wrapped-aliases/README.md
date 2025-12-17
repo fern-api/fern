@@ -177,7 +177,6 @@ SeedNullableClient client = SeedNullableClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.nullable.SeedNullableClient;
 import com.seed.nullable.core.RequestOptions;
@@ -185,7 +184,7 @@ import com.seed.nullable.core.RequestOptions;
 // Client level
 SeedNullableClient client = SeedNullableClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -193,7 +192,7 @@ client.nullable().createUser(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

@@ -21,20 +21,24 @@ class ListUsernamesWithOptionalResponseRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    )
-    {
+    ) {
         $this->startingAfter = $values['startingAfter'] ?? null;
     }
 
     /**
      * @return ?string
      */
-    public function getStartingAfter(): ?string {
-        return $this->startingAfter;}
+    public function getStartingAfter(): ?string
+    {
+        return $this->startingAfter;
+    }
 
     /**
      * @param ?string $value
      */
-    public function setStartingAfter(?string $value = null): self {
-        $this->startingAfter = $value;return $this;}
+    public function setStartingAfter(?string $value = null): self
+    {
+        $this->startingAfter = $value;
+        return $this;
+    }
 }

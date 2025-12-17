@@ -182,7 +182,7 @@ export type BaseClientOptions = {
         }
 
         const functionCode = `
-export function normalizeClientOptions<T extends BaseClientOptions>(
+export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
 ): NormalizedClientOptions<T> {${headersSection}    return {
         ...options,
@@ -207,14 +207,14 @@ export function normalizeClientOptions<T extends BaseClientOptions>(
             : "";
 
         let typesCode = `
-export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
+export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: ${getTextOfTsNode(context.coreUtilities.logging.Logger._getReferenceToType())};${authProviderProperty}
 }`;
 
         if (shouldGenerateAuthCode) {
             typesCode += `
 
-export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions> = NormalizedClientOptions<T> & {
     authProvider: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};
 }`;
         }
@@ -330,7 +330,7 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
         }
 
         const functionCode = `
-export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
+export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(${OPTIONS_PARAMETER_NAME}) as NormalizedClientOptionsWithAuth<T>;
@@ -339,7 +339,7 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     return normalized;
 }
 
-function withNoOpAuthProvider<T extends BaseClientOptions>(
+function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
     options: NormalizedClientOptions<T>
 ): NormalizedClientOptionsWithAuth<T> {
     return {

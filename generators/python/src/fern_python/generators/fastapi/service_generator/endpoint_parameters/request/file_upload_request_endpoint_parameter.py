@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from ....context import FastApiGeneratorContext
 from ..endpoint_parameter import EndpointParameter
@@ -36,14 +36,17 @@ class FileUploadRequestFileParameter(EndpointParameter):
             is_list=self._request_property.get_as_union().type == "fileArray",
         )
 
-    def get_default(self) -> AST.Expression:
-        return FastAPI.UploadFile(
-            is_optional=self._request_property.get_as_union().is_optional,
-            is_list=self._request_property.get_as_union().type == "fileArray",
+    def get_fastapi_marker(self) -> AST.Expression:
+        return FastAPI.File(
             variable_name=self._get_request_param_name(),
             wire_value=self._request_property.get_as_union().key.wire_value,
             docs=None,
         )
+
+    def get_python_default(self) -> Optional[AST.Expression]:
+        if self._request_property.get_as_union().is_optional:
+            return AST.Expression(AST.TypeHint.none())
+        return None
 
 
 class FileUploadRequestBodyParameter(EndpointParameter):
@@ -73,7 +76,7 @@ class FileUploadRequestBodyParameter(EndpointParameter):
             self._request_property.value_type
         )
 
-    def get_default(self) -> AST.Expression:
+    def get_fastapi_marker(self) -> AST.Expression:
         return FastAPI.Body(variable_name=self._parameter_name(), wire_value=self._request_property.name.wire_value)
 
 

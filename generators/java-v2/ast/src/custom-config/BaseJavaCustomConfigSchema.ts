@@ -27,6 +27,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "custom-pager-name": z.string().optional(),
     "default-timeout-in-seconds": z.number().optional(),
+    "gradle-distribution-url": z.string().optional(),
 
     // Deprecated.
     "wrapped-aliases": z.boolean().optional()

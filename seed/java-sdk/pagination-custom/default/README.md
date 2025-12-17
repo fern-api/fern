@@ -167,7 +167,6 @@ SeedPaginationClient client = SeedPaginationClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.pagination.SeedPaginationClient;
 import com.seed.pagination.core.RequestOptions;
@@ -175,7 +174,7 @@ import com.seed.pagination.core.RequestOptions;
 // Client level
 SeedPaginationClient client = SeedPaginationClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -183,7 +182,7 @@ client.users().listUsernamesCustom(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

@@ -98,7 +98,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             formatter: parsed?.formatter ?? "biome",
             generateSubpackageExports: parsed?.generateSubpackageExports ?? false,
             offsetSemantics: parsed?.offsetSemantics ?? "item-index",
-            customPagerName: parsed?.customPagerName
+            customPagerName: parsed?.customPagerName ?? "CustomPager"
         };
 
         if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
@@ -245,7 +245,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 linter: customConfig.linter,
                 generateSubpackageExports: customConfig.generateSubpackageExports ?? false,
                 offsetSemantics: customConfig.offsetSemantics,
-                customPagerName: customConfig.customPagerName
+                customPagerName: customConfig.customPagerName ?? "CustomPager"
             }
         });
         const typescriptProject = await sdkGenerator.generate();

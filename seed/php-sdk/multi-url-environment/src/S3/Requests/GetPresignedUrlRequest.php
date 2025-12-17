@@ -20,8 +20,7 @@ class GetPresignedUrlRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
+    ) {
         $this->s3Key = $values['s3Key'];
     }
 }

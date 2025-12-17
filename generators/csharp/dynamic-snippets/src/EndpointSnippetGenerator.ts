@@ -175,6 +175,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): NamedArgument[] {
         const authArgs: NamedArgument[] = [];
+
+        // Check if the API uses inferred auth by looking for a token endpoint
         if (endpoint.auth != null) {
             if (snippet.auth != null) {
                 authArgs.push(...this.getConstructorAuthArgs({ auth: endpoint.auth, values: snippet.auth }));
@@ -324,8 +326,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
             case "oauth":
                 return values.type === "oauth" ? this.getConstructorOAuthArgs({ auth, values }) : [];
             case "inferred":
-                this.addWarning("The C# SDK Generator does not support Inferred auth scheme yet");
-                return [];
+                return values.type === "inferred" ? this.getConstructorInferredAuthArgs({ auth, values }) : [];
             default:
                 assertNever(auth);
         }
@@ -409,6 +410,41 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 assignment: this.csharp.Literal.string(values.clientSecret)
             }
         ];
+    }
+
+    private getConstructorInferredAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.InferredAuth;
+        values: FernIr.dynamic.InferredAuthValues;
+    }): NamedArgument[] {
+        const args: NamedArgument[] = [];
+
+        // Use parameters from the IR
+        if (auth.parameters != null) {
+            for (const param of auth.parameters) {
+                const wireValue = param.name.wireValue;
+                const value = values.values?.[wireValue];
+
+                args.push({
+                    name: this.context.getParameterName(param.name.name),
+                    assignment: this.context.dynamicLiteralMapper.convert({
+                        typeReference: param.typeReference,
+                        value: value,
+                        fallbackToDefault: wireValue
+                    })
+                });
+            }
+        } else {
+            this.context.errors.add({
+                severity: Severity.Critical,
+                message:
+                    "Inferred auth parameters are not defined in the IR. Please ensure you're using IR version 62.3.0 or later."
+            });
+        }
+
+        return args;
     }
 
     private getConstructorHeaderArgs({

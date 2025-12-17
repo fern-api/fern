@@ -473,13 +473,17 @@ export function ${functionName}(server: MockServer): void {
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
         .mockEndpoint()
-        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
-            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
+            .filter((h) => h.value.jsonExample != null)
+            .map((h) => {
+                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-        })}${example.endpointHeaders.map((h) => {
-            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+            })}${example.endpointHeaders
+            .filter((h) => h.value.jsonExample != null)
+            .map((h) => {
+                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-        })}${
+            })}${
             rawRequestBody
                 ? code`.${mockBodyMethod}(rawRequestBody)
             `
@@ -535,13 +539,17 @@ export function ${functionName}(server: MockServer): void {
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
         .mockEndpoint()
-        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
-            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
+            .filter((h) => h.value.jsonExample != null)
+            .map((h) => {
+                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-        })}${example.endpointHeaders.map((h) => {
-            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+            })}${example.endpointHeaders
+            .filter((h) => h.value.jsonExample != null)
+            .map((h) => {
+                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-        })}${
+            })}${
             rawRequestBody
                 ? code`.${mockBodyMethod}(rawRequestBody)
             `
@@ -1206,13 +1214,17 @@ describe("${serviceName}", () => {
         ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
         server
             .mockEndpoint(${hasPagination ? "{ once: false }" : ""})
-            .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
-                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+            .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
+                .filter((h) => h.value.jsonExample != null)
+                .map((h) => {
+                    return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                     `;
-            })}${example.endpointHeaders.map((h) => {
-                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+                })}${example.endpointHeaders
+                .filter((h) => h.value.jsonExample != null)
+                .map((h) => {
+                    return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                     `;
-            })}${
+                })}${
                 rawRequestBody
                     ? code`.${mockBodyMethod}(rawRequestBody)
                 `
@@ -1308,6 +1320,10 @@ describe("${serviceName}", () => {
                 assertNever(responseType);
         }
         if (endpoint.idempotent) {
+            return false;
+        }
+        // Skip endpoints with custom pagination
+        if (endpoint.pagination?.type === "custom") {
             return false;
         }
         return true;

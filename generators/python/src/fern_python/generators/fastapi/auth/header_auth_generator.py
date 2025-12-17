@@ -13,7 +13,7 @@ class HeaderAuthGenerator(AbstractAuthGenerator):
         self._context = context
 
     def get_dependency(self) -> AST.Expression:
-        return FastAPI.Header(is_optional=False, wire_value=self._http_header.name.wire_value)
+        return FastAPI.Header(wire_value=self._http_header.name.wire_value)
 
     def get_parsed_auth_type(self) -> AST.TypeHint:
         return self._context.pydantic_generator_context.get_type_hint_for_type_reference(

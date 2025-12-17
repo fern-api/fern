@@ -13,7 +13,7 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class UrlsClient 
+class UrlsClient
 {
     /**
      * @var array{
@@ -41,11 +41,10 @@ class UrlsClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -63,7 +62,8 @@ class UrlsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withMixedCase(?array $options = null): string {
+    public function withMixedCase(?array $options = null): string
+    {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -75,15 +75,15 @@ class UrlsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -114,7 +114,8 @@ class UrlsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function noEndingSlash(?array $options = null): string {
+    public function noEndingSlash(?array $options = null): string
+    {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -126,15 +127,15 @@ class UrlsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -165,7 +166,8 @@ class UrlsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withEndingSlash(?array $options = null): string {
+    public function withEndingSlash(?array $options = null): string
+    {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -177,15 +179,15 @@ class UrlsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -216,7 +218,8 @@ class UrlsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function withUnderscores(?array $options = null): string {
+    public function withUnderscores(?array $options = null): string
+    {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -228,15 +231,15 @@ class UrlsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-            } catch (JsonException $e) {
-                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

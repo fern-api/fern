@@ -159,7 +159,6 @@ SeedClientSideParamsClient client = SeedClientSideParamsClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.clientSideParams.SeedClientSideParamsClient;
 import com.seed.clientSideParams.core.RequestOptions;
@@ -167,7 +166,7 @@ import com.seed.clientSideParams.core.RequestOptions;
 // Client level
 SeedClientSideParamsClient client = SeedClientSideParamsClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -175,7 +174,7 @@ client.service().searchResources(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

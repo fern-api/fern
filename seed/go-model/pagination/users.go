@@ -616,6 +616,82 @@ func (l *ListUsersPaginationResponse) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type ListUsersOptionalDataPaginationResponse struct {
+	HasNextPage *bool `json:"hasNextPage,omitempty" url:"hasNextPage,omitempty"`
+	Page        *Page `json:"page,omitempty" url:"page,omitempty"`
+	// The totall number of /users
+	TotalCount int     `json:"total_count" url:"total_count"`
+	Data       []*User `json:"data,omitempty" url:"data,omitempty"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) GetHasNextPage() *bool {
+	if l == nil {
+		return nil
+	}
+	return l.HasNextPage
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) GetPage() *Page {
+	if l == nil {
+		return nil
+	}
+	return l.Page
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) GetTotalCount() int {
+	if l == nil {
+		return 0
+	}
+	return l.TotalCount
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) GetData() []*User {
+	if l == nil {
+		return nil
+	}
+	return l.Data
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) GetExtraProperties() map[string]any {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ListUsersOptionalDataPaginationResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersOptionalDataPaginationResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUsersOptionalDataPaginationResponse) String() string {
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
 type ListUsersMixedTypePaginationResponse struct {
 	Next string  `json:"next" url:"next"`
 	Data []*User `json:"data" url:"data"`

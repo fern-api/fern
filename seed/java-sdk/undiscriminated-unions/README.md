@@ -145,7 +145,6 @@ SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;
 import com.seed.undiscriminatedUnions.core.RequestOptions;
@@ -153,7 +152,7 @@ import com.seed.undiscriminatedUnions.core.RequestOptions;
 // Client level
 SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -161,7 +160,7 @@ client.union().get(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

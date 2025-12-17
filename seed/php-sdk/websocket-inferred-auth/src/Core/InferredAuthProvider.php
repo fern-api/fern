@@ -9,7 +9,7 @@ use Seed\Auth\Requests\GetTokenRequest;
  * The InferredAuthProvider retrieves an access token from the configured token endpoint.
  * The access token is then used as the bearer token in every authenticated request.
  */
-class InferredAuthProvider 
+class InferredAuthProvider
 {
     /**
      * @var AuthClient $authClient
@@ -30,11 +30,10 @@ class InferredAuthProvider
      * @param AuthClient $authClient The client used to retrieve the access token.
      * @param array<mixed> $options The options containing credentials for the token endpoint.
      */
-    function __construct(
+    public function __construct(
         AuthClient $authClient,
         array $options,
-    )
-    {
+    ) {
         $this->authClient = $authClient;
         $this->options = $options;
         $this->accessToken = null;
@@ -45,8 +44,9 @@ class InferredAuthProvider
      *
      * @return string
      */
-    public function getToken(): string {
-        if ($this->accessToken !== null){
+    public function getToken(): string
+    {
+        if ($this->accessToken !== null) {
             return $this->accessToken;
         }
         return $this->refresh();
@@ -57,7 +57,8 @@ class InferredAuthProvider
      *
      * @return array<string, string>
      */
-    public function getAuthHeaders(): array {
+    public function getAuthHeaders(): array
+    {
         $token = $this->getToken();
         return [
             'Authorization' => "Bearer " . $token,
@@ -69,7 +70,8 @@ class InferredAuthProvider
      *
      * @return string
      */
-    private function refresh(): string {
+    private function refresh(): string
+    {
         /** @var array{xApiKey: string, clientId: string, clientSecret: string, audience: 'https://api.example.com', grantType: 'client_credentials', scope?: string|null} $values */
         $values = [
             'xApiKey' => $this->options['xApiKey'] ?? '',

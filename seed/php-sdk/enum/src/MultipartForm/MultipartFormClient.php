@@ -13,7 +13,7 @@ use Seed\Core\Client\HttpMethod;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class MultipartFormClient 
+class MultipartFormClient
 {
     /**
      * @var array{
@@ -41,11 +41,10 @@ class MultipartFormClient
      *   headers?: array<string, string>,
      * } $options
      */
-    function __construct(
+    public function __construct(
         RawClient $client,
         ?array $options = null,
-    )
-    {
+    ) {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -62,18 +61,19 @@ class MultipartFormClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function multipartForm(MultipartFormRequest $request, ?array $options = null): void {
+    public function multipartForm(MultipartFormRequest $request, ?array $options = null): void
+    {
         $options = array_merge($this->options, $options ?? []);
         $body = new MultipartFormData();
         $body->add(name: 'color', value: $request->color);
-        if ($request->maybeColor != null){
+        if ($request->maybeColor != null) {
             $body->add(name: 'maybeColor', value: $request->maybeColor);
         }
-        foreach ($request->colorList as $element){
+        foreach ($request->colorList as $element) {
             $body->add(name: 'colorList', value: $element);
         }
-        if ($request->maybeColorList != null){
-            foreach ($request->maybeColorList as $element){
+        if ($request->maybeColorList != null) {
+            foreach ($request->maybeColorList as $element) {
                 $body->add(name: 'maybeColorList', value: $element);
             }
         }
@@ -88,12 +88,12 @@ class MultipartFormClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400){
+            if ($statusCode >= 200 && $statusCode < 400) {
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null){
+            if ($response === null) {
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
