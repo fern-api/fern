@@ -1,3 +1,12 @@
+- version: 3.25.1
+  changelogEntry:
+    - summary: |
+        Fix form-urlencoded request body handling to properly serialize request objects using
+        Jackson's convertValue, preserving wire names from @JsonProperty annotations.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 61
+
 - version: 3.25.0
   changelogEntry:
     - summary: |
