@@ -20,7 +20,7 @@ client = SeedValidation(
 client.create(
     decimal=2.2,
     even=100,
-    name="line1\nline2\n",
+    name="fern",
     shape="SQUARE",
 )
 
@@ -103,7 +103,7 @@ client = SeedValidation(
 client.get(
     decimal=2.2,
     even=100,
-    name="line1\nline2\n",
+    name="fern",
 )
 
 ```

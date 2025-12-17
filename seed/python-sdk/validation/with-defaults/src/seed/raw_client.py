@@ -24,7 +24,7 @@ class RawSeedValidation:
         *,
         decimal: float = 1.1,
         even: int = 42,
-        name: str = "line1\nline2\n",
+        name: str = "fern",
         shape: Shape,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Type]:
@@ -78,7 +78,7 @@ class RawSeedValidation:
         *,
         decimal: float = 1.1,
         even: int = 42,
-        name: str = "line1\nline2\n",
+        name: str = "fern",
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Type]:
         """
@@ -131,7 +131,7 @@ class AsyncRawSeedValidation:
         *,
         decimal: float = 1.1,
         even: int = 42,
-        name: str = "line1\nline2\n",
+        name: str = "fern",
         shape: Shape,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Type]:
@@ -185,7 +185,7 @@ class AsyncRawSeedValidation:
         *,
         decimal: float = 1.1,
         even: int = 42,
-        name: str = "line1\nline2\n",
+        name: str = "fern",
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Type]:
         """

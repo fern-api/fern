@@ -18,14 +18,14 @@ class Type(UniversalBaseModel):
     Type(
         decimal=1.1,
         even=2,
-        name="example\ntext\n",
+        name="rules",
         shape="SQUARE",
     )
     """
 
     decimal: float = 1.1
     even: int = 42
-    name: str = "line1\nline2\n"
+    name: str = "fern"
     shape: Shape
 
     if IS_PYDANTIC_V2:
