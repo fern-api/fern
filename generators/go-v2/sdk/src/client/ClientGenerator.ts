@@ -9,6 +9,7 @@ import {
     HeaderAuthScheme,
     HttpEndpoint,
     HttpService,
+    InferredAuthScheme,
     Name,
     OAuthScheme,
     RequestProperty,
@@ -231,6 +232,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         this.writeHeaderEnvironmentVariables({ writer });
         if (this.isRootClient) {
             this.writeOAuthTokenFetching({ writer });
+            this.writeInferredAuthTokenFetching({ writer });
         }
     }
 
@@ -264,6 +266,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     break;
                 case "oauth":
                     this.writeOAuthEnvironmentVariables({ writer, scheme });
+                    break;
+                case "inferred":
+                    this.writeInferredAuthEnvironmentVariables({ writer, scheme });
                     break;
             }
         }
@@ -603,6 +608,221 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             }
         }
         return undefined;
+    }
+
+    private writeInferredAuthEnvironmentVariables({
+        writer,
+        scheme
+    }: {
+        writer: go.Writer;
+        scheme: InferredAuthScheme;
+    }): void {
+        // Inferred auth uses the token endpoint parameters for environment variables
+        // For now, we'll use simple naming conventions for common parameters
+        const tokenEndpoint = this.getInferredAuthTokenEndpoint(scheme);
+        if (tokenEndpoint == null) {
+            return;
+        }
+
+        // Check for common token endpoint parameters and set environment variables
+        const requestProperties = this.getInferredAuthTokenRequestProperties(tokenEndpoint);
+        for (const property of requestProperties) {
+            const fieldName = this.toPascalCase(property.name.name.originalName);
+            const envVarName = `FERN_${fieldName.toUpperCase()}`;
+
+            this.writeEnvConditional({
+                writer,
+                propertyReference: go.selector({ on: go.codeblock("options"), selector: go.codeblock(fieldName) }),
+                env: envVarName
+            });
+        }
+    }
+
+    private writeInferredAuthTokenFetching({ writer }: { writer: go.Writer }): void {
+        const inferredAuthScheme = this.getInferredAuthScheme();
+        if (inferredAuthScheme == null) {
+            return;
+        }
+
+        const tokenEndpoint = this.getInferredAuthTokenEndpoint(inferredAuthScheme);
+        if (tokenEndpoint == null) {
+            return;
+        }
+
+        const authServiceFernFilepath = this.getInferredAuthServiceFernFilepath(inferredAuthScheme);
+        if (authServiceFernFilepath == null) {
+            return;
+        }
+
+        // Create the InferredAuthProvider using callback pattern like OAuth
+        writer.writeNode(
+            go.codeblock((w) => {
+                // Get request properties for the constructor
+                const requestProperties = this.getInferredAuthTokenRequestProperties(tokenEndpoint);
+
+                // Create the InferredAuthProvider (no auth client dependency)
+                w.write("inferredAuthProvider := ");
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "NewInferredAuthProvider",
+                            importPath: this.context.getRootImportPath() + "/internal"
+                        }),
+                        arguments_: [
+                            // Add request properties as arguments
+                            ...requestProperties.map((property) => {
+                                const fieldName = this.toPascalCase(property.name.name.originalName);
+                                return go.selector({ on: go.codeblock("options"), selector: go.codeblock(fieldName) });
+                            })
+                        ]
+                    })
+                );
+                w.newLine();
+
+                // Clone options for the auth client to avoid infinite recursion
+                w.writeLine("authOptions := *options");
+
+                // Create the auth client
+                const authServiceSubpackage = undefined; // TODO: Fix subpackage lookup
+                const authClientImportPath = this.context.getClientFileLocation({
+                    fernFilepath: authServiceFernFilepath,
+                    subpackage: authServiceSubpackage
+                }).importPath;
+
+                w.write("authClient := ");
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "NewClient",
+                            importPath: authClientImportPath
+                        }),
+                        arguments_: [go.codeblock("&authOptions")]
+                    })
+                );
+                w.newLine();
+
+                // Set up the header getter function using callback pattern (like OAuth)
+                w.write("options.SetHeaderGetter(func() (");
+                w.writeNode(
+                    go.typeReference({
+                        name: "Header",
+                        importPath: "net/http"
+                    })
+                );
+                w.writeLine(", error) {");
+                w.indent();
+                w.writeLine("return inferredAuthProvider.GetOrFetch(func() (string, error) {");
+                w.indent();
+
+                // Fetch a new token from the auth endpoint (same as OAuth pattern)
+                const methodName = this.toPascalCase(tokenEndpoint.name.originalName);
+
+                // Get the request type reference from the endpoint
+                const serviceId = inferredAuthScheme.tokenEndpoint.endpoint.serviceId;
+                const requestWrapperName =
+                    tokenEndpoint.sdkRequest?.shape.type === "wrapper"
+                        ? tokenEndpoint.sdkRequest.shape.wrapperName
+                        : tokenEndpoint.sdkRequest?.requestParameterName;
+                const requestTypeRef =
+                    requestWrapperName != null
+                        ? this.context.getRequestWrapperTypeReference(serviceId, requestWrapperName)
+                        : go.typeReference({ name: "GetTokenRequest", importPath: this.context.getRootImportPath() });
+
+                w.write(`response, err := authClient.${methodName}(`);
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "Background",
+                            importPath: "context"
+                        }),
+                        arguments_: []
+                    })
+                );
+                w.write(", &");
+                w.writeNode(requestTypeRef);
+                w.writeLine("{");
+                w.indent();
+
+                // Set the request fields
+                for (const property of requestProperties) {
+                    const fieldName = this.toPascalCase(property.name.name.originalName);
+                    const paramFieldName = this.toPascalCase(property.name.name.originalName);
+                    w.writeLine(`${fieldName}: options.${paramFieldName},`);
+                }
+
+                w.dedent();
+                w.writeLine("})");
+                w.writeLine("if err != nil {");
+                w.indent();
+                w.writeLine('return "", err');
+                w.dedent();
+                w.writeLine("}");
+
+                // Direct property access (like OAuth implementation)
+                // Extract the access token from the response - find the authenticated request header property
+                for (const authHeader of inferredAuthScheme.tokenEndpoint.authenticatedRequestHeaders) {
+                    if (authHeader.responseProperty) {
+                        const propertyName = this.getResponsePropertyFieldName(authHeader.responseProperty);
+                        w.writeLine(`return response.${propertyName}, nil`);
+                        break;
+                    }
+                }
+
+                w.dedent();
+                w.writeLine("})");
+                w.dedent();
+                w.writeLine("})");
+            })
+        );
+    }
+
+    private getInferredAuthScheme(): InferredAuthScheme | undefined {
+        if (this.context.ir.auth == null) {
+            return undefined;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "inferred") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
+    private getInferredAuthTokenEndpoint(scheme: InferredAuthScheme): HttpEndpoint | undefined {
+        const endpointReference = scheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[endpointReference.serviceId];
+        if (service == null) {
+            return undefined;
+        }
+        return service.endpoints.find((ep) => ep.id === endpointReference.endpointId);
+    }
+
+    private getInferredAuthServiceFernFilepath(scheme: InferredAuthScheme): FernFilepath | undefined {
+        const endpointReference = scheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[endpointReference.serviceId];
+        if (service != null) {
+            return service.name.fernFilepath;
+        }
+        return undefined;
+    }
+
+    private getInferredAuthTokenRequestProperties(endpoint: HttpEndpoint): any[] {
+        // Extract request properties from the endpoint
+        // This is a simplified version - in a real implementation we'd need to handle
+        // headers, query params, and body properties properly
+        if (endpoint.requestBody?.type === "inlinedRequestBody") {
+            return endpoint.requestBody.properties || [];
+        }
+        return [];
+    }
+
+    private getResponsePropertyFieldName(responseProperty: ResponseProperty): string {
+        // Convert the response property to a Go field name (PascalCase)
+        return this.toPascalCase(responseProperty.property.name.name.originalName);
+    }
+
+    private toPascalCase(str: string): string {
+        return str.charAt(0).toUpperCase() + str.slice(1).replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
     }
 
     private writeEnvConditional({

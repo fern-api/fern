@@ -3,6 +3,8 @@
 package client
 
 import (
+	context "context"
+	fern "github.com/inferred-auth-implicit/fern"
 	auth "github.com/inferred-auth-implicit/fern/auth"
 	core "github.com/inferred-auth-implicit/fern/core"
 	internal "github.com/inferred-auth-implicit/fern/internal"
@@ -10,6 +12,8 @@ import (
 	client "github.com/inferred-auth-implicit/fern/nestednoauth/client"
 	option "github.com/inferred-auth-implicit/fern/option"
 	simple "github.com/inferred-auth-implicit/fern/simple"
+	http "net/http"
+	os "os"
 )
 
 type Client struct {
@@ -25,6 +29,47 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	if options.ClientId == "" {
+		options.ClientId = os.Getenv("FERN_CLIENTID")
+	}
+	if options.ClientSecret == "" {
+		options.ClientSecret = os.Getenv("FERN_CLIENTSECRET")
+	}
+	if options.Audience == "" {
+		options.Audience = os.Getenv("FERN_AUDIENCE")
+	}
+	if options.GrantType == "" {
+		options.GrantType = os.Getenv("FERN_GRANTTYPE")
+	}
+	if options.Scope == "" {
+		options.Scope = os.Getenv("FERN_SCOPE")
+	}
+	inferredAuthProvider := internal.NewInferredAuthProvider(
+		options.ClientId,
+		options.ClientSecret,
+		options.Audience,
+		options.GrantType,
+		options.Scope,
+	)
+	authOptions := *options
+	authClient := auth.NewClient(
+		&authOptions,
+	)
+	options.SetHeaderGetter(func() (http.Header, error) {
+		return inferredAuthProvider.GetOrFetch(func() (string, error) {
+			response, err := authClient.GetTokenWithClientCredentials(context.Background(), &fern.GetTokenRequest{
+				ClientId:     options.ClientId,
+				ClientSecret: options.ClientSecret,
+				Audience:     options.Audience,
+				GrantType:    options.GrantType,
+				Scope:        options.Scope,
+			})
+			if err != nil {
+				return "", err
+			}
+			return response.AccessToken, nil
+		})
+	})
 	return &Client{
 		Auth:         auth.NewClient(options),
 		NestedNoAuth: client.NewClient(options),

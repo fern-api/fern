@@ -7,6 +7,7 @@ import (
 	core "github.com/inferred-auth-implicit-no-expiry/fern/core"
 	internal "github.com/inferred-auth-implicit-no-expiry/fern/internal"
 	option "github.com/inferred-auth-implicit-no-expiry/fern/option"
+	os "os"
 )
 
 type Client struct {
@@ -18,6 +19,21 @@ type Client struct {
 }
 
 func NewClient(options *core.RequestOptions) *Client {
+	if options.ClientId == "" {
+		options.ClientId = os.Getenv("FERN_CLIENTID")
+	}
+	if options.ClientSecret == "" {
+		options.ClientSecret = os.Getenv("FERN_CLIENTSECRET")
+	}
+	if options.Audience == "" {
+		options.Audience = os.Getenv("FERN_AUDIENCE")
+	}
+	if options.GrantType == "" {
+		options.GrantType = os.Getenv("FERN_GRANTTYPE")
+	}
+	if options.Scope == "" {
+		options.Scope = os.Getenv("FERN_SCOPE")
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,
