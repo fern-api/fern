@@ -86,7 +86,7 @@ jobs:
 
             **Instructions:**
             1. Analyze the vulnerability and understand its impact
-            2. Update the affected dependency to a secure version
+            2. Update the affected dependency to a secure version. If updating a poetry lock file, use the same version of poetry used to generate the existing one.
             3. Ideally resolve this without using an override - prefer updating the dependency directly
             4. If an override is absolutely necessary, document why in the PR description
             5. Run tests to ensure the update doesn't break anything

@@ -26,7 +26,7 @@ inputs:
       **Instructions:**
       1. Analyze each vulnerability and understand its impact
       2. For OS-level vulnerabilities, consider updating the base image or specific packages
-      3. For Python dependencies, update the affected packages in pyproject.toml/poetry.lock
+      3. For Python dependencies, update the affected packages in pyproject.toml/poetry.lock. If updating a poetry lock file, use the same version of poetry used to generate the existing one.
       4. Run tests to ensure the updates don't break anything
       5. Build the container locally and re-scan to confirm your changes actually address the CVEs.
       6. Push your fix to this PR branch and tag @davidkonigsberg for review
