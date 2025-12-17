@@ -17,7 +17,8 @@ export function buildUrl({
     omitUndefined,
     parameterNaming,
     getReferenceToPathParameterVariableFromRequest,
-    forceInlinePathParameters = false
+    forceInlinePathParameters = false,
+    requestOptionsReference
 }: {
     endpoint: {
         sdkRequest: SdkRequest | undefined;
@@ -33,6 +34,7 @@ export function buildUrl({
     omitUndefined: boolean;
     getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
     forceInlinePathParameters?: boolean;
+    requestOptionsReference?: ts.Expression;
 }): ts.Expression | undefined {
     if (endpoint.allPathParameters.length === 0) {
         if (endpoint.fullPath.head.length === 0) {
@@ -57,7 +59,8 @@ export function buildUrl({
                 parameterNaming,
                 shouldInlinePathParameters:
                     forceInlinePathParameters || context.requestWrapper.shouldInlinePathParameters(endpoint.sdkRequest),
-                getReferenceToPathParameterVariableFromRequest
+                getReferenceToPathParameterVariableFromRequest,
+                requestOptionsReference
             });
 
             if (includeSerdeLayer && pathParameter.valueType.type === "named") {
@@ -91,7 +94,8 @@ function getReferenceToPathParameter({
     retainOriginalCasing,
     shouldInlinePathParameters,
     parameterNaming,
-    getReferenceToPathParameterVariableFromRequest
+    getReferenceToPathParameterVariableFromRequest,
+    requestOptionsReference
 }: {
     pathParameter: PathParameter;
     generatedClientClass: GeneratedSdkClientClassImpl;
@@ -99,8 +103,15 @@ function getReferenceToPathParameter({
     shouldInlinePathParameters: boolean;
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     getReferenceToPathParameterVariableFromRequest: GetReferenceToPathParameterVariableFromRequest;
+    requestOptionsReference?: ts.Expression;
 }): ts.Expression {
     if (pathParameter.variable != null) {
+        if (requestOptionsReference != null) {
+            return generatedClientClass.getReferenceToVariableWithRequestOptions(
+                pathParameter.variable,
+                requestOptionsReference
+            );
+        }
         return generatedClientClass.getReferenceToVariable(pathParameter.variable);
     }
     switch (pathParameter.location) {

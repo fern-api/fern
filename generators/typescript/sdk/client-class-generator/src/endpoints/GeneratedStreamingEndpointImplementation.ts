@@ -12,7 +12,8 @@ import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
-    getTimeoutExpression
+    getTimeoutExpression,
+    REQUEST_OPTIONS_PARAMETER_NAME
 } from "./utils/requestOptionsParameter";
 
 export declare namespace GeneratedStreamingEndpointImplementation {
@@ -230,7 +231,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
                 return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
             },
-            parameterNaming: this.parameterNaming
+            parameterNaming: this.parameterNaming,
+            requestOptionsReference: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME)
         });
         if (url != null) {
             return context.coreUtilities.urlUtils.join._invoke([baseUrl, url]);
