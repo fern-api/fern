@@ -4,11 +4,11 @@ import {
     visitAllDefinitionFiles,
     visitAllPackageMarkers
 } from "@fern-api/api-workspace-commons";
+import { CasingsGenerator } from "@fern-api/casings-generator";
 import { HttpEndpointReferenceParser } from "@fern-api/fern-definition-schema";
 import { HttpMethod } from "@fern-api/ir-sdk";
 
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
-import { CASINGS_GENERATOR } from "../utils/getAllPropertiesForObject";
 import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointName";
 import { ResolvedEndpoint } from "./ResolvedEndpoint";
 
@@ -36,17 +36,19 @@ export class EndpointResolverImpl implements EndpointResolver {
 
     public resolveEndpointByMethodAndPath({
         method,
-        path
+        path,
+        casingsGenerator
     }: {
         method: HttpMethod;
         path: string;
+        casingsGenerator: CasingsGenerator;
     }): ResolvedEndpoint | undefined {
         let result: ResolvedEndpoint | undefined = undefined;
         visitAllDefinitionFiles(this.workspace, (relativeFilepath, file, metadata) => {
             const context = constructFernFileContext({
                 relativeFilepath,
                 definitionFile: file,
-                casingsGenerator: CASINGS_GENERATOR,
+                casingsGenerator,
                 rootApiFile: this.workspace.definition.rootApiFile.contents,
                 defaultUrl: metadata.defaultUrl
             });
@@ -64,7 +66,7 @@ export class EndpointResolverImpl implements EndpointResolver {
             const context = constructFernFileContext({
                 relativeFilepath,
                 definitionFile: packageMarker,
-                casingsGenerator: CASINGS_GENERATOR,
+                casingsGenerator,
                 rootApiFile: this.workspace.definition.rootApiFile.contents
             });
             for (const [endpointId, endpointDeclaration] of Object.entries(packageMarker.service?.endpoints ?? {})) {
@@ -90,7 +92,10 @@ export class EndpointResolverImpl implements EndpointResolver {
         const referenceParser = new HttpEndpointReferenceParser();
         const parsedEndpointReference = referenceParser.tryParse(endpoint);
         if (parsedEndpointReference != null) {
-            return this.resolveEndpointByMethodAndPath(parsedEndpointReference);
+            return this.resolveEndpointByMethodAndPath({
+                ...parsedEndpointReference,
+                casingsGenerator: file.casingsGenerator
+            });
         }
 
         const maybeDeclaration = this.getDeclarationOfEndpoint({
