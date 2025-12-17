@@ -149,6 +149,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const service = this.context.ir.services[tokenEndpointReference.serviceId];
         const subpackageId = service?.name.fernFilepath.packagePath[0]?.pascalCase.safeName ?? "Auth";
 
+        // Get the token endpoint to check its baseUrl
+        const tokenEndpoint = service?.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
+        const tokenEndpointBaseUrlId = tokenEndpoint?.baseUrl;
+
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
 
@@ -161,13 +165,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.indent();
 
             // Resolve base URL with proper fallback to default environment
+            // For multi-URL environments, use the token endpoint's baseUrl if specified,
+            // otherwise fall back to the first base URL
             if (isMultiUrl) {
                 const multiUrlEnvs = this.context.getMultipleBaseUrlsEnvironments();
-                const defaultBaseUrlId = multiUrlEnvs?.baseUrls[0]?.id;
-                const defaultBaseUrlName =
-                    defaultBaseUrlId != null ? this.context.getBaseUrlName(defaultBaseUrlId) : undefined;
-                if (defaultBaseUrlName != null) {
-                    writer.writeLine(`base_url: base_url || environment&.dig(:${defaultBaseUrlName}),`);
+                // Prefer the token endpoint's baseUrl if specified, otherwise use the first base URL
+                const authBaseUrlId = tokenEndpointBaseUrlId ?? multiUrlEnvs?.baseUrls[0]?.id;
+                const authBaseUrlName = authBaseUrlId != null ? this.context.getBaseUrlName(authBaseUrlId) : undefined;
+                if (authBaseUrlName != null) {
+                    writer.writeLine(`base_url: base_url || environment&.dig(:${authBaseUrlName}),`);
                 } else {
                     writer.writeLine(`base_url: base_url,`);
                 }
