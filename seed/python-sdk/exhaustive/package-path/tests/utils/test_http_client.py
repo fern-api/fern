@@ -91,17 +91,30 @@ def test_get_none_request_body() -> None:
 
 
 def test_get_empty_json_request_body() -> None:
+    """Test that implicit empty bodies (json=None) are collapsed to None."""
     unrelated_request_options: RequestOptions = {"max_retries": 3}
     json_body, data_body = get_request_body(json=None, data=None, request_options=unrelated_request_options, omit=None)
     assert json_body is None
     assert data_body is None
 
-    json_body_extras, data_body_extras = get_request_body(
-        json={}, data=None, request_options=unrelated_request_options, omit=None
-    )
 
-    assert json_body_extras is None
-    assert data_body_extras is None
+def test_explicit_empty_json_body_is_preserved() -> None:
+    """Test that explicit empty bodies (json={}) are preserved and sent as {}.
+
+    This is important for endpoints where the request body is required but all
+    fields are optional. The server expects valid JSON ({}) not an empty body.
+    """
+    unrelated_request_options: RequestOptions = {"max_retries": 3}
+
+    # Explicit json={} should be preserved
+    json_body, data_body = get_request_body(json={}, data=None, request_options=unrelated_request_options, omit=None)
+    assert json_body == {}
+    assert data_body is None
+
+    # Explicit data={} should also be preserved
+    json_body2, data_body2 = get_request_body(json=None, data={}, request_options=unrelated_request_options, omit=None)
+    assert json_body2 is None
+    assert data_body2 == {}
 
 
 def test_json_body_preserves_none_values() -> None:
