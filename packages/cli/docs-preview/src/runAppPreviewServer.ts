@@ -158,17 +158,7 @@ class SlugChangeTracker {
             const oldSlug = this.pageSlugMap.get(pageId);
 
             if (oldSlug && oldSlug !== newSlug) {
-                this.context.logger.debug(
-                    `[SlugTracker] SLUG CHANGE: ${pageId} changed from "${oldSlug}" to "${newSlug}"`
-                );
                 changes.push({ oldSlug, newSlug });
-            }
-        }
-
-        // Also check for pages that were removed from navigation (though this shouldn't happen in normal cases)
-        for (const [pageId, oldSlug] of this.pageSlugMap.entries()) {
-            if (!newSlugMap.has(pageId)) {
-                this.context.logger.debug(`[SlugTracker] PAGE REMOVED: ${pageId} (was "${oldSlug}")`);
             }
         }
 
@@ -187,14 +177,9 @@ class SlugChangeTracker {
                 docsDefinition.config.root
             );
             this.pageSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
-            this.context.logger.debug(`[SlugTracker] INITIALIZED with ${this.pageSlugMap.size} slug mappings:`);
-            for (const [pageId, slug] of this.pageSlugMap.entries()) {
-                this.context.logger.debug(`[SlugTracker]   ${pageId} -> ${slug}`);
-            }
         } else {
             // Initialize empty map, will be populated when navigation is ready during change detection
             this.pageSlugMap = new Map();
-            this.context.logger.debug(`[SlugTracker] INITIALIZED with empty slug map (no navigation root)`);
         }
     }
 }
@@ -797,8 +782,8 @@ export async function runAppPreviewServer({
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
-        // Ignore changes to .fern/app-preview/ directory (contains debug logs and other generated files)
-        if (targetPath.includes(".fern/app-preview/") || targetPath.includes(".fern\\app-preview\\")) {
+        // Ignore changes to .fern/logs/ directory (contains debug logs)
+        if (targetPath.includes(".fern/logs/") || targetPath.includes(".fern\\logs\\")) {
             return;
         }
 

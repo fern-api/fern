@@ -301,6 +301,8 @@ export class DocsDefinitionResolver {
         // Also collects all referenced markdown files to store in jsFiles
         this.taskContext.logger.debug("Replacing referenced markdown and code files...");
         const refStart = performance.now();
+        // Use a Set for O(1) deduplication instead of O(N) array scan
+        const seenReferencedFiles = new Set<AbsoluteFilePath>();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             // First replace markdown includes, then code includes (order matters: snippets can contain code)
             const result = await replaceReferencedMarkdown({
@@ -309,9 +311,10 @@ export class DocsDefinitionResolver {
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
-            // Collect referenced markdown files (deduplicated by absolute path)
+            // Collect referenced markdown files (deduplicated by absolute path using Set for O(1) lookup)
             for (const refFile of result.referencedFiles) {
-                if (!this.referencedMarkdownFiles.some((f) => f.absoluteFilePath === refFile.absoluteFilePath)) {
+                if (!seenReferencedFiles.has(refFile.absoluteFilePath)) {
+                    seenReferencedFiles.add(refFile.absoluteFilePath);
                     this.referencedMarkdownFiles.push(refFile);
                 }
             }
