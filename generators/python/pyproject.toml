@@ -27,7 +27,7 @@ snapshottest = "^0.6.0"
 setuptools = "^80.9.0"
 fastapi = "^0.124.0"
 httpx = "^0.27.0"
-filelock = {version = ">=3.20.1", markers = "python_version >= \"3.10\""}
+filelock = {version = ">=3.20.1", python = ">=3.10"}
 
 [[tool.poetry.source]]
 name = "fern-prod"
