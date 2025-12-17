@@ -122,6 +122,9 @@ public interface ICustomConfig {
     @JsonProperty("gradle-distribution-url")
     Optional<String> gradleDistributionUrl();
 
+    @JsonProperty("gradle-plugin-management")
+    Optional<String> gradlePluginManagement();
+
     enum PackageLayout {
         NESTED("nested"),
         FLAT("flat");
