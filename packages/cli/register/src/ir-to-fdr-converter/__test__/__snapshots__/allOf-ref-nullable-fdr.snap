@@ -1,0 +1,247 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_customer",
+    ],
+    "types": [
+      "CustomerInfo",
+      "GetCustomerResponse",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {
+    "subpackage_customer": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "authV2": undefined,
+          "availability": undefined,
+          "defaultEnvironment": "https://api.example.com/v1",
+          "description": "Demonstrates allOf with single $ref and nullable pattern",
+          "environments": [
+            {
+              "baseUrl": "https://api.example.com/v1",
+              "id": "https://api.example.com/v1",
+            },
+          ],
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": undefined,
+              "path": "/customer",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": undefined,
+              "requestBodyV3": undefined,
+              "responseBody": {
+                "customer": {
+                  "email": "string",
+                  "id": "string",
+                  "name": "string",
+                },
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "customer": {
+                    "email": "string",
+                    "id": "string",
+                    "name": "string",
+                  },
+                },
+              },
+              "responseStatusCode": 200,
+            },
+          ],
+          "headers": [],
+          "id": "getCustomer",
+          "includeInApiExplorer": undefined,
+          "method": "GET",
+          "multiAuth": undefined,
+          "name": "Get customer information",
+          "originalEndpointId": "endpoint_customer.getCustomer",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/customer",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "protocol": {
+            "type": "rest",
+          },
+          "queryParameters": [],
+          "request": undefined,
+          "requestsV2": {
+            "requests": undefined,
+          },
+          "response": {
+            "description": "Success",
+            "isWildcard": undefined,
+            "statusCode": 200,
+            "type": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "GetCustomerResponse",
+              },
+            },
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "description": "Success",
+                "isWildcard": undefined,
+                "statusCode": 200,
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "GetCustomerResponse",
+                  },
+                },
+              },
+            ],
+          },
+          "slug": undefined,
+        },
+      ],
+      "name": "customer",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_customer",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "CustomerInfo": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "CustomerInfo",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "email",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "GetCustomerResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "GetCustomerResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "The object representing the customer, will be null on the first purchase.",
+            "key": "customer",
+            "propertyAccess": undefined,
+            "valueType": {
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "CustomerInfo",
+              },
+              "type": "nullable",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
