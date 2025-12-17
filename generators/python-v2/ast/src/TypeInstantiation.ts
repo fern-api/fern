@@ -283,9 +283,13 @@ export class TypeInstantiation extends AstNode {
             case "date":
                 writer.write(`date.fromisoformat("${this.internalType.value}")`);
                 break;
-            case "datetime":
-                writer.write(`datetime.fromisoformat("${this.internalType.value}")`);
+            case "datetime": {
+                // Convert 'Z' suffix to '+00:00' for Python 3.8 compatibility
+                // datetime.fromisoformat() doesn't support 'Z' until Python 3.11
+                const datetimeValue = this.internalType.value.replace(/Z$/, "+00:00");
+                writer.write(`datetime.fromisoformat("${datetimeValue}")`);
                 break;
+            }
             case "bytes":
                 writer.write(`b"${this.internalType.value}"`);
                 break;

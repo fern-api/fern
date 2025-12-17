@@ -302,7 +302,15 @@ export class WireTestGenerator {
 
             // Generate the API call AST directly
             const apiCallAst = this.generateApiCallAst(endpoint, example);
-            statements.push(apiCallAst);
+
+            // For streaming responses (fileDownload, bytes, streaming, streamParameter),
+            // we need to consume the iterator to actually trigger the HTTP request
+            if (this.isStreamingResponse(endpoint)) {
+                // Wrap in list() to consume the generator and trigger the HTTP request
+                statements.push(python.codeBlock(`list(${apiCallAst.toString()})`));
+            } else {
+                statements.push(apiCallAst);
+            }
 
             // Verify request count using test ID for filtering
             statements.push(
@@ -323,6 +331,21 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Checks if an endpoint returns a streaming response that needs to be consumed.
+     * Streaming responses return generators/iterators, which don't make the HTTP
+     * request until iterated.
+     */
+    private isStreamingResponse(endpoint: HttpEndpoint): boolean {
+        const responseBody = endpoint.response?.body;
+        if (!responseBody) {
+            return false;
+        }
+        // These response types return iterators that need to be consumed
+        const streamingTypes = ["fileDownload", "bytes", "streaming", "streamParameter"];
+        return streamingTypes.includes(responseBody.type);
     }
 
     /**
@@ -500,10 +523,21 @@ export class WireTestGenerator {
             basePath = "/" + basePath;
         }
 
+        // Store the full path with fragment for WireMock mapping lookup
+        const fullPathWithFragment = basePath;
+
+        // Strip URL fragment - fragments are never sent to the server in HTTP requests
+        // e.g., "/oauth2/token#refresh" -> "/oauth2/token"
+        const fragmentIndex = basePath.indexOf("#");
+        if (fragmentIndex !== -1) {
+            basePath = basePath.substring(0, fragmentIndex);
+        }
+
         // Substitute path parameters with actual values from WireMock mapping
+        // Use the full path (with fragment) to look up the mapping, since that's how mappings are keyed
         const mappingKey = this.wiremockMappingKey({
             requestMethod: endpoint.method,
-            requestUrlPathTemplate: basePath
+            requestUrlPathTemplate: fullPathWithFragment
         });
 
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
