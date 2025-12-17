@@ -44,11 +44,16 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
         fern_filepath: ir_types.FernFilepath,
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         parts: Tuple[Filepath.DirectoryFilepathPart, ...] = ()
+        # Filter out empty name parts from package_path (which become "_" or empty string)
+        # These create invalid import paths like "._.types"
         for fern_filepath_part in fern_filepath.package_path:
-            parts += self._get_directories_for_fern_filepath_part(
-                fern_filepath_part=fern_filepath_part,
-                export_strategy=ExportStrategy(export_as_namespace=True),
-            )
+            module_name = fern_filepath_part.snake_case.safe_name
+            if module_name and module_name != "_":
+                parts += self._get_directories_for_fern_filepath_part(
+                    fern_filepath_part=fern_filepath_part,
+                    export_strategy=ExportStrategy(export_as_namespace=True),
+                )
+        # Always include the file part (it's the actual file name, not a directory)
         if fern_filepath.file is not None:
             parts += self._get_directories_for_fern_filepath_part(
                 fern_filepath_part=fern_filepath.file,

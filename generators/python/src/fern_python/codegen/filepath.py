@@ -19,11 +19,24 @@ class Filepath:
     file: FilepathPart
 
     def to_module(self) -> AST.Module:
-        return AST.Module.local(*(part.module_name for part in self.directories + (self.file,)))
+        # Filter out empty or underscore-only module names from directories to avoid invalid imports like "._.types"
+        # Always include the file part (it's the actual file name)
+        module_names = [
+            part.module_name
+            for part in self.directories
+            if part.module_name and part.module_name != "_"
+        ]
+        # Always include the file part
+        if self.file.module_name:
+            module_names.append(self.file.module_name)
+        return AST.Module.local(*module_names)
 
     def __str__(self) -> str:
-        parts = [dir.module_name for dir in self.directories]
-        parts.append(self.file.module_name + ".py")
+        # Filter out empty or underscore-only module names from directories
+        parts = [dir.module_name for dir in self.directories if dir.module_name and dir.module_name != "_"]
+        # Always include the file part
+        if self.file.module_name:
+            parts.append(self.file.module_name + ".py")
         return os.path.join(*parts)
 
     @dataclass(frozen=True)
