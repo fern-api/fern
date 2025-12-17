@@ -172,9 +172,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                 return False
             elif union.type == "named":
                 # Named types (objects, enums, aliases) need to be checked further
-                type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
-                    union.type_id
-                )
+                type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(union.type_id)
                 shape = type_declaration.shape.get_as_union()
                 if shape.type == "alias":
                     return check_type(shape.alias_of)
