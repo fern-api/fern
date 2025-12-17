@@ -4,7 +4,6 @@ import { homedir } from "os";
 import path from "path";
 
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
-const APP_PREVIEW_FOLDER_NAME = "app-preview";
 const LOGS_FOLDER_NAME = "logs";
 
 /**
@@ -138,8 +137,7 @@ export class DebugLogger {
         }
 
         const localStorageFolder = join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
-        const appPreviewDir = join(localStorageFolder, RelativeFilePath.of(APP_PREVIEW_FOLDER_NAME));
-        const logsDir = join(appPreviewDir, RelativeFilePath.of(LOGS_FOLDER_NAME));
+        const logsDir = join(localStorageFolder, RelativeFilePath.of(LOGS_FOLDER_NAME));
 
         if (!(await doesPathExist(logsDir))) {
             await mkdir(logsDir, { recursive: true });
