@@ -41,7 +41,7 @@
 
 - changelogEntry:
     - summary: |
-        Collects `fern docs dev` metrics in `.fern/app-preview/<timestamp>.debug.log` file.
+        Collects `fern docs dev` metrics in `.fern/logs/<timestamp>.debug.log` file.
       type: chore
   irVersion: 62
   createdAt: "2025-12-16"

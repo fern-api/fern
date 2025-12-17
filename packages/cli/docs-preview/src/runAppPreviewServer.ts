@@ -782,8 +782,8 @@ export async function runAppPreviewServer({
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
-        // Ignore changes to .fern/app-preview/ directory (contains debug logs and other generated files)
-        if (targetPath.includes(".fern/app-preview/") || targetPath.includes(".fern\\app-preview\\")) {
+        // Ignore changes to .fern/logs/ directory (contains debug logs)
+        if (targetPath.includes(".fern/logs/") || targetPath.includes(".fern\\logs\\")) {
             return;
         }
 
