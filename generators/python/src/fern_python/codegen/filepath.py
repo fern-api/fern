@@ -33,7 +33,11 @@ class Filepath:
 
     def __str__(self) -> str:
         # Filter out empty or underscore-only module names from directories
-        parts = [dir.module_name for dir in self.directories if dir.module_name and dir.module_name != "_"]
+        parts = [
+            dir.module_name
+            for dir in self.directories
+            if dir.module_name and dir.module_name != "_"
+        ]
         # Always include the file part
         if self.file.module_name:
             parts.append(self.file.module_name + ".py")
