@@ -654,19 +654,22 @@ class ModuleFile {
                 .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
                 .join("\n");
 
-        // Add optional user custom integration hook at the end
+        // Add optional user custom integration hook at the end (only if configured)
         // This allows users to add custom code (e.g., Sentry integration) without fernignoring generated files
-        const customIntegrationHook = `
+        const customIntegrationPath = this.context.customConfig?.customIntegrationPath;
+        if (customIntegrationPath != null) {
+            const rootFolder = this.context.getRootFolderName();
+            const customIntegrationHook = `
 
 # Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/${this.context.getRootFolderName()}/custom_integration.rb
-begin
-  require_relative 'custom_integration'
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end`;
+# To use: create a file at lib/${rootFolder}/${customIntegrationPath}.rb
+integration_path = File.join(__dir__, "${rootFolder}/${customIntegrationPath}.rb")
+require_relative "${rootFolder}/${customIntegrationPath}" if File.exist?(integration_path)`;
 
-        return dedent`${contents}` + customIntegrationHook;
+            return dedent`${contents}` + customIntegrationHook;
+        }
+
+        return dedent`${contents}`;
     }
 
     public async writeFile(): Promise<void> {
