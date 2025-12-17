@@ -58,7 +58,8 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     wrapReferencesToNullableInOptional: "wrapReferencesToNullableInOptional",
     coerceOptionalSchemasToNullable: "coerceOptionalSchemasToNullable",
     removeDiscriminantsFromSchemas: "removeDiscriminantsFromSchemas",
-    defaultIntegerFormat: "defaultIntegerFormat"
+    defaultIntegerFormat: "defaultIntegerFormat",
+    requestBodyAsGroupedSchema: "requestBodyAsGroupedSchema"
 };
 
 function setIfDefined<K extends keyof OpenAPISettings>(

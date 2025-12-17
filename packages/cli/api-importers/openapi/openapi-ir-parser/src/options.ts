@@ -97,6 +97,13 @@ export interface ParseOpenAPIOptions {
      * Defaults to 'int32' for backward compatibility.
      */
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat;
+
+    /**
+     * If true, request body schemas will always be emitted as top-level types (grouped schemas) rather than being inlined.
+     * This ensures consistent behavior for both JSON/form and multipart request bodies.
+     * Defaults to false.
+     */
+    requestBodyAsGroupedSchema: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -130,7 +137,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     wrapReferencesToNullableInOptional: false,
     coerceOptionalSchemasToNullable: false,
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
-    defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32
+    defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32,
+    requestBodyAsGroupedSchema: false
 };
 
 function mergeOptions<T extends object>(params: {

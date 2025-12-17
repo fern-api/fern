@@ -751,7 +751,8 @@ function getRequest({
             convertedRequestValue.docs = request.description;
         }
         return {
-            schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
+            schemaIdsToExclude:
+                maybeSchemaId != null && !context.options.requestBodyAsGroupedSchema ? [maybeSchemaId] : [],
             value: convertedRequestValue
         };
     } else if (request.type === "octetStream") {
@@ -825,7 +826,8 @@ function getRequest({
             })
         );
         return {
-            schemaIdsToExclude: request.name == null ? [] : [request.name],
+            schemaIdsToExclude:
+                request.name == null || context.options.requestBodyAsGroupedSchema ? [] : [request.name],
             value: {
                 name: requestNameOverride ?? request.name ?? generatedRequestName,
                 "path-parameters": pathParameters,
