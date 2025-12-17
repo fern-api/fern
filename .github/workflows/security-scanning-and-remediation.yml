@@ -92,6 +92,7 @@ jobs:
             5. Run tests to ensure the update doesn't break anything
             6. Push your fix to this PR branch and tag @davidkonigsberg for review
             7. Delete the scaffold file (.github/dependabot-alerts/alert-*.md) as part of your fix
+            8. Update the PR title, if needed, to pass CI checks
 
             **Alert Details:**
           ALERTS_JSON: ${{ steps.fetch-alerts.outputs.alerts_json }}

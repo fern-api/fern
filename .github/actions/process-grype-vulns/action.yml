@@ -31,6 +31,7 @@ inputs:
       5. Build the container locally and re-scan to confirm your changes actually address the CVEs.
       6. Push your fix to this PR branch and tag @davidkonigsberg for review
       7. Delete the scaffold file (.github/grype-scans/scan-*.md) as part of your fix
+      8. Update the PR title, if needed, to pass CI checks
 
       **Vulnerability Details:**
   slack_token:
