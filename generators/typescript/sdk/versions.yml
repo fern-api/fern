@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.4
+  changelogEntry:
+    - summary: |
+        Fix bug where request wrapper was set as body when the body property inside the request wrapper should've been used.
+        This only affects a specific combination of feature flags:
+        - `inline-path-parameters: true` on the API spec settings
+        - `inlinePathParameters: false` on the generator config
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 62
+
 - version: 3.42.3
   changelogEntry:
     - summary: |
