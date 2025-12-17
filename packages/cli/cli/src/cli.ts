@@ -29,6 +29,7 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview";
+import { listDocsPreview } from "./commands/docs-preview/listDocsPreview";
 import { downgrade } from "./commands/downgrade/downgrade";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
@@ -1482,6 +1483,30 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addDocsPreviewSubcommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("preview", "Commands for managing preview deployments", (yargs) => {
+        yargs.command(
+            "list",
+            "List all preview deployments",
+            (yargs) =>
+                yargs
+                    .option("limit", {
+                        type: "number",
+                        description: "Maximum number of preview deployments to display"
+                    })
+                    .option("page", {
+                        type: "number",
+                        description: "Page number for pagination (starts at 1)"
+                    }),
+            async (argv) => {
+                await cliContext.instrumentPostHogEvent({
+                    command: "fern docs preview list"
+                });
+                await listDocsPreview({
+                    cliContext,
+                    limit: argv.limit,
+                    page: argv.page
+                });
+            }
+        );
         yargs.command(
             "delete <url>",
             "Delete a preview deployment",
