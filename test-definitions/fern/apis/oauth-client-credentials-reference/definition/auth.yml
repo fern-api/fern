@@ -12,7 +12,6 @@ types:
     properties:
       client_id: string
       client_secret: string
-      grant_type: literal<"client_credentials">
 
 service:
   auth: false
@@ -27,7 +26,6 @@ service:
         - request:
             client_id: "client_id"
             client_secret: "client_secret"
-            grant_type: "client_credentials"
           response:
             body:
               access_token: "access_token"

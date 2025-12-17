@@ -1,3 +1,2 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
-api:
-  path: definition
+groups: {}

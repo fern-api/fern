@@ -11,25 +11,27 @@ export function handleNonStatusCodeError(
 ): never {
     switch (error.reason) {
         case "non-json":
-            throw new errors.SeedApiError({
+            throw new errors.SeedOauthClientCredentialsReferenceError({
                 statusCode: error.statusCode,
                 body: error.rawBody,
                 rawResponse: rawResponse,
             });
         case "body-is-null":
-            throw new errors.SeedApiError({
+            throw new errors.SeedOauthClientCredentialsReferenceError({
                 statusCode: error.statusCode,
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.SeedApiTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
+            throw new errors.SeedOauthClientCredentialsReferenceTimeoutError(
+                `Timeout exceeded when calling ${method} ${path}.`,
+            );
         case "unknown":
-            throw new errors.SeedApiError({
+            throw new errors.SeedOauthClientCredentialsReferenceError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
             });
         default:
-            throw new errors.SeedApiError({
+            throw new errors.SeedOauthClientCredentialsReferenceError({
                 message: "Unknown error",
                 rawResponse: rawResponse,
             });
