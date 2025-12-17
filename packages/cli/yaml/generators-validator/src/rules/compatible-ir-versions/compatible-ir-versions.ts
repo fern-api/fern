@@ -1,3 +1,4 @@
+import { addDefaultDockerOrgIfNotPresent } from "@fern-api/configuration-loader";
 import { createFdrGeneratorsSdkService, getIrVersionForGenerator } from "@fern-api/core";
 import { isVersionAhead } from "@fern-api/semver-utils";
 
@@ -49,7 +50,14 @@ export const CompatibleIrVersionsRule: Rule = {
                         // You've overridden the IR version in the generator invocation, let's clean it up
                         invocationIrVersion = getOverriddenIrVersion(invocation["ir-version"]);
                     } else {
-                        const maybeIrVersion = await getIrVersionForGenerator(invocation);
+                        // Normalize the generator name to add default Docker org prefix if not present
+                        // This is needed because the YAML may contain shorthand names like "fern-csharp-sdk"
+                        // but the FDR API expects fully-qualified names like "fernapi/fern-csharp-sdk"
+                        const normalizedInvocation = {
+                            ...invocation,
+                            name: addDefaultDockerOrgIfNotPresent(invocation.name)
+                        };
+                        const maybeIrVersion = await getIrVersionForGenerator(normalizedInvocation);
 
                         // The above returns undefined if we can't get the IR version, so we'll just return an empty array
                         // Again, this is to allow for offline usage, and other transient errors
