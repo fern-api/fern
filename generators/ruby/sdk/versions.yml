@@ -1,15 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 0.8.4
-  createdAt: "2024-12-16"
-  changelogEntry:
-    - type: feat
-      summary: >-
-        Add support for passing a custom Faraday connection to the client,
-        allowing users to inject custom middleware (e.g., Sentry integration)
-        without needing to fernignore the client file.
-  irVersion: 39
-
 - version: 0.8.3
   createdAt: "2025-11-19"
   changelogEntry:

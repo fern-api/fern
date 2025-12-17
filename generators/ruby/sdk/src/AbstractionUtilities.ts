@@ -347,11 +347,7 @@ export function generateRootPackage(
                 headersGenerator,
                 retriesProperty,
                 timeoutProperty,
-                defaultEnvironment,
-                new ClassReference({
-                    name: "Faraday::Connection",
-                    import_: new Import({ from: "faraday", isExternal: true })
-                })
+                defaultEnvironment
             ),
             returnValue: classReference
         })
@@ -435,11 +431,7 @@ export function generateRootPackage(
                 headersGenerator,
                 retriesProperty,
                 timeoutProperty,
-                defaultEnvironment,
-                new ClassReference({
-                    name: "Faraday::Connection",
-                    import_: new Import({ from: "faraday", isExternal: true })
-                })
+                defaultEnvironment
             ),
             returnValue: asyncClassReference
         })
@@ -727,8 +719,7 @@ function generateRequestClientInitializer(
     retriesProperty: Property,
     timeoutProperty: Property,
     defaultEnvironment?: string,
-    hasFileBasedDependencies = false,
-    faradayReference?: ClassReference
+    hasFileBasedDependencies = false
 ): Function_ {
     const retryOptions = new HashInstance({
         contents: new Map([["max", retriesProperty.toVariable(VariableType.LOCAL)]])
@@ -898,44 +889,6 @@ function generateRequestClientInitializer(
         ]);
     }
 
-    // Create the default Faraday connection expression
-    const defaultFaradayConnection = new FunctionInvocation({
-        onObject: new ClassReference({
-            name: "Faraday",
-            import_: new Import({ from: "faraday", isExternal: true })
-        }),
-        baseFunction: new Function_({ name: "new", functionBody: [] }),
-        arguments_: hasHeaders
-            ? [
-                  new Argument({
-                      isNamed: true,
-                      name: "headers",
-                      value: "@headers"
-                  })
-              ]
-            : undefined,
-        block: { arguments: "faraday", expressions: faradayConfiguration }
-    });
-
-    // If faradayReference is provided, use faraday_connection || default, otherwise just use default
-    const connAssignment =
-        faradayReference !== undefined
-            ? new Expression({
-                  leftSide: "@conn",
-                  rightSide: new Expression({
-                      leftSide: "faraday_connection",
-                      rightSide: defaultFaradayConnection,
-                      operation: "||",
-                      isAssignment: false
-                  }),
-                  isAssignment: true
-              })
-            : new Expression({
-                  leftSide: "@conn",
-                  rightSide: defaultFaradayConnection,
-                  isAssignment: true
-              });
-
     return new Function_({
         name: "initialize",
         invocationName: "new",
@@ -945,14 +898,33 @@ function generateRequestClientInitializer(
             headersGenerator,
             retriesProperty,
             timeoutProperty,
-            defaultEnvironment,
-            faradayReference
+            defaultEnvironment
         ),
         returnValue: classReference,
         functionBody: [
             ...functionBody,
-            // Set the Faraday connection (uses custom faraday_connection if provided, otherwise creates default)
-            connAssignment
+            // Set the Faraday connection
+            new Expression({
+                leftSide: "@conn",
+                rightSide: new FunctionInvocation({
+                    onObject: new ClassReference({
+                        name: "Faraday",
+                        import_: new Import({ from: "faraday", isExternal: true })
+                    }),
+                    baseFunction: new Function_({ name: "new", functionBody: [] }),
+                    arguments_: hasHeaders
+                        ? [
+                              new Argument({
+                                  isNamed: true,
+                                  name: "headers",
+                                  value: "@headers"
+                              })
+                          ]
+                        : undefined,
+                    block: { arguments: "faraday", expressions: faradayConfiguration }
+                }),
+                isAssignment: true
+            })
         ]
     });
 }
@@ -963,31 +935,16 @@ function getClientParameters(
     headersGenerator: HeadersGenerator,
     retriesProperty: Property,
     timeoutProperty: Property,
-    defaultEnvironment?: string,
-    faradayReference?: ClassReference
+    defaultEnvironment?: string
 ): Parameter[] {
-    const functionParams: Parameter[] = [];
-
-    // Add faraday_connection parameter first (optional, allows custom Faraday connection with middleware)
-    if (faradayReference !== undefined) {
-        functionParams.push(
-            new Parameter({
-                name: "faraday_connection",
-                type: faradayReference,
-                isOptional: true,
-                documentation: "Override the default Faraday connection with your own, e.g. to add custom middleware"
-            })
-        );
-    }
-
-    functionParams.push(
+    const functionParams = [
         new Parameter({
             name: "base_url",
             type: StringClassReference,
             isOptional: true,
             example: '"https://api.example.com"'
         })
-    );
+    ];
     if (environmentCr !== undefined) {
         functionParams.push(
             new Parameter({
@@ -1161,8 +1118,7 @@ export function generateRequestClients(
             retriesProperty,
             timeoutProperty,
             defaultEnvironment,
-            hasFileBasedDependencies,
-            faradayReference
+            hasFileBasedDependencies
         ),
         functions: requestClientFunctions(
             requestOptions,
@@ -1195,8 +1151,7 @@ export function generateRequestClients(
             retriesProperty,
             timeoutProperty,
             defaultEnvironment,
-            hasFileBasedDependencies,
-            faradayReference
+            hasFileBasedDependencies
         ),
         functions: requestClientFunctions(
             requestOptions,
