@@ -6625,6 +6625,9 @@ importers:
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
+      '@fern-api/core':
+        specifier: workspace:*
+        version: link:../../core
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
