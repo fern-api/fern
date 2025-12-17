@@ -1,11 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.24.7
+- version: 3.26.0
   changelogEntry:
     - summary: |
         Allow omitting the `fernapi/` prefix in generator names in `generators.yml`. The prefix is now inferred by default, so `fern-typescript-sdk` is equivalent to `fernapi/fern-typescript-sdk`. Custom Docker orgs can still be specified explicitly (e.g., `myorg/my-generator`).
       type: feat
-  irVersion: 62
   createdAt: "2025-12-17"
+  irVersion: 62
+
+- version: 3.25.0
+  changelogEntry:
+    - summary: |
+        Add user email to CLI PostHog events when not using an access token. This enables better user analytics by capturing the primary email address from Auth0 for logged-in users.
+      type: feat
+  createdAt: "2025-12-17"
+  irVersion: 62
 
 - version: 3.24.6
   changelogEntry:

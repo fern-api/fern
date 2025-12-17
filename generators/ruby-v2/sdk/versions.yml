@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc71
+  createdAt: "2025-12-17"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Make the base_url parameter optional in the main client.rb. The parameter now has a default
+        value of nil, allowing users to instantiate the client without explicitly providing a base_url
+        when using environment-based configuration.
+  irVersion: 61
+
 - version: 1.0.0-rc70
   createdAt: "2025-12-17"
   changelogEntry:
