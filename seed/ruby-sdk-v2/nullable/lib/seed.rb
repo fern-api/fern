@@ -47,10 +47,10 @@ require_relative "seed/nullable/types/get_users_request"
 require_relative "seed/nullable/types/create_user_request"
 require_relative "seed/nullable/types/delete_user_request"
 
-# Load user-defined extensions if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/extensions.rb
+# Load user-defined custom integration if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/custom_integration.rb
 begin
-  require_relative "seed/extensions"
+  require_relative "custom_integration"
 rescue LoadError
-  # No extensions file found - this is expected and fine
+  # No custom integration file found - this is expected and fine
 end

@@ -52,7 +52,7 @@ module Seed
           api_key: @options[:api_key]
         }
 
-        token_response = @auth_client.get_token(**request_params, request_options: { base_url: @options[:base_url] })
+        token_response = @auth_client.get_token(**request_params)
 
         @access_token = token_response.access_token
         @expires_at = Time.now + token_response.expires_in

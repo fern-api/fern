@@ -40,10 +40,10 @@ require_relative "seed/types/example_type"
 require_relative "seed/types/json"
 require_relative "seed/types/nested_type"
 
-# Load user-defined extensions if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/extensions.rb
+# Load user-defined custom integration if present (e.g., for Sentry integration)
+# To use: create a file at lib/seed/custom_integration.rb
 begin
-  require_relative "seed/extensions"
+  require_relative "custom_integration"
 rescue LoadError
-  # No extensions file found - this is expected and fine
+  # No custom integration file found - this is expected and fine
 end
