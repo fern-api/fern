@@ -4,11 +4,17 @@
 - version: 2.0.0
   changelogEntry:
     - type: break
-      summary: Minimum FastAPI and Starlette version requirements increased
+      summary: Minimum FastAPI version requirement increased and direct Starlette dependency removed
       changed:
         - >-
-          Generated FastAPI servers now require FastAPI >=0.123.5 and Starlette >=0.40.0. This ensures compatibility with the 
-          latest FastAPI features and security fixes
+          Generated FastAPI servers now require FastAPI >=0.123.5 when not using local output mode to ensure package dependencies are up to date. 
+          This ensures compatibility with the latest FastAPI features and security fixes. Users must upgrade their FastAPI installation: 
+          `pip install "fastapi>=0.123.5"`
+        - >-
+          Starlette is no longer a direct dependency. FastAPI will automatically manage the correct 
+          Starlette version (>=0.40.0) as a transitive dependency. If you previously had Starlette as a 
+          direct dependency, you can remove it from your `pyproject.toml` or `requirements.txt`. 
+          FastAPI will handle the Starlette dependency automatically
   createdAt: "2025-12-16"
   irVersion: 61
 
