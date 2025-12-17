@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.5
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for OAuth endpoints with reference request bodies.
+        Previously, the `getAuthClientOptions` function only handled inlined request bodies for OAuth,
+        leaving reference request bodies unimplemented. This caused wire tests to fail when OAuth
+        token endpoints used a reference type for the request body.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 62
+
 - version: 3.42.4
   changelogEntry:
     - summary: |

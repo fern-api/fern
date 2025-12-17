@@ -651,8 +651,16 @@ export function ${functionName}(server: MockServer): void {
                                 }
                             });
                         },
-                        reference: () => {
-                            // noop
+                        reference: (value) => {
+                            const allProperties = this.getAuthRequestParameters(value);
+                            const clientIdValue = allProperties[clientIdPropertyName];
+                            const clientSecretValue = allProperties[clientSecretPropertyName];
+                            if (clientIdValue) {
+                                authOptions.clientId = clientIdValue;
+                            }
+                            if (clientSecretValue) {
+                                authOptions.clientSecret = clientSecretValue;
+                            }
                         },
                         _other: () => {
                             // noop
