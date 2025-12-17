@@ -654,19 +654,22 @@ class ModuleFile {
                 .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
                 .join("\n");
 
-        // Add optional user custom integration hook at the end (only if configured)
+        // Add optional user require paths hook at the end (only if configured)
         // This allows users to add custom code (e.g., Sentry integration) without fernignoring generated files
-        const customIntegrationPath = this.context.customConfig?.customIntegrationPath;
-        if (customIntegrationPath != null) {
+        const requirePaths = this.context.customConfig?.requirePaths;
+        if (requirePaths != null && requirePaths.length > 0) {
             const rootFolder = this.context.getRootFolderName();
-            const customIntegrationHook = `
+            const pathsArray = requirePaths.map((p) => `"${rootFolder}/${p}"`).join(", ");
+            const requirePathsHook = `
 
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/${rootFolder}/${customIntegrationPath}.rb
-integration_path = File.join(__dir__, "${rootFolder}/${customIntegrationPath}.rb")
-require_relative "${rootFolder}/${customIntegrationPath}" if File.exist?(integration_path)`;
+# Load user-defined files if present (e.g., for Sentry integration)
+# Files are loaded from lib/${rootFolder}/ if they exist
+[${pathsArray}].each do |relative_path|
+  absolute_path = File.join(__dir__, "\#{relative_path}.rb")
+  require_relative relative_path if File.exist?(absolute_path)
+end`;
 
-            return dedent`${contents}` + customIntegrationHook;
+            return dedent`${contents}` + requirePathsHook;
         }
 
         return dedent`${contents}`;

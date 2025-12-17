@@ -5,11 +5,11 @@
   changelogEntry:
     - type: feat
       summary: |
-        Add opt-in `customIntegrationPath` config option for loading user-defined integration files.
-        When configured (e.g., `customIntegrationPath: "custom_integration"`), the gem entrypoint
-        will auto-load `lib/<gem>/<path>.rb` if it exists. This allows users to add custom code
-        (e.g., Sentry integration) without needing to fernignore generated files. The hook uses
-        file existence check instead of rescue LoadError to avoid silently swallowing real errors.
+        Add opt-in `requirePaths` config option for auto-loading user-defined files when the gem
+        is required. When configured (e.g., `requirePaths: ["custom_integration", "sentry_integration"]`),
+        the gem entrypoint will auto-load each file from `lib/<gem>/<path>.rb` if it exists. This
+        allows users to add custom code (e.g., Sentry integration) without needing to fernignore
+        generated files. Uses file existence check to avoid silently swallowing real errors.
   irVersion: 61
 
 - version: 1.0.0-rc71
