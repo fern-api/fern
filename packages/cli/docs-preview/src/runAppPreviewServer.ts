@@ -22,7 +22,7 @@ import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 
 import { DebugLogger } from "./DebugLogger";
-import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
+import { downloadBundle, getPathToBundleFolder, getPathToEtagFile } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
@@ -386,6 +386,13 @@ export async function runAppPreviewServer({
     if (await doesPathExist(nextCachePath)) {
         context.logger.debug(`Clearing Next.js cache at: ${nextCachePath}`);
         await rm(nextCachePath, { recursive: true, force: true });
+    }
+
+    // Clear the ETag cache to force re-download of the bundle
+    const etagPath = getPathToEtagFile({ app: true });
+    if (await doesPathExist(etagPath)) {
+        context.logger.debug(`Clearing ETag cache at: ${etagPath}`);
+        await rm(etagPath, { force: true });
     }
 
     if (bundlePath != null) {
