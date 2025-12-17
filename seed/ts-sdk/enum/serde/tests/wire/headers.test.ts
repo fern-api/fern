@@ -14,7 +14,6 @@ describe("HeadersClient", () => {
             .header("operand", ">")
             .header("maybeOperand", ">")
             .header("operandOrColor", "red")
-            .header("maybeOperandOrColor", "undefined")
             .respondWith()
             .statusCode(200)
             .build();
