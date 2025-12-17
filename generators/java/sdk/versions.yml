@@ -27,6 +27,33 @@
         Fix `gradle-distribution-url` override in Java V2 generator to properly create the
         `gradle/wrapper` directory before writing `gradle-wrapper.properties`.
       type: fix
+    - summary: |
+        Add `gradle-central-dependency-management` configuration option (boolean, default false).
+        When enabled, this skips generating the `repositories` block in `build.gradle` files,
+        allowing `dependencyResolutionManagement` in `settings.gradle` with
+        `RepositoriesMode.FAIL_ON_PROJECT_REPOS` to work correctly.
+
+        This should be used in conjunction with `gradle-plugin-management` when configuring
+        central repository management on enterprise networks.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-central-dependency-management: true
+          gradle-plugin-management: |
+            pluginManagement {
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/gradle-plugins/' }
+                }
+            }
+            dependencyResolutionManagement {
+                repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/maven-releases/' }
+                }
+            }
+        ```
+      type: feat
   createdAt: "2025-12-17"
   irVersion: 61
 
