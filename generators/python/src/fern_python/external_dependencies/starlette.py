@@ -4,7 +4,8 @@ STARLETTE_MODULE = AST.Module.external(
     module_path=("starlette",),
     dependency=AST.Dependency(
         name="starlette",
-        version="^0.37.2",
+        version="0.40.0",
+        compatibility=AST.DependencyCompatibility.GREATER_THAN_OR_EQUAL,
     ),
 )
 
@@ -12,7 +13,8 @@ STARLETTE_EXCEPTIONS_MODULE = AST.Module.external(
     module_path=("starlette", "exceptions"),
     dependency=AST.Dependency(
         name="starlette",
-        version="^0.37.2",
+        version="0.40.0",
+        compatibility=AST.DependencyCompatibility.GREATER_THAN_OR_EQUAL,
     ),
 )
 

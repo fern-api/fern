@@ -28,7 +28,7 @@ test:
     command: docker build -f ./generators/python/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest ./generators/python
 language: python
 generatorType: Server
-defaultOutputMode: local_files
+defaultOutputMode: github
 fixtures:
   alias-extends:
     - customConfig: null
