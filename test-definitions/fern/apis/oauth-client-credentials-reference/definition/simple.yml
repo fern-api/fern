@@ -1,0 +1,10 @@
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    getSomething:
+      path: /get-something
+      method: GET
+      examples:
+        - response:
+            body: "Hello, World!"
