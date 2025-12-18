@@ -119,6 +119,9 @@ export class WireTestGenerator {
         imports.set("bytes", "bytes");
         imports.set("encoding/json", "encoding/json");
 
+        // Track test function names to avoid duplicates (multiple endpoints can map to the same test name)
+        const seenTestFunctionNames = new Set<string>();
+
         const endpointTestCaseCodeBlocks = endpoints
             .map((endpoint) => {
                 const snippet = endpointTestCases.get(endpoint.id);
@@ -126,6 +129,17 @@ export class WireTestGenerator {
                     this.context.logger.warn(`No snippet found for endpoint ${endpoint.id}`);
                     return null;
                 }
+
+                // Parse the test function name from the snippet and skip if we've already seen it
+                const testFunctionName = this.parseTestFunctionNameFromSnippet(snippet);
+                if (seenTestFunctionNames.has(testFunctionName)) {
+                    this.context.logger.debug(
+                        `Skipping duplicate test function ${testFunctionName} for endpoint ${endpoint.id}`
+                    );
+                    return null;
+                }
+                seenTestFunctionNames.add(testFunctionName);
+
                 const [endpointTestCaseCodeBlock, endpointImports] = this.generateEndpointTestMethod(endpoint, snippet);
                 for (const [importName, importPath] of endpointImports.entries()) {
                     imports.set(importName, importPath);

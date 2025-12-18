@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.21.5
+  changelogEntry:
+    - summary: |
+        Fix duplicate test function generation in wire tests. When multiple endpoints map to the
+        same test function name, only the first one is now generated to avoid Go compilation errors.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 60
+
 - version: 1.21.4
   changelogEntry:
     - summary: |
