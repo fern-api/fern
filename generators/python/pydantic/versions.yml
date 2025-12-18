@@ -6,7 +6,7 @@
     - summary: |
         Update to support IR version 62.6.0 with new WebSocketMessage.methodName field,
         webhook response descriptions, and OpenAPI explode parameter support.
-      type: feat
+      type: chore
   createdAt: "2025-12-18"
   irVersion: 62
 
