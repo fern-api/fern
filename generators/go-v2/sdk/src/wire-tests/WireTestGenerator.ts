@@ -119,6 +119,9 @@ export class WireTestGenerator {
         imports.set("bytes", "bytes");
         imports.set("encoding/json", "encoding/json");
 
+        // Track test function name counts to generate unique names for duplicates (e.g., Test1, Test2, Test3)
+        const testFunctionNameCounts = new Map<string, number>();
+
         const endpointTestCaseCodeBlocks = endpoints
             .map((endpoint) => {
                 const snippet = endpointTestCases.get(endpoint.id);
@@ -126,7 +129,21 @@ export class WireTestGenerator {
                     this.context.logger.warn(`No snippet found for endpoint ${endpoint.id}`);
                     return null;
                 }
-                const [endpointTestCaseCodeBlock, endpointImports] = this.generateEndpointTestMethod(endpoint, snippet);
+
+                // Parse the test function name from the snippet and generate a unique name if needed
+                const baseTestFunctionName = this.parseTestFunctionNameFromSnippet(snippet);
+                const count = testFunctionNameCounts.get(baseTestFunctionName) ?? 0;
+                testFunctionNameCounts.set(baseTestFunctionName, count + 1);
+
+                // First occurrence uses the base name, subsequent occurrences get a numeric suffix
+                const uniqueTestFunctionName =
+                    count === 0 ? baseTestFunctionName : `${baseTestFunctionName}${count + 1}`;
+
+                const [endpointTestCaseCodeBlock, endpointImports] = this.generateEndpointTestMethod(
+                    endpoint,
+                    snippet,
+                    uniqueTestFunctionName
+                );
                 for (const [importName, importPath] of endpointImports.entries()) {
                     imports.set(importName, importPath);
                 }
@@ -303,9 +320,12 @@ export class WireTestGenerator {
         return response.snippet;
     }
 
-    private generateEndpointTestMethod(endpoint: HttpEndpoint, snippet: string): [go.CodeBlock, Map<string, string>] {
+    private generateEndpointTestMethod(
+        endpoint: HttpEndpoint,
+        snippet: string,
+        testFunctionName: string
+    ): [go.CodeBlock, Map<string, string>] {
         const imports = this.parseImportsFromSnippet(snippet);
-        const testFunctionName = this.parseTestFunctionNameFromSnippet(snippet);
 
         const testMethod = go.codeblock((writer) => {
             writer.writeNode(

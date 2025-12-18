@@ -1,0 +1,89 @@
+asyncapi: 3.0.0
+
+info:
+  title: SDK Method Name Test API
+  version: 1.0.0
+  description: Tests the x-fern-sdk-method-name extension for custom WebSocket method names
+
+servers:
+  production:
+    host: api.example.com
+    protocol: wss
+    pathname: /v1/ws
+
+channels:
+  chat:
+    address: /v1/ws/chat
+    description: Chat channel for testing custom method names
+    messages:
+      userMessage:
+        $ref: "#/components/messages/UserMessage"
+      serverNotification:
+        $ref: "#/components/messages/ServerNotification"
+
+operations:
+  sendChatMessage:
+    action: send
+    x-fern-sdk-method-name: sendMessage
+    description: Send a chat message with custom method name
+    channel:
+      $ref: "#/channels/chat"
+    messages:
+      - $ref: "#/channels/chat/messages/userMessage"
+
+  receiveNotification:
+    action: receive
+    x-fern-sdk-method-name: onNotification
+    description: Receive server notifications with custom method name
+    channel:
+      $ref: "#/channels/chat"
+    messages:
+      - $ref: "#/channels/chat/messages/serverNotification"
+
+  noCustomMethodName:
+    action: send
+    description: Operation without custom method name (should use operation ID)
+    channel:
+      $ref: "#/channels/chat"
+    messages:
+      - $ref: "#/channels/chat/messages/userMessage"
+
+components:
+  messages:
+    UserMessage:
+      name: UserMessage
+      title: User Message
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/UserMessagePayload"
+
+    ServerNotification:
+      name: ServerNotification
+      title: Server Notification
+      contentType: application/json
+      payload:
+        $ref: "#/components/schemas/ServerNotificationPayload"
+
+  schemas:
+    UserMessagePayload:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          type: string
+          description: Message text
+
+    ServerNotificationPayload:
+      type: object
+      required:
+        - message
+        - type
+      properties:
+        message:
+          type: string
+          description: Notification message
+        type:
+          type: string
+          enum: [info, warning, error]
+          description: Notification type

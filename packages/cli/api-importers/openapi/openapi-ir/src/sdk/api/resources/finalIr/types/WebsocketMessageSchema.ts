@@ -8,4 +8,5 @@ export interface WebsocketMessageSchema {
     name: string;
     origin: FernOpenapiIr.WebsocketMessageOrigin;
     body: FernOpenapiIr.Schema;
+    methodName: string | undefined;
 }

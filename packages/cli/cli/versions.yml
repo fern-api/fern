@@ -7,6 +7,14 @@
   createdAt: "2025-12-18"
   irVersion: 62
 
+- version: 3.26.3
+  changelogEntry:
+    - summary: |
+        Add `x-fern-sdk-method-name` support for AsyncAPI operations.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 62
+
 - version: 3.26.2
   changelogEntry:
     - summary: |

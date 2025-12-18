@@ -49,6 +49,22 @@ export class HttpEndpointGenerator {
 
         const statements: ruby.AstNode[] = [];
 
+        // Normalize params to convert camelCase keys to snake_case
+        // This allows SDK methods to accept both snake_case and camelCase keys
+        statements.push(
+            ruby.codeblock((writer) => {
+                writer.write(`${PARAMS_VN} = `);
+                ruby.invokeMethod({
+                    on: ruby.classReference({
+                        name: "Utils",
+                        modules: [this.context.getRootModuleName(), "Internal", "Types"]
+                    }),
+                    method: "normalize_keys",
+                    arguments_: [ruby.codeblock(PARAMS_VN)]
+                }).write(writer);
+            })
+        );
+
         const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
             statements.push(requestBodyCodeBlock.code);
@@ -59,6 +75,11 @@ export class HttpEndpointGenerator {
             statements.push(queryParameterCodeBlock.code);
         }
 
+        const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
+        if (headerParameterCodeBlock?.code != null) {
+            statements.push(headerParameterCodeBlock.code);
+        }
+
         const pathParameterReferences = this.getPathParameterReferences({ endpoint });
         const baseUrlName = this.getBaseUrlNameForEndpoint(endpoint);
         const sendRequestCodeBlock = rawClient.sendRequest({
@@ -67,6 +88,7 @@ export class HttpEndpointGenerator {
             endpoint,
             requestType: request?.getRequestType(),
             queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             baseUrlName
         });
