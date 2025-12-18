@@ -59,6 +59,11 @@ export class HttpEndpointGenerator {
             statements.push(queryParameterCodeBlock.code);
         }
 
+        const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
+        if (headerParameterCodeBlock?.code != null) {
+            statements.push(headerParameterCodeBlock.code);
+        }
+
         const pathParameterReferences = this.getPathParameterReferences({ endpoint });
         const baseUrlName = this.getBaseUrlNameForEndpoint(endpoint);
         const sendRequestCodeBlock = rawClient.sendRequest({
@@ -67,6 +72,7 @@ export class HttpEndpointGenerator {
             endpoint,
             requestType: request?.getRequestType(),
             queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             baseUrlName
         });
