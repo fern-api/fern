@@ -85,7 +85,7 @@ class SeedClient
 
         $this->options = $options ?? [];
 
-        $authRawClient = new RawClient(['headers' => []]);
+        $authRawClient = new RawClient(array_merge($this->options, ['headers' => []]));
         $authClient = new AuthClient($authRawClient);
         $inferredAuthOptions = [
             'clientId' => $clientId ?? '',

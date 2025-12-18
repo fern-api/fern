@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.25.2
+  changelogEntry:
+    - summary: |
+        Fix auth client to inherit client options like baseUrl. The auth RawClient now receives merged options from the main client with headers explicitly set to empty array, ensuring OAuth and InferredAuth token endpoints use the correct base URL while not inheriting authentication headers.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 62
+
 - version: 1.25.1
   changelogEntry:
     - summary: |
