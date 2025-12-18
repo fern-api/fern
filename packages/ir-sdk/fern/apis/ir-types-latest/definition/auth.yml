@@ -19,6 +19,7 @@ types:
     enum:
       - ALL
       - ANY
+      - ENDPOINT_SPECIFIC
 
   AuthScheme:
     discriminant:

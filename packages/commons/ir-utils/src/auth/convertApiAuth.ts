@@ -48,6 +48,11 @@ export function convertApiAuth({
                     casingsGenerator
                 })
             )
+        }),
+        endpointSpecific: () => ({
+            docs,
+            requirement: AuthSchemesRequirement.EndpointSpecific,
+            schemes: []
         })
     });
 }
