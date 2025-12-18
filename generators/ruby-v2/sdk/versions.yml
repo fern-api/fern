@@ -14,6 +14,13 @@
         proper union coercion even when API discriminant values differ in case from member keys,
         ensuring nested objects are correctly serialized with their wire field names.
       type: fix
+    - summary: |
+        Fix union type serialization to preserve discriminant field in to_h output.
+        When a discriminated union value is coerced to a member type (e.g., CardPayload),
+        the discriminant field (e.g., "type": "card") is now tracked and injected back
+        into the serialized JSON output. This ensures union fields serialize correctly
+        with their discriminant values for API requests.
+      type: fix
   createdAt: "2025-12-18"
   irVersion: 61
 
