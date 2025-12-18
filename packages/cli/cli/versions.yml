@@ -2,7 +2,9 @@
 - version: 3.27.0
   changelogEntry:
     - summary: |
-        Check for existing SDK dynamic IR before generating from docs. When publishing docs, the CLI now checks if a dynamic IR has been uploaded from the SDK publishing pipeline and uses that instead of generating a new one. This ensures consistency between SDK snippets and documentation.
+        Add `ENDPOINT_SECURITY` value to `AuthSchemesRequirement` enum in the IR. 
+        This allows users to specify that authentication requirements are defined per-endpoint rather than globally. 
+        Users can now use `endpoint-security: {}` in their Fern API definition's `auth` field to indicate that security is configured on individual endpoints via the `security` field.
       type: feat
   createdAt: "2025-12-18"
   irVersion: 62

@@ -20,6 +20,7 @@ module Seed
       #
       # @return [untyped]
       def send_(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
         body_bag = params.slice(*body_prop_names)
 

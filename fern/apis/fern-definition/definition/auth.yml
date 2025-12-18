@@ -16,6 +16,7 @@ types:
       - string
       - AuthSchemeReferenceSchema
       - AnyAuthSchemesSchema
+      - EndpointSecuritySchema
 
   AuthSchemeReferenceSchema:
     extends:
@@ -28,6 +29,17 @@ types:
       - commons.WithDocsSchema
     properties:
       any: list<AnyAuthItem>
+
+  EndpointSecuritySchema:
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      endpoint-security:
+        type: EndpointSecuritySchemaDetails
+        docs: Indicates that authentication requirements are defined per-endpoint via the `security` field.
+
+  EndpointSecuritySchemaDetails:
+    properties: {}
 
   AnyAuthItem:
     discriminated: false

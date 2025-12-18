@@ -61,6 +61,7 @@ allowedFailures:
   - alias-extends
   - any-auth
   - streaming-parameter
+  - endpoint-security-auth
   # public-object requires file download
   - public-object
 

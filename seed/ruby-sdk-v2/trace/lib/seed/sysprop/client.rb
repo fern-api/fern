@@ -22,6 +22,7 @@ module Seed
       #
       # @return [untyped]
       def set_num_warm_instances(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
@@ -49,7 +50,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Hash[Seed::Commons::Types::Language, Integer]]
-      def get_num_warm_instances(request_options: {}, **_params)
+      def get_num_warm_instances(request_options: {}, **params)
+        Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",

@@ -20,6 +20,7 @@ module Seed
       #
       # @return [untyped]
       def multipart_form(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         if params[:color]

@@ -4,6 +4,8 @@ export * from "./WithAuthSchema";
 export * from "./ApiAuthSchema";
 export * from "./AuthSchemeReferenceSchema";
 export * from "./AnyAuthSchemesSchema";
+export * from "./EndpointSecuritySchema";
+export * from "./EndpointSecuritySchemaDetails";
 export * from "./AnyAuthItem";
 export * from "./AuthSchemeDeclarationSchema";
 export * from "./WithEnvironmentVariable";

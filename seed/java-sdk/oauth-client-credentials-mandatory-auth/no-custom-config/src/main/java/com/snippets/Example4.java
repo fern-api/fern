@@ -4,11 +4,10 @@ import com.seed.oauthClientCredentialsMandatoryAuth.SeedOauthClientCredentialsMa
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsMandatoryAuthClient client = SeedOauthClientCredentialsMandatoryAuthClient.builder()
-                .clientId("<clientId>")
-                .clientSecret("<clientSecret>")
-                .url("https://api.fern.com")
-                .build();
+        SeedOauthClientCredentialsMandatoryAuthClient client =
+                SeedOauthClientCredentialsMandatoryAuthClient.withCredentials("<clientId>", "<clientSecret>")
+                        .url("https://api.fern.com")
+                        .build();
 
         client.nested().api().getSomething();
     }

@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "customPagerName": "FooPager"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }
