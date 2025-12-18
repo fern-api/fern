@@ -86,12 +86,13 @@ jobs:
 
             **Instructions:**
             1. Analyze the vulnerability and understand its impact
-            2. Update the affected dependency to a secure version
+            2. Update the affected dependency to a secure version. If updating a poetry lock file, use the same version of poetry used to generate the existing one.
             3. Ideally resolve this without using an override - prefer updating the dependency directly
             4. If an override is absolutely necessary, document why in the PR description
             5. Run tests to ensure the update doesn't break anything
             6. Push your fix to this PR branch and tag @davidkonigsberg for review
             7. Delete the scaffold file (.github/dependabot-alerts/alert-*.md) as part of your fix
+            8. Update the PR title, if needed, to pass CI checks
 
             **Alert Details:**
           ALERTS_JSON: ${{ steps.fetch-alerts.outputs.alerts_json }}
@@ -105,7 +106,7 @@ jobs:
             const devinMention = '<@U088PL5FS3B>';
             const owner = context.repo.owner;
             const repo = context.repo.repo;
-            const baseBranch = 'app';
+            const baseBranch = 'main';
 
             const alerts = JSON.parse(process.env.ALERTS_JSON || '[]');
             if (alerts.length === 0) {
@@ -162,7 +163,7 @@ jobs:
 
             // Helper function to send Slack notification
             async function sendSlackNotification(prInfo) {
-              const message = `${devinMention} *New Dependabot Alert PR Created*\nNew PR created for Dependabot security alert. Please open a PR into the \`fern-platform\` repo to address the dependabot alert "<${prInfo.alertUrl}|${prInfo.alertName}>". Follow the instructions in the <${prInfo.url}|PR>.`;
+              const message = `${devinMention} *New Dependabot Alert PR Created*\nNew PR created for Dependabot security alert. Please open a PR into the \`fern\` repo to address the dependabot alert "<${prInfo.alertUrl}|${prInfo.alertName}>". Follow the instructions in the <${prInfo.url}|PR>.`;
               
               try {
                 const response = await fetch('https://slack.com/api/chat.postMessage', {

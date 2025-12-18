@@ -15,7 +15,13 @@ public class JavaV2Adapter {
 
     private static final Logger log = LoggerFactory.getLogger(JavaV2Adapter.class);
 
-    private static final String NODE = "/usr/local/bin/node";
+    private static final String DEFAULT_NODE_PATH = "/usr/local/bin/node";
+    private static final String NODE_PATH_ENV_VAR = "NODE_PATH";
+
+    private static String getNodePath() {
+        String envPath = System.getenv(NODE_PATH_ENV_VAR);
+        return (envPath != null && !envPath.isEmpty()) ? envPath : DEFAULT_NODE_PATH;
+    }
 
     /**
      * Execute the Java V2 generator with the provided arguments.
@@ -27,7 +33,9 @@ public class JavaV2Adapter {
         try {
             System.out.println("Generating command for java v2 sdk generation");
             String[] command = new String[] {
-                NODE, args.executable().toString(), args.generatorConfig().toString()
+                getNodePath(),
+                args.executable().toString(),
+                args.generatorConfig().toString()
             };
             System.out.println("Generated command for java v2 sdk generation: " + Arrays.asList(command));
             System.out.println("Calling java v2 generator");

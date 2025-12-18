@@ -111,18 +111,24 @@ export function buildChannel({
     });
 
     for (const message of channel.messages) {
+        const messageSchema: RawSchemas.WebSocketChannelMessageSchema = {
+            origin: message.origin,
+            body: buildTypeReference({
+                schema: message.body,
+                context,
+                fileContainingReference: declarationFile,
+                namespace: maybeChannelNamespace,
+                declarationDepth: 0
+            })
+        };
+
+        if (message.methodName != null) {
+            messageSchema["method-name"] = message.methodName;
+        }
+
         context.builder.addChannelMessage(declarationFile, {
             messageId: message.name,
-            message: {
-                origin: message.origin,
-                body: buildTypeReference({
-                    schema: message.body,
-                    context,
-                    fileContainingReference: declarationFile,
-                    namespace: maybeChannelNamespace,
-                    declarationDepth: 0
-                })
-            }
+            message: messageSchema
         });
     }
 

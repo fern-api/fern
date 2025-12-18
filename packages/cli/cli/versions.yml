@@ -9,6 +9,22 @@
   createdAt: "2025-12-18"
   irVersion: 62
 
+- version: 3.26.3
+  changelogEntry:
+    - summary: |
+        Add `x-fern-sdk-method-name` support for AsyncAPI operations.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 62
+
+- version: 3.26.2
+  changelogEntry:
+    - summary: |
+        Support custom environment variables and shell command operators in native local generation for seed testing.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 62
+
 - version: 3.26.1
   changelogEntry:
     - summary: |
