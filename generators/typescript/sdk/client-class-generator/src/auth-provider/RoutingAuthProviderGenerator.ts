@@ -105,19 +105,16 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
         }
 
         const authOptionsTypes = childClassNames.map((className) => `${className}.AuthOptions`);
-        const tupleStr = authOptionsTypes.join(",\n        ");
 
+        // Use Partial intersection of all auth options to allow anonymous endpoints
+        // (some endpoints may not require any auth)
         const typeCode = `
     type UnionToIntersection<U> =
         (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;
 
-    type AtLeastOneOf<T extends any[]> = {
-        [K in keyof T]: T[K] & Partial<UnionToIntersection<Exclude<T[number], T[K]>>>;
-    }[number];
-
-    export type ${AUTH_OPTIONS_TYPE_NAME} = AtLeastOneOf<[
-        ${tupleStr}
-    ]>;`;
+    export type ${AUTH_OPTIONS_TYPE_NAME} = Partial<UnionToIntersection<
+        ${authOptionsTypes.join(" | ")}
+    >>;`;
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
@@ -197,26 +194,27 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
 
     private generateGetAuthRequestStatements(): string {
         const providerMap = `this.${AUTH_PROVIDERS_FIELD_NAME}`;
-        const errorHandling = this.ir.sdkConfig.isAuthMandatory
-            ? `throw new Error("No authentication credentials provided. Please provide one of the supported authentication methods.");`
-            : `return { headers: {} };`;
 
         return `
         const security = arg?.endpointMetadata?.security;
 
-        // If no security requirements specified, try all providers in order
+        // If no security requirements specified, endpoint is anonymous - return empty auth request
         if (security == null || security.length === 0) {
-            for (const provider of ${providerMap}.values()) {
-                try {
-                    const authRequest = await provider.getAuthRequest(arg);
-                    if (authRequest.headers.Authorization != null || Object.keys(authRequest.headers).length > 0) {
-                        return authRequest;
-                    }
-                } catch (e) {
-                    // Continue to next auth provider
-                }
-            }
-            ${errorHandling}
+            return { headers: {} };
+        }
+
+        // First, verify that at least one security requirement can be satisfied by available providers
+        const canSatisfyAnyRequirement = security.some((securityRequirement) => {
+            const schemeKeys = Object.keys(securityRequirement);
+            return schemeKeys.every((schemeKey) => ${providerMap}.has(schemeKey));
+        });
+
+        if (!canSatisfyAnyRequirement) {
+            const requiredSchemes = security.map((req) => Object.keys(req).join(" AND ")).join(" OR ");
+            throw new Error(
+                \`No authentication credentials provided that satisfy the endpoint's security requirements. ` +
+                \`Required: \${requiredSchemes}. Please provide the necessary authentication credentials.\`
+            );
         }
 
         // Try each security requirement collection (OR relationship)
@@ -235,7 +233,7 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
 
                 try {
                     const authRequest = await provider.getAuthRequest(arg);
-                    if (authRequest.headers.Authorization == null && Object.keys(authRequest.headers).length === 0) {
+                    if (Object.keys(authRequest.headers).length === 0) {
                         allSchemesSucceeded = false;
                         break;
                     }
@@ -251,7 +249,11 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
             }
         }
 
-        // No security requirement could be satisfied
-        ${errorHandling}`;
+        // No security requirement could be satisfied (auth credentials not provided or invalid)
+        const requiredSchemes = security.map((req) => Object.keys(req).join(" AND ")).join(" OR ");
+        throw new Error(
+            \`Authentication failed. The endpoint requires: \${requiredSchemes}. ` +
+            \`Please ensure valid authentication credentials are provided.\`
+        );`;
     }
 }
