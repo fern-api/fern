@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.46.4-rc1
+  changelogEntry:
+    - summary: |
+        Fix URL path stripping when base URL contains path prefixes.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
 - version: 4.46.4-rc0
   changelogEntry:
     - summary: |
