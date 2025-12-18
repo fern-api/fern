@@ -79,9 +79,16 @@ export async function validateWorkspaces({
                 return;
             }
 
+            // First, load the workspace outside of runTaskForWorkspace so that
+            // workspace loading errors (like "Missing file: api.yml") don't get the [api]: prefix
+            const fernWorkspace = await cliContext.runTask(async (context) => {
+                return workspace.toFernWorkspace({ context });
+            });
+
+            // Then, run validation inside runTaskForWorkspace so that dependency errors
+            // and other validation errors get the [api]: prefix
             let collected: Awaited<ReturnType<typeof collectAPIWorkspaceViolations>> | undefined;
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                const fernWorkspace = await workspace.toFernWorkspace({ context });
                 collected = await collectAPIWorkspaceViolations({
                     workspace: fernWorkspace,
                     context,
