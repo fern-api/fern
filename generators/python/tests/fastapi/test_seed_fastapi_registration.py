@@ -68,7 +68,7 @@ def test_seed_examples_register_and_openapi_works_and_uses_annotated_body() -> N
     seed_fastapi_root = _find_seed_fastapi_root()
     sys.path.insert(0, str(seed_fastapi_root))
     try:
-        examples_register = typing.cast(typing.Any, importlib.import_module("examples.register"))
+        examples_register = typing.cast(typing.Any, importlib.import_module("examples.no_custom_config.register"))
 
         # Re-exported in examples.register
         AbstractRootService = typing.cast(type, getattr(examples_register, "AbstractRootService"))

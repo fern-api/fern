@@ -32,10 +32,10 @@ defaultOutputMode: local_files
 fixtures:
   examples:
     - customConfig:
-      outputFolder: generate-package-deps
+      outputFolder: generate_package_deps
       outputMode: github  # generate pyproject.toml for validation of expected dependency versions
     - customConfig: null
-      outputFolder: no-custom-config
+      outputFolder: no_custom_config
   alias-extends:
     - customConfig: null
       outputFolder: no-custom-config
