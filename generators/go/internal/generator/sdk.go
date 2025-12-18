@@ -71,6 +71,9 @@ var (
 
 	//go:embed sdk/core/oauth.go
 	oauthFile string
+
+	//go:embed sdk/core/inferred_auth.go
+	inferredAuthFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -305,11 +308,12 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("}")
 	f.P()
 
-	// Check if OAuth is configured
+	// Check if OAuth or inferred auth is configured
 	hasOAuth := getOAuthClientCredentials(auth) != nil
+	hasInferredAuth := hasInferredAuthScheme(auth)
 
-	// Generate TokenGetter type if OAuth is configured
-	if hasOAuth {
+	// Generate TokenGetter type if OAuth or inferred auth is configured
+	if hasOAuth || hasInferredAuth {
 		f.P("// TokenGetter is a function that returns an access token.")
 		f.P("type TokenGetter func() (string, error)")
 		f.P()
@@ -331,7 +335,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("BodyProperties map[string]interface{}")
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
-	if hasOAuth {
+	if hasOAuth || hasInferredAuth {
 		f.P("tokenGetter TokenGetter")
 	}
 
@@ -357,6 +361,12 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		if authScheme.Oauth != nil {
 			f.P("ClientID string")
 			f.P("ClientSecret string")
+			// Only add Token field if there's no Bearer auth (which already provides Token)
+			if !hasBearerAuth(auth) {
+				f.P("Token string")
+			}
+		}
+		if authScheme.Inferred != nil {
 			// Only add Token field if there's no Bearer auth (which already provides Token)
 			if !hasBearerAuth(auth) {
 				f.P("Token string")
@@ -641,6 +651,23 @@ func (f *fileWriter) writeRequestOptionStructs(
 
 				// Add SetTokenGetter method for internal use
 				f.P("// SetTokenGetter sets the token getter function for OAuth.")
+				f.P("// This is an internal method and should not be called directly.")
+				f.P("func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {")
+				f.P("r.tokenGetter = getter")
+				f.P("}")
+				f.P()
+			}
+			if authScheme.Inferred != nil {
+				// Add TokenOption struct for direct token usage.
+				// Skip if Bearer auth exists, as it already provides TokenOption.
+				if !hasBearerAuth(auth) {
+					if err := f.writeOptionStruct("Token", "string", true, asIdempotentRequestOption); err != nil {
+						return err
+					}
+				}
+
+				// Add SetTokenGetter method for internal use
+				f.P("// SetTokenGetter sets the token getter function for inferred auth.")
 				f.P("// This is an internal method and should not be called directly.")
 				f.P("func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {")
 				f.P("r.tokenGetter = getter")
