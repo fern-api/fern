@@ -96,6 +96,7 @@ export async function loadOpenAPI({
     if (absolutePathToOpenAPIOverlays != null) {
         result = await applyOverlays<OpenAPI.Document>({
             absoluteFilePathToOverlay: absolutePathToOpenAPIOverlays,
+            absoluteFilePathToOpenAPI: absolutePathToOpenAPI,
             context,
             data: result
         });

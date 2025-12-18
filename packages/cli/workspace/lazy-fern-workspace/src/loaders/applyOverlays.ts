@@ -1,8 +1,10 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { readFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import { JSONPath } from "jsonpath-plus";
 import yaml from "js-yaml";
+import path from "path";
+import tmp from "tmp-promise";
 
 /**
  * OpenAPI Overlay Specification v1.0.0
@@ -25,6 +27,17 @@ interface OverlayAction {
     remove?: boolean;
 }
 
+// Module-level temp directory - created once and reused
+let tempDir: string | undefined;
+
+async function getTempDir(): Promise<string> {
+    if (tempDir === undefined) {
+        const dir = await tmp.dir({ prefix: "fern-overlay-" });
+        tempDir = dir.path;
+    }
+    return tempDir;
+}
+
 /**
  * Applies an OpenAPI Overlay to the given OpenAPI document.
  *
@@ -35,16 +48,19 @@ interface OverlayAction {
  * @see https://spec.openapis.org/overlay/latest.html
  *
  * @param absoluteFilePathToOverlay - Path to the overlay file (YAML or JSON)
+ * @param absoluteFilePathToOpenAPI - Path to the original OpenAPI file (for naming the output)
  * @param data - The OpenAPI document to apply the overlay to
  * @param context - Task context for logging and error handling
  * @returns The OpenAPI document with the overlay applied
  */
 export async function applyOverlays<T extends object>({
     absoluteFilePathToOverlay,
+    absoluteFilePathToOpenAPI,
     data,
     context
 }: {
     absoluteFilePathToOverlay: AbsoluteFilePath;
+    absoluteFilePathToOpenAPI: AbsoluteFilePath;
     data: T;
     context: TaskContext;
 }): Promise<T> {
@@ -63,6 +79,15 @@ export async function applyOverlays<T extends object>({
     for (const action of overlay.actions) {
         result = applyAction(result, action, context);
     }
+
+    // Write the overlaid result to a temp file for debugging/inspection
+    const dir = await getTempDir();
+    const originalFileName = path.basename(absoluteFilePathToOpenAPI);
+    const outputFileName = `${path.parse(originalFileName).name}.overlaid.json`;
+    const outputPath = path.join(dir, outputFileName);
+
+    await writeFile(outputPath, JSON.stringify(result, null, 2), "utf8");
+    context.logger.info(`Wrote overlaid OpenAPI spec to: ${outputPath}`);
 
     return result;
 }
@@ -216,10 +241,10 @@ function applyUpdateAction<T extends object>(
                 deepMerge(value, update);
             } else if (Array.isArray(value) && !Array.isArray(update)) {
                 // Append to array if update is not an array
-                value.push(update);
+                value.push(structuredClone(update));
             } else {
-                // Replace the value entirely
-                (parent as Record<string | number, unknown>)[parentProperty] = update;
+                // Replace the value entirely (clone to avoid shared references)
+                (parent as Record<string | number, unknown>)[parentProperty] = structuredClone(update);
             }
         }
     }
@@ -245,8 +270,9 @@ function deepMerge(target: Record<string, unknown>, source: Record<string, unkno
             // Recursively merge nested objects
             deepMerge(targetValue, sourceValue);
         } else {
-            // Overwrite with source value
-            target[key] = sourceValue;
+            // Clone the source value to avoid shared references across multiple targets
+            // This prevents swagger2openapi from interpreting shared objects as YAML anchors
+            target[key] = structuredClone(sourceValue);
         }
     }
 }
