@@ -22,8 +22,25 @@ export class RoutingAuthProvider implements core.AuthProvider {
         this.authProviders = authProviders;
     }
 
-    public async getAuthRequest(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
-        const security = arg?.endpointMetadata?.security;
+    private static getAuthConfigErrorMessage(schemeKey: string): string {
+        switch (schemeKey) {
+            case "Bearer":
+                return "Please provide 'auth.token' or set the 'MY_TOKEN' environment variable";
+            case "ApiKey":
+                return "Please provide 'auth.apiKey' or set the 'MY_API_KEY' environment variable";
+            case "OAuth":
+                return "Please provide 'auth.clientId' or 'MY_CLIENT_ID' env var and 'auth.clientSecret' or 'MY_CLIENT_SECRET' env var";
+            default:
+                return `Please provide the required authentication credentials for ${schemeKey}`;
+        }
+    }
+
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
+        const security = endpointMetadata?.security;
 
         // If no security requirements specified, endpoint is anonymous - return empty auth request
         if (security == null || security.length === 0) {
@@ -37,12 +54,19 @@ export class RoutingAuthProvider implements core.AuthProvider {
         });
 
         if (!canSatisfyAnyRequirement) {
-            const requiredSchemes = security.map((req) => Object.keys(req).join(" AND ")).join(" OR ");
+            // Build user-friendly error message showing which auth options are missing
+            const missingAuthHints = security
+                .map((req) => {
+                    const schemeKeys = Object.keys(req);
+                    const missingSchemes = schemeKeys.filter((key) => !this.authProviders.has(key));
+                    return missingSchemes
+                        .map((key) => RoutingAuthProvider.getAuthConfigErrorMessage(key))
+                        .join(" AND ");
+                })
+                .join(" OR ");
             throw new Error(
                 "No authentication credentials provided that satisfy the endpoint's security requirements. " +
-                    "Required: " +
-                    requiredSchemes +
-                    ". Please provide the necessary authentication credentials.",
+                    missingAuthHints,
             );
         }
 
@@ -50,27 +74,16 @@ export class RoutingAuthProvider implements core.AuthProvider {
         const satisfiableRequirement = security.find((securityRequirement) => {
             const schemeKeys = Object.keys(securityRequirement);
             return schemeKeys.every((schemeKey) => this.authProviders.has(schemeKey));
-        });
-
-        if (satisfiableRequirement == null) {
-            // This should not happen since we already verified above, but handle it gracefully
-            const requiredSchemes = security.map((req) => Object.keys(req).join(" AND ")).join(" OR ");
-            throw new Error(
-                "No authentication credentials provided that satisfy the endpoint's security requirements. " +
-                    "Required: " +
-                    requiredSchemes +
-                    ". Please provide the necessary authentication credentials.",
-            );
-        }
+        })!;
 
         // Get auth for all schemes in the satisfiable requirement (AND relationship)
         const combinedHeaders: Record<string, string> = {};
         for (const schemeKey of Object.keys(satisfiableRequirement)) {
             const provider = this.authProviders.get(schemeKey);
             if (provider == null) {
-                throw new Error(`Auth provider not found for scheme: ${schemeKey}`);
+                throw new Error(`Internal error: auth provider not found for scheme: ${schemeKey}`);
             }
-            const authRequest = await provider.getAuthRequest(arg);
+            const authRequest = await provider.getAuthRequest({ endpointMetadata });
             Object.assign(combinedHeaders, authRequest.headers);
         }
 

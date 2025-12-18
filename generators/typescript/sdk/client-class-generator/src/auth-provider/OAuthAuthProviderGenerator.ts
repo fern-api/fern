@@ -21,7 +21,7 @@ const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 const OPTIONS_PARAM_NAME = "options";
 const CLIENT_ID_VAR_NAME = "clientId";
 const CLIENT_SECRET_VAR_NAME = "clientSecret";
-const ENDPOINT_METADATA_ARG_NAME = "arg";
+const ENDPOINT_METADATA_ARG_NAME = "{ endpointMetadata }";
 const REFRESH_METHOD_NAME = "refresh";
 const GET_TOKEN_INTERNAL_METHOD_NAME = "_getToken";
 const BUFFER_IN_MINUTES_FIELD_NAME = "BUFFER_IN_MINUTES";
@@ -353,18 +353,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
                 clientIdPropertyAccess,
                 ts.factory.createObjectLiteralExpression([
-                    ts.factory.createPropertyAssignment(
-                        "endpointMetadata",
-                        ts.factory.createBinaryExpression(
-                            ts.factory.createPropertyAccessChain(
-                                ts.factory.createIdentifier("arg"),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                "endpointMetadata"
-                            ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                            ts.factory.createObjectLiteralExpression([])
-                        )
-                    )
+                    ts.factory.createShorthandPropertyAssignment("endpointMetadata")
                 ])
             )
         );
@@ -387,18 +376,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
                 clientSecretPropertyAccess,
                 ts.factory.createObjectLiteralExpression([
-                    ts.factory.createPropertyAssignment(
-                        "endpointMetadata",
-                        ts.factory.createBinaryExpression(
-                            ts.factory.createPropertyAccessChain(
-                                ts.factory.createIdentifier("arg"),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                "endpointMetadata"
-                            ),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                            ts.factory.createObjectLiteralExpression([])
-                        )
-                    )
+                    ts.factory.createShorthandPropertyAssignment("endpointMetadata")
                 ])
             )
         );
@@ -459,6 +437,11 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const canCreateReturnType = `options is ${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.ClientCredentials`;
 
+        const getAuthConfigErrorMessageStatements = this.generateGetAuthConfigErrorMessageStatements(
+            oauthConfig.clientIdEnvVar,
+            oauthConfig.clientSecretEnvVar
+        );
+
         const methods: Array<{
             kind: StructureKind.Method;
             scope: Scope;
@@ -487,11 +470,20 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             {
                 kind: StructureKind.Method,
                 scope: Scope.Public,
+                isStatic: true,
+                name: "getAuthConfigErrorMessage",
+                isAsync: false,
+                returnType: "string",
+                statements: getAuthConfigErrorMessageStatements
+            },
+            {
+                kind: StructureKind.Method,
+                scope: Scope.Public,
                 name: "getAuthRequest",
                 isAsync: true,
                 parameters: [
                     {
-                        name: "arg?",
+                        name: "{ endpointMetadata } = {}",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
@@ -510,7 +502,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     ])
                 ),
                 statements: `
-        const token = await this.getToken(arg);
+        const token = await this.getToken({ endpointMetadata });
 
         return {
             headers: {
@@ -527,7 +519,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 returnType: "Promise<string>",
                 parameters: [
                     {
-                        name: "arg?",
+                        name: "{ endpointMetadata } = {}",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
@@ -550,7 +542,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 returnType: "Promise<string>",
                 parameters: [
                     {
-                        name: "arg?",
+                        name: "{ endpointMetadata } = {}",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
@@ -675,7 +667,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 isAsync: true,
                 parameters: [
                     {
-                        name: "arg?",
+                        name: "{ endpointMetadata } = {}",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
@@ -769,6 +761,21 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 : `"clientSecret" in options && options.clientSecret != null`;
 
         return `return (${clientIdCheck}) && (${clientSecretCheck});`;
+    }
+
+    private generateGetAuthConfigErrorMessageStatements(
+        clientIdEnvVar: string | undefined,
+        clientSecretEnvVar: string | undefined
+    ): string {
+        const clientIdHint =
+            clientIdEnvVar != null ? `'auth.clientId' or '${clientIdEnvVar}' env var` : `'auth.clientId'`;
+
+        const clientSecretHint =
+            clientSecretEnvVar != null
+                ? `'auth.clientSecret' or '${clientSecretEnvVar}' env var`
+                : `'auth.clientSecret'`;
+
+        return `return "Please provide ${clientIdHint} and ${clientSecretHint}";`;
     }
 
     private getName(name: FernIr.Name | FernIr.NameAndWireValue): string {

@@ -143,12 +143,19 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                 {
                     kind: StructureKind.Method,
                     scope: Scope.Public,
+                    isStatic: true,
+                    name: "getAuthConfigErrorMessage",
+                    returnType: "string",
+                    statements: this.generateGetAuthConfigErrorMessageStatements()
+                },
+                {
+                    kind: StructureKind.Method,
+                    scope: Scope.Public,
                     name: "getAuthRequest",
                     isAsync: true,
                     parameters: [
                         {
-                            name: "arg",
-                            hasQuestionToken: true,
+                            name: "{ endpointMetadata }",
                             type: getTextOfTsNode(
                                 ts.factory.createTypeLiteralNode([
                                     ts.factory.createPropertySignature(
@@ -158,7 +165,8 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                                         context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
                                     )
                                 ])
-                            )
+                            ),
+                            initializer: "{}"
                         }
                     ],
                     returnType: getTextOfTsNode(
@@ -194,6 +202,17 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         return `return options.${headerFieldName} != null;`;
     }
 
+    private generateGetAuthConfigErrorMessageStatements(): string {
+        const headerFieldName = this.authScheme.name.name.camelCase.safeName;
+        const headerEnvVar = this.authScheme.headerEnvVar;
+
+        if (headerEnvVar != null) {
+            return `return "Please provide 'auth.${headerFieldName}' or set the '${headerEnvVar}' environment variable";`;
+        }
+
+        return `return "Please provide 'auth.${headerFieldName}'";`;
+    }
+
     private generateGetAuthRequestStatements(context: SdkContext): string {
         const headerVar = this.authScheme.name.name.camelCase.unsafeName;
         const headerFieldName = this.authScheme.name.name.camelCase.safeName;
@@ -207,18 +226,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                               ts.factory.createIdentifier(HEADER_FIELD_NAME)
                           ),
                           ts.factory.createObjectLiteralExpression([
-                              ts.factory.createPropertyAssignment(
-                                  "endpointMetadata",
-                                  ts.factory.createBinaryExpression(
-                                      ts.factory.createPropertyAccessChain(
-                                          ts.factory.createIdentifier("arg"),
-                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                          "endpointMetadata"
-                                      ),
-                                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                      ts.factory.createObjectLiteralExpression([])
-                                  )
-                              )
+                              ts.factory.createShorthandPropertyAssignment("endpointMetadata")
                           ])
                       )
                   )}) ?? process.env?.["${this.authScheme.headerEnvVar}"]`
@@ -229,18 +237,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                               ts.factory.createIdentifier(HEADER_FIELD_NAME)
                           ),
                           ts.factory.createObjectLiteralExpression([
-                              ts.factory.createPropertyAssignment(
-                                  "endpointMetadata",
-                                  ts.factory.createBinaryExpression(
-                                      ts.factory.createPropertyAccessChain(
-                                          ts.factory.createIdentifier("arg"),
-                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                          "endpointMetadata"
-                                      ),
-                                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                      ts.factory.createObjectLiteralExpression([])
-                                  )
-                              )
+                              ts.factory.createShorthandPropertyAssignment("endpointMetadata")
                           ])
                       )
                   );

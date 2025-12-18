@@ -150,8 +150,46 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                 {
                     kind: StructureKind.Method,
                     scope: Scope.Public,
+                    isStatic: true,
+                    name: "canCreate",
+                    parameters: [
+                        {
+                            name: "options",
+                            type: getTextOfTsNode(this.getOptionsType())
+                        }
+                    ],
+                    returnType: "boolean",
+                    statements: this.generateCanCreateStatements()
+                },
+                {
+                    kind: StructureKind.Method,
+                    scope: Scope.Public,
+                    isStatic: true,
+                    name: "getAuthConfigErrorMessage",
+                    returnType: "string",
+                    statements: this.generateGetAuthConfigErrorMessageStatements()
+                },
+                {
+                    kind: StructureKind.Method,
+                    scope: Scope.Public,
                     name: "getAuthRequest",
                     isAsync: true,
+                    parameters: [
+                        {
+                            name: "{ endpointMetadata }",
+                            type: getTextOfTsNode(
+                                ts.factory.createTypeLiteralNode([
+                                    ts.factory.createPropertySignature(
+                                        undefined,
+                                        "endpointMetadata",
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                    )
+                                ])
+                            ),
+                            initializer: "{}"
+                        }
+                    ],
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
                             context.coreUtilities.auth.AuthRequest._getReferenceToType()
@@ -175,6 +213,44 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                 }
             ]
         });
+    }
+
+    private generateCanCreateStatements(): string {
+        const usernameFieldName = this.authScheme.username.camelCase.safeName;
+        const passwordFieldName = this.authScheme.password.camelCase.safeName;
+        const usernameEnvVar = this.authScheme.usernameEnvVar;
+        const passwordEnvVar = this.authScheme.passwordEnvVar;
+
+        const usernameCheck =
+            usernameEnvVar != null
+                ? `(options.${usernameFieldName} != null || process.env?.["${usernameEnvVar}"] != null)`
+                : `options.${usernameFieldName} != null`;
+
+        const passwordCheck =
+            passwordEnvVar != null
+                ? `(options.${passwordFieldName} != null || process.env?.["${passwordEnvVar}"] != null)`
+                : `options.${passwordFieldName} != null`;
+
+        return `return ${usernameCheck} && ${passwordCheck};`;
+    }
+
+    private generateGetAuthConfigErrorMessageStatements(): string {
+        const usernameFieldName = this.authScheme.username.camelCase.safeName;
+        const passwordFieldName = this.authScheme.password.camelCase.safeName;
+        const usernameEnvVar = this.authScheme.usernameEnvVar;
+        const passwordEnvVar = this.authScheme.passwordEnvVar;
+
+        const usernameHint =
+            usernameEnvVar != null
+                ? `'auth.${usernameFieldName}' or '${usernameEnvVar}' env var`
+                : `'auth.${usernameFieldName}'`;
+
+        const passwordHint =
+            passwordEnvVar != null
+                ? `'auth.${passwordFieldName}' or '${passwordEnvVar}' env var`
+                : `'auth.${passwordFieldName}'`;
+
+        return `return "Please provide ${usernameHint} and ${passwordHint}";`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {

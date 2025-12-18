@@ -22,10 +22,17 @@ export class HeaderAuthProvider implements core.AuthProvider {
         return options.apiKey != null || process.env?.MY_API_KEY != null;
     }
 
-    public async getAuthRequest(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+    public static getAuthConfigErrorMessage(): string {
+        return "Please provide 'auth.apiKey' or set the 'MY_API_KEY' environment variable";
+    }
+
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
         const apiKey =
-            (await core.EndpointSupplier.get(this.headerValue, { endpointMetadata: arg?.endpointMetadata ?? {} })) ??
-            process.env?.MY_API_KEY;
+            (await core.EndpointSupplier.get(this.headerValue, { endpointMetadata })) ?? process.env?.MY_API_KEY;
         if (apiKey == null) {
             throw new errors.SeedEndpointSecurityAuthError({
                 message:
