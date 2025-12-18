@@ -38,7 +38,9 @@ class SimpleClient:
         from seed import SeedInferredAuthImplicit
 
         client = SeedInferredAuthImplicit(
-            base_url="https://yourhost.com/path/to/api",
+            base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.simple.get_something()
         """
@@ -79,7 +81,9 @@ class AsyncSimpleClient:
         from seed import AsyncSeedInferredAuthImplicit
 
         client = AsyncSeedInferredAuthImplicit(
-            base_url="https://yourhost.com/path/to/api",
+            base_url="YOUR_BASE_URL",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
