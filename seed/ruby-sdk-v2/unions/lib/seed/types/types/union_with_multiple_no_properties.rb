@@ -8,9 +8,9 @@ module Seed
 
         discriminant :type
 
-        member -> { Seed::Types::Types::Foo }, key: "foo"
-        member -> { Object }, key: "empty1"
-        member -> { Object }, key: "empty2"
+        member -> { Seed::Types::Types::Foo }, key: "FOO"
+        member -> { Object }, key: "EMPTY_1"
+        member -> { Object }, key: "EMPTY_2"
       end
     end
   end

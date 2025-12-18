@@ -8,8 +8,8 @@ module Seed
 
         discriminant :type
 
-        member -> { Seed::Types::Types::Foo }, key: "foo"
-        member -> { Seed::Types::Types::FooExtended }, key: "fooExtended"
+        member -> { Seed::Types::Types::Foo }, key: "FOO"
+        member -> { Seed::Types::Types::FooExtended }, key: "FOO_EXTENDED"
       end
     end
   end

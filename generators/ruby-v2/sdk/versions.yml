@@ -8,11 +8,6 @@
         passed via the headers parameter in Request.new() calls.
       type: fix
     - summary: |
-        Fix union type discriminant matching to use wire values instead of SCREAMING_SNAKE_CASE.
-        Union member keys now match the API's expected discriminant values (e.g., "card" instead
-        of "CARD"), enabling proper type coercion and field transformation for nested objects.
-      type: fix
-    - summary: |
         Add case-insensitive fallback for union discriminant matching in the Ruby runtime.
         When the exact discriminant value doesn't match a member key, the runtime now tries
         a case-insensitive lookup (e.g., "card" will match "CARD" or "Card"). This enables

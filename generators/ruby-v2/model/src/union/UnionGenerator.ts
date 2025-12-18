@@ -75,7 +75,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
 
     private unionMemberFromUnionType(type: FernIr.SingleUnionType): UnionMember {
         return {
-            keyName: type.discriminantValue.wireValue,
+            keyName: type.discriminantValue.name.screamingSnakeCase.safeName,
             typeReference: this.typeReferenceFromUnionType(type)
         };
     }

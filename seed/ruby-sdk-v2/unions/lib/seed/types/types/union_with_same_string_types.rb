@@ -8,9 +8,9 @@ module Seed
 
         discriminant :type
 
-        member -> { String }, key: "customFormat"
-        member -> { String }, key: "regularString"
-        member -> { String }, key: "patternString"
+        member -> { String }, key: "CUSTOM_FORMAT"
+        member -> { String }, key: "REGULAR_STRING"
+        member -> { String }, key: "PATTERN_STRING"
       end
     end
   end
