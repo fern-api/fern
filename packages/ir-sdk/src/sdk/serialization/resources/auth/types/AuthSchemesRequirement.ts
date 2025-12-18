@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const AuthSchemesRequirement: core.serialization.Schema<
     serializers.AuthSchemesRequirement.Raw,
     FernIr.AuthSchemesRequirement
-> = core.serialization.enum_(["ALL", "ANY", "ENDPOINT_SPECIFIC"]);
+> = core.serialization.enum_(["ALL", "ANY", "ENDPOINT_SECURITY"]);
 
 export declare namespace AuthSchemesRequirement {
-    export type Raw = "ALL" | "ANY" | "ENDPOINT_SPECIFIC";
+    export type Raw = "ALL" | "ANY" | "ENDPOINT_SECURITY";
 }

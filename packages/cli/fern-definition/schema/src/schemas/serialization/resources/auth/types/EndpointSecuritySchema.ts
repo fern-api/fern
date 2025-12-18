@@ -5,19 +5,20 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { EndpointSecuritySchemaDetails } from "./EndpointSecuritySchemaDetails";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
-export const EndpointSpecificAuthSchema: core.serialization.ObjectSchema<
-    serializers.EndpointSpecificAuthSchema.Raw,
-    FernDefinition.EndpointSpecificAuthSchema
+export const EndpointSecuritySchema: core.serialization.ObjectSchema<
+    serializers.EndpointSecuritySchema.Raw,
+    FernDefinition.EndpointSecuritySchema
 > = core.serialization
     .object({
-        "endpoint-specific": core.serialization.record(core.serialization.string(), core.serialization.unknown()),
+        "endpoint-security": EndpointSecuritySchemaDetails,
     })
     .extend(WithDocsSchema);
 
-export declare namespace EndpointSpecificAuthSchema {
+export declare namespace EndpointSecuritySchema {
     export interface Raw extends WithDocsSchema.Raw {
-        "endpoint-specific": Record<string, unknown>;
+        "endpoint-security": EndpointSecuritySchemaDetails.Raw;
     }
 }

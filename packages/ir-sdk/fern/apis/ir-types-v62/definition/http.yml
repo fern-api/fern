@@ -77,6 +77,9 @@ types:
       source: optional<HttpEndpointSource>
       audiences: optional<list<audience.AudienceReference>>
       retries: optional<RetriesConfiguration>
+      apiPlayground:
+        type: optional<boolean>
+        docs: Whether this endpoint is shown in the API playground
 
   HttpEndpointSecurityItem:
     type: map<auth.AuthSchemeKey, list<auth.AuthScope>>
@@ -138,6 +141,7 @@ types:
       location: PathParameterLocation
       variable: optional<variables.VariableId>
       v2Examples: optional<examples.V2SchemaExamples>
+      explode: optional<boolean>
 
   PathParameterLocation:
     enum:
@@ -152,6 +156,7 @@ types:
       valueType: types.TypeReference
       allowMultiple: boolean
       v2Examples: optional<examples.V2SchemaExamples>
+      explode: optional<boolean>
 
   HttpRequestBody:
     union:
@@ -277,8 +282,14 @@ types:
       onlyPathParameters: optional<boolean>
 
   HttpResponse:
+    extends: commons.WithDocs
     properties:
       status-code: optional<integer>
+      isWildcardStatusCode:
+        type: optional<boolean>
+        docs: |
+          When true, indicates that the status-code represents a wildcard pattern (e.g., 4XX or 5XX).
+          The status-code field will contain the base value (400 for 4XX, 500 for 5XX).
       body: optional<HttpResponseBody>
 
   V2HttpResponses:
@@ -578,6 +589,12 @@ types:
     extends: commons.WithJsonExample
     properties:
       properties: list<ExampleInlinedRequestBodyProperty>
+      extraProperties: optional<list<ExampleInlinedRequestBodyExtraProperty>>
+
+  ExampleInlinedRequestBodyExtraProperty:
+    properties:
+      name: commons.NameAndWireValue
+      value: types.ExampleTypeReference
 
   ExampleInlinedRequestBodyProperty:
     properties:

@@ -377,6 +377,7 @@ types:
   ExampleObjectType:
     properties:
       properties: list<ExampleObjectProperty>
+      extraProperties: optional<list<ExampleExtraObjectProperty>>
 
   ExampleObjectProperty:
     properties:
@@ -389,10 +390,26 @@ types:
           is the name of the type that contains this property.
         type: DeclaredTypeName
 
+  ExampleExtraObjectProperty:
+    properties:
+      name: commons.NameAndWireValue
+      value: ExampleTypeReference
+
   ExampleUnionType:
     properties:
       discriminant: commons.NameAndWireValue
       singleUnionType: ExampleSingleUnionType
+      extendProperties:
+        docs: A list of properties inherited from other types
+        type: optional<list<ExampleObjectProperty>>
+      baseProperties:
+        docs: A list of base properties for the union
+        type: optional<list<ExampleUnionBaseProperty>>
+
+  ExampleUnionBaseProperty:
+    properties:
+      name: commons.NameAndWireValue
+      value: ExampleTypeReference
 
   ExampleUndiscriminatedUnionType:
     properties:

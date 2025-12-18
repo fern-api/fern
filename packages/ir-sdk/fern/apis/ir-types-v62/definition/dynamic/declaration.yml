@@ -1,5 +1,5 @@
 imports:
-  commons: ../commons.yml
+  commons: ./commons.yml
 types:
   Declaration:
     properties:

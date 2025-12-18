@@ -66,7 +66,7 @@ export const V61_TO_V60_MIGRATION: IrMigration<
 };
 
 function convertApiAuth(auth: IrVersions.V61.auth.ApiAuth): IrVersions.V60.auth.ApiAuth {
-    if (auth.requirement === AuthSchemesRequirement.EndpointSpecific) {
+    if (auth.requirement === AuthSchemesRequirement.EndpointSecurity) {
         return {
             ...auth,
             requirement: IrVersions.V60.auth.AuthSchemesRequirement.All

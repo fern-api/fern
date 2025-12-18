@@ -1,8 +1,8 @@
 imports:
   auth: ./auth.yml
-  commons: ../commons.yml
+  commons: ./commons.yml
   declaration: ./declaration.yml
-  http: ../http.yml
+  http: ./http.yml
   types: ./types.yml
   snippets: ./snippets.yml
 
@@ -39,6 +39,11 @@ types:
       streaming, etc).
     union:
       json: {}
+      streaming: {}
+      streamParameter: {}
+      fileDownload: {}
+      text: {}
+      bytes: {}
 
   BodyRequest:
     properties:

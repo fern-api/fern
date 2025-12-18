@@ -66,6 +66,28 @@ types:
       dynamic: optional<dynamic.DynamicIntermediateRepresentation>
       selfHosted: optional<boolean>
       audiences: optional<list<audience.AudienceDefinition>>
+      generationMetadata: optional<GenerationMetadata>
+      apiPlayground:
+        type: optional<boolean>
+        docs: Whether the API playground should be enabled. Defaults to true.
+
+  GenerationMetadata:
+    docs: |
+      Metadata about the generation process, including CLI version and generator configuration.
+      This information can be used by generators to include metadata in generated SDKs.
+    properties:
+      cliVersion:
+        type: string
+        docs: The version of the Fern CLI that generated this IR.
+      generatorName:
+        type: string
+        docs: The name of the generator being invoked (e.g., "fernapi/fern-python-sdk").
+      generatorVersion:
+        type: string
+        docs: The version of the generator being invoked.
+      generatorConfig:
+        type: optional<unknown>
+        docs: The custom configuration passed to the generator from generators.yml.
 
   ReadmeConfig:
     docs: |
@@ -95,6 +117,15 @@ types:
       customSections:
         docs: "Supply custom sections as markdown to be included in the readme"
         type: optional<list<ReadmeCustomSection>>
+      exampleStyle:
+        docs: "Controls whether usage examples show only required parameters (minimal) or all parameters (comprehensive). Defaults to comprehensive."
+        type: optional<ExampleStyle>
+
+  ExampleStyle:
+    docs: "Controls the verbosity of usage examples in README generation"
+    enum:
+      - minimal
+      - comprehensive
 
   ReadmeCustomSection:
     properties:

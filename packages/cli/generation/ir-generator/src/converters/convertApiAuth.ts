@@ -65,10 +65,18 @@ export function convertApiAuth({
                 })
             )
         }),
-        endpointSpecific: () => ({
+        endpointSecurity: () => ({
             docs,
-            requirement: AuthSchemesRequirement.EndpointSpecific,
-            schemes: []
+            requirement: AuthSchemesRequirement.EndpointSecurity,
+            schemes: Object.keys(rawApiFileSchema["auth-schemes"] ?? {}).map((schemeName) =>
+                convertSchemeReference({
+                    reference: schemeName,
+                    authSchemeDeclarations: rawApiFileSchema["auth-schemes"],
+                    file,
+                    propertyResolver,
+                    endpointResolver
+                })
+            )
         })
     });
 }

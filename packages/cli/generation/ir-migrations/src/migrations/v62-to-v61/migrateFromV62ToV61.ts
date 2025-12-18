@@ -61,8 +61,8 @@ export const V62_TO_V61_MIGRATION: IrMigration<
 };
 
 function convertApiAuth(auth: IntermediateRepresentation["auth"]): IrVersions.V61.auth.ApiAuth {
-    // Convert ENDPOINT_SPECIFIC to ALL when migrating backwards since v61 doesn't support ENDPOINT_SPECIFIC
-    if (auth.requirement === AuthSchemesRequirement.EndpointSpecific) {
+    // Convert ENDPOINT_SECURITY to ALL when migrating backwards since v61 doesn't support ENDPOINT_SECURITY
+    if (auth.requirement === AuthSchemesRequirement.EndpointSecurity) {
         return {
             ...auth,
             requirement: IrVersions.V61.auth.AuthSchemesRequirement.All

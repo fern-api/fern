@@ -22,8 +22,8 @@ function getReferencedAuthSchemeNames(auth: RawSchemas.ApiAuthSchema): string[] 
         any: (anySchemes) => {
             return anySchemes.any.map((scheme) => (typeof scheme === "string" ? scheme : scheme.scheme));
         },
-        endpointSpecific: () => {
-            // For endpoint-specific auth, there are no globally referenced auth schemes
+        endpointSecurity: () => {
+            // For endpoint-security auth, there are no globally referenced auth schemes
             return [];
         }
     });

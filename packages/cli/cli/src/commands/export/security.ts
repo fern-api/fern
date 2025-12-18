@@ -18,8 +18,8 @@ export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityR
             apiAuth.schemes.map((scheme) => ({
                 [getNameForAuthScheme(scheme)]: []
             })),
-        endpointSpecific: () => {
-            // When auth is endpoint-specific, security is defined per-endpoint, not globally
+        endpointSecurity: () => {
+            // When auth is endpoint-security, security is defined per-endpoint, not globally
             return [];
         },
         _other: () => {

@@ -49,9 +49,9 @@ export function convertApiAuth({
                 })
             )
         }),
-        endpointSpecific: () => ({
+        endpointSecurity: () => ({
             docs,
-            requirement: AuthSchemesRequirement.EndpointSpecific,
+            requirement: AuthSchemesRequirement.EndpointSecurity,
             schemes: []
         })
     });

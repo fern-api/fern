@@ -67,6 +67,9 @@ types:
         docs: |
           The token scoped to installing the repository. If not specified, the generator
           should NOT attempt to clone the repository.
+      branch:
+        type: optional<string>
+        docs: The branch to use for README cloning. Defaults to the repository's default branch when omitted.
       publishInfo: optional<GithubPublishInfo>
   OutputMetadataAuthor:
     properties:
@@ -91,6 +94,7 @@ types:
       pypi: PypiGithubPublishInfo
       rubygems: RubyGemsGithubPublishInfo
       nuget: NugetGithubPublishInfo
+      crates: CratesGithubPublishInfo
   EnvironmentVariable: string
   NpmGithubPublishInfo:
     properties:
@@ -141,6 +145,12 @@ types:
       packageName: string
       apiKeyEnvironmentVariable: EnvironmentVariable
       shouldGeneratePublishWorkflow: optional<boolean>
+  CratesGithubPublishInfo:
+    properties:
+      registryUrl: string
+      packageName: string
+      tokenEnvironmentVariable: EnvironmentVariable
+      shouldGeneratePublishWorkflow: optional<boolean>
   GeneratorRegistriesConfig:
     properties:
       maven: MavenRegistryConfig
@@ -169,6 +179,7 @@ types:
       pypi: PypiRegistryConfig
       rubygems: RubyGemsRegistryConfig
       nuget: NugetRegistryConfig
+      crates: CratesRegistryConfig
   GeneratorPublishTarget:
     union:
       maven: MavenRegistryConfigV2
@@ -177,6 +188,7 @@ types:
       postman: PostmanConfig
       rubygems: RubyGemsRegistryConfig
       nuget: NugetRegistryConfig
+      crates: CratesRegistryConfig
   MavenRegistryConfigV2:
     properties:
       registryUrl: string
@@ -205,6 +217,11 @@ types:
     properties:
       registryUrl: string
       apiKey: string
+      packageName: string
+  CratesRegistryConfig:
+    properties:
+      registryUrl: string
+      token: string
       packageName: string
   PostmanConfig:
     properties:

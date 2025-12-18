@@ -1,8 +1,9 @@
 imports:
-  commons: ../commons.yml
+  commons: ./commons.yml
   endpoints: ./endpoints.yml
-  environment: ../environment.yml
+  environment: ./environment.yml
   types: ./types.yml
+  variables: ./variables.yml
 types:
   DynamicIntermediateRepresentation:
     audiences:
@@ -32,6 +33,11 @@ types:
           path parameters are typically included in the SDK's client
           constructor.
         type: optional<list<types.NamedParameter>>
+      variables:
+        docs: |
+          Variables that are configured at the client level and can be
+          referenced in path parameters and other contexts.
+        type: optional<list<variables.VariableDeclaration>>
       generatorConfig: optional<GeneratorConfig>
 
   GeneratorConfig:
@@ -59,13 +65,22 @@ types:
   PublishInfo:
     union:
       go: GoPublishInfo
+      swift: SwiftPublishInfo
       maven: MavenPublishInfo
       npm: NpmPublishInfo
       nuget: NugetPublishInfo
       pypi: PypiPublishInfo
       rubygems: RubyGemsPublishInfo
+      crates: CratesPublishInfo
 
   GoPublishInfo:
+    properties:
+      version: string
+      repoUrl:
+        type: string
+        docs: A full repo url (i.e. https://github.com/fern-api/fern)
+
+  SwiftPublishInfo:
     properties:
       version: string
       repoUrl:
@@ -97,6 +112,12 @@ types:
       repoUrl: optional<string>
 
   RubyGemsPublishInfo:
+    properties:
+      version: string
+      packageName: string
+      repoUrl: optional<string>
+
+  CratesPublishInfo:
     properties:
       version: string
       packageName: string

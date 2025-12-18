@@ -24,6 +24,10 @@ types:
       repo: string
       uri: optional<string>
       token: optional<string>
+      mode: optional<literal<"pull-request">>
+      branch:
+        type: optional<string>
+        docs: The branch to use for README cloning and publishing. Defaults to the repository's default branch when omitted.
       target: PublishTarget
 
   DirectPublish:
@@ -36,6 +40,7 @@ types:
       npm: NpmPublishTarget
       maven: MavenPublishTarget
       pypi: PypiPublishTarget
+      crates: CratesPublishTarget
 
   PostmanPublishTarget:
     properties:
@@ -58,6 +63,11 @@ types:
       mavenUrlEnvironmentVariable: string
 
   PypiPublishTarget:
+    properties:
+      version: optional<string>
+      packageName: optional<string>
+
+  CratesPublishTarget:
     properties:
       version: optional<string>
       packageName: optional<string>

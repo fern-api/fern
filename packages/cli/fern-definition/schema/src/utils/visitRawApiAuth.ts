@@ -1,10 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AnyAuthSchemesSchema, ApiAuthSchema, AuthSchemeReferenceSchema, EndpointSpecificAuthSchema } from "../schemas";
+import { AnyAuthSchemesSchema, ApiAuthSchema, AuthSchemeReferenceSchema, EndpointSecuritySchema } from "../schemas";
 
 export interface RawApiAuthVisitor<R> {
     single: (authScheme: AuthSchemeReferenceSchema | string) => R;
     any: (authSchemes: AnyAuthSchemesSchema) => R;
-    endpointSpecific: (authSchemes: EndpointSpecificAuthSchema) => R;
+    endpointSecurity: (authSchemes: EndpointSecuritySchema) => R;
 }
 
 export function visitRawApiAuth<R>(apiAuth: ApiAuthSchema, visitor: RawApiAuthVisitor<R>): R {
@@ -14,8 +14,8 @@ export function visitRawApiAuth<R>(apiAuth: ApiAuthSchema, visitor: RawApiAuthVi
     if (isAnyAuthSchemes(apiAuth)) {
         return visitor.any(apiAuth);
     }
-    if (isEndpointSpecificAuthSchemes(apiAuth)) {
-        return visitor.endpointSpecific(apiAuth);
+    if (isEndpointSecurityAuthSchemes(apiAuth)) {
+        return visitor.endpointSecurity(apiAuth);
     }
     assertNever(apiAuth);
 }
@@ -30,7 +30,7 @@ export function isAnyAuthSchemes(apiAuth: ApiAuthSchema): apiAuth is AnyAuthSche
     return firstKey === "any" && rest.length === 0;
 }
 
-export function isEndpointSpecificAuthSchemes(apiAuth: ApiAuthSchema): apiAuth is EndpointSpecificAuthSchema {
+export function isEndpointSecurityAuthSchemes(apiAuth: ApiAuthSchema): apiAuth is EndpointSecuritySchema {
     const [firstKey, ...rest] = Object.keys(apiAuth);
-    return firstKey === "endpoint-specific" && rest.length === 0;
+    return firstKey === "endpoint-security" && rest.length === 0;
 }

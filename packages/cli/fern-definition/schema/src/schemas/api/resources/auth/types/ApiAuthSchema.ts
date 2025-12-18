@@ -8,4 +8,4 @@ export type ApiAuthSchema =
     | string
     | FernDefinition.AuthSchemeReferenceSchema
     | FernDefinition.AnyAuthSchemesSchema
-    | FernDefinition.EndpointSpecificAuthSchema;
+    | FernDefinition.EndpointSecuritySchema;
