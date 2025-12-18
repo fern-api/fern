@@ -212,48 +212,37 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
         if (!canSatisfyAnyRequirement) {
             const requiredSchemes = security.map((req) => Object.keys(req).join(" AND ")).join(" OR ");
             throw new Error(
-                \`No authentication credentials provided that satisfy the endpoint's security requirements. ` +
-                \`Required: \${requiredSchemes}. Please provide the necessary authentication credentials.\`
+                "No authentication credentials provided that satisfy the endpoint's security requirements. " +
+                "Required: " + requiredSchemes + ". Please provide the necessary authentication credentials."
             );
         }
 
-        // Try each security requirement collection (OR relationship)
-        for (const securityRequirement of security) {
+        // Get the first security requirement that can be satisfied (OR relationship)
+        const satisfiableRequirement = security.find((securityRequirement) => {
             const schemeKeys = Object.keys(securityRequirement);
-            let allSchemesSucceeded = true;
-            const combinedHeaders: Record<string, string> = {};
+            return schemeKeys.every((schemeKey) => ${providerMap}.has(schemeKey));
+        });
 
-            // Try all schemes in this requirement (AND relationship)
-            for (const schemeKey of schemeKeys) {
-                const provider = ${providerMap}.get(schemeKey);
-                if (provider == null) {
-                    allSchemesSucceeded = false;
-                    break;
-                }
-
-                try {
-                    const authRequest = await provider.getAuthRequest(arg);
-                    if (Object.keys(authRequest.headers).length === 0) {
-                        allSchemesSucceeded = false;
-                        break;
-                    }
-                    Object.assign(combinedHeaders, authRequest.headers);
-                } catch (e) {
-                    allSchemesSucceeded = false;
-                    break;
-                }
-            }
-
-            if (allSchemesSucceeded && Object.keys(combinedHeaders).length > 0) {
-                return { headers: combinedHeaders };
-            }
+        if (satisfiableRequirement == null) {
+            // This should not happen since we already verified above, but handle it gracefully
+            const requiredSchemes = security.map((req) => Object.keys(req).join(" AND ")).join(" OR ");
+            throw new Error(
+                "No authentication credentials provided that satisfy the endpoint's security requirements. " +
+                "Required: " + requiredSchemes + ". Please provide the necessary authentication credentials."
+            );
         }
 
-        // No security requirement could be satisfied (auth credentials not provided or invalid)
-        const requiredSchemes = security.map((req) => Object.keys(req).join(" AND ")).join(" OR ");
-        throw new Error(
-            \`Authentication failed. The endpoint requires: \${requiredSchemes}. ` +
-            \`Please ensure valid authentication credentials are provided.\`
-        );`;
+        // Get auth for all schemes in the satisfiable requirement (AND relationship)
+        const combinedHeaders: Record<string, string> = {};
+        for (const schemeKey of Object.keys(satisfiableRequirement)) {
+            const provider = ${providerMap}.get(schemeKey);
+            if (provider == null) {
+                throw new Error("Auth provider not found for scheme: " + schemeKey);
+            }
+            const authRequest = await provider.getAuthRequest(arg);
+            Object.assign(combinedHeaders, authRequest.headers);
+        }
+
+        return { headers: combinedHeaders };`;
     }
 }
