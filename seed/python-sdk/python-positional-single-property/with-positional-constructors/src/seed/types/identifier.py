@@ -10,7 +10,7 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Identifier_Isin(UniversalBaseModel):
-    type: typing.Literal["isin"] = "isin"
+    identifier_type: typing.Literal["isin"] = "isin"
     isin: str
 
     def __init__(self, isin: str, **kwargs: typing.Any) -> None:
@@ -27,7 +27,7 @@ class Identifier_Isin(UniversalBaseModel):
 
 
 class Identifier_Cusip(UniversalBaseModel):
-    type: typing.Literal["cusip"] = "cusip"
+    identifier_type: typing.Literal["cusip"] = "cusip"
     cusip: str
 
     def __init__(self, cusip: str, **kwargs: typing.Any) -> None:
@@ -44,5 +44,5 @@ class Identifier_Cusip(UniversalBaseModel):
 
 
 Identifier = typing_extensions.Annotated[
-    typing.Union[Identifier_Isin, Identifier_Cusip], pydantic.Field(discriminator="type")
+    typing.Union[Identifier_Isin, Identifier_Cusip], pydantic.Field(discriminator="identifier_type")
 ]

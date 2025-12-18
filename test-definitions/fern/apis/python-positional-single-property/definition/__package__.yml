@@ -51,16 +51,16 @@ types:
       quantity: Quantity
 
   # Union type with single-property members
+  # Using a different discriminant name to avoid conflict with member type fields
   Identifier:
-    discriminant: type
+    discriminant: identifier_type
     union:
-      isin: IsinWithDiscriminator
+      isin: Isin
       cusip: Cusip
 
   Cusip:
     properties:
       cusip: string
-      type: literal<"CUSIP">
 
 service:
   auth: false
