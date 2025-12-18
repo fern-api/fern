@@ -161,7 +161,7 @@ module Seed
         end
 
         def to_h
-          self.class.fields.merge(self.class.extra_fields).each_with_object({}) do |(name, field), acc|
+          result = self.class.fields.merge(self.class.extra_fields).each_with_object({}) do |(name, field), acc|
             # If there is a value present in the data, use that value
             # If there is a `nil` value present in the data, and it is optional but NOT nullable, exclude key altogether
             # If there is a `nil` value present in the data, and it is optional and nullable, use the nil value
@@ -178,6 +178,14 @@ module Seed
 
             acc[field.api_name] = value
           end
+
+          # Inject union discriminant if this instance was coerced from a discriminated union
+          # and the discriminant key is not already present in the result
+          discriminant_key = instance_variable_get(:@_fern_union_discriminant_key)
+          discriminant_value = instance_variable_get(:@_fern_union_discriminant_value)
+          result[discriminant_key] = discriminant_value if discriminant_key && discriminant_value && !result.key?(discriminant_key)
+
+          result
         end
 
         def ==(other)

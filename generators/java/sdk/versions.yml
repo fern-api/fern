@@ -1,3 +1,61 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 3.27.3
+  changelogEntry:
+    - summary: |
+        Fix streaming endpoint return types to use Iterable instead of Optional, fix missing ArrayList import for empty list literals, and fix OAuth wire tests to use withCredentials() pattern.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 3.27.2
+  changelogEntry:
+    - summary: |
+        Support configurable Node.js and Java V2 executable paths via NODE_PATH and JAVA_V2_PATH environment variables for local seed testing.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 3.27.1
+  changelogEntry:
+    - summary: |
+        Add sdkVersion as a top-level field in the generated metadata.json file.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 3.27.0
+  changelogEntry:
+    - summary: |
+        Add `gradle-central-dependency-management` configuration option (boolean, default false).
+        When enabled, this skips generating the `repositories` block in `build.gradle` files,
+        allowing `dependencyResolutionManagement` in `settings.gradle` with
+        `RepositoriesMode.FAIL_ON_PROJECT_REPOS` to work correctly.
+
+        This should be used in conjunction with `gradle-plugin-management` when configuring
+        central repository management on enterprise networks.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-central-dependency-management: true
+          gradle-plugin-management: |
+            pluginManagement {
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/gradle-plugins/' }
+                }
+            }
+            dependencyResolutionManagement {
+                repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/maven-releases/' }
+                }
+            }
+        ```
+      type: feat
+  createdAt: "2025-12-17"
+  irVersion: 61
+
 - version: 3.26.0
   changelogEntry:
     - summary: |

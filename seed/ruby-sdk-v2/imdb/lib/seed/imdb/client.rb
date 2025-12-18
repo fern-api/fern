@@ -22,6 +22,7 @@ module Seed
       #
       # @return [String]
       def create_movie(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -54,6 +55,7 @@ module Seed
       #
       # @return [Seed::Imdb::Types::Movie]
       def get_movie(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",

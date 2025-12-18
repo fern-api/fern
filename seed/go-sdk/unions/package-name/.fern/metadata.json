@@ -8,5 +8,6 @@
     "module": {
       "path": "github.com/fern-api/unions-go"
     }
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

@@ -9,6 +9,7 @@ import { WebSocketOrigin } from "./WebSocketOrigin";
 import { WebSocketChannelMessageBodySchema } from "./WebSocketChannelMessageBodySchema";
 import { DeclarationSchema } from "../../commons/types/DeclarationSchema";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
+import { WithMethodName } from "../../commons/types/WithMethodName";
 
 export const WebSocketChannelMessageSchema: core.serialization.ObjectSchema<
     serializers.WebSocketChannelMessageSchema.Raw,
@@ -19,10 +20,11 @@ export const WebSocketChannelMessageSchema: core.serialization.ObjectSchema<
         body: WebSocketChannelMessageBodySchema,
     })
     .extend(DeclarationSchema)
-    .extend(WithDisplayName);
+    .extend(WithDisplayName)
+    .extend(WithMethodName);
 
 export declare namespace WebSocketChannelMessageSchema {
-    export interface Raw extends DeclarationSchema.Raw, WithDisplayName.Raw {
+    export interface Raw extends DeclarationSchema.Raw, WithDisplayName.Raw, WithMethodName.Raw {
         origin: WebSocketOrigin.Raw;
         body: WebSocketChannelMessageBodySchema.Raw;
     }

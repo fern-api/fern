@@ -72,10 +72,6 @@ class AbstractImdbService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_movie.__globals__)
-
         router.post(
             path="/movies/create-movie",
             response_model=MovieId,
@@ -111,10 +107,6 @@ class AbstractImdbService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_movie.__globals__)
 
         router.get(
             path="/movies/{movie_id}",

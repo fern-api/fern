@@ -14,6 +14,7 @@ export const WebsocketMessageSchema: core.serialization.ObjectSchema<
     name: core.serialization.string(),
     origin: WebsocketMessageOrigin,
     body: core.serialization.lazy(() => serializers.Schema),
+    methodName: core.serialization.string().optional(),
 });
 
 export declare namespace WebsocketMessageSchema {
@@ -21,5 +22,6 @@ export declare namespace WebsocketMessageSchema {
         name: string;
         origin: WebsocketMessageOrigin.Raw;
         body: serializers.Schema.Raw;
+        methodName?: string | null;
     }
 }

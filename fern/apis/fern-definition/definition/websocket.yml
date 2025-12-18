@@ -23,6 +23,7 @@ types:
     extends:
       - commons.DeclarationSchema
       - commons.WithDisplayName
+      - commons.WithMethodName
     properties:
       origin: WebSocketOrigin
       body: WebSocketChannelMessageBodySchema

@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedOauthClientCredentialsReference;\n\nvar client = new SeedOauthClientCredentialsReferenceClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest { ClientId = \"client_id\", ClientSecret = \"client_secret\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/get-something",
+                "method": "GET",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedOauthClientCredentialsReference;\n\nvar client = new SeedOauthClientCredentialsReferenceClient(\"CLIENT_ID\", \"CLIENT_SECRET\");\nawait client.Simple.GetSomethingAsync();\n"
+            }
+        }
+    ]
+}

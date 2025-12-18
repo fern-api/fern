@@ -1,5 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.46.4-rc2
+  changelogEntry:
+    - summary: |
+        Add sdkVersion as a top-level field in the generated metadata.json file.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 4.46.4-rc1
+  changelogEntry:
+    - summary: |
+        Fix URL path stripping when base URL contains path prefixes.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 4.46.4-rc0
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to use `config.client.exported_class_name` for the client class name
+        instead of deriving it from the organization and workspace names. This ensures wire tests
+        import and instantiate the correct client class when a custom exported class name is configured.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 61
+
 - version: 4.46.3
   changelogEntry:
     - summary: |

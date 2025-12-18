@@ -85,7 +85,7 @@ export async function previewDocsWorkspace({
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-        context.logger.info(`Starting server on port ${port}`);
+        context.logger.info("Bootstrapping docs preview (this may take a few seconds)...");
 
         await runAppPreviewServer({
             initialProject: project,

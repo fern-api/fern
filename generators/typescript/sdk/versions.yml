@@ -3,10 +3,25 @@
   changelogEntry:
     - summary: |
         Add RoutingAuthProvider that routes to the correct auth provider based on endpoint security requirements.
-        When multiple auth schemes are defined (ANY auth), the RoutingAuthProvider uses endpoint metadata to determine
-        which auth provider to use, enabling per-endpoint auth scheme selection. This replaces the AnyAuthProvider
-        for better endpoint-specific auth routing.
+        When `auth: endpoint-security` is configured, the RoutingAuthProvider uses endpoint metadata to determine
+        which auth provider to use, enabling per-endpoint auth scheme selection. AnyAuthProvider remains the default
+        for `auth: any` configurations.
       type: feat
+  createdAt: "2025-12-18"
+  irVersion: 63
+
+- version: 3.42.7
+  changelogEntry:
+    - summary: |
+        Add sdkVersion as a top-level field in the generated metadata.json file.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 62
+
+- version: 3.42.6
+  changelogEntry:
+    - summary: Fix wire test generation for OAuth endpoints with reference request bodies.
+      type: fix
   createdAt: "2025-12-17"
   irVersion: 62
 

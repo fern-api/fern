@@ -24,6 +24,7 @@ module Seed
       #
       # @return [untyped]
       def get_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -55,6 +56,7 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[name age]
         body_bag = params.slice(*body_prop_names)
 

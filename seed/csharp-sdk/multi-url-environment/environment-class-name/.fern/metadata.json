@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "environment-class-name": "CustomEnvironment"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }
