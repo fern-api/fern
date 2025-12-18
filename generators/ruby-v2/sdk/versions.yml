@@ -21,6 +21,12 @@
         into the serialized JSON output. This ensures union fields serialize correctly
         with their discriminant values for API requests.
       type: fix
+    - summary: |
+        Add normalize_keys utility to accept both snake_case and camelCase parameter keys.
+        SDK endpoint methods now automatically convert camelCase keys (e.g., refundMethod)
+        to snake_case (e.g., refund_method) at the start of each method. This allows users
+        to pass JSON data with camelCase keys directly to SDK methods without manual conversion.
+      type: feat
   createdAt: "2025-12-18"
   irVersion: 61
 
