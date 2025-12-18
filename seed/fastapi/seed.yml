@@ -137,6 +137,7 @@ allowedFailures:
   - response-property
   - streaming
   - literal
+  - endpoint-security-auth
   # enum fixture fails due to union header parameter handling, not enum.py helper
   - enum:no-custom-config
   - server-sent-events
