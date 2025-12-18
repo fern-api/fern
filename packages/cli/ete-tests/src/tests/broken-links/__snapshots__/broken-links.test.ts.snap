@@ -2,15 +2,15 @@
 
 exports[`fern docs broken-links > simple broken links 1`] = `
 "[docs]:foo.md
-       broken link to /bar/baz
+       [error] broken link to /bar/baz
        	fix here: foo.md:11:21
-       broken link to /bar/baz.md
+       [error] broken link to /bar/baz.md
        	fix here: foo.md:12:21
        
 [docs]:bar.mdx
-       broken link to ../hello (resolved path: section/hello)
+       [error] broken link to ../hello (resolved path: section/hello)
        	fix here: bar.mdx:6:30
-       broken link to ../hello.md (resolved path: section/hello.md)
+       [error] broken link to ../hello.md (resolved path: section/hello.md)
        	fix here: bar.mdx:7:30
        
 [docs]:Found 4 errors and 0 warnings in"
