@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.26.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` to start the backend server before Next.js. Previously, Next.js would start immediately while the backend was still initializing, causing requests to fail if users opened the browser too quickly. The backend now fully initializes before Next.js starts accepting requests.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 62
+
 - version: 3.26.0
   changelogEntry:
     - summary: |
