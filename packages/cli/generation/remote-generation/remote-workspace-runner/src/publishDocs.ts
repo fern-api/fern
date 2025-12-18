@@ -589,13 +589,31 @@ async function checkAndDownloadExistingSdkDynamicIRs({
     );
 
     try {
-        const response = await fdr.api.v1.register.checkSdkDynamicIrExists({
+        // Use type assertion to call the endpoint that may not exist in older SDK versions.
+        // This endpoint is added in fern-platform PR #6049 and will be available once the SDK is updated.
+        const registerClient = fdr.api.v1.register as unknown as {
+            checkSdkDynamicIrExists?: (request: {
+                orgId: string;
+                snippetConfiguration: Record<string, { packageName: string; version: string }>;
+            }) => Promise<{
+                ok: boolean;
+                body?: { existingDynamicIrs: Record<string, { downloadUrl: string }> };
+                error?: { error: string };
+            }>;
+        };
+
+        if (!registerClient.checkSdkDynamicIrExists) {
+            context.logger.debug("checkSdkDynamicIrExists endpoint not available in current FDR SDK");
+            return undefined;
+        }
+
+        const response = await registerClient.checkSdkDynamicIrExists({
             orgId: CjsFdrSdk.OrgId(organization),
             snippetConfiguration: snippetConfigWithVersions
         });
 
-        if (!response.ok) {
-            context.logger.debug(`Failed to check for existing SDK dynamic IRs: ${response.error.error}`);
+        if (!response.ok || !response.body) {
+            context.logger.debug(`Failed to check for existing SDK dynamic IRs: ${response.error?.error ?? "unknown"}`);
             return undefined;
         }
 
