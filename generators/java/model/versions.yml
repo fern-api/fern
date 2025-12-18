@@ -1,14 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Support configurable Node.js and Java V2 executable paths via NODE_PATH and JAVA_V2_PATH environment variables for local seed testing.
-      type: chore
-  createdAt: "2025-12-18"
-  irVersion: 61
-  version: 1.8.5
-
-- changelogEntry:
-    - summary: |
         Bump generator CLI version to publish new Docker image.
       type: chore
   createdAt: "2025-11-19"

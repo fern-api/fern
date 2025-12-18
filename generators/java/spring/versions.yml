@@ -1,14 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Support configurable Node.js and Java V2 executable paths via NODE_PATH and JAVA_V2_PATH environment variables for local seed testing.
-      type: chore
-  createdAt: "2025-12-18"
-  irVersion: 61
-  version: 2.0.0-rc5
-
-- changelogEntry:
-    - summary: |
         Capture and display Gradle output in error messages when publish fails. The generator now includes the last 100 lines of stdout/stderr in error messages, making it possible to see actual Gradle compilation errors, dependency resolution failures, or Maven publish issues when running in hosted environments. Also adds --console=plain flag for better log capture.
       type: fix
   createdAt: "2025-11-20"
