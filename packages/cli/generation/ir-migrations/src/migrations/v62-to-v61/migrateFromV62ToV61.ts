@@ -65,7 +65,7 @@ function convertApiAuth(auth: IntermediateRepresentation["auth"]): IrVersions.V6
     if (auth.requirement === AuthSchemesRequirement.EndpointSpecific) {
         return {
             ...auth,
-            requirement: AuthSchemesRequirement.All
+            requirement: IrVersions.V61.auth.AuthSchemesRequirement.All
         };
     }
     return auth;
