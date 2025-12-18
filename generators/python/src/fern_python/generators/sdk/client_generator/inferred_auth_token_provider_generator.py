@@ -89,9 +89,7 @@ class InferredAuthTokenProviderGenerator:
                 initializer=AST.Expression("2"),
             ),
         )
-        class_declaration.add_method(
-            self._get_headers_function_declaration(has_expiry=has_expiry, is_async=is_async)
-        )
+        class_declaration.add_method(self._get_headers_function_declaration(has_expiry=has_expiry, is_async=is_async))
         class_declaration.add_method(
             self._get_fetch_token_function_declaration(
                 credential_properties=credential_properties,
@@ -153,7 +151,9 @@ class InferredAuthTokenProviderGenerator:
                     AST.CodeWriter(
                         self._get_write_member_initialization(
                             member_name=self._get_cached_headers_member_name(),
-                            type_hint=AST.TypeHint.optional(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())),
+                            type_hint=AST.TypeHint.optional(
+                                AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())
+                            ),
                             initialization=AST.Expression("None"),
                         ),
                     ),
@@ -288,9 +288,7 @@ class InferredAuthTokenProviderGenerator:
 
         return _write_auth_client_initialization
 
-    def _get_headers_function_declaration(
-        self, *, has_expiry: bool, is_async: bool
-    ) -> AST.FunctionDeclaration:
+    def _get_headers_function_declaration(self, *, has_expiry: bool, is_async: bool) -> AST.FunctionDeclaration:
         def _write_get_headers_body(writer: AST.NodeWriter) -> None:
             if has_expiry:
                 writer.write(
@@ -401,7 +399,10 @@ class InferredAuthTokenProviderGenerator:
                                         )
                                     ),
                                 ),
-                                ("buffer_in_minutes", AST.Expression(f"self.{self._get_buffer_in_minutes_member_name()}")),
+                                (
+                                    "buffer_in_minutes",
+                                    AST.Expression(f"self.{self._get_buffer_in_minutes_member_name()}"),
+                                ),
                             ],
                         ),
                     )
@@ -439,9 +440,7 @@ class InferredAuthTokenProviderGenerator:
 
         return AST.FunctionInvocation(
             function_definition=AST.Reference(
-                qualified_name_excluding_import=(
-                    f"self.{self._get_auth_client_member_name()}.{endpoint_name}",
-                ),
+                qualified_name_excluding_import=(f"self.{self._get_auth_client_member_name()}.{endpoint_name}",),
             ),
             kwargs=kwargs,
         )
@@ -526,8 +525,8 @@ class InferredAuthTokenProviderGenerator:
             elif request_body.type == "reference":
                 type_id = self._get_type_id_from_type_reference(request_body.request_body_type)
                 if type_id is not None:
-                    object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
-                        type_id
+                    object_properties = (
+                        self._context.pydantic_generator_context.get_all_properties_including_extensions(type_id)
                     )
                     for object_prop in object_properties:
                         field_name = object_prop.name.name.snake_case.safe_name
@@ -588,9 +587,7 @@ class InferredAuthTokenProviderGenerator:
             return container.type == "optional"
         return False
 
-    def _build_response_property_accessor(
-        self, response_var: str, response_property: ir_types.ResponseProperty
-    ) -> str:
+    def _build_response_property_accessor(self, response_var: str, response_property: ir_types.ResponseProperty) -> str:
         accessor = response_var
 
         if response_property.property_path is not None:
