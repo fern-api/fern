@@ -3,12 +3,12 @@ import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
-export const V62_TO_V61_MIGRATION: IrMigration<
-    IrVersions.V62.ir.IntermediateRepresentation,
-    IrVersions.V61.ir.IntermediateRepresentation
+export const V63_TO_V62_MIGRATION: IrMigration<
+    IrVersions.V63.ir.IntermediateRepresentation,
+    IrVersions.V62.ir.IntermediateRepresentation
 > = {
-    laterVersion: "v62",
-    earlierVersion: "v61",
+    laterVersion: "v63",
+    earlierVersion: "v62",
     firstGeneratorVersionToConsumeNewIR: {
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -35,30 +35,35 @@ export const V62_TO_V61_MIGRATION: IrMigration<
         [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.SWIFT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PHP_MODEL]: "0.0.2",
-        [GeneratorName.PHP_SDK]: "1.22.0",
+        [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
-        IrSerialization.V61.IntermediateRepresentation.jsonOrThrow(ir, {
+        IrSerialization.V62.IntermediateRepresentation.jsonOrThrow(ir, {
             unrecognizedObjectKeys: "passthrough",
             skipValidation: true
         }),
     migrateBackwards: (
-        v62: IrVersions.V62.IntermediateRepresentation
-    ): IrVersions.V61.ir.IntermediateRepresentation => {
+        v63: IrVersions.V63.IntermediateRepresentation
+    ): IrVersions.V62.ir.IntermediateRepresentation => {
         return {
-            ...v62,
-            errors: resolveErrorDeclarationConflicts(v62.errors)
+            ...v63,
+            auth: convertApiAuth(v63.auth)
         };
     }
 };
 
-function resolveErrorDeclarationConflicts(
-    errors: Record<string, IrVersions.V62.ErrorDeclaration>
-): Record<string, IrVersions.V61.ErrorDeclaration> {
-    return Object.fromEntries(
-        Object.entries(errors).filter(([_, errorDeclaration]) => errorDeclaration.isWildcardStatusCode !== true)
-    );
+function convertApiAuth(auth: IrVersions.V63.ApiAuth): IrVersions.V62.ApiAuth {
+    return {
+        ...auth,
+        requirement: IrVersions.V63.AuthSchemesRequirement._visit(auth.requirement, {
+            all: () => IrVersions.V62.AuthSchemesRequirement.All,
+            any: () => IrVersions.V62.AuthSchemesRequirement.Any,
+            // Convert ENDPOINT_SECURITY to ALL when migrating backwards since v62 doesn't support ENDPOINT_SECURITY
+            endpointSecurity: () => IrVersions.V62.AuthSchemesRequirement.All,
+            _other: () => IrVersions.V62.AuthSchemesRequirement.All
+        })
+    };
 }

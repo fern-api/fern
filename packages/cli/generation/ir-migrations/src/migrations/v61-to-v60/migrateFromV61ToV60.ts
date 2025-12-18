@@ -1,5 +1,4 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
-import { AuthSchemesRequirement } from "@fern-api/ir-sdk";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
@@ -52,7 +51,6 @@ export const V61_TO_V60_MIGRATION: IrMigration<
         const { apiPlayground: _apiPlayground, ...rest } = v61;
         return {
             ...rest,
-            auth: convertApiAuth(v61.auth),
             errors: Object.fromEntries(
                 Object.entries(v61.errors).map(([key, error]) => [key, convertErrorDeclaration(error)])
             ),
@@ -64,22 +62,6 @@ export const V61_TO_V60_MIGRATION: IrMigration<
         };
     }
 };
-
-function convertApiAuth(auth: IrVersions.V61.auth.ApiAuth): IrVersions.V60.auth.ApiAuth {
-    if (auth.requirement === AuthSchemesRequirement.EndpointSecurity) {
-        return {
-            ...auth,
-            requirement: IrVersions.V60.auth.AuthSchemesRequirement.All
-        };
-    }
-    return {
-        ...auth,
-        requirement:
-            auth.requirement === AuthSchemesRequirement.All
-                ? IrVersions.V60.auth.AuthSchemesRequirement.All
-                : IrVersions.V60.auth.AuthSchemesRequirement.Any
-    };
-}
 
 function convertErrorDeclaration(
     error: IrVersions.V61.errors.ErrorDeclaration
