@@ -24,7 +24,7 @@ module Seed
         #
         # @return [Array[Seed::User::Events::Types::Event]]
         def list_events(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.symbolize_keys(params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           query_param_names = %i[limit]
           query_params = {}
           query_params["limit"] = params[:limit] if params.key?(:limit)

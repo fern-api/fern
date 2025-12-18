@@ -20,6 +20,7 @@ module Seed
       #
       # @return [untyped]
       def patch(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[application require_auth]
         body_bag = params.slice(*body_prop_names)
 
@@ -58,6 +59,7 @@ module Seed
       #
       # @return [untyped]
       def patch_complex(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[id]
         body_params = params.except(*path_param_names)
         body_prop_names = %i[name age active metadata tags email nickname bio profile_image_url settings]
@@ -96,6 +98,7 @@ module Seed
       #
       # @return [untyped]
       def named_patch_with_mixed(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[id]
         body_params = params.except(*path_param_names)
         body_prop_names = %i[app_id instructions active]
@@ -135,6 +138,7 @@ module Seed
       #
       # @return [untyped]
       def optional_merge_patch_test(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[required_field optional_string optional_integer optional_boolean nullable_string]
         body_bag = params.slice(*body_prop_names)
 
@@ -170,6 +174,7 @@ module Seed
       #
       # @return [untyped]
       def regular_patch(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[id]
         body_params = params.except(*path_param_names)
         body_prop_names = %i[field_1 field_2]

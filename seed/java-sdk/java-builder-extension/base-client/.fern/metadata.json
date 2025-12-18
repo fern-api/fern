@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "client-class-name": "BaseClient"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

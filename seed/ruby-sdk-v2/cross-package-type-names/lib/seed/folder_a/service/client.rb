@@ -20,7 +20,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Seed::FolderA::Service::Types::Response]
-        def get_direct_thread(request_options: {}, **_params)
+        def get_direct_thread(request_options: {}, **params)
+          Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",

@@ -6,5 +6,6 @@
     "pydantic_config": {
       "skip_validation": true
     }
-  }
+  },
+  "sdkVersion": "0.0.1"
 }
