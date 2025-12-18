@@ -1381,31 +1381,46 @@ export class SdkGenerator {
     }
 
     private generateAuthProviders(): void {
-        const isAnyAuth = this.intermediateRepresentation.auth.requirement === "ANY";
+        const authRequirement = this.intermediateRepresentation.auth.requirement;
 
-        if (isAnyAuth) {
-            // For ANY auth, we need to generate all individual auth providers first,
-            // then generate the AnyAuthProvider that aggregates them
-            for (const authScheme of this.intermediateRepresentation.auth.schemes) {
-                const authProvidersGenerator = new AuthProvidersGenerator({
-                    ir: this.intermediateRepresentation,
-                    authScheme,
-                    neverThrowErrors: this.config.neverThrowErrors,
-                    includeSerdeLayer: this.config.includeSerdeLayer
-                });
-                if (!authProvidersGenerator.shouldWriteFile()) {
-                    continue;
-                }
-                this.withSourceFile({
-                    filepath: authProvidersGenerator.getFilePath(),
-                    run: ({ sourceFile, importsManager }) => {
-                        const context = this.generateSdkContext({ sourceFile, importsManager });
-                        authProvidersGenerator.writeToFile(context);
-                    }
-                });
+        // Generate individual auth providers for all auth schemes
+        for (const authScheme of this.intermediateRepresentation.auth.schemes) {
+            const authProvidersGenerator = new AuthProvidersGenerator({
+                ir: this.intermediateRepresentation,
+                authScheme,
+                neverThrowErrors: this.config.neverThrowErrors,
+                includeSerdeLayer: this.config.includeSerdeLayer
+            });
+            if (!authProvidersGenerator.shouldWriteFile()) {
+                continue;
             }
+            this.withSourceFile({
+                filepath: authProvidersGenerator.getFilePath(),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    authProvidersGenerator.writeToFile(context);
+                }
+            });
+        }
 
-            // Now generate the RoutingAuthProvider that routes to the correct provider based on endpoint security
+        // Generate aggregator auth provider based on auth requirement
+        if (authRequirement === "ANY") {
+            // For ANY auth, generate AnyAuthProvider that tries all providers in sequence
+            const anyAuthProvidersGenerator = new AuthProvidersGenerator({
+                ir: this.intermediateRepresentation,
+                authScheme: { type: "any" },
+                neverThrowErrors: this.config.neverThrowErrors,
+                includeSerdeLayer: this.config.includeSerdeLayer
+            });
+            this.withSourceFile({
+                filepath: anyAuthProvidersGenerator.getFilePath(),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    anyAuthProvidersGenerator.writeToFile(context);
+                }
+            });
+        } else if (authRequirement === "ENDPOINT_SECURITY") {
+            // For ENDPOINT_SECURITY, generate RoutingAuthProvider that routes based on endpoint metadata
             const routingAuthProvidersGenerator = new AuthProvidersGenerator({
                 ir: this.intermediateRepresentation,
                 authScheme: { type: "routing" },
@@ -1419,26 +1434,6 @@ export class SdkGenerator {
                     routingAuthProvidersGenerator.writeToFile(context);
                 }
             });
-        } else {
-            // For non-ANY auth, generate auth providers as before
-            for (const authScheme of this.intermediateRepresentation.auth.schemes) {
-                const authProvidersGenerator = new AuthProvidersGenerator({
-                    ir: this.intermediateRepresentation,
-                    authScheme,
-                    neverThrowErrors: this.config.neverThrowErrors,
-                    includeSerdeLayer: this.config.includeSerdeLayer
-                });
-                if (!authProvidersGenerator.shouldWriteFile()) {
-                    continue;
-                }
-                this.withSourceFile({
-                    filepath: authProvidersGenerator.getFilePath(),
-                    run: ({ sourceFile, importsManager }) => {
-                        const context = this.generateSdkContext({ sourceFile, importsManager });
-                        authProvidersGenerator.writeToFile(context);
-                    }
-                });
-            }
         }
     }
 
