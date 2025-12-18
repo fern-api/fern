@@ -5,14 +5,14 @@ import * as errors from "../errors/index.js";
 
 export namespace BearerAuthProvider {
     export interface AuthOptions {
-        token?: core.Supplier<core.BearerToken> | undefined;
+        token?: core.EndpointSupplier<core.BearerToken> | undefined;
     }
 
     export interface Options extends AuthOptions {}
 }
 
 export class BearerAuthProvider implements core.AuthProvider {
-    private readonly token: core.Supplier<core.BearerToken> | undefined;
+    private readonly token: core.EndpointSupplier<core.BearerToken> | undefined;
 
     constructor(options: BearerAuthProvider.Options) {
         this.token = options.token;
@@ -22,8 +22,10 @@ export class BearerAuthProvider implements core.AuthProvider {
         return options.token != null || process.env?.MY_TOKEN != null;
     }
 
-    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
-        const token = (await core.Supplier.get(this.token)) ?? process.env?.MY_TOKEN;
+    public async getAuthRequest(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+        const token =
+            (await core.EndpointSupplier.get(this.token, { endpointMetadata: arg?.endpointMetadata ?? {} })) ??
+            process.env?.MY_TOKEN;
         if (token == null) {
             throw new errors.SeedEndpointSecurityAuthError({
                 message:

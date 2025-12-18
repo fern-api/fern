@@ -5,14 +5,14 @@ import * as errors from "../errors/index.js";
 
 export namespace HeaderAuthProvider {
     export interface AuthOptions {
-        apiKey?: core.Supplier<string> | undefined;
+        apiKey?: core.EndpointSupplier<string> | undefined;
     }
 
     export interface Options extends AuthOptions {}
 }
 
 export class HeaderAuthProvider implements core.AuthProvider {
-    private readonly headerValue: core.Supplier<string> | undefined;
+    private readonly headerValue: core.EndpointSupplier<string> | undefined;
 
     constructor(options: HeaderAuthProvider.Options) {
         this.headerValue = options.apiKey;
@@ -22,8 +22,10 @@ export class HeaderAuthProvider implements core.AuthProvider {
         return options.apiKey != null || process.env?.MY_API_KEY != null;
     }
 
-    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
-        const apiKey = (await core.Supplier.get(this.headerValue)) ?? process.env?.MY_API_KEY;
+    public async getAuthRequest(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+        const apiKey =
+            (await core.EndpointSupplier.get(this.headerValue, { endpointMetadata: arg?.endpointMetadata ?? {} })) ??
+            process.env?.MY_API_KEY;
         if (apiKey == null) {
             throw new errors.SeedEndpointSecurityAuthError({
                 message:
