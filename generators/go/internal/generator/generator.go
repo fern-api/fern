@@ -574,6 +574,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		if hasOAuthScheme(ir.Auth) {
 			files = append(files, newOAuthFile(g.coordinator))
 		}
+		if hasInferredAuthScheme(ir.Auth) {
+			files = append(files, newInferredAuthFile(g.coordinator))
+		}
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newHttpCoreFile(g.coordinator))
 		files = append(files, newHttpInternalFile(g.coordinator))
@@ -1089,6 +1092,19 @@ func hasOAuthScheme(auth *ir.ApiAuth) bool {
 	return false
 }
 
+// hasInferredAuthScheme returns true if the auth configuration includes an inferred auth scheme.
+func hasInferredAuthScheme(auth *ir.ApiAuth) bool {
+	if auth == nil {
+		return false
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Inferred != nil {
+			return true
+		}
+	}
+	return false
+}
+
 // newPointerFile returns a *File containing the pointer helper functions
 // used to more easily instantiate pointers to primitive values (e.g. *string).
 //
@@ -1225,6 +1241,14 @@ func newOAuthFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/oauth.go",
 		[]byte(oauthFile),
+	)
+}
+
+func newInferredAuthFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/inferred_auth.go",
+		[]byte(inferredAuthFile),
 	)
 }
 

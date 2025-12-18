@@ -71,6 +71,9 @@ var (
 
 	//go:embed sdk/core/oauth.go
 	oauthFile string
+
+	//go:embed sdk/core/inferred_auth.go
+	inferredAuthFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -1116,6 +1119,8 @@ func (f *fileWriter) WriteClient(
 
 	// Check if OAuth is configured
 	oauthClientCredentials := getOAuthClientCredentials(irAuth)
+	// Check if Inferred Auth is configured
+	inferredAuth := getInferredAuthScheme(irAuth)
 
 	// Generate the client implementation.
 	f.P("type ", clientName, " struct {")
@@ -1124,6 +1129,9 @@ func (f *fileWriter) WriteClient(
 	f.P("header http.Header")
 	if oauthClientCredentials != nil {
 		f.P("oauthTokenProvider *core.OAuthTokenProvider")
+	}
+	if inferredAuth != nil {
+		f.P("inferredAuthProvider *core.InferredAuthProvider")
 	}
 	f.P()
 	if len(endpoints) > 0 {
@@ -1223,6 +1231,48 @@ func (f *fileWriter) WriteClient(
 		f.P("})")
 		f.P("})")
 	}
+	if inferredAuth != nil {
+		f.P("inferredAuthProvider := core.NewInferredAuthProvider()")
+		// Create an auth client to fetch tokens
+		// We need to create a separate RequestOptions without the token getter to avoid infinite recursion
+		f.P("authOptions := core.NewRequestOptions()")
+		f.P("authOptions.BaseURL = options.BaseURL")
+		f.P("authOptions.HTTPClient = options.HTTPClient")
+		// Copy any auth headers/API keys needed for the inferred auth endpoint
+		for _, header := range headers {
+			f.P("authOptions.", header.Name.Name.PascalCase.UnsafeName, " = options.", header.Name.Name.PascalCase.UnsafeName)
+		}
+		// Import the auth package
+		authImportPath := packagePathToImportPath(f.baseImportPath, []string{"auth"})
+		authPackage := f.scope.AddImport(authImportPath)
+		f.P("authClient := ", authPackage, ".NewClient(authOptions)")
+		// Set up the token getter function that will be called by ToHeader()
+		f.P("options.SetTokenGetter(func() (string, error) {")
+		f.P("return inferredAuthProvider.GetOrFetch(func() (string, int, error) {")
+		// Fetch a new token from the auth endpoint
+		fernImportPath := f.baseImportPath
+		fernPackage := f.scope.AddImport(fernImportPath)
+		f.P("response, err := authClient.GetTokenWithClientCredentials(context.Background(), &", fernPackage, ".GetTokenRequest{")
+		// Add any header-based auth like API keys
+		for _, header := range headers {
+			f.P(header.Name.Name.PascalCase.UnsafeName, ": options.", header.Name.Name.PascalCase.UnsafeName, ",")
+		}
+		f.P("})")
+		f.P("if err != nil {")
+		f.P("return \"\", 0, err")
+		f.P("}")
+		errorsPackage := f.scope.AddImport("errors")
+		f.P("if response.AccessToken == nil {")
+		f.P("return \"\", 0, ", errorsPackage, ".New(\"inferred auth response missing access token\")")
+		f.P("}")
+		f.P("expiresIn := 3600") // defaultInferredAuthExpirySeconds from the core file
+		f.P("if response.ExpiresIn != nil {")
+		f.P("expiresIn = *response.ExpiresIn")
+		f.P("}")
+		f.P("return *response.AccessToken, expiresIn, nil")
+		f.P("})")
+		f.P("})")
+	}
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
 	f.P("caller: internal.NewCaller(")
@@ -1234,6 +1284,9 @@ func (f *fileWriter) WriteClient(
 	f.P("header: options.ToHeader(),")
 	if oauthClientCredentials != nil {
 		f.P("oauthTokenProvider: oauthTokenProvider,")
+	}
+	if inferredAuth != nil {
+		f.P("inferredAuthProvider: inferredAuthProvider,")
 	}
 	if len(endpoints) > 0 {
 		f.P(" WithRawResponse: ", rawClientConstructorName, "(options),")
@@ -4062,4 +4115,17 @@ func getOAuthClientCredentials(auth *ir.ApiAuth) *ir.OAuthClientCredentials {
 		return nil
 	}
 	return oauth.Configuration.ClientCredentials
+}
+
+// getInferredAuthScheme returns the inferred auth scheme from the API auth config, or nil if not present.
+func getInferredAuthScheme(auth *ir.ApiAuth) *ir.InferredAuthScheme {
+	if auth == nil {
+		return nil
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Inferred != nil {
+			return scheme.Inferred
+		}
+	}
+	return nil
 }

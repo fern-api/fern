@@ -3,6 +3,8 @@
 package client
 
 import (
+	context "context"
+	errors "errors"
 	auth "github.com/inferred-auth-implicit/fern/auth"
 	core "github.com/inferred-auth-implicit/fern/core"
 	internal "github.com/inferred-auth-implicit/fern/internal"
@@ -25,6 +27,32 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	inferredAuthProvider := core.NewInferredAuthProvider()
+	authOptions := *options
+	authClient := auth.NewClient(
+		&authOptions,
+	)
+	options.SetTokenGetter(func() (string, error) {
+		return inferredAuthProvider.GetOrFetch(func() (string, int, error) {
+			response, err := authClient.GetTokenWithClientCredentials(context.Background(), &GetTokenRequest{
+				AccessToken: options.AccessToken,
+			})
+			if err != nil {
+				return "", 0, err
+			}
+			if response.AccessToken == "" {
+				return "", 0,
+					errors.New(
+						"inferred auth response missing access token",
+					)
+			}
+			expiresIn := 0
+			if response.ExpiresIn > 0 {
+				expiresIn = response.ExpiresIn
+			}
+			return response.AccessToken, expiresIn, nil
+		})
+	})
 	return &Client{
 		Auth:         auth.NewClient(options),
 		NestedNoAuth: client.NewClient(options),

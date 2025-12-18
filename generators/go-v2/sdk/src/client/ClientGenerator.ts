@@ -9,6 +9,7 @@ import {
     HeaderAuthScheme,
     HttpEndpoint,
     HttpService,
+    InferredAuthScheme,
     Name,
     OAuthScheme,
     RequestProperty,
@@ -231,6 +232,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         this.writeHeaderEnvironmentVariables({ writer });
         if (this.isRootClient) {
             this.writeOAuthTokenFetching({ writer });
+            this.writeInferredTokenFetching({ writer });
         }
     }
 
@@ -264,6 +266,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     break;
                 case "oauth":
                     this.writeOAuthEnvironmentVariables({ writer, scheme });
+                    break;
+                case "inferred":
+                    this.writeInferredAuthEnvironmentVariables({ writer, scheme });
                     break;
             }
         }
@@ -342,6 +347,21 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 propertyReference: go.selector({ on: go.codeblock("options"), selector: go.codeblock("ClientSecret") }),
                 env: configuration.clientSecretEnvVar
             });
+        }
+    }
+
+    private writeInferredAuthEnvironmentVariables({
+        writer,
+        scheme
+    }: {
+        writer: go.Writer;
+        scheme: InferredAuthScheme;
+    }): void {
+        // For inferred auth, we need to copy authenticated request headers that may need environment variables
+        // This would be similar to how headers are handled in the header auth scheme
+        for (const authHeader of scheme.tokenEndpoint.authenticatedRequestHeaders) {
+            // TODO: Add environment variable support for inferred auth headers if needed
+            // This would require checking if the auth header has an associated environment variable
         }
     }
 
@@ -527,6 +547,177 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         );
     }
 
+    private writeInferredTokenFetching({ writer }: { writer: go.Writer }): void {
+        const inferredScheme = this.getInferredAuthScheme();
+        if (inferredScheme == null) {
+            return;
+        }
+
+        const authServiceFernFilepath = this.getInferredAuthServiceFernFilepath();
+        if (authServiceFernFilepath == null) {
+            return;
+        }
+
+        // Get the token endpoint from the IR
+        const tokenEndpoint = this.getInferredTokenEndpoint();
+        if (tokenEndpoint == null) {
+            return;
+        }
+
+        // Get the method name from the endpoint
+        const methodName = this.context.getMethodName(tokenEndpoint.name);
+
+        // Create the InferredAuthProvider
+        writer.writeNode(
+            go.codeblock((w) => {
+                w.write("inferredAuthProvider := ");
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "NewInferredAuthProvider",
+                            importPath: this.context.getCoreImportPath()
+                        }),
+                        arguments_: []
+                    })
+                );
+                w.newLine();
+
+                // Create a separate auth client to fetch tokens
+                // We need to create a separate RequestOptions without the token getter to avoid infinite recursion
+                w.writeLine("authOptions := *options");
+
+                // Create the auth client
+                const authClientImportPath = this.context.getClientFileLocation({
+                    fernFilepath: authServiceFernFilepath,
+                    subpackage: undefined
+                }).importPath;
+                w.write("authClient := ");
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "NewClient",
+                            importPath: authClientImportPath
+                        }),
+                        arguments_: [go.codeblock("&authOptions")]
+                    })
+                );
+                w.newLine();
+
+                // Set up the token getter function that will be called by ToHeader()
+                w.writeLine("options.SetTokenGetter(func() (string, error) {");
+                w.indent();
+                w.writeLine("return inferredAuthProvider.GetOrFetch(func() (string, int, error) {");
+                w.indent();
+
+                // Fetch a new token from the auth endpoint
+                // Get the request type reference from the endpoint
+                const serviceId = inferredScheme.tokenEndpoint.endpoint.serviceId;
+                const requestWrapperName =
+                    tokenEndpoint.sdkRequest?.shape.type === "wrapper"
+                        ? tokenEndpoint.sdkRequest.shape.wrapperName
+                        : tokenEndpoint.sdkRequest?.requestParameterName;
+                const requestTypeRef =
+                    requestWrapperName != null
+                        ? go.typeReference({
+                              name: requestWrapperName.pascalCase.unsafeName,
+                              importPath: this.context.getRootImportPath()
+                          })
+                        : undefined;
+
+                if (requestTypeRef != null) {
+                    w.write(`response, err := authClient.${methodName}(`);
+                    w.writeNode(
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: "Background",
+                                importPath: "context"
+                            }),
+                            arguments_: []
+                        })
+                    );
+                    w.write(", &" + requestTypeRef.name + "{");
+                    w.newLine();
+                    w.indent();
+
+                    // Add authenticated request headers needed for the inferred auth endpoint
+                    for (const authHeader of inferredScheme.tokenEndpoint.authenticatedRequestHeaders) {
+                        // Get the property name from the auth header
+                        const headerPropertyName = this.getResponsePropertyFieldName(authHeader.responseProperty);
+                        w.writeLine(headerPropertyName + ": options." + headerPropertyName + ",");
+                    }
+
+                    w.dedent();
+                    w.writeLine("})");
+                } else {
+                    // Fallback for endpoints without request wrappers
+                    w.write(`response, err := authClient.${methodName}(`);
+                    w.writeNode(
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: "Background",
+                                importPath: "context"
+                            }),
+                            arguments_: []
+                        })
+                    );
+                    w.writeLine(")");
+                }
+
+                w.writeLine("if err != nil {");
+                w.indent();
+                w.writeLine('return "", 0, err');
+                w.dedent();
+                w.writeLine("}");
+
+                // Check for access token
+                w.writeNode(go.codeblock('if response.AccessToken == "" {'));
+                w.newLine();
+                w.indent();
+                w.writeLine('return "", 0, ');
+                w.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "New",
+                            importPath: "errors"
+                        }),
+                        arguments_: [go.codeblock('"inferred auth response missing access token"')]
+                    })
+                );
+                w.newLine();
+                w.dedent();
+                w.writeLine("}");
+
+                // Handle ExpiresIn with fallback to default
+                const expiresInProperty = inferredScheme.tokenEndpoint.expiryProperty;
+                if (expiresInProperty != null) {
+                    const expiresInIsOptional = this.isResponsePropertyOptional(expiresInProperty);
+                    w.writeLine("expiresIn := 0");
+                    if (expiresInIsOptional) {
+                        w.writeLine("if response.ExpiresIn != nil {");
+                        w.indent();
+                        w.writeLine("expiresIn = *response.ExpiresIn");
+                        w.dedent();
+                        w.writeLine("}");
+                    } else {
+                        w.writeLine("if response.ExpiresIn > 0 {");
+                        w.indent();
+                        w.writeLine("expiresIn = response.ExpiresIn");
+                        w.dedent();
+                        w.writeLine("}");
+                    }
+                } else {
+                    w.writeLine("expiresIn := 0 // No expiry property defined");
+                }
+
+                w.writeLine("return response.AccessToken, expiresIn, nil");
+                w.dedent();
+                w.writeLine("})");
+                w.dedent();
+                w.writeLine("})");
+            })
+        );
+    }
+
     private getOAuthTokenEndpoint(): HttpEndpoint | undefined {
         const oauthScheme = this.getOAuthClientCredentialsScheme();
         if (oauthScheme?.configuration?.type !== "clientCredentials") {
@@ -603,6 +794,52 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             }
         }
         return undefined;
+    }
+
+    private getInferredAuthScheme(): InferredAuthScheme | undefined {
+        if (this.context.ir.auth == null) {
+            return undefined;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "inferred") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+
+    private getInferredAuthServiceFernFilepath(): FernFilepath | undefined {
+        const inferredScheme = this.getInferredAuthScheme();
+        if (inferredScheme != null) {
+            const serviceId = inferredScheme.tokenEndpoint.endpoint.serviceId;
+            const service = this.context.ir.services[serviceId];
+            if (service != null) {
+                return service.name.fernFilepath;
+            }
+        }
+        return undefined;
+    }
+
+    private getInferredTokenEndpoint(): HttpEndpoint | undefined {
+        const inferredScheme = this.getInferredAuthScheme();
+        if (inferredScheme == null) {
+            return undefined;
+        }
+        const { endpointId, serviceId } = inferredScheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[serviceId];
+        if (service == null) {
+            return undefined;
+        }
+        return service.endpoints.find((ep) => ep.id === endpointId);
+    }
+
+    private getResponsePropertyFieldName(responseProperty: ResponseProperty): string {
+        // For inferred auth, we need to map the response property to the field name
+        // ResponseProperty has a property field which contains the ObjectProperty
+        if (responseProperty.property.name != null) {
+            return this.context.getFieldName(responseProperty.property.name.name);
+        }
+        return "Unknown";
     }
 
     private writeEnvConditional({

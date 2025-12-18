@@ -3,6 +3,8 @@
 package client
 
 import (
+	context "context"
+	errors "errors"
 	auth "github.com/websocket-inferred-auth/fern/auth"
 	core "github.com/websocket-inferred-auth/fern/core"
 	internal "github.com/websocket-inferred-auth/fern/internal"
@@ -19,6 +21,29 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	inferredAuthProvider := core.NewInferredAuthProvider()
+	authOptions := *options
+	authClient := auth.NewClient(
+		&authOptions,
+	)
+	options.SetTokenGetter(func() (string, error) {
+		return inferredAuthProvider.GetOrFetch(func() (string, int, error) {
+			response, err := authClient.GetTokenWithClientCredentials(context.Background(), &GetTokenRequest{
+				AccessToken: options.AccessToken,
+			})
+			if err != nil {
+				return "", 0, err
+			}
+			if response.AccessToken == "" {
+				return "", 0,
+					errors.New(
+						"inferred auth response missing access token",
+					)
+			}
+			expiresIn := 0 // No expiry property defined
+			return response.AccessToken, expiresIn, nil
+		})
+	})
 	return &Client{
 		Auth:    auth.NewClient(options),
 		options: options,
