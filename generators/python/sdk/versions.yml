@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.47.0
+  changelogEntry:
+    - summary: |
+        Add `positional_single_property_constructors` option to `pydantic_config`. When enabled, generates
+        a custom `__init__` method for models with a single required field (ignoring discriminator/literal
+        type fields with defaults). This allows positional argument construction like `Isin("US0378331005")`
+        instead of `Isin(isin="US0378331005")`.
+      type: feat
+  createdAt: "2025-12-18"
+  irVersion: 61
+
 - version: 4.46.4-rc2
   changelogEntry:
     - summary: |
