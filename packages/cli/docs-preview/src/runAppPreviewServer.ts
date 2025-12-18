@@ -856,19 +856,14 @@ export async function runAppPreviewServer({
 
                 editedAbsoluteFilepaths.length = 0;
 
-                // Restart the Next.js server
-                context.logger.info("Restarting Next.js server...");
+                // Restart the docs server
+                context.logger.info("Restarting docs server...");
                 await restartNextJsServer();
-
-                // Wait 3 seconds for the server to be fully ready before triggering refresh
-                context.logger.info("Waiting 3 seconds for server to be ready...");
-                await new Promise((resolve) => setTimeout(resolve, 3000));
 
                 sendData({
                     version: 1,
                     type: "finishReload"
                 });
-                context.logger.info("Reload complete. Refreshing browser...");
                 isReloading = false;
 
                 if (reloadedDocsDefinition != null) {
