@@ -3,8 +3,9 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
-import { validateAPIWorkspaceAndLogIssues } from "./validateAPIWorkspaceAndLogIssues";
-import { validateDocsWorkspaceAndLogIssues } from "./validateDocsWorkspaceAndLogIssues";
+import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport";
+import { collectAPIWorkspaceViolations } from "./validateAPIWorkspaceAndLogIssues";
+import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues";
 
 export async function validateWorkspaces({
     project,
@@ -23,48 +24,82 @@ export async function validateWorkspaces({
     isLocal?: boolean;
     directFromOpenapi?: boolean;
 }): Promise<void> {
+    const apiResults: ApiValidationResult[] = [];
+    let docsResult: DocsValidationResult | undefined;
+    let hasAnyErrors = false;
+
+    // Collect docs violations first
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
-        await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-            const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
-            await validateDocsWorkspaceAndLogIssues({
-                workspace: docsWorkspace,
-                context,
-                logWarnings,
-                apiWorkspaces: project.apiWorkspaces,
-                ossWorkspaces: await filterOssWorkspaces(project),
-                errorOnBrokenLinks,
-                excludeRules
-            });
+        const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
+        const ossWorkspaces = await filterOssWorkspaces(project);
+
+        const collected = await collectDocsWorkspaceViolations({
+            workspace: docsWorkspace,
+            context: cliContext,
+            apiWorkspaces: project.apiWorkspaces,
+            ossWorkspaces,
+            errorOnBrokenLinks,
+            excludeRules
         });
+
+        docsResult = {
+            violations: collected.violations,
+            elapsedMillis: collected.elapsedMillis
+        };
+
+        if (collected.hasErrors) {
+            hasAnyErrors = true;
+        }
     }
 
+    // Collect API violations
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
-            if (workspace.generatorsConfiguration?.groups.length === 0 && workspace.type != "fern") {
+            if (workspace.generatorsConfiguration?.groups.length === 0 && workspace.type !== "fern") {
                 return;
             }
 
-            await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace instanceof OSSWorkspace && directFromOpenapi) {
-                    await workspace.getIntermediateRepresentation({
-                        context,
-                        audiences: { type: "all" },
-                        enableUniqueErrorsPerEndpoint: false,
-                        generateV1Examples: false,
-                        logWarnings: logWarnings
-                    });
-                    return;
-                }
-
-                const fernWorkspace = await workspace.toFernWorkspace({ context });
-                await validateAPIWorkspaceAndLogIssues({
-                    workspace: fernWorkspace,
-                    context,
-                    logWarnings,
-                    ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+            if (workspace instanceof OSSWorkspace && directFromOpenapi) {
+                // For --from-openapi, run IR generation which logs its own errors
+                await workspace.getIntermediateRepresentation({
+                    context: cliContext,
+                    audiences: { type: "all" },
+                    enableUniqueErrorsPerEndpoint: false,
+                    generateV1Examples: false,
+                    logWarnings: logWarnings
                 });
+                return;
+            }
+
+            const fernWorkspace = await workspace.toFernWorkspace({ context: cliContext });
+            const collected = await collectAPIWorkspaceViolations({
+                workspace: fernWorkspace,
+                context: cliContext,
+                ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
             });
+
+            apiResults.push({
+                apiName: collected.apiName,
+                violations: collected.violations,
+                elapsedMillis: collected.elapsedMillis
+            });
+
+            if (collected.hasErrors) {
+                hasAnyErrors = true;
+            }
         })
     );
+
+    // Print the aggregated report
+    const { hasErrors } = printCheckReport({
+        apiResults,
+        docsResult,
+        logWarnings,
+        context: cliContext
+    });
+
+    if (hasErrors || hasAnyErrors) {
+        cliContext.failAndThrow();
+    }
 }
