@@ -9,6 +9,7 @@ import {
     FernFilepath,
     HttpEndpoint,
     HttpService,
+    OAuthScheme,
     PrimitiveTypeV1,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
@@ -63,9 +64,15 @@ export class WireTestGenerator {
     public async generate(): Promise<void> {
         const endpointsByService = this.groupEndpointsByService();
         const filePathsByServiceName = this.getFilePathsByServiceName();
+        const oauthTokenEndpointId = this.getOAuthTokenEndpointId();
 
         for (const [serviceName, endpoints] of endpointsByService.entries()) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
+                // Skip OAuth token endpoint - testing it with an OAuth-enabled client
+                // creates a circular dependency (client auto-fetches token before the explicit call)
+                if (oauthTokenEndpointId != null && endpoint.id === oauthTokenEndpointId) {
+                    return false;
+                }
                 const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
                 return dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0;
             });
@@ -175,9 +182,13 @@ export class WireTestGenerator {
                         writer.newLine();
                         writer.writeNode(
                             go.codeblock(
-                                '_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)'
+                                'req, err := http.NewRequest(http.MethodDelete, WiremockAdminURL+"/requests", nil)'
                             )
                         );
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("require.NoError(t, err)"));
+                        writer.newLine();
+                        writer.writeNode(go.codeblock("_, err = http.DefaultClient.Do(req)"));
                         writer.newLine();
                         writer.writeNode(go.codeblock("require.NoError(t, err)"));
                         writer.newLine();
@@ -835,5 +846,26 @@ export class WireTestGenerator {
 
     private getFormattedServiceName(service: HttpService): string {
         return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+    }
+
+    /**
+     * Returns the endpoint ID of the OAuth token endpoint, if one exists.
+     * This is used to skip generating wire tests for OAuth endpoints,
+     * since testing OAuth with an OAuth-enabled client creates a circular dependency
+     * (the client auto-fetches a token before making the explicit GetToken call).
+     */
+    private getOAuthTokenEndpointId(): string | undefined {
+        if (this.context.ir.auth == null) {
+            return undefined;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth") {
+                const oauthScheme = scheme as OAuthScheme;
+                if (oauthScheme.configuration?.type === "clientCredentials") {
+                    return oauthScheme.configuration.tokenEndpoint.endpointReference.endpointId;
+                }
+            }
+        }
+        return undefined;
     }
 }

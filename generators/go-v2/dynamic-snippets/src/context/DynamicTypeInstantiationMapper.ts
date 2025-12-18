@@ -236,15 +236,11 @@ export class DynamicTypeInstantiationMapper {
     }): go.TypeInstantiation {
         switch (aliasType.typeReference.type) {
             case "literal":
-                return go.TypeInstantiation.reference(
-                    go.invokeFunc({
-                        func: go.typeReference({
-                            name: this.context.getTypeName(aliasType.declaration.name),
-                            importPath: this.context.getImportPath(aliasType.declaration.fernFilepath)
-                        }),
-                        arguments_: [this.convertLiteralValue(aliasType.typeReference.value)]
-                    })
-                );
+                // For literal aliases (e.g., single-value enum coerced to literal),
+                // just return the underlying literal value. This allows the standard
+                // pointer helper mechanism to work when used in optional contexts,
+                // instead of generating invalid code like `&TypeName("value")`.
+                return this.convertLiteralValue(aliasType.typeReference.value);
             default:
                 return this.convert({ typeReference: aliasType.typeReference, value, as });
         }
