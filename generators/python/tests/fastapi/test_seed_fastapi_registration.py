@@ -66,9 +66,11 @@ def _instantiate_concrete(abstract_cls: type) -> object:
 
 def test_seed_examples_register_and_openapi_works_and_uses_annotated_body() -> None:
     seed_fastapi_root = _find_seed_fastapi_root()
-    sys.path.insert(0, str(seed_fastapi_root))
+    # Use the no-custom-config fixture which has the full examples package structure
+    examples_root = seed_fastapi_root / "examples" / "no-custom-config"
+    sys.path.insert(0, str(examples_root))
     try:
-        examples_register = typing.cast(typing.Any, importlib.import_module("examples.register"))
+        examples_register = typing.cast(typing.Any, importlib.import_module("register"))
 
         # Re-exported in examples.register
         AbstractRootService = typing.cast(type, getattr(examples_register, "AbstractRootService"))
@@ -125,7 +127,7 @@ def test_seed_examples_register_and_openapi_works_and_uses_annotated_body() -> N
         assert {"shallow", "tag"} <= query_param_names
     finally:
         # Be a good citizen for other tests
-        sys.path.remove(str(seed_fastapi_root))
+        sys.path.remove(str(examples_root))
 
 
 def test_seed_validation_register_and_openapi_works_and_uses_annotated_query() -> None:
