@@ -136,7 +136,8 @@ export class WireTestGenerator {
                 testFunctionNameCounts.set(baseTestFunctionName, count + 1);
 
                 // First occurrence uses the base name, subsequent occurrences get a numeric suffix
-                const uniqueTestFunctionName = count === 0 ? baseTestFunctionName : `${baseTestFunctionName}${count + 1}`;
+                const uniqueTestFunctionName =
+                    count === 0 ? baseTestFunctionName : `${baseTestFunctionName}${count + 1}`;
 
                 const [endpointTestCaseCodeBlock, endpointImports] = this.generateEndpointTestMethod(
                     endpoint,
@@ -322,10 +323,9 @@ export class WireTestGenerator {
     private generateEndpointTestMethod(
         endpoint: HttpEndpoint,
         snippet: string,
-        testFunctionNameOverride?: string
+        testFunctionName: string
     ): [go.CodeBlock, Map<string, string>] {
         const imports = this.parseImportsFromSnippet(snippet);
-        const testFunctionName = testFunctionNameOverride ?? this.parseTestFunctionNameFromSnippet(snippet);
 
         const testMethod = go.codeblock((writer) => {
             writer.writeNode(
