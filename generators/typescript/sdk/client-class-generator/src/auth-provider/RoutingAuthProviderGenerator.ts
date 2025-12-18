@@ -125,6 +125,9 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeClass(context: SdkContext): void {
+        // Generate the error message map for user-friendly error messages
+        const errorMessageMapEntries = this.generateErrorMessageMapEntries(context);
+
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
@@ -162,13 +165,26 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
             methods: [
                 {
                     kind: StructureKind.Method,
+                    scope: Scope.Private,
+                    isStatic: true,
+                    name: "getAuthConfigErrorMessage",
+                    parameters: [
+                        {
+                            name: "schemeKey",
+                            type: "string"
+                        }
+                    ],
+                    returnType: "string",
+                    statements: this.generateGetAuthConfigErrorMessageStatements(errorMessageMapEntries)
+                },
+                {
+                    kind: StructureKind.Method,
                     scope: Scope.Public,
                     name: "getAuthRequest",
                     isAsync: true,
                     parameters: [
                         {
-                            name: "arg",
-                            hasQuestionToken: true,
+                            name: "{ endpointMetadata }",
                             type: getTextOfTsNode(
                                 ts.factory.createTypeLiteralNode([
                                     ts.factory.createPropertySignature(
@@ -178,7 +194,8 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
                                         context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
                                     )
                                 ])
-                            )
+                            ),
+                            initializer: "{}"
                         }
                     ],
                     returnType: getTextOfTsNode(
@@ -192,11 +209,95 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
         });
     }
 
+    private generateErrorMessageMapEntries(context: SdkContext): Map<string, string> {
+        const entries = new Map<string, string>();
+        for (const authScheme of this.ir.auth.schemes) {
+            const schemeKey = authScheme.key;
+            switch (authScheme.type) {
+                case "bearer": {
+                    const tokenFieldName = authScheme.token.camelCase.safeName;
+                    const tokenEnvVar = authScheme.tokenEnvVar;
+                    if (tokenEnvVar != null) {
+                        entries.set(
+                            schemeKey,
+                            `Please provide 'auth.${tokenFieldName}' or set the '${tokenEnvVar}' environment variable`
+                        );
+                    } else {
+                        entries.set(schemeKey, `Please provide 'auth.${tokenFieldName}'`);
+                    }
+                    break;
+                }
+                case "basic": {
+                    const usernameFieldName = authScheme.username.camelCase.safeName;
+                    const passwordFieldName = authScheme.password.camelCase.safeName;
+                    const usernameEnvVar = authScheme.usernameEnvVar;
+                    const passwordEnvVar = authScheme.passwordEnvVar;
+                    const usernameHint =
+                        usernameEnvVar != null
+                            ? `'auth.${usernameFieldName}' or '${usernameEnvVar}' env var`
+                            : `'auth.${usernameFieldName}'`;
+                    const passwordHint =
+                        passwordEnvVar != null
+                            ? `'auth.${passwordFieldName}' or '${passwordEnvVar}' env var`
+                            : `'auth.${passwordFieldName}'`;
+                    entries.set(schemeKey, `Please provide ${usernameHint} and ${passwordHint}`);
+                    break;
+                }
+                case "header": {
+                    const headerFieldName = authScheme.name.name.camelCase.safeName;
+                    const headerEnvVar = authScheme.headerEnvVar;
+                    if (headerEnvVar != null) {
+                        entries.set(
+                            schemeKey,
+                            `Please provide 'auth.${headerFieldName}' or set the '${headerEnvVar}' environment variable`
+                        );
+                    } else {
+                        entries.set(schemeKey, `Please provide 'auth.${headerFieldName}'`);
+                    }
+                    break;
+                }
+                case "oauth": {
+                    if (context.generateOAuthClients && authScheme.configuration.type === "clientCredentials") {
+                        const clientIdEnvVar = authScheme.configuration.clientIdEnvVar;
+                        const clientSecretEnvVar = authScheme.configuration.clientSecretEnvVar;
+                        const clientIdHint =
+                            clientIdEnvVar != null
+                                ? `'auth.clientId' or '${clientIdEnvVar}' env var`
+                                : `'auth.clientId'`;
+                        const clientSecretHint =
+                            clientSecretEnvVar != null
+                                ? `'auth.clientSecret' or '${clientSecretEnvVar}' env var`
+                                : `'auth.clientSecret'`;
+                        entries.set(schemeKey, `Please provide ${clientIdHint} and ${clientSecretHint}`);
+                    }
+                    break;
+                }
+                case "inferred":
+                    // Inferred auth doesn't have a simple error message
+                    entries.set(schemeKey, `Please provide the required authentication credentials`);
+                    break;
+            }
+        }
+        return entries;
+    }
+
+    private generateGetAuthConfigErrorMessageStatements(errorMessageMap: Map<string, string>): string {
+        const switchCases = Array.from(errorMessageMap.entries())
+            .map(([schemeKey, message]) => `case "${schemeKey}": return "${message}";`)
+            .join("\n            ");
+
+        return `
+        switch (schemeKey) {
+            ${switchCases}
+            default: return "Please provide the required authentication credentials for " + schemeKey;
+        }`;
+    }
+
     private generateGetAuthRequestStatements(): string {
         const providerMap = `this.${AUTH_PROVIDERS_FIELD_NAME}`;
 
         return `
-        const security = arg?.endpointMetadata?.security;
+        const security = endpointMetadata?.security;
 
         // If no security requirements specified, endpoint is anonymous - return empty auth request
         if (security == null || security.length === 0) {
@@ -210,10 +311,15 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
         });
 
         if (!canSatisfyAnyRequirement) {
-            const requiredSchemes = security.map((req) => Object.keys(req).join(" AND ")).join(" OR ");
+            // Build user-friendly error message showing which auth options are missing
+            const missingAuthHints = security.map((req) => {
+                const schemeKeys = Object.keys(req);
+                const missingSchemes = schemeKeys.filter((key) => !${providerMap}.has(key));
+                return missingSchemes.map((key) => ${CLASS_NAME}.getAuthConfigErrorMessage(key)).join(" AND ");
+            }).join(" OR ");
             throw new Error(
                 "No authentication credentials provided that satisfy the endpoint's security requirements. " +
-                "Required: " + requiredSchemes + ". Please provide the necessary authentication credentials."
+                missingAuthHints
             );
         }
 
@@ -221,25 +327,16 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
         const satisfiableRequirement = security.find((securityRequirement) => {
             const schemeKeys = Object.keys(securityRequirement);
             return schemeKeys.every((schemeKey) => ${providerMap}.has(schemeKey));
-        });
-
-        if (satisfiableRequirement == null) {
-            // This should not happen since we already verified above, but handle it gracefully
-            const requiredSchemes = security.map((req) => Object.keys(req).join(" AND ")).join(" OR ");
-            throw new Error(
-                "No authentication credentials provided that satisfy the endpoint's security requirements. " +
-                "Required: " + requiredSchemes + ". Please provide the necessary authentication credentials."
-            );
-        }
+        })!;
 
         // Get auth for all schemes in the satisfiable requirement (AND relationship)
         const combinedHeaders: Record<string, string> = {};
         for (const schemeKey of Object.keys(satisfiableRequirement)) {
             const provider = ${providerMap}.get(schemeKey);
             if (provider == null) {
-                throw new Error("Auth provider not found for scheme: " + schemeKey);
+                throw new Error("Internal error: auth provider not found for scheme: " + schemeKey);
             }
-            const authRequest = await provider.getAuthRequest(arg);
+            const authRequest = await provider.getAuthRequest({ endpointMetadata });
             Object.assign(combinedHeaders, authRequest.headers);
         }
 

@@ -142,12 +142,19 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                 {
                     kind: StructureKind.Method,
                     scope: Scope.Public,
+                    isStatic: true,
+                    name: "getAuthConfigErrorMessage",
+                    returnType: "string",
+                    statements: this.generateGetAuthConfigErrorMessageStatements()
+                },
+                {
+                    kind: StructureKind.Method,
+                    scope: Scope.Public,
                     name: "getAuthRequest",
                     isAsync: true,
                     parameters: [
                         {
-                            name: "arg",
-                            hasQuestionToken: true,
+                            name: "{ endpointMetadata }",
                             type: getTextOfTsNode(
                                 ts.factory.createTypeLiteralNode([
                                     ts.factory.createPropertySignature(
@@ -157,7 +164,8 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                                         context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
                                     )
                                 ])
-                            )
+                            ),
+                            initializer: "{}"
                         }
                     ],
                     returnType: getTextOfTsNode(
@@ -193,6 +201,17 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         return `return options.${tokenFieldName} != null;`;
     }
 
+    private generateGetAuthConfigErrorMessageStatements(): string {
+        const tokenFieldName = this.authScheme.token.camelCase.safeName;
+        const tokenEnvVar = this.authScheme.tokenEnvVar;
+
+        if (tokenEnvVar != null) {
+            return `return "Please provide 'auth.${tokenFieldName}' or set the '${tokenEnvVar}' environment variable";`;
+        }
+
+        return `return "Please provide 'auth.${tokenFieldName}'";`;
+    }
+
     private generateGetAuthRequestStatements(context: SdkContext): string {
         const tokenVar = this.authScheme.token.camelCase.unsafeName;
         const tokenFieldName = this.authScheme.token.camelCase.safeName;
@@ -206,18 +225,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                               ts.factory.createIdentifier(TOKEN_FIELD_NAME)
                           ),
                           ts.factory.createObjectLiteralExpression([
-                              ts.factory.createPropertyAssignment(
-                                  "endpointMetadata",
-                                  ts.factory.createBinaryExpression(
-                                      ts.factory.createPropertyAccessChain(
-                                          ts.factory.createIdentifier("arg"),
-                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                          "endpointMetadata"
-                                      ),
-                                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                      ts.factory.createObjectLiteralExpression([])
-                                  )
-                              )
+                              ts.factory.createShorthandPropertyAssignment("endpointMetadata")
                           ])
                       )
                   )}) ?? process.env?.["${this.authScheme.tokenEnvVar}"]`
@@ -228,18 +236,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                               ts.factory.createIdentifier(TOKEN_FIELD_NAME)
                           ),
                           ts.factory.createObjectLiteralExpression([
-                              ts.factory.createPropertyAssignment(
-                                  "endpointMetadata",
-                                  ts.factory.createBinaryExpression(
-                                      ts.factory.createPropertyAccessChain(
-                                          ts.factory.createIdentifier("arg"),
-                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                          "endpointMetadata"
-                                      ),
-                                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                      ts.factory.createObjectLiteralExpression([])
-                                  )
-                              )
+                              ts.factory.createShorthandPropertyAssignment("endpointMetadata")
                           ])
                       )
                   );

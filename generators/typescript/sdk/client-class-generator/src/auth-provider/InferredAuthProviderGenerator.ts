@@ -234,6 +234,22 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     scope: Scope.Public,
                     name: GET_AUTH_REQUEST_METHOD_NAME,
                     isAsync: true,
+                    parameters: [
+                        {
+                            name: "{ endpointMetadata }",
+                            type: getTextOfTsNode(
+                                ts.factory.createTypeLiteralNode([
+                                    ts.factory.createPropertySignature(
+                                        undefined,
+                                        "endpointMetadata",
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                    )
+                                ])
+                            ),
+                            initializer: "{}"
+                        }
+                    ],
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
                             context.coreUtilities.auth.AuthRequest._getReferenceToType()
