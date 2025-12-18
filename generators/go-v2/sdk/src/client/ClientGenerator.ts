@@ -268,7 +268,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     this.writeOAuthEnvironmentVariables({ writer, scheme });
                     break;
                 case "inferred":
-                    this.writeInferredAuthEnvironmentVariables({ writer, scheme });
+                    // Inferred auth doesn't have direct environment variables like OAuth client credentials,
+                    // but the auth endpoint might have its own request parameters that support environment variables.
+                    // This is handled at the endpoint level, so we don't need to set anything here.
                     break;
             }
         }
@@ -348,18 +350,6 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 env: configuration.clientSecretEnvVar
             });
         }
-    }
-
-    private writeInferredAuthEnvironmentVariables({
-        writer,
-        scheme
-    }: {
-        writer: go.Writer;
-        scheme: InferredAuthScheme;
-    }): void {
-        // Inferred auth doesn't have direct environment variables like OAuth client credentials,
-        // but the auth endpoint might have its own request parameters that support environment variables.
-        // This is handled at the endpoint level, so we don't need to set anything here.
     }
 
     private writeOAuthTokenFetching({ writer }: { writer: go.Writer }): void {
