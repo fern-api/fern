@@ -28,19 +28,21 @@ export async function validateWorkspaces({
     let docsResult: DocsValidationResult | undefined;
     let hasAnyErrors = false;
 
-    // Collect docs violations first
+    // Collect docs violations first (using runTask to get a proper TaskContext)
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
         const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
         const ossWorkspaces = await filterOssWorkspaces(project);
 
-        const collected = await collectDocsWorkspaceViolations({
-            workspace: docsWorkspace,
-            context: cliContext,
-            apiWorkspaces: project.apiWorkspaces,
-            ossWorkspaces,
-            errorOnBrokenLinks,
-            excludeRules
+        const collected = await cliContext.runTask(async (context) => {
+            return collectDocsWorkspaceViolations({
+                workspace: docsWorkspace,
+                context,
+                apiWorkspaces: project.apiWorkspaces,
+                ossWorkspaces,
+                errorOnBrokenLinks,
+                excludeRules
+            });
         });
 
         docsResult = {
@@ -53,7 +55,7 @@ export async function validateWorkspaces({
         }
     }
 
-    // Collect API violations
+    // Collect API violations (using runTask to get a proper TaskContext)
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             if (workspace.generatorsConfiguration?.groups.length === 0 && workspace.type !== "fern") {
@@ -62,21 +64,25 @@ export async function validateWorkspaces({
 
             if (workspace instanceof OSSWorkspace && directFromOpenapi) {
                 // For --from-openapi, run IR generation which logs its own errors
-                await workspace.getIntermediateRepresentation({
-                    context: cliContext,
-                    audiences: { type: "all" },
-                    enableUniqueErrorsPerEndpoint: false,
-                    generateV1Examples: false,
-                    logWarnings: logWarnings
+                await cliContext.runTask(async (context) => {
+                    await workspace.getIntermediateRepresentation({
+                        context,
+                        audiences: { type: "all" },
+                        enableUniqueErrorsPerEndpoint: false,
+                        generateV1Examples: false,
+                        logWarnings: logWarnings
+                    });
                 });
                 return;
             }
 
-            const fernWorkspace = await workspace.toFernWorkspace({ context: cliContext });
-            const collected = await collectAPIWorkspaceViolations({
-                workspace: fernWorkspace,
-                context: cliContext,
-                ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+            const collected = await cliContext.runTask(async (context) => {
+                const fernWorkspace = await workspace.toFernWorkspace({ context });
+                return collectAPIWorkspaceViolations({
+                    workspace: fernWorkspace,
+                    context,
+                    ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+                });
             });
 
             apiResults.push({
@@ -91,12 +97,14 @@ export async function validateWorkspaces({
         })
     );
 
-    // Print the aggregated report
-    const { hasErrors } = printCheckReport({
-        apiResults,
-        docsResult,
-        logWarnings,
-        context: cliContext
+    // Print the aggregated report (using runTask to get a proper TaskContext)
+    const { hasErrors } = await cliContext.runTask((context) => {
+        return printCheckReport({
+            apiResults,
+            docsResult,
+            logWarnings,
+            context
+        });
     });
 
     if (hasErrors || hasAnyErrors) {
