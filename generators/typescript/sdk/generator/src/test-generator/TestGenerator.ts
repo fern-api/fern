@@ -1180,7 +1180,10 @@ describe("${serviceName}", () => {
             }
         }
 
-        const hasPagination = endpoint.pagination !== undefined;
+        // hasPagination determines if we need { once: false } for multiple mock requests
+        // This is set after isCursorMissing is computed to ensure we don't allow multiple
+        // requests when cursor is missing (since there's no next page to request)
+        let hasPagination = endpoint.pagination !== undefined;
         const expectedName =
             endpoint.pagination !== undefined
                 ? context.type.generateGetterForResponsePropertyAsString({
@@ -1202,6 +1205,20 @@ describe("${serviceName}", () => {
                 includeSerdeLayer: context.includeSerdeLayer
             });
 
+        const isCursorMissing =
+            endpoint.pagination !== undefined &&
+            isPaginationCursorMissingInExample({
+                example,
+                endpoint,
+                retainOriginalCasing: context.retainOriginalCasing,
+                includeSerdeLayer: context.includeSerdeLayer
+            });
+
+        // If cursor is missing, we won't be making getNextPage() calls, so don't need { once: false }
+        if (isCursorMissing) {
+            hasPagination = false;
+        }
+
         const expectedDeclaration = code`const expected = ${expected};`;
 
         const paginationBlock =
@@ -1216,7 +1233,11 @@ describe("${serviceName}", () => {
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
                     endpoint.pagination.type !== "custom"
-                        ? code`
+                        ? isCursorMissing
+                            ? code`
+                            expect(${expectedName}).toEqual(${pageName}.data);
+                            `
+                            : code`
                             expect(${expectedName}).toEqual(${pageName}.data);
                             expect(${pageName}.hasNextPage()).toBe(true);
                             const nextPage = await ${pageName}.getNextPage();
@@ -1922,4 +1943,70 @@ function isPaginationResultsPathMissingInExample({
 
     // If the leaf is explicitly undefined, treat it as "missing" for pagination purposes
     return cursor === undefined;
+}
+
+/**
+ * Checks if the pagination cursor/next property is missing from the example response.
+ * For cursor pagination, we need the "next" property; for offset pagination, we need "hasNextPage".
+ * If the cursor property is missing, we shouldn't generate hasNextPage().toBe(true) assertions
+ * since there won't be a cursor to indicate a next page.
+ */
+function isPaginationCursorMissingInExample({
+    example,
+    endpoint,
+    retainOriginalCasing,
+    includeSerdeLayer
+}: {
+    example: ExampleEndpointCall;
+    endpoint: HttpEndpoint;
+    retainOriginalCasing: boolean;
+    includeSerdeLayer: boolean;
+}): boolean {
+    const pagination = endpoint.pagination;
+    if (pagination == null) {
+        return true;
+    }
+
+    const responseJson = getResponseBodyJsonExample(example.response);
+    if (responseJson == null) {
+        return true;
+    }
+
+    // Get the cursor property based on pagination type
+    let cursorProperty;
+    if (pagination.type === "cursor") {
+        cursorProperty = pagination.next;
+    } else if (pagination.type === "offset") {
+        cursorProperty = pagination.hasNextPage;
+        // For offset pagination, hasNextPage is optional - if not defined, the SDK calculates it differently
+        if (cursorProperty == null) {
+            return false;
+        }
+    } else {
+        // Custom pagination - skip this check
+        return false;
+    }
+
+    if (cursorProperty == null) {
+        return true;
+    }
+
+    const useWireValue = retainOriginalCasing || !includeSerdeLayer;
+    const segments = [
+        ...(cursorProperty.propertyPath ?? []).map((item) =>
+            useWireValue ? item.name.originalName : item.name.camelCase.safeName
+        ),
+        useWireValue ? cursorProperty.property.name.wireValue : cursorProperty.property.name.name.camelCase.safeName
+    ];
+
+    let cursor: unknown = responseJson;
+    for (const key of segments) {
+        if (cursor == null || typeof cursor !== "object" || !(key in cursor)) {
+            return true;
+        }
+        cursor = (cursor as Record<string, unknown>)[key];
+    }
+
+    // If the leaf is explicitly undefined or null, treat it as "missing"
+    return cursor === undefined || cursor === null;
 }
