@@ -672,6 +672,105 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertUnknown({ value }: { value: unknown }): java.TypeLiteral {
+        if (this.context.customConfig?.["generate-unknown-as-json-node"] === true) {
+            return this.convertToJsonNode({ value });
+        }
+        return java.TypeLiteral.unknown(value);
+    }
+
+    private convertToJsonNode({ value }: { value: unknown }): java.TypeLiteral {
+        const objectMappersClass = java.classReference({
+            name: "ObjectMappers",
+            packageName: this.context.getCorePackageName()
+        });
+
+        // For primitive values, wrap directly in valueToTree
+        if (typeof value === "string") {
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [java.TypeLiteral.string(value)]
+                })
+            );
+        }
+
+        if (typeof value === "number") {
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [java.TypeLiteral.integer(value)]
+                })
+            );
+        }
+
+        if (typeof value === "boolean") {
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [java.TypeLiteral.boolean(value)]
+                })
+            );
+        }
+
+        if (value === null) {
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [java.TypeLiteral.raw(java.codeblock("null"))]
+                })
+            );
+        }
+
+        if (Array.isArray(value)) {
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [
+                        java.TypeLiteral.list({
+                            valueType: java.Type.object(),
+                            values: value.map((v) => java.TypeLiteral.unknown(v)),
+                            isParameter: true
+                        })
+                    ]
+                })
+            );
+        }
+
+        if (typeof value === "object" && value !== null) {
+            // For objects, create a map and wrap in valueToTree
+            return java.TypeLiteral.reference(
+                java.invokeMethod({
+                    on: java.codeblock((writer) => {
+                        writer.writeNode(objectMappersClass);
+                        writer.write(".JSON_MAPPER");
+                    }),
+                    method: "valueToTree",
+                    arguments_: [java.TypeLiteral.unknown(value)]
+                })
+            );
+        }
+
+        // Fallback to regular unknown handling
         return java.TypeLiteral.unknown(value);
     }
 

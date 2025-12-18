@@ -766,7 +766,12 @@ export function convertSchemaObject(
         }
 
         // maps
-        if (schema.additionalProperties != null && schema.additionalProperties !== false && hasNoProperties(schema)) {
+        if (
+            schema.additionalProperties != null &&
+            schema.additionalProperties !== false &&
+            hasNoProperties(schema) &&
+            hasNoAllOf(schema)
+        ) {
             return convertAdditionalProperties({
                 nameOverride,
                 generatedName,
@@ -1129,10 +1134,12 @@ export function convertSchemaObject(
             if (
                 (schema.properties == null || hasNoProperties(schema)) &&
                 filteredAllOfs.length === 1 &&
-                filteredAllOfs[0] != null
+                filteredAllOfs[0] != null &&
+                (schema.additionalProperties == null || schema.additionalProperties === false)
             ) {
                 // If we end up with a single element, we short-circuit and convert it directly.
                 // Note that this handles any schema type, not just objects (e.g. arrays).
+                // We don't short-circuit if additionalProperties is set, as we'd lose that information.
                 const convertedSchema = convertSchema(
                     filteredAllOfs[0],
                     wrapAsOptional,
@@ -1159,9 +1166,11 @@ export function convertSchemaObject(
             if (
                 (schema.properties == null || hasNoProperties(schema)) &&
                 filteredAllOfObjects.length === 1 &&
-                filteredAllOfObjects[0] != null
+                filteredAllOfObjects[0] != null &&
+                (schema.additionalProperties == null || schema.additionalProperties === false)
             ) {
                 // Try to short-circuit again.
+                // We don't short-circuit if additionalProperties is set, as we'd lose that information.
                 const convertedSchema = convertSchema(
                     filteredAllOfObjects[0],
                     wrapAsOptional,

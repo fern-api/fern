@@ -65,10 +65,6 @@ class AbstractUnknownService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.post.__globals__)
-
         router.post(
             path="/",
             response_model=typing.Sequence[typing.Any],
@@ -102,10 +98,6 @@ class AbstractUnknownService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.post_object.__globals__)
 
         router.post(
             path="/with-object",

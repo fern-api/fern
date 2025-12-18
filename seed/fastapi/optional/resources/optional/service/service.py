@@ -78,10 +78,6 @@ class AbstractOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.send_optional_body.__globals__)
-
         router.post(
             path="/send-optional-body",
             response_model=str,
@@ -115,10 +111,6 @@ class AbstractOptionalService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.send_optional_typed_body.__globals__)
 
         router.post(
             path="/send-optional-typed-body",
@@ -165,10 +157,6 @@ class AbstractOptionalService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.send_optional_nullable_with_all_optional_properties.__globals__)
 
         router.post(
             path="/deploy/{action_id}/versions/{id}",

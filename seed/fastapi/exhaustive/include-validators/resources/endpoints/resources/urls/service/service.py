@@ -73,10 +73,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.with_mixed_case.__globals__)
-
         router.get(
             path="/urls/MixedCase",
             response_model=str,
@@ -110,10 +106,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.no_ending_slash.__globals__)
 
         router.get(
             path="/urls/no-ending-slash",
@@ -149,10 +141,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.with_ending_slash.__globals__)
-
         router.get(
             path="/urls/with-ending-slash/",
             response_model=str,
@@ -186,10 +174,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.with_underscores.__globals__)
 
         router.get(
             path="/urls/with_underscores",

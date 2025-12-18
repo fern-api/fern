@@ -140,7 +140,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 if (ir.generationMetadata) {
                     await writeGenerationMetadata({
                         generationMetadata: ir.generationMetadata,
-                        pathToProject
+                        pathToProject,
+                        sdkVersion: version
                     });
                 }
             });

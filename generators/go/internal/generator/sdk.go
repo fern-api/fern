@@ -1259,22 +1259,23 @@ func (f *fileWriter) WriteClient(
 		}
 		f.P(") ", endpoint.ReturnValues, " {")
 		f.P("options := ", endpoint.OptionConstructor)
-			if endpoint.BaseURLName != "" {
-				f.P("baseURL := internal.ResolveBaseURL(")
-				f.P("options.BaseURL,")
-				f.P(fmt.Sprintf("internal.ResolveEnvironmentBaseURL(options.Environment, %q),", endpoint.BaseURLName))
-				f.P(receiver, ".baseURL,")
-				f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
-				f.P(")")
-			} else {
-				f.P("baseURL := internal.ResolveBaseURL(")
-				f.P("options.BaseURL,")
-				f.P(receiver, ".baseURL,")
-				f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
-				f.P(")")
-			}
-			baseURLVariable := "baseURL"
-			if len(endpoint.PathSuffix) > 0 {
+		if endpoint.BaseURLName != "" {
+			f.P("baseURL := internal.ResolveBaseURL(")
+			f.P("options.BaseURL,")
+			f.P(fmt.Sprintf("internal.ResolveEnvironmentBaseURL(options.Environment, %q),", endpoint.BaseURLName))
+			f.P(receiver, ".baseURL,")
+			f.P(fmt.Sprintf("internal.ResolveEnvironmentBaseURL(%s.options.Environment, %q),", receiver, endpoint.BaseURLName))
+			f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
+			f.P(")")
+		} else {
+			f.P("baseURL := internal.ResolveBaseURL(")
+			f.P("options.BaseURL,")
+			f.P(receiver, ".baseURL,")
+			f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
+			f.P(")")
+		}
+		baseURLVariable := "baseURL"
+		if len(endpoint.PathSuffix) > 0 {
 			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
 		}
 		if len(endpoint.PathParameterNames) > 0 {
@@ -3210,10 +3211,10 @@ func (f *fileWriter) WriteRequestType(
 	f.WriteSetterMethods(typeName, propertyNames, propertyTypes, propertySafeNames)
 
 	var (
-		referenceType            string
-		referenceIsPointer       bool
-		referenceFieldIsPointer  bool
-		referenceLiteral         string
+		referenceType           string
+		referenceIsPointer      bool
+		referenceFieldIsPointer bool
+		referenceLiteral        string
 	)
 	if reference := endpoint.RequestBody.Reference; reference != nil {
 		fullType := typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false)

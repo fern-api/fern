@@ -54,7 +54,8 @@ export class LocalTestRunner extends TestRunner {
             readme,
             shouldGenerateDynamicSnippetTests,
             inspect = false,
-            license
+            license,
+            smartCasing
         } = args;
 
         const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -74,7 +75,8 @@ export class LocalTestRunner extends TestRunner {
                     irVersion,
                     publishMetadata,
                     readme,
-                    license
+                    license,
+                    smartCasing
                 })
             ]
         };
