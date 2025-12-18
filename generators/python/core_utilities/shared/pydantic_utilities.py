@@ -256,3 +256,62 @@ def _get_field_default(field: PydanticField) -> Any:
             return None
         return value
     return value
+
+
+def copy_and_update_model(
+    source: pydantic.BaseModel,
+    target_cls: Type[Model],
+    *,
+    update: Optional[Dict[str, Any]] = None,
+    exclude: Optional[Set[str]] = None,
+) -> Model:
+    """
+    Efficiently copy fields from a source model to a new instance of target_cls
+    without deep serialization (avoiding .dict() overhead).
+
+    This is useful for union type conversions where we need to:
+    - Add fields (e.g., discriminant field in factory methods)
+    - Remove fields (e.g., discriminant field in visit methods)
+
+    Args:
+        source: The source Pydantic model instance
+        target_cls: The target model class to create
+        update: Optional dict of field values to add/override
+        exclude: Optional set of field names to exclude from copying
+
+    Returns:
+        A new instance of target_cls with copied fields
+    """
+    update = update or {}
+    exclude = exclude or set()
+
+    if IS_PYDANTIC_V2:
+        fields_set = source.__pydantic_fields_set__.copy()  # type: ignore[attr-defined]
+        extras = getattr(source, "__pydantic_extra__", None) or {}
+    else:
+        fields_set = source.__fields_set__.copy()
+        extras = {}
+        for key in source.__dict__:
+            if key not in source.__fields__:
+                extras[key] = source.__dict__[key]
+
+    values: Dict[str, Any] = {}
+    for field_name in source.__dict__:
+        if field_name not in exclude:
+            values[field_name] = source.__dict__[field_name]
+
+    for key in extras:
+        if key not in exclude:
+            values[key] = extras[key]
+
+    for key, value in update.items():
+        values[key] = value
+        fields_set.add(key)
+
+    for field_name in exclude:
+        fields_set.discard(field_name)
+
+    if IS_PYDANTIC_V2:
+        return pydantic.BaseModel.model_construct.__func__(target_cls, fields_set, **values)  # type: ignore[attr-defined, return-value]
+    else:
+        return pydantic.BaseModel.construct.__func__(target_cls, fields_set, **values)  # type: ignore[attr-defined, return-value]

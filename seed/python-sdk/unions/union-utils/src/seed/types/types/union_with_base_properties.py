@@ -6,7 +6,13 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ...core.pydantic_utilities import (
+    IS_PYDANTIC_V2,
+    UniversalBaseModel,
+    UniversalRootModel,
+    copy_and_update_model,
+    update_forward_refs,
+)
 from .foo import Foo as types_types_foo_Foo
 
 T_Result = typing.TypeVar("T_Result")
@@ -28,11 +34,11 @@ class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithBaseProperties:
         if IS_PYDANTIC_V2:
             return UnionWithBaseProperties(
-                root=_UnionWithBaseProperties.Foo(**value.dict(exclude_unset=True), type="foo")
+                root=copy_and_update_model(value, _UnionWithBaseProperties.Foo, update={"type": "foo"})
             )  # type: ignore
         else:
             return UnionWithBaseProperties(
-                __root__=_UnionWithBaseProperties.Foo(**value.dict(exclude_unset=True), type="foo")
+                __root__=copy_and_update_model(value, _UnionWithBaseProperties.Foo, update={"type": "foo"})
             )  # type: ignore
 
 
@@ -94,7 +100,7 @@ class UnionWithBaseProperties(UniversalRootModel):
         if unioned_value.type == "string":
             return string(unioned_value.value)
         if unioned_value.type == "foo":
-            return foo(types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+            return foo(copy_and_update_model(unioned_value, types_types_foo_Foo, exclude={"type"}))
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

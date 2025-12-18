@@ -6,7 +6,13 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ...core.pydantic_utilities import (
+    IS_PYDANTIC_V2,
+    UniversalBaseModel,
+    UniversalRootModel,
+    copy_and_update_model,
+    update_forward_refs,
+)
 from .foo import Foo as types_types_foo_Foo
 
 T_Result = typing.TypeVar("T_Result")
@@ -15,10 +21,12 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithNoProperties:
         if IS_PYDANTIC_V2:
-            return UnionWithNoProperties(root=_UnionWithNoProperties.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
+            return UnionWithNoProperties(
+                root=copy_and_update_model(value, _UnionWithNoProperties.Foo, update={"type": "foo"})
+            )  # type: ignore
         else:
             return UnionWithNoProperties(
-                __root__=_UnionWithNoProperties.Foo(**value.dict(exclude_unset=True), type="foo")
+                __root__=copy_and_update_model(value, _UnionWithNoProperties.Foo, update={"type": "foo"})
             )  # type: ignore
 
     def empty(self) -> UnionWithNoProperties:
@@ -67,7 +75,7 @@ class UnionWithNoProperties(UniversalRootModel):
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":
-            return foo(types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+            return foo(copy_and_update_model(unioned_value, types_types_foo_Foo, exclude={"type"}))
         if unioned_value.type == "empty":
             return empty()
 

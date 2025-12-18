@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, copy_and_update_model, update_forward_refs
 from .active_diamond import ActiveDiamond as bigunion_types_active_diamond_ActiveDiamond
 from .attractive_script import AttractiveScript as bigunion_types_attractive_script_AttractiveScript
 from .circular_card import CircularCard as bigunion_types_circular_card_CircularCard
@@ -43,191 +43,253 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def normal_sweet(self, value: bigunion_types_normal_sweet_NormalSweet) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.NormalSweet(**value.dict(exclude_unset=True), type="normalSweet"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.NormalSweet, update={"type": "normalSweet"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.NormalSweet(**value.dict(exclude_unset=True), type="normalSweet"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.NormalSweet, update={"type": "normalSweet"})
+            )  # type: ignore
 
     def thankful_factor(self, value: bigunion_types_thankful_factor_ThankfulFactor) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.ThankfulFactor(**value.dict(exclude_unset=True), type="thankfulFactor"))  # type: ignore
+            return BigUnion(
+                root=copy_and_update_model(value, _BigUnion.ThankfulFactor, update={"type": "thankfulFactor"})
+            )  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.ThankfulFactor(**value.dict(exclude_unset=True), type="thankfulFactor"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.ThankfulFactor, update={"type": "thankfulFactor"})
+            )  # type: ignore
 
     def jumbo_end(self, value: bigunion_types_jumbo_end_JumboEnd) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.JumboEnd(**value.dict(exclude_unset=True), type="jumboEnd"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.JumboEnd, update={"type": "jumboEnd"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.JumboEnd(**value.dict(exclude_unset=True), type="jumboEnd"))  # type: ignore
+            return BigUnion(__root__=copy_and_update_model(value, _BigUnion.JumboEnd, update={"type": "jumboEnd"}))  # type: ignore
 
     def hasty_pain(self, value: bigunion_types_hasty_pain_HastyPain) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.HastyPain(**value.dict(exclude_unset=True), type="hastyPain"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.HastyPain, update={"type": "hastyPain"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.HastyPain(**value.dict(exclude_unset=True), type="hastyPain"))  # type: ignore
+            return BigUnion(__root__=copy_and_update_model(value, _BigUnion.HastyPain, update={"type": "hastyPain"}))  # type: ignore
 
     def misty_snow(self, value: bigunion_types_misty_snow_MistySnow) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.MistySnow(**value.dict(exclude_unset=True), type="mistySnow"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.MistySnow, update={"type": "mistySnow"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.MistySnow(**value.dict(exclude_unset=True), type="mistySnow"))  # type: ignore
+            return BigUnion(__root__=copy_and_update_model(value, _BigUnion.MistySnow, update={"type": "mistySnow"}))  # type: ignore
 
     def distinct_failure(self, value: bigunion_types_distinct_failure_DistinctFailure) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.DistinctFailure(**value.dict(exclude_unset=True), type="distinctFailure"))  # type: ignore
+            return BigUnion(
+                root=copy_and_update_model(value, _BigUnion.DistinctFailure, update={"type": "distinctFailure"})
+            )  # type: ignore
         else:
             return BigUnion(
-                __root__=_BigUnion.DistinctFailure(**value.dict(exclude_unset=True), type="distinctFailure")
+                __root__=copy_and_update_model(value, _BigUnion.DistinctFailure, update={"type": "distinctFailure"})
             )  # type: ignore
 
     def practical_principle(self, value: bigunion_types_practical_principle_PracticalPrinciple) -> BigUnion:
         if IS_PYDANTIC_V2:
             return BigUnion(
-                root=_BigUnion.PracticalPrinciple(**value.dict(exclude_unset=True), type="practicalPrinciple")
+                root=copy_and_update_model(value, _BigUnion.PracticalPrinciple, update={"type": "practicalPrinciple"})
             )  # type: ignore
         else:
             return BigUnion(
-                __root__=_BigUnion.PracticalPrinciple(**value.dict(exclude_unset=True), type="practicalPrinciple")
+                __root__=copy_and_update_model(
+                    value, _BigUnion.PracticalPrinciple, update={"type": "practicalPrinciple"}
+                )
             )  # type: ignore
 
     def limping_step(self, value: bigunion_types_limping_step_LimpingStep) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.LimpingStep(**value.dict(exclude_unset=True), type="limpingStep"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.LimpingStep, update={"type": "limpingStep"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.LimpingStep(**value.dict(exclude_unset=True), type="limpingStep"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.LimpingStep, update={"type": "limpingStep"})
+            )  # type: ignore
 
     def vibrant_excitement(self, value: bigunion_types_vibrant_excitement_VibrantExcitement) -> BigUnion:
         if IS_PYDANTIC_V2:
             return BigUnion(
-                root=_BigUnion.VibrantExcitement(**value.dict(exclude_unset=True), type="vibrantExcitement")
+                root=copy_and_update_model(value, _BigUnion.VibrantExcitement, update={"type": "vibrantExcitement"})
             )  # type: ignore
         else:
             return BigUnion(
-                __root__=_BigUnion.VibrantExcitement(**value.dict(exclude_unset=True), type="vibrantExcitement")
+                __root__=copy_and_update_model(value, _BigUnion.VibrantExcitement, update={"type": "vibrantExcitement"})
             )  # type: ignore
 
     def active_diamond(self, value: bigunion_types_active_diamond_ActiveDiamond) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.ActiveDiamond(**value.dict(exclude_unset=True), type="activeDiamond"))  # type: ignore
+            return BigUnion(
+                root=copy_and_update_model(value, _BigUnion.ActiveDiamond, update={"type": "activeDiamond"})
+            )  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.ActiveDiamond(**value.dict(exclude_unset=True), type="activeDiamond"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.ActiveDiamond, update={"type": "activeDiamond"})
+            )  # type: ignore
 
     def popular_limit(self, value: bigunion_types_popular_limit_PopularLimit) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.PopularLimit(**value.dict(exclude_unset=True), type="popularLimit"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.PopularLimit, update={"type": "popularLimit"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.PopularLimit(**value.dict(exclude_unset=True), type="popularLimit"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.PopularLimit, update={"type": "popularLimit"})
+            )  # type: ignore
 
     def false_mirror(self, value: bigunion_types_false_mirror_FalseMirror) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.FalseMirror(**value.dict(exclude_unset=True), type="falseMirror"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.FalseMirror, update={"type": "falseMirror"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.FalseMirror(**value.dict(exclude_unset=True), type="falseMirror"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.FalseMirror, update={"type": "falseMirror"})
+            )  # type: ignore
 
     def primary_block(self, value: bigunion_types_primary_block_PrimaryBlock) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.PrimaryBlock(**value.dict(exclude_unset=True), type="primaryBlock"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.PrimaryBlock, update={"type": "primaryBlock"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.PrimaryBlock(**value.dict(exclude_unset=True), type="primaryBlock"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.PrimaryBlock, update={"type": "primaryBlock"})
+            )  # type: ignore
 
     def rotating_ratio(self, value: bigunion_types_rotating_ratio_RotatingRatio) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.RotatingRatio(**value.dict(exclude_unset=True), type="rotatingRatio"))  # type: ignore
+            return BigUnion(
+                root=copy_and_update_model(value, _BigUnion.RotatingRatio, update={"type": "rotatingRatio"})
+            )  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.RotatingRatio(**value.dict(exclude_unset=True), type="rotatingRatio"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.RotatingRatio, update={"type": "rotatingRatio"})
+            )  # type: ignore
 
     def colorful_cover(self, value: bigunion_types_colorful_cover_ColorfulCover) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.ColorfulCover(**value.dict(exclude_unset=True), type="colorfulCover"))  # type: ignore
+            return BigUnion(
+                root=copy_and_update_model(value, _BigUnion.ColorfulCover, update={"type": "colorfulCover"})
+            )  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.ColorfulCover(**value.dict(exclude_unset=True), type="colorfulCover"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.ColorfulCover, update={"type": "colorfulCover"})
+            )  # type: ignore
 
     def disloyal_value(self, value: bigunion_types_disloyal_value_DisloyalValue) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.DisloyalValue(**value.dict(exclude_unset=True), type="disloyalValue"))  # type: ignore
+            return BigUnion(
+                root=copy_and_update_model(value, _BigUnion.DisloyalValue, update={"type": "disloyalValue"})
+            )  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.DisloyalValue(**value.dict(exclude_unset=True), type="disloyalValue"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.DisloyalValue, update={"type": "disloyalValue"})
+            )  # type: ignore
 
     def gruesome_coach(self, value: bigunion_types_gruesome_coach_GruesomeCoach) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.GruesomeCoach(**value.dict(exclude_unset=True), type="gruesomeCoach"))  # type: ignore
+            return BigUnion(
+                root=copy_and_update_model(value, _BigUnion.GruesomeCoach, update={"type": "gruesomeCoach"})
+            )  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.GruesomeCoach(**value.dict(exclude_unset=True), type="gruesomeCoach"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.GruesomeCoach, update={"type": "gruesomeCoach"})
+            )  # type: ignore
 
     def total_work(self, value: bigunion_types_total_work_TotalWork) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.TotalWork(**value.dict(exclude_unset=True), type="totalWork"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.TotalWork, update={"type": "totalWork"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.TotalWork(**value.dict(exclude_unset=True), type="totalWork"))  # type: ignore
+            return BigUnion(__root__=copy_and_update_model(value, _BigUnion.TotalWork, update={"type": "totalWork"}))  # type: ignore
 
     def harmonious_play(self, value: bigunion_types_harmonious_play_HarmoniousPlay) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.HarmoniousPlay(**value.dict(exclude_unset=True), type="harmoniousPlay"))  # type: ignore
+            return BigUnion(
+                root=copy_and_update_model(value, _BigUnion.HarmoniousPlay, update={"type": "harmoniousPlay"})
+            )  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.HarmoniousPlay(**value.dict(exclude_unset=True), type="harmoniousPlay"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.HarmoniousPlay, update={"type": "harmoniousPlay"})
+            )  # type: ignore
 
     def unique_stress(self, value: bigunion_types_unique_stress_UniqueStress) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.UniqueStress(**value.dict(exclude_unset=True), type="uniqueStress"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.UniqueStress, update={"type": "uniqueStress"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.UniqueStress(**value.dict(exclude_unset=True), type="uniqueStress"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.UniqueStress, update={"type": "uniqueStress"})
+            )  # type: ignore
 
     def unwilling_smoke(self, value: bigunion_types_unwilling_smoke_UnwillingSmoke) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.UnwillingSmoke(**value.dict(exclude_unset=True), type="unwillingSmoke"))  # type: ignore
+            return BigUnion(
+                root=copy_and_update_model(value, _BigUnion.UnwillingSmoke, update={"type": "unwillingSmoke"})
+            )  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.UnwillingSmoke(**value.dict(exclude_unset=True), type="unwillingSmoke"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.UnwillingSmoke, update={"type": "unwillingSmoke"})
+            )  # type: ignore
 
     def frozen_sleep(self, value: bigunion_types_frozen_sleep_FrozenSleep) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.FrozenSleep(**value.dict(exclude_unset=True), type="frozenSleep"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.FrozenSleep, update={"type": "frozenSleep"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.FrozenSleep(**value.dict(exclude_unset=True), type="frozenSleep"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.FrozenSleep, update={"type": "frozenSleep"})
+            )  # type: ignore
 
     def diligent_deal(self, value: bigunion_types_diligent_deal_DiligentDeal) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.DiligentDeal(**value.dict(exclude_unset=True), type="diligentDeal"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.DiligentDeal, update={"type": "diligentDeal"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.DiligentDeal(**value.dict(exclude_unset=True), type="diligentDeal"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.DiligentDeal, update={"type": "diligentDeal"})
+            )  # type: ignore
 
     def attractive_script(self, value: bigunion_types_attractive_script_AttractiveScript) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.AttractiveScript(**value.dict(exclude_unset=True), type="attractiveScript"))  # type: ignore
+            return BigUnion(
+                root=copy_and_update_model(value, _BigUnion.AttractiveScript, update={"type": "attractiveScript"})
+            )  # type: ignore
         else:
             return BigUnion(
-                __root__=_BigUnion.AttractiveScript(**value.dict(exclude_unset=True), type="attractiveScript")
+                __root__=copy_and_update_model(value, _BigUnion.AttractiveScript, update={"type": "attractiveScript"})
             )  # type: ignore
 
     def hoarse_mouse(self, value: bigunion_types_hoarse_mouse_HoarseMouse) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.HoarseMouse(**value.dict(exclude_unset=True), type="hoarseMouse"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.HoarseMouse, update={"type": "hoarseMouse"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.HoarseMouse(**value.dict(exclude_unset=True), type="hoarseMouse"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.HoarseMouse, update={"type": "hoarseMouse"})
+            )  # type: ignore
 
     def circular_card(self, value: bigunion_types_circular_card_CircularCard) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.CircularCard(**value.dict(exclude_unset=True), type="circularCard"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.CircularCard, update={"type": "circularCard"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.CircularCard(**value.dict(exclude_unset=True), type="circularCard"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.CircularCard, update={"type": "circularCard"})
+            )  # type: ignore
 
     def potable_bad(self, value: bigunion_types_potable_bad_PotableBad) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.PotableBad(**value.dict(exclude_unset=True), type="potableBad"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.PotableBad, update={"type": "potableBad"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.PotableBad(**value.dict(exclude_unset=True), type="potableBad"))  # type: ignore
+            return BigUnion(__root__=copy_and_update_model(value, _BigUnion.PotableBad, update={"type": "potableBad"}))  # type: ignore
 
     def triangular_repair(self, value: bigunion_types_triangular_repair_TriangularRepair) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.TriangularRepair(**value.dict(exclude_unset=True), type="triangularRepair"))  # type: ignore
+            return BigUnion(
+                root=copy_and_update_model(value, _BigUnion.TriangularRepair, update={"type": "triangularRepair"})
+            )  # type: ignore
         else:
             return BigUnion(
-                __root__=_BigUnion.TriangularRepair(**value.dict(exclude_unset=True), type="triangularRepair")
+                __root__=copy_and_update_model(value, _BigUnion.TriangularRepair, update={"type": "triangularRepair"})
             )  # type: ignore
 
     def gaseous_road(self, value: bigunion_types_gaseous_road_GaseousRoad) -> BigUnion:
         if IS_PYDANTIC_V2:
-            return BigUnion(root=_BigUnion.GaseousRoad(**value.dict(exclude_unset=True), type="gaseousRoad"))  # type: ignore
+            return BigUnion(root=copy_and_update_model(value, _BigUnion.GaseousRoad, update={"type": "gaseousRoad"}))  # type: ignore
         else:
-            return BigUnion(__root__=_BigUnion.GaseousRoad(**value.dict(exclude_unset=True), type="gaseousRoad"))  # type: ignore
+            return BigUnion(
+                __root__=copy_and_update_model(value, _BigUnion.GaseousRoad, update={"type": "gaseousRoad"})
+            )  # type: ignore
 
 
 class BigUnion(UniversalRootModel):
@@ -425,135 +487,125 @@ class BigUnion(UniversalRootModel):
         unioned_value = self.get_as_union()
         if unioned_value.type == "normalSweet":
             return normal_sweet(
-                bigunion_types_normal_sweet_NormalSweet(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_normal_sweet_NormalSweet, exclude={"type"})
             )
         if unioned_value.type == "thankfulFactor":
             return thankful_factor(
-                bigunion_types_thankful_factor_ThankfulFactor(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
+                copy_and_update_model(unioned_value, bigunion_types_thankful_factor_ThankfulFactor, exclude={"type"})
             )
         if unioned_value.type == "jumboEnd":
-            return jumbo_end(
-                bigunion_types_jumbo_end_JumboEnd(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
-            )
+            return jumbo_end(copy_and_update_model(unioned_value, bigunion_types_jumbo_end_JumboEnd, exclude={"type"}))
         if unioned_value.type == "hastyPain":
             return hasty_pain(
-                bigunion_types_hasty_pain_HastyPain(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_hasty_pain_HastyPain, exclude={"type"})
             )
         if unioned_value.type == "mistySnow":
             return misty_snow(
-                bigunion_types_misty_snow_MistySnow(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_misty_snow_MistySnow, exclude={"type"})
             )
         if unioned_value.type == "distinctFailure":
             return distinct_failure(
-                bigunion_types_distinct_failure_DistinctFailure(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
+                copy_and_update_model(unioned_value, bigunion_types_distinct_failure_DistinctFailure, exclude={"type"})
             )
         if unioned_value.type == "practicalPrinciple":
             return practical_principle(
-                bigunion_types_practical_principle_PracticalPrinciple(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
+                copy_and_update_model(
+                    unioned_value, bigunion_types_practical_principle_PracticalPrinciple, exclude={"type"}
                 )
             )
         if unioned_value.type == "limpingStep":
             return limping_step(
-                bigunion_types_limping_step_LimpingStep(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_limping_step_LimpingStep, exclude={"type"})
             )
         if unioned_value.type == "vibrantExcitement":
             return vibrant_excitement(
-                bigunion_types_vibrant_excitement_VibrantExcitement(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
+                copy_and_update_model(
+                    unioned_value, bigunion_types_vibrant_excitement_VibrantExcitement, exclude={"type"}
                 )
             )
         if unioned_value.type == "activeDiamond":
             return active_diamond(
-                bigunion_types_active_diamond_ActiveDiamond(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_active_diamond_ActiveDiamond, exclude={"type"})
             )
         if unioned_value.type == "popularLimit":
             return popular_limit(
-                bigunion_types_popular_limit_PopularLimit(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_popular_limit_PopularLimit, exclude={"type"})
             )
         if unioned_value.type == "falseMirror":
             return false_mirror(
-                bigunion_types_false_mirror_FalseMirror(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_false_mirror_FalseMirror, exclude={"type"})
             )
         if unioned_value.type == "primaryBlock":
             return primary_block(
-                bigunion_types_primary_block_PrimaryBlock(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_primary_block_PrimaryBlock, exclude={"type"})
             )
         if unioned_value.type == "rotatingRatio":
             return rotating_ratio(
-                bigunion_types_rotating_ratio_RotatingRatio(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_rotating_ratio_RotatingRatio, exclude={"type"})
             )
         if unioned_value.type == "colorfulCover":
             return colorful_cover(
-                bigunion_types_colorful_cover_ColorfulCover(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_colorful_cover_ColorfulCover, exclude={"type"})
             )
         if unioned_value.type == "disloyalValue":
             return disloyal_value(
-                bigunion_types_disloyal_value_DisloyalValue(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_disloyal_value_DisloyalValue, exclude={"type"})
             )
         if unioned_value.type == "gruesomeCoach":
             return gruesome_coach(
-                bigunion_types_gruesome_coach_GruesomeCoach(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_gruesome_coach_GruesomeCoach, exclude={"type"})
             )
         if unioned_value.type == "totalWork":
             return total_work(
-                bigunion_types_total_work_TotalWork(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_total_work_TotalWork, exclude={"type"})
             )
         if unioned_value.type == "harmoniousPlay":
             return harmonious_play(
-                bigunion_types_harmonious_play_HarmoniousPlay(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
+                copy_and_update_model(unioned_value, bigunion_types_harmonious_play_HarmoniousPlay, exclude={"type"})
             )
         if unioned_value.type == "uniqueStress":
             return unique_stress(
-                bigunion_types_unique_stress_UniqueStress(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_unique_stress_UniqueStress, exclude={"type"})
             )
         if unioned_value.type == "unwillingSmoke":
             return unwilling_smoke(
-                bigunion_types_unwilling_smoke_UnwillingSmoke(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
-                )
+                copy_and_update_model(unioned_value, bigunion_types_unwilling_smoke_UnwillingSmoke, exclude={"type"})
             )
         if unioned_value.type == "frozenSleep":
             return frozen_sleep(
-                bigunion_types_frozen_sleep_FrozenSleep(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_frozen_sleep_FrozenSleep, exclude={"type"})
             )
         if unioned_value.type == "diligentDeal":
             return diligent_deal(
-                bigunion_types_diligent_deal_DiligentDeal(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_diligent_deal_DiligentDeal, exclude={"type"})
             )
         if unioned_value.type == "attractiveScript":
             return attractive_script(
-                bigunion_types_attractive_script_AttractiveScript(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
+                copy_and_update_model(
+                    unioned_value, bigunion_types_attractive_script_AttractiveScript, exclude={"type"}
                 )
             )
         if unioned_value.type == "hoarseMouse":
             return hoarse_mouse(
-                bigunion_types_hoarse_mouse_HoarseMouse(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_hoarse_mouse_HoarseMouse, exclude={"type"})
             )
         if unioned_value.type == "circularCard":
             return circular_card(
-                bigunion_types_circular_card_CircularCard(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_circular_card_CircularCard, exclude={"type"})
             )
         if unioned_value.type == "potableBad":
             return potable_bad(
-                bigunion_types_potable_bad_PotableBad(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_potable_bad_PotableBad, exclude={"type"})
             )
         if unioned_value.type == "triangularRepair":
             return triangular_repair(
-                bigunion_types_triangular_repair_TriangularRepair(
-                    **unioned_value.dict(exclude_unset=True, exclude={"type"})
+                copy_and_update_model(
+                    unioned_value, bigunion_types_triangular_repair_TriangularRepair, exclude={"type"}
                 )
             )
         if unioned_value.type == "gaseousRoad":
             return gaseous_road(
-                bigunion_types_gaseous_road_GaseousRoad(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, bigunion_types_gaseous_road_GaseousRoad, exclude={"type"})
             )
 
     if IS_PYDANTIC_V2:

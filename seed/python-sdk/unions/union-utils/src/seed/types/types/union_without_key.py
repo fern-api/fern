@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, copy_and_update_model, update_forward_refs
 from .bar import Bar as types_types_bar_Bar
 from .foo import Foo as types_types_foo_Foo
 
@@ -16,15 +16,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithoutKey:
         if IS_PYDANTIC_V2:
-            return UnionWithoutKey(root=_UnionWithoutKey.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
+            return UnionWithoutKey(root=copy_and_update_model(value, _UnionWithoutKey.Foo, update={"type": "foo"}))  # type: ignore
         else:
-            return UnionWithoutKey(__root__=_UnionWithoutKey.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
+            return UnionWithoutKey(__root__=copy_and_update_model(value, _UnionWithoutKey.Foo, update={"type": "foo"}))  # type: ignore
 
     def bar(self, value: types_types_bar_Bar) -> UnionWithoutKey:
         if IS_PYDANTIC_V2:
-            return UnionWithoutKey(root=_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar"))  # type: ignore
+            return UnionWithoutKey(root=copy_and_update_model(value, _UnionWithoutKey.Bar, update={"type": "bar"}))  # type: ignore
         else:
-            return UnionWithoutKey(__root__=_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar"))  # type: ignore
+            return UnionWithoutKey(__root__=copy_and_update_model(value, _UnionWithoutKey.Bar, update={"type": "bar"}))  # type: ignore
 
 
 class UnionWithoutKey(UniversalRootModel):
@@ -68,9 +68,9 @@ class UnionWithoutKey(UniversalRootModel):
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":
-            return foo(types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+            return foo(copy_and_update_model(unioned_value, types_types_foo_Foo, exclude={"type"}))
         if unioned_value.type == "bar":
-            return bar(types_types_bar_Bar(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+            return bar(copy_and_update_model(unioned_value, types_types_bar_Bar, exclude={"type"}))
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

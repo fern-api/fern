@@ -80,6 +80,7 @@ class CoreUtilities:
                 "universal_field_validator",
                 "update_forward_refs",
                 "UniversalRootModel",
+                "copy_and_update_model",
             }
             | (set() if is_v1_on_v2 else {"IS_PYDANTIC_V2"}),
         )
@@ -286,3 +287,12 @@ class CoreUtilities:
             return Pydantic(self._pydantic_compatibility).RootModel()
         else:  # V1 or V1_ON_V2
             return Pydantic(self._pydantic_compatibility).BaseModel()
+
+    def get_copy_and_update_model(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                named_import="copy_and_update_model",
+            ),
+        )
