@@ -2,8 +2,9 @@
 - version: 3.42.8
   changelogEntry:
     - summary: |
-        Fix wire test generation for paginated endpoints when example response has null or missing cursor field.
-        Previously, tests incorrectly asserted `hasNextPage()` would be true even for "last page" examples.
+        Fix wire test generation for paginated endpoints. The test generator now correctly uses wire format
+        (snake_case) when checking JSON examples for pagination results, and properly handles examples with
+        null or missing cursor fields by skipping `hasNextPage()` assertions.
       type: fix
   createdAt: "2025-12-18"
   irVersion: 62
