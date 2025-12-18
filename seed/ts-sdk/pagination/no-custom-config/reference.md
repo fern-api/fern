@@ -1472,13 +1472,17 @@ const response = page.response;
 <dd>
 
 ```typescript
-const pageableResponse = await client.users.listWithExtendedResults();
+const pageableResponse = await client.users.listWithExtendedResults({
+    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+});
 for await (const item of pageableResponse) {
     console.log(item);
 }
 
 // Or you can manually iterate page-by-page
-let page = await client.users.listWithExtendedResults();
+let page = await client.users.listWithExtendedResults({
+    cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+});
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }

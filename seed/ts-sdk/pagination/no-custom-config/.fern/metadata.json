@@ -1,6 +1,5 @@
 {
     "cliVersion": "DUMMY",
     "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
-    "sdkVersion": "0.0.1"
+    "generatorVersion": "latest"
 }
