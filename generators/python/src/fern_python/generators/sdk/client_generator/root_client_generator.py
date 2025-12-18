@@ -1408,14 +1408,14 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             module_path: AST.ModulePath,
             class_name: str,
             async_class_name: str,
-            constructor_parameters: List[ConstructorParameter],
+            constructor_parameters: Sequence[ConstructorParameter],
             oauth_token_override: bool = False,
             use_kwargs_snippets: bool = False,
         ):
             self._module_path = module_path
             self._class_name = class_name
             self._async_class_name = async_class_name
-            self._constructor_parameters = constructor_parameters
+            self._constructor_parameters: List[ConstructorParameter] = list(constructor_parameters)
             self._oauth_token_override = oauth_token_override
             self._use_kwargs_snippets = use_kwargs_snippets
 
