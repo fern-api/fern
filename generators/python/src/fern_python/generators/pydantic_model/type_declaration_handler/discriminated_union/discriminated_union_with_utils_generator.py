@@ -316,6 +316,28 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 )
             )
 
+            discriminant_attr_name = self._get_discriminant_attr_name()
+
+            def make_visitor_argument_for_same_properties(
+                declared_type_name: ir_types.DeclaredTypeName,
+            ) -> VisitorArgument:
+                def write_copy_and_update_for_visit(writer: AST.NodeWriter) -> None:
+                    writer.write_reference(self._context.core_utilities.get_copy_and_update_model())
+                    writer.write("(unioned_value, ")
+                    writer.write_reference(
+                        self._context.get_class_reference_for_type_id(declared_type_name.type_id, as_request=False)
+                    )
+                    writer.write(f', exclude={{"{discriminant_attr_name}"}})')
+
+                return VisitorArgument(
+                    expression=AST.Expression(AST.CodeWriter(write_copy_and_update_for_visit)),
+                    type=external_pydantic_model.get_type_hint_for_type_reference(
+                        ir_types.TypeReference.factory.named(
+                            declared_type_name_to_named_type(declared_type_name=declared_type_name)
+                        )
+                    ),
+                )
+
             external_pydantic_model.add_method_unsafe(
                 get_visit_method(
                     items=[
@@ -323,26 +345,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                             parameter_name=single_union_type.discriminant_value.name.snake_case.safe_name,
                             expected_value=f'"{single_union_type.discriminant_value.wire_value}"',
                             visitor_argument=single_union_type.shape.visit(
-                                same_properties_as_object=lambda declared_type_name: VisitorArgument(
-                                    expression=AST.Expression(
-                                        AST.FunctionInvocation(
-                                            function_definition=self._context.get_class_reference_for_type_id(
-                                                declared_type_name.type_id, as_request=False
-                                            ),
-                                            args=[
-                                                AST.Expression(
-                                                    f'unioned_value.dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}})',
-                                                    spread=AST.ExpressionSpread.TWO_ASTERISKS,
-                                                )
-                                            ],
-                                        )
-                                    ),
-                                    type=external_pydantic_model.get_type_hint_for_type_reference(
-                                        ir_types.TypeReference.factory.named(
-                                            declared_type_name_to_named_type(declared_type_name=declared_type_name)
-                                        )
-                                    ),
-                                ),
+                                same_properties_as_object=make_visitor_argument_for_same_properties,
                                 single_property=lambda property: VisitorArgument(
                                     expression=AST.Expression(
                                         f"unioned_value.{get_field_name_for_single_property(property)}"
@@ -357,7 +360,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     pre_tree_expressions=[
                         AST.Expression("unioned_value = self.get_as_union()"),
                     ],
-                    reference_to_current_value=f"unioned_value.{self._get_discriminant_attr_name()}",
+                    reference_to_current_value=f"unioned_value.{discriminant_attr_name}",
                 )
             )
 
@@ -390,49 +393,54 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         internal_single_union_type: AST.ClassReference,
         external_union: AST.ClassReference,
     ) -> AST.CodeWriterFunction:
+        discriminant_attr_name = self._get_discriminant_attr_name()
+        discriminant_value = single_union_type.discriminant_value.wire_value
+
         def write(writer: AST.NodeWriter) -> None:
             # explicit typing needed to help mypy
             no_expressions: List[AST.Expression] = []
 
-            internal_single_union_type_instantiation = AST.ClassInstantiation(
-                class_=internal_single_union_type,
-                args=single_union_type.shape.visit(
-                    same_properties_as_object=lambda type_name: [
-                        AST.Expression(
-                            f"{BUILDER_ARGUMENT_NAME}.dict(exclude_unset=True)",
-                            spread=AST.ExpressionSpread.TWO_ASTERISKS,
+            # For same_properties_as_object, use copy_and_update_model for efficiency
+            # For single_property and no_properties, use direct instantiation
+            shape = single_union_type.shape.get_as_union()
+
+            if shape.properties_type == "samePropertiesAsObject":
+                # Use copy_and_update_model for efficient shallow copy
+                def write_copy_and_update(writer: AST.NodeWriter) -> None:
+                    writer.write_reference(self._context.core_utilities.get_copy_and_update_model())
+                    writer.write(f"({BUILDER_ARGUMENT_NAME}, ")
+                    writer.write_reference(internal_single_union_type)
+                    writer.write(f', update={{"{discriminant_attr_name}": "{discriminant_value}"}})')
+
+                internal_single_union_type_instantiation: AST.AstNode = AST.CodeWriter(write_copy_and_update)
+            else:
+                internal_single_union_type_instantiation = AST.ClassInstantiation(
+                    class_=internal_single_union_type,
+                    args=no_expressions,
+                    kwargs=[
+                        (
+                            discriminant_attr_name,
+                            self._get_discriminant_value_for_single_union_type(single_union_type),
                         )
-                    ],
-                    single_property=lambda property: no_expressions,
-                    no_properties=lambda: no_expressions,
-                ),
-                kwargs=[
-                    (
-                        self._get_discriminant_attr_name(),
-                        self._get_discriminant_value_for_single_union_type(single_union_type),
-                    )
-                ]
-                + (
-                    single_union_type.shape.visit(
-                        same_properties_as_object=lambda type_name: [],
-                        single_property=lambda property: [
-                            (get_field_name_for_single_property(property), AST.Expression(BUILDER_ARGUMENT_NAME))
-                        ],
-                        no_properties=lambda: [],
-                    )
-                ),
-            )
+                    ]
+                    + (
+                        single_union_type.shape.visit(
+                            same_properties_as_object=lambda type_name: [],
+                            single_property=lambda property: [
+                                (get_field_name_for_single_property(property), AST.Expression(BUILDER_ARGUMENT_NAME))
+                            ],
+                            no_properties=lambda: [],
+                        )
+                    ),
+                )
 
             def write_condition(root_str: str) -> AST.CodeWriter:
                 def write_condition_for_root(writer: AST.NodeWriter) -> None:
-                    sub_union_instantiation = AST.ClassInstantiation(
-                        class_=external_union,
-                        kwargs=[(root_str, AST.Expression(internal_single_union_type_instantiation))],
-                    )
-
                     writer.write("return ")
-                    writer.write_node(sub_union_instantiation)
-                    writer.write("  # type: ignore")
+                    writer.write_reference(external_union)
+                    writer.write(f"({root_str}=")
+                    writer.write_node(internal_single_union_type_instantiation)
+                    writer.write(")  # type: ignore")
 
                 return AST.CodeWriter(write_condition_for_root)
 

@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.47.0
+  changelogEntry:
+    - summary: |
+        Optimize discriminated union `factory` and `visit` methods to avoid expensive `.dict()` 
+        serialization/deserialization. The new implementation uses shallow field copying via 
+        `copy_and_update_model`, significantly reducing runtime overhead and memory usage for 
+        deep, tree-like API shapes.
+      type: feat
+  createdAt: "2025-12-18"
+  irVersion: 61
+
 - version: 4.46.4-rc2
   changelogEntry:
     - summary: |

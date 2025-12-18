@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, copy_and_update_model, update_forward_refs
 from .circle import Circle as union_types_circle_Circle
 from .square import Square as union_types_square_Square
 
@@ -16,15 +16,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def circle(self, value: union_types_circle_Circle) -> Shape:
         if IS_PYDANTIC_V2:
-            return Shape(root=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))  # type: ignore
+            return Shape(root=copy_and_update_model(value, _Shape.Circle, update={"type": "circle"}))  # type: ignore
         else:
-            return Shape(__root__=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))  # type: ignore
+            return Shape(__root__=copy_and_update_model(value, _Shape.Circle, update={"type": "circle"}))  # type: ignore
 
     def square(self, value: union_types_square_Square) -> Shape:
         if IS_PYDANTIC_V2:
-            return Shape(root=_Shape.Square(**value.dict(exclude_unset=True), type="square"))  # type: ignore
+            return Shape(root=copy_and_update_model(value, _Shape.Square, update={"type": "square"}))  # type: ignore
         else:
-            return Shape(__root__=_Shape.Square(**value.dict(exclude_unset=True), type="square"))  # type: ignore
+            return Shape(__root__=copy_and_update_model(value, _Shape.Square, update={"type": "square"}))  # type: ignore
 
 
 class Shape(UniversalRootModel):
@@ -68,9 +68,9 @@ class Shape(UniversalRootModel):
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "circle":
-            return circle(union_types_circle_Circle(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+            return circle(copy_and_update_model(unioned_value, union_types_circle_Circle, exclude={"type"}))
         if unioned_value.type == "square":
-            return square(union_types_square_Square(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+            return square(copy_and_update_model(unioned_value, union_types_square_Square, exclude={"type"}))
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

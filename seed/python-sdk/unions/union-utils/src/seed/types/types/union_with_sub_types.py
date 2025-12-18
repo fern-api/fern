@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, copy_and_update_model, update_forward_refs
 from .foo import Foo as types_types_foo_Foo
 from .foo_extended import FooExtended as types_types_foo_extended_FooExtended
 
@@ -16,18 +16,20 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithSubTypes:
         if IS_PYDANTIC_V2:
-            return UnionWithSubTypes(root=_UnionWithSubTypes.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
+            return UnionWithSubTypes(root=copy_and_update_model(value, _UnionWithSubTypes.Foo, update={"type": "foo"}))  # type: ignore
         else:
-            return UnionWithSubTypes(__root__=_UnionWithSubTypes.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
+            return UnionWithSubTypes(
+                __root__=copy_and_update_model(value, _UnionWithSubTypes.Foo, update={"type": "foo"})
+            )  # type: ignore
 
     def foo_extended(self, value: types_types_foo_extended_FooExtended) -> UnionWithSubTypes:
         if IS_PYDANTIC_V2:
             return UnionWithSubTypes(
-                root=_UnionWithSubTypes.FooExtended(**value.dict(exclude_unset=True), type="fooExtended")
+                root=copy_and_update_model(value, _UnionWithSubTypes.FooExtended, update={"type": "fooExtended"})
             )  # type: ignore
         else:
             return UnionWithSubTypes(
-                __root__=_UnionWithSubTypes.FooExtended(**value.dict(exclude_unset=True), type="fooExtended")
+                __root__=copy_and_update_model(value, _UnionWithSubTypes.FooExtended, update={"type": "fooExtended"})
             )  # type: ignore
 
 
@@ -72,10 +74,10 @@ class UnionWithSubTypes(UniversalRootModel):
     ) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "foo":
-            return foo(types_types_foo_Foo(**unioned_value.dict(exclude_unset=True, exclude={"type"})))
+            return foo(copy_and_update_model(unioned_value, types_types_foo_Foo, exclude={"type"}))
         if unioned_value.type == "fooExtended":
             return foo_extended(
-                types_types_foo_extended_FooExtended(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, types_types_foo_extended_FooExtended, exclude={"type"})
             )
 
     if IS_PYDANTIC_V2:

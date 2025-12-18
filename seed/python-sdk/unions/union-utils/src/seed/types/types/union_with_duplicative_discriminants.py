@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, copy_and_update_model, update_forward_refs
 from .first_item_type import FirstItemType as types_types_first_item_type_FirstItemType
 from .second_item_type import SecondItemType as types_types_second_item_type_SecondItemType
 
@@ -17,28 +17,28 @@ class _Factory:
     def first_item_type(self, value: types_types_first_item_type_FirstItemType) -> UnionWithDuplicativeDiscriminants:
         if IS_PYDANTIC_V2:
             return UnionWithDuplicativeDiscriminants(
-                root=_UnionWithDuplicativeDiscriminants.FirstItemType(
-                    **value.dict(exclude_unset=True), type="firstItemType"
+                root=copy_and_update_model(
+                    value, _UnionWithDuplicativeDiscriminants.FirstItemType, update={"type": "firstItemType"}
                 )
             )  # type: ignore
         else:
             return UnionWithDuplicativeDiscriminants(
-                __root__=_UnionWithDuplicativeDiscriminants.FirstItemType(
-                    **value.dict(exclude_unset=True), type="firstItemType"
+                __root__=copy_and_update_model(
+                    value, _UnionWithDuplicativeDiscriminants.FirstItemType, update={"type": "firstItemType"}
                 )
             )  # type: ignore
 
     def second_item_type(self, value: types_types_second_item_type_SecondItemType) -> UnionWithDuplicativeDiscriminants:
         if IS_PYDANTIC_V2:
             return UnionWithDuplicativeDiscriminants(
-                root=_UnionWithDuplicativeDiscriminants.SecondItemType(
-                    **value.dict(exclude_unset=True), type="secondItemType"
+                root=copy_and_update_model(
+                    value, _UnionWithDuplicativeDiscriminants.SecondItemType, update={"type": "secondItemType"}
                 )
             )  # type: ignore
         else:
             return UnionWithDuplicativeDiscriminants(
-                __root__=_UnionWithDuplicativeDiscriminants.SecondItemType(
-                    **value.dict(exclude_unset=True), type="secondItemType"
+                __root__=copy_and_update_model(
+                    value, _UnionWithDuplicativeDiscriminants.SecondItemType, update={"type": "secondItemType"}
                 )
             )  # type: ignore
 
@@ -89,11 +89,11 @@ class UnionWithDuplicativeDiscriminants(UniversalRootModel):
         unioned_value = self.get_as_union()
         if unioned_value.type == "firstItemType":
             return first_item_type(
-                types_types_first_item_type_FirstItemType(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, types_types_first_item_type_FirstItemType, exclude={"type"})
             )
         if unioned_value.type == "secondItemType":
             return second_item_type(
-                types_types_second_item_type_SecondItemType(**unioned_value.dict(exclude_unset=True, exclude={"type"}))
+                copy_and_update_model(unioned_value, types_types_second_item_type_SecondItemType, exclude={"type"})
             )
 
     if IS_PYDANTIC_V2:
