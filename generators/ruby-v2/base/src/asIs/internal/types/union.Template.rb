@@ -63,11 +63,29 @@ module <%= gem_namespace %>
         # @return [Class]
         private def resolve_member(value)
           if discriminated? && value.is_a?(::Hash)
-            discriminant_value = value.fetch(@discriminant, nil)
+            # Try both symbol and string keys for the discriminant
+            discriminant_value = value.fetch(@discriminant, nil) || value.fetch(@discriminant.to_s, nil)
 
             return if discriminant_value.nil?
 
-            members.to_h[discriminant_value]&.call
+            # Convert to string for consistent comparison
+            discriminant_str = discriminant_value.to_s
+
+            # First try exact match
+            members_hash = members.to_h
+            result = members_hash[discriminant_str]&.call
+            return result if result
+
+            # Try case-insensitive match as fallback
+            discriminant_lower = discriminant_str.downcase
+            matching_keys = members_hash.keys.select { |k| k.to_s.downcase == discriminant_lower }
+
+            # Only use case-insensitive match if exactly one key matches (avoid ambiguity)
+            if matching_keys.length == 1
+              return members_hash[matching_keys.first]&.call
+            end
+
+            nil
           else
             # First try exact type matching
             result = members.find do |_key, mem|
@@ -132,4 +150,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end    
+end        

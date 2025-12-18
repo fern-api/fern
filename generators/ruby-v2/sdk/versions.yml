@@ -12,6 +12,13 @@
         Union member keys now match the API's expected discriminant values (e.g., "card" instead
         of "CARD"), enabling proper type coercion and field transformation for nested objects.
       type: fix
+    - summary: |
+        Add case-insensitive fallback for union discriminant matching in the Ruby runtime.
+        When the exact discriminant value doesn't match a member key, the runtime now tries
+        a case-insensitive lookup (e.g., "card" will match "CARD" or "Card"). This enables
+        proper union coercion even when API discriminant values differ in case from member keys,
+        ensuring nested objects are correctly serialized with their wire field names.
+      type: fix
   createdAt: "2025-12-18"
   irVersion: 61
 
