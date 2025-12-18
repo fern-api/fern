@@ -282,6 +282,25 @@ service:
         query-parameters:
           cursor: optional<uuid>
       response: ListUsersExtendedResponse
+      examples:
+        - name: WithNextCursor
+          response:
+            body:
+              data:
+                users:
+                  - name: "Alice"
+                    id: 1
+              next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+              total_count: 100
+        - name: WithoutNextCursor
+          response:
+            body:
+              data:
+                users:
+                  - name: "Bob"
+                    id: 2
+              next: null
+              total_count: 1
 
     listWithExtendedResultsAndOptionalData:
       pagination:
