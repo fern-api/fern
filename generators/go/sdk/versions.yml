@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.22.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred authentication. APIs can now use inferred auth schemes where tokens
+        are fetched from dedicated endpoints using other authentication methods like API keys. The SDK
+        automatically handles token caching, refresh, and thread-safe token fetching in the background.
+      type: feat
+  createdAt: "2025-12-17"
+  irVersion: 60
+
 - version: 1.21.3
   changelogEntry:
     - summary: |

@@ -267,9 +267,6 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 case "oauth":
                     this.writeOAuthEnvironmentVariables({ writer, scheme });
                     break;
-                case "inferred":
-                    this.writeInferredAuthEnvironmentVariables({ writer, scheme });
-                    break;
             }
         }
     }
@@ -347,21 +344,6 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 propertyReference: go.selector({ on: go.codeblock("options"), selector: go.codeblock("ClientSecret") }),
                 env: configuration.clientSecretEnvVar
             });
-        }
-    }
-
-    private writeInferredAuthEnvironmentVariables({
-        writer,
-        scheme
-    }: {
-        writer: go.Writer;
-        scheme: InferredAuthScheme;
-    }): void {
-        // For inferred auth, we need to copy authenticated request headers that may need environment variables
-        // This would be similar to how headers are handled in the header auth scheme
-        for (const authHeader of scheme.tokenEndpoint.authenticatedRequestHeaders) {
-            // TODO: Add environment variable support for inferred auth headers if needed
-            // This would require checking if the auth header has an associated environment variable
         }
     }
 
@@ -611,7 +593,6 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
                 // Fetch a new token from the auth endpoint
                 // Get the request type reference from the endpoint
-                const serviceId = inferredScheme.tokenEndpoint.endpoint.serviceId;
                 const requestWrapperName =
                     tokenEndpoint.sdkRequest?.shape.type === "wrapper"
                         ? tokenEndpoint.sdkRequest.shape.wrapperName
