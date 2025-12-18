@@ -1,5 +1,7 @@
+import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
@@ -79,16 +81,31 @@ export async function validateWorkspaces({
                 return;
             }
 
-            // First, load the workspace outside of runTaskForWorkspace so that
-            // workspace loading errors (like "Missing file: api.yml") don't get the [api]: prefix
-            const fernWorkspace = await cliContext.runTask(async (context) => {
-                return workspace.toFernWorkspace({ context });
-            });
+            // For LazyFernWorkspace, check if api.yml exists before running validation.
+            // If it doesn't exist, we want to log the error WITHOUT the [api]: prefix.
+            // All other errors (including dependency errors) should have the [api]: prefix.
+            if (workspace instanceof LazyFernWorkspace) {
+                const absolutePathToApiYml = join(
+                    workspace.absoluteFilePath,
+                    RelativeFilePath.of(DEFINITION_DIRECTORY),
+                    RelativeFilePath.of(ROOT_API_FILENAME)
+                );
+                const apiYmlExists = await doesPathExist(absolutePathToApiYml);
+                if (!apiYmlExists) {
+                    // Log the missing file error without the [api]: prefix
+                    await cliContext.runTask(async (context) => {
+                        context.logger.error(`Missing file: ${ROOT_API_FILENAME}`);
+                        return context.failAndThrow();
+                    });
+                    return;
+                }
+            }
 
-            // Then, run validation inside runTaskForWorkspace so that dependency errors
-            // and other validation errors get the [api]: prefix
+            // Run toFernWorkspace and validation inside runTaskForWorkspace so that
+            // dependency errors and other validation errors get the [api]: prefix
             let collected: Awaited<ReturnType<typeof collectAPIWorkspaceViolations>> | undefined;
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
+                const fernWorkspace = await workspace.toFernWorkspace({ context });
                 collected = await collectAPIWorkspaceViolations({
                     workspace: fernWorkspace,
                     context,
