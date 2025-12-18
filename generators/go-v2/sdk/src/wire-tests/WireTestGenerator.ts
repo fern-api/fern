@@ -106,7 +106,7 @@ export class WireTestGenerator {
                         const service = Object.values(this.context.ir.services).find((s) =>
                             s.endpoints.some((e) => e.id === endpoint.id)
                         );
-                        const testId = this.buildDeterministicTestId(service, endpoint, 0);
+                        const testId = this.buildDeterministicTestId(service, endpoint);
                         const snippet = await this.generateSnippetForExample(firstExample);
                         endpointTestCases.set(endpoint.id, { snippet, testId });
                     } catch (error) {
@@ -336,7 +336,7 @@ export class WireTestGenerator {
                     body: go.codeblock((writer) => {
                         writer.writeNode(go.codeblock('WireMockBaseURL := "http://localhost:8080"'));
                         writer.newLine();
-                        writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet, testId }));
+                        writer.writeNode(this.constructWiremockTestClient({ snippet, testId }));
                         writer.newLine();
                         writer.writeNode(this.callClientMethodAndAssert({ endpoint, snippet, testId }));
                     })
@@ -454,7 +454,12 @@ export class WireTestGenerator {
         return requestBodyLines.join("\n");
     }
 
-    private parseClientConstructor(snippet: string): string {
+    /**
+     * Parses the client constructor from a snippet and returns its parts.
+     * Returns the assignment prefix (e.g., "client := client.NewClient") and
+     * the arguments as separate strings for structured re-emission.
+     */
+    private parseClientConstructorParts(snippet: string): { prefix: string; args: string[] } {
         const lines = snippet.split("\n");
 
         // Find the line that starts with client constructor (e.g., "client := client.NewWithOptions")
@@ -468,13 +473,14 @@ export class WireTestGenerator {
         }
 
         if (constructorStartIndex === -1) {
-            return ""; // No client constructor found
+            return { prefix: "", args: [] };
         }
 
         // Track parentheses to find the end of the constructor call
         let parenCount = 0;
         let constructorEndIndex = -1;
         let foundOpenParen = false;
+        let openParenPosition = { line: -1, col: -1 };
 
         for (let i = constructorStartIndex; i < lines.length; i++) {
             const line = lines[i] ?? "";
@@ -482,6 +488,9 @@ export class WireTestGenerator {
             for (let j = 0; j < line.length; j++) {
                 const char = line[j];
                 if (char === "(") {
+                    if (!foundOpenParen) {
+                        openParenPosition = { line: i, col: j };
+                    }
                     parenCount++;
                     foundOpenParen = true;
                 } else if (char === ")") {
@@ -498,13 +507,61 @@ export class WireTestGenerator {
             }
         }
 
-        if (constructorEndIndex === -1) {
-            return ""; // No matching closing parenthesis found
+        if (constructorEndIndex === -1 || openParenPosition.line === -1) {
+            return { prefix: "", args: [] };
         }
 
-        // Extract the constructor lines
+        // Extract the prefix (everything up to and including the opening paren)
+        const firstLine = lines[constructorStartIndex] ?? "";
+        const prefix = firstLine.substring(0, openParenPosition.col + 1).trim();
+
+        // Extract the arguments between the parentheses
         const constructorLines = lines.slice(constructorStartIndex, constructorEndIndex + 1);
-        return constructorLines.join("\n");
+        const fullConstructor = constructorLines.join("\n");
+
+        // Find the content between the first ( and last )
+        const firstParenIndex = fullConstructor.indexOf("(");
+        const lastParenIndex = fullConstructor.lastIndexOf(")");
+        if (firstParenIndex === -1 || lastParenIndex === -1) {
+            return { prefix, args: [] };
+        }
+
+        const argsContent = fullConstructor.substring(firstParenIndex + 1, lastParenIndex).trim();
+        if (argsContent.length === 0) {
+            return { prefix, args: [] };
+        }
+
+        // Split arguments by comma at depth 0 (not inside nested parens/braces/brackets)
+        const args: string[] = [];
+        let currentArg = "";
+        let depth = 0;
+
+        for (let i = 0; i < argsContent.length; i++) {
+            const char = argsContent[i];
+            if (char === "(" || char === "{" || char === "[") {
+                depth++;
+                currentArg += char;
+            } else if (char === ")" || char === "}" || char === "]") {
+                depth--;
+                currentArg += char;
+            } else if (char === "," && depth === 0) {
+                const trimmedArg = currentArg.trim();
+                if (trimmedArg.length > 0) {
+                    args.push(trimmedArg);
+                }
+                currentArg = "";
+            } else {
+                currentArg += char;
+            }
+        }
+
+        // Don't forget the last argument
+        const trimmedArg = currentArg.trim();
+        if (trimmedArg.length > 0) {
+            args.push(trimmedArg);
+        }
+
+        return { prefix, args };
     }
 
     private parseTestFunctionNameFromSnippet(snippet: string): string {
@@ -558,48 +615,25 @@ export class WireTestGenerator {
         return imports;
     }
 
-    private constructWiremockTestClient({
-        endpoint,
-        snippet,
-        testId
-    }: {
-        endpoint: HttpEndpoint;
-        snippet: string;
-        testId: string;
-    }): go.CodeBlock {
-        const clientConstructor = this.parseClientConstructor(snippet);
-
-        // Inject the X-Test-Id header into the client constructor using WithHTTPHeader
-        // This allows WireMock to filter requests by test ID for concurrency safety
-        const modifiedConstructor = this.injectTestIdHeader(clientConstructor, testId);
+    private constructWiremockTestClient({ snippet, testId }: { snippet: string; testId: string }): go.CodeBlock {
+        const { prefix, args } = this.parseClientConstructorParts(snippet);
 
         return go.codeblock((writer) => {
-            writer.write(modifiedConstructor);
+            // Write the assignment and function call prefix (e.g., "client := client.NewClient(")
+            writer.writeLine(prefix);
+            writer.indent();
+
+            // Write each existing argument
+            for (const arg of args) {
+                writer.writeLine(`${arg},`);
+            }
+
+            // Add the X-Test-Id header option for WireMock test isolation
+            writer.writeLine(`option.WithHTTPHeader(http.Header{"X-Test-Id": []string{"${testId}"}}),`);
+
+            writer.dedent();
+            writer.write(")");
         });
-    }
-
-    /**
-     * Injects the X-Test-Id header into the client constructor using WithHTTPHeader.
-     * This modifies the client constructor to add the header option before the closing parenthesis.
-     */
-    private injectTestIdHeader(clientConstructor: string, testId: string): string {
-        // Find the last closing parenthesis and inject the header option before it
-        const lastParenIndex = clientConstructor.lastIndexOf(")");
-        if (lastParenIndex === -1) {
-            return clientConstructor;
-        }
-
-        // Check if there are existing options (look for content before the closing paren)
-        const beforeParen = clientConstructor.substring(0, lastParenIndex).trimEnd();
-        const needsComma = beforeParen.length > 0 && !beforeParen.endsWith("(") && !beforeParen.endsWith(",");
-
-        const headerOption = `option.WithHTTPHeader(http.Header{"X-Test-Id": []string{"${testId}"}})`;
-
-        if (needsComma) {
-            return `${beforeParen},\n\t\t${headerOption},\n\t)`;
-        } else {
-            return `${beforeParen}\n\t\t${headerOption},\n\t)`;
-        }
     }
 
     private callClientMethodAndAssert({
@@ -869,11 +903,7 @@ export class WireTestGenerator {
      * This ID is used to scope WireMock assertions to a specific test,
      * allowing tests to run concurrently without interfering with each other.
      */
-    private buildDeterministicTestId(
-        service: HttpService | undefined,
-        endpoint: HttpEndpoint,
-        exampleIndex: number
-    ): string {
+    private buildDeterministicTestId(service: HttpService | undefined, endpoint: HttpEndpoint): string {
         const servicePathParts = service?.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName) ?? [];
         const endpointName = endpoint.name.snakeCase.safeName;
 
@@ -882,7 +912,6 @@ export class WireTestGenerator {
             segments.push(servicePathParts.join("."));
         }
         segments.push(endpointName);
-        segments.push(String(exampleIndex));
 
         return segments.join(".");
     }
