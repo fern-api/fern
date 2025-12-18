@@ -7,8 +7,8 @@ import * as errors from "../errors/index.js";
 
 export class OAuthAuthProvider implements core.AuthProvider {
     private readonly BUFFER_IN_MINUTES: number = 2;
-    private readonly _clientId: core.Supplier<string> | undefined;
-    private readonly _clientSecret: core.Supplier<string> | undefined;
+    private readonly _clientId: core.EndpointSupplier<string> | undefined;
+    private readonly _clientSecret: core.EndpointSupplier<string> | undefined;
     private readonly _authClient: AuthClient;
     private _accessToken: string | undefined;
     private _expiresAt: Date;
@@ -51,10 +51,13 @@ export class OAuthAuthProvider implements core.AuthProvider {
         return this.refresh(arg);
     }
 
-    private async refresh(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
+    private async refresh(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
         this._refreshPromise = (async () => {
             try {
-                const clientId = (await core.Supplier.get(this._clientId)) ?? process.env?.MY_CLIENT_ID;
+                const clientId =
+                    (await core.EndpointSupplier.get(this._clientId, {
+                        endpointMetadata: arg?.endpointMetadata ?? {},
+                    })) ?? process.env?.MY_CLIENT_ID;
                 if (clientId == null) {
                     throw new errors.SeedEndpointSecurityAuthError({
                         message:
@@ -62,7 +65,10 @@ export class OAuthAuthProvider implements core.AuthProvider {
                     });
                 }
 
-                const clientSecret = (await core.Supplier.get(this._clientSecret)) ?? process.env?.MY_CLIENT_SECRET;
+                const clientSecret =
+                    (await core.EndpointSupplier.get(this._clientSecret, {
+                        endpointMetadata: arg?.endpointMetadata ?? {},
+                    })) ?? process.env?.MY_CLIENT_SECRET;
                 if (clientSecret == null) {
                     throw new errors.SeedEndpointSecurityAuthError({
                         message:
