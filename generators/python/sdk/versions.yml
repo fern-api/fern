@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.46.4
+- version: 4.46.4-rc0
   changelogEntry:
     - summary: |
         Fix wire test generation to use `config.client.exported_class_name` for the client class name
