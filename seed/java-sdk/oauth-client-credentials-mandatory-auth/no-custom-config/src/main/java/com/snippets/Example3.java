@@ -5,11 +5,10 @@ import com.seed.oauthClientCredentialsMandatoryAuth.resources.auth.requests.Refr
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsMandatoryAuthClient client = SeedOauthClientCredentialsMandatoryAuthClient.builder()
-                .clientId("<clientId>")
-                .clientSecret("<clientSecret>")
-                .url("https://api.fern.com")
-                .build();
+        SeedOauthClientCredentialsMandatoryAuthClient client =
+                SeedOauthClientCredentialsMandatoryAuthClient.withCredentials("<clientId>", "<clientSecret>")
+                        .url("https://api.fern.com")
+                        .build();
 
         client.auth()
                 .refreshToken(RefreshTokenRequest.builder()
