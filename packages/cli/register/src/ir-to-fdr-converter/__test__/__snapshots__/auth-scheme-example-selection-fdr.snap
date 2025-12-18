@@ -1,0 +1,352 @@
+{
+  "auth": {
+    "description": "User authentication token",
+    "headerWireValue": "x-user-token",
+    "nameOverride": "apiKey",
+    "prefix": undefined,
+    "type": "header",
+  },
+  "authSchemes": {
+    "admin": {
+      "description": "Admin API key",
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey",
+      "prefix": undefined,
+      "type": "header",
+    },
+    "operator": {
+      "description": "Operator API key",
+      "headerWireValue": "Authorization",
+      "nameOverride": "apiKey",
+      "prefix": undefined,
+      "type": "header",
+    },
+    "user": {
+      "description": "User authentication token",
+      "headerWireValue": "x-user-token",
+      "nameOverride": "apiKey",
+      "prefix": undefined,
+      "type": "header",
+    },
+  },
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": true,
+        "authV2": [
+          "admin",
+          "operator",
+        ],
+        "availability": undefined,
+        "defaultEnvironment": "https://api.example.com/v1",
+        "description": "This endpoint accepts either admin auth OR operator auth.
+Examples should use the first available auth scheme (admin).
+",
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "https://api.example.com/v1",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/resource",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "amount": {
+                "value": 1.1,
+              },
+              "target": "string",
+              "type": "typeA",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "amount": {
+                  "value": 1.1,
+                },
+                "target": "string",
+                "type": "typeA",
+              },
+            },
+            "responseBody": {
+              "id": "string",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "id": "string",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "createResource",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": [
+          {
+            "schemes": [
+              "admin",
+            ],
+          },
+          {
+            "schemes": [
+              "operator",
+            ],
+          },
+        ],
+        "name": "Create a resource with multiple auth options",
+        "originalEndpointId": "endpoint_.createResource",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/resource",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "description": undefined,
+            "shape": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "ResourceRequest",
+              },
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "description": undefined,
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "ResourceRequest",
+                  },
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Resource created successfully",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "ResourceResponse",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Resource created successfully",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "ResourceResponse",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "ResourceRequest",
+      "ResourceResponse",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "ResourceRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ResourceRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Resource type",
+            "key": "type",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "ResourceRequestType",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "amount",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "ResourceRequestAmount",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Target identifier",
+            "key": "target",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ResourceRequestAmount": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ResourceRequestAmount",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Amount value",
+            "key": "value",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": 1,
+                "type": "double",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "ResourceRequestType": {
+      "availability": undefined,
+      "description": "Resource type",
+      "displayName": undefined,
+      "name": "ResourceRequestType",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "typeA",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "typeB",
+          },
+        ],
+      },
+    },
+    "ResourceResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "ResourceResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Resource identifier",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

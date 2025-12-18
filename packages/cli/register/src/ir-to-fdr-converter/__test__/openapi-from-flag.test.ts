@@ -2411,4 +2411,86 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/company-file-ref-examples-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/company-file-ref-examples-ir.snap");
     });
+
+    it("should populate examples with the first available auth scheme from endpoint security", async () => {
+        // Test that when an endpoint has multiple auth options (e.g., admin OR operator),
+        // the generated examples should use the first available auth scheme (admin),
+        // not the first globally defined auth scheme or an incorrect scheme.
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/auth-scheme-example-selection")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "auth-scheme-example-selection"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate auth schemes were processed correctly
+        expect(intermediateRepresentation.auth).toBeDefined();
+        expect(intermediateRepresentation.auth.schemes).toBeDefined();
+        // Should have 3 security schemes: user, operator, admin
+        expect(intermediateRepresentation.auth.schemes.length).toBe(3);
+
+        // Validate FDR auth schemes
+        expect(fdrApiDefinition.authSchemes).toBeDefined();
+        expect(Object.keys(fdrApiDefinition.authSchemes ?? {}).length).toBe(3);
+
+        // Validate that the endpoint has the correct multiAuth configuration
+        // The endpoint security is: [{"admin": []}, {"operator": []}]
+        // So multiAuth should show admin as the first option
+        expect(fdrApiDefinition.rootPackage?.endpoints).toBeDefined();
+        const endpoint = fdrApiDefinition.rootPackage?.endpoints?.[0];
+        expect(endpoint).toBeDefined();
+        expect(endpoint?.multiAuth).toBeDefined();
+        expect(endpoint?.multiAuth?.length).toBe(2);
+        // First auth option should be admin
+        expect(endpoint?.multiAuth?.[0]?.schemes).toContain("admin");
+        // Second auth option should be operator
+        expect(endpoint?.multiAuth?.[1]?.schemes).toContain("operator");
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/auth-scheme-example-selection-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot(
+            "__snapshots__/auth-scheme-example-selection-ir.snap"
+        );
+    });
 });
