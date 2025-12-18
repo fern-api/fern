@@ -312,6 +312,12 @@ def copy_and_update_model(
         fields_set.discard(field_name)
 
     if IS_PYDANTIC_V2:
-        return pydantic.BaseModel.model_construct.__func__(target_cls, fields_set, **values)  # type: ignore[attr-defined, return-value]
+        return cast(
+            Model,
+            pydantic.BaseModel.model_construct.__func__(target_cls, fields_set, **values),  # type: ignore[attr-defined]
+        )
     else:
-        return pydantic.BaseModel.construct.__func__(target_cls, fields_set, **values)  # type: ignore[attr-defined, return-value]
+        return cast(
+            Model,
+            pydantic.BaseModel.construct.__func__(target_cls, fields_set, **values),  # type: ignore[attr-defined]
+        )

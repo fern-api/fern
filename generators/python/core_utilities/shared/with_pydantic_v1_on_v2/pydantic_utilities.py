@@ -219,4 +219,7 @@ def copy_and_update_model(
     for field_name in exclude:
         fields_set.discard(field_name)
 
-    return pydantic.v1.BaseModel.construct.__func__(target_cls, fields_set, **values)  # type: ignore[attr-defined, return-value]
+    return cast(
+        Model,
+        pydantic.v1.BaseModel.construct.__func__(target_cls, fields_set, **values),  # type: ignore[attr-defined]
+    )
