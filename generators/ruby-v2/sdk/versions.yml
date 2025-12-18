@@ -7,6 +7,11 @@
         Header parameters (like Idempotency-Key) are now properly extracted from params and
         passed via the headers parameter in Request.new() calls.
       type: fix
+    - summary: |
+        Fix union type discriminant matching to use wire values instead of SCREAMING_SNAKE_CASE.
+        Union member keys now match the API's expected discriminant values (e.g., "card" instead
+        of "CARD"), enabling proper type coercion and field transformation for nested objects.
+      type: fix
   createdAt: "2025-12-18"
   irVersion: 61
 

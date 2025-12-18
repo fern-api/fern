@@ -8,8 +8,8 @@ module Seed
 
         discriminant :type
 
-        member -> { String }, key: "DATE"
-        member -> { String }, key: "DATETIME"
+        member -> { String }, key: "date"
+        member -> { String }, key: "datetime"
       end
     end
   end

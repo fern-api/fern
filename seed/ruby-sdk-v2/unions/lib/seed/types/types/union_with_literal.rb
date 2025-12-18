@@ -8,7 +8,7 @@ module Seed
 
         discriminant :type
 
-        member -> { String }, key: "FERN"
+        member -> { String }, key: "fern"
       end
     end
   end

@@ -8,9 +8,9 @@ module Seed
 
         discriminant :type
 
-        member -> { Integer }, key: "INTEGER"
-        member -> { String }, key: "STRING"
-        member -> { Seed::Types::Types::Foo }, key: "FOO"
+        member -> { Integer }, key: "integer"
+        member -> { String }, key: "string"
+        member -> { Seed::Types::Types::Foo }, key: "foo"
       end
     end
   end
