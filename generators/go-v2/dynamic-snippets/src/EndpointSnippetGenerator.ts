@@ -299,7 +299,7 @@ export class EndpointSnippetGenerator {
     }
 
     private getWiremockTestConstructorArgs(): go.AstNode[] {
-        return [
+        const args: go.AstNode[] = [
             go.codeblock((writer) => {
                 writer.writeNode(
                     go.invokeFunc({
@@ -312,6 +312,25 @@ export class EndpointSnippetGenerator {
                 );
             })
         ];
+
+        // Add X-Test-Id header for request scoping in concurrent test execution
+        args.push(
+            go.codeblock((writer) => {
+                writer.writeNode(
+                    go.invokeFunc({
+                        func: go.typeReference({
+                            name: "WithHTTPHeader",
+                            importPath: this.context.getOptionImportPath()
+                        }),
+                        arguments_: [
+                            go.codeblock(`http.Header{"X-Test-Id": []string{"TEST-ID-PLACEHOLDER"}}`)
+                        ]
+                    })
+                );
+            })
+        );
+
+        return args;
     }
 
     private getConstructorAuthArg({
