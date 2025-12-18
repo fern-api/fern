@@ -529,11 +529,11 @@ class InferredAuthTokenProviderGenerator:
                     object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
                         type_id
                     )
-                    for prop in object_properties:
-                        field_name = prop.name.name.snake_case.safe_name
-                        is_literal = self._is_literal_type(prop.value_type)
-                        literal_value = self._extract_literal_value(prop.value_type) if is_literal else None
-                        is_optional = self._is_optional_type(prop.value_type)
+                    for object_prop in object_properties:
+                        field_name = object_prop.name.name.snake_case.safe_name
+                        is_literal = self._is_literal_type(object_prop.value_type)
+                        literal_value = self._extract_literal_value(object_prop.value_type) if is_literal else None
+                        is_optional = self._is_optional_type(object_prop.value_type)
                         properties.append(
                             CredentialProperty(
                                 field_name=field_name,
