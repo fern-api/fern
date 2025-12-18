@@ -44,7 +44,7 @@ export function printCheckReport({ apiResults, docsResult, logWarnings, context 
 
         if (showApiNesting) {
             // Multiple APIs - show [sdk] header with nested [api] sections
-            context.logger.info(chalk.bold("[sdk]"));
+            context.logger.info(chalk.blue(chalk.bold("[sdk]")));
             for (const apiResult of apiResults) {
                 const stats = getViolationStats(apiResult.violations);
                 if (stats.numErrors > 0 || (logWarnings && stats.numWarnings > 0)) {
@@ -112,7 +112,7 @@ function printSdkSectionFlat({
     context: TaskContext;
 }): void {
     const statsStr = formatStats(stats, logWarnings);
-    context.logger.info(chalk.bold(`[sdk]`) + ` ${statsStr}`);
+    context.logger.info(chalk.blue(chalk.bold(`[sdk]`)) + ` ${statsStr}`);
 
     printViolationsByType({
         violations,
@@ -160,7 +160,7 @@ function printDocsSection({
     context: TaskContext;
 }): void {
     const statsStr = formatStats(stats, logWarnings);
-    context.logger.info(chalk.bold(`[docs]`) + ` ${statsStr}`);
+    context.logger.info(chalk.blue(chalk.bold(`[docs]`)) + ` ${statsStr}`);
 
     printViolationsByType({
         violations,
@@ -185,16 +185,16 @@ function printViolationsByType({
     const errors = violations.filter((v) => v.severity === "fatal" || v.severity === "error");
     const warnings = violations.filter((v) => v.severity === "warning");
 
-    // Print errors first
-    for (const violation of errors.sort(sortViolations)) {
-        printViolation({ violation, context, indent });
-    }
-
-    // Print warnings if enabled
+    // Print warnings first (if enabled)
     if (logWarnings) {
         for (const violation of warnings.sort(sortViolations)) {
             printViolation({ violation, context, indent });
         }
+    }
+
+    // Print errors at the end
+    for (const violation of errors.sort(sortViolations)) {
+        printViolation({ violation, context, indent });
     }
 }
 
@@ -210,13 +210,23 @@ function printViolation({
     const severityLabel = getSeverityLabel(violation.severity);
     const path = formatViolationPath(violation);
 
-    context.logger.info(`${indent}${severityLabel}`);
-    context.logger.info(`${indent}    path: ${path}`);
-    context.logger.info(`${indent}    issue: ${violation.message}`);
+    // If path is empty, print issue on same line as severity label
+    if (path === "") {
+        context.logger.info(`${indent}${severityLabel} ${violation.message}`);
+    } else {
+        context.logger.info(`${indent}${severityLabel}`);
+        context.logger.info(`${indent}    path: ${chalk.blue(path)}`);
+        context.logger.info(`${indent}    issue: ${violation.message}`);
+    }
 }
 
 function formatViolationPath(violation: ValidationViolation): string {
-    const parts: string[] = [violation.relativeFilepath];
+    const parts: string[] = [];
+
+    // Only add relativeFilepath if it's not empty
+    if (violation.relativeFilepath !== "") {
+        parts.push(violation.relativeFilepath);
+    }
 
     for (const nodePathItem of violation.nodePath) {
         let itemStr = typeof nodePathItem === "string" ? nodePathItem : nodePathItem.key;
