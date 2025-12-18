@@ -1,5 +1,6 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "latest"
+  "generatorVersion": "latest",
+  "sdkVersion": "0.0.1"
 }

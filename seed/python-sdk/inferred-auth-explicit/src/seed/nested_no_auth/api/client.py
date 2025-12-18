@@ -38,7 +38,10 @@ class ApiClient:
         from seed import SeedInferredAuthExplicit
 
         client = SeedInferredAuthExplicit(
-            base_url="https://yourhost.com/path/to/api",
+            base_url="YOUR_BASE_URL",
+            x_api_key="YOUR_X_API_KEY",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.nested_no_auth.api.get_something()
         """
@@ -79,7 +82,10 @@ class AsyncApiClient:
         from seed import AsyncSeedInferredAuthExplicit
 
         client = AsyncSeedInferredAuthExplicit(
-            base_url="https://yourhost.com/path/to/api",
+            base_url="YOUR_BASE_URL",
+            x_api_key="YOUR_X_API_KEY",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
