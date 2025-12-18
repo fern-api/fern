@@ -716,6 +716,12 @@ export async function runAppPreviewServer({
 
                 editedAbsoluteFilepaths.length = 0;
 
+                // Restart the Next.js server
+                await restartNextJsServer();
+
+                // Wait 3 seconds for the server to be fully ready before triggering refresh
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+
                 sendData({
                     version: 1,
                     type: "finishReload"
@@ -795,58 +801,104 @@ export async function runAppPreviewServer({
         NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
     };
 
-    const serverProcess = runExeca(context.logger, "node", [serverPath], {
-        env,
-        doNotPipeOutput: true
-    });
+    // Track the current server process
+    let serverProcess: ReturnType<typeof runExeca> | null = null;
 
-    // Wait for Next.js to be ready by watching for the "Ready" message in stdout
-    const nextJsReady = new Promise<void>((resolve) => {
-        const checkReady = (data: Buffer) => {
-            const output = data.toString();
-            context.logger.debug(`[Next.js] ${output}`);
-            if (output.includes("Ready in") || output.includes("✓ Ready")) {
+    // Function to start the Next.js server
+    const startNextJsServer = (): Promise<void> => {
+        return new Promise((resolve) => {
+            serverProcess = runExeca(context.logger, "node", [serverPath], {
+                env,
+                doNotPipeOutput: true
+            });
+
+            const checkReady = (data: Buffer) => {
+                const output = data.toString();
+                context.logger.debug(`[Next.js] ${output}`);
+                if (output.includes("Ready in") || output.includes("✓ Ready")) {
+                    resolve();
+                }
+            };
+            serverProcess.stdout?.on("data", checkReady);
+
+            // Also log stderr but don't block on it
+            serverProcess.stderr?.on("data", (data) => {
+                context.logger.debug(`[Next.js] ${data.toString()}`);
+            });
+
+            context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
+
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            serverProcess.on("error", (err) => {
+                context.logger.debug(`Server process error: ${err.message}`);
+            });
+
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            serverProcess.on("exit", (code, signal) => {
+                if (code) {
+                    context.logger.debug(`Server process exited with code: ${code}`);
+                } else if (signal) {
+                    context.logger.debug(`Server process killed with signal: ${signal}`);
+                } else {
+                    context.logger.debug("Server process exited");
+                }
+            });
+
+            // Fallback timeout in case we miss the ready message
+            setTimeout(() => {
+                resolve();
+            }, 10000);
+        });
+    };
+
+    // Function to stop the current Next.js server
+    const stopNextJsServer = (): Promise<void> => {
+        return new Promise((resolve) => {
+            if (serverProcess == null || serverProcess.killed) {
+                resolve();
+                return;
+            }
+
+            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
+            try {
+                serverProcess.kill();
+                // Give it a moment to clean up
+                setTimeout(() => {
+                    if (serverProcess != null && !serverProcess.killed) {
+                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
+                        try {
+                            serverProcess.kill("SIGKILL");
+                        } catch (err) {
+                            context.logger.error(`Failed to force kill server process: ${err}`);
+                        }
+                    }
+                    resolve();
+                }, 1000);
+            } catch (err) {
+                context.logger.error(`Failed to kill server process: ${err}`);
                 resolve();
             }
-        };
-        serverProcess.stdout?.on("data", checkReady);
+        });
+    };
 
-        // Fallback timeout in case we miss the ready message
-        setTimeout(() => {
-            resolve();
-        }, 10000);
-    });
+    // Function to restart the Next.js server
+    const restartNextJsServer = async (): Promise<void> => {
+        context.logger.info("Restarting Next.js server...");
+        await stopNextJsServer();
+        await startNextJsServer();
+        context.logger.info("Next.js server restarted");
+    };
 
-    // Also log stderr but don't block on it
-    serverProcess.stderr?.on("data", (data) => {
-        context.logger.debug(`[Next.js] ${data.toString()}`);
-    });
-
-    context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    serverProcess.on("error", (err) => {
-        context.logger.debug(`Server process error: ${err.message}`);
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    serverProcess.on("exit", (code, signal) => {
-        if (code) {
-            context.logger.debug(`Server process exited with code: ${code}`);
-        } else if (signal) {
-            context.logger.debug(`Server process killed with signal: ${signal}`);
-        } else {
-            context.logger.debug("Server process exited");
-        }
-    });
+    // Start the initial server
+    await startNextJsServer();
 
     const cleanup = () => {
-        if (!serverProcess.killed) {
+        if (serverProcess != null && !serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
                 serverProcess.kill();
                 setTimeout(() => {
-                    if (!serverProcess.killed) {
+                    if (serverProcess != null && !serverProcess.killed) {
                         context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
                         try {
                             serverProcess.kill("SIGKILL");
@@ -902,8 +954,7 @@ export async function runAppPreviewServer({
 
     process.on("beforeExit", cleanup);
 
-    // Wait for Next.js to be ready before announcing the server is ready
-    await nextJsReady;
+    // Server is ready after startNextJsServer completes
     context.logger.info(`Docs preview server ready on http://localhost:${port}`);
 
     // await infinitely
