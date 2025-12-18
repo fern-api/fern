@@ -484,35 +484,11 @@ export class SdkWireTestGenerator {
         let transformedSnippet = snippet;
 
         const isStreamingEndpoint = endpoint.response?.body?.type === "streaming";
-        const methodCamel = endpoint.name.camelCase.safeName;
-        const methodPascal = endpoint.name.pascalCase.safeName;
-        const requestPascal = methodPascal + "Request";
-        const streamRequestPascal = methodPascal + "StreamRequest";
 
         if (isStreamingEndpoint) {
-            // For streaming endpoints, ensure method name ends with "Stream"
-            // Only add suffix if it doesn't already end with "Stream"
-            if (!methodCamel.endsWith("Stream")) {
-                const nonStreamingMethodPattern = new RegExp(`\\.${methodCamel}\\s*\\(`, "g");
-                transformedSnippet = transformedSnippet.replace(nonStreamingMethodPattern, `.${methodCamel}Stream(`);
-            }
-
-            // For request types, only add "Stream" suffix if not already present
-            if (!methodPascal.endsWith("Stream")) {
-                const nonStreamingRequestPattern = new RegExp(`\\b${requestPascal}\\b`, "g");
-                transformedSnippet = transformedSnippet.replace(nonStreamingRequestPattern, streamRequestPascal);
-            }
-
             // For streaming endpoints, replace Optional<ResponseType> with Iterable<ResponseType>
+            // The Java SDK generator uses Iterable for streaming responses, not Optional
             transformedSnippet = transformedSnippet.replace(/Optional</g, "Iterable<");
-        } else {
-            // For non-streaming endpoints, ensure method name does NOT end with "Stream"
-            // Remove "Stream" suffix if present
-            const streamingMethodPattern = new RegExp(`\\.${methodCamel}Stream\\s*\\(`, "g");
-            transformedSnippet = transformedSnippet.replace(streamingMethodPattern, `.${methodCamel}(`);
-
-            const streamingRequestPattern = new RegExp(`\\b${streamRequestPascal}\\b`, "g");
-            transformedSnippet = transformedSnippet.replace(streamingRequestPattern, requestPascal);
         }
 
         if (endpoint.name.originalName === "listUsernames") {
