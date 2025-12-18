@@ -44,7 +44,7 @@ export function printCheckReport({ apiResults, docsResult, logWarnings, context 
 
         if (showApiNesting) {
             // Multiple APIs - show [sdk] header with nested [api] sections
-            context.logger.info(chalk.blue(chalk.bold("[sdk]")));
+            context.logger.info(chalk.cyan(chalk.bold("[sdk]")));
             for (const apiResult of apiResults) {
                 const stats = getViolationStats(apiResult.violations);
                 if (stats.numErrors > 0 || (logWarnings && stats.numWarnings > 0)) {
@@ -112,7 +112,7 @@ function printSdkSectionFlat({
     context: TaskContext;
 }): void {
     const statsStr = formatStats(stats, logWarnings);
-    context.logger.info(chalk.blue(chalk.bold(`[sdk]`)) + ` ${statsStr}`);
+    context.logger.info(chalk.cyan(chalk.bold(`[sdk]`)) + ` ${statsStr}`);
 
     printViolationsByType({
         violations,
@@ -160,7 +160,7 @@ function printDocsSection({
     context: TaskContext;
 }): void {
     const statsStr = formatStats(stats, logWarnings);
-    context.logger.info(chalk.blue(chalk.bold(`[docs]`)) + ` ${statsStr}`);
+    context.logger.info(chalk.magenta(chalk.bold(`[docs]`)) + ` ${statsStr}`);
 
     printViolationsByType({
         violations,
@@ -218,6 +218,8 @@ function printViolation({
         context.logger.info(`${indent}    path: ${chalk.blue(path)}`);
         context.logger.info(`${indent}    issue: ${violation.message}`);
     }
+    // Add blank line after each violation for better readability
+    context.logger.info("");
 }
 
 function formatViolationPath(violation: ValidationViolation): string {
