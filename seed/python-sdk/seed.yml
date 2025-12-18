@@ -137,7 +137,7 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
         client:
-          exported_class_name: Exhaustive
+          class_name: Exhaustive
       outputFolder: wire-tests-custom-client-name
     - customConfig:
         inline_path_params: true

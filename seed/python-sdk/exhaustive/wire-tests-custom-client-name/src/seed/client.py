@@ -15,7 +15,7 @@ if typing.TYPE_CHECKING:
     from .req_with_headers.client import AsyncReqWithHeadersClient, ReqWithHeadersClient
 
 
-class SeedExhaustive:
+class Exhaustive:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -118,7 +118,7 @@ class SeedExhaustive:
         return self._req_with_headers
 
 
-class AsyncSeedExhaustive:
+class AsyncExhaustive:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
