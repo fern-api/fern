@@ -95,12 +95,24 @@ function writeAsBullet(entry: string): string {
 
 export async function writeChangelogsToFile(
     outputPath: AbsoluteFilePath,
-    changelogs: Map<string, Map<string, string>>
+    changelogs: Map<string, Map<string, string>>,
+    displayName?: string
 ) {
     for (const [releaseDate, versions] of changelogs.entries()) {
         const changelogPath = join(outputPath, RelativeFilePath.of(`${releaseDate}.mdx`));
 
-        let changelogContent = "";
+        // Format the date for the title (e.g., "September 18, 2025")
+        const formattedDate = moment(releaseDate, "YYYY-MM-DD").format("MMMM D, YYYY");
+
+        // Build frontmatter with headline for SEO
+        let changelogContent = "---\n";
+        if (displayName != null) {
+            changelogContent += `headline: "${displayName} changelog: ${formattedDate}"\n`;
+        } else {
+            changelogContent += `headline: "Changelog: ${formattedDate}"\n`;
+        }
+        changelogContent += "---\n\n";
+
         for (const [_, changelog] of versions.entries()) {
             changelogContent += changelog;
             changelogContent += "\n\n";

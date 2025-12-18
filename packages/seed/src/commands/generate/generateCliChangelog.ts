@@ -100,5 +100,5 @@ export async function generateCliChangelog({
         }
     });
 
-    await writeChangelogsToFile(resolvedOutputPath, writtenVersions);
+    await writeChangelogsToFile(resolvedOutputPath, writtenVersions, "Fern CLI");
 }

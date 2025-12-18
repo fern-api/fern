@@ -105,5 +105,5 @@ export async function generateGeneratorChangelog({
         }
     });
 
-    await writeChangelogsToFile(resolvedOutputPath, writtenVersions);
+    await writeChangelogsToFile(resolvedOutputPath, writtenVersions, generatorConfig.displayName);
 }
