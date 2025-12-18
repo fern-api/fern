@@ -1,6 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml } from "@fern-api/configuration";
+import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
@@ -281,13 +281,40 @@ export async function publishDocs({
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
+            let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
             if (useDynamicSnippets) {
-                dynamicIRsByLanguage = await generateLanguageSpecificDynamicIRs({
+                // Check for existing SDK dynamic IRs before generating
+                const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
+                    fdr,
                     workspace,
                     organization,
                     context,
                     snippetsConfig
                 });
+
+                if (existingSdkDynamicIrs && Object.keys(existingSdkDynamicIrs).length > 0) {
+                    dynamicIRsByLanguage = existingSdkDynamicIrs;
+                    languagesWithExistingSdkDynamicIr = new Set(Object.keys(existingSdkDynamicIrs));
+                    context.logger.debug(
+                        `Using existing SDK dynamic IRs for: ${Object.keys(existingSdkDynamicIrs).join(", ")}`
+                    );
+                }
+
+                // Generate dynamic IRs for languages that don't have existing SDK dynamic IRs
+                const generatedDynamicIRs = await generateLanguageSpecificDynamicIRs({
+                    workspace,
+                    organization,
+                    context,
+                    snippetsConfig,
+                    skipLanguages: languagesWithExistingSdkDynamicIr
+                });
+
+                if (generatedDynamicIRs) {
+                    dynamicIRsByLanguage = {
+                        ...dynamicIRsByLanguage,
+                        ...generatedDynamicIRs
+                    };
+                }
             }
 
             const response = await fdr.api.v1.register.registerApiDefinition({
@@ -305,12 +332,21 @@ export async function publishDocs({
                     if (skipUpload) {
                         context.logger.debug("Skip-upload mode: skipping dynamic IR uploads");
                     } else {
-                        await uploadDynamicIRs({
-                            dynamicIRs: dynamicIRsByLanguage,
-                            dynamicIRUploadUrls: response.body.dynamicIRs,
-                            context,
-                            apiId: response.body.apiDefinitionId
-                        });
+                        // Only upload dynamic IRs for languages that were generated (not downloaded from SDK)
+                        const dynamicIRsToUpload: Record<string, DynamicIr> = {};
+                        for (const [language, dynamicIr] of Object.entries(dynamicIRsByLanguage)) {
+                            if (!languagesWithExistingSdkDynamicIr.has(language)) {
+                                dynamicIRsToUpload[language] = dynamicIr;
+                            }
+                        }
+                        if (Object.keys(dynamicIRsToUpload).length > 0) {
+                            await uploadDynamicIRs({
+                                dynamicIRs: dynamicIRsToUpload,
+                                dynamicIRUploadUrls: response.body.dynamicIRs,
+                                context,
+                                apiId: response.body.apiDefinitionId
+                            });
+                        }
                     }
                 }
 
@@ -520,16 +556,216 @@ function parseBasePath(domain: string): string | undefined {
     }
 }
 
-async function generateLanguageSpecificDynamicIRs({
+async function checkAndDownloadExistingSdkDynamicIRs({
+    fdr,
     workspace,
     organization,
     context,
     snippetsConfig
 }: {
+    fdr: FdrClient;
     workspace: FernWorkspace | undefined;
     organization: string;
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
+}): Promise<Record<string, DynamicIr> | undefined> {
+    if (!workspace) {
+        return undefined;
+    }
+
+    const snippetConfigWithVersions = await buildSnippetConfigurationWithVersions({
+        fdr,
+        workspace,
+        organization,
+        snippetsConfig
+    });
+
+    if (Object.keys(snippetConfigWithVersions).length === 0) {
+        return undefined;
+    }
+
+    context.logger.debug(
+        `Checking for existing SDK dynamic IRs for: ${Object.keys(snippetConfigWithVersions).join(", ")}`
+    );
+
+    try {
+        const response = await fdr.api.v1.register.checkSdkDynamicIrExists({
+            orgId: CjsFdrSdk.OrgId(organization),
+            snippetConfiguration: snippetConfigWithVersions
+        });
+
+        if (!response.ok) {
+            context.logger.debug(`Failed to check for existing SDK dynamic IRs: ${response.error.error}`);
+            return undefined;
+        }
+
+        const existingDynamicIrs = response.body.existingDynamicIrs;
+        if (Object.keys(existingDynamicIrs).length === 0) {
+            context.logger.debug("No existing SDK dynamic IRs found");
+            return undefined;
+        }
+
+        const result: Record<string, DynamicIr> = {};
+        for (const [language, sdkDynamicIrDownload] of Object.entries(existingDynamicIrs)) {
+            const downloadInfo = sdkDynamicIrDownload as { downloadUrl: string };
+            try {
+                context.logger.debug(`Downloading existing SDK dynamic IR for ${language}...`);
+                const downloadResponse = await fetch(downloadInfo.downloadUrl);
+                if (downloadResponse.ok) {
+                    const dynamicIR = (await downloadResponse.json()) as unknown;
+                    result[language] = { dynamicIR };
+                    context.logger.debug(`Successfully downloaded SDK dynamic IR for ${language}`);
+                } else {
+                    context.logger.warn(
+                        `Failed to download SDK dynamic IR for ${language}: ${downloadResponse.status}`
+                    );
+                }
+            } catch (error) {
+                context.logger.warn(`Error downloading SDK dynamic IR for ${language}: ${error}`);
+            }
+        }
+
+        return Object.keys(result).length > 0 ? result : undefined;
+    } catch (error) {
+        context.logger.debug(`Error checking for existing SDK dynamic IRs: ${error}`);
+        return undefined;
+    }
+}
+
+async function buildSnippetConfigurationWithVersions({
+    fdr,
+    workspace,
+    organization,
+    snippetsConfig
+}: {
+    fdr: FdrClient;
+    workspace: FernWorkspace;
+    organization: string;
+    snippetsConfig: SnippetsConfig;
+}): Promise<Record<string, { packageName: string; version: string }>> {
+    const result: Record<string, { packageName: string; version: string }> = {};
+
+    const snippetConfiguration: Record<string, string | undefined> = {
+        typescript: snippetsConfig.typescriptSdk?.package,
+        python: snippetsConfig.pythonSdk?.package,
+        java: snippetsConfig.javaSdk?.coordinate,
+        go: snippetsConfig.goSdk?.githubRepo,
+        csharp: snippetsConfig.csharpSdk?.package,
+        ruby: snippetsConfig.rubySdk?.gem,
+        php: snippetsConfig.phpSdk?.package,
+        swift: snippetsConfig.swiftSdk?.package,
+        rust: snippetsConfig.rustSdk?.package
+    };
+
+    if (!workspace.generatorsConfiguration?.groups) {
+        return result;
+    }
+
+    for (const group of workspace.generatorsConfiguration.groups) {
+        for (const generatorInvocation of group.generators) {
+            if (!generatorInvocation.language) {
+                continue;
+            }
+
+            const packageName = generatorsYml.getPackageName({ generatorInvocation });
+            if (!packageName) {
+                continue;
+            }
+
+            const configuredPackage = snippetConfiguration[generatorInvocation.language];
+            if (configuredPackage !== packageName) {
+                continue;
+            }
+
+            const version = await computeSemanticVersionForLanguage({
+                fdr,
+                packageName,
+                generatorInvocation
+            });
+
+            if (version) {
+                result[generatorInvocation.language] = { packageName, version };
+            }
+        }
+    }
+
+    return result;
+}
+
+async function computeSemanticVersionForLanguage({
+    fdr,
+    packageName,
+    generatorInvocation
+}: {
+    fdr: FdrClient;
+    packageName: string;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+}): Promise<string | undefined> {
+    if (generatorInvocation.language == null) {
+        return undefined;
+    }
+
+    let language: CjsFdrSdk.sdks.Language;
+    switch (generatorInvocation.language) {
+        case "csharp":
+            language = "Csharp";
+            break;
+        case "go":
+            language = "Go";
+            break;
+        case "java":
+            language = "Java";
+            break;
+        case "python":
+            language = "Python";
+            break;
+        case "ruby":
+            language = "Ruby";
+            break;
+        case "typescript":
+            language = "TypeScript";
+            break;
+        case "php":
+            language = "Php";
+            break;
+        case "swift":
+            language = "Swift";
+            break;
+        default:
+            return undefined;
+    }
+
+    try {
+        const response = await fdr.sdks.versions.computeSemanticVersion({
+            githubRepository:
+                generatorInvocation.outputMode.type === "githubV2"
+                    ? `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`
+                    : undefined,
+            language,
+            package: packageName
+        });
+
+        if (!response.ok) {
+            return undefined;
+        }
+        return response.body.version;
+    } catch {
+        return undefined;
+    }
+}
+
+async function generateLanguageSpecificDynamicIRs({
+    workspace,
+    organization,
+    context,
+    snippetsConfig,
+    skipLanguages = new Set()
+}: {
+    workspace: FernWorkspace | undefined;
+    organization: string;
+    context: TaskContext;
+    snippetsConfig: SnippetsConfig;
+    skipLanguages?: Set<string>;
 }): Promise<Record<string, DynamicIr> | undefined> {
     let languageSpecificIRs: Record<string, DynamicIr> = {};
 
@@ -599,6 +835,14 @@ async function generateLanguageSpecificDynamicIRs({
                 }
 
                 if (!generatorInvocation.language) {
+                    continue;
+                }
+
+                // Skip languages that already have SDK dynamic IRs
+                if (skipLanguages.has(generatorInvocation.language)) {
+                    context.logger.debug(
+                        `Skipping dynamic IR generation for ${generatorInvocation.language} (using existing SDK dynamic IR)`
+                    );
                     continue;
                 }
 
