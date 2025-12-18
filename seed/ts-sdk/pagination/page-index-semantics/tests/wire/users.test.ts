@@ -443,14 +443,19 @@ describe("UsersClient", () => {
         expect(expected.data).toEqual(nextPage.data);
     });
 
-    test("listWithExtendedResults (1)", async () => {
+    test("listWithExtendedResults", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
-            data: { users: [{ name: "Alice", id: 1 }] },
+            total_count: 1,
+            data: {
+                users: [
+                    { name: "name", id: 1 },
+                    { name: "name", id: 1 },
+                ],
+            },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            total_count: 100,
         };
         server
             .mockEndpoint({ once: false })
@@ -461,46 +466,29 @@ describe("UsersClient", () => {
             .build();
 
         const expected = {
+            total_count: 1,
             data: {
                 users: [
                     {
-                        name: "Alice",
+                        name: "name",
+                        id: 1,
+                    },
+                    {
+                        name: "name",
                         id: 1,
                     },
                 ],
             },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            total_count: 100,
         };
-        const page = await client.users.listWithExtendedResults();
+        const page = await client.users.listWithExtendedResults({
+            cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        });
 
         expect(expected.data.users).toEqual(page.data);
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data.users).toEqual(nextPage.data);
-    });
-
-    test("listWithExtendedResults (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
-
-        const rawResponseBody = { data: { users: [{ name: "Bob", id: 2 }] }, total_count: 1 };
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const expected = {
-            data: {
-                users: [
-                    {
-                        name: "Bob",
-                        id: 2,
-                    },
-                ],
-            },
-            total_count: 1,
-        };
-        const page = await client.users.listWithExtendedResults();
-
-        expect(expected.data.users).toEqual(page.data);
     });
 
     test("listWithExtendedResultsAndOptionalData", async () => {

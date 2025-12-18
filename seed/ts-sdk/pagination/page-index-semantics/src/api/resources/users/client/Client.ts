@@ -652,7 +652,9 @@ export class UsersClient {
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.users.listWithExtendedResults()
+     *     await client.users.listWithExtendedResults({
+     *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+     *     })
      */
     public async listWithExtendedResults(
         request: SeedPagination.ListUsersExtendedRequest = {},
