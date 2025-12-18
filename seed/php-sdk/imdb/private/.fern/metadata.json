@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "propertyAccess": "private"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

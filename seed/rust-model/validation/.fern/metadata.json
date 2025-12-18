@@ -1,5 +1,6 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-rust-model",
-  "generatorVersion": "latest"
+  "generatorVersion": "latest",
+  "sdkVersion": "0.0.1"
 }

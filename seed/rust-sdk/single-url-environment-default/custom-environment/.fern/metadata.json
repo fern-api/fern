@@ -6,5 +6,6 @@
     "environmentEnumName": "CustomApiEnvironment",
     "crateName": "environment_test_sdk",
     "crateVersion": "0.2.0"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

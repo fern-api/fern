@@ -16,5 +16,6 @@
         "content": "Override Content"
       }
     ]
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

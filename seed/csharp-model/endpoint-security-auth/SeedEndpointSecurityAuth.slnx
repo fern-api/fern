@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedEndpointSecurityAuth.Test/SeedEndpointSecurityAuth.Test.csproj" />
+  <Project Path="src/SeedEndpointSecurityAuth/SeedEndpointSecurityAuth.csproj" />
+</Solution>

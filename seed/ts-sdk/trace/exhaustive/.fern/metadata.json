@@ -9,5 +9,6 @@
         "includeUtilsOnUnionMembers": true,
         "includeOtherInUnionTypes": true,
         "timeoutInSeconds": "infinity"
-    }
+    },
+    "sdkVersion": "0.0.1"
 }
