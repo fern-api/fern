@@ -24,6 +24,7 @@ export declare namespace WrappedEndpointRequest {
 const BODY_BAG_NAME = "body_params";
 const QUERY_PARAM_NAMES_VN = "query_param_names";
 const PATH_PARAM_NAMES_VN = "path_param_names";
+const HEADER_BAG_NAME = "headers";
 
 export class WrappedEndpointRequest extends EndpointRequest {
     private serviceId: ServiceId;
@@ -57,16 +58,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
         return {
             code: ruby.codeblock((writer) => {
-                writer.write(`params = `);
-                ruby.invokeMethod({
-                    on: ruby.classReference({
-                        name: "Utils",
-                        modules: [this.context.getRootModuleName(), "Internal", "Types"]
-                    }),
-                    method: "symbolize_keys",
-                    arguments_: [ruby.codeblock("params")]
-                }).write(writer);
-                writer.newLine();
                 writer.write(`${QUERY_PARAM_NAMES_VN} = `);
                 writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
                 writer.writeLine(`${queryParameterBagName} = {}`);
@@ -84,7 +75,23 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        return undefined;
+        if (this.endpoint.headers.length === 0) {
+            return undefined;
+        }
+
+        return {
+            code: ruby.codeblock((writer) => {
+                writer.writeLine(`${HEADER_BAG_NAME} = {}`);
+                for (const header of this.endpoint.headers) {
+                    const snakeCaseName = header.name.name.snakeCase.safeName;
+                    const wireValue = header.name.wireValue;
+                    writer.writeLine(
+                        `${HEADER_BAG_NAME}["${wireValue}"] = params[:${snakeCaseName}] if params[:${snakeCaseName}]`
+                    );
+                }
+            }),
+            headerParameterBagReference: HEADER_BAG_NAME
+        };
     }
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {

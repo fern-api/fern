@@ -1,0 +1,195 @@
+{
+  "servers": [],
+  "websocketServers": [
+    {
+      "name": "production",
+      "url": "wss://api.example.com"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {
+    "chat": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [],
+        "pathParameters": []
+      },
+      "groupName": [
+        "chat"
+      ],
+      "messages": [
+        {
+          "origin": "server",
+          "name": "serverNotification",
+          "body": {
+            "generatedName": "ServerNotification",
+            "schema": "ServerNotificationPayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "methodName": "sendMessage"
+        },
+        {
+          "origin": "client",
+          "name": "userMessage",
+          "body": {
+            "generatedName": "UserMessage",
+            "schema": "UserMessagePayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "methodName": "sendMessage"
+        },
+        {
+          "origin": "client",
+          "name": "userMessage",
+          "body": {
+            "generatedName": "UserMessage",
+            "schema": "UserMessagePayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "methodName": "onNotification"
+        }
+      ],
+      "servers": [
+        {
+          "name": "production",
+          "url": "wss://api.example.com"
+        }
+      ],
+      "path": "/v1/ws/chat",
+      "description": "Chat channel for testing custom method names",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": []
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {
+      "UserMessagePayload": {
+        "properties": [
+          {
+            "key": "text",
+            "schema": {
+              "generatedName": "UserMessagePayloadText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Message text",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "userMessagePayloadText"
+          }
+        ],
+        "generatedName": "UserMessagePayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ServerNotificationPayload": {
+        "properties": [
+          {
+            "key": "message",
+            "schema": {
+              "generatedName": "ServerNotificationPayloadMessage",
+              "schema": {
+                "type": "string"
+              },
+              "description": "Notification message",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "serverNotificationPayloadMessage"
+          },
+          {
+            "key": "type",
+            "schema": {
+              "generatedName": "ServerNotificationPayloadType",
+              "values": [
+                {
+                  "generatedName": "info",
+                  "value": "info",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "warning",
+                  "value": "warning",
+                  "casing": {}
+                },
+                {
+                  "generatedName": "error",
+                  "value": "error",
+                  "casing": {}
+                }
+              ],
+              "description": "Notification type",
+              "groupName": [],
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "serverNotificationPayloadType"
+          }
+        ],
+        "generatedName": "ServerNotificationPayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

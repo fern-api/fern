@@ -21,6 +21,7 @@ module Seed
       #
       # @return [Seed::Union::Types::Shape]
       def get(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -51,6 +52,7 @@ module Seed
       #
       # @return [Boolean]
       def update(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
