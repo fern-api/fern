@@ -560,7 +560,10 @@ export class WireTestGenerator {
     }): go.CodeBlock {
         // The dynamic snippets generator includes the X-Test-Id header with a placeholder.
         // Replace the placeholder with the actual unique test function name.
-        const clientConstructor = this.parseClientConstructor(snippet).replace(`"X-Test-Id": []string{"TEST-ID-PLACEHOLDER"}`, `"X-Test-Id": []string{"${testFunctionName}"}`);
+        const clientConstructor = this.parseClientConstructor(snippet).replace(
+            `"X-Test-Id": []string{"TEST-ID-PLACEHOLDER"}`,
+            `"X-Test-Id": []string{"${testFunctionName}"}`
+        );
         return go.codeblock((writer) => {
             writer.write(clientConstructor);
         });
