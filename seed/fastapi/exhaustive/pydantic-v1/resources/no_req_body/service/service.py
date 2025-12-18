@@ -48,6 +48,8 @@ class AbstractNoReqBodyService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation,
                     cls.get_with_no_request_body.__globals__,
@@ -87,6 +89,8 @@ class AbstractNoReqBodyService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation,
                     cls.post_with_no_request_body.__globals__,

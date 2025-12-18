@@ -272,26 +272,21 @@ class EndpointGenerator:
                 writer.write_line(f'elif {PARAMETER_NAME_VARIABLE_NAME} == "{parameter.get_name()}":')
                 with writer.indent():
                     python_default = parameter.get_python_default()
-                    if uses_pydantic_v1_params:
-                        EVALUATED_VARIABLE_NAME = "evaluated"
-                        writer.write(f"{EVALUATED_VARIABLE_NAME} = ")
-                        writer.write_reference(FastAPI.evaluate_forwardref)
-                        writer.write_line(
-                            f"({PARAMETER_VALUE_VARIABLE_NAME}.annotation, "
-                            + f"{method_on_cls}.__globals__, {method_on_cls}.__globals__)"
-                        )
-                        writer.write(f"{NEW_PARAMETERS_VARIABLE_NAME}.append(")
-                        writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(")
-                        writer.write(f"annotation=typing.Annotated[{EVALUATED_VARIABLE_NAME}, ")
-                        writer.write_node(parameter.get_fastapi_marker())
-                        writer.write("]")
-                    else:
-                        writer.write(f"{NEW_PARAMETERS_VARIABLE_NAME}.append(")
-                        writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(")
-                        writer.write("annotation=typing.Annotated[")
-                        writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.annotation, ")
-                        writer.write_node(parameter.get_fastapi_marker())
-                        writer.write("]")
+                    # Write a comment into the generated code explaining the evaluate_forwardref call
+                    writer.write_line("# Evaluate forward references before using in Annotated")
+                    writer.write_line("# See: https://github.com/fastapi/fastapi/issues/13056")
+                    EVALUATED_VARIABLE_NAME = "evaluated"
+                    writer.write(f"{EVALUATED_VARIABLE_NAME} = ")
+                    writer.write_reference(FastAPI.evaluate_forwardref)
+                    writer.write_line(
+                        f"({PARAMETER_VALUE_VARIABLE_NAME}.annotation, "
+                        + f"{method_on_cls}.__globals__, {method_on_cls}.__globals__)"
+                    )
+                    writer.write(f"{NEW_PARAMETERS_VARIABLE_NAME}.append(")
+                    writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(")
+                    writer.write(f"annotation=typing.Annotated[{EVALUATED_VARIABLE_NAME}, ")
+                    writer.write_node(parameter.get_fastapi_marker())
+                    writer.write("]")
                     if python_default is not None:
                         writer.write(", default=")
                         writer.write_node(python_default)

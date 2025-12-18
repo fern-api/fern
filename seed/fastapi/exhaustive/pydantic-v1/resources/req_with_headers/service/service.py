@@ -44,6 +44,8 @@ class AbstractReqWithHeadersService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.get_with_custom_header.__globals__, cls.get_with_custom_header.__globals__
                 )
@@ -51,6 +53,8 @@ class AbstractReqWithHeadersService(AbstractFernService):
                     parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "x_test_endpoint_header":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.get_with_custom_header.__globals__, cls.get_with_custom_header.__globals__
                 )
@@ -62,6 +66,8 @@ class AbstractReqWithHeadersService(AbstractFernService):
                     )
                 )
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.get_with_custom_header.__globals__, cls.get_with_custom_header.__globals__
                 )

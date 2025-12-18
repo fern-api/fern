@@ -45,6 +45,8 @@ class AbstractEndpointsUnionService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.get_and_return_union.__globals__, cls.get_and_return_union.__globals__
                 )
@@ -52,6 +54,8 @@ class AbstractEndpointsUnionService(AbstractFernService):
                     parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.get_and_return_union.__globals__, cls.get_and_return_union.__globals__
                 )

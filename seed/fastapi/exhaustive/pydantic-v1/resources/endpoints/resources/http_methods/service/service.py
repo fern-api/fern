@@ -62,6 +62,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_get.__globals__, cls.test_get.__globals__
                 )
@@ -69,6 +71,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Path()])
                 )
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_get.__globals__, cls.test_get.__globals__
                 )
@@ -106,6 +110,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_post.__globals__, cls.test_post.__globals__
                 )
@@ -113,6 +119,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_post.__globals__, cls.test_post.__globals__
                 )
@@ -150,6 +158,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_put.__globals__, cls.test_put.__globals__
                 )
@@ -157,6 +167,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "id":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_put.__globals__, cls.test_put.__globals__
                 )
@@ -164,6 +176,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Path()])
                 )
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_put.__globals__, cls.test_put.__globals__
                 )
@@ -201,6 +215,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_patch.__globals__, cls.test_patch.__globals__
                 )
@@ -208,6 +224,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "id":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_patch.__globals__, cls.test_patch.__globals__
                 )
@@ -215,6 +233,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Path()])
                 )
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_patch.__globals__, cls.test_patch.__globals__
                 )
@@ -252,6 +272,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_delete.__globals__, cls.test_delete.__globals__
                 )
@@ -259,6 +281,8 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Path()])
                 )
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.test_delete.__globals__, cls.test_delete.__globals__
                 )

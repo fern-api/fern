@@ -55,6 +55,8 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.with_mixed_case.__globals__, cls.with_mixed_case.__globals__
                 )
@@ -92,6 +94,8 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.no_ending_slash.__globals__, cls.no_ending_slash.__globals__
                 )
@@ -129,6 +133,8 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.with_ending_slash.__globals__, cls.with_ending_slash.__globals__
                 )
@@ -166,6 +172,8 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
                 evaluated = fastapi._compat.evaluate_forwardref(
                     parameter.annotation, cls.with_underscores.__globals__, cls.with_underscores.__globals__
                 )

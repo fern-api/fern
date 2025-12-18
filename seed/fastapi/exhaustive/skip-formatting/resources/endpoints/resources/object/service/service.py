@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import fastapi._compat
 from ......core.abstract_fern_service import AbstractFernService
 from ......core.exceptions.fern_http_exception import FernHTTPException
 from ......core.route_args import get_route_args
@@ -73,9 +74,15 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_with_optional_field.__globals__, cls.get_and_return_with_optional_field.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_with_optional_field.__globals__, cls.get_and_return_with_optional_field.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_with_optional_field, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -107,9 +114,15 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_with_required_field.__globals__, cls.get_and_return_with_required_field.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_with_required_field.__globals__, cls.get_and_return_with_required_field.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_with_required_field, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -141,9 +154,15 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_with_map_of_map.__globals__, cls.get_and_return_with_map_of_map.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_with_map_of_map.__globals__, cls.get_and_return_with_map_of_map.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_with_map_of_map, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -175,9 +194,15 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_nested_with_optional_field.__globals__, cls.get_and_return_nested_with_optional_field.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_nested_with_optional_field.__globals__, cls.get_and_return_nested_with_optional_field.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_nested_with_optional_field, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -209,11 +234,20 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_nested_with_required_field.__globals__, cls.get_and_return_nested_with_required_field.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             elif parameter_name == "string":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_nested_with_required_field.__globals__, cls.get_and_return_nested_with_required_field.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Path()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_nested_with_required_field.__globals__, cls.get_and_return_nested_with_required_field.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_nested_with_required_field, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -245,9 +279,15 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_nested_with_required_field_as_list.__globals__, cls.get_and_return_nested_with_required_field_as_list.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_and_return_nested_with_required_field_as_list.__globals__, cls.get_and_return_nested_with_required_field_as_list.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_nested_with_required_field_as_list, "__signature__", endpoint_function.replace(parameters=new_parameters))

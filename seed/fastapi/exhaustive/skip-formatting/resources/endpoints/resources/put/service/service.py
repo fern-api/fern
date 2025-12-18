@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import fastapi._compat
 from ......core.abstract_fern_service import AbstractFernService
 from ......core.exceptions.fern_http_exception import FernHTTPException
 from ......core.route_args import get_route_args
@@ -44,9 +45,15 @@ class AbstractEndpointsPutService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.add.__globals__, cls.add.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Path()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.add.__globals__, cls.add.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.add, "__signature__", endpoint_function.replace(parameters=new_parameters))
