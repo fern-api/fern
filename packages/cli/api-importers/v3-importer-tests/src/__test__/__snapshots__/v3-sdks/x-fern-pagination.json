@@ -1841,7 +1841,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Success"
           },
           "docs": "",
           "v2Examples": {
@@ -1936,7 +1937,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Success"
               }
             ]
           }
@@ -3305,7 +3307,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Success"
           },
           "docs": "",
           "v2Examples": {
@@ -3400,7 +3403,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Success"
               }
             ]
           }

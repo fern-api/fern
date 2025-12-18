@@ -5,7 +5,8 @@
 import * as FernOpenapiIr from "../../../index";
 
 export interface EndpointWithExample
-    extends FernOpenapiIr.WithDescription,
+    extends
+        FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithAvailability,
         FernOpenapiIr.WithSource,
         FernOpenapiIr.WithNamespace {

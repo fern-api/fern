@@ -2,6 +2,7 @@ import typing
 from dataclasses import dataclass
 from typing import List, Optional
 
+import fern_python.generators.sdk.names as names
 from ..environment_generators import (
     GeneratedEnvironment,
     MultipleBaseUrlsEnvironmentGenerator,
@@ -66,6 +67,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     GET_BASEURL_FUNCTION_NAME = "_get_base_url"
     TOKEN_GETTER_PARAM_NAME = "_token_getter_override"
     TOKEN_PARAMETER_NAME = "token"
+
+    def _get_wrapper_bearer_token_kwarg_name(self, *, client_wrapper_generator: ClientWrapperGenerator) -> str:
+        """
+        Returns the kwarg name for the bearer token parameter on the generated ClientWrapper.
+        """
+        bearer_auth_scheme = client_wrapper_generator._get_bearer_auth_scheme()
+        if bearer_auth_scheme is None:
+            return "token"
+        return names.get_token_constructor_parameter_name(bearer_auth_scheme)
 
     def __init__(
         self,
@@ -988,9 +998,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 exclude_auth=True,
             )
             # Add token to kwargs - prefer the explicit override, otherwise use the provided callable
+            wrapper_bearer_token_kwarg_name = self._get_wrapper_bearer_token_kwarg_name(
+                client_wrapper_generator=client_wrapper_generator
+            )
             client_wrapper_constructor_kwargs.append(
                 (
-                    "token",
+                    wrapper_bearer_token_kwarg_name,
                     AST.Expression(
                         f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else {self.TOKEN_PARAMETER_NAME}"
                     ),
@@ -1132,12 +1145,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
 
         if use_oauth_token_provider:
+            wrapper_bearer_token_kwarg_name = self._get_wrapper_bearer_token_kwarg_name(
+                client_wrapper_generator=client_wrapper_generator
+            )
             if is_async:
                 # For async clients, pass the sync token_getter_override to token (if provided)
                 # and the async oauth_token_provider.get_token to async_token
                 client_wrapper_constructor_kwargs.append(
                     (
-                        "token",
+                        wrapper_bearer_token_kwarg_name,
                         AST.Expression(f"{self.TOKEN_GETTER_PARAM_NAME}"),
                     )
                 )
@@ -1150,7 +1166,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             else:
                 client_wrapper_constructor_kwargs.append(
                     (
-                        "token",
+                        wrapper_bearer_token_kwarg_name,
                         AST.Expression(
                             f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else oauth_token_provider.get_token"
                         ),

@@ -53,14 +53,26 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
     private getInitializeMethod(): ruby.Method {
         const parameters: ruby.KeywordParameter[] = [];
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
 
         const baseUrlParameter = ruby.parameters.keyword({
             name: "base_url",
             type: ruby.Type.nilable(ruby.Type.string()),
-            initializer: undefined,
+            initializer: ruby.nilValue(),
             docs: "Override the default base URL for the API, e.g., `https://api.example.com`"
         });
         parameters.push(baseUrlParameter);
+
+        if (isMultiUrl) {
+            const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+            const environmentParameter = ruby.parameters.keyword({
+                name: "environment",
+                type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.string())),
+                initializer: defaultEnvironmentReference != null ? defaultEnvironmentReference : ruby.nilValue(),
+                docs: "The environment URLs to use for requests"
+            });
+            parameters.push(environmentParameter);
+        }
 
         const authenticationParameters = this.getAuthenticationParameters();
         parameters.push(...authenticationParameters);
@@ -79,6 +91,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth));
         }
 
+        if (isMultiUrl) {
+            method.addStatement(
+                ruby.codeblock((writer) => {
+                    writer.writeLine(`@base_url = base_url`);
+                    writer.writeLine(`@environment = environment`);
+                })
+            );
+        }
+
         const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
 
         method.addStatement(
@@ -87,12 +108,24 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 writer.writeNode(this.context.getRawClientClassReference());
                 writer.writeLine(`.new(`);
                 writer.indent();
-                writer.write(`base_url: base_url`);
-                if (defaultEnvironmentReference != null) {
-                    writer.write(" || ");
-                    writer.writeNode(defaultEnvironmentReference);
+                if (isMultiUrl) {
+                    const multiUrlEnvs = this.context.getMultipleBaseUrlsEnvironments();
+                    const defaultBaseUrlId = multiUrlEnvs?.baseUrls[0]?.id;
+                    const defaultBaseUrlName =
+                        defaultBaseUrlId != null ? this.context.getBaseUrlName(defaultBaseUrlId) : undefined;
+                    if (defaultBaseUrlName != null) {
+                        writer.writeLine(`base_url: base_url || environment&.dig(:${defaultBaseUrlName}),`);
+                    } else {
+                        writer.writeLine(`base_url: base_url,`);
+                    }
+                } else {
+                    writer.write(`base_url: base_url`);
+                    if (defaultEnvironmentReference != null) {
+                        writer.write(" || ");
+                        writer.writeNode(defaultEnvironmentReference);
+                    }
+                    writer.writeLine(`,`);
                 }
-                writer.writeLine(`,`);
                 writer.write(`headers: `);
                 writer.writeNode(this.getRawClientHeaders());
                 if (inferredAuth != null) {
@@ -116,6 +149,13 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         const service = this.context.ir.services[tokenEndpointReference.serviceId];
         const subpackageId = service?.name.fernFilepath.packagePath[0]?.pascalCase.safeName ?? "Auth";
 
+        // Get the token endpoint to check its baseUrl
+        const tokenEndpoint = service?.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
+        const tokenEndpointBaseUrlId = tokenEndpoint?.baseUrl;
+
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+
         return ruby.codeblock((writer) => {
             // Create an unauthenticated raw client for the auth endpoint
             writer.writeLine(`# Create an unauthenticated client for the auth endpoint`);
@@ -123,7 +163,28 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.writeNode(this.context.getRawClientClassReference());
             writer.writeLine(`.new(`);
             writer.indent();
-            writer.writeLine(`base_url: base_url,`);
+
+            // Resolve base URL with proper fallback to default environment
+            // For multi-URL environments, use the token endpoint's baseUrl if specified,
+            // otherwise fall back to the first base URL
+            if (isMultiUrl) {
+                const multiUrlEnvs = this.context.getMultipleBaseUrlsEnvironments();
+                // Prefer the token endpoint's baseUrl if specified, otherwise use the first base URL
+                const authBaseUrlId = tokenEndpointBaseUrlId ?? multiUrlEnvs?.baseUrls[0]?.id;
+                const authBaseUrlName = authBaseUrlId != null ? this.context.getBaseUrlName(authBaseUrlId) : undefined;
+                if (authBaseUrlName != null) {
+                    writer.writeLine(`base_url: base_url || environment&.dig(:${authBaseUrlName}),`);
+                } else {
+                    writer.writeLine(`base_url: base_url,`);
+                }
+            } else {
+                writer.write(`base_url: base_url`);
+                if (defaultEnvironmentReference != null) {
+                    writer.write(" || ");
+                    writer.writeNode(defaultEnvironmentReference);
+                }
+                writer.writeLine(`,`);
+            }
             writer.writeLine(`headers: {`);
             writer.indent();
 
@@ -372,6 +433,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         return new ruby.Method({
             name: subpackage.name.snakeCase.safeName,
             kind: ruby.MethodKind.Instance,
@@ -384,12 +446,21 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             ),
             statements: [
                 ruby.codeblock((writer) => {
-                    writer.writeLine(
-                        `@${subpackage.name.snakeCase.safeName} ||= ` +
-                            `${rootModule.name}::` +
-                            `${subpackage.name.pascalCase.safeName}::` +
-                            `Client.new(client: @raw_client)`
-                    );
+                    if (isMultiUrl) {
+                        writer.writeLine(
+                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                                `${rootModule.name}::` +
+                                `${subpackage.name.pascalCase.safeName}::` +
+                                `Client.new(client: @raw_client, base_url: @base_url, environment: @environment)`
+                        );
+                    } else {
+                        writer.writeLine(
+                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                                `${rootModule.name}::` +
+                                `${subpackage.name.pascalCase.safeName}::` +
+                                `Client.new(client: @raw_client)`
+                        );
+                    }
                 })
             ]
         });

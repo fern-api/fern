@@ -156,6 +156,7 @@ scripts:
         - composer test
 allowedFailures:
   - pagination-custom
+  - inferred-auth-implicit-reference
   # Dynamic snippets need to add support for global headers included in the client constructor.
   - header-auth-environment-variable
   # TODO: Add support for bytes upload.
@@ -180,6 +181,7 @@ allowedFailures:
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
+  - oauth-client-credentials-reference
   # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
   - pagination:no-custom-config
   - pagination:property-accessors

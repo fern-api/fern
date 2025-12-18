@@ -1,5 +1,73 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.46.3
+  changelogEntry:
+    - summary: |
+        Fix empty request body issue where endpoints with all-optional fields would send an empty
+        body instead of `{}`. When an endpoint has a request body type but all fields are optional,
+        the SDK now correctly sends `{}` as valid JSON rather than omitting the body entirely.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 61
+
+- version: 4.46.2
+  changelogEntry:
+    - summary: |
+        Fix handling of newlines in default values for strings when using `config.pydantic_config.use_provided_defaults`.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 4.46.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth token handling for optional expires_in field with default fallback.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 4.46.0
+  changelogEntry:
+    - summary: |
+        FastAPI Python codegen now emits parameter markers via `typing.Annotated[...]` with standard Python defaults for better FastAPI/Pydantic compatibility.
+      type: feat
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 4.45.10
+  changelogEntry:
+    - summary: |
+        Fix retry logic "off-by-two" error. The internal `retries` counter now starts at 0
+        instead of 2, and `max_retries` defaults to 2 when not specified. This ensures users
+        get the expected number of retries (2 by default, or the configured `max_retries` value).
+      type: fix
+  createdAt: "2025-12-15"
+  irVersion: 61
+
+- version: 4.45.9
+  changelogEntry:
+    - summary: |
+        Fix empty query params stripping existing URL query strings. When `params` and
+        `additional_query_parameters` are both empty, httpx now receives `params=None` instead
+        of `params=[]`, preserving any query parameters already present in the URL (e.g.,
+        pagination cursors like `?after=123`).
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 61
+
+- version: 4.45.8
+  changelogEntry:
+    - summary: Ensures the root client always exposes a headers parameter and forwards it to the underlying ClientWrapper.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 61
+
+- version: 4.45.7
+  changelogEntry:
+    - summary: Fix client wrapper instantiation to use the correct bearer token parameter name, preventing incorrect `token=` references when custom auth parameter names are configured.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 61
 
 - version: 4.45.6
   changelogEntry:

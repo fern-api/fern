@@ -118,6 +118,7 @@
           "allPathParameters": [
             {
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -842,6 +843,7 @@
           "pathParameters": [
             {
               "docs": undefined,
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -945,6 +947,7 @@
                 },
               },
             },
+            "docs": "Plant retrieved successfully",
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
@@ -1057,6 +1060,7 @@
                     },
                   },
                 },
+                "docs": "Plant retrieved successfully",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
@@ -2325,6 +2329,7 @@
                 },
               },
             },
+            "docs": "Garden created",
             "isWildcardStatusCode": undefined,
             "statusCode": 201,
           },
@@ -2492,6 +2497,7 @@
                     },
                   },
                 },
+                "docs": "Garden created",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 201,
               },

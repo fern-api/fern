@@ -326,12 +326,12 @@ function filterExampleRequestBody({
             return {
                 ...requestBody,
                 properties: inlined.properties
-                    .filter((p) =>
+                    .filter((p: ExampleInlinedRequestBodyProperty) =>
                         p.originalTypeDeclaration
                             ? filteredIr.hasProperty(p.originalTypeDeclaration.typeId, p.name.wireValue)
                             : true
                     )
-                    .map((property) => {
+                    .map((property: ExampleInlinedRequestBodyProperty) => {
                         const filteredProperty = filterExampleTypeReference({
                             filteredIr,
                             exampleTypeReference: property.value

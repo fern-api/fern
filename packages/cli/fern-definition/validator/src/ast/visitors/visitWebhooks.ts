@@ -94,6 +94,8 @@ export function visitWebhooks({
                 }
             });
         },
+        response: noop,
+        "response-stream": noop,
         audiences: noop,
         availability: noop,
         docs: createDocsVisitor(visitor, nodePathForWebhook)

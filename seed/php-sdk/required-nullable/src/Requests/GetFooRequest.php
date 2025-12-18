@@ -36,8 +36,10 @@ class GetFooRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->optionalBaz = $values['optionalBaz'] ?? null;$this->optionalNullableBaz = $values['optionalNullableBaz'] ?? null;$this->requiredBaz = $values['requiredBaz'];$this->requiredNullableBaz = $values['requiredNullableBaz'] ?? null;
+    ) {
+        $this->optionalBaz = $values['optionalBaz'] ?? null;
+        $this->optionalNullableBaz = $values['optionalNullableBaz'] ?? null;
+        $this->requiredBaz = $values['requiredBaz'];
+        $this->requiredNullableBaz = $values['requiredNullableBaz'] ?? null;
     }
 }

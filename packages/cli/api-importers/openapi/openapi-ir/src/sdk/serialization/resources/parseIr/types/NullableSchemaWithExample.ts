@@ -30,7 +30,8 @@ export const NullableSchemaWithExample: core.serialization.ObjectSchema<
 
 export declare namespace NullableSchemaWithExample {
     export interface Raw
-        extends WithSdkGroupName.Raw,
+        extends
+            WithSdkGroupName.Raw,
             WithNamespace.Raw,
             WithName.Raw,
             WithDescription.Raw,

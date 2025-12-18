@@ -4,6 +4,7 @@ package client
 
 import (
 	context "context"
+	errors "errors"
 	fern "github.com/oauth-client-credentials-default/fern"
 	auth "github.com/oauth-client-credentials-default/fern/auth"
 	core "github.com/oauth-client-credentials-default/fern/core"
@@ -36,18 +37,25 @@ func NewClient(opts ...option.RequestOption) *Client {
 		&authOptions,
 	)
 	options.SetTokenGetter(func() (string, error) {
-		if token := oauthTokenProvider.GetToken(); token != "" {
-			return token, nil
-		}
-		response, err := authClient.GetToken(context.Background(), &fern.GetTokenRequest{
-			ClientId:     options.ClientID,
-			ClientSecret: options.ClientSecret,
+		return oauthTokenProvider.GetOrFetch(func() (string, int, error) {
+			response, err := authClient.GetToken(context.Background(), &fern.GetTokenRequest{
+				ClientId:     options.ClientID,
+				ClientSecret: options.ClientSecret,
+			})
+			if err != nil {
+				return "", 0, err
+			}
+			if response.AccessToken == "" {
+				return "", 0, errors.New(
+					"oauth response missing access token",
+				)
+			}
+			expiresIn := core.DefaultExpirySeconds
+			if response.ExpiresIn > 0 {
+				expiresIn = response.ExpiresIn
+			}
+			return response.AccessToken, expiresIn, nil
 		})
-		if err != nil {
-			return "", err
-		}
-		oauthTokenProvider.SetToken(response.AccessToken, response.ExpiresIn)
-		return response.AccessToken, nil
 	})
 	return &Client{
 		Auth:         auth.NewClient(options),

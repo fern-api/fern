@@ -44,10 +44,13 @@ class AbstractUsersService(AbstractFernService):
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The cursor used for pagination in order to fetch\nthe next page of results.",
-                        )
+                        annotation=typing.Annotated[
+                            parameter.annotation,
+                            fastapi.Query(
+                                description="The cursor used for pagination in order to fetch\nthe next page of results."
+                            ),
+                        ],
+                        default=None,
                     )
                 )
             else:
@@ -65,10 +68,6 @@ class AbstractUsersService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_usernames_custom.__globals__)
 
         router.get(
             path="/users",

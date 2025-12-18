@@ -29,15 +29,16 @@ class VoidFunctionSignatureThatTakesActualResult extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    )
-    {
-        $this->parameters = $values['parameters'];$this->actualResultType = $values['actualResultType'];
+    ) {
+        $this->parameters = $values['parameters'];
+        $this->actualResultType = $values['actualResultType'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string {
+    public function __toString(): string
+    {
         return $this->toJson();
     }
 }

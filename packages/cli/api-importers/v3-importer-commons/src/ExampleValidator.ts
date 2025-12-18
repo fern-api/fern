@@ -61,6 +61,8 @@ export interface ExampleToValidate {
     responseExample?: unknown;
     requestSchema?: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     responseSchema?: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+    responseStatusCode?: string;
+    responseSchemas?: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>;
 }
 
 /**
@@ -173,10 +175,12 @@ export class ExampleValidator {
             validExample = { request: requestResult.validExample };
         }
 
-        if (exampleToValidate.responseExample !== undefined && exampleToValidate.responseSchema !== undefined) {
+        const responseSchemaToUse = this.getResponseSchemaForValidation(exampleToValidate);
+
+        if (exampleToValidate.responseExample !== undefined && responseSchemaToUse !== undefined) {
             const responseResult = this.validateExample({
                 example: exampleToValidate.responseExample,
-                schema: exampleToValidate.responseSchema,
+                schema: responseSchemaToUse,
                 breadcrumbs: [...breadcrumbsBase, "response"],
                 exampleGenerationStrategy: "response"
             });
@@ -224,6 +228,27 @@ export class ExampleValidator {
     }
 
     /**
+     * Gets the appropriate response schema for validation based on status code.
+     * If responseStatusCode is provided and responseSchemas contains a schema for that status code, use it.
+     * Otherwise, fall back to the legacy responseSchema field for backward compatibility.
+     * If no status code is specified, defaults to the success schema (200/201).
+     */
+    private getResponseSchemaForValidation(
+        exampleToValidate: ExampleToValidate
+    ): OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined {
+        const { responseStatusCode, responseSchemas, responseSchema } = exampleToValidate;
+
+        if (responseSchemas && Object.keys(responseSchemas).length > 0) {
+            if (responseStatusCode && responseSchemas[responseStatusCode]) {
+                return responseSchemas[responseStatusCode];
+            }
+            return responseSchemas["200"] ?? responseSchemas["201"];
+        }
+
+        return responseSchema;
+    }
+
+    /**
      * Validates AI examples from ai_examples_override.yml
      * Returns a list of invalid examples that should be removed and regenerated
      */
@@ -235,7 +260,7 @@ export class ExampleValidator {
         const invalidExamples: { example: AiExampleOverride; validationResult: ExampleValidationResult }[] = [];
 
         for (const aiExample of aiExamples) {
-            const { requestSchema, responseSchema } = this.getSchemasForEndpoint({
+            const { requestSchema, responseSchema, responseSchemas } = this.getSchemasForEndpoint({
                 spec,
                 endpointPath: aiExample.endpointPath,
                 method: aiExample.method
@@ -248,7 +273,8 @@ export class ExampleValidator {
                 requestExample: aiExample.request?.body,
                 responseExample: aiExample.response?.body,
                 requestSchema,
-                responseSchema
+                responseSchema,
+                responseSchemas
             };
 
             const result = this.validateEndpointExample({ exampleToValidate });
@@ -374,7 +400,7 @@ export class ExampleValidator {
 
                 const endpointResults: ExampleValidationResult[] = [];
 
-                const { requestSchema, responseSchema } = this.getSchemasForOperation({ operation });
+                const { requestSchema, responseSchema, responseSchemas } = this.getSchemasForOperation({ operation });
 
                 const examples = this.extractExamplesFromOperation({ operation, path, method });
 
@@ -389,7 +415,9 @@ export class ExampleValidator {
                         requestExample: example.request,
                         responseExample: example.response,
                         requestSchema,
-                        responseSchema
+                        responseSchema,
+                        responseStatusCode: example.statusCode,
+                        responseSchemas
                     };
 
                     const result = this.validateEndpointExample({ exampleToValidate });
@@ -445,29 +473,33 @@ export class ExampleValidator {
     }): {
         requestSchema?: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         responseSchema?: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        responseSchemas: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>;
     } {
         const pathItem = spec.paths?.[endpointPath];
         if (!pathItem) {
-            return {};
+            return { responseSchemas: {} };
         }
 
         const operation = pathItem[method.toLowerCase() as keyof OpenAPIV3_1.PathItemObject];
         if (!operation || typeof operation !== "object" || !("responses" in operation)) {
-            return {};
+            return { responseSchemas: {} };
         }
 
         return this.getSchemasForOperation({ operation: operation as OpenAPIV3_1.OperationObject });
     }
 
     /**
-     * Gets the request and response schemas for an operation
+     * Gets the request and response schemas for an operation.
+     * Returns schemas for all status codes, not just success responses.
      */
     private getSchemasForOperation({ operation }: { operation: OpenAPIV3_1.OperationObject }): {
         requestSchema?: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
         responseSchema?: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
+        responseSchemas: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>;
     } {
         let requestSchema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined;
         let responseSchema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined;
+        const responseSchemas: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject> = {};
 
         if (operation.requestBody && !this.context.isReferenceObject(operation.requestBody)) {
             const content = operation.requestBody.content;
@@ -478,17 +510,20 @@ export class ExampleValidator {
         }
 
         if (operation.responses) {
-            const successResponse = operation.responses["200"] || operation.responses["201"];
-            if (successResponse && !this.context.isReferenceObject(successResponse)) {
-                const content = successResponse.content;
+            for (const [statusCode, response] of Object.entries(operation.responses)) {
+                if (!response || this.context.isReferenceObject(response)) {
+                    continue;
+                }
+                const content = response.content;
                 const jsonContent = content?.["application/json"];
                 if (jsonContent?.schema) {
-                    responseSchema = jsonContent.schema;
+                    responseSchemas[statusCode] = jsonContent.schema;
                 }
             }
+            responseSchema = responseSchemas["200"] ?? responseSchemas["201"];
         }
 
-        return { requestSchema, responseSchema };
+        return { requestSchema, responseSchema, responseSchemas };
     }
 
     /**
@@ -507,12 +542,14 @@ export class ExampleValidator {
         source: ExampleSource;
         request?: unknown;
         response?: unknown;
+        statusCode?: string;
     }> {
         const examples: Array<{
             name?: string;
             source: ExampleSource;
             request?: unknown;
             response?: unknown;
+            statusCode?: string;
         }> = [];
 
         if (operation.requestBody && !this.context.isReferenceObject(operation.requestBody)) {
@@ -557,11 +594,13 @@ export class ExampleValidator {
                     const existingExample = examples.find((e) => e.request !== undefined && e.response === undefined);
                     if (existingExample) {
                         existingExample.response = jsonContent.example;
+                        existingExample.statusCode = statusCode;
                     } else {
                         examples.push({
                             name: `${method}_${path}_response_${statusCode}_example`,
                             source: "openapi",
-                            response: jsonContent.example
+                            response: jsonContent.example,
+                            statusCode
                         });
                     }
                 }
@@ -576,11 +615,13 @@ export class ExampleValidator {
                             const existingExample = examples.find((e) => e.name === exampleName);
                             if (existingExample) {
                                 existingExample.response = (resolvedExample as { value: unknown }).value;
+                                existingExample.statusCode = statusCode;
                             } else {
                                 examples.push({
                                     name: exampleName,
                                     source: "human",
-                                    response: (resolvedExample as { value: unknown }).value
+                                    response: (resolvedExample as { value: unknown }).value,
+                                    statusCode
                                 });
                             }
                         }

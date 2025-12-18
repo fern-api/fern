@@ -376,7 +376,8 @@
                             }
                         },
                         "status-code": 200,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": "getFooResponse"
                     },
                     "v2Responses": null,
                     "errors": [
@@ -1033,7 +1034,8 @@
                             }
                         },
                         "status-code": 201,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": "Foo created."
                     },
                     "v2Responses": null,
                     "errors": [

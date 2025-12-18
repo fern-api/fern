@@ -5,7 +5,8 @@
 import * as FernOpenapiIr from "../../../index";
 
 export interface ArraySchema
-    extends FernOpenapiIr.WithSdkGroupName,
+    extends
+        FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithNamespace,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription,

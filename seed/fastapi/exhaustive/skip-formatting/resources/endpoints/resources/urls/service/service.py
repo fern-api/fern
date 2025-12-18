@@ -58,7 +58,7 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.with_mixed_case, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -75,10 +75,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.with_mixed_case.__globals__)
-        
         router.get(
             path="/urls/MixedCase",
             response_model=str,
@@ -94,7 +90,7 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.no_ending_slash, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -111,10 +107,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.no_ending_slash.__globals__)
-        
         router.get(
             path="/urls/no-ending-slash",
             response_model=str,
@@ -130,7 +122,7 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.with_ending_slash, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -147,10 +139,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.with_ending_slash.__globals__)
-        
         router.get(
             path="/urls/with-ending-slash/",
             response_model=str,
@@ -166,7 +154,7 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.with_underscores, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -182,10 +170,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-        
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.with_underscores.__globals__)
         
         router.get(
             path="/urls/with_underscores",

@@ -19,14 +19,14 @@ public record User : IJsonOnDeserialized
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("id")]
-    public required string Id { get; set; }
+    public string Id { get; set; }
 
     /// <summary>
     /// The email address of the user.
     /// </summary>
     [JsonAccess(JsonAccessType.ReadOnly)]
     [JsonPropertyName("email")]
-    public required string Email { get; set; }
+    public string Email { get; set; }
 
     /// <summary>
     /// The password for the user.

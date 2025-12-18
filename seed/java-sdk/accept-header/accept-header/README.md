@@ -143,7 +143,6 @@ SeedAcceptClient client = SeedAcceptClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.accept.SeedAcceptClient;
 import com.seed.accept.core.RequestOptions;
@@ -151,7 +150,7 @@ import com.seed.accept.core.RequestOptions;
 // Client level
 SeedAcceptClient client = SeedAcceptClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -159,7 +158,7 @@ client.service().endpoint(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

@@ -1,0 +1,4 @@
+# frozen_string_literal: true
+
+require_relative "seed_oauth_client_credentials_reference_client/auth/types/token_response"
+require_relative "seed_oauth_client_credentials_reference_client/auth/types/get_token_request"

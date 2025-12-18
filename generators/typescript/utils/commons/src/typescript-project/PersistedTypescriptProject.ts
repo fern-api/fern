@@ -67,6 +67,25 @@ export class PersistedTypescriptProject {
         return this.testDirectory;
     }
 
+    public async fixPackageJson(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+
+        const npm = createLoggingExecutable("npm", {
+            cwd: this.directory,
+            logger
+        });
+
+        try {
+            logger.debug("Running npm pkg fix to normalize package.json");
+            await npm(["pkg", "fix"]);
+            logger.debug("Successfully ran npm pkg fix");
+        } catch (e) {
+            logger.warn(`Failed to run npm pkg fix: ${e}`);
+        }
+    }
+
     public async generateLockfile(logger: Logger): Promise<void> {
         if (!this.runScripts) {
             return;

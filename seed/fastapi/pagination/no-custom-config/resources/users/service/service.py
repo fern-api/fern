@@ -150,21 +150,36 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="Defaults to first page"))
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                        ],
+                        default=None,
+                    )
                 )
             elif parameter_name == "per_page":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="Defaults to per page"))
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Query(description="Defaults to per page")
+                        ],
+                        default=None,
+                    )
                 )
             elif parameter_name == "order":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The cursor used for pagination in order to fetch\nthe next page of results.",
-                        )
+                        annotation=typing.Annotated[
+                            parameter.annotation,
+                            fastapi.Query(
+                                description="The cursor used for pagination in order to fetch\nthe next page of results."
+                            ),
+                        ],
+                        default=None,
                     )
                 )
             else:
@@ -183,10 +198,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_cursor_pagination.__globals__)
-
         router.get(
             path="/users",
             response_model=ListUsersPaginationResponse,
@@ -202,7 +213,9 @@ class AbstractUsersService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "cursor":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -223,10 +236,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_mixed_type_cursor_pagination.__globals__)
-
         router.post(
             path="/users",
             response_model=ListUsersMixedTypePaginationResponse,
@@ -242,7 +251,9 @@ class AbstractUsersService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -261,10 +272,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_body_cursor_pagination.__globals__)
-
         router.post(
             path="/users",
             response_model=ListUsersPaginationResponse,
@@ -281,21 +288,36 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="Defaults to first page"))
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                        ],
+                        default=None,
+                    )
                 )
             elif parameter_name == "per_page":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="Defaults to per page"))
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Query(description="Defaults to per page")
+                        ],
+                        default=None,
+                    )
                 )
             elif parameter_name == "order":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The cursor used for pagination in order to fetch\nthe next page of results.",
-                        )
+                        annotation=typing.Annotated[
+                            parameter.annotation,
+                            fastapi.Query(
+                                description="The cursor used for pagination in order to fetch\nthe next page of results."
+                            ),
+                        ],
+                        default=None,
                     )
                 )
             else:
@@ -314,10 +336,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_offset_pagination.__globals__)
-
         router.get(
             path="/users",
             response_model=ListUsersPaginationResponse,
@@ -334,21 +352,36 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="Defaults to first page"))
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                        ],
+                        default=None,
+                    )
                 )
             elif parameter_name == "per_page":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="Defaults to per page"))
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Query(description="Defaults to per page")
+                        ],
+                        default=None,
+                    )
                 )
             elif parameter_name == "order":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The cursor used for pagination in order to fetch\nthe next page of results.",
-                        )
+                        annotation=typing.Annotated[
+                            parameter.annotation,
+                            fastapi.Query(
+                                description="The cursor used for pagination in order to fetch\nthe next page of results."
+                            ),
+                        ],
+                        default=None,
                     )
                 )
             else:
@@ -371,10 +404,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_double_offset_pagination.__globals__)
-
         router.get(
             path="/users",
             response_model=ListUsersPaginationResponse,
@@ -390,7 +419,9 @@ class AbstractUsersService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -409,10 +440,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_body_offset_pagination.__globals__)
-
         router.post(
             path="/users",
             response_model=ListUsersPaginationResponse,
@@ -429,19 +456,29 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="Defaults to first page"))
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                        ],
+                        default=None,
+                    )
                 )
             elif parameter_name == "limit":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
-                        )
+                        annotation=typing.Annotated[
+                            parameter.annotation,
+                            fastapi.Query(
+                                description="The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
+                            ),
+                        ],
+                        default=None,
                     )
                 )
             elif parameter_name == "order":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -460,10 +497,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_offset_step_pagination.__globals__)
-
         router.get(
             path="/users",
             response_model=ListUsersPaginationResponse,
@@ -480,19 +513,29 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="Defaults to first page"))
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                        ],
+                        default=None,
+                    )
                 )
             elif parameter_name == "limit":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
-                        )
+                        annotation=typing.Annotated[
+                            parameter.annotation,
+                            fastapi.Query(
+                                description="The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
+                            ),
+                        ],
+                        default=None,
                     )
                 )
             elif parameter_name == "order":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -513,10 +556,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_offset_pagination_has_next_page.__globals__)
-
         router.get(
             path="/users",
             response_model=ListUsersPaginationResponse,
@@ -532,7 +571,9 @@ class AbstractUsersService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "cursor":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.list_with_extended_results, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -549,10 +590,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_extended_results.__globals__)
-
         router.get(
             path="/users",
             response_model=ListUsersExtendedResponse,
@@ -568,7 +605,9 @@ class AbstractUsersService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "cursor":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -589,10 +628,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_extended_results_and_optional_data.__globals__)
-
         router.get(
             path="/users",
             response_model=ListUsersExtendedOptionalListResponse,
@@ -610,10 +645,13 @@ class AbstractUsersService(AbstractFernService):
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The cursor used for pagination in order to fetch\nthe next page of results.",
-                        )
+                        annotation=typing.Annotated[
+                            parameter.annotation,
+                            fastapi.Query(
+                                description="The cursor used for pagination in order to fetch\nthe next page of results."
+                            ),
+                        ],
+                        default=None,
                     )
                 )
             else:
@@ -632,10 +670,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_usernames.__globals__)
-
         router.get(
             path="/users",
             response_model=UsernameCursor,
@@ -653,10 +687,13 @@ class AbstractUsersService(AbstractFernService):
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(
-                            default=None,
-                            description="The cursor used for pagination in order to fetch\nthe next page of results.",
-                        )
+                        annotation=typing.Annotated[
+                            parameter.annotation,
+                            fastapi.Query(
+                                description="The cursor used for pagination in order to fetch\nthe next page of results."
+                            ),
+                        ],
+                        default=None,
                     )
                 )
             else:
@@ -679,10 +716,6 @@ class AbstractUsersService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_usernames_with_optional_response.__globals__)
-
         router.get(
             path="/users",
             response_model=typing.Optional[UsernameCursor],
@@ -698,7 +731,9 @@ class AbstractUsersService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "offset":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.list_with_global_config, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -714,10 +749,6 @@ class AbstractUsersService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_global_config.__globals__)
 
         router.get(
             path="/users",
@@ -735,7 +766,12 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="Defaults to first page"))
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                        ],
+                        default=None,
+                    )
                 )
             else:
                 new_parameters.append(parameter)
@@ -752,10 +788,6 @@ class AbstractUsersService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_with_optional_data.__globals__)
 
         router.get(
             path="/users/optional-data",

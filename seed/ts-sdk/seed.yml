@@ -1,5 +1,5 @@
 displayName: TypeScript SDK
-irVersion: v61
+irVersion: v62
 image: fernapi/fern-typescript-sdk
 imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
@@ -278,6 +278,9 @@ fixtures:
     - outputFolder: never-throw-errors
       customConfig:
         neverThrowErrors: true
+  oauth-client-credentials-reference:
+    - outputFolder: .
+      customConfig: null
   mixed-case:
     - outputFolder: no-custom-config
       customConfig: null
@@ -294,19 +297,19 @@ fixtures:
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: no-inline-path-parameters
+      customConfig:
+        inlinePathParameters: false
+    - outputFolder: no-inline-path-parameters-serde
+      customConfig:
+        inlinePathParameters: false
+        noSerdeLayer: false
+    - outputFolder: no-inline-path-parameters-retain-original-casing
+      customConfig:
+        inlinePathParameters: false
+        retainOriginalCasing: true
     - outputFolder: retain-original-casing
       customConfig:
-        retainOriginalCasing: true
-    - outputFolder: inline-path-parameters
-      customConfig:
-        inlinePathParameters: true
-    - outputFolder: inline-path-parameters-serde
-      customConfig:
-        inlinePathParameters: true
-        noSerdeLayer: false
-    - outputFolder: inline-path-parameters-retain-original-casing
-      customConfig:
-        inlinePathParameters: true
         retainOriginalCasing: true
     - outputFolder: parameter-naming-original-name
       customConfig:
@@ -506,3 +509,4 @@ allowedFailures:
   - package-yml
   - trace:no-custom-config
   - trace:serde
+  - inferred-auth-implicit-reference

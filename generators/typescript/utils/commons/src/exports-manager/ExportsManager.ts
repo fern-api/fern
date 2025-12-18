@@ -40,7 +40,10 @@ export namespace NamedExport {
         return typeof namedExport === "string" ? namedExport : namedExport.name;
     }
     export function isTypeExport(namedExport: NamedExport): boolean {
-        return typeof namedExport !== "string" && namedExport.type === "type";
+        if (typeof namedExport === "string") {
+            return false;
+        }
+        return namedExport.type === "type";
     }
 }
 
@@ -217,8 +220,6 @@ export class ExportsManager {
                         name: NamedExport.getName(namedExport),
                         type: "type"
                     });
-                } else if (NamedExport.isTypeExport(namedExport)) {
-                    exportsForModuleSpecifier.namedExports.set(NamedExport.getName(namedExport), namedExport);
                 } else {
                     exportsForModuleSpecifier.namedExports.set(NamedExport.getName(namedExport), namedExport);
                 }
@@ -256,12 +257,17 @@ export class ExportsManager {
                     const sortedNamedExports = [...combinedExportDeclarations.namedExports.entries()]
                         .sort(([a], [b]) => a.localeCompare(b))
                         .map(([, namedExport]) => namedExport);
+                    const areAllTypeExports = sortedNamedExports.every((namedExport) =>
+                        NamedExport.isTypeExport(namedExport)
+                    );
                     exportsFile.addExportDeclaration({
                         moduleSpecifier,
+                        isTypeOnly: areAllTypeExports,
                         namedExports: sortedNamedExports.map<ExportSpecifierStructure>((namedExport) => ({
                             kind: StructureKind.ExportSpecifier,
                             name: NamedExport.getName(namedExport),
-                            leadingTrivia: NamedExport.isTypeExport(namedExport) ? "type " : undefined
+                            leadingTrivia:
+                                !areAllTypeExports && NamedExport.isTypeExport(namedExport) ? "type " : undefined
                         }))
                     });
                 }

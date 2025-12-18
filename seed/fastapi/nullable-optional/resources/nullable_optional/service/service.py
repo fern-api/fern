@@ -174,7 +174,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="userId")])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -191,10 +193,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_user.__globals__)
-
         router.get(
             path="/api/users/{user_id}",
             response_model=UserResponse,
@@ -210,7 +208,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -227,10 +227,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_user.__globals__)
-
         router.post(
             path="/api/users",
             response_model=UserResponse,
@@ -246,9 +242,13 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="userId")])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_user, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -265,10 +265,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_user.__globals__)
-
         router.patch(
             path="/api/users/{user_id}",
             response_model=UserResponse,
@@ -284,13 +280,26 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "limit":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "offset":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "include_deleted":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="includeDeleted")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="includeDeleted")],
+                        default=None,
+                    )
+                )
             elif parameter_name == "sort_by":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="sortBy")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="sortBy")], default=None
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.list_users, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -307,10 +316,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_users.__globals__)
-
         router.get(
             path="/api/users",
             response_model=typing.Sequence[UserResponse],
@@ -326,13 +331,23 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "query":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()])
+                )
             elif parameter_name == "department":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "role":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "is_active":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="isActive")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="isActive")], default=None
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.search_users, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -349,10 +364,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.search_users.__globals__)
-
         router.get(
             path="/api/users/search",
             response_model=typing.Sequence[UserResponse],
@@ -368,7 +379,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.create_complex_profile, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -385,10 +398,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_complex_profile.__globals__)
-
         router.post(
             path="/api/profiles/complex",
             response_model=ComplexProfile,
@@ -404,7 +413,11 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "profile_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="profileId")]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_complex_profile, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -421,10 +434,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_complex_profile.__globals__)
-
         router.get(
             path="/api/profiles/complex/{profile_id}",
             response_model=ComplexProfile,
@@ -440,9 +449,15 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             elif parameter_name == "profile_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="profileId")]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_complex_profile, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -459,10 +474,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_complex_profile.__globals__)
-
         router.patch(
             path="/api/profiles/complex/{profile_id}",
             response_model=ComplexProfile,
@@ -478,7 +489,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.test_deserialization, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -495,10 +508,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_deserialization.__globals__)
-
         router.post(
             path="/api/test/deserialization",
             response_model=DeserializationTestResponse,
@@ -514,11 +523,20 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "role":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "status":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                )
             elif parameter_name == "secondary_role":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=None, alias="secondaryRole")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="secondaryRole")],
+                        default=None,
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.filter_by_role, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -535,10 +553,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.filter_by_role.__globals__)
-
         router.get(
             path="/api/users/filter",
             response_model=typing.Sequence[UserResponse],
@@ -554,7 +568,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="userId")])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_notification_settings, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -571,10 +587,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_notification_settings.__globals__)
-
         router.get(
             path="/api/users/{user_id}/notifications",
             response_model=typing.Optional[NotificationMethod],
@@ -590,9 +602,13 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             elif parameter_name == "user_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="userId")])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_tags, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -609,10 +625,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_tags.__globals__)
-
         router.put(
             path="/api/users/{user_id}/tags",
             response_model=typing.Sequence[str],
@@ -628,7 +640,9 @@ class AbstractNullableOptionalService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_search_results, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -644,10 +658,6 @@ class AbstractNullableOptionalService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_search_results.__globals__)
 
         router.post(
             path="/api/search",

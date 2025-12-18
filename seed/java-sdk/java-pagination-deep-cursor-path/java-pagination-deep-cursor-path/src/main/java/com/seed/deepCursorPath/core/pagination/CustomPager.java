@@ -3,6 +3,7 @@
  */
 package com.seed.deepCursorPath.core.pagination;
 
+import com.seed.deepCursorPath.core.ClientOptions;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -60,12 +61,12 @@ public class CustomPager<T> implements BiDirectionalPage<T>, Iterable<T> {
      * Create a CustomPager from an initial response.
      *
      * @param initialResponse The first page response from the API
-     * @param client The HTTP client to use for subsequent requests
+     * @param clientOptions The client options containing HTTP client and other configuration
      * @param requestOptions Request options for authentication, headers, etc.
      * @return A new CustomPager instance
      * @throws IOException if the request fails
      */
-    public static <T> CustomPager<T> create(Object initialResponse, okhttp3.OkHttpClient client, Object requestOptions)
+    public static <T> CustomPager<T> create(Object initialResponse, ClientOptions clientOptions, Object requestOptions)
             throws IOException {
         throw new UnsupportedOperationException("CustomPager must be implemented. "
                 + "Please implement this class in core/CustomPager.java to define your pagination logic. "

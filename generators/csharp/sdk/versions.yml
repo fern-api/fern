@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.12.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred authentication scheme. This allows the SDK to automatically
+        obtain authentication tokens from a specified token endpoint and cache them for subsequent
+        requests.
+
+        When an API uses inferred auth, the SDK will:
+        * Call the token endpoint to obtain authentication headers
+        * Cache the headers and refresh them when expired (with a 2-minute buffer)
+        * Automatically set the authenticated request headers on all API calls
+      type: feat
+  createdAt: "2025-12-11"
+  irVersion: 62
+
+- version: 2.11.4
+  changelogEntry:
+    - summary: |
+        Don't use `required` keyword on properties that are read-only, since they're not supposed to be set by users.
+      type: fix
+  createdAt: "2025-12-13"
+  irVersion: 61
+
 - version: 2.11.3
   changelogEntry:
     - summary: |

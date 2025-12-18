@@ -1,4 +1,5 @@
 import { FernUserToken, getUserIdFromToken } from "@fern-api/auth";
+import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { PosthogEvent } from "@fern-api/task-context";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -15,10 +16,12 @@ const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 export class UserPosthogManager implements PosthogManager {
     private posthog: PostHog;
     private userId: string | undefined;
+    private token: FernUserToken | undefined;
 
     constructor({ token, posthogApiKey }: { token: FernUserToken | undefined; posthogApiKey: string }) {
         this.posthog = new PostHog(posthogApiKey);
         this.userId = token == null ? undefined : getUserIdFromToken(token);
+        this.token = token;
     }
 
     public async identify(): Promise<void> {
@@ -31,19 +34,47 @@ export class UserPosthogManager implements PosthogManager {
     }
 
     public async sendEvent(event: PosthogEvent): Promise<void> {
+        const userEmail = await this.getUserEmail();
         this.posthog.capture({
             distinctId: this.userId ?? (await this.getPersistedDistinctId()),
             event: "CLI",
             properties: {
                 version: process.env.CLI_VERSION,
                 ...event,
-                ...event.properties
+                ...event.properties,
+                usingAccessToken: false,
+                ...(userEmail != null ? { userEmail } : {})
             }
         });
     }
 
     public async flush(): Promise<void> {
         await this.posthog.flush();
+    }
+
+    private userEmail: string | undefined | null;
+    private async getUserEmail(): Promise<string | undefined> {
+        if (this.userEmail === null) {
+            return undefined;
+        }
+        if (this.userEmail != null) {
+            return this.userEmail;
+        }
+        if (this.token == null) {
+            this.userEmail = null;
+            return undefined;
+        }
+        try {
+            const response = await createVenusService({ token: this.token.value }).user.getMyself();
+            if (response.ok && response.body.email != null) {
+                this.userEmail = response.body.email;
+                return this.userEmail;
+            }
+        } catch {
+            // Silently fail - email is optional for analytics
+        }
+        this.userEmail = null;
+        return undefined;
     }
 
     private persistedDistinctId: string | undefined;

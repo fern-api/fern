@@ -147,7 +147,6 @@ SeedFileUploadClient client = SeedFileUploadClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.fileUpload.SeedFileUploadClient;
 import com.seed.fileUpload.core.RequestOptions;
@@ -155,7 +154,7 @@ import com.seed.fileUpload.core.RequestOptions;
 // Client level
 SeedFileUploadClient client = SeedFileUploadClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -163,7 +162,7 @@ client.service().justFile(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

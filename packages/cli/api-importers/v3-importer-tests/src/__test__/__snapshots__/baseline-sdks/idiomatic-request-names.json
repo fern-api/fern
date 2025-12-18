@@ -1498,7 +1498,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "User created successfully"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -1790,7 +1791,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "User created successfully"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -2036,7 +2038,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "User retrieved successfully"
           },
           "errors": [],
           "userSpecifiedExamples": [],
