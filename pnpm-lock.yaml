@@ -6017,8 +6017,8 @@ importers:
         specifier: 0.0.2
         version: 0.0.2
       '@fern-fern/ir-v62-sdk':
-        specifier: 0.0.1
-        version: 0.0.1
+        specifier: 0.0.2
+        version: 0.0.2
       '@fern-fern/ir-v7-model':
         specifier: 0.0.2
         version: 0.0.2
@@ -9577,8 +9577,8 @@ packages:
   '@fern-fern/ir-v61-sdk@0.0.2':
     resolution: {integrity: sha512-b3wO3kunLYzDL3w72d8qJw/Oc/JRVPYwmseDrDHe4CeAz6QZaZ+8bqD6RnUVn6VdtBfSiBO2aQfr5jnf6X+fFw==}
 
-  '@fern-fern/ir-v62-sdk@0.0.1':
-    resolution: {integrity: sha512-P0WOYfRI0IT1nkKTBS9loy+MjqG1AyTpbt/5sU/Pby9z93M7QUyiaIIk/awuLLTP/2c6T3En48Wn/9G20wr0mA==}
+  '@fern-fern/ir-v62-sdk@0.0.2':
+    resolution: {integrity: sha512-hfQjHZk4siuuzoVE4wX+NC+Lqexe98/SQY1OHTDf3+4ojsGQa5ytriCIsvXf/nXzUwdjOgnqthhuMpC4ar7hRg==}
 
   '@fern-fern/ir-v7-model@0.0.2':
     resolution: {integrity: sha512-YLm+eUW97/wghZR8COZ5P0kGPis27L3hqG7+Cy+lyhqx4qv5Gw/jck0gaskZ3KqOWbigVfblo0ukW9P5TaW0Iw==}
@@ -17288,7 +17288,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fern-fern/ir-v62-sdk@0.0.1':
+  '@fern-fern/ir-v62-sdk@0.0.2':
     dependencies:
       form-data: 4.0.5
       formdata-node: 6.0.3
