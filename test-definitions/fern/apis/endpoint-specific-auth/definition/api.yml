@@ -1,0 +1,11 @@
+name: endpoint-specific-auth
+
+auth:
+  endpoint-specific: {}
+
+auth-schemes:
+  BearerAuth:
+    scheme: bearer
+  ApiKeyAuth:
+    header: X-API-Key
+    type: string

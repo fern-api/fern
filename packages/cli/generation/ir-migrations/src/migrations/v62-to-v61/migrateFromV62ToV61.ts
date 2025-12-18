@@ -1,5 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { AuthSchemesRequirement, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
@@ -50,6 +50,7 @@ export const V62_TO_V61_MIGRATION: IrMigration<
     migrateBackwards: (v62: IntermediateRepresentation): IrVersions.V61.ir.IntermediateRepresentation => {
         return {
             ...v62,
+            auth: convertApiAuth(v62.auth),
             errors: resolveErrorDeclarationConflicts(v62.errors),
             services: Object.fromEntries(
                 Object.entries(v62.services).map(([key, service]) => [key, convertHttpService(service)])
@@ -58,6 +59,17 @@ export const V62_TO_V61_MIGRATION: IrMigration<
         };
     }
 };
+
+function convertApiAuth(auth: IntermediateRepresentation["auth"]): IrVersions.V61.auth.ApiAuth {
+    // Convert ENDPOINT_SPECIFIC to ALL when migrating backwards since v61 doesn't support ENDPOINT_SPECIFIC
+    if (auth.requirement === AuthSchemesRequirement.EndpointSpecific) {
+        return {
+            ...auth,
+            requirement: AuthSchemesRequirement.All
+        };
+    }
+    return auth;
+}
 
 function resolveErrorDeclarationConflicts(
     errors: IntermediateRepresentation["errors"]
