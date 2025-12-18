@@ -44,6 +44,7 @@ import {
 } from "ts-morph";
 import { Code, code } from "ts-poet";
 import {
+    AnyAuthProviderInstance,
     AuthProviderInstance,
     BasicAuthProviderInstance,
     BearerAuthProviderInstance,
@@ -417,7 +418,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
         }
 
-        const isAnyAuth = intermediateRepresentation.auth.requirement === "ANY";
+        const authRequirement = intermediateRepresentation.auth.requirement;
         const anyAuthProviders: AuthProviderInstance[] = [];
         const routingAuthProviders: Map<string, AuthProviderInstance> = new Map();
 
@@ -433,22 +434,28 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             });
 
-        for (const authScheme of authSchemes) {
-            if (isAnyAuth) {
-                const authProvider = getAuthProvider(authScheme);
-                anyAuthProviders.push(authProvider);
-                // Also add to routing map for endpoint-specific auth routing
-                routingAuthProviders.set(authScheme.key, authProvider);
-            } else {
+        if (authRequirement === "ANY") {
+            // For ANY auth, collect all providers and create AnyAuthProviderInstance
+            for (const authScheme of authSchemes) {
+                anyAuthProviders.push(getAuthProvider(authScheme));
+            }
+            if (anyAuthProviders.length > 0) {
+                this.authProvider = new AnyAuthProviderInstance(anyAuthProviders);
+            }
+        } else if (authRequirement === "ENDPOINT_SECURITY") {
+            // For ENDPOINT_SECURITY, collect all providers keyed by scheme key and create RoutingAuthProviderInstance
+            for (const authScheme of authSchemes) {
+                routingAuthProviders.set(authScheme.key, getAuthProvider(authScheme));
+            }
+            if (routingAuthProviders.size > 0) {
+                this.authProvider = new RoutingAuthProviderInstance(routingAuthProviders);
+            }
+        } else {
+            // For other auth requirements (e.g., ALL), use the first auth scheme
+            for (const authScheme of authSchemes) {
                 this.authProvider = getAuthProvider(authScheme);
                 break;
             }
-        }
-
-        // After the loop, if isAnyAuth, create RoutingAuthProviderInstance with all collected providers
-        // This allows routing to the correct auth provider based on endpoint security requirements
-        if (isAnyAuth && routingAuthProviders.size > 0) {
-            this.authProvider = new RoutingAuthProviderInstance(routingAuthProviders);
         }
     }
 

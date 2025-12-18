@@ -74,9 +74,11 @@ export type BaseClientOptions = {
 
     private getAuthOptionsTypes(context: SdkContext): string[] {
         const authOptionsTypes: string[] = [];
-        const isAnyAuth = this.ir.auth.requirement === "ANY";
+        const authRequirement = this.ir.auth.requirement;
 
-        if (isAnyAuth) {
+        if (authRequirement === "ANY") {
+            authOptionsTypes.push("AnyAuthProvider.AuthOptions");
+        } else if (authRequirement === "ENDPOINT_SECURITY") {
             authOptionsTypes.push("RoutingAuthProvider.AuthOptions");
         } else {
             for (const authScheme of this.ir.auth.schemes) {
@@ -228,9 +230,60 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseCl
 
     private generateNormalizeClientOptionsWithAuthFunction(context: SdkContext): void {
         let authProviderCreation = "";
-        const isAnyAuth = this.ir.auth.requirement === "ANY";
+        const authRequirement = this.ir.auth.requirement;
 
-        if (isAnyAuth) {
+        if (authRequirement === "ANY") {
+            // Use AnyAuthProvider for ANY auth - tries all providers in sequence
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: "./auth/AnyAuthProvider.js",
+                namedImports: ["AnyAuthProvider"]
+            });
+
+            const providerInstantiations: string[] = [];
+
+            for (const authScheme of this.ir.auth.schemes) {
+                if (authScheme.type === "bearer") {
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/BearerAuthProvider.js",
+                        namedImports: ["BearerAuthProvider"]
+                    });
+                    providerInstantiations.push(
+                        "if (BearerAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new BearerAuthProvider(normalizedWithNoOpAuthProvider)); }"
+                    );
+                } else if (authScheme.type === "basic") {
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/BasicAuthProvider.js",
+                        namedImports: ["BasicAuthProvider"]
+                    });
+                    providerInstantiations.push(
+                        "if (BasicAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new BasicAuthProvider(normalizedWithNoOpAuthProvider)); }"
+                    );
+                } else if (authScheme.type === "header") {
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/HeaderAuthProvider.js",
+                        namedImports: ["HeaderAuthProvider"]
+                    });
+                    providerInstantiations.push(
+                        "if (HeaderAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new HeaderAuthProvider(normalizedWithNoOpAuthProvider)); }"
+                    );
+                } else if (authScheme.type === "oauth") {
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/OAuthAuthProvider.js",
+                        namedImports: ["OAuthAuthProvider"]
+                    });
+                    providerInstantiations.push(
+                        "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)); }"
+                    );
+                }
+            }
+
+            authProviderCreation = `(() => {
+        const authProviders: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())}[] = [];
+        ${providerInstantiations.join("\n        ")}
+        return new AnyAuthProvider(authProviders);
+    })()`;
+        } else if (authRequirement === "ENDPOINT_SECURITY") {
+            // Use RoutingAuthProvider for ENDPOINT_SECURITY - routes based on endpoint metadata
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: "./auth/RoutingAuthProvider.js",
                 namedImports: ["RoutingAuthProvider"]
