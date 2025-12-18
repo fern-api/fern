@@ -665,6 +665,7 @@ export async function runAppPreviewServer({
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
 
+    // Create watcher but don't attach the event handler yet - we'll do that after restartNextJsServer is defined
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
         ignoreInitial: true,
@@ -673,84 +674,6 @@ export async function runAppPreviewServer({
     });
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
-
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
-        // Ignore changes to .fern/logs/ directory (contains debug logs)
-        if (targetPath.includes(".fern/logs/") || targetPath.includes(".fern\\logs\\")) {
-            return;
-        }
-
-        context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
-
-        if (isReloading) {
-            return;
-        }
-
-        editedAbsoluteFilepaths.push(AbsoluteFilePath.of(targetPath));
-
-        if (reloadTimer != null) {
-            clearTimeout(reloadTimer);
-        }
-
-        reloadTimer = setTimeout(() => {
-            void (async () => {
-                isReloading = true;
-
-                // Expand the list of files to include pages that depend on changed snippets
-                const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
-                const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
-
-                if (hasSnippetDependencies) {
-                    context.logger.info(
-                        `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
-                    );
-                }
-
-                sendData({
-                    version: 1,
-                    type: "startReload"
-                });
-
-                const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
-
-                editedAbsoluteFilepaths.length = 0;
-
-                // Restart the Next.js server
-                await restartNextJsServer();
-
-                // Wait 3 seconds for the server to be fully ready before triggering refresh
-                await new Promise((resolve) => setTimeout(resolve, 3000));
-
-                sendData({
-                    version: 1,
-                    type: "finishReload"
-                });
-                isReloading = false;
-
-                if (reloadedDocsDefinition != null) {
-                    // Detect slug changes before updating the docs definition
-                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedDocsDefinition);
-
-                    docsDefinition = reloadedDocsDefinition;
-
-                    // Send navigateToSlug events for any slug changes
-                    if (slugChanges.length > 0) {
-                        slugChanges.forEach((change) => {
-                            const eventData = {
-                                version: 1,
-                                type: "navigateToSlug",
-                                oldSlug: change.oldSlug,
-                                newSlug: change.newSlug
-                            };
-
-                            sendData(eventData);
-                        });
-                    }
-                }
-            })();
-        }, RELOAD_DEBOUNCE_MS);
-    });
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
@@ -883,14 +806,94 @@ export async function runAppPreviewServer({
 
     // Function to restart the Next.js server
     const restartNextJsServer = async (): Promise<void> => {
-        context.logger.info("Restarting Next.js server...");
         await stopNextJsServer();
         await startNextJsServer();
-        context.logger.info("Next.js server restarted");
     };
 
     // Start the initial server
     await startNextJsServer();
+
+    // Now that restartNextJsServer is defined, attach the watcher event handler
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
+        // Ignore changes to .fern/logs/ directory (contains debug logs)
+        if (targetPath.includes(".fern/logs/") || targetPath.includes(".fern\\logs\\")) {
+            return;
+        }
+
+        context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
+
+        if (isReloading) {
+            return;
+        }
+
+        editedAbsoluteFilepaths.push(AbsoluteFilePath.of(targetPath));
+
+        if (reloadTimer != null) {
+            clearTimeout(reloadTimer);
+        }
+
+        reloadTimer = setTimeout(() => {
+            void (async () => {
+                isReloading = true;
+
+                // Expand the list of files to include pages that depend on changed snippets
+                const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
+                const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
+
+                if (hasSnippetDependencies) {
+                    context.logger.info(
+                        `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
+                    );
+                }
+
+                sendData({
+                    version: 1,
+                    type: "startReload"
+                });
+
+                const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
+
+                editedAbsoluteFilepaths.length = 0;
+
+                // Restart the Next.js server
+                context.logger.info("Restarting Next.js server...");
+                await restartNextJsServer();
+
+                // Wait 3 seconds for the server to be fully ready before triggering refresh
+                context.logger.info("Waiting 3 seconds for server to be ready...");
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+
+                sendData({
+                    version: 1,
+                    type: "finishReload"
+                });
+                context.logger.info("Reload complete. Refreshing browser...");
+                isReloading = false;
+
+                if (reloadedDocsDefinition != null) {
+                    // Detect slug changes before updating the docs definition
+                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedDocsDefinition);
+
+                    docsDefinition = reloadedDocsDefinition;
+
+                    // Send navigateToSlug events for any slug changes
+                    if (slugChanges.length > 0) {
+                        slugChanges.forEach((change) => {
+                            const eventData = {
+                                version: 1,
+                                type: "navigateToSlug",
+                                oldSlug: change.oldSlug,
+                                newSlug: change.newSlug
+                            };
+
+                            sendData(eventData);
+                        });
+                    }
+                }
+            })();
+        }, RELOAD_DEBOUNCE_MS);
+    });
 
     const cleanup = () => {
         if (serverProcess != null && !serverProcess.killed) {
