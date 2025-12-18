@@ -173,6 +173,7 @@ export function convertHttpService({
                             ? AuthSchemesRequirement._visit<Record<string, string[]>[] | undefined>(auth.requirement, {
                                   any: () => auth.schemes.map((scheme) => ({ [scheme.key]: [] })),
                                   all: () => [auth.schemes.reduce((acc, scheme) => ({ ...acc, [scheme.key]: [] }), {})],
+                                  // for endpoint security, `typeof endpoint.auth === "object"`, so this case is unreachable
                                   endpointSecurity: () => undefined,
                                   _other: () => undefined
                               })
