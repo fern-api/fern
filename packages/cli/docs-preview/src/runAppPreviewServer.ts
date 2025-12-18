@@ -781,7 +781,6 @@ export async function runAppPreviewServer({
     });
 
     // Now start Next.js after backend is ready
-    context.logger.info("Starting Next.js server...");
     const env = {
         ...process.env,
         PORT: port.toString(),
@@ -905,7 +904,7 @@ export async function runAppPreviewServer({
 
     // Wait for Next.js to be ready before announcing the server is ready
     await nextJsReady;
-    context.logger.info(`Development server ready on http://localhost:${port}`);
+    context.logger.info(`Docs preview server ready on http://localhost:${port}`);
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
