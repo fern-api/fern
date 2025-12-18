@@ -135,6 +135,11 @@ fixtures:
         enable_wire_tests: true
       outputFolder: no-custom-config
     - customConfig:
+        enable_wire_tests: true
+        client:
+          exported_class_name: Exhaustive
+      outputFolder: wire-tests-custom-client-name
+    - customConfig:
         inline_path_params: true
         recursion_limit: 1234
       outputFolder: inline-path-params
