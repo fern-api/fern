@@ -3,7 +3,7 @@ name: seed-debug
 description: "Debug generator issues using seed CLI with automatic validation"
 category: development
 complexity: advanced
-argument-hint: "<generator> [--fixture <name> | --custom <path>]"
+argument-hint: "<generator> [--fixture <name> | --custom <path>] [--local] [description]"
 ---
 
 # /fern:seed-debug - Generator Debugging Tool
@@ -11,12 +11,12 @@ argument-hint: "<generator> [--fixture <name> | --custom <path>]"
 ## Triggers
 - Need to debug a generator issue with a specific fixture
 - Reproducing and fixing generator bugs
-- Manual invocation: `/fern:seed-debug <generator> [--fixture <name> | --custom <path>]`
+- Manual invocation: `/fern:seed-debug <generator> [--fixture <name> | --custom <path>] [--local] [description]`
 
 ## Usage
 ```
-/fern:seed-debug <generator> --fixture <fixture-name> [--outputFolder <folder>]
-/fern:seed-debug <generator> --custom <path-to-fern-folder>
+/fern:seed-debug <generator> --fixture <fixture-name> [--outputFolder <folder>] [--local] [description of the issue]
+/fern:seed-debug <generator> --custom <path-to-fern-folder> [--local] [description of the issue]
 ```
 
 **Arguments**:
@@ -24,18 +24,21 @@ argument-hint: "<generator> [--fixture <name> | --custom <path>]"
 - `--fixture` (optional): Name of the test fixture to use (e.g., `imdb`, `file-download`)
 - `--custom` (optional): Path to a custom Fern project folder
 - `--outputFolder` (optional): Specific output folder when fixture has multiple configurations
+- `--local` (optional): Run using local generator build instead of Docker (requires `test.local` config in seed.yml)
+- `[description]` (optional): Any remaining text after flags is treated as context/hints about the issue
 
 **Note**: Must provide either `--fixture` or `--custom`, not both.
 
 ## Behavioral Flow
-1. **Parse Arguments**: Extract generator name and fixture/custom path
-2. **Verify Output Folder**: For fixtures with multiple configs, prompt user to select
-3. **Run Generation**: Execute seed CLI with debug logging
-4. **Extract Output Path**: Parse logs to find generated code location
-5. **Discover Validation Steps**: Read `.github/workflows/ci.yml` for build/test commands
-6. **Run Validation**: Execute build and test commands
-7. **Iterate if Needed**: On failure, edit source code and repeat cycle
-8. **Report Results**: Summarize changes made
+1. **Parse Arguments**: Extract generator name, fixture/custom path, --local flag, and description
+2. **Verify Local Config**: If --local flag, check seed.yml for local configuration
+3. **Verify Output Folder**: For fixtures with multiple configs, prompt user to select
+4. **Run Generation**: Execute seed CLI with debug logging (and --local if specified)
+5. **Extract Output Path**: Parse logs to find generated code location
+6. **Discover Validation Steps**: Read `.github/workflows/ci.yml` for build/test commands
+7. **Run Validation**: Execute build and test commands
+8. **Iterate if Needed**: On failure, edit source code and repeat cycle
+9. **Report Results**: Summarize changes made
 
 ## Execution Steps
 
@@ -46,11 +49,49 @@ Extract from `$ARGUMENTS`:
 - `--fixture <name>` - test fixture name (mutually exclusive with --custom)
 - `--custom <path>` - path to custom Fern project (mutually exclusive with --fixture)
 - `--outputFolder <folder>` - specific output folder for multi-config fixtures
+- `--local` - flag to use local generator build instead of Docker
+- Any remaining text after all flags - treat as issue description/context
+
+Store the description for reference during debugging. This provides hints about what to look for.
 
 If no generator name is provided, ask the user which generator they want to debug.
 If neither `--fixture` nor `--custom` is provided, ask the user which mode they want.
 
-### Step 2: Verify Output Folder (Fixture Mode Only)
+### Step 2: Verify Local Config (If --local Flag)
+
+When `--local` flag is provided:
+
+1. Read the seed.yml file for the generator:
+   ```
+   seed/<generator>/seed.yml
+   ```
+
+2. Check if `test.local` configuration exists. It should have structure like:
+   ```yaml
+   test:
+     local:
+       workingDirectory: generators/typescript
+       buildCommand:
+         - pnpm turbo run dist:cli --filter @fern-typescript/sdk-generator-cli
+       runCommand: node --enable-source-maps sdk/cli/dist/cli.cjs {CONFIG_PATH}
+       env:
+         NODE_ENV: test
+   ```
+
+3. If `test.local` is NOT present, prompt the user:
+   ```
+   The generator "<generator>" does not have a local configuration in seed.yml.
+
+   Running without --local will use Docker instead.
+
+   Would you like to:
+   1. Continue without --local (use Docker)
+   2. Stop and add a local config to seed.yml first
+   ```
+
+4. If user chooses to continue without --local, remove the flag from subsequent commands
+
+### Step 3: Verify Output Folder (Fixture Mode Only)
 
 When using `--fixture` without `--outputFolder`:
 
@@ -73,7 +114,7 @@ When using `--fixture` without `--outputFolder`:
 
 4. Once confirmed, include `--outputFolder <folder>` in subsequent commands
 
-### Step 3: Run Generation
+### Step 4: Run Generation
 
 First, ensure dependencies are installed:
 ```bash
@@ -84,17 +125,17 @@ Then run seed generation with debug logging:
 
 **For fixture mode:**
 ```bash
-pnpm seed:local test --log-level debug --generator <generator> --fixture <fixture> [--outputFolder <folder>]
+pnpm seed:local test --log-level debug --generator <generator> --fixture <fixture> [--outputFolder <folder>] [--local]
 ```
 
 **For custom mode:**
 ```bash
-pnpm seed:local run --log-level debug --generator <generator> --path <custom-path>
+pnpm seed:local run --log-level debug --generator <generator> --path <custom-path> [--local]
 ```
 
 **Important**: The `seed:local` script handles all necessary compilation, so no separate compile step is needed.
 
-### Step 4: Extract Output Path
+### Step 5: Extract Output Path
 
 Parse the generation output to find where files were written. Look for patterns like:
 
@@ -110,7 +151,7 @@ Parse the generation output to find where files were written. Look for patterns 
 
 Store this path for validation steps.
 
-### Step 5: Discover Validation Steps
+### Step 6: Discover Validation Steps
 
 Read the CI workflow file:
 ```
@@ -133,7 +174,7 @@ Common validation commands by language:
 - **Go**: `go build ./... && go test ./...`
 - **Java**: `./gradlew build test`
 
-### Step 6: Run Validation
+### Step 7: Run Validation
 
 Navigate to the output directory and run the discovered validation commands in sequence:
 
@@ -145,17 +186,17 @@ pnpm build
 pnpm test
 ```
 
-### Step 7: Iterate on Failures
+### Step 8: Iterate on Failures
 
 If generation or validation fails:
 
-1. **Analyze the error** - Read error messages carefully
+1. **Analyze the error** - Read error messages carefully. Use the user-provided description/context as hints for what to look for.
 2. **Add logging if needed** - Insert debug statements in generator/CLI code to understand the issue
 3. **Make targeted edits** - Modify source code in:
    - `/generators/<language>/` - Generator implementation
    - `/packages/cli/` - CLI code
    - `/packages/` - Core packages
-4. **Re-run generation** - Go back to Step 3
+4. **Re-run generation** - Go back to Step 4
 5. **Repeat** until all validation passes
 
 **Remember**:
@@ -163,7 +204,7 @@ If generation or validation fails:
 - Never edit generated code or external project code
 - Debug logs can be cleaned up later
 
-### Step 8: Report Results
+### Step 9: Report Results
 
 When all validation passes, provide a summary:
 
@@ -198,9 +239,24 @@ When all validation passes, provide a summary:
 /fern:seed-debug ts-sdk --fixture imdb --outputFolder no-custom-config
 ```
 
+### Using Local Generator Build
+```
+/fern:seed-debug ts-sdk --fixture imdb --local
+```
+
 ### Custom Project Debug
 ```
 /fern:seed-debug python-sdk --custom ~/projects/my-api/fern
+```
+
+### With Issue Description
+```
+/fern:seed-debug ts-sdk --fixture file-download --local The generated SDK is missing the Content-Disposition header handling for file downloads
+```
+
+### Full Example with All Options
+```
+/fern:seed-debug go-sdk --fixture pagination --outputFolder offset --local There's an issue with cursor-based pagination where the next page token is not being properly extracted from the response
 ```
 
 ## Boundaries
