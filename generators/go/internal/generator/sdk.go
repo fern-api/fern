@@ -74,6 +74,9 @@ var (
 
 	//go:embed sdk/core/inferred_auth.go
 	inferredAuthFile string
+
+	//go:embed sdk/core/constants.go
+	constantsFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.

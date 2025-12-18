@@ -571,6 +571,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newOptionalTestFile(g.coordinator))
 		}
 		files = append(files, newApiErrorFile(g.coordinator))
+		if hasOAuthScheme(ir.Auth) || hasInferredAuthScheme(ir.Auth) {
+			files = append(files, newConstantsFile(g.coordinator))
+		}
 		if hasOAuthScheme(ir.Auth) {
 			files = append(files, newOAuthFile(g.coordinator))
 		}
@@ -1249,6 +1252,14 @@ func newInferredAuthFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/inferred_auth.go",
 		[]byte(inferredAuthFile),
+	)
+}
+
+func newConstantsFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/constants.go",
+		[]byte(constantsFile),
 	)
 }
 
