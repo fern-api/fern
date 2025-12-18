@@ -2413,9 +2413,10 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
     });
 
     it("should populate examples with the first available auth scheme from endpoint security", async () => {
-        // Test that when an endpoint has multiple auth options (e.g., admin OR operator),
-        // the generated examples should use the first available auth scheme (admin),
-        // not the first globally defined auth scheme or an incorrect scheme.
+        // Bug reproduction test: When an endpoint has multiple auth options (e.g., admin OR operator),
+        // the generated examples should use the first available auth scheme from the endpoint's
+        // security requirements (admin), not the first globally defined auth scheme or an incorrect scheme.
+        // See: https://app.devin.ai/sessions/9cf9fa77087045cda6bbf83fa5859f52
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace: join(
