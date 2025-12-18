@@ -1571,6 +1571,11 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 .option("backend-port", {
                     number: true,
                     description: "Run the development backend server on the following port"
+                })
+                .option("force-download", {
+                    boolean: true,
+                    default: false,
+                    description: "Force re-download of the docs preview bundle by deleting the cached bundle"
                 }),
         async (argv) => {
             if (argv.beta) {
@@ -1606,7 +1611,8 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
                 legacyPreview: argv.legacy,
-                backendPort
+                backendPort,
+                forceDownload: argv.forceDownload
             });
         }
     );

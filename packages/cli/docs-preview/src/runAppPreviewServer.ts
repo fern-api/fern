@@ -7,14 +7,14 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import cors from "cors";
 import express from "express";
-import { readFile } from "fs/promises";
+import { readFile, rm } from "fs/promises";
 import http from "http";
 import path from "path";
 import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 
 import { DebugLogger } from "./DebugLogger";
-import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
+import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
@@ -363,7 +363,8 @@ export async function runAppPreviewServer({
     context,
     port,
     bundlePath,
-    backendPort
+    backendPort,
+    forceDownload
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -372,7 +373,16 @@ export async function runAppPreviewServer({
     port: number;
     bundlePath?: string;
     backendPort: number;
+    forceDownload?: boolean;
 }): Promise<void> {
+    if (forceDownload) {
+        const appPreviewFolder = getPathToPreviewFolder({ app: true });
+        if (await doesPathExist(appPreviewFolder)) {
+            context.logger.info("Force download requested. Deleting cached bundle...");
+            await rm(appPreviewFolder, { recursive: true });
+        }
+    }
+
     if (bundlePath != null) {
         context.logger.info(`Using bundle from path: ${bundlePath}`);
     } else {
@@ -425,123 +435,6 @@ export async function runAppPreviewServer({
     const bundleRoot = bundlePath || getPathToBundleFolder({ app: true });
     const serverPath = path.join(bundleRoot, "standalone/packages/fern-docs/bundle/server.js");
 
-    const env = {
-        ...process.env,
-        PORT: port.toString(),
-        HOSTNAME: "0.0.0.0",
-        NEXT_PUBLIC_FDR_ORIGIN_PORT: backendPort.toString(),
-        NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
-        NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
-        NEXT_PUBLIC_IS_LOCAL: "1",
-        NEXT_DISABLE_CACHE: "1",
-        NODE_ENV: "production",
-        NODE_PATH: bundleRoot,
-        NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
-    };
-
-    const serverProcess = runExeca(context.logger, "node", [serverPath], {
-        env,
-        doNotPipeOutput: true
-    });
-
-    serverProcess.stdout?.on("data", (data) => {
-        context.logger.debug(`[Next.js] ${data.toString()}`);
-    });
-
-    // some errors from the frontend don't need to be sent to user
-    serverProcess.stderr?.on("data", (data) => {
-        context.logger.debug(`[Next.js] ${data.toString()}`);
-    });
-
-    context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    serverProcess.on("error", (err) => {
-        context.logger.debug(`Server process error: ${err.message}`);
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    serverProcess.on("exit", (code, signal) => {
-        if (code) {
-            context.logger.debug(`Server process exited with code: ${code}`);
-        } else if (signal) {
-            context.logger.debug(`Server process killed with signal: ${signal}`);
-        } else {
-            context.logger.debug("Server process exited");
-        }
-    });
-
-    const cleanup = () => {
-        if (!serverProcess.killed) {
-            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
-            try {
-                // First try graceful shutdown
-                serverProcess.kill();
-
-                // If process doesn't exit within 2 seconds, force kill
-                setTimeout(() => {
-                    if (!serverProcess.killed) {
-                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
-                        try {
-                            serverProcess.kill("SIGKILL");
-                        } catch (err) {
-                            context.logger.error(`Failed to force kill server process: ${err}`);
-                        }
-                    }
-                }, 2000);
-            } catch (err) {
-                context.logger.error(`Failed to kill server process: ${err}`);
-            }
-        }
-
-        context.logger.debug("Cleaning up WebSocket connections...");
-        for (const [ws, metadata] of connections) {
-            clearInterval(metadata.pingInterval);
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.close(1000, "Server shutting down");
-            }
-        }
-        connections.clear();
-        httpServer.close();
-    };
-
-    // handle termination signals
-    const shutdownSignals = ["SIGTERM", "SIGINT"];
-    const failureSignals = ["SIGHUP"];
-    for (const shutSig of shutdownSignals) {
-        process.on(shutSig, () => {
-            context.logger.debug("Shutting down server...");
-            cleanup();
-        });
-    }
-    for (const failSig of failureSignals) {
-        process.on(failSig, () => {
-            context.logger.debug("Server failed, shutting down process...");
-            cleanup();
-        });
-    }
-
-    // handle normal exit
-    process.on("exit", cleanup);
-
-    // handle uncaught exits
-    process.on("uncaughtException", (err) => {
-        context.logger.debug(`Uncaught exception: ${err}`);
-        cleanup();
-        process.exit(1);
-    });
-    process.on("unhandledRejection", (reason) => {
-        context.logger.debug(`Unhandled rejection: ${reason}`);
-        cleanup();
-        process.exit(1);
-    });
-
-    // Ensure cleanup runs before process exits
-    process.on("beforeExit", cleanup);
-
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    context.logger.debug(`Next.js server should now be running on http://localhost:${port}`);
-
     const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
     // Initialize the debug logger for metrics collection
@@ -552,6 +445,7 @@ export async function runAppPreviewServer({
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
     }
 
+    // Set up backend server first (before Next.js) so it's ready to serve requests
     const app = express();
     const httpServer = http.createServer(app);
     const wss = new WebSocketServer({
@@ -878,10 +772,139 @@ export async function runAppPreviewServer({
         return res.sendFile(`/${req.params[0]}`);
     });
 
-    httpServer.listen(backendPort, () => {
-        context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
-        context.logger.info(`Development server ready on http://localhost:${port}`);
+    // Start backend server first and wait for it to be ready
+    await new Promise<void>((resolve) => {
+        httpServer.listen(backendPort, () => {
+            context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
+            resolve();
+        });
     });
+
+    // Now start Next.js after backend is ready
+    const env = {
+        ...process.env,
+        PORT: port.toString(),
+        HOSTNAME: "0.0.0.0",
+        NEXT_PUBLIC_FDR_ORIGIN_PORT: backendPort.toString(),
+        NEXT_PUBLIC_FDR_ORIGIN: `http://localhost:${backendPort}`,
+        NEXT_PUBLIC_DOCS_DOMAIN: initialProject.docsWorkspaces?.config.instances[0]?.url,
+        NEXT_PUBLIC_IS_LOCAL: "1",
+        NEXT_DISABLE_CACHE: "1",
+        NODE_ENV: "production",
+        NODE_PATH: bundleRoot,
+        NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
+    };
+
+    const serverProcess = runExeca(context.logger, "node", [serverPath], {
+        env,
+        doNotPipeOutput: true
+    });
+
+    // Wait for Next.js to be ready by watching for the "Ready" message in stdout
+    const nextJsReady = new Promise<void>((resolve) => {
+        const checkReady = (data: Buffer) => {
+            const output = data.toString();
+            context.logger.debug(`[Next.js] ${output}`);
+            if (output.includes("Ready in") || output.includes("✓ Ready")) {
+                resolve();
+            }
+        };
+        serverProcess.stdout?.on("data", checkReady);
+
+        // Fallback timeout in case we miss the ready message
+        setTimeout(() => {
+            resolve();
+        }, 10000);
+    });
+
+    // Also log stderr but don't block on it
+    serverProcess.stderr?.on("data", (data) => {
+        context.logger.debug(`[Next.js] ${data.toString()}`);
+    });
+
+    context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    serverProcess.on("error", (err) => {
+        context.logger.debug(`Server process error: ${err.message}`);
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    serverProcess.on("exit", (code, signal) => {
+        if (code) {
+            context.logger.debug(`Server process exited with code: ${code}`);
+        } else if (signal) {
+            context.logger.debug(`Server process killed with signal: ${signal}`);
+        } else {
+            context.logger.debug("Server process exited");
+        }
+    });
+
+    const cleanup = () => {
+        if (!serverProcess.killed) {
+            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
+            try {
+                serverProcess.kill();
+                setTimeout(() => {
+                    if (!serverProcess.killed) {
+                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
+                        try {
+                            serverProcess.kill("SIGKILL");
+                        } catch (err) {
+                            context.logger.error(`Failed to force kill server process: ${err}`);
+                        }
+                    }
+                }, 2000);
+            } catch (err) {
+                context.logger.error(`Failed to kill server process: ${err}`);
+            }
+        }
+
+        context.logger.debug("Cleaning up WebSocket connections...");
+        for (const [ws, metadata] of connections) {
+            clearInterval(metadata.pingInterval);
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.close(1000, "Server shutting down");
+            }
+        }
+        connections.clear();
+        httpServer.close();
+    };
+
+    // handle termination signals
+    const shutdownSignals = ["SIGTERM", "SIGINT"];
+    const failureSignals = ["SIGHUP"];
+    for (const shutSig of shutdownSignals) {
+        process.on(shutSig, () => {
+            context.logger.debug("Shutting down server...");
+            cleanup();
+        });
+    }
+    for (const failSig of failureSignals) {
+        process.on(failSig, () => {
+            context.logger.debug("Server failed, shutting down process...");
+            cleanup();
+        });
+    }
+
+    process.on("exit", cleanup);
+
+    process.on("uncaughtException", (err) => {
+        context.logger.debug(`Uncaught exception: ${err}`);
+        cleanup();
+        process.exit(1);
+    });
+    process.on("unhandledRejection", (reason) => {
+        context.logger.debug(`Unhandled rejection: ${reason}`);
+        cleanup();
+        process.exit(1);
+    });
+
+    process.on("beforeExit", cleanup);
+
+    // Wait for Next.js to be ready before announcing the server is ready
+    await nextJsReady;
+    context.logger.info(`Docs preview server ready on http://localhost:${port}`);
 
     // await infinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function

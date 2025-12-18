@@ -488,7 +488,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     true,
                     false,
                     generatorConfig,
-                    customConfig.gradlePluginManagement());
+                    customConfig.gradlePluginManagement(),
+                    customConfig.gradleCentralDependencyManagement());
         }
         generatedFiles.forEach(
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
@@ -530,7 +531,12 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 || customConfigPublishToCentral(generatorConfig);
         // add project level files
         addRootProjectFiles(
-                maybeMavenCoordinate, true, addSignatureBlock, generatorConfig, customConfig.gradlePluginManagement());
+                maybeMavenCoordinate,
+                true,
+                addSignatureBlock,
+                generatorConfig,
+                customConfig.gradlePluginManagement(),
+                customConfig.gradleCentralDependencyManagement());
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
@@ -577,7 +583,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 false,
                 mavenRegistryConfigV2.getSignature().isPresent(),
                 generatorConfig,
-                customConfig.gradlePluginManagement());
+                customConfig.gradlePluginManagement(),
+                customConfig.gradleCentralDependencyManagement());
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         copyLicenseFile(generatorConfig);
@@ -644,7 +651,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             boolean addTestBlock,
             boolean addSignaturePlugin,
             GeneratorConfig generatorConfig,
-            Optional<String> gradlePluginManagement) {
+            Optional<String> gradlePluginManagement,
+            boolean skipRepositories) {
         String repositoryUrl = addSignaturePlugin
                 ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
                 : "https://s01.oss.sonatype.org/content/repositories/releases/";
@@ -711,6 +719,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     + "}");
         }
 
+        buildGradle.skipRepositories(skipRepositories);
         addGeneratedFile(buildGradle.build());
         StringBuilder settingsGradleContents = new StringBuilder();
 

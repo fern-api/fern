@@ -9,7 +9,7 @@ module Seed
     # @param x_api_key [String]
     #
     # @return [void]
-    def initialize(base_url:, client_id:, client_secret:, x_api_key:, scope: nil)
+    def initialize(client_id:, client_secret:, x_api_key:, base_url: nil, scope: nil)
       # Create an unauthenticated client for the auth endpoint
       auth_raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,

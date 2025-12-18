@@ -12,7 +12,8 @@ export async function previewDocsWorkspace({
     bundlePath,
     brokenLinks,
     legacyPreview,
-    backendPort
+    backendPort,
+    forceDownload
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
@@ -21,6 +22,7 @@ export async function previewDocsWorkspace({
     brokenLinks: boolean;
     legacyPreview?: boolean;
     backendPort: number;
+    forceDownload?: boolean;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -83,7 +85,7 @@ export async function previewDocsWorkspace({
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-        context.logger.info(`Starting server on port ${port}`);
+        context.logger.info("Bootstrapping docs preview (this may take a few seconds)...");
 
         await runAppPreviewServer({
             initialProject: project,
@@ -121,7 +123,8 @@ export async function previewDocsWorkspace({
             context,
             port,
             bundlePath,
-            backendPort
+            backendPort,
+            forceDownload
         });
     });
 

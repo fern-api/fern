@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -107,10 +106,6 @@ class AbstractProblemService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_problem.__globals__)
-
         router.post(
             path="/problem-crud/create",
             response_model=CreateProblemResponse,
@@ -158,10 +153,6 @@ class AbstractProblemService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_problem.__globals__)
-
         router.post(
             path="/problem-crud/update/{problem_id}",
             response_model=UpdateProblemResponse,
@@ -205,14 +196,10 @@ class AbstractProblemService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.delete_problem.__globals__)
-
         router.delete(
             path="/problem-crud/delete/{problem_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractProblemService.delete_problem.__doc__,
             **get_route_args(cls.delete_problem, default_tag="problem"),
         )(wrapper)
@@ -250,10 +237,6 @@ class AbstractProblemService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_default_starter_files.__globals__)
 
         router.post(
             path="/problem-crud/default-starter-files",
