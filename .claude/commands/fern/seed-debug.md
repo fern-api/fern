@@ -3,6 +3,7 @@ name: seed-debug
 description: "Debug generator issues using seed CLI with automatic validation"
 category: development
 complexity: advanced
+tags: [seed, generator, debugging, testing, validation]
 argument-hint: "<generator> [--fixture <name> | --custom <path>] [--local] [description]"
 ---
 
@@ -37,8 +38,16 @@ argument-hint: "<generator> [--fixture <name> | --custom <path>] [--local] [desc
 5. **Extract Output Path**: Parse logs to find generated code location
 6. **Discover Validation Steps**: Read `.github/workflows/ci.yml` for build/test commands
 7. **Run Validation**: Execute build and test commands
-8. **Iterate if Needed**: On failure, edit source code and repeat cycle
+8. **Iterate if Needed**: On failure, use sequential-thinking to analyze errors and plan fixes, then edit source code and repeat cycle
 9. **Report Results**: Summarize changes made
+
+## MCP Integration
+
+**Sequential Thinking**: When available, use the `mcp__sequential-thinking__sequentialthinking` tool to:
+- Analyze complex error messages and stack traces
+- Plan multi-step debugging approaches
+- Reason through generator logic to identify root causes
+- Track hypotheses and validate fixes systematically
 
 ## Execution Steps
 
@@ -190,14 +199,15 @@ pnpm test
 
 If generation or validation fails:
 
-1. **Analyze the error** - Read error messages carefully. Use the user-provided description/context as hints for what to look for.
-2. **Add logging if needed** - Insert debug statements in generator/CLI code to understand the issue
-3. **Make targeted edits** - Modify source code in:
+1. **Analyze the error** - Use sequential-thinking MCP (if available) to systematically analyze error messages and stack traces. Use the user-provided description/context as hints for what to look for.
+2. **Form a hypothesis** - Use sequential-thinking to reason through the generator logic and identify potential root causes
+3. **Add logging if needed** - Insert debug statements in generator/CLI code to validate your hypothesis
+4. **Make targeted edits** - Modify source code in:
    - `/generators/<language>/` - Generator implementation
    - `/packages/cli/` - CLI code
    - `/packages/` - Core packages
-4. **Re-run generation** - Go back to Step 4
-5. **Repeat** until all validation passes
+5. **Re-run generation** - Go back to Step 4
+6. **Repeat** until all validation passes
 
 **Remember**:
 - Only edit code in the fern repository
