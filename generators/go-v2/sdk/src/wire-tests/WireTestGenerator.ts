@@ -13,7 +13,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
+import { convertDynamicEndpointSnippetRequest, EndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
@@ -95,15 +95,20 @@ export class WireTestGenerator {
         endpoints: HttpEndpoint[],
         filePath: FernFilepath
     ): Promise<GoFile> {
-        const endpointTestCases = new Map<string, string>();
+        const endpointTestCases = new Map<string, { snippet: string; testId: string }>();
         for (const endpoint of endpoints) {
             const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
             if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
                 const firstExample = this.getDynamicEndpointExample(endpoint);
                 if (firstExample) {
                     try {
-                        const snippet = await this.generateSnippetForExample(firstExample);
-                        endpointTestCases.set(endpoint.id, snippet);
+                        // Generate a deterministic test ID for this endpoint
+                        const service = Object.values(this.context.ir.services).find((s) =>
+                            s.endpoints.some((e) => e.id === endpoint.id)
+                        );
+                        const testId = this.buildDeterministicTestId(service, endpoint, 0);
+                        const snippet = await this.generateSnippetForExample(firstExample, testId);
+                        endpointTestCases.set(endpoint.id, { snippet, testId });
                     } catch (error) {
                         this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
                         // Skip this endpoint if snippet generation fails
@@ -124,11 +129,13 @@ export class WireTestGenerator {
 
         const endpointTestCaseCodeBlocks = endpoints
             .map((endpoint) => {
-                const snippet = endpointTestCases.get(endpoint.id);
-                if (!snippet) {
+                const testCase = endpointTestCases.get(endpoint.id);
+                if (!testCase) {
                     this.context.logger.warn(`No snippet found for endpoint ${endpoint.id}`);
                     return null;
                 }
+
+                const { snippet, testId } = testCase;
 
                 // Parse the test function name from the snippet and generate a unique name if needed
                 const baseTestFunctionName = this.parseTestFunctionNameFromSnippet(snippet);
@@ -142,7 +149,8 @@ export class WireTestGenerator {
                 const [endpointTestCaseCodeBlock, endpointImports] = this.generateEndpointTestMethod(
                     endpoint,
                     snippet,
-                    uniqueTestFunctionName
+                    uniqueTestFunctionName,
+                    testId
                 );
                 for (const [importName, importPath] of endpointImports.entries()) {
                     imports.set(importName, importPath);
@@ -160,35 +168,10 @@ export class WireTestGenerator {
             }
             writer.writeNewLineIfLastLineNot();
             writer.newLine();
-            writer.write(
-                go.func({
-                    name: "ResetWireMockRequests",
-                    parameters: [
-                        go.parameter({
-                            name: "t",
-                            type: go.Type.pointer(go.Type.reference(this.context.getTestingTypeReference()))
-                        })
-                    ],
-                    return_: [],
-                    body: go.codeblock((writer) => {
-                        writer.writeNode(go.codeblock('WiremockAdminURL := "http://localhost:8080/__admin"'));
-                        writer.newLine();
-                        writer.writeNode(
-                            go.codeblock(
-                                '_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)'
-                            )
-                        );
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("require.NoError(t, err)"));
-                        writer.newLine();
-                    })
-                })
-            );
 
             // Uses the requests/find endpoint for more flexible matching based on query parameters and base URL
             // This allows proper matching even when SDKs reorder query parameters alphabetically
-            writer.writeNewLineIfLastLineNot();
-            writer.newLine();
+            // The X-Test-Id header is used to scope assertions to a specific test for concurrency safety
             this.writeVerifyRequestCount(writer);
             writer.writeNewLineIfLastLineNot();
             writer.newLine();
@@ -226,6 +209,10 @@ export class WireTestGenerator {
                         type: go.Type.pointer(go.Type.reference(this.context.getTestingTypeReference()))
                     }),
                     go.parameter({
+                        name: "testId",
+                        type: go.Type.string()
+                    }),
+                    go.parameter({
                         name: "method",
                         type: go.Type.string()
                     }),
@@ -245,6 +232,7 @@ export class WireTestGenerator {
                 return_: [],
                 body: go.codeblock((writer) => {
                     // Build the request body for WireMock's requests/find endpoint
+                    // Include X-Test-Id header filter to scope assertions to this specific test
                     writer.writeNode(go.codeblock('WiremockAdminURL := "http://localhost:8080/__admin"'));
                     writer.newLine();
                     writer.writeNode(go.codeblock("var reqBody bytes.Buffer"));
@@ -257,7 +245,11 @@ export class WireTestGenerator {
                     writer.newLine();
                     writer.writeNode(go.codeblock("reqBody.WriteString(urlPath)"));
                     writer.newLine();
-                    writer.writeNode(go.codeblock('reqBody.WriteString(`"}`)'));
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("reqBody.WriteString(testId)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`"}}`)'));
                     writer.newLine();
                     writer.writeNode(go.codeblock("if len(queryParams) > 0 {"));
                     writer.newLine();
@@ -291,6 +283,8 @@ export class WireTestGenerator {
                     writer.newLine();
                     writer.writeNode(go.codeblock("}"));
                     writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString("}")'));
+                    writer.newLine();
                     writer.writeNode(
                         go.codeblock(
                             'resp, err := http.Post(WiremockAdminURL+"/requests/find", "application/json", &reqBody)'
@@ -309,8 +303,16 @@ export class WireTestGenerator {
         );
     }
 
-    private async generateSnippetForExample(example: dynamic.EndpointExample): Promise<string> {
-        const snippetRequest = convertDynamicEndpointSnippetRequest(example);
+    private async generateSnippetForExample(example: dynamic.EndpointExample, testId: string): Promise<string> {
+        const baseRequest = convertDynamicEndpointSnippetRequest(example);
+        // Add the X-Test-Id header to scope assertions to this specific test
+        const snippetRequest: EndpointSnippetRequest = {
+            ...baseRequest,
+            headers: {
+                ...baseRequest.headers,
+                "X-Test-Id": testId
+            }
+        };
         const response = await this.dynamicSnippetsGenerator.generate(snippetRequest, {
             config: { outputWiremockTests: true }
         });
@@ -323,7 +325,8 @@ export class WireTestGenerator {
     private generateEndpointTestMethod(
         endpoint: HttpEndpoint,
         snippet: string,
-        testFunctionName: string
+        testFunctionName: string,
+        testId: string
     ): [go.CodeBlock, Map<string, string>] {
         const imports = this.parseImportsFromSnippet(snippet);
 
@@ -339,13 +342,11 @@ export class WireTestGenerator {
                     ],
                     return_: [],
                     body: go.codeblock((writer) => {
-                        writer.writeNode(go.codeblock(`ResetWireMockRequests(t)`));
-                        writer.newLine();
                         writer.writeNode(go.codeblock('WireMockBaseURL := "http://localhost:8080"'));
                         writer.newLine();
                         writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
                         writer.newLine();
-                        writer.writeNode(this.callClientMethodAndAssert({ endpoint, snippet }));
+                        writer.writeNode(this.callClientMethodAndAssert({ endpoint, snippet, testId }));
                     })
                 })
             );
@@ -581,10 +582,12 @@ export class WireTestGenerator {
 
     private callClientMethodAndAssert({
         endpoint,
-        snippet
+        snippet,
+        testId
     }: {
         endpoint: HttpEndpoint;
         snippet: string;
+        testId: string;
     }): go.CodeBlock {
         const requestBodyInstantiation = this.parseRequestBodyInstantiation(snippet);
         const clientCall = this.parseClientCallFromSnippet(snippet);
@@ -628,7 +631,9 @@ export class WireTestGenerator {
             const queryParamsMap = this.buildQueryParamsMap(endpoint);
 
             writer.writeNode(
-                go.codeblock(`VerifyRequestCount(t, "${endpoint.method}", "${basePath}", ${queryParamsMap}, 1)`)
+                go.codeblock(
+                    `VerifyRequestCount(t, "${testId}", "${endpoint.method}", "${basePath}", ${queryParamsMap}, 1)`
+                )
             );
 
             writer.writeLine();
@@ -835,5 +840,28 @@ export class WireTestGenerator {
 
     private getFormattedServiceName(service: HttpService): string {
         return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+    }
+
+    /**
+     * Builds a deterministic test ID for an endpoint example.
+     * This ID is used to scope WireMock assertions to a specific test,
+     * allowing tests to run concurrently without interfering with each other.
+     */
+    private buildDeterministicTestId(
+        service: HttpService | undefined,
+        endpoint: HttpEndpoint,
+        exampleIndex: number
+    ): string {
+        const servicePathParts = service?.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName) ?? [];
+        const endpointName = endpoint.name.snakeCase.safeName;
+
+        const segments: string[] = [];
+        if (servicePathParts.length > 0) {
+            segments.push(servicePathParts.join("."));
+        }
+        segments.push(endpointName);
+        segments.push(String(exampleIndex));
+
+        return segments.join(".");
     }
 }
