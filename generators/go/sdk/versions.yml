@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Add sdkVersion as a top-level field in the generated metadata.json file.
-      type: feat
+      type: chore
   createdAt: "2025-12-18"
   irVersion: 60
 
