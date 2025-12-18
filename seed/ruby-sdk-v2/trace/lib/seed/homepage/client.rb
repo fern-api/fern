@@ -19,7 +19,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[String]]
-      def get_homepage_problems(request_options: {}, **_params)
+      def get_homepage_problems(request_options: {}, **params)
+        Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -48,6 +49,7 @@ module Seed
       #
       # @return [untyped]
       def set_homepage_problems(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

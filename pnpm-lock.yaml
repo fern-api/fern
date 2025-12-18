@@ -6011,8 +6011,14 @@ importers:
         specifier: 0.0.33
         version: 0.0.33
       '@fern-fern/ir-v60-sdk':
-        specifier: 0.0.5
-        version: 0.0.5
+        specifier: 0.0.7
+        version: 0.0.7
+      '@fern-fern/ir-v61-sdk':
+        specifier: 0.0.2
+        version: 0.0.2
+      '@fern-fern/ir-v62-sdk':
+        specifier: 0.0.2
+        version: 0.0.2
       '@fern-fern/ir-v7-model':
         specifier: 0.0.2
         version: 0.0.2
@@ -9565,8 +9571,14 @@ packages:
   '@fern-fern/ir-v6-model@0.0.33':
     resolution: {integrity: sha512-I3KLvdrRzSrh5CcpU0v/Mjn4ywZhzVwhqJC8IDIQiP1yPvsCnjgbTBNwLRG8KdJqHfLOgdt/hfVzjeuFugSlGA==}
 
-  '@fern-fern/ir-v60-sdk@0.0.5':
-    resolution: {integrity: sha512-xMU5tMJp6Qha9PEJOoLH5ctsqlwJRJPw3YWjhlkLqJmbCtXGbfGRzgL6fwdXfd5osTc5Gm3bLoOOzA5jttlPyQ==}
+  '@fern-fern/ir-v60-sdk@0.0.7':
+    resolution: {integrity: sha512-fYXI7ORJt6i4cnxwE/DOeM5kbY7WUft4tusi9IWFyKXfO5wUoINqHJy5JNYXFP37Ya+IUD2HWL1dsnGwuoac5A==}
+
+  '@fern-fern/ir-v61-sdk@0.0.2':
+    resolution: {integrity: sha512-b3wO3kunLYzDL3w72d8qJw/Oc/JRVPYwmseDrDHe4CeAz6QZaZ+8bqD6RnUVn6VdtBfSiBO2aQfr5jnf6X+fFw==}
+
+  '@fern-fern/ir-v62-sdk@0.0.2':
+    resolution: {integrity: sha512-hfQjHZk4siuuzoVE4wX+NC+Lqexe98/SQY1OHTDf3+4ojsGQa5ytriCIsvXf/nXzUwdjOgnqthhuMpC4ar7hRg==}
 
   '@fern-fern/ir-v7-model@0.0.2':
     resolution: {integrity: sha512-YLm+eUW97/wghZR8COZ5P0kGPis27L3hqG7+Cy+lyhqx4qv5Gw/jck0gaskZ3KqOWbigVfblo0ukW9P5TaW0Iw==}
@@ -17256,7 +17268,27 @@ snapshots:
 
   '@fern-fern/ir-v6-model@0.0.33': {}
 
-  '@fern-fern/ir-v60-sdk@0.0.5':
+  '@fern-fern/ir-v60-sdk@0.0.7':
+    dependencies:
+      form-data: 4.0.5
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.13.0
+      readable-stream: 4.7.0
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/ir-v61-sdk@0.0.2':
+    dependencies:
+      form-data: 4.0.5
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.13.0
+      readable-stream: 4.7.0
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/ir-v62-sdk@0.0.2':
     dependencies:
       form-data: 4.0.5
       formdata-node: 6.0.3

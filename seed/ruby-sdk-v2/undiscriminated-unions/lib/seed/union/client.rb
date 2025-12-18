@@ -20,6 +20,7 @@ module Seed
       #
       # @return [Seed::Union::Types::MyUnion]
       def get(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -50,7 +51,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Hash[Seed::Union::Types::Key, String]]
-      def get_metadata(request_options: {}, **_params)
+      def get_metadata(request_options: {}, **params)
+        Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -81,6 +83,7 @@ module Seed
       #
       # @return [Boolean]
       def update_metadata(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
@@ -110,6 +113,7 @@ module Seed
       #
       # @return [Boolean]
       def call(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -139,6 +143,7 @@ module Seed
       #
       # @return [Seed::Union::Types::UnionWithDuplicateTypes]
       def duplicate_types_union(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -170,6 +175,7 @@ module Seed
       #
       # @return [String]
       def nested_unions(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -199,6 +205,7 @@ module Seed
       #
       # @return [String]
       def test_camel_case_properties(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[payment_method]
         body_bag = params.slice(*body_prop_names)
 

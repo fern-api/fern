@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v63.0.0] - 2025-12-18
+- Feature: Add `ENDPOINT_SECURITY` value to `AuthSchemesRequirement` enum to support per-endpoint authentication configuration. 
+  When `auth.requirement` is set to `ENDPOINT_SECURITY`, the API definition declares that authentication requirements are specified on individual endpoints rather than globally. 
+  All defined auth schemes are included in `auth.schemes` for generators to reference when processing endpoint-specific security.
+
 ## [v62.4.0] - 2025-12-14
 - Feature: Add `explode` field to PathParameter and QueryParameter types for OpenAPI parameter serialization control
 

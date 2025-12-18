@@ -31,5 +31,6 @@
         "hello": "echo hello"
       }
     }
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

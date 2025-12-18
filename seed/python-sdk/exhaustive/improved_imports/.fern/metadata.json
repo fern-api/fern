@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "improved_imports": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

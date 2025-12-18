@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "parameterNaming": "camelCase"
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

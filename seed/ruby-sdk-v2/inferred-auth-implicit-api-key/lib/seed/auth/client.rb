@@ -20,11 +20,16 @@ module Seed
       # @option params [String] :api_key
       #
       # @return [Seed::Auth::Types::TokenResponse]
-      def get_token(request_options: {}, **_params)
+      def get_token(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        headers = {}
+        headers["X-Api-Key"] = params[:api_key] if params[:api_key]
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
+          headers: headers,
           request_options: request_options
         )
         begin
