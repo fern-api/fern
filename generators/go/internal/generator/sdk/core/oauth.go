@@ -5,14 +5,6 @@ import (
 	"time"
 )
 
-const (
-	// expirationBufferMinutes is subtracted from the token expiration time
-	// to ensure we refresh the token before it actually expires.
-	expirationBufferMinutes = 2
-
-	// DefaultExpirySeconds is used when the OAuth response doesn't include an expires_in value.
-	DefaultExpirySeconds = 3600 // 1 hour fallback
-)
 
 // OAuthTokenProvider manages OAuth access tokens, including caching and automatic refresh.
 type OAuthTokenProvider struct {

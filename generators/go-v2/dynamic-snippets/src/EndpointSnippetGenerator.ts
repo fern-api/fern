@@ -335,8 +335,7 @@ export class EndpointSnippetGenerator {
             case "oauth":
                 return values.type === "oauth" ? this.getConstructorOAuthAuthArg({ values }) : TypeInst.nop();
             case "inferred":
-                this.addWarning("The Go SDK Generator does not support Inferred auth scheme yet");
-                return TypeInst.nop();
+                return TypeInst.nop(); // Inferred auth is handled automatically by the client
             default:
                 assertNever(auth);
         }
