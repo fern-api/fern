@@ -22,6 +22,7 @@ module Seed
         #
         # @return [String]
         def test_get(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -50,6 +51,7 @@ module Seed
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_post(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -82,6 +84,7 @@ module Seed
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_put(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
@@ -114,6 +117,7 @@ module Seed
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_patch(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PATCH",
@@ -146,6 +150,7 @@ module Seed
         #
         # @return [Boolean]
         def test_delete(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "DELETE",

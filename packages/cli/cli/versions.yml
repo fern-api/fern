@@ -1,8 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.27.0
+- version: 3.28.0
   changelogEntry:
     - summary: |
         Add `[warning]` and `[error]` labels to each violation message in `fern check` output, making it easier to distinguish between warnings and errors at a glance.
+      type: feat
+  createdAt: "2025-12-18"
+  irVersion: 62
+
+- version: 3.27.0
+  changelogEntry:
+    - summary: |
+        Add `ENDPOINT_SECURITY` value to `AuthSchemesRequirement` enum in the IR. 
+        This allows users to specify that authentication requirements are defined per-endpoint rather than globally. 
+        Users can now use `endpoint-security: {}` in their Fern API definition's `auth` field to indicate that security is configured on individual endpoints via the `security` field.
       type: feat
   createdAt: "2025-12-18"
   irVersion: 62

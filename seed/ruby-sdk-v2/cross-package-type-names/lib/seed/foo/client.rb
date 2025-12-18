@@ -21,10 +21,10 @@ module Seed
       #
       # @return [Seed::Foo::Types::ImportingType]
       def find(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[public_property private_property]
         body_bag = params.slice(*body_prop_names)
 
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
         query_param_names = %i[optional_string]
         query_params = {}
         query_params["optionalString"] = params[:optional_string] if params.key?(:optional_string)

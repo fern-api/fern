@@ -24,6 +24,7 @@ module Seed
       #
       # @return [untyped]
       def boot_instance(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[size]
         body_bag = params.slice(*body_prop_names)
 

@@ -25,10 +25,10 @@ module Seed
       #
       # @return [Object]
       def test_method_name(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[path_param]
         body_params = params.except(*path_param_names)
 
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
         query_param_names = %i[query_param_object query_param_integer]
         query_params = {}
         query_params["query_param_object"] = params[:query_param_object] if params.key?(:query_param_object)
