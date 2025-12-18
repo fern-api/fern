@@ -1,0 +1,27 @@
+openapi: 3.0.3
+info:
+  title: String Request Body API
+  version: 1.0.0
+  description: API to test string request body handling
+paths:
+  /{tenant_id}/didcomm-messages/recv:
+    post:
+      operationId: DidCommMessageRecv
+      summary: Receive DIDComm Message
+      parameters:
+        - name: tenant_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/didcomm-signed+json:
+            schema:
+              type: string
+              format: binary
+              description: Base64-encoded DIDComm signed message
+      responses:
+        '200':
+          description: Message received successfully

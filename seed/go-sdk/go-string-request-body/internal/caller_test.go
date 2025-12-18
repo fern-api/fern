@@ -13,7 +13,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/imdb/fern/inhereplease/core"
+	"github.com/go-string-request-body/fern/core"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

@@ -12,7 +12,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/imdb/fern/core"
+	"github.com/go-string-request-body/fern/core"
 )
 
 const (
