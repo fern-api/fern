@@ -259,7 +259,13 @@ export class SdkGenerator {
         this.context = context;
         this.namespaceExport = namespaceExport;
         this.intermediateRepresentation = intermediateRepresentation;
-        this.config = config;
+
+        // Auto-enable generateEndpointMetadata when ENDPOINT_SECURITY is set
+        // because RoutingAuthProvider requires endpoint metadata to function
+        const generateEndpointMetadata =
+            config.generateEndpointMetadata || intermediateRepresentation.auth.requirement === "ENDPOINT_SECURITY";
+        this.config = { ...config, generateEndpointMetadata };
+
         this.npmPackage = npmPackage;
         this.rawConfig = rawConfig;
         this.generateJestTests = generateJestTests;
