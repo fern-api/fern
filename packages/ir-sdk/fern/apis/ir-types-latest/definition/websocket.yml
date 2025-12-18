@@ -32,6 +32,7 @@ types:
     properties:
       type: WebSocketMessageId
       displayName: optional<string>
+      methodName: optional<string>
       origin: WebSocketMessageOrigin
       body: WebSocketMessageBody
 

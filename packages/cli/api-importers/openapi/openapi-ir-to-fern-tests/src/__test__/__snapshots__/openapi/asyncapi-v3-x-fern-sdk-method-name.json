@@ -1,0 +1,156 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "ServerNotificationPayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "message": {
+                "docs": "Notification message",
+                "type": "string",
+              },
+              "type": {
+                "docs": "Notification type",
+                "type": "ServerNotificationPayloadType",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "ServerNotificationPayloadType": {
+            "docs": "Notification type",
+            "enum": [
+              "info",
+              "warning",
+              "error",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "UserMessagePayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "text": {
+                "docs": "Message text",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  UserMessagePayload:
+    properties:
+      text:
+        type: string
+        docs: Message text
+    source:
+      openapi: ../asyncapi.yml
+  ServerNotificationPayloadType:
+    enum:
+      - info
+      - warning
+      - error
+    docs: Notification type
+    inline: true
+    source:
+      openapi: ../asyncapi.yml
+  ServerNotificationPayload:
+    properties:
+      message:
+        type: string
+        docs: Notification message
+      type:
+        type: ServerNotificationPayloadType
+        docs: Notification type
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+    "chat.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "docs": "Chat channel for testing custom method names",
+          "examples": [
+            {
+              "messages": [],
+            },
+          ],
+          "messages": {
+            "serverNotification": {
+              "body": "root.ServerNotificationPayload",
+              "method-name": "sendMessage",
+              "origin": "server",
+            },
+            "userMessage": {
+              "body": "root.UserMessagePayload",
+              "method-name": "onNotification",
+              "origin": "client",
+            },
+          },
+          "path": "/v1/ws/chat",
+          "url": "production",
+        },
+        "imports": {
+          "root": "__package__.yml",
+        },
+      },
+      "rawContents": "channel:
+  path: /v1/ws/chat
+  url: production
+  auth: false
+  docs: Chat channel for testing custom method names
+  messages:
+    serverNotification:
+      origin: server
+      body: root.ServerNotificationPayload
+      method-name: sendMessage
+    userMessage:
+      origin: client
+      body: root.UserMessagePayload
+      method-name: onNotification
+  examples:
+    - messages: []
+imports:
+  root: __package__.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "production",
+      "default-url": "Base",
+      "environments": {
+        "production": "wss://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "Base",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+environments:
+  production: wss://api.example.com
+default-environment: production
+default-url: Base
+",
+  },
+}
