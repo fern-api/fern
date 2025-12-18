@@ -22,9 +22,10 @@ export async function runContainerizedGenerationForSeed(
 export async function runNativeGenerationForSeed(
     args: GenerationRunner.RunArgs,
     commands: string[],
-    workingDirectory?: string
+    workingDirectory?: string,
+    env?: Record<string, string>
 ): Promise<void> {
-    const executionEnv = new NativeExecutionEnvironment({ commands, workingDirectory });
+    const executionEnv = new NativeExecutionEnvironment({ commands, workingDirectory, env });
     const runner = new GenerationRunner(executionEnv);
     await runner.run(args);
 }
