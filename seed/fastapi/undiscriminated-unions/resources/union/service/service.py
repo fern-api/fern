@@ -91,10 +91,6 @@ class AbstractUnionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get.__globals__)
-
         router.post(
             path="/",
             response_model=MyUnion,
@@ -124,10 +120,6 @@ class AbstractUnionService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_metadata.__globals__)
 
         router.get(
             path="/metadata",
@@ -163,10 +155,6 @@ class AbstractUnionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_metadata.__globals__)
-
         router.put(
             path="/metadata",
             response_model=bool,
@@ -200,10 +188,6 @@ class AbstractUnionService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.call.__globals__)
 
         router.post(
             path="/call",
@@ -239,10 +223,6 @@ class AbstractUnionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.duplicate_types_union.__globals__)
-
         router.post(
             path="/duplicate",
             response_model=UnionWithDuplicateTypes,
@@ -277,10 +257,6 @@ class AbstractUnionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.nested_unions.__globals__)
-
         router.post(
             path="/nested",
             response_model=str,
@@ -314,10 +290,6 @@ class AbstractUnionService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_camel_case_properties.__globals__)
 
         router.post(
             path="/camel-case",

@@ -7,7 +7,7 @@ module Seed
     # @param api_key [String]
     #
     # @return [void]
-    def initialize(base_url:, token: ENV.fetch("MY_TOKEN", nil), api_key: ENV.fetch("MY_API_KEY", nil))
+    def initialize(base_url: nil, token: ENV.fetch("MY_TOKEN", nil), api_key: ENV.fetch("MY_API_KEY", nil))
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {

@@ -43,6 +43,10 @@ func (r *RawClient) BootInstance(
 			"Ec2",
 		),
 		r.baseURL,
+		internal.ResolveEnvironmentBaseURL(
+			r.options.Environment,
+			"Ec2",
+		),
 		"https://ec2.aws.com",
 	)
 	endpointURL := baseURL + "/ec2/boot"

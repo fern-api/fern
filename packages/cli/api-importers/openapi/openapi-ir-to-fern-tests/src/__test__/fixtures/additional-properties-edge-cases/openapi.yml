@@ -100,6 +100,54 @@ paths:
               schema:
                 $ref: "#/components/schemas/ArrayMap"
 
+  /extended-with-any:
+    post:
+      operationId: createExtendedWithAny
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesAny"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesAny"
+
+  /extended-with-typed:
+    post:
+      operationId: createExtendedWithTyped
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesTyped"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesTyped"
+
+  /extended-with-ref:
+    post:
+      operationId: createExtendedWithRef
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesRef"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExtendedWithAdditionalPropertiesRef"
+
 components:
   schemas:
     FlexibleObject:
@@ -157,3 +205,52 @@ components:
         type: array
         items:
           type: string
+
+    BaseObject:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+
+    ExtendedWithAdditionalPropertiesAny:
+      allOf:
+        - $ref: "#/components/schemas/BaseObject"
+        - type: object
+          properties:
+            name:
+              type: string
+          required:
+            - name
+      additionalProperties: true
+
+    ExtendedWithAdditionalPropertiesTyped:
+      allOf:
+        - $ref: "#/components/schemas/BaseObject"
+        - type: object
+          properties:
+            name:
+              type: string
+      additionalProperties:
+        type: string
+
+    ExtendedWithAdditionalPropertiesRef:
+      allOf:
+        - $ref: "#/components/schemas/BaseObject"
+        - type: object
+          properties:
+            primaryUser:
+              $ref: "#/components/schemas/User"
+      additionalProperties:
+        $ref: "#/components/schemas/User"
+
+    ExtendedOnlyRefWithAdditionalProperties:
+      description: "Options with only ref-based inheritance and additionalProperties"
+      type: object
+      additionalProperties: true
+      allOf:
+        - $ref: "#/components/schemas/BaseObject"
