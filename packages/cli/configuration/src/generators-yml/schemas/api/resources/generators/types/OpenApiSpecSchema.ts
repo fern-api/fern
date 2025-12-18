@@ -8,6 +8,7 @@ export interface OpenApiSpecSchema {
     openapi: string;
     origin?: string;
     overrides?: string;
+    overlays?: string;
     namespace?: string;
     settings?: FernDefinition.OpenApiSettingsSchema;
 }
