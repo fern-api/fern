@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.46.5
+- version: 4.46.4-rc2
   changelogEntry:
     - summary: |
         Add sdkVersion as a top-level field in the generated metadata.json file.
