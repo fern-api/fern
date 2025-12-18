@@ -589,31 +589,13 @@ async function checkAndDownloadExistingSdkDynamicIRs({
     );
 
     try {
-        // Use type assertion to call the endpoint that may not exist in older SDK versions.
-        // This endpoint is added in fern-platform PR #6049 and will be available once the SDK is updated.
-        const registerClient = fdr.api.v1.register as unknown as {
-            checkSdkDynamicIrExists?: (request: {
-                orgId: string;
-                snippetConfiguration: Record<string, { packageName: string; version: string }>;
-            }) => Promise<{
-                ok: boolean;
-                body?: { existingDynamicIrs: Record<string, { downloadUrl: string }> };
-                error?: { error: string };
-            }>;
-        };
-
-        if (!registerClient.checkSdkDynamicIrExists) {
-            context.logger.debug("checkSdkDynamicIrExists endpoint not available in current FDR SDK");
-            return undefined;
-        }
-
-        const response = await registerClient.checkSdkDynamicIrExists({
+        const response = await fdr.api.v1.register.checkSdkDynamicIrExists({
             orgId: CjsFdrSdk.OrgId(organization),
             snippetConfiguration: snippetConfigWithVersions
         });
 
         if (!response.ok || !response.body) {
-            context.logger.debug(`Failed to check for existing SDK dynamic IRs: ${response.error?.error ?? "unknown"}`);
+            context.logger.debug(`Failed to check for existing SDK dynamic IRs`);
             return undefined;
         }
 
@@ -625,10 +607,9 @@ async function checkAndDownloadExistingSdkDynamicIRs({
 
         const result: Record<string, DynamicIr> = {};
         for (const [language, sdkDynamicIrDownload] of Object.entries(existingDynamicIrs)) {
-            const downloadInfo = sdkDynamicIrDownload as { downloadUrl: string };
             try {
                 context.logger.debug(`Downloading existing SDK dynamic IR for ${language}...`);
-                const downloadResponse = await fetch(downloadInfo.downloadUrl);
+                const downloadResponse = await fetch(sdkDynamicIrDownload.downloadUrl);
                 if (downloadResponse.ok) {
                     const dynamicIR = (await downloadResponse.json()) as unknown;
                     result[language] = { dynamicIR };
