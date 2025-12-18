@@ -173,6 +173,7 @@ export function convertHttpService({
                             ? AuthSchemesRequirement._visit<Record<string, string[]>[] | undefined>(auth.requirement, {
                                   any: () => auth.schemes.map((scheme) => ({ [scheme.key]: [] })),
                                   all: () => [auth.schemes.reduce((acc, scheme) => ({ ...acc, [scheme.key]: [] }), {})],
+                                  endpointSpecific: () => undefined,
                                   _other: () => undefined
                               })
                             : undefined
