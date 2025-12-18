@@ -4,6 +4,7 @@ from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
+from .client_generator.inferred_auth_token_provider_generator import InferredAuthTokenProviderGenerator
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.raw_client_generator import RawClientGenerator
 from .client_generator.root_client_generator import RootClientGenerator
@@ -201,6 +202,29 @@ class SdkGenerator(AbstractGenerator):
                 generator_exec_wrapper=generator_exec_wrapper,
                 project=project,
                 oauth_scheme=oauth_scheme,
+            )
+
+        maybe_inferred_auth_scheme = next(
+            (scheme for scheme in context.ir.auth.schemes if scheme.get_as_union().type == "inferred"), None
+        )
+        inferred_auth_scheme = (
+            maybe_inferred_auth_scheme.visit(
+                bearer=lambda _: None,
+                basic=lambda _: None,
+                header=lambda _: None,
+                oauth=lambda _: None,
+                inferred=lambda inferred: inferred,
+            )
+            if maybe_inferred_auth_scheme is not None and generator_config.generate_oauth_clients
+            else None
+        )
+        if inferred_auth_scheme is not None:
+            self._generate_inferred_auth_token_provider(
+                context=context,
+                ir=ir,
+                generator_exec_wrapper=generator_exec_wrapper,
+                project=project,
+                inferred_auth_scheme=inferred_auth_scheme,
             )
 
         self._generate_client_wrapper(
@@ -457,6 +481,24 @@ class SdkGenerator(AbstractGenerator):
         OAuthTokenProviderGenerator(
             context=context,
             oauth_scheme=oauth_scheme,
+        ).generate(source_file=source_file)
+        project.write_source_file(source_file=source_file, filepath=filepath)
+
+    def _generate_inferred_auth_token_provider(
+        self,
+        context: SdkGeneratorContext,
+        ir: ir_types.IntermediateRepresentation,
+        generator_exec_wrapper: GeneratorExecWrapper,
+        project: Project,
+        inferred_auth_scheme: ir_types.InferredAuthScheme,
+    ) -> None:
+        filepath = context.get_filepath_for_generated_inferred_auth_token_provider()
+        source_file = context.source_file_factory.create(
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+        )
+        InferredAuthTokenProviderGenerator(
+            context=context,
+            inferred_auth_scheme=inferred_auth_scheme,
         ).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
 
