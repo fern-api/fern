@@ -69,10 +69,6 @@ class AbstractBigunionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get.__globals__)
-
         router.get(
             path="/{id}",
             response_model=BigUnion,
@@ -107,10 +103,6 @@ class AbstractBigunionService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update.__globals__)
-
         router.patch(
             path="/",
             response_model=bool,
@@ -144,10 +136,6 @@ class AbstractBigunionService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_many.__globals__)
 
         router.patch(
             path="/many",

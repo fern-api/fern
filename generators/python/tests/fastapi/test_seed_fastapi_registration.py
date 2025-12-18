@@ -66,11 +66,21 @@ def _instantiate_concrete(abstract_cls: type) -> object:
 
 def test_seed_examples_register_and_openapi_works_and_uses_annotated_body() -> None:
     seed_fastapi_root = _find_seed_fastapi_root()
-    sys.path.insert(0, str(seed_fastapi_root))
-    try:
-        examples_register = typing.cast(typing.Any, importlib.import_module("examples.register"))
+    # The examples seed has multiple configurations in subdirectories; use no-custom-config.
+    # We create a synthetic package so that relative imports inside register.py work.
+    examples_root = seed_fastapi_root / "examples" / "no-custom-config"
+    pkg_name = "_seed_examples_test"
 
-        # Re-exported in examples.register
+    # Create a synthetic parent package pointing to the no-custom-config directory
+    pkg = types.ModuleType(pkg_name)
+    pkg.__path__ = [str(examples_root)]  # type: ignore[attr-defined]
+    pkg.__package__ = pkg_name
+    sys.modules[pkg_name] = pkg
+
+    try:
+        examples_register = typing.cast(typing.Any, importlib.import_module(f"{pkg_name}.register"))
+
+        # Re-exported in register module
         AbstractRootService = typing.cast(type, getattr(examples_register, "AbstractRootService"))
         AbstractFileNotificationServiceService = typing.cast(
             type, getattr(examples_register, "AbstractFileNotificationServiceService")
@@ -124,8 +134,10 @@ def test_seed_examples_register_and_openapi_works_and_uses_annotated_body() -> N
         query_param_names = {p["name"] for p in openapi_params if p["in"] == "query"}
         assert {"shallow", "tag"} <= query_param_names
     finally:
-        # Be a good citizen for other tests
-        sys.path.remove(str(seed_fastapi_root))
+        # Be a good citizen for other tests - remove synthetic package and its submodules
+        to_remove = [key for key in sys.modules if key == pkg_name or key.startswith(f"{pkg_name}.")]
+        for key in to_remove:
+            del sys.modules[key]
 
 
 def test_seed_validation_register_and_openapi_works_and_uses_annotated_query() -> None:

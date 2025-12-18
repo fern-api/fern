@@ -72,13 +72,15 @@ async function getDefaultGeneratorsConfiguration({
     context: TaskContext;
     apiConfiguration?: generatorsYml.ApiConfigurationSchema;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
-    const defaultGeneratorName = "fernapi/fern-typescript-sdk";
-    const fallbackInvocation = GENERATOR_INVOCATIONS[defaultGeneratorName];
+    // Use the full name for lookups, but the shorthand name for the generated config
+    const defaultGeneratorFullName = "fernapi/fern-typescript-sdk";
+    const defaultGeneratorShortName = "fern-typescript-sdk";
+    const fallbackInvocation = GENERATOR_INVOCATIONS[defaultGeneratorFullName];
 
     let version = fallbackInvocation.version;
     const versionFromDB = await getLatestGeneratorVersion({
         cliVersion,
-        generatorName: defaultGeneratorName,
+        generatorName: defaultGeneratorFullName,
         channel: undefined
     });
 
@@ -87,7 +89,7 @@ async function getDefaultGeneratorsConfiguration({
         version = versionFromDB;
     } else {
         context.logger.debug(
-            `Failed to get latest version for ${defaultGeneratorName} that is compatible with CLI ${cliVersion}, falling back to preset version ${version}`
+            `Failed to get latest version for ${defaultGeneratorFullName} that is compatible with CLI ${cliVersion}, falling back to preset version ${version}`
         );
     }
     const config: generatorsYml.GeneratorsConfigurationSchema = {
@@ -96,7 +98,7 @@ async function getDefaultGeneratorsConfiguration({
             [DEFAULT_GROUP_NAME]: {
                 generators: [
                     {
-                        name: defaultGeneratorName,
+                        name: defaultGeneratorShortName,
                         ...fallbackInvocation,
                         version
                     }

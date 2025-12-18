@@ -99,10 +99,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_string.__globals__)
-
         router.post(
             path="/primitive/string",
             response_model=str,
@@ -140,10 +136,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_int.__globals__)
 
         router.post(
             path="/primitive/integer",
@@ -183,10 +175,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_long.__globals__)
-
         router.post(
             path="/primitive/long",
             response_model=int,
@@ -224,10 +212,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_double.__globals__)
 
         router.post(
             path="/primitive/double",
@@ -267,10 +251,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_bool.__globals__)
-
         router.post(
             path="/primitive/boolean",
             response_model=bool,
@@ -308,10 +288,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_datetime.__globals__)
 
         router.post(
             path="/primitive/datetime",
@@ -351,10 +327,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_date.__globals__)
-
         router.post(
             path="/primitive/date",
             response_model=dt.date,
@@ -393,10 +365,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_uuid.__globals__)
-
         router.post(
             path="/primitive/uuid",
             response_model=uuid.UUID,
@@ -434,10 +402,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_base_64.__globals__)
 
         router.post(
             path="/primitive/base64",

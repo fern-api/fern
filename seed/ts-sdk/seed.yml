@@ -278,6 +278,9 @@ fixtures:
     - outputFolder: never-throw-errors
       customConfig:
         neverThrowErrors: true
+  oauth-client-credentials-reference:
+    - outputFolder: .
+      customConfig: null
   mixed-case:
     - outputFolder: no-custom-config
       customConfig: null

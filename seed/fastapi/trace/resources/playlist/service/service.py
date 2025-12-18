@@ -8,7 +8,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -164,10 +163,6 @@ class AbstractPlaylistService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_playlist.__globals__)
-
         router.post(
             path="/v2/playlist/{service_param}/create",
             response_model=Playlist,
@@ -250,10 +245,6 @@ class AbstractPlaylistService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_playlists.__globals__)
-
         router.get(
             path="/v2/playlist/{service_param}/all",
             response_model=typing.Sequence[Playlist],
@@ -304,10 +295,6 @@ class AbstractPlaylistService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_playlist.__globals__)
 
         router.get(
             path="/v2/playlist/{service_param}/{playlist_id}",
@@ -368,10 +355,6 @@ class AbstractPlaylistService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_playlist.__globals__)
-
         router.put(
             path="/v2/playlist/{service_param}/{playlist_id}",
             response_model=typing.Optional[Playlist],
@@ -423,14 +406,10 @@ class AbstractPlaylistService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.delete_playlist.__globals__)
-
         router.delete(
             path="/v2/playlist/{service_param}/{playlist_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractPlaylistService.delete_playlist.__doc__,
             **get_route_args(cls.delete_playlist, default_tag="playlist"),
         )(wrapper)

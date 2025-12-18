@@ -1,4 +1,8 @@
-import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
+import {
+    addDefaultDockerOrgIfNotPresent,
+    generatorsYml,
+    loadGeneratorsConfiguration
+} from "@fern-api/configuration-loader";
 import { assertNever, Values } from "@fern-api/core-utils";
 import { Project } from "@fern-api/project-loader";
 import { writeFile } from "fs/promises";
@@ -56,6 +60,12 @@ export async function getGeneratorList({
                 const apiName = workspace.workspaceName ?? apiKeyFallback;
                 generators[apiName] = {};
 
+                // Normalize the generator filter to add default Docker org prefix if not present
+                const normalizedGeneratorFilter =
+                    generatorFilter != null
+                        ? new Set([...generatorFilter].map(addDefaultDockerOrgIfNotPresent))
+                        : undefined;
+
                 for (const group of generatorsConfiguration.groups) {
                     // If the current group is not in the specified groups, skip it
                     if (groupFilter != null && !groupFilter.has(group.groupName)) {
@@ -76,7 +86,10 @@ export async function getGeneratorList({
 
                             return include;
                         })
-                        .filter((generator) => generatorFilter == null || generatorFilter.has(generator.name))
+                        .filter(
+                            (generator) =>
+                                normalizedGeneratorFilter == null || normalizedGeneratorFilter.has(generator.name)
+                        )
                         .map((generator) => generator.name);
                 }
             });

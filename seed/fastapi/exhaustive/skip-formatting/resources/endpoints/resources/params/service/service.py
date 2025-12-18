@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ......core.abstract_fern_service import AbstractFernService
 from ......core.exceptions.fern_http_exception import FernHTTPException
 from ......core.route_args import get_route_args
@@ -122,10 +121,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_with_path.__globals__)
-        
         router.get(
             path="/params/path/{param}",
             response_model=str,
@@ -159,10 +154,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-        
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_with_inline_path.__globals__)
         
         router.get(
             path="/params/path/{param}",
@@ -200,14 +191,10 @@ class AbstractEndpointsParamsService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_with_query.__globals__)
-        
         router.get(
             path="/params",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractEndpointsParamsService.get_with_query.__doc__,
             **get_route_args(cls.get_with_query, default_tag="endpoints.params"),
         )(wrapper)
@@ -241,14 +228,10 @@ class AbstractEndpointsParamsService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_with_allow_multiple_query.__globals__)
-        
         router.get(
             path="/params",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractEndpointsParamsService.get_with_allow_multiple_query.__doc__,
             **get_route_args(cls.get_with_allow_multiple_query, default_tag="endpoints.params"),
         )(wrapper)
@@ -282,14 +265,10 @@ class AbstractEndpointsParamsService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_with_path_and_query.__globals__)
-        
         router.get(
             path="/params/path-query/{param}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractEndpointsParamsService.get_with_path_and_query.__doc__,
             **get_route_args(cls.get_with_path_and_query, default_tag="endpoints.params"),
         )(wrapper)
@@ -323,14 +302,10 @@ class AbstractEndpointsParamsService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_with_inline_path_and_query.__globals__)
-        
         router.get(
             path="/params/path-query/{param}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractEndpointsParamsService.get_with_inline_path_and_query.__doc__,
             **get_route_args(cls.get_with_inline_path_and_query, default_tag="endpoints.params"),
         )(wrapper)
@@ -363,10 +338,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-        
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.modify_with_path.__globals__)
         
         router.put(
             path="/params/path/{param}",
@@ -403,10 +374,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-        
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.modify_with_inline_path.__globals__)
         
         router.put(
             path="/params/path/{param}",
