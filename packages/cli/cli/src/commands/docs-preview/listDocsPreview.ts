@@ -34,22 +34,27 @@ export async function listDocsPreview({
 
         const fdr = createFdrService({ token: token.value });
 
-        // Use the preview flag to fetch only preview URLs from the server
+        // Fetch all docs URLs and filter for preview URLs client-side
+        // Note: Once FDR SDK is updated with preview filter support, this can be simplified
         const listResponse = await fdr.docs.v2.read.listAllDocsUrls({
             page,
-            limit: limit ?? 100,
-            preview: true
+            limit: limit ?? 100
         });
 
         if (!listResponse.ok) {
             return context.failAndThrow("Failed to fetch docs URLs", listResponse.error);
         }
 
-        const previewDeployments: PreviewDeployment[] = listResponse.body.urls.map((item) => ({
-            url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
-            organizationId: item.organizationId,
-            updatedAt: item.updatedAt
-        }));
+        // Preview URLs match the pattern: {org}-preview-{hash}.docs.buildwithfern.com
+        const previewUrlPattern = /-preview-[a-f0-9]+\.docs\.buildwithfern\.com$/;
+
+        const previewDeployments: PreviewDeployment[] = listResponse.body.urls
+            .filter((item) => previewUrlPattern.test(item.domain))
+            .map((item) => ({
+                url: item.basePath != null ? `${item.domain}${item.basePath}` : item.domain,
+                organizationId: item.organizationId,
+                updatedAt: item.updatedAt
+            }));
 
         if (previewDeployments.length === 0) {
             context.logger.info("No preview deployments found.");
