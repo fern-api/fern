@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.46.5
+  changelogEntry:
+    - summary: |
+        Update to support IR version 62.6.0 with new WebSocketMessage.methodName field,
+        webhook response descriptions, and OpenAPI explode parameter support.
+      type: feat
+  createdAt: "2025-12-18"
+  irVersion: 62
+
 - version: 4.46.4-rc2
   changelogEntry:
     - summary: |

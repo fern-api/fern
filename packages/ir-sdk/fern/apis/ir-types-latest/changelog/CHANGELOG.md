@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v62.6.0] - 2025-12-18
+- Feature: Add optional `methodName` field to `WebSocketMessage` for custom SDK method naming in websocket operations
+- Feature: Support `x-fern-sdk-method-name` extension in AsyncAPI v3 for custom websocket method names
+
+## [v62.5.0] - 2025-12-14
+- Feature: Add optional `docs` field to `HttpResponse` for webhook response descriptions
+- Feature: Enhanced webhook response documentation support from OpenAPI specifications
+
 ## [v62.4.0] - 2025-12-14
 - Feature: Add `explode` field to PathParameter and QueryParameter types for OpenAPI parameter serialization control
 
