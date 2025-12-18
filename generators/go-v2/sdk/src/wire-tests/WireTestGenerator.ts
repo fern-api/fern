@@ -13,7 +13,7 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { convertDynamicEndpointSnippetRequest, EndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
@@ -107,7 +107,7 @@ export class WireTestGenerator {
                             s.endpoints.some((e) => e.id === endpoint.id)
                         );
                         const testId = this.buildDeterministicTestId(service, endpoint, 0);
-                        const snippet = await this.generateSnippetForExample(firstExample, testId);
+                        const snippet = await this.generateSnippetForExample(firstExample);
                         endpointTestCases.set(endpoint.id, { snippet, testId });
                     } catch (error) {
                         this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
@@ -303,16 +303,8 @@ export class WireTestGenerator {
         );
     }
 
-    private async generateSnippetForExample(example: dynamic.EndpointExample, testId: string): Promise<string> {
-        const baseRequest = convertDynamicEndpointSnippetRequest(example);
-        // Add the X-Test-Id header to scope assertions to this specific test
-        const snippetRequest: EndpointSnippetRequest = {
-            ...baseRequest,
-            headers: {
-                ...baseRequest.headers,
-                "X-Test-Id": testId
-            }
-        };
+    private async generateSnippetForExample(example: dynamic.EndpointExample): Promise<string> {
+        const snippetRequest = convertDynamicEndpointSnippetRequest(example);
         const response = await this.dynamicSnippetsGenerator.generate(snippetRequest, {
             config: { outputWiremockTests: true }
         });
@@ -344,7 +336,7 @@ export class WireTestGenerator {
                     body: go.codeblock((writer) => {
                         writer.writeNode(go.codeblock('WireMockBaseURL := "http://localhost:8080"'));
                         writer.newLine();
-                        writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
+                        writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet, testId }));
                         writer.newLine();
                         writer.writeNode(this.callClientMethodAndAssert({ endpoint, snippet, testId }));
                     })
@@ -568,16 +560,46 @@ export class WireTestGenerator {
 
     private constructWiremockTestClient({
         endpoint,
-        snippet
+        snippet,
+        testId
     }: {
         endpoint: HttpEndpoint;
         snippet: string;
+        testId: string;
     }): go.CodeBlock {
         const clientConstructor = this.parseClientConstructor(snippet);
 
+        // Inject the X-Test-Id header into the client constructor using WithHTTPHeader
+        // This allows WireMock to filter requests by test ID for concurrency safety
+        const modifiedConstructor = this.injectTestIdHeader(clientConstructor, testId);
+
         return go.codeblock((writer) => {
-            writer.write(clientConstructor);
+            writer.write(modifiedConstructor);
         });
+    }
+
+    /**
+     * Injects the X-Test-Id header into the client constructor using WithHTTPHeader.
+     * This modifies the client constructor to add the header option before the closing parenthesis.
+     */
+    private injectTestIdHeader(clientConstructor: string, testId: string): string {
+        // Find the last closing parenthesis and inject the header option before it
+        const lastParenIndex = clientConstructor.lastIndexOf(")");
+        if (lastParenIndex === -1) {
+            return clientConstructor;
+        }
+
+        // Check if there are existing options (look for content before the closing paren)
+        const beforeParen = clientConstructor.substring(0, lastParenIndex).trimEnd();
+        const needsComma = beforeParen.length > 0 && !beforeParen.endsWith("(") && !beforeParen.endsWith(",");
+
+        const headerOption = `option.WithHTTPHeader(http.Header{"X-Test-Id": []string{"${testId}"}})`;
+
+        if (needsComma) {
+            return `${beforeParen},\n\t\t${headerOption},\n\t)`;
+        } else {
+            return `${beforeParen}\n\t\t${headerOption},\n\t)`;
+        }
     }
 
     private callClientMethodAndAssert({
