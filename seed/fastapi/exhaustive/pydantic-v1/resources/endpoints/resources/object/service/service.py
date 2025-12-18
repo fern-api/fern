@@ -7,6 +7,8 @@ import logging
 import typing
 
 import fastapi
+import fastapi._compat
+import fastapi.temp_pydantic_v1_params
 from ......core.abstract_fern_service import AbstractFernService
 from ......core.exceptions.fern_http_exception import FernHTTPException
 from ......core.route_args import get_route_args
@@ -77,12 +79,22 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_with_optional_field.__globals__,
+                    cls.get_and_return_with_optional_field.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "auth":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_with_optional_field.__globals__,
+                    cls.get_and_return_with_optional_field.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -119,12 +131,22 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_with_required_field.__globals__,
+                    cls.get_and_return_with_required_field.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "auth":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_with_required_field.__globals__,
+                    cls.get_and_return_with_required_field.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -161,12 +183,22 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_with_map_of_map.__globals__,
+                    cls.get_and_return_with_map_of_map.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "auth":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_with_map_of_map.__globals__,
+                    cls.get_and_return_with_map_of_map.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -201,12 +233,22 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_nested_with_optional_field.__globals__,
+                    cls.get_and_return_nested_with_optional_field.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "auth":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_nested_with_optional_field.__globals__,
+                    cls.get_and_return_nested_with_optional_field.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -243,16 +285,31 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_nested_with_required_field.__globals__,
+                    cls.get_and_return_nested_with_required_field.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "string":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_nested_with_required_field.__globals__,
+                    cls.get_and_return_nested_with_required_field.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Path()])
                 )
             elif parameter_name == "auth":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_nested_with_required_field.__globals__,
+                    cls.get_and_return_nested_with_required_field.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -289,12 +346,22 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_nested_with_required_field_as_list.__globals__,
+                    cls.get_and_return_nested_with_required_field_as_list.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "auth":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_and_return_nested_with_required_field_as_list.__globals__,
+                    cls.get_and_return_nested_with_required_field_as_list.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)

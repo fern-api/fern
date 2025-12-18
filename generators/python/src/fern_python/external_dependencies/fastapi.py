@@ -1,19 +1,196 @@
 from typing import List, Optional, Tuple
 
 from fern_python.codegen import AST
+from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
+
+FASTAPI_DEPENDENCY = AST.Dependency(
+    name="fastapi",
+    version="0.123.5",
+    compatibility=AST.DependencyCompatibility.GREATER_THAN_OR_EQUAL,
+)
 
 FAST_API_MODULE = AST.Module.external(
     module_path=("fastapi",),
-    dependency=AST.Dependency(
-        name="fastapi",
-        version="0.123.5",
-        compatibility=AST.DependencyCompatibility.GREATER_THAN_OR_EQUAL,
-    ),
+    dependency=FASTAPI_DEPENDENCY,
 )
+
+FAST_API_COMPAT_MODULE = AST.Module.external(
+    module_path=("fastapi", "_compat"),
+    dependency=FASTAPI_DEPENDENCY,
+)
+
+
+def _export_compat(*name: str) -> AST.ClassReference:
+    return AST.ClassReference(
+        qualified_name_excluding_import=name, import_=AST.ReferenceImport(module=FAST_API_COMPAT_MODULE)
+    )
+
+
+def _get_fastapi_params_module_path(pydantic_version: PydanticVersionCompatibility) -> tuple[str, ...]:
+    if pydantic_version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2):
+        return ("fastapi", "temp_pydantic_v1_params")
+    return ("fastapi",)
 
 
 def _export(*name: str) -> AST.ClassReference:
     return AST.ClassReference(qualified_name_excluding_import=name, import_=AST.ReferenceImport(module=FAST_API_MODULE))
+
+
+def _export_params(pydantic_version: PydanticVersionCompatibility, *name: str) -> AST.ClassReference:
+    return AST.ClassReference(
+        qualified_name_excluding_import=name,
+        import_=AST.ReferenceImport(
+            module=AST.Module.external(
+                module_path=_get_fastapi_params_module_path(pydantic_version),
+                dependency=FASTAPI_DEPENDENCY,
+            )
+        ),
+    )
+
+
+class FastAPIParams:
+    def __init__(self, pydantic_version: PydanticVersionCompatibility):
+        self._pydantic_version = pydantic_version
+
+    def uses_pydantic_v1_params(self) -> bool:
+        return self._pydantic_version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2)
+
+    def Path(
+        self,
+        *,
+        variable_name: str,
+        wire_value: str,
+        docs: Optional[str],
+    ) -> AST.Expression:
+        kwargs: List[Tuple[str, AST.Expression]] = []
+        if variable_name != wire_value:
+            kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
+        if docs is not None:
+            kwargs.append(
+                (
+                    "description",
+                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n").replace("\r", "\\r") + '"')),
+                )
+            )
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=_export_params(self._pydantic_version, "Path"),
+                kwargs=kwargs,
+            )
+        )
+
+    def Body(self, *, variable_name: Optional[str] = None, wire_value: Optional[str] = None) -> AST.Expression:
+        body_function_definition = _export_params(self._pydantic_version, "Body")
+
+        if variable_name is not None and wire_value is not None and variable_name != wire_value:
+            return AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=body_function_definition,
+                    kwargs=[("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"')))],
+                )
+            )
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=body_function_definition,
+                args=[],
+            )
+        )
+
+    def Header(self, *, wire_value: str) -> AST.Expression:
+        kwargs: List[Tuple[str, AST.Expression]] = []
+        kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=_export_params(self._pydantic_version, "Header"),
+                kwargs=kwargs,
+            )
+        )
+
+    def Query(
+        self,
+        *,
+        variable_name: str,
+        wire_value: str,
+        docs: Optional[str],
+    ) -> AST.Expression:
+        kwargs: List[Tuple[str, AST.Expression]] = []
+        if variable_name != wire_value:
+            kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
+        if docs is not None:
+            kwargs.append(
+                (
+                    "description",
+                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n").replace("\r", "\\r") + '"')),
+                )
+            )
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=_export_params(self._pydantic_version, "Query"),
+                kwargs=kwargs,
+            )
+        )
+
+    def File(
+        self,
+        *,
+        variable_name: str,
+        wire_value: str,
+        docs: Optional[str],
+    ) -> AST.Expression:
+        kwargs: List[Tuple[str, AST.Expression]] = []
+        if variable_name != wire_value:
+            kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
+        if docs is not None:
+            kwargs.append(
+                (
+                    "description",
+                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n").replace("\r", "\\r") + '"')),
+                )
+            )
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=_export_params(self._pydantic_version, "File"),
+                kwargs=kwargs,
+            )
+        )
+
+    def UploadFile(
+        self,
+        *,
+        is_optional: bool,
+        is_list: bool,
+        variable_name: str,
+        wire_value: str,
+        docs: Optional[str],
+    ) -> AST.Expression:
+        kwargs: List[Tuple[str, AST.Expression]] = []
+        if variable_name != wire_value:
+            kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
+        if docs is not None:
+            kwargs.append(
+                (
+                    "description",
+                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n").replace("\r", "\\r") + '"')),
+                )
+            )
+
+        inner_type = FastAPI.UploadFileType(is_optional=is_optional, is_list=is_list)
+
+        return (
+            AST.Expression(inner_type)
+            if len(kwargs) == 0
+            else AST.Expression(
+                AST.TypeHint.annotated(
+                    inner_type,
+                    AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=_export_params(self._pydantic_version, "File"),
+                            kwargs=kwargs,
+                        )
+                    ),
+                )
+            )
+        )
 
 
 class JSONResponse:
@@ -47,6 +224,8 @@ class APIRouter:
 
 class FastAPI:
     FastAPI = AST.TypeHint(type=_export("FastAPI"))
+
+    evaluate_forwardref = _export_compat("evaluate_forwardref")
 
     @staticmethod
     def Path(

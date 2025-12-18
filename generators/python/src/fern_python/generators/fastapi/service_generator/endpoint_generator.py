@@ -223,6 +223,7 @@ class EndpointGenerator:
 
     def _write_update_endpoint_signature(self, writer: AST.NodeWriter) -> None:
         method_on_cls = self._get_reference_to_method_on_cls()
+        uses_pydantic_v1_params = self._context.fastapi_params.uses_pydantic_v1_params()
 
         ENDPOINT_FUNCTION_VARIABLE_NAME = "endpoint_function"
         writer.write(f"{ENDPOINT_FUNCTION_VARIABLE_NAME} = ")
@@ -271,12 +272,26 @@ class EndpointGenerator:
                 writer.write_line(f'elif {PARAMETER_NAME_VARIABLE_NAME} == "{parameter.get_name()}":')
                 with writer.indent():
                     python_default = parameter.get_python_default()
-                    writer.write(f"{NEW_PARAMETERS_VARIABLE_NAME}.append(")
-                    writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(")
-                    writer.write("annotation=typing.Annotated[")
-                    writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.annotation, ")
-                    writer.write_node(parameter.get_fastapi_marker())
-                    writer.write("]")
+                    if uses_pydantic_v1_params:
+                        EVALUATED_VARIABLE_NAME = "evaluated"
+                        writer.write(f"{EVALUATED_VARIABLE_NAME} = ")
+                        writer.write_reference(FastAPI.evaluate_forwardref)
+                        writer.write_line(
+                            f"({PARAMETER_VALUE_VARIABLE_NAME}.annotation, "
+                            + f"{method_on_cls}.__globals__, {method_on_cls}.__globals__)"
+                        )
+                        writer.write(f"{NEW_PARAMETERS_VARIABLE_NAME}.append(")
+                        writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(")
+                        writer.write(f"annotation=typing.Annotated[{EVALUATED_VARIABLE_NAME}, ")
+                        writer.write_node(parameter.get_fastapi_marker())
+                        writer.write("]")
+                    else:
+                        writer.write(f"{NEW_PARAMETERS_VARIABLE_NAME}.append(")
+                        writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.replace(")
+                        writer.write("annotation=typing.Annotated[")
+                        writer.write(f"{PARAMETER_VALUE_VARIABLE_NAME}.annotation, ")
+                        writer.write_node(parameter.get_fastapi_marker())
+                        writer.write("]")
                     if python_default is not None:
                         writer.write(", default=")
                         writer.write_node(python_default)

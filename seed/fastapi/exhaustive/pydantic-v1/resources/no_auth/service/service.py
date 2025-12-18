@@ -7,6 +7,8 @@ import logging
 import typing
 
 import fastapi
+import fastapi._compat
+import fastapi.temp_pydantic_v1_params
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -46,8 +48,11 @@ class AbstractNoAuthService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.post_with_no_auth.__globals__, cls.post_with_no_auth.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             else:
                 new_parameters.append(parameter)
