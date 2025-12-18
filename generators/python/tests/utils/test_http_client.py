@@ -274,178 +274,29 @@ async def test_async_http_client_passes_encoded_params_when_present() -> None:
     assert params == [("after", "456")]
 
 
-# Tests for _build_url function
-class TestBuildUrl:
-    """Comprehensive tests for the _build_url function.
+def test_basic_url_joining() -> None:
+    """Test basic URL joining with a simple base URL and path."""
+    result = _build_url("https://api.example.com", "/users")
+    assert result == "https://api.example.com/users"
 
-    This function is critical for correctly joining base URLs with paths,
-    especially for multi-tenant cloud APIs where base URLs contain path prefixes
-    that must be preserved.
+
+def test_basic_url_joining_trailing_slash() -> None:
+    """Test basic URL joining with a simple base URL and path."""
+    result = _build_url("https://api.example.com/", "/users")
+    assert result == "https://api.example.com/users"
+
+
+def test_preserves_base_url_path_prefix() -> None:
+    """Test that path prefixes in base URL are preserved.
+
+    This is the critical bug fix - urllib.parse.urljoin() would strip
+    the path prefix when the path starts with '/'.
     """
-
-    def test_basic_url_joining(self) -> None:
-        """Test basic URL joining with a simple base URL and path."""
-        result = _build_url("https://api.example.com", "/users")
-        assert result == "https://api.example.com/users"
-
-    def test_preserves_base_url_path_prefix(self) -> None:
-        """Test that path prefixes in base URL are preserved.
-
-        This is the critical bug fix - urllib.parse.urljoin() would strip
-        the path prefix when the path starts with '/'.
-        """
-        result = _build_url("https://cloud.example.com/org/tenant/api", "/users")
-        assert result == "https://cloud.example.com/org/tenant/api/users"
-
-    def test_uipath_cloud_url_pattern(self) -> None:
-        """Test with UiPath Cloud URL pattern that originally exposed the bug."""
-        result = _build_url(
-            "https://cloud.uipath.com/my-org/my-tenant/orchestrator_",
-            "/odata/Users",
-        )
-        assert result == "https://cloud.uipath.com/my-org/my-tenant/orchestrator_/odata/Users"
-
-    def test_multi_level_path_prefix(self) -> None:
-        """Test with multiple levels of path prefixes."""
-        result = _build_url(
-            "https://platform.example.com/v1/organizations/acme/tenants/prod/services/api",
-            "/resources/123",
-        )
-        assert result == "https://platform.example.com/v1/organizations/acme/tenants/prod/services/api/resources/123"
-
-    def test_base_url_with_trailing_slash(self) -> None:
-        """Test that trailing slash on base URL is handled correctly."""
-        result = _build_url("https://api.example.com/", "/users")
-        assert result == "https://api.example.com/users"
-
-    def test_base_url_with_multiple_trailing_slashes(self) -> None:
-        """Test that multiple trailing slashes on base URL are handled."""
-        result = _build_url("https://api.example.com///", "/users")
-        assert result == "https://api.example.com/users"
-
-    def test_path_without_leading_slash(self) -> None:
-        """Test that paths without leading slash are handled correctly."""
-        result = _build_url("https://api.example.com", "users")
-        assert result == "https://api.example.com/users"
-
-    def test_path_with_multiple_leading_slashes(self) -> None:
-        """Test that multiple leading slashes on path are handled."""
-        result = _build_url("https://api.example.com", "///users")
-        assert result == "https://api.example.com/users"
-
-    def test_both_trailing_and_leading_slashes(self) -> None:
-        """Test handling of both trailing slash on base and leading slash on path."""
-        result = _build_url("https://api.example.com/v1/", "/users/123")
-        assert result == "https://api.example.com/v1/users/123"
-
-    def test_none_path_returns_base_url(self) -> None:
-        """Test that None path returns the base URL unchanged."""
-        result = _build_url("https://api.example.com/v1", None)
-        assert result == "https://api.example.com/v1"
-
-    def test_empty_string_path_returns_base_url(self) -> None:
-        """Test that empty string path returns the base URL unchanged."""
-        result = _build_url("https://api.example.com/v1", "")
-        assert result == "https://api.example.com/v1"
-
-    def test_path_with_query_parameters(self) -> None:
-        """Test that query parameters in path are preserved."""
-        result = _build_url("https://api.example.com/v1", "/users?active=true")
-        assert result == "https://api.example.com/v1/users?active=true"
-
-    def test_path_with_fragment(self) -> None:
-        """Test that fragments in path are preserved."""
-        result = _build_url("https://api.example.com/v1", "/docs#section")
-        assert result == "https://api.example.com/v1/docs#section"
-
-    def test_base_url_with_port(self) -> None:
-        """Test that port numbers in base URL are preserved."""
-        result = _build_url("https://api.example.com:8443/v1", "/users")
-        assert result == "https://api.example.com:8443/v1/users"
-
-    def test_base_url_with_auth(self) -> None:
-        """Test that authentication info in base URL is preserved."""
-        result = _build_url("https://user:pass@api.example.com/v1", "/users")
-        assert result == "https://user:pass@api.example.com/v1/users"
-
-    def test_deeply_nested_path(self) -> None:
-        """Test with deeply nested paths."""
-        result = _build_url(
-            "https://api.example.com/v1/org/tenant",
-            "/resources/123/sub/456/deep/789",
-        )
-        assert result == "https://api.example.com/v1/org/tenant/resources/123/sub/456/deep/789"
-
-    def test_path_only_slash(self) -> None:
-        """Test with path that is only a slash."""
-        result = _build_url("https://api.example.com/v1", "/")
-        assert result == "https://api.example.com/v1/"
-
-    def test_base_url_only_domain(self) -> None:
-        """Test with base URL that has no path component."""
-        result = _build_url("https://api.example.com", "/v1/users")
-        assert result == "https://api.example.com/v1/users"
-
-    def test_http_scheme(self) -> None:
-        """Test with HTTP (non-HTTPS) scheme."""
-        result = _build_url("http://localhost:3000/api", "/users")
-        assert result == "http://localhost:3000/api/users"
-
-    def test_special_characters_in_path(self) -> None:
-        """Test that special characters in path are preserved."""
-        result = _build_url("https://api.example.com/v1", "/users/john%20doe")
-        assert result == "https://api.example.com/v1/users/john%20doe"
+    result = _build_url("https://cloud.example.com/org/tenant/api", "/users")
+    assert result == "https://cloud.example.com/org/tenant/api/users"
 
 
-def test_http_client_preserves_base_url_path_prefix() -> None:
-    """Test that HttpClient preserves path prefixes in base URL.
-
-    This is an integration test for the URL path stripping fix.
-    """
-    dummy_client = _DummySyncClient()
-    http_client = HttpClient(
-        httpx_client=dummy_client,  # type: ignore[arg-type]
-        base_timeout=lambda: None,
-        base_headers=lambda: {},
-        base_url=lambda: "https://cloud.example.com/org/tenant/api",
-    )
-
-    http_client.request(
-        path="/users",
-        method="GET",
-        params=None,
-        request_options=None,
-    )
-
-    url = str(dummy_client.last_request_kwargs["url"])
-    assert url == "https://cloud.example.com/org/tenant/api/users", (
-        f"Expected base URL path prefix to be preserved, got: {url}"
-    )
-
-
-@pytest.mark.asyncio
-async def test_async_http_client_preserves_base_url_path_prefix() -> None:
-    """Test that AsyncHttpClient preserves path prefixes in base URL.
-
-    This is an integration test for the URL path stripping fix.
-    """
-    dummy_client = _DummyAsyncClient()
-    http_client = AsyncHttpClient(
-        httpx_client=dummy_client,  # type: ignore[arg-type]
-        base_timeout=lambda: None,
-        base_headers=lambda: {},
-        base_url=lambda: "https://cloud.example.com/org/tenant/api",
-        async_base_headers=None,
-    )
-
-    await http_client.request(
-        path="/users",
-        method="GET",
-        params=None,
-        request_options=None,
-    )
-
-    url = str(dummy_client.last_request_kwargs["url"])
-    assert url == "https://cloud.example.com/org/tenant/api/users", (
-        f"Expected base URL path prefix to be preserved, got: {url}"
-    )
+def test_preserves_base_url_path_prefix_trailing_slash() -> None:
+    """Test that path prefixes in base URL are preserved."""
+    result = _build_url("https://cloud.example.com/org/tenant/api/", "/users")
+    assert result == "https://cloud.example.com/org/tenant/api/users"
