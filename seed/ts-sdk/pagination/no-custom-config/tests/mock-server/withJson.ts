@@ -28,7 +28,9 @@ export function withJson(expectedBody: unknown, resolver: HttpResponseResolver):
         }
 
         const mismatches = findMismatches(actualBody, expectedBody);
-        if (Object.keys(mismatches).filter((key) => !key.startsWith("pagination.")).length > 0) {
+        // Filter out pagination-related fields (e.g., cursor) that change between paginated requests
+        const isPaginationField = (key: string) => key.startsWith("pagination.") || key === "cursor";
+        if (Object.keys(mismatches).filter((key) => !isPaginationField(key)).length > 0) {
             console.error("JSON body mismatch:", toJson(mismatches, undefined, 2));
             return passthrough();
         }

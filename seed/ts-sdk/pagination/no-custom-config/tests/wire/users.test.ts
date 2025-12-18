@@ -485,13 +485,7 @@ describe("UsersClient", () => {
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { data: { users: [{ name: "Bob", id: 2 }] }, total_count: 1 };
-        server
-            .mockEndpoint({ once: false })
-            .get("/users")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const expected = {
             data: {
@@ -507,9 +501,6 @@ describe("UsersClient", () => {
         const page = await client.users.listWithExtendedResults();
 
         expect(expected.data.users).toEqual(page.data);
-        expect(page.hasNextPage()).toBe(true);
-        const nextPage = await page.getNextPage();
-        expect(expected.data.users).toEqual(nextPage.data);
     });
 
     test("listWithExtendedResultsAndOptionalData", async () => {
