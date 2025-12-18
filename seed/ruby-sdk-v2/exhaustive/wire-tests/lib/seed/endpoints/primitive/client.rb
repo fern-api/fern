@@ -21,6 +21,7 @@ module Seed
         #
         # @return [String]
         def get_and_return_string(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -50,6 +51,7 @@ module Seed
         #
         # @return [Integer]
         def get_and_return_int(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -79,6 +81,7 @@ module Seed
         #
         # @return [Integer]
         def get_and_return_long(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -108,6 +111,7 @@ module Seed
         #
         # @return [Integer]
         def get_and_return_double(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -137,6 +141,7 @@ module Seed
         #
         # @return [Boolean]
         def get_and_return_bool(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -166,6 +171,7 @@ module Seed
         #
         # @return [String]
         def get_and_return_datetime(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -195,6 +201,7 @@ module Seed
         #
         # @return [String]
         def get_and_return_date(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -224,6 +231,7 @@ module Seed
         #
         # @return [String]
         def get_and_return_uuid(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -253,6 +261,7 @@ module Seed
         #
         # @return [String]
         def get_and_return_base_64(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
