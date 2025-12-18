@@ -72,10 +72,6 @@ class AbstractOrganizationsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_organization.__globals__)
-
         router.get(
             path="/{tenant_id}/organizations/{organization_id}/",
             response_model=Organization,
@@ -114,10 +110,6 @@ class AbstractOrganizationsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_organization_user.__globals__)
-
         router.get(
             path="/{tenant_id}/organizations/{organization_id}/users/{user_id}",
             response_model=User,
@@ -155,10 +147,6 @@ class AbstractOrganizationsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.search_organizations.__globals__)
 
         router.get(
             path="/{tenant_id}/organizations/{organization_id}/search",

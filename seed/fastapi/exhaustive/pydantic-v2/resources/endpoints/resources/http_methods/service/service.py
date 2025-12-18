@@ -83,10 +83,6 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_get.__globals__)
-
         router.get(
             path="/http-methods/{id}",
             response_model=str,
@@ -124,10 +120,6 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_post.__globals__)
 
         router.post(
             path="/http-methods",
@@ -171,10 +163,6 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_put.__globals__)
-
         router.put(
             path="/http-methods/{id}",
             response_model=ObjectWithOptionalField,
@@ -217,10 +205,6 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_patch.__globals__)
-
         router.patch(
             path="/http-methods/{id}",
             response_model=ObjectWithOptionalField,
@@ -258,10 +242,6 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.test_delete.__globals__)
 
         router.delete(
             path="/http-methods/{id}",

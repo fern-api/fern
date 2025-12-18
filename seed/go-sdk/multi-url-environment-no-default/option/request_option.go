@@ -3,6 +3,7 @@
 package option
 
 import (
+	fern "github.com/multi-url-environment-no-default/fern"
 	core "github.com/multi-url-environment-no-default/fern/core"
 	http "net/http"
 	url "net/url"
@@ -60,6 +61,14 @@ func WithQueryParameters(queryParameters url.Values) *core.QueryParametersOption
 func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 	return &core.MaxAttemptsOption{
 		MaxAttempts: attempts,
+	}
+}
+
+// WithEnvironment sets the environment for the client, which determines
+// the base URL for each endpoint.
+func WithEnvironment(environment fern.Environment) *core.EnvironmentOption {
+	return &core.EnvironmentOption{
+		Environment: environment,
 	}
 }
 

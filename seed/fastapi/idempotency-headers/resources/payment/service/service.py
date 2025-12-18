@@ -8,7 +8,6 @@ import typing
 import uuid
 
 import fastapi
-import starlette
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -72,10 +71,6 @@ class AbstractPaymentService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create.__globals__)
-
         router.post(
             path="/payment",
             response_model=uuid.UUID,
@@ -116,14 +111,10 @@ class AbstractPaymentService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.delete.__globals__)
-
         router.delete(
             path="/payment/{payment_id}",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractPaymentService.delete.__doc__,
             **get_route_args(cls.delete, default_tag="payment"),
         )(wrapper)

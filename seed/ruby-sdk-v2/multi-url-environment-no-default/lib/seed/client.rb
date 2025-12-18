@@ -7,7 +7,7 @@ module Seed
     # @param token [String]
     #
     # @return [void]
-    def initialize(base_url:, token:, environment: nil)
+    def initialize(token:, base_url: nil, environment: nil)
       @base_url = base_url
       @environment = environment
 

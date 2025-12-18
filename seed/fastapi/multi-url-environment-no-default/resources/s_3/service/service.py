@@ -66,10 +66,6 @@ class AbstractS3Service(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_presigned_url.__globals__)
-
         router.post(
             path="/s3/presigned-url",
             response_model=str,

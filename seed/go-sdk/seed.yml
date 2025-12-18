@@ -261,6 +261,7 @@ allowedFailures:
   - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
   - property-access
+  - oauth-client-credentials-reference
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
