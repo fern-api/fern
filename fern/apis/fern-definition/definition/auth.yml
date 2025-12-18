@@ -34,7 +34,7 @@ types:
     extends:
       - commons.WithDocsSchema
     properties:
-      endpoint-security: 
+      endpoint-security:
         type: EndpointSecuritySchemaDetails
         docs: Indicates that authentication requirements are defined per-endpoint via the `security` field.
 
