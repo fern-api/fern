@@ -28,14 +28,15 @@ export async function validateWorkspaces({
     let docsResult: DocsValidationResult | undefined;
     let hasAnyErrors = false;
 
-    // Collect docs violations first (using runTask to get a proper TaskContext)
+    // Collect docs violations first (using runTaskForWorkspace to preserve [docs]: prefix for fatal errors)
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
         const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
         const ossWorkspaces = await filterOssWorkspaces(project);
 
-        const collected = await cliContext.runTask(async (context) => {
-            return collectDocsWorkspaceViolations({
+        let collected: Awaited<ReturnType<typeof collectDocsWorkspaceViolations>> | undefined;
+        await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+            collected = await collectDocsWorkspaceViolations({
                 workspace: docsWorkspace,
                 context,
                 apiWorkspaces: project.apiWorkspaces,
@@ -45,17 +46,19 @@ export async function validateWorkspaces({
             });
         });
 
-        docsResult = {
-            violations: collected.violations,
-            elapsedMillis: collected.elapsedMillis
-        };
+        if (collected != null) {
+            docsResult = {
+                violations: collected.violations,
+                elapsedMillis: collected.elapsedMillis
+            };
 
-        if (collected.hasErrors) {
-            hasAnyErrors = true;
+            if (collected.hasErrors) {
+                hasAnyErrors = true;
+            }
         }
     }
 
-    // Collect API violations (using runTask to get a proper TaskContext)
+    // Collect API violations (using runTaskForWorkspace to preserve [api]: prefix for fatal errors)
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             if (workspace.generatorsConfiguration?.groups.length === 0 && workspace.type !== "fern") {
@@ -64,7 +67,7 @@ export async function validateWorkspaces({
 
             if (workspace instanceof OSSWorkspace && directFromOpenapi) {
                 // For --from-openapi, run IR generation which logs its own errors
-                await cliContext.runTask(async (context) => {
+                await cliContext.runTaskForWorkspace(workspace, async (context) => {
                     await workspace.getIntermediateRepresentation({
                         context,
                         audiences: { type: "all" },
@@ -76,23 +79,26 @@ export async function validateWorkspaces({
                 return;
             }
 
-            const collected = await cliContext.runTask(async (context) => {
+            let collected: Awaited<ReturnType<typeof collectAPIWorkspaceViolations>> | undefined;
+            await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
-                return collectAPIWorkspaceViolations({
+                collected = await collectAPIWorkspaceViolations({
                     workspace: fernWorkspace,
                     context,
                     ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
                 });
             });
 
-            apiResults.push({
-                apiName: collected.apiName,
-                violations: collected.violations,
-                elapsedMillis: collected.elapsedMillis
-            });
+            if (collected != null) {
+                apiResults.push({
+                    apiName: collected.apiName,
+                    violations: collected.violations,
+                    elapsedMillis: collected.elapsedMillis
+                });
 
-            if (collected.hasErrors) {
-                hasAnyErrors = true;
+                if (collected.hasErrors) {
+                    hasAnyErrors = true;
+                }
             }
         })
     );
