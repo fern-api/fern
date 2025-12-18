@@ -1200,18 +1200,14 @@ describe("${serviceName}", () => {
             endpoint.pagination !== undefined &&
             isPaginationResultsPathMissingInExample({
                 example,
-                endpoint,
-                retainOriginalCasing: context.retainOriginalCasing,
-                includeSerdeLayer: context.includeSerdeLayer
+                endpoint
             });
 
         const isCursorMissing =
             endpoint.pagination !== undefined &&
             isPaginationCursorMissingInExample({
                 example,
-                endpoint,
-                retainOriginalCasing: context.retainOriginalCasing,
-                includeSerdeLayer: context.includeSerdeLayer
+                endpoint
             });
 
         // If cursor is missing, we won't be making getNextPage() calls, so don't need { once: false }
@@ -1901,14 +1897,10 @@ function getResponseBodyJsonExample(response: ExampleResponse): unknown | undefi
 
 function isPaginationResultsPathMissingInExample({
     example,
-    endpoint,
-    retainOriginalCasing,
-    includeSerdeLayer
+    endpoint
 }: {
     example: ExampleEndpointCall;
     endpoint: HttpEndpoint;
-    retainOriginalCasing: boolean;
-    includeSerdeLayer: boolean;
 }): boolean {
     const pagination = endpoint.pagination;
     if (pagination == null || pagination.results == null) {
@@ -1923,14 +1915,12 @@ function isPaginationResultsPathMissingInExample({
     const resultsProperty = pagination.results;
 
     // Build the path segments using wire values for JSON walking
-    // When retainOriginalCasing is true or includeSerdeLayer is false, use wire values
-    // Otherwise use camelCase names (which match the serialized JSON)
-    const useWireValue = retainOriginalCasing || !includeSerdeLayer;
+    // JSON examples from IR are always in wire format (snake_case), so we must
+    // always use wire values to walk the JSON regardless of retainOriginalCasing
+    // or includeSerdeLayer settings (those affect generated code, not example JSON)
     const segments = [
-        ...(resultsProperty.propertyPath ?? []).map((item) =>
-            useWireValue ? item.name.originalName : item.name.camelCase.safeName
-        ),
-        useWireValue ? resultsProperty.property.name.wireValue : resultsProperty.property.name.name.camelCase.safeName
+        ...(resultsProperty.propertyPath ?? []).map((item) => item.name.originalName),
+        resultsProperty.property.name.wireValue
     ];
 
     let cursor: unknown = responseJson;
@@ -1953,14 +1943,10 @@ function isPaginationResultsPathMissingInExample({
  */
 function isPaginationCursorMissingInExample({
     example,
-    endpoint,
-    retainOriginalCasing,
-    includeSerdeLayer
+    endpoint
 }: {
     example: ExampleEndpointCall;
     endpoint: HttpEndpoint;
-    retainOriginalCasing: boolean;
-    includeSerdeLayer: boolean;
 }): boolean {
     const pagination = endpoint.pagination;
     if (pagination == null) {
@@ -1991,12 +1977,13 @@ function isPaginationCursorMissingInExample({
         return true;
     }
 
-    const useWireValue = retainOriginalCasing || !includeSerdeLayer;
+    // Build the path segments using wire values for JSON walking
+    // JSON examples from IR are always in wire format (snake_case), so we must
+    // always use wire values to walk the JSON regardless of retainOriginalCasing
+    // or includeSerdeLayer settings (those affect generated code, not example JSON)
     const segments = [
-        ...(cursorProperty.propertyPath ?? []).map((item) =>
-            useWireValue ? item.name.originalName : item.name.camelCase.safeName
-        ),
-        useWireValue ? cursorProperty.property.name.wireValue : cursorProperty.property.name.name.camelCase.safeName
+        ...(cursorProperty.propertyPath ?? []).map((item) => item.name.originalName),
+        cursorProperty.property.name.wireValue
     ];
 
     let cursor: unknown = responseJson;
