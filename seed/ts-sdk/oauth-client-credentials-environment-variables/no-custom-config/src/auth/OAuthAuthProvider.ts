@@ -122,8 +122,8 @@ export namespace OAuthAuthProvider {
 
     export namespace AuthOptions {
         export interface ClientCredentials {
-            clientId: core.Supplier<string> | undefined;
-            clientSecret: core.Supplier<string> | undefined;
+            clientId?: core.Supplier<string> | undefined;
+            clientSecret?: core.Supplier<string> | undefined;
         }
 
         export interface TokenOverride {

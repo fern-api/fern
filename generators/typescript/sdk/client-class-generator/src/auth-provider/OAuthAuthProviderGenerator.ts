@@ -835,8 +835,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                             name: "ClientCredentials",
                             isExported: true,
                             properties: [
-                                { name: "clientId", type: clientIdType },
-                                { name: "clientSecret", type: clientSecretType }
+                                { name: "clientId", type: clientIdType, hasQuestionToken: clientIdIsOptional },
+                                { name: "clientSecret", type: clientSecretType, hasQuestionToken: clientSecretIsOptional }
                             ]
                         },
                         {
