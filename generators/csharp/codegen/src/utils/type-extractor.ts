@@ -28,17 +28,18 @@ type UnwrapArray<T> = T extends Array<infer U> ? U : T extends ReadonlyArray<inf
 type IsArray<T> = T extends Array<unknown> | ReadonlyArray<unknown> ? true : false;
 
 // Extract element types from built-in containers
-type UnwrapContainer<T> = T extends Map<unknown, infer V>
-    ? V
-    : T extends Set<infer U>
-      ? U
-      : T extends WeakMap<object, infer V>
+type UnwrapContainer<T> =
+    T extends Map<unknown, infer V>
         ? V
-        : T extends WeakSet<infer U>
+        : T extends Set<infer U>
           ? U
-          : T extends Promise<infer U>
-            ? U
-            : never;
+          : T extends WeakMap<object, infer V>
+            ? V
+            : T extends WeakSet<infer U>
+              ? U
+              : T extends Promise<infer U>
+                ? U
+                : never;
 
 // Check if a type is a built-in container (Map, Set, etc.)
 type IsBuiltInContainer<T> = T extends
@@ -54,41 +55,44 @@ type IsBuiltInContainer<T> = T extends
 type IsBuiltInObject<T> = T extends Date | RegExp | Error ? true : false;
 
 // Check if a type is a Record (generic object with string/number keys)
-type IsRecord<T> = T extends Record<string, unknown>
-    ? string extends keyof T
-        ? true
-        : T extends Record<number, unknown>
-          ? number extends keyof T
-              ? true
+type IsRecord<T> =
+    T extends Record<string, unknown>
+        ? string extends keyof T
+            ? true
+            : T extends Record<number, unknown>
+              ? number extends keyof T
+                  ? true
+                  : false
               : false
-          : false
-    : false;
-
-// Check if we should stop recursion (don't traverse into this type)
-type ShouldStopRecursion<T> = IsPrimitive<T> extends true
-    ? true
-    : IsFunction<T> extends true
-      ? true
-      : IsBuiltInObject<T> extends true
-        ? true
         : false;
 
-// Check if we should include this type in the result
-type ShouldIncludeType<T> = IsPrimitive<T> extends true
-    ? false
-    : IsFunction<T> extends true
-      ? false
-      : IsArray<T> extends true
-        ? false
-        : IsBuiltInContainer<T> extends true
-          ? false
+// Check if we should stop recursion (don't traverse into this type)
+type ShouldStopRecursion<T> =
+    IsPrimitive<T> extends true
+        ? true
+        : IsFunction<T> extends true
+          ? true
           : IsBuiltInObject<T> extends true
+            ? true
+            : false;
+
+// Check if we should include this type in the result
+type ShouldIncludeType<T> =
+    IsPrimitive<T> extends true
+        ? false
+        : IsFunction<T> extends true
+          ? false
+          : IsArray<T> extends true
             ? false
-            : IsRecord<T> extends true
+            : IsBuiltInContainer<T> extends true
               ? false
-              : T extends object
-                ? true
-                : false;
+              : IsBuiltInObject<T> extends true
+                ? false
+                : IsRecord<T> extends true
+                  ? false
+                  : T extends object
+                    ? true
+                    : false;
 
 // Depth counter helper
 type Prev = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...0[]];
