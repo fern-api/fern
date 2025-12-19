@@ -361,6 +361,26 @@ class SdkGenerator(AbstractGenerator):
                 ir=ir,
             )
 
+        # Warn about positional_single_property_constructors if enabled
+        if custom_config.pydantic_config.positional_single_property_constructors:
+            warning_message = (
+                "\x1b[31;1m"  # Bold red
+                "WARNING: positional_single_property_constructors is enabled. "
+                "This allows Wrapper('value') syntax for single-required-field models, but if the model "
+                "later adds another required field, the positional __init__ will no longer be generated, "
+                "causing runtime failures for existing code. Use keyword arguments (Wrapper(field='value')) "
+                "for long-term stability."
+                "\x1b[0m"  # Reset
+            )
+            generator_exec_wrapper.send_update(
+                GeneratorUpdate.factory.log(
+                    LogUpdate(
+                        level=LogLevel.WARN,
+                        message=warning_message,
+                    )
+                )
+            )
+
     def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:
         # Finally, run the python-v2 generator.
         pythonv2 = PythonV2Generator(
