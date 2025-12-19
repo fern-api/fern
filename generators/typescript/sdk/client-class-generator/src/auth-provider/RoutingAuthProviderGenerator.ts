@@ -126,14 +126,19 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
                     if (context.generateOAuthClients) {
                         // Wrap OAuth options under camelCased scheme key to avoid conflicts
                         const wrapperName = camelCase(authScheme.key);
-                        nestedAuthOptionsTypes.push(`{ ${wrapperName}?: ${OAuthAuthProviderGenerator.CLASS_NAME}.AuthOptions }`);
+                        nestedAuthOptionsTypes.push(
+                            `{ ${wrapperName}?: ${OAuthAuthProviderGenerator.CLASS_NAME}.AuthOptions }`
+                        );
                     }
                     break;
-                case "inferred":
+                case "inferred": {
                     // Wrap Inferred options under camelCased scheme key to avoid conflicts
                     const wrapperName = camelCase(authScheme.key);
-                    nestedAuthOptionsTypes.push(`{ ${wrapperName}?: ${InferredAuthProviderGenerator.CLASS_NAME}.AuthOptions }`);
+                    nestedAuthOptionsTypes.push(
+                        `{ ${wrapperName}?: ${InferredAuthProviderGenerator.CLASS_NAME}.AuthOptions }`
+                    );
                     break;
+                }
             }
         }
 
