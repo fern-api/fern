@@ -65,9 +65,6 @@ func TestImdbCreateMovieWithWireMock(
 		option.WithBaseURL(
 			WireMockBaseURL,
 		),
-		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestImdbCreateMovieWithWireMock"}},
-		),
 	)
 	request := &testPackageName.CreateMovieRequest{
 		Title:  "title",
@@ -76,6 +73,9 @@ func TestImdbCreateMovieWithWireMock(
 	_, invocationErr := client.Imdb.CreateMovie(
 		context.TODO(),
 		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestImdbCreateMovieWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
@@ -90,13 +90,13 @@ func TestImdbGetMovieWithWireMock(
 		option.WithBaseURL(
 			WireMockBaseURL,
 		),
-		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestImdbGetMovieWithWireMock"}},
-		),
 	)
 	_, invocationErr := client.Imdb.GetMovie(
 		context.TODO(),
 		"movieId",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestImdbGetMovieWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
