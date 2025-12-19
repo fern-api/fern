@@ -77,7 +77,6 @@ class AbstractEndpointsPutService(AbstractFernService):
 
         router.put(
             path="/{id}",
-            response_model=PutResponse,
             description=AbstractEndpointsPutService.add.__doc__,
             **get_route_args(cls.add, default_tag="endpoints.put"),
         )(wrapper)

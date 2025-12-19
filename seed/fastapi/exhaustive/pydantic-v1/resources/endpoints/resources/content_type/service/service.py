@@ -88,7 +88,6 @@ class AbstractEndpointsContentTypeService(AbstractFernService):
 
         router.post(
             path="/foo/bar",
-            response_model=None,
             status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractEndpointsContentTypeService.post_json_patch_content_type.__doc__,
             **get_route_args(cls.post_json_patch_content_type, default_tag="endpoints.content_type"),
@@ -145,7 +144,6 @@ class AbstractEndpointsContentTypeService(AbstractFernService):
 
         router.post(
             path="/foo/baz",
-            response_model=None,
             status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractEndpointsContentTypeService.post_json_patch_content_with_charset_type.__doc__,
             **get_route_args(cls.post_json_patch_content_with_charset_type, default_tag="endpoints.content_type"),

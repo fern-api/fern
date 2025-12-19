@@ -113,7 +113,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/string",
-            response_model=str,
             description=AbstractEndpointsPrimitiveService.get_and_return_string.__doc__,
             **get_route_args(cls.get_and_return_string, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -153,7 +152,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/integer",
-            response_model=int,
             description=AbstractEndpointsPrimitiveService.get_and_return_int.__doc__,
             **get_route_args(cls.get_and_return_int, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -193,7 +191,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/long",
-            response_model=int,
             description=AbstractEndpointsPrimitiveService.get_and_return_long.__doc__,
             **get_route_args(cls.get_and_return_long, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -233,7 +230,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/double",
-            response_model=float,
             description=AbstractEndpointsPrimitiveService.get_and_return_double.__doc__,
             **get_route_args(cls.get_and_return_double, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -273,7 +269,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/boolean",
-            response_model=bool,
             description=AbstractEndpointsPrimitiveService.get_and_return_bool.__doc__,
             **get_route_args(cls.get_and_return_bool, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -313,7 +308,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/datetime",
-            response_model=dt.datetime,
             description=AbstractEndpointsPrimitiveService.get_and_return_datetime.__doc__,
             **get_route_args(cls.get_and_return_datetime, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -353,7 +347,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/date",
-            response_model=dt.date,
             description=AbstractEndpointsPrimitiveService.get_and_return_date.__doc__,
             **get_route_args(cls.get_and_return_date, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -393,7 +386,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/uuid",
-            response_model=uuid.UUID,
             description=AbstractEndpointsPrimitiveService.get_and_return_uuid.__doc__,
             **get_route_args(cls.get_and_return_uuid, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -433,7 +425,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/base64",
-            response_model=str,
             description=AbstractEndpointsPrimitiveService.get_and_return_base_64.__doc__,
             **get_route_args(cls.get_and_return_base_64, default_tag="endpoints.primitive"),
         )(wrapper)

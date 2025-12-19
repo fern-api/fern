@@ -79,7 +79,6 @@ class AbstractInlinedRequestsService(AbstractFernService):
 
         router.post(
             path="/req-bodies/object",
-            response_model=ObjectWithOptionalField,
             description=AbstractInlinedRequestsService.post_with_object_bodyand_response.__doc__,
             **get_route_args(cls.post_with_object_bodyand_response, default_tag="inlined_requests"),
         )(wrapper)

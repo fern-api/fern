@@ -130,7 +130,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
         
         router.get(
             path="/params/path/{param}",
-            response_model=str,
             description=AbstractEndpointsParamsService.get_with_path.__doc__,
             **get_route_args(cls.get_with_path, default_tag="endpoints.params"),
         )(wrapper)
@@ -170,7 +169,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
         
         router.get(
             path="/params/path/{param}",
-            response_model=str,
             description=AbstractEndpointsParamsService.get_with_inline_path.__doc__,
             **get_route_args(cls.get_with_inline_path, default_tag="endpoints.params"),
         )(wrapper)
@@ -215,7 +213,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
         
         router.get(
             path="/params",
-            response_model=None,
             status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractEndpointsParamsService.get_with_query.__doc__,
             **get_route_args(cls.get_with_query, default_tag="endpoints.params"),
@@ -261,7 +258,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
         
         router.get(
             path="/params",
-            response_model=None,
             status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractEndpointsParamsService.get_with_allow_multiple_query.__doc__,
             **get_route_args(cls.get_with_allow_multiple_query, default_tag="endpoints.params"),
@@ -307,7 +303,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
         
         router.get(
             path="/params/path-query/{param}",
-            response_model=None,
             status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractEndpointsParamsService.get_with_path_and_query.__doc__,
             **get_route_args(cls.get_with_path_and_query, default_tag="endpoints.params"),
@@ -353,7 +348,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
         
         router.get(
             path="/params/path-query/{param}",
-            response_model=None,
             status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractEndpointsParamsService.get_with_inline_path_and_query.__doc__,
             **get_route_args(cls.get_with_inline_path_and_query, default_tag="endpoints.params"),
@@ -399,7 +393,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
         
         router.put(
             path="/params/path/{param}",
-            response_model=str,
             description=AbstractEndpointsParamsService.modify_with_path.__doc__,
             **get_route_args(cls.modify_with_path, default_tag="endpoints.params"),
         )(wrapper)
@@ -444,7 +437,6 @@ class AbstractEndpointsParamsService(AbstractFernService):
         
         router.put(
             path="/params/path/{param}",
-            response_model=str,
             description=AbstractEndpointsParamsService.modify_with_inline_path.__doc__,
             **get_route_args(cls.modify_with_inline_path, default_tag="endpoints.params"),
         )(wrapper)

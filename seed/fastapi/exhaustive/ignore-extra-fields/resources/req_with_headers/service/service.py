@@ -87,7 +87,6 @@ class AbstractReqWithHeadersService(AbstractFernService):
 
         router.post(
             path="/test-headers/custom-header",
-            response_model=None,
             status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractReqWithHeadersService.get_with_custom_header.__doc__,
             **get_route_args(cls.get_with_custom_header, default_tag="req_with_headers"),

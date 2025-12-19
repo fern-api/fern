@@ -188,17 +188,16 @@ class EndpointGenerator:
             with writer.indent():
                 writer.write_line(f'path="{self._get_endpoint_path()}",')
 
-                # Void responses make more sense as response_class, but keeping as response_model to not modify existing users
+                # Only specify response_class for non-pydantic models (file downloads, bytes)
+                # For pydantic models, FastAPI infers response_model from the return type annotation
+                # See: https://docs.astral.sh/ruff/rules/fast-api-redundant-response-model/
                 if not self._get_is_return_type_pydantic_model():
                     writer.write("response_class=")
-                else:
-                    writer.write("response_model=")
-
-                if self._endpoint.response is not None:
-                    writer.write_node(self._get_return_type())
-                else:
-                    writer.write("None")
-                writer.write_line(",")
+                    if self._endpoint.response is not None:
+                        writer.write_node(self._get_return_type())
+                    else:
+                        writer.write("None")
+                    writer.write_line(",")
 
                 if self._endpoint.response is None or self._endpoint.response.body is None:
                     writer.write("status_code=")

@@ -76,7 +76,6 @@ class AbstractNoReqBodyService(AbstractFernService):
 
         router.get(
             path="/no-req-body",
-            response_model=ObjectWithOptionalField,
             description=AbstractNoReqBodyService.get_with_no_request_body.__doc__,
             **get_route_args(cls.get_with_no_request_body, default_tag="no_req_body"),
         )(wrapper)
@@ -117,7 +116,6 @@ class AbstractNoReqBodyService(AbstractFernService):
 
         router.post(
             path="/no-req-body",
-            response_model=str,
             description=AbstractNoReqBodyService.post_with_no_request_body.__doc__,
             **get_route_args(cls.post_with_no_request_body, default_tag="no_req_body"),
         )(wrapper)

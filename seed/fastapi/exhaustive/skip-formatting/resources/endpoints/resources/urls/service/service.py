@@ -81,7 +81,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
         
         router.get(
             path="/urls/MixedCase",
-            response_model=str,
             description=AbstractEndpointsUrlsService.with_mixed_case.__doc__,
             **get_route_args(cls.with_mixed_case, default_tag="endpoints.urls"),
         )(wrapper)
@@ -116,7 +115,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
         
         router.get(
             path="/urls/no-ending-slash",
-            response_model=str,
             description=AbstractEndpointsUrlsService.no_ending_slash.__doc__,
             **get_route_args(cls.no_ending_slash, default_tag="endpoints.urls"),
         )(wrapper)
@@ -151,7 +149,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
         
         router.get(
             path="/urls/with-ending-slash/",
-            response_model=str,
             description=AbstractEndpointsUrlsService.with_ending_slash.__doc__,
             **get_route_args(cls.with_ending_slash, default_tag="endpoints.urls"),
         )(wrapper)
@@ -186,7 +183,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
         
         router.get(
             path="/urls/with_underscores",
-            response_model=str,
             description=AbstractEndpointsUrlsService.with_underscores.__doc__,
             **get_route_args(cls.with_underscores, default_tag="endpoints.urls"),
         )(wrapper)

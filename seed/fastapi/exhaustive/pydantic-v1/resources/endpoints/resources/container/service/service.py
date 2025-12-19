@@ -120,7 +120,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/list-of-primitives",
-            response_model=typing.Sequence[str],
             description=AbstractEndpointsContainerService.get_and_return_list_of_primitives.__doc__,
             **get_route_args(cls.get_and_return_list_of_primitives, default_tag="endpoints.container"),
         )(wrapper)
@@ -174,7 +173,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/list-of-objects",
-            response_model=typing.Sequence[ObjectWithRequiredField],
             description=AbstractEndpointsContainerService.get_and_return_list_of_objects.__doc__,
             **get_route_args(cls.get_and_return_list_of_objects, default_tag="endpoints.container"),
         )(wrapper)
@@ -228,7 +226,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/set-of-primitives",
-            response_model=typing.Set[str],
             description=AbstractEndpointsContainerService.get_and_return_set_of_primitives.__doc__,
             **get_route_args(cls.get_and_return_set_of_primitives, default_tag="endpoints.container"),
         )(wrapper)
@@ -282,7 +279,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/set-of-objects",
-            response_model=typing.Sequence[ObjectWithRequiredField],
             description=AbstractEndpointsContainerService.get_and_return_set_of_objects.__doc__,
             **get_route_args(cls.get_and_return_set_of_objects, default_tag="endpoints.container"),
         )(wrapper)
@@ -336,7 +332,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/map-prim-to-prim",
-            response_model=typing.Dict[str, str],
             description=AbstractEndpointsContainerService.get_and_return_map_prim_to_prim.__doc__,
             **get_route_args(cls.get_and_return_map_prim_to_prim, default_tag="endpoints.container"),
         )(wrapper)
@@ -392,7 +387,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/map-prim-to-object",
-            response_model=typing.Dict[str, ObjectWithRequiredField],
             description=AbstractEndpointsContainerService.get_and_return_map_of_prim_to_object.__doc__,
             **get_route_args(cls.get_and_return_map_of_prim_to_object, default_tag="endpoints.container"),
         )(wrapper)
@@ -444,7 +438,6 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/opt-objects",
-            response_model=typing.Optional[ObjectWithRequiredField],
             description=AbstractEndpointsContainerService.get_and_return_optional.__doc__,
             **get_route_args(cls.get_and_return_optional, default_tag="endpoints.container"),
         )(wrapper)

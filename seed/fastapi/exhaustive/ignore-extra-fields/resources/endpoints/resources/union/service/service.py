@@ -77,7 +77,6 @@ class AbstractEndpointsUnionService(AbstractFernService):
 
         router.post(
             path="/union",
-            response_model=Animal,
             description=AbstractEndpointsUnionService.get_and_return_union.__doc__,
             **get_route_args(cls.get_and_return_union, default_tag="endpoints.union"),
         )(wrapper)

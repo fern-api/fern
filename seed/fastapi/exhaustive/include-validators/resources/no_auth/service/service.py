@@ -73,7 +73,6 @@ class AbstractNoAuthService(AbstractFernService):
 
         router.post(
             path="/no-auth",
-            response_model=bool,
             description=AbstractNoAuthService.post_with_no_auth.__doc__,
             **get_route_args(cls.post_with_no_auth, default_tag="no_auth"),
         )(wrapper)

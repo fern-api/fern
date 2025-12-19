@@ -101,7 +101,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
         
         router.post(
             path="/object/get-and-return-with-optional-field",
-            response_model=ObjectWithOptionalField,
             description=AbstractEndpointsObjectService.get_and_return_with_optional_field.__doc__,
             **get_route_args(cls.get_and_return_with_optional_field, default_tag="endpoints.object"),
         )(wrapper)
@@ -141,7 +140,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
         
         router.post(
             path="/object/get-and-return-with-required-field",
-            response_model=ObjectWithRequiredField,
             description=AbstractEndpointsObjectService.get_and_return_with_required_field.__doc__,
             **get_route_args(cls.get_and_return_with_required_field, default_tag="endpoints.object"),
         )(wrapper)
@@ -181,7 +179,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
         
         router.post(
             path="/object/get-and-return-with-map-of-map",
-            response_model=ObjectWithMapOfMap,
             description=AbstractEndpointsObjectService.get_and_return_with_map_of_map.__doc__,
             **get_route_args(cls.get_and_return_with_map_of_map, default_tag="endpoints.object"),
         )(wrapper)
@@ -221,7 +218,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
         
         router.post(
             path="/object/get-and-return-nested-with-optional-field",
-            response_model=NestedObjectWithOptionalField,
             description=AbstractEndpointsObjectService.get_and_return_nested_with_optional_field.__doc__,
             **get_route_args(cls.get_and_return_nested_with_optional_field, default_tag="endpoints.object"),
         )(wrapper)
@@ -266,7 +262,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
         
         router.post(
             path="/object/get-and-return-nested-with-required-field/{string}",
-            response_model=NestedObjectWithRequiredField,
             description=AbstractEndpointsObjectService.get_and_return_nested_with_required_field.__doc__,
             **get_route_args(cls.get_and_return_nested_with_required_field, default_tag="endpoints.object"),
         )(wrapper)
@@ -306,7 +301,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
         
         router.post(
             path="/object/get-and-return-nested-with-required-field-list",
-            response_model=NestedObjectWithRequiredField,
             description=AbstractEndpointsObjectService.get_and_return_nested_with_required_field_as_list.__doc__,
             **get_route_args(cls.get_and_return_nested_with_required_field_as_list, default_tag="endpoints.object"),
         )(wrapper)

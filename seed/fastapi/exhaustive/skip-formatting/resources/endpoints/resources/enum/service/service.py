@@ -72,7 +72,6 @@ class AbstractEndpointsEnumService(AbstractFernService):
         
         router.post(
             path="/enum",
-            response_model=WeatherReport,
             description=AbstractEndpointsEnumService.get_and_return_enum.__doc__,
             **get_route_args(cls.get_and_return_enum, default_tag="endpoints.enum"),
         )(wrapper)
