@@ -12,6 +12,21 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace";
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value != null && !Array.isArray(value);
+}
+
+function getBooleanAtPath(root: unknown, path: string[]): boolean | undefined {
+    let cur: unknown = root;
+    for (const key of path) {
+        if (!isRecord(cur)) {
+            return undefined;
+        }
+        cur = cur[key];
+    }
+    return typeof cur === "boolean" ? cur : undefined;
+}
+
 export declare namespace GenerationRunner {
     interface RunArgs {
         organization: string;
@@ -74,6 +89,24 @@ export class GenerationRunner {
                             interactiveTaskContext.logger.info(
                                 chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
                             );
+
+                            if (
+                                generatorInvocation.name === "fernapi/fern-python-sdk" &&
+                                getBooleanAtPath(generatorInvocation.config, [
+                                    "pydantic_config",
+                                    "positional_single_property_constructors"
+                                ]) === true
+                            ) {
+                                interactiveTaskContext.logger.warn(
+                                    chalk.red.bold(
+                                        "WARNING: positional_single_property_constructors is enabled. " +
+                                            "This allows Wrapper('value') syntax for single-required-field models, but if the model " +
+                                            "later adds another required field, the positional __init__ will no longer be generated, " +
+                                            "causing runtime failures for existing code. Use keyword arguments (Wrapper(field='value')) " +
+                                            "for long-term stability."
+                                    )
+                                );
+                            }
 
                             if (shouldGenerateDynamicSnippetTests && generatorInvocation.language != null) {
                                 interactiveTaskContext.logger.info(
