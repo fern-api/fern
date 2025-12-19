@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc74
+  createdAt: "2025-12-19"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add opt-in `requirePaths` config option for auto-loading user-defined files when the gem
+        is required. When configured (e.g., `requirePaths: ["custom_integration", "sentry_integration"]`),
+        the gem entrypoint will auto-load each file from `lib/<gem>/<path>.rb` if it exists. This
+        allows users to add custom code (e.g., Sentry integration) without needing to fernignore
+        generated files. Uses file existence check to avoid silently swallowing real errors.
+  irVersion: 61
+
 - version: 1.0.0-rc73
   changelogEntry:
     - summary: |

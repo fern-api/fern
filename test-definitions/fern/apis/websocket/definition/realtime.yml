@@ -20,6 +20,7 @@ channel:
       body: send_snake_case
     send2:
       display-name: Send2
+      method-name: custom_send
       origin: client
       body: SendEvent2
     receive:

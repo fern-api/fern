@@ -237,11 +237,14 @@ class SocketClientGenerator:
         return _get_start_listening_method_body
 
     def _get_send_message_method(self, message: ir_types.WebSocketMessage, is_async: bool) -> AST.FunctionDeclaration:
+        # Use custom method_name if provided, otherwise default to send_{message_type}
+        method_name = snake_case(message.method_name) if message.method_name else f"send_{snake_case(message.type)}"
+
         union = message.body.get_as_union()
         if not hasattr(union, "body_type"):
             # Create a fallback for non-reference messages
             return AST.FunctionDeclaration(
-                name=f"send_{snake_case(message.type)}",
+                name=method_name,
                 is_async=is_async,
                 signature=AST.FunctionSignature(
                     parameters=[
@@ -259,7 +262,7 @@ class SocketClientGenerator:
         message_type = union.body_type
         message_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(message_type)
         return AST.FunctionDeclaration(
-            name=f"send_{snake_case(message.type)}",
+            name=method_name,
             is_async=is_async,
             signature=AST.FunctionSignature(
                 parameters=[
