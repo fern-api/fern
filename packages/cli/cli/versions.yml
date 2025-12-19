@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.29.2
+  changelogEntry:
+    - summary: |
+        Add CLI warning when Python SDK generator has `positional_single_property_constructors` enabled. The warning appears in the terminal after generation completes, alerting users to potential backwards compatibility risks.
+      type: chore
+  createdAt: "2025-12-19"
+  irVersion: 62
+
 - version: 3.29.1
   changelogEntry:
     - summary: |
