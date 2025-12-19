@@ -22,6 +22,7 @@ module Seed
       #
       # @return [Seed::Organizations::Types::Organization]
       def get_organization(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -55,6 +56,7 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def get_organization_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -88,7 +90,7 @@ module Seed
       #
       # @return [Array[Seed::Organizations::Types::Organization]]
       def search_organizations(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)

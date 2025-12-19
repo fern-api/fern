@@ -20,6 +20,7 @@ module Seed
       #
       # @return [untyped]
       def generate(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[stream num_events]
         body_bag = params.slice(*body_prop_names)
 

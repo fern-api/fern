@@ -1,0 +1,44 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "463a9e5a",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsReference.SeedOauthClientCredentialsReferenceClient;\nimport com.seed.oauthClientCredentialsReference.resources.auth.types.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsReference.SeedOauthClientCredentialsReferenceClient;\nimport com.seed.oauthClientCredentialsReference.resources.auth.types.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "963930b9",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsReference.SeedOauthClientCredentialsReferenceClient;\nimport com.seed.oauthClientCredentialsReference.resources.auth.types.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsReference.SeedOauthClientCredentialsReferenceClient;\nimport com.seed.oauthClientCredentialsReference.resources.auth.types.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .clientId(\"client_id\")\n                .clientSecret(\"client_secret\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "82444d62",
+            "id": {
+                "method": "GET",
+                "path": "/get-something",
+                "identifier_override": "endpoint_simple.getSomething"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsReference.SeedOauthClientCredentialsReferenceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.simple().getSomething();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.oauthClientCredentialsReference.SeedOauthClientCredentialsReferenceClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials(\"<clientId>\", \"<clientSecret>\")\n            .build()\n        ;\n\n        client.simple().getSomething();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

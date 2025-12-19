@@ -1,0 +1,90 @@
+openapi: 3.0.3
+info:
+  title: Auth Scheme Example Selection Test API
+  version: 1.0.0
+  description: |
+    Test fixture to verify that examples populate with the first available auth scheme
+    from the endpoint's security requirements, not the first globally defined auth scheme.
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /resource:
+    post:
+      operationId: createResource
+      summary: Create a resource with multiple auth options
+      description: |
+        This endpoint accepts either admin auth OR operator auth.
+        Examples should use the first available auth scheme (admin).
+      security:
+        - admin: []
+        - operator: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResourceRequest"
+      responses:
+        "200":
+          description: Resource created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResourceResponse"
+
+components:
+  securitySchemes:
+    user:
+      type: apiKey
+      name: x-user-token
+      in: header
+      description: User authentication token
+    operator:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: Operator API key
+    admin:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: Admin API key
+
+  schemas:
+    ResourceRequest:
+      type: object
+      required:
+        - type
+        - amount
+        - target
+      properties:
+        type:
+          type: string
+          enum:
+            - typeA
+            - typeB
+          description: Resource type
+        amount:
+          type: object
+          required:
+            - value
+          properties:
+            value:
+              type: number
+              format: double
+              minimum: 1
+              description: Amount value
+        target:
+          type: string
+          description: Target identifier
+
+    ResourceResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          description: Resource identifier

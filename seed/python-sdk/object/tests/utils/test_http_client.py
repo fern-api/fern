@@ -4,7 +4,13 @@ from typing import Any, Dict
 
 import pytest
 
-from seed.core.http_client import AsyncHttpClient, HttpClient, get_request_body, remove_none_from_dict
+from seed.core.http_client import (
+    AsyncHttpClient,
+    HttpClient,
+    _build_url,
+    get_request_body,
+    remove_none_from_dict,
+)
 from seed.core.request_options import RequestOptions
 
 
@@ -264,3 +270,31 @@ async def test_async_http_client_passes_encoded_params_when_present() -> None:
     params = dummy_client.last_request_kwargs["params"]
     # For a simple dict, encode_query should give a single (key, value) tuple
     assert params == [("after", "456")]
+
+
+def test_basic_url_joining() -> None:
+    """Test basic URL joining with a simple base URL and path."""
+    result = _build_url("https://api.example.com", "/users")
+    assert result == "https://api.example.com/users"
+
+
+def test_basic_url_joining_trailing_slash() -> None:
+    """Test basic URL joining with a simple base URL and path."""
+    result = _build_url("https://api.example.com/", "/users")
+    assert result == "https://api.example.com/users"
+
+
+def test_preserves_base_url_path_prefix() -> None:
+    """Test that path prefixes in base URL are preserved.
+
+    This is the critical bug fix - urllib.parse.urljoin() would strip
+    the path prefix when the path starts with '/'.
+    """
+    result = _build_url("https://cloud.example.com/org/tenant/api", "/users")
+    assert result == "https://cloud.example.com/org/tenant/api/users"
+
+
+def test_preserves_base_url_path_prefix_trailing_slash() -> None:
+    """Test that path prefixes in base URL are preserved."""
+    result = _build_url("https://cloud.example.com/org/tenant/api/", "/users")
+    assert result == "https://cloud.example.com/org/tenant/api/users"

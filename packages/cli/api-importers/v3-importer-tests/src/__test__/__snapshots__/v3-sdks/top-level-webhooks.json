@@ -452,6 +452,7 @@
   },
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test extension `x-fern-webhook`.",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -558,22 +559,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test extension `x-fern-webhook`.",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testExtensionXFernWebhook",
+      "safeName": "testExtensionXFernWebhook"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_extension_x_fern_webhook",
+      "safeName": "test_extension_x_fern_webhook"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_EXTENSION_X_FERN_WEBHOOK",
+      "safeName": "TEST_EXTENSION_X_FERN_WEBHOOK"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestExtensionXFernWebhook",
+      "safeName": "TestExtensionXFernWebhook"
     }
   },
   "constants": {

@@ -160,35 +160,10 @@ export class WireTestGenerator {
             }
             writer.writeNewLineIfLastLineNot();
             writer.newLine();
-            writer.write(
-                go.func({
-                    name: "ResetWireMockRequests",
-                    parameters: [
-                        go.parameter({
-                            name: "t",
-                            type: go.Type.pointer(go.Type.reference(this.context.getTestingTypeReference()))
-                        })
-                    ],
-                    return_: [],
-                    body: go.codeblock((writer) => {
-                        writer.writeNode(go.codeblock('WiremockAdminURL := "http://localhost:8080/__admin"'));
-                        writer.newLine();
-                        writer.writeNode(
-                            go.codeblock(
-                                '_, err := http.Post(WiremockAdminURL+"/requests/reset", "application/json", nil)'
-                            )
-                        );
-                        writer.newLine();
-                        writer.writeNode(go.codeblock("require.NoError(t, err)"));
-                        writer.newLine();
-                    })
-                })
-            );
 
             // Uses the requests/find endpoint for more flexible matching based on query parameters and base URL
             // This allows proper matching even when SDKs reorder query parameters alphabetically
-            writer.writeNewLineIfLastLineNot();
-            writer.newLine();
+            // Filters by X-Test-Id header to scope assertions to specific tests for concurrency safety
             this.writeVerifyRequestCount(writer);
             writer.writeNewLineIfLastLineNot();
             writer.newLine();
@@ -226,6 +201,10 @@ export class WireTestGenerator {
                         type: go.Type.pointer(go.Type.reference(this.context.getTestingTypeReference()))
                     }),
                     go.parameter({
+                        name: "testId",
+                        type: go.Type.string()
+                    }),
+                    go.parameter({
                         name: "method",
                         type: go.Type.string()
                     }),
@@ -257,7 +236,11 @@ export class WireTestGenerator {
                     writer.newLine();
                     writer.writeNode(go.codeblock("reqBody.WriteString(urlPath)"));
                     writer.newLine();
-                    writer.writeNode(go.codeblock('reqBody.WriteString(`"}`)'));
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`","headers":{"X-Test-Id":{"equalTo":"`)'));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock("reqBody.WriteString(testId)"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString(`"}}`)'));
                     writer.newLine();
                     writer.writeNode(go.codeblock("if len(queryParams) > 0 {"));
                     writer.newLine();
@@ -290,6 +273,8 @@ export class WireTestGenerator {
                     writer.writeNode(go.codeblock('    reqBody.WriteString("}")'));
                     writer.newLine();
                     writer.writeNode(go.codeblock("}"));
+                    writer.newLine();
+                    writer.writeNode(go.codeblock('reqBody.WriteString("}")'));
                     writer.newLine();
                     writer.writeNode(
                         go.codeblock(
@@ -339,13 +324,11 @@ export class WireTestGenerator {
                     ],
                     return_: [],
                     body: go.codeblock((writer) => {
-                        writer.writeNode(go.codeblock(`ResetWireMockRequests(t)`));
-                        writer.newLine();
                         writer.writeNode(go.codeblock('WireMockBaseURL := "http://localhost:8080"'));
                         writer.newLine();
                         writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
                         writer.newLine();
-                        writer.writeNode(this.callClientMethodAndAssert({ endpoint, snippet }));
+                        writer.writeNode(this.callClientMethodAndAssert({ endpoint, snippet, testFunctionName }));
                     })
                 })
             );
@@ -573,7 +556,6 @@ export class WireTestGenerator {
         snippet: string;
     }): go.CodeBlock {
         const clientConstructor = this.parseClientConstructor(snippet);
-
         return go.codeblock((writer) => {
             writer.write(clientConstructor);
         });
@@ -581,13 +563,18 @@ export class WireTestGenerator {
 
     private callClientMethodAndAssert({
         endpoint,
-        snippet
+        snippet,
+        testFunctionName
     }: {
         endpoint: HttpEndpoint;
         snippet: string;
+        testFunctionName: string;
     }): go.CodeBlock {
         const requestBodyInstantiation = this.parseRequestBodyInstantiation(snippet);
-        const clientCall = this.parseClientCallFromSnippet(snippet);
+        const clientCall = this.parseClientCallFromSnippet(snippet).replace(
+            `"X-Test-Id": []string{"TEST-ID-PLACEHOLDER"}`,
+            `"X-Test-Id": []string{"${testFunctionName}"}`
+        );
 
         return go.codeblock((writer) => {
             if (requestBodyInstantiation) {
@@ -628,7 +615,9 @@ export class WireTestGenerator {
             const queryParamsMap = this.buildQueryParamsMap(endpoint);
 
             writer.writeNode(
-                go.codeblock(`VerifyRequestCount(t, "${endpoint.method}", "${basePath}", ${queryParamsMap}, 1)`)
+                go.codeblock(
+                    `VerifyRequestCount(t, "${testFunctionName}", "${endpoint.method}", "${basePath}", ${queryParamsMap}, 1)`
+                )
             );
 
             writer.writeLine();

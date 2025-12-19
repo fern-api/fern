@@ -5,9 +5,7 @@ import com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCreden
 public class Example2 {
     public static void main(String[] args) {
         SeedOauthClientCredentialsEnvironmentVariablesClient client =
-                SeedOauthClientCredentialsEnvironmentVariablesClient.builder()
-                        .clientId("<clientId>")
-                        .clientSecret("<clientSecret>")
+                SeedOauthClientCredentialsEnvironmentVariablesClient.withCredentials("<clientId>", "<clientSecret>")
                         .url("https://api.fern.com")
                         .build();
 

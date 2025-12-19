@@ -7,5 +7,6 @@
       "use_pydantic_field_aliases": true,
       "skip_validation": true
     }
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

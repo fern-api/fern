@@ -23,7 +23,8 @@ module Seed
           # @option request_options [Integer] :timeout_in_seconds
           #
           # @return [Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]]
-          def get_lightweight_problems(request_options: {}, **_params)
+          def get_lightweight_problems(request_options: {}, **params)
+            Seed::Internal::Types::Utils.normalize_keys(params)
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
@@ -53,7 +54,8 @@ module Seed
           # @option request_options [Integer] :timeout_in_seconds
           #
           # @return [Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]]
-          def get_problems(request_options: {}, **_params)
+          def get_problems(request_options: {}, **params)
+            Seed::Internal::Types::Utils.normalize_keys(params)
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
@@ -85,6 +87,7 @@ module Seed
           #
           # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_latest_problem(request_options: {}, **params)
+            params = Seed::Internal::Types::Utils.normalize_keys(params)
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
@@ -119,6 +122,7 @@ module Seed
           #
           # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_problem_version(request_options: {}, **params)
+            params = Seed::Internal::Types::Utils.normalize_keys(params)
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",

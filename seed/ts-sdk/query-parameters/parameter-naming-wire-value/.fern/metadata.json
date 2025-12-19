@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "parameterNaming": "wireValue"
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

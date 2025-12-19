@@ -24,6 +24,7 @@ module Seed
       #
       # @return [String]
       def get_presigned_url(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[s_3_key]
         body_bag = params.slice(*body_prop_names)
 

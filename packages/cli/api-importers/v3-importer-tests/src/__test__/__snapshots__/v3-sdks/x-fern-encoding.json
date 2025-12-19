@@ -227,6 +227,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test extension `x-fern-encoding` for schemas",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -262,22 +263,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test extension `x-fern-encoding` for schemas",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testExtensionXFernEncodingForSchemas",
+      "safeName": "testExtensionXFernEncodingForSchemas"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_extension_x_fern_encoding_for_schemas",
+      "safeName": "test_extension_x_fern_encoding_for_schemas"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_EXTENSION_X_FERN_ENCODING_FOR_SCHEMAS",
+      "safeName": "TEST_EXTENSION_X_FERN_ENCODING_FOR_SCHEMAS"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestExtensionXFernEncodingForSchemas",
+      "safeName": "TestExtensionXFernEncodingForSchemas"
     }
   },
   "constants": {

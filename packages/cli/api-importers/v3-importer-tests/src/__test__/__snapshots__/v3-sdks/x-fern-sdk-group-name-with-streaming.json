@@ -1657,6 +1657,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test extension `x-fern-sdk-group-name` alongside `x-fern-streaming`.",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1764,22 +1765,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test extension `x-fern-sdk-group-name` alongside `x-fern-streaming`.",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testExtensionXFernSdkGroupNameAlongsideXFernStreaming",
+      "safeName": "testExtensionXFernSdkGroupNameAlongsideXFernStreaming"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_extension_x_fern_sdk_group_name_alongside_x_fern_streaming",
+      "safeName": "test_extension_x_fern_sdk_group_name_alongside_x_fern_streaming"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_EXTENSION_X_FERN_SDK_GROUP_NAME_ALONGSIDE_X_FERN_STREAMING",
+      "safeName": "TEST_EXTENSION_X_FERN_SDK_GROUP_NAME_ALONGSIDE_X_FERN_STREAMING"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestExtensionXFernSdkGroupNameAlongsideXFernStreaming",
+      "safeName": "TestExtensionXFernSdkGroupNameAlongsideXFernStreaming"
     }
   },
   "constants": {

@@ -25,10 +25,10 @@ module Seed
       #
       # @return [Seed::Playlist::Types::Playlist]
       def create_playlist(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[service_param]
         body_params = params.except(*path_param_names)
 
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
         query_param_names = %i[datetime optional_datetime]
         query_params = {}
         query_params["datetime"] = params[:datetime] if params.key?(:datetime)
@@ -75,7 +75,7 @@ module Seed
       #
       # @return [Array[Seed::Playlist::Types::Playlist]]
       def get_playlists(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit other_field multi_line_docs optional_multiple_field multiple_field]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
@@ -118,6 +118,7 @@ module Seed
       #
       # @return [Seed::Playlist::Types::Playlist]
       def get_playlist(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -152,6 +153,7 @@ module Seed
       #
       # @return [Seed::Playlist::Types::Playlist, nil]
       def update_playlist(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
@@ -185,6 +187,7 @@ module Seed
       #
       # @return [untyped]
       def delete_playlist(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",

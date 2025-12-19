@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "AI Examples Issue Test",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "aiExamplesIssueTest",
+      "unsafeName": "aiExamplesIssueTest",
     },
-    "originalName": "",
+    "originalName": "AI Examples Issue Test",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "AiExamplesIssueTest",
+      "unsafeName": "AiExamplesIssueTest",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "AI_EXAMPLES_ISSUE_TEST",
+      "unsafeName": "AI_EXAMPLES_ISSUE_TEST",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "ai_examples_issue_test",
+      "unsafeName": "ai_examples_issue_test",
     },
   },
   "apiPlayground": undefined,

@@ -6,7 +6,6 @@ import com.seed.streaming.core.ObjectMappers;
 import com.seed.streaming.resources.dummy.requests.GenerateStreamRequest;
 import com.seed.streaming.resources.dummy.requests.Generateequest;
 import com.seed.streaming.resources.dummy.types.StreamResponse;
-import java.util.Optional;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -35,7 +34,7 @@ public class DummyWireTest {
     @Test
     public void testGenerateStream() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
-        Optional<StreamResponse> response = client.dummy()
+        Iterable<StreamResponse> response = client.dummy()
                 .generateStream(GenerateStreamRequest.builder().numEvents(1).build());
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
