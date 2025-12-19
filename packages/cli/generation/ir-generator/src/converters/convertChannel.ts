@@ -55,7 +55,8 @@ export function convertChannel({
             docs: message.docs,
             origin: message.origin,
             body: convertMessageSchema({ body: message.body, file }),
-            displayName: message["display-name"]
+            displayName: message["display-name"],
+            methodName: message["method-name"]
         });
     }
     return {

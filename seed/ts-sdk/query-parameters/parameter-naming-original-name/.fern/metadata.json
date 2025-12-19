@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "parameterNaming": "originalName"
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

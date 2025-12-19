@@ -25,7 +25,7 @@ module Seed
       #
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[usernames avatar activated tags extra]
         query_params = {}
         query_params["usernames"] = params[:usernames] if params.key?(:usernames)
@@ -64,6 +64,7 @@ module Seed
       #
       # @return [Seed::Nullable::Types::User]
       def create_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[username tags metadata avatar]
         body_bag = params.slice(*body_prop_names)
 
@@ -98,6 +99,7 @@ module Seed
       #
       # @return [Boolean]
       def delete_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[username]
         body_bag = params.slice(*body_prop_names)
 

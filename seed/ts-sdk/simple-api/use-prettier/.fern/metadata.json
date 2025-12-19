@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "formatter": "prettier"
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

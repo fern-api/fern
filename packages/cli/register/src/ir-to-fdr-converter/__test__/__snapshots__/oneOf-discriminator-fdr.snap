@@ -1,4 +1,5 @@
 {
+  "apiName": "OneOf Discriminator Test API",
   "auth": undefined,
   "authSchemes": {},
   "globalHeaders": [],

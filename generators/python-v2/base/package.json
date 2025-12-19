@@ -37,7 +37,7 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/python-ast": "workspace:*",
     "@fern-api/python-browser-compatible-base": "workspace:*",
-    "@fern-fern/ir-sdk": "^61.7.0",
+    "@fern-fern/ir-sdk": "^62.6.0",
     "lodash-es": "^4.17.21",
     "zod": "^3.22.4"
   },

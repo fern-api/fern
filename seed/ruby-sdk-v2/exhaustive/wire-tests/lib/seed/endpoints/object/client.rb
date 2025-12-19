@@ -21,6 +21,7 @@ module Seed
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def get_and_return_with_optional_field(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -52,6 +53,7 @@ module Seed
         #
         # @return [Seed::Types::Object_::Types::ObjectWithRequiredField]
         def get_and_return_with_required_field(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -83,6 +85,7 @@ module Seed
         #
         # @return [Seed::Types::Object_::Types::ObjectWithMapOfMap]
         def get_and_return_with_map_of_map(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -114,6 +117,7 @@ module Seed
         #
         # @return [Seed::Types::Object_::Types::NestedObjectWithOptionalField]
         def get_and_return_nested_with_optional_field(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -146,6 +150,7 @@ module Seed
         #
         # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -177,6 +182,7 @@ module Seed
         #
         # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field_as_list(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",

@@ -60,11 +60,9 @@ import com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRe
 
 public class Example {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient
-            .builder()
-            .clientId("<clientId>")
-            .clientSecret("<clientSecret>")
-            .build();
+        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.withCredentials("<clientId>", "<clientSecret>")
+            .build()
+        ;
 
         client.auth().getToken(
             GetTokenRequest

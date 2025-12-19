@@ -69,17 +69,26 @@ export class TestClassBuilder {
             // Note: For OAuth APIs, each test method enqueues its own OAuth token response
             // because the token is fetched lazily on first API call
 
-            writer.writeLine(`client = ${clientClassName}.builder()`);
-            writer.indent();
+            // For OAuth APIs, use withCredentials() instead of builder()
+            const isOAuth = this.isOAuthApi();
+            if (isOAuth) {
+                writer.writeLine(`client = ${clientClassName}.withCredentials("test-client-id", "test-client-secret")`);
+                writer.indent();
+                this.generateEnvironmentConfiguration(writer);
+                writer.writeLine(".build();");
+            } else {
+                writer.writeLine(`client = ${clientClassName}.builder()`);
+                writer.indent();
 
-            this.generateEnvironmentConfiguration(writer);
+                this.generateEnvironmentConfiguration(writer);
 
-            const authConfig = this.getAuthClientBuilderCalls();
-            if (authConfig) {
-                writer.writeLine(authConfig);
+                const authConfig = this.getAuthClientBuilderCalls();
+                if (authConfig) {
+                    writer.writeLine(authConfig);
+                }
+
+                writer.writeLine(".build();");
             }
-
-            writer.writeLine(".build();");
             writer.dedent();
             writer.dedent();
             writer.writeLine("}");

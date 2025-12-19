@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "inline_request_params": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

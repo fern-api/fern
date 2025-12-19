@@ -1,0 +1,1208 @@
+{
+  "apiDisplayName": "Auth Scheme Example Selection Test API",
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "authSchemeExampleSelectionTestApi",
+      "unsafeName": "authSchemeExampleSelectionTestApi",
+    },
+    "originalName": "Auth Scheme Example Selection Test API",
+    "pascalCase": {
+      "safeName": "AuthSchemeExampleSelectionTestApi",
+      "unsafeName": "AuthSchemeExampleSelectionTestApi",
+    },
+    "screamingSnakeCase": {
+      "safeName": "AUTH_SCHEME_EXAMPLE_SELECTION_TEST_API",
+      "unsafeName": "AUTH_SCHEME_EXAMPLE_SELECTION_TEST_API",
+    },
+    "snakeCase": {
+      "safeName": "auth_scheme_example_selection_test_api",
+      "unsafeName": "auth_scheme_example_selection_test_api",
+    },
+  },
+  "apiPlayground": undefined,
+  "apiVersion": undefined,
+  "audiences": undefined,
+  "auth": {
+    "docs": undefined,
+    "requirement": "ANY",
+    "schemes": [
+      {
+        "_visit": [Function],
+        "docs": "User authentication token",
+        "headerEnvVar": undefined,
+        "key": "user",
+        "name": {
+          "name": {
+            "camelCase": {
+              "safeName": "apiKey",
+              "unsafeName": "apiKey",
+            },
+            "originalName": "apiKey",
+            "pascalCase": {
+              "safeName": "ApiKey",
+              "unsafeName": "ApiKey",
+            },
+            "screamingSnakeCase": {
+              "safeName": "API_KEY",
+              "unsafeName": "API_KEY",
+            },
+            "snakeCase": {
+              "safeName": "api_key",
+              "unsafeName": "api_key",
+            },
+          },
+          "wireValue": "x-user-token",
+        },
+        "prefix": undefined,
+        "type": "header",
+        "valueType": {
+          "_visit": [Function],
+          "container": {
+            "_visit": [Function],
+            "optional": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": undefined,
+                },
+              },
+              "type": "primitive",
+            },
+            "type": "optional",
+          },
+          "type": "container",
+        },
+      },
+      {
+        "_visit": [Function],
+        "docs": "Operator API key",
+        "headerEnvVar": undefined,
+        "key": "operator",
+        "name": {
+          "name": {
+            "camelCase": {
+              "safeName": "apiKey",
+              "unsafeName": "apiKey",
+            },
+            "originalName": "apiKey",
+            "pascalCase": {
+              "safeName": "ApiKey",
+              "unsafeName": "ApiKey",
+            },
+            "screamingSnakeCase": {
+              "safeName": "API_KEY",
+              "unsafeName": "API_KEY",
+            },
+            "snakeCase": {
+              "safeName": "api_key",
+              "unsafeName": "api_key",
+            },
+          },
+          "wireValue": "Authorization",
+        },
+        "prefix": undefined,
+        "type": "header",
+        "valueType": {
+          "_visit": [Function],
+          "container": {
+            "_visit": [Function],
+            "optional": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": undefined,
+                },
+              },
+              "type": "primitive",
+            },
+            "type": "optional",
+          },
+          "type": "container",
+        },
+      },
+      {
+        "_visit": [Function],
+        "docs": "Admin API key",
+        "headerEnvVar": undefined,
+        "key": "admin",
+        "name": {
+          "name": {
+            "camelCase": {
+              "safeName": "apiKey",
+              "unsafeName": "apiKey",
+            },
+            "originalName": "apiKey",
+            "pascalCase": {
+              "safeName": "ApiKey",
+              "unsafeName": "ApiKey",
+            },
+            "screamingSnakeCase": {
+              "safeName": "API_KEY",
+              "unsafeName": "API_KEY",
+            },
+            "snakeCase": {
+              "safeName": "api_key",
+              "unsafeName": "api_key",
+            },
+          },
+          "wireValue": "Authorization",
+        },
+        "prefix": undefined,
+        "type": "header",
+        "valueType": {
+          "_visit": [Function],
+          "container": {
+            "_visit": [Function],
+            "optional": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": undefined,
+                },
+              },
+              "type": "primitive",
+            },
+            "type": "optional",
+          },
+          "type": "container",
+        },
+      },
+    ],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": undefined,
+  "environments": {
+    "defaultEnvironment": "https://api.example.com/v1",
+    "environments": {
+      "_visit": [Function],
+      "environments": [
+        {
+          "docs": undefined,
+          "id": "https://api.example.com/v1",
+          "name": {
+            "camelCase": {
+              "safeName": "httpsApiExampleComV1",
+              "unsafeName": "httpsApiExampleComV1",
+            },
+            "originalName": "https://api.example.com/v1",
+            "pascalCase": {
+              "safeName": "HttpsApiExampleComV1",
+              "unsafeName": "HttpsApiExampleComV1",
+            },
+            "screamingSnakeCase": {
+              "safeName": "HTTPS_API_EXAMPLE_COM_V_1",
+              "unsafeName": "HTTPS_API_EXAMPLE_COM_V_1",
+            },
+            "snakeCase": {
+              "safeName": "https_api_example_com_v_1",
+              "unsafeName": "https_api_example_com_v_1",
+            },
+          },
+          "url": "https://api.example.com/v1",
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {},
+  "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": undefined,
+  "readmeConfig": undefined,
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": "service_",
+    "subpackages": [],
+    "types": [
+      "ResourceRequest",
+      "ResourceResponse",
+    ],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": "",
+      "userAgent": undefined,
+    },
+  },
+  "selfHosted": false,
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_": {
+      "audiences": undefined,
+      "availability": undefined,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": undefined,
+      "encoding": undefined,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": true,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "https://api.example.com/v1",
+          "displayName": "Create a resource with multiple auth options",
+          "docs": "This endpoint accepts either admin auth OR operator auth.
+Examples should use the first available auth scheme (admin).
+",
+          "errors": [],
+          "fullPath": {
+            "head": "/resource",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.createResource",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "createResource",
+              "unsafeName": "createResource",
+            },
+            "originalName": "createResource",
+            "pascalCase": {
+              "safeName": "CreateResource",
+              "unsafeName": "CreateResource",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_RESOURCE",
+              "unsafeName": "CREATE_RESOURCE",
+            },
+            "snakeCase": {
+              "safeName": "create_resource",
+              "unsafeName": "create_resource",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/resource",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "_visit": [Function],
+            "contentType": "application/json",
+            "docs": undefined,
+            "requestBodyType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "resourceRequest",
+                  "unsafeName": "resourceRequest",
+                },
+                "originalName": "ResourceRequest",
+                "pascalCase": {
+                  "safeName": "ResourceRequest",
+                  "unsafeName": "ResourceRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RESOURCE_REQUEST",
+                  "unsafeName": "RESOURCE_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "resource_request",
+                  "unsafeName": "resource_request",
+                },
+              },
+              "type": "named",
+              "typeId": "ResourceRequest",
+            },
+            "type": "reference",
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "createResourceExample": {
+                  "amount": {
+                    "value": 1.1,
+                  },
+                  "target": "string",
+                  "type": "typeA",
+                },
+              },
+              "userSpecifiedExamples": {},
+            },
+          },
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Resource created successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "resourceResponse",
+                      "unsafeName": "resourceResponse",
+                    },
+                    "originalName": "ResourceResponse",
+                    "pascalCase": {
+                      "safeName": "ResourceResponse",
+                      "unsafeName": "ResourceResponse",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "RESOURCE_RESPONSE",
+                      "unsafeName": "RESOURCE_RESPONSE",
+                    },
+                    "snakeCase": {
+                      "safeName": "resource_response",
+                      "unsafeName": "resource_response",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "ResourceResponse",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createResourceExample": {
+                      "id": "string",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "docs": "Resource created successfully",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 200,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": [
+            {
+              "admin": [],
+            },
+            {
+              "operator": [],
+            },
+          ],
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "createResourceExample_200": {
+                "codeSamples": undefined,
+                "displayName": "createResourceExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/resource",
+                  },
+                  "environment": "https://api.example.com/v1",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": {
+                    "amount": {
+                      "value": 1.1,
+                    },
+                    "target": "string",
+                    "type": "typeA",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "id": "string",
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "_visit": [Function],
+                "contentType": "application/json",
+                "docs": undefined,
+                "requestBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "resourceRequest",
+                      "unsafeName": "resourceRequest",
+                    },
+                    "originalName": "ResourceRequest",
+                    "pascalCase": {
+                      "safeName": "ResourceRequest",
+                      "unsafeName": "ResourceRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "RESOURCE_REQUEST",
+                      "unsafeName": "RESOURCE_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "resource_request",
+                      "unsafeName": "resource_request",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "ResourceRequest",
+                },
+                "type": "reference",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createResourceExample": {
+                      "amount": {
+                        "value": 1.1,
+                      },
+                      "target": "string",
+                      "type": "typeA",
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            ],
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Resource created successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "resourceResponse",
+                          "unsafeName": "resourceResponse",
+                        },
+                        "originalName": "ResourceResponse",
+                        "pascalCase": {
+                          "safeName": "ResourceResponse",
+                          "unsafeName": "ResourceResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "RESOURCE_RESPONSE",
+                          "unsafeName": "RESOURCE_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "resource_response",
+                          "unsafeName": "resource_response",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "ResourceResponse",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "createResourceExample": {
+                          "id": "string",
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "docs": "Resource created successfully",
+                "isWildcardStatusCode": undefined,
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+      "transport": undefined,
+    },
+  },
+  "sourceConfig": undefined,
+  "subpackages": {},
+  "types": {
+    "ResourceRequest": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "resourceRequest",
+            "unsafeName": "resourceRequest",
+          },
+          "originalName": "ResourceRequest",
+          "pascalCase": {
+            "safeName": "ResourceRequest",
+            "unsafeName": "ResourceRequest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "RESOURCE_REQUEST",
+            "unsafeName": "RESOURCE_REQUEST",
+          },
+          "snakeCase": {
+            "safeName": "resource_request",
+            "unsafeName": "resource_request",
+          },
+        },
+        "typeId": "ResourceRequest",
+      },
+      "referencedTypes": Set {
+        "ResourceRequestType",
+        "ResourceRequestAmount",
+      },
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Resource type",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+                "originalName": "type",
+                "pascalCase": {
+                  "safeName": "Type",
+                  "unsafeName": "Type",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPE",
+                  "unsafeName": "TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+              },
+              "wireValue": "type",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ResourceRequestType_example_autogenerated": "typeA",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "resourceRequestType",
+                  "unsafeName": "resourceRequestType",
+                },
+                "originalName": "ResourceRequestType",
+                "pascalCase": {
+                  "safeName": "ResourceRequestType",
+                  "unsafeName": "ResourceRequestType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RESOURCE_REQUEST_TYPE",
+                  "unsafeName": "RESOURCE_REQUEST_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "resource_request_type",
+                  "unsafeName": "resource_request_type",
+                },
+              },
+              "type": "named",
+              "typeId": "ResourceRequestType",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+                "originalName": "amount",
+                "pascalCase": {
+                  "safeName": "Amount",
+                  "unsafeName": "Amount",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "AMOUNT",
+                  "unsafeName": "AMOUNT",
+                },
+                "snakeCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+              },
+              "wireValue": "amount",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ResourceRequestAmount_example_autogenerated": {
+                  "value": 1.1,
+                },
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "resourceRequestAmount",
+                  "unsafeName": "resourceRequestAmount",
+                },
+                "originalName": "ResourceRequestAmount",
+                "pascalCase": {
+                  "safeName": "ResourceRequestAmount",
+                  "unsafeName": "ResourceRequestAmount",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RESOURCE_REQUEST_AMOUNT",
+                  "unsafeName": "RESOURCE_REQUEST_AMOUNT",
+                },
+                "snakeCase": {
+                  "safeName": "resource_request_amount",
+                  "unsafeName": "resource_request_amount",
+                },
+              },
+              "type": "named",
+              "typeId": "ResourceRequestAmount",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Target identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "target",
+                  "unsafeName": "target",
+                },
+                "originalName": "target",
+                "pascalCase": {
+                  "safeName": "Target",
+                  "unsafeName": "Target",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TARGET",
+                  "unsafeName": "TARGET",
+                },
+                "snakeCase": {
+                  "safeName": "target",
+                  "unsafeName": "target",
+                },
+              },
+              "wireValue": "target",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ResourceRequestTarget_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "ResourceRequest_example_autogenerated": {
+            "amount": {
+              "value": 1.1,
+            },
+            "target": "string",
+            "type": "typeA",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "ResourceRequestAmount": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "resourceRequestAmount",
+            "unsafeName": "resourceRequestAmount",
+          },
+          "originalName": "ResourceRequestAmount",
+          "pascalCase": {
+            "safeName": "ResourceRequestAmount",
+            "unsafeName": "ResourceRequestAmount",
+          },
+          "screamingSnakeCase": {
+            "safeName": "RESOURCE_REQUEST_AMOUNT",
+            "unsafeName": "RESOURCE_REQUEST_AMOUNT",
+          },
+          "snakeCase": {
+            "safeName": "resource_request_amount",
+            "unsafeName": "resource_request_amount",
+          },
+        },
+        "typeId": "ResourceRequestAmount",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Amount value",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "value",
+                  "unsafeName": "value",
+                },
+                "originalName": "value",
+                "pascalCase": {
+                  "safeName": "Value",
+                  "unsafeName": "Value",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "VALUE",
+                  "unsafeName": "VALUE",
+                },
+                "snakeCase": {
+                  "safeName": "value",
+                  "unsafeName": "value",
+                },
+              },
+              "wireValue": "value",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ResourceRequestAmountValue_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "DOUBLE",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "double",
+                  "validation": {
+                    "exclusiveMax": undefined,
+                    "exclusiveMin": undefined,
+                    "max": undefined,
+                    "min": 1,
+                    "multipleOf": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "ResourceRequestAmount_example_autogenerated": {
+            "value": 1.1,
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "ResourceRequestType": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": "Resource type",
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "resourceRequestType",
+            "unsafeName": "resourceRequestType",
+          },
+          "originalName": "ResourceRequestType",
+          "pascalCase": {
+            "safeName": "ResourceRequestType",
+            "unsafeName": "ResourceRequestType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "RESOURCE_REQUEST_TYPE",
+            "unsafeName": "RESOURCE_REQUEST_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "resource_request_type",
+            "unsafeName": "resource_request_type",
+          },
+        },
+        "typeId": "ResourceRequestType",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "typeA",
+                  "unsafeName": "typeA",
+                },
+                "originalName": "typeA",
+                "pascalCase": {
+                  "safeName": "TypeA",
+                  "unsafeName": "TypeA",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPE_A",
+                  "unsafeName": "TYPE_A",
+                },
+                "snakeCase": {
+                  "safeName": "type_a",
+                  "unsafeName": "type_a",
+                },
+              },
+              "wireValue": "typeA",
+            },
+          },
+          {
+            "availability": undefined,
+            "casing": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "typeB",
+                  "unsafeName": "typeB",
+                },
+                "originalName": "typeB",
+                "pascalCase": {
+                  "safeName": "TypeB",
+                  "unsafeName": "TypeB",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPE_B",
+                  "unsafeName": "TYPE_B",
+                },
+                "snakeCase": {
+                  "safeName": "type_b",
+                  "unsafeName": "type_b",
+                },
+              },
+              "wireValue": "typeB",
+            },
+          },
+        ],
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "ResourceRequestType_example_autogenerated": "typeA",
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "ResourceResponse": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "resourceResponse",
+            "unsafeName": "resourceResponse",
+          },
+          "originalName": "ResourceResponse",
+          "pascalCase": {
+            "safeName": "ResourceResponse",
+            "unsafeName": "ResourceResponse",
+          },
+          "screamingSnakeCase": {
+            "safeName": "RESOURCE_RESPONSE",
+            "unsafeName": "RESOURCE_RESPONSE",
+          },
+          "snakeCase": {
+            "safeName": "resource_response",
+            "unsafeName": "resource_response",
+          },
+        },
+        "typeId": "ResourceResponse",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Resource identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ResourceResponseId_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "ResourceResponse_example_autogenerated": {
+            "id": "string",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": undefined,
+}

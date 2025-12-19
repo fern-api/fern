@@ -141,16 +141,106 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): java.CodeBlock {
+        // For OAuth APIs, use withCredentials() instead of builder()
+        const isOAuth = endpoint.auth?.type === "oauth";
+
         return java.codeblock((writer) => {
             writer.writeNode(this.context.getRootClientClassReference());
             writer.write(` ${CLIENT_VAR_NAME} = `);
-            writer.writeNode(
-                java.TypeLiteral.builder({
-                    classReference: this.context.getRootClientClassReference(),
-                    parameters: this.getRootClientBuilderArgs({ endpoint, snippet })
-                })
-            );
+
+            if (isOAuth && snippet.auth?.type === "oauth") {
+                // OAuth: use withCredentials(clientId, clientSecret) pattern
+                const oauthValues = snippet.auth as FernIr.dynamic.OAuthValues;
+                writer.writeNode(this.context.getRootClientClassReference());
+                writer.write(`.withCredentials("${oauthValues.clientId}", "${oauthValues.clientSecret}")`);
+                writer.writeNewLineIfLastLineNot();
+                writer.indent();
+
+                // Add remaining builder args (url, environment, headers, etc.)
+                const otherArgs = this.getRootClientBuilderArgsExcludingAuth({ endpoint, snippet });
+                for (const arg of otherArgs) {
+                    writer.write(`.${arg.name}(`);
+                    if (!arg.value.shouldWriteInLine()) {
+                        writer.newLine();
+                    }
+                    writer.writeNode(arg.value);
+                    if (!arg.value.shouldWriteInLine()) {
+                        writer.newLine();
+                    }
+                    writer.writeLine(")");
+                }
+
+                writer.writeLine(".build()");
+                writer.dedent();
+            } else {
+                // Standard builder() pattern
+                writer.writeNode(
+                    java.TypeLiteral.builder({
+                        classReference: this.context.getRootClientClassReference(),
+                        parameters: this.getRootClientBuilderArgs({ endpoint, snippet })
+                    })
+                );
+            }
         });
+    }
+
+    private getRootClientBuilderArgsExcludingAuth({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): java.BuilderParameter[] {
+        const builderArgs: java.BuilderParameter[] = [];
+
+        // Skip auth - it's handled by withCredentials()
+
+        const baseUrlArg = this.getRootClientBaseUrlArg({
+            baseUrl: snippet.baseURL,
+            environment: snippet.environment
+        });
+        if (baseUrlArg != null) {
+            builderArgs.push(baseUrlArg);
+        }
+        this.context.errors.scope(Scope.Headers);
+        if (this.context.ir.headers != null && snippet.headers != null) {
+            builderArgs.push(
+                ...this.getRootClientHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
+            );
+        }
+        this.context.errors.unscope();
+
+        const usedVariables = new Set<string>();
+        const allPathParams = [...(this.context.ir.pathParameters ?? []), ...(endpoint.request.pathParameters ?? [])];
+
+        allPathParams.forEach((param) => {
+            if (param.variable != null) {
+                usedVariables.add(param.variable);
+            }
+        });
+
+        if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
+            for (const variable of this.context.ir.variables) {
+                if (usedVariables.has(variable.id)) {
+                    const variableName = variable.name.camelCase.unsafeName;
+                    builderArgs.push({
+                        name: variableName,
+                        value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
+                    });
+                }
+            }
+        }
+
+        this.context.errors.scope(Scope.PathParameters);
+        if (this.context.ir.pathParameters != null && this.context.ir.pathParameters.length > 0) {
+            const apiPathParams = this.context.ir.pathParameters.filter((param) => param.variable == null);
+            if (apiPathParams.length > 0) {
+                builderArgs.push(...this.getPathParameters({ namedParameters: apiPathParams, snippet }));
+            }
+        }
+        this.context.errors.unscope();
+
+        return builderArgs;
     }
 
     private buildFullCodeBlock({ body, options }: { body: java.CodeBlock; options: Options }): java.AstNode {

@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "packagePath": "src/test-packagePath"
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

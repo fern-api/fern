@@ -34,7 +34,7 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def get_username(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit id date deadline bytes user user_list optional_deadline key_value optional_string nested_user optional_user exclude_user filter]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)

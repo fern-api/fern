@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Simple OpenAPI Test",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "simpleOpenApiTest",
+      "unsafeName": "simpleOpenApiTest",
     },
-    "originalName": "",
+    "originalName": "Simple OpenAPI Test",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "SimpleOpenApiTest",
+      "unsafeName": "SimpleOpenApiTest",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "SIMPLE_OPEN_API_TEST",
+      "unsafeName": "SIMPLE_OPEN_API_TEST",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "simple_open_api_test",
+      "unsafeName": "simple_open_api_test",
     },
   },
   "apiPlayground": undefined,

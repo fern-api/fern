@@ -41,10 +41,14 @@ test:
     buildCommand:
       - ./gradlew :sdk:distTar
       - chmod +x install-gradle.sh && ./install-gradle.sh
-      - cd sdk
-      - tar -xvf build/distributions/sdk.tar -C .
+      - cd sdk && tar -xvf build/distributions/sdk.tar -C .
+      - pnpm turbo run compile --filter @fern-api/java-sdk && pnpm turbo run dist:cli --filter @fern-api/java-sdk
     runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli {CONFIG_PATH}
-    env: {}
+    env:
+      # Path to Node.js executable (uses system node)
+      NODE_PATH: node
+      # Path to the built v2 CLI (relative to generators/java/sdk/sdk where Java runs)
+      JAVA_V2_PATH: ../../../../generators/java-v2/sdk/dist/cli.cjs
 
 language: java
 generatorType: SDK
@@ -331,6 +335,7 @@ allowedFailures:
   - request-parameters
   - streaming-parameter
   - inferred-auth-implicit-reference
+  - endpoint-security-auth
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
