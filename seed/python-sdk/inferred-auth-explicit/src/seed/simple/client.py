@@ -38,7 +38,7 @@ class SimpleClient:
         from seed import SeedInferredAuthExplicit
 
         client = SeedInferredAuthExplicit(
-            base_url="YOUR_BASE_URL",
+            base_url="https://yourhost.com/path/to/api",
             x_api_key="YOUR_X_API_KEY",
             client_id="YOUR_CLIENT_ID",
             client_secret="YOUR_CLIENT_SECRET",
@@ -82,7 +82,7 @@ class AsyncSimpleClient:
         from seed import AsyncSeedInferredAuthExplicit
 
         client = AsyncSeedInferredAuthExplicit(
-            base_url="YOUR_BASE_URL",
+            base_url="https://yourhost.com/path/to/api",
             x_api_key="YOUR_X_API_KEY",
             client_id="YOUR_CLIENT_ID",
             client_secret="YOUR_CLIENT_SECRET",

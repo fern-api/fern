@@ -16,6 +16,7 @@
 from seed import SeedInferredAuthImplicitApiKey
 
 client = SeedInferredAuthImplicitApiKey(
+    base_url="https://yourhost.com/path/to/api",
     api_key="YOUR_API_KEY",
 )
 client.auth.get_token(
@@ -73,6 +74,7 @@ client.auth.get_token(
 from seed import SeedInferredAuthImplicitApiKey
 
 client = SeedInferredAuthImplicitApiKey(
+    base_url="https://yourhost.com/path/to/api",
     api_key="YOUR_API_KEY",
 )
 client.nested_no_auth.api.get_something()
@@ -120,6 +122,7 @@ client.nested_no_auth.api.get_something()
 from seed import SeedInferredAuthImplicitApiKey
 
 client = SeedInferredAuthImplicitApiKey(
+    base_url="https://yourhost.com/path/to/api",
     api_key="YOUR_API_KEY",
 )
 client.nested.api.get_something()
@@ -167,6 +170,7 @@ client.nested.api.get_something()
 from seed import SeedInferredAuthImplicitApiKey
 
 client = SeedInferredAuthImplicitApiKey(
+    base_url="https://yourhost.com/path/to/api",
     api_key="YOUR_API_KEY",
 )
 client.simple.get_something()

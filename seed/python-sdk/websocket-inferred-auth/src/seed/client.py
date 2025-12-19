@@ -50,7 +50,7 @@ class SeedWebsocketAuth:
     from seed import SeedWebsocketAuth
 
     client = SeedWebsocketAuth(
-        base_url="YOUR_BASE_URL",
+        base_url="https://yourhost.com/path/to/api",
         x_api_key="YOUR_X_API_KEY",
         client_id="YOUR_CLIENT_ID",
         client_secret="YOUR_CLIENT_SECRET",
@@ -149,7 +149,7 @@ class AsyncSeedWebsocketAuth:
     from seed import AsyncSeedWebsocketAuth
 
     client = AsyncSeedWebsocketAuth(
-        base_url="YOUR_BASE_URL",
+        base_url="https://yourhost.com/path/to/api",
         x_api_key="YOUR_X_API_KEY",
         client_id="YOUR_CLIENT_ID",
         client_secret="YOUR_CLIENT_SECRET",

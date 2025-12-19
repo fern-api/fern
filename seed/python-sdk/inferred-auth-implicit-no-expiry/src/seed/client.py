@@ -53,7 +53,7 @@ class SeedInferredAuthImplicitNoExpiry:
     from seed import SeedInferredAuthImplicitNoExpiry
 
     client = SeedInferredAuthImplicitNoExpiry(
-        base_url="YOUR_BASE_URL",
+        base_url="https://yourhost.com/path/to/api",
         x_api_key="YOUR_X_API_KEY",
         client_id="YOUR_CLIENT_ID",
         client_secret="YOUR_CLIENT_SECRET",
@@ -179,7 +179,7 @@ class AsyncSeedInferredAuthImplicitNoExpiry:
     from seed import AsyncSeedInferredAuthImplicitNoExpiry
 
     client = AsyncSeedInferredAuthImplicitNoExpiry(
-        base_url="YOUR_BASE_URL",
+        base_url="https://yourhost.com/path/to/api",
         x_api_key="YOUR_X_API_KEY",
         client_id="YOUR_CLIENT_ID",
         client_secret="YOUR_CLIENT_SECRET",
