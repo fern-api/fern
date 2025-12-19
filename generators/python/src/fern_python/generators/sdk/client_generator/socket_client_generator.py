@@ -238,9 +238,7 @@ class SocketClientGenerator:
 
     def _get_send_message_method(self, message: ir_types.WebSocketMessage, is_async: bool) -> AST.FunctionDeclaration:
         # Use custom method_name if provided, otherwise default to send_{message_type}
-        method_name = (
-            snake_case(message.method_name) if message.method_name else f"send_{snake_case(message.type)}"
-        )
+        method_name = snake_case(message.method_name) if message.method_name else f"send_{snake_case(message.type)}"
 
         union = message.body.get_as_union()
         if not hasattr(union, "body_type"):

@@ -106,16 +106,12 @@ def test_explicit_empty_json_body_is_preserved() -> None:
     unrelated_request_options: RequestOptions = {"max_retries": 3}
 
     # Explicit json={} should be preserved
-    json_body, data_body = get_request_body(
-        json={}, data=None, request_options=unrelated_request_options, omit=None
-    )
+    json_body, data_body = get_request_body(json={}, data=None, request_options=unrelated_request_options, omit=None)
     assert json_body == {}
     assert data_body is None
 
     # Explicit data={} should also be preserved
-    json_body2, data_body2 = get_request_body(
-        json=None, data={}, request_options=unrelated_request_options, omit=None
-    )
+    json_body2, data_body2 = get_request_body(json=None, data={}, request_options=unrelated_request_options, omit=None)
     assert json_body2 is None
     assert data_body2 == {}
 
