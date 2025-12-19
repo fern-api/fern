@@ -1,13 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.46.6
+- version: 4.46.7
   changelogEntry:
     - summary: |
         Fix wire test generation for APIs with environments, error responses, streaming
         endpoints, and URL fragments; fix string escaping for JSON examples and multipart
         form serialization of complex types.
       type: fix
-  createdAt: "2025-12-16"
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 4.46.6
+  changelogEntry:
+    - summary: |
+        Support custom `x-fern-sdk-method-name` on AsyncAPI operations.
+      type: fix
+  createdAt: "2025-12-19"
   irVersion: 62
 
 - version: 4.46.5
