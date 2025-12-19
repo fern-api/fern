@@ -60,11 +60,9 @@ import com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.reques
 
 public class Example {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient
-            .builder()
-            .clientId("<clientId>")
-            .clientSecret("<clientSecret>")
-            .build();
+        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient.withCredentials("<clientId>", "<clientSecret>")
+            .build()
+        ;
 
         client.auth().getTokenWithClientCredentials(
             GetTokenRequest

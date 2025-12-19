@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Explode Parameter Test",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "explodeParameterTest",
+      "unsafeName": "explodeParameterTest",
     },
-    "originalName": "",
+    "originalName": "Explode Parameter Test",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "ExplodeParameterTest",
+      "unsafeName": "ExplodeParameterTest",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "EXPLODE_PARAMETER_TEST",
+      "unsafeName": "EXPLODE_PARAMETER_TEST",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "explode_parameter_test",
+      "unsafeName": "explode_parameter_test",
     },
   },
   "apiPlayground": undefined,

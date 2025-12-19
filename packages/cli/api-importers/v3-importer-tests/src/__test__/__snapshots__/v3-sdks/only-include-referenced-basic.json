@@ -1607,6 +1607,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Schema Pruning Test",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1645,22 +1646,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Schema Pruning Test",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "schemaPruningTest",
+      "safeName": "schemaPruningTest"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "schema_pruning_test",
+      "safeName": "schema_pruning_test"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "SCHEMA_PRUNING_TEST",
+      "safeName": "SCHEMA_PRUNING_TEST"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "SchemaPruningTest",
+      "safeName": "SchemaPruningTest"
     }
   },
   "constants": {

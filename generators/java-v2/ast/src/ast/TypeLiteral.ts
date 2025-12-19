@@ -673,7 +673,9 @@ export class TypeLiteral extends AstNode {
         }
 
         if (values.length === 0) {
-            writer.write(`new ${classReference.name}<`);
+            writer.write("new ");
+            writer.writeNode(classReference);
+            writer.write("<");
             writer.writeNode(iterable.valueType);
             writer.write(">()");
             return;

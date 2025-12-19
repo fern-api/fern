@@ -909,6 +909,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test spec for anyOf with const query parameter",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1013,22 +1014,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test spec for anyOf with const query parameter",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testSpecForAnyOfWithConstQueryParameter",
+      "safeName": "testSpecForAnyOfWithConstQueryParameter"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_spec_for_any_of_with_const_query_parameter",
+      "safeName": "test_spec_for_any_of_with_const_query_parameter"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_SPEC_FOR_ANY_OF_WITH_CONST_QUERY_PARAMETER",
+      "safeName": "TEST_SPEC_FOR_ANY_OF_WITH_CONST_QUERY_PARAMETER"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestSpecForAnyOfWithConstQueryParameter",
+      "safeName": "TestSpecForAnyOfWithConstQueryParameter"
     }
   },
   "constants": {

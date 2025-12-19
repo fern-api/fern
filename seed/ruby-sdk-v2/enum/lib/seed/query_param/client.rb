@@ -24,7 +24,7 @@ module Seed
       #
       # @return [untyped]
       def send_(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
         query_params = {}
         query_params["operand"] = params[:operand] if params.key?(:operand)
@@ -66,7 +66,7 @@ module Seed
       #
       # @return [untyped]
       def send_list(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
         query_params = {}
         query_params["operand"] = params[:operand] if params.key?(:operand)

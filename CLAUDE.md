@@ -6,7 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Package Manager**: This project uses `pnpm` (version 9.4.0+) exclusively. Node.js 18+ required.
 
-**Common Commands**:
+**Important**: Commands from the root `package.json` can be run directly with `pnpm <command>`. However, when running commands defined in subfolder `package.json` files, always use `pnpm turbo run <command>` so that Turbo can execute dependent tasks first (e.g., compilation before testing).
+
+**Common Commands** (from root):
 ```bash
 # Initial setup
 pnpm bootstrap                    # Bootstrap the development environment
@@ -37,7 +39,7 @@ pnpm fern                       # Run local CLI directly
 pnpm seed:build                 # Build seed CLI for generator testing
 ```
 
-**Running Individual Tests**: Use Turbo filters, e.g., `pnpm test --filter @fern-api/cli`
+**Running Individual Package Commands**: For commands in subfolder packages, use `pnpm turbo run <command> --filter @fern-api/cli` (e.g., `pnpm turbo run test --filter @fern-api/cli`)
 
 **Dependency Management**: Run `pnpm depcheck` to check for unused dependencies
 
@@ -164,6 +166,72 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 - **Testing**: Always run `pnpm test:ete` for end-to-end validation after CLI changes
 - **Monorepo**: Use Turbo filters for focused builds/tests on specific packages
 - **Docker**: Generators run in Docker containers for isolation and consistency
+
+### TypeScript Rules
+
+#### Typing
+
+**Never use `any`.** If the type is truly unknown, use `unknown` and narrow it with type guards. If you're tempted to use `any`, stop and find the correct type or create one.
+
+**Never use `as X` for type assertions unless you have information the compiler cannot infer.** Valid uses are rare—typically only when working with DOM APIs, test mocks, or deserializing JSON where you've validated the shape. If you need to assert, prefer `satisfies` for validation without widening.
+
+**Never use `as any` or `as unknown as X`.** These are escape hatches that bypass the type system entirely. If the types don't line up, fix the types.
+
+**Never use non-null assertions (`!`) unless you can prove the value is defined and the compiler simply cannot see it.** Prefer optional chaining (`?.`), nullish coalescing (`??`), or explicit null checks.
+
+**Never use `@ts-ignore`.** If you must suppress an error, use `@ts-expect-error` with a comment explaining why, and only as a last resort.
+
+**Never use loose types like `object`, `{}`, or `Function`.** Use specific object shapes, `Record<K, V>`, or typed function signatures like `() => void`.
+
+**Always provide explicit return types for exported functions and public methods.** This serves as documentation and catches accidental return type changes.
+
+**Prefer type guards and discriminated unions over type assertions for narrowing.** Write `if ('kind' in x)` or custom type guards rather than asserting.
+
+**Prefer `unknown` over `any` in generic constraints when the type truly varies.** Use `<T>` or `<T extends SomeBase>` rather than accepting `any`.
+
+**When working with external data (API responses, JSON parsing), validate and narrow with type guards—never assert the shape blindly.**
+
+Here are additional TypeScript rules beyond type safety:
+
+#### Async/Await & Promises
+
+**Never use `.then()` chains when `async/await` is available.** Prefer linear async code over nested callbacks or promise chains.
+
+**Never forget to `await` a Promise.** Unhandled promises silently fail. If you intentionally don't await, assign to `void` and add a comment explaining why.
+
+**Never use `async` on a function that doesn't `await` anything.** It adds unnecessary overhead and obscures intent.
+
+#### Error Handling
+
+**Never swallow errors with empty catch blocks.** At minimum, log the error. If you truly want to ignore it, add a comment explaining why.
+
+**Never throw strings or plain objects.** Always throw `Error` instances (or subclasses) to preserve stack traces.
+
+**Prefer early returns over deeply nested conditionals.** Guard clauses make code easier to follow.
+
+#### Immutability & Mutation
+
+**Never mutate function parameters.** Create new objects/arrays instead. Use spread, `map`, `filter`, not `push`, `splice`, or direct assignment.
+
+**Prefer `const` over `let`.** Only use `let` when reassignment is actually necessary.
+
+**Never use `var`.**
+
+#### Imports & Modules
+
+**Never use default exports.** Named exports are easier to refactor, auto-import, and grep for.
+
+**Never use `require()` in TypeScript.** Use ES module `import` syntax.
+
+**Keep imports organized.** External dependencies first, then internal modules, then relative imports.
+
+#### Naming & Structure
+
+**Never use abbreviations in variable names unless universally understood** (e.g., `id`, `url`). Write `response`, not `res`. Write `error`, not `err`.
+
+**Never use `I` prefix for interfaces.** Just name the thing what it is.
+
+**Prefer pure functions where possible.** Functions that depend only on their inputs are easier to test and reason about.
 
 ## Generated Code Management
 

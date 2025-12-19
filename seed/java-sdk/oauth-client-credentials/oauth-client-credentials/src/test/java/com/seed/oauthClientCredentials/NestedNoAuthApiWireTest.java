@@ -20,10 +20,8 @@ public class NestedNoAuthApiWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        client = SeedOauthClientCredentialsClient.builder()
+        client = SeedOauthClientCredentialsClient.withCredentials("test-client-id", "test-client-secret")
                 .url(server.url("/").toString())
-                .clientId("test-client-id")
-                .clientSecret("test-client-secret")
                 .build();
     }
 
@@ -45,6 +43,12 @@ public class NestedNoAuthApiWireTest {
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate OAuth Authorization header
+        Assertions.assertEquals(
+                "Bearer test-token",
+                request.getHeader("Authorization"),
+                "OAuth Authorization header should contain Bearer token from OAuth flow");
     }
 
     /**

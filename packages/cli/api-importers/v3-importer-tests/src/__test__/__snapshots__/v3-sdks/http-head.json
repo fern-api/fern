@@ -1403,6 +1403,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test HEAD method",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1438,22 +1439,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test HEAD method",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testHeadMethod",
+      "safeName": "testHeadMethod"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_head_method",
+      "safeName": "test_head_method"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_HEAD_METHOD",
+      "safeName": "TEST_HEAD_METHOD"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestHeadMethod",
+      "safeName": "TestHeadMethod"
     }
   },
   "constants": {

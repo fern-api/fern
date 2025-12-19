@@ -17,6 +17,7 @@ export const WebSocketMessage: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         type: WebSocketMessageId,
         displayName: core.serialization.string().optional(),
+        methodName: core.serialization.string().optional(),
         origin: WebSocketMessageOrigin,
         body: WebSocketMessageBody,
     })
@@ -26,6 +27,7 @@ export declare namespace WebSocketMessage {
     export interface Raw extends Declaration.Raw {
         type: WebSocketMessageId.Raw;
         displayName?: string | null;
+        methodName?: string | null;
         origin: WebSocketMessageOrigin.Raw;
         body: WebSocketMessageBody.Raw;
     }

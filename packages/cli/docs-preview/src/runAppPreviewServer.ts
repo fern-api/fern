@@ -665,6 +665,7 @@ export async function runAppPreviewServer({
 
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
 
+    // Create watcher but don't attach the event handler yet - we'll do that after restartNextJsServer is defined
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
         recursive: true,
         ignoreInitial: true,
@@ -673,78 +674,6 @@ export async function runAppPreviewServer({
     });
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
-
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
-        // Ignore changes to .fern/logs/ directory (contains debug logs)
-        if (targetPath.includes(".fern/logs/") || targetPath.includes(".fern\\logs\\")) {
-            return;
-        }
-
-        context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
-
-        if (isReloading) {
-            return;
-        }
-
-        editedAbsoluteFilepaths.push(AbsoluteFilePath.of(targetPath));
-
-        if (reloadTimer != null) {
-            clearTimeout(reloadTimer);
-        }
-
-        reloadTimer = setTimeout(() => {
-            void (async () => {
-                isReloading = true;
-
-                // Expand the list of files to include pages that depend on changed snippets
-                const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
-                const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
-
-                if (hasSnippetDependencies) {
-                    context.logger.info(
-                        `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
-                    );
-                }
-
-                sendData({
-                    version: 1,
-                    type: "startReload"
-                });
-
-                const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
-
-                editedAbsoluteFilepaths.length = 0;
-
-                sendData({
-                    version: 1,
-                    type: "finishReload"
-                });
-                isReloading = false;
-
-                if (reloadedDocsDefinition != null) {
-                    // Detect slug changes before updating the docs definition
-                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedDocsDefinition);
-
-                    docsDefinition = reloadedDocsDefinition;
-
-                    // Send navigateToSlug events for any slug changes
-                    if (slugChanges.length > 0) {
-                        slugChanges.forEach((change) => {
-                            const eventData = {
-                                version: 1,
-                                type: "navigateToSlug",
-                                oldSlug: change.oldSlug,
-                                newSlug: change.newSlug
-                            };
-
-                            sendData(eventData);
-                        });
-                    }
-                }
-            })();
-        }, RELOAD_DEBOUNCE_MS);
-    });
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
@@ -795,58 +724,184 @@ export async function runAppPreviewServer({
         NODE_OPTIONS: "--max-old-space-size=8096 --enable-source-maps"
     };
 
-    const serverProcess = runExeca(context.logger, "node", [serverPath], {
-        env,
-        doNotPipeOutput: true
-    });
+    // Track the current server process
+    let serverProcess: ReturnType<typeof runExeca> | null = null;
 
-    // Wait for Next.js to be ready by watching for the "Ready" message in stdout
-    const nextJsReady = new Promise<void>((resolve) => {
-        const checkReady = (data: Buffer) => {
-            const output = data.toString();
-            context.logger.debug(`[Next.js] ${output}`);
-            if (output.includes("Ready in") || output.includes("✓ Ready")) {
+    // Function to start the Next.js server
+    const startNextJsServer = (): Promise<void> => {
+        return new Promise((resolve) => {
+            serverProcess = runExeca(context.logger, "node", [serverPath], {
+                env,
+                doNotPipeOutput: true
+            });
+
+            const checkReady = (data: Buffer) => {
+                const output = data.toString();
+                context.logger.debug(`[Next.js] ${output}`);
+                if (output.includes("Ready in") || output.includes("✓ Ready")) {
+                    resolve();
+                }
+            };
+            serverProcess.stdout?.on("data", checkReady);
+
+            // Also log stderr but don't block on it
+            serverProcess.stderr?.on("data", (data) => {
+                context.logger.debug(`[Next.js] ${data.toString()}`);
+            });
+
+            context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
+
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            serverProcess.on("error", (err) => {
+                context.logger.debug(`Server process error: ${err.message}`);
+            });
+
+            // eslint-disable-next-line @typescript-eslint/no-floating-promises
+            serverProcess.on("exit", (code, signal) => {
+                if (code) {
+                    context.logger.debug(`Server process exited with code: ${code}`);
+                } else if (signal) {
+                    context.logger.debug(`Server process killed with signal: ${signal}`);
+                } else {
+                    context.logger.debug("Server process exited");
+                }
+            });
+
+            // Fallback timeout in case we miss the ready message
+            setTimeout(() => {
+                resolve();
+            }, 10000);
+        });
+    };
+
+    // Function to stop the current Next.js server
+    const stopNextJsServer = (): Promise<void> => {
+        return new Promise((resolve) => {
+            if (serverProcess == null || serverProcess.killed) {
+                resolve();
+                return;
+            }
+
+            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
+            try {
+                serverProcess.kill();
+                // Give it a moment to clean up
+                setTimeout(() => {
+                    if (serverProcess != null && !serverProcess.killed) {
+                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
+                        try {
+                            serverProcess.kill("SIGKILL");
+                        } catch (err) {
+                            context.logger.error(`Failed to force kill server process: ${err}`);
+                        }
+                    }
+                    resolve();
+                }, 1000);
+            } catch (err) {
+                context.logger.error(`Failed to kill server process: ${err}`);
                 resolve();
             }
-        };
-        serverProcess.stdout?.on("data", checkReady);
+        });
+    };
 
-        // Fallback timeout in case we miss the ready message
-        setTimeout(() => {
-            resolve();
-        }, 10000);
-    });
+    // Function to restart the Next.js server
+    const restartNextJsServer = async (): Promise<void> => {
+        await stopNextJsServer();
+        await startNextJsServer();
+    };
 
-    // Also log stderr but don't block on it
-    serverProcess.stderr?.on("data", (data) => {
-        context.logger.debug(`[Next.js] ${data.toString()}`);
-    });
+    // Start the initial server
+    await startNextJsServer();
 
-    context.logger.debug(`Next.js standalone server started with PID: ${serverProcess.pid}`);
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    serverProcess.on("error", (err) => {
-        context.logger.debug(`Server process error: ${err.message}`);
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    serverProcess.on("exit", (code, signal) => {
-        if (code) {
-            context.logger.debug(`Server process exited with code: ${code}`);
-        } else if (signal) {
-            context.logger.debug(`Server process killed with signal: ${signal}`);
-        } else {
-            context.logger.debug("Server process exited");
+    // Now that restartNextJsServer is defined, attach the watcher event handler
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
+        // Ignore changes to .fern/logs/ directory (contains debug logs)
+        if (targetPath.includes(".fern/logs/") || targetPath.includes(".fern\\logs\\")) {
+            return;
         }
+
+        context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
+
+        if (isReloading) {
+            return;
+        }
+
+        editedAbsoluteFilepaths.push(AbsoluteFilePath.of(targetPath));
+
+        if (reloadTimer != null) {
+            clearTimeout(reloadTimer);
+        }
+
+        reloadTimer = setTimeout(() => {
+            void (async () => {
+                isReloading = true;
+
+                // Expand the list of files to include pages that depend on changed snippets
+                const filesToReload = snippetTracker.getFilesToReload(editedAbsoluteFilepaths);
+                const hasSnippetDependencies = snippetTracker.hasSnippetDependencies(editedAbsoluteFilepaths);
+
+                if (hasSnippetDependencies) {
+                    context.logger.info(
+                        `Snippet dependencies detected. Reloading ${filesToReload.length} files (${editedAbsoluteFilepaths.length} changed, ${filesToReload.length - editedAbsoluteFilepaths.length} dependent pages)`
+                    );
+                }
+
+                sendData({
+                    version: 1,
+                    type: "startReload"
+                });
+
+                const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
+
+                editedAbsoluteFilepaths.length = 0;
+
+                // Restart the docs server
+                context.logger.info("Restarting docs server...");
+                await restartNextJsServer();
+
+                // Wait 1 second for the server to be ready
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+
+                context.logger.info("Refreshing page. Please refresh manually if you don't see changes.");
+
+                sendData({
+                    version: 1,
+                    type: "finishReload"
+                });
+                isReloading = false;
+
+                if (reloadedDocsDefinition != null) {
+                    // Detect slug changes before updating the docs definition
+                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedDocsDefinition);
+
+                    docsDefinition = reloadedDocsDefinition;
+
+                    // Send navigateToSlug events for any slug changes
+                    if (slugChanges.length > 0) {
+                        slugChanges.forEach((change) => {
+                            const eventData = {
+                                version: 1,
+                                type: "navigateToSlug",
+                                oldSlug: change.oldSlug,
+                                newSlug: change.newSlug
+                            };
+
+                            sendData(eventData);
+                        });
+                    }
+                }
+            })();
+        }, RELOAD_DEBOUNCE_MS);
     });
 
     const cleanup = () => {
-        if (!serverProcess.killed) {
+        if (serverProcess != null && !serverProcess.killed) {
             context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
             try {
                 serverProcess.kill();
                 setTimeout(() => {
-                    if (!serverProcess.killed) {
+                    if (serverProcess != null && !serverProcess.killed) {
                         context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
                         try {
                             serverProcess.kill("SIGKILL");
@@ -902,8 +957,7 @@ export async function runAppPreviewServer({
 
     process.on("beforeExit", cleanup);
 
-    // Wait for Next.js to be ready before announcing the server is ready
-    await nextJsReady;
+    // Server is ready after startNextJsServer completes
     context.logger.info(`Docs preview server ready on http://localhost:${port}`);
 
     // await infinitely

@@ -24,6 +24,7 @@ module Seed
         #
         # @return [String]
         def get_with_path(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -55,6 +56,7 @@ module Seed
         #
         # @return [String]
         def get_with_inline_path(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -87,7 +89,7 @@ module Seed
         #
         # @return [untyped]
         def get_with_query(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.symbolize_keys(params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           query_param_names = %i[query number]
           query_params = {}
           query_params["query"] = params[:query] if params.key?(:query)
@@ -127,7 +129,7 @@ module Seed
         #
         # @return [untyped]
         def get_with_allow_multiple_query(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.symbolize_keys(params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           query_param_names = %i[query number]
           query_params = {}
           query_params["query"] = params[:query] if params.key?(:query)
@@ -167,7 +169,7 @@ module Seed
         #
         # @return [untyped]
         def get_with_path_and_query(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.symbolize_keys(params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           query_param_names = %i[query]
           query_params = {}
           query_params["query"] = params[:query] if params.key?(:query)
@@ -206,7 +208,7 @@ module Seed
         #
         # @return [untyped]
         def get_with_inline_path_and_query(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.symbolize_keys(params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           query_param_names = %i[query]
           query_params = {}
           query_params["query"] = params[:query] if params.key?(:query)
@@ -244,6 +246,7 @@ module Seed
         #
         # @return [String]
         def modify_with_path(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
@@ -276,6 +279,7 @@ module Seed
         #
         # @return [String]
         def modify_with_inline_path(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           path_param_names = %i[param]
           body_params = params.except(*path_param_names)
 

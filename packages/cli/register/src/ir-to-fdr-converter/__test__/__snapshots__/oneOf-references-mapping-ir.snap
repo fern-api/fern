@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "OneOf References Mapping Test API",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "oneOfReferencesMappingTestApi",
+      "unsafeName": "oneOfReferencesMappingTestApi",
     },
-    "originalName": "",
+    "originalName": "OneOf References Mapping Test API",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "OneOfReferencesMappingTestApi",
+      "unsafeName": "OneOfReferencesMappingTestApi",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "ONE_OF_REFERENCES_MAPPING_TEST_API",
+      "unsafeName": "ONE_OF_REFERENCES_MAPPING_TEST_API",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "one_of_references_mapping_test_api",
+      "unsafeName": "one_of_references_mapping_test_api",
     },
   },
   "apiPlayground": undefined,

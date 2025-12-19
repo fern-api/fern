@@ -587,6 +587,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test setting to disable usage of title param",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -623,22 +624,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test setting to disable usage of title param",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testSettingToDisableUsageOfTitleParam",
+      "safeName": "testSettingToDisableUsageOfTitleParam"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_setting_to_disable_usage_of_title_param",
+      "safeName": "test_setting_to_disable_usage_of_title_param"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_SETTING_TO_DISABLE_USAGE_OF_TITLE_PARAM",
+      "safeName": "TEST_SETTING_TO_DISABLE_USAGE_OF_TITLE_PARAM"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestSettingToDisableUsageOfTitleParam",
+      "safeName": "TestSettingToDisableUsageOfTitleParam"
     }
   },
   "constants": {

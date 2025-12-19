@@ -710,6 +710,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Primitive Array Complex API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -743,22 +744,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Primitive Array Complex API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "primitiveArrayComplexApi",
+      "safeName": "primitiveArrayComplexApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "primitive_array_complex_api",
+      "safeName": "primitive_array_complex_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "PRIMITIVE_ARRAY_COMPLEX_API",
+      "safeName": "PRIMITIVE_ARRAY_COMPLEX_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "PrimitiveArrayComplexApi",
+      "safeName": "PrimitiveArrayComplexApi"
     }
   },
   "constants": {
