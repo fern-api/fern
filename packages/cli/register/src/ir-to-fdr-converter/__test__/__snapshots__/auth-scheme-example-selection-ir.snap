@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Auth Scheme Example Selection Test API",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "authSchemeExampleSelectionTestApi",
+      "unsafeName": "authSchemeExampleSelectionTestApi",
     },
-    "originalName": "",
+    "originalName": "Auth Scheme Example Selection Test API",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "AuthSchemeExampleSelectionTestApi",
+      "unsafeName": "AuthSchemeExampleSelectionTestApi",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "AUTH_SCHEME_EXAMPLE_SELECTION_TEST_API",
+      "unsafeName": "AUTH_SCHEME_EXAMPLE_SELECTION_TEST_API",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "auth_scheme_example_selection_test_api",
+      "unsafeName": "auth_scheme_example_selection_test_api",
     },
   },
   "apiPlayground": undefined,

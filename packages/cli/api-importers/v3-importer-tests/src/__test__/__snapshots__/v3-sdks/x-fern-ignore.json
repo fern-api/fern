@@ -1997,6 +1997,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test extension `x-fern-ignore`",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -2034,22 +2035,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test extension `x-fern-ignore`",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testExtensionXFernIgnore",
+      "safeName": "testExtensionXFernIgnore"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_extension_x_fern_ignore",
+      "safeName": "test_extension_x_fern_ignore"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_EXTENSION_X_FERN_IGNORE",
+      "safeName": "TEST_EXTENSION_X_FERN_IGNORE"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestExtensionXFernIgnore",
+      "safeName": "TestExtensionXFernIgnore"
     }
   },
   "constants": {

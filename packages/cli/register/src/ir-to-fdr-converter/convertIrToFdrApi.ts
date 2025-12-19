@@ -20,6 +20,7 @@ export function convertIrToFdrApi({
         types: {},
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir),
+        apiName: ir.apiName.originalName,
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),
         snippetsConfiguration: snippetsConfig,

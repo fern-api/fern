@@ -2,9 +2,33 @@
 - version: 3.28.0
   changelogEntry:
     - summary: |
-        Add `[warning]` and `[error]` labels to each violation message in `fern check` output, making it easier to distinguish between warnings and errors at a glance.
+        Refactor `fern check` output with improved formatting and severity labels. Violations are now displayed in a hierarchical format grouped by `[sdk]` and `[docs]`, with `[error]` (red) and `[warning]` (yellow) labels for each violation. When multiple APIs exist, violations are further grouped by API name. Additional UX improvements include: blue-colored paths, cyan `[sdk]` and magenta `[docs]` headers for visual distinction, warnings displayed before errors, blank lines between violations for readability, and inline issue display when path is empty.
       type: feat
-  createdAt: "2025-12-18"
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.27.3
+  changelogEntry:
+    - summary: |
+        Updates dynamic snippets to pull from an SDK version, if available and specified in the `api.snippets` configuration.
+      type: chore
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.27.2
+  changelogEntry:
+    - summary: |
+        Fix example resolution to treat dollar-prefixed strings as literals when they don't match the valid example reference format. Strings like `"$3.00"`, `"$USD"`, or `"$PATH"` are now treated as literal values without requiring escaping. Valid example references (e.g., `$Type.Example` or `$import.Type.Example`) continue to work as expected.
+      type: fix
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.27.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` hot reload to properly restart the docs server when files change.
+      type: fix
+  createdAt: "2025-12-19"
   irVersion: 62
 
 - version: 3.27.0
