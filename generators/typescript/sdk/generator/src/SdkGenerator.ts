@@ -3,6 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleEndpointCall,
     HttpEndpoint,
@@ -262,17 +263,18 @@ export class SdkGenerator {
 
         // Auto-enable generateEndpointMetadata when ENDPOINT_SECURITY is set
         // because RoutingAuthProvider requires endpoint metadata to function
-        const generateEndpointMetadata =
-            config.generateEndpointMetadata || intermediateRepresentation.auth.requirement === "ENDPOINT_SECURITY";
-        this.config = { ...config, generateEndpointMetadata };
+        if (intermediateRepresentation.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity) {
+            config.generateEndpointMetadata = true;
+        }
+        this.config = config;
 
         this.npmPackage = npmPackage;
         this.rawConfig = rawConfig;
         this.generateJestTests = generateJestTests;
         this.generateOAuthClients =
-            this.config.generateOAuthClients &&
+            config.generateOAuthClients &&
             this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
-        this.shouldGenerateWebsocketClients = this.config.shouldGenerateWebsocketClients;
+        this.shouldGenerateWebsocketClients = config.shouldGenerateWebsocketClients;
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -291,13 +293,13 @@ export class SdkGenerator {
         });
         this.publicExportsManager = new PublicExportsManager();
         this.coreUtilitiesManager = new CoreUtilitiesManager({
-            streamType: this.config.streamType,
-            formDataSupport: this.config.formDataSupport,
-            fetchSupport: this.config.fetchSupport,
+            streamType: config.streamType,
+            formDataSupport: config.formDataSupport,
+            fetchSupport: config.fetchSupport,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
-            generateEndpointMetadata: this.config.generateEndpointMetadata,
-            customPagerName: this.config.customPagerName
+            generateEndpointMetadata: config.generateEndpointMetadata,
+            customPagerName: config.customPagerName
         });
 
         const apiDirectory: ExportedDirectory[] = [
@@ -509,7 +511,7 @@ export class SdkGenerator {
             ir: intermediateRepresentation,
             dependencyManager: this.dependencyManager,
             rootDirectory: this.rootDirectory,
-            writeUnitTests: this.config.writeUnitTests,
+            writeUnitTests: config.writeUnitTests,
             includeSerdeLayer: config.includeSerdeLayer,
             generateWireTests: config.generateWireTests,
             useBigInt: config.useBigInt,
@@ -530,9 +532,9 @@ export class SdkGenerator {
             config: this.rawConfig,
             readmeConfigBuilder: new ReadmeConfigBuilder({
                 endpointSnippets: this.endpointSnippets,
-                fileResponseType: this.config.fileResponseType,
-                fetchSupport: this.config.fetchSupport,
-                generateSubpackageExports: this.config.generateSubpackageExports
+                fileResponseType: config.fileResponseType,
+                fetchSupport: config.fetchSupport,
+                generateSubpackageExports: config.generateSubpackageExports
             }),
             ir: intermediateRepresentation
         });
