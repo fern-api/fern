@@ -30,8 +30,16 @@ export class OAuthAuthProvider implements core.AuthProvider {
         );
     }
 
-    public async getAuthRequest(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
-        const token = await this.getToken(arg);
+    public static getAuthConfigErrorMessage(): string {
+        return "Please provide 'auth.clientId' or 'MY_CLIENT_ID' env var and 'auth.clientSecret' or 'MY_CLIENT_SECRET' env var";
+    }
+
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
+        const token = await this.getToken({ endpointMetadata });
 
         return {
             headers: {
@@ -40,7 +48,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
         };
     }
 
-    private async getToken(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
+    private async getToken({ endpointMetadata }: { endpointMetadata?: core.EndpointMetadata } = {}): Promise<string> {
         if (this._accessToken && this._expiresAt > new Date()) {
             return this._accessToken;
         }
@@ -48,16 +56,15 @@ export class OAuthAuthProvider implements core.AuthProvider {
         if (this._refreshPromise != null) {
             return this._refreshPromise;
         }
-        return this.refresh(arg);
+        return this.refresh({ endpointMetadata });
     }
 
-    private async refresh(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
+    private async refresh({ endpointMetadata }: { endpointMetadata?: core.EndpointMetadata } = {}): Promise<string> {
         this._refreshPromise = (async () => {
             try {
                 const clientId =
-                    (await core.EndpointSupplier.get(this._clientId, {
-                        endpointMetadata: arg?.endpointMetadata ?? {},
-                    })) ?? process.env?.MY_CLIENT_ID;
+                    (await core.EndpointSupplier.get(this._clientId, { endpointMetadata })) ??
+                    process.env?.MY_CLIENT_ID;
                 if (clientId == null) {
                     throw new errors.SeedAnyAuthError({
                         message:
@@ -66,9 +73,8 @@ export class OAuthAuthProvider implements core.AuthProvider {
                 }
 
                 const clientSecret =
-                    (await core.EndpointSupplier.get(this._clientSecret, {
-                        endpointMetadata: arg?.endpointMetadata ?? {},
-                    })) ?? process.env?.MY_CLIENT_SECRET;
+                    (await core.EndpointSupplier.get(this._clientSecret, { endpointMetadata })) ??
+                    process.env?.MY_CLIENT_SECRET;
                 if (clientSecret == null) {
                     throw new errors.SeedAnyAuthError({
                         message:
@@ -114,7 +120,11 @@ export class OAuthTokenOverrideAuthProvider implements core.AuthProvider {
         return "token" in options && options.token != null;
     }
 
-    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
         return {
             headers: {
                 Authorization: `Bearer ${await core.Supplier.get(this._token)}`,

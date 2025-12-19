@@ -22,7 +22,15 @@ export class BearerAuthProvider implements core.AuthProvider {
         return options.token != null || process.env?.MY_TOKEN != null;
     }
 
-    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+    public static getAuthConfigErrorMessage(): string {
+        return "Please provide 'auth.token' or set the 'MY_TOKEN' environment variable";
+    }
+
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
         const token = (await core.Supplier.get(this.token)) ?? process.env?.MY_TOKEN;
         if (token == null) {
             throw new errors.SeedAnyAuthError({
