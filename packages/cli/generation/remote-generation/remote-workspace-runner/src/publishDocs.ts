@@ -572,7 +572,7 @@ async function checkAndDownloadExistingSdkDynamicIRs({
     });
 
     if (Object.keys(snippetConfigWithVersions).length === 0) {
-        context.logger.debug(`[SDK Dynamic IR] No snippet configs with versions found, skipping S3 check`);
+        context.logger.debug(`[SDK Dynamic IR] No snippet configs found, skipping S3 check`);
         return undefined;
     }
 
@@ -630,8 +630,8 @@ async function buildSnippetConfigurationWithVersions({
     workspace: FernWorkspace;
     snippetsConfig: SnippetsConfig;
     context: TaskContext;
-}): Promise<Record<string, { packageName: string; version: string }>> {
-    const result: Record<string, { packageName: string; version: string }> = {};
+}): Promise<Record<string, { packageName: string; version: string | undefined }>> {
+    const result: Record<string, { packageName: string; version: string | undefined }> = {};
 
     const snippetConfigs: Array<{
         language: string;
@@ -690,7 +690,7 @@ async function buildSnippetConfigurationWithVersions({
             continue;
         }
 
-        let version = config.explicitVersion;
+        let version: string | undefined = config.explicitVersion;
         if (!version) {
             const versionResult = await computeSemanticVersionForLanguage({
                 fdr,
@@ -702,10 +702,10 @@ async function buildSnippetConfigurationWithVersions({
             version = versionResult?.version;
         }
 
-        if (version) {
-            result[config.language] = { packageName: config.snippetName, version };
-        } else {
-            context.logger.debug(`[SDK Dynamic IR] ${config.language}: skipping S3 check (no version available)`);
+        // Include the entry even if no version is available - the API will use the latest version
+        result[config.language] = { packageName: config.snippetName, version };
+        if (!version) {
+            context.logger.debug(`[SDK Dynamic IR] ${config.language}: no version specified, will use latest`);
         }
     }
 
