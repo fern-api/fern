@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   When `auth.requirement` is set to `ENDPOINT_SECURITY`, the API definition declares that authentication requirements are specified on individual endpoints rather than globally. 
   All defined auth schemes are included in `auth.schemes` for generators to reference when processing endpoint-specific security.
 
+## [v62.6.0] - 2025-12-18
+- Feature: Add optional `methodName` field to `WebSocketMessage` for custom SDK method naming in websocket operations
+- Feature: Support `x-fern-sdk-method-name` extension in AsyncAPI v3 for custom websocket method names
+
+## [v62.5.0] - 2025-12-14
+- Feature: Add optional `docs` field to `HttpResponse` for webhook response descriptions
+- Feature: Enhanced webhook response documentation support from OpenAPI specifications
+
 ## [v62.4.0] - 2025-12-14
 - Feature: Add `explode` field to PathParameter and QueryParameter types for OpenAPI parameter serialization control
 
