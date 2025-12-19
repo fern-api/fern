@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
+import { camelCase } from "lodash-es";
 import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
 import { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator";
@@ -106,8 +107,40 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
             });
         }
 
-        const authOptionsTypes = childClassNames.map((className) => `${className}.AuthOptions`);
-        const tupleStr = authOptionsTypes.join(",\n        ");
+        // Separate auth schemes into flat (Bearer, Basic, Header) and nested (OAuth, Inferred)
+        // OAuth and Inferred need to be nested to avoid property name conflicts (e.g., "token")
+        const flatAuthOptionsTypes: string[] = [];
+        const nestedAuthOptionsTypes: string[] = [];
+
+        for (const authScheme of this.ir.auth.schemes) {
+            switch (authScheme.type) {
+                case "bearer":
+                    flatAuthOptionsTypes.push(`${BearerAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
+                    break;
+                case "basic":
+                    flatAuthOptionsTypes.push(`${BasicAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
+                    break;
+                case "header":
+                    flatAuthOptionsTypes.push(`${HeaderAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
+                    break;
+                case "oauth":
+                    if (context.generateOAuthClients) {
+                        // Wrap OAuth options under camelCased scheme key to avoid conflicts
+                        const wrapperName = camelCase(authScheme.key);
+                        nestedAuthOptionsTypes.push(`{ ${wrapperName}: ${OAuthAuthProviderGenerator.CLASS_NAME}.AuthOptions }`);
+                    }
+                    break;
+                case "inferred":
+                    // Wrap Inferred options under camelCased scheme key to avoid conflicts
+                    const wrapperName = camelCase(authScheme.key);
+                    nestedAuthOptionsTypes.push(`{ ${wrapperName}: ${InferredAuthProviderGenerator.CLASS_NAME}.AuthOptions }`);
+                    break;
+            }
+        }
+
+        // Combine flat and nested auth options
+        const allAuthOptionsTypes = [...flatAuthOptionsTypes, ...nestedAuthOptionsTypes];
+        const tupleStr = allAuthOptionsTypes.join(",\n        ");
 
         const typeCode = `
     type UnionToIntersection<U> =

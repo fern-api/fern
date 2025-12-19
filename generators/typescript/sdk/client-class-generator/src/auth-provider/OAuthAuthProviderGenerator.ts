@@ -1,6 +1,7 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
 import { type ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
+import { camelCase } from "lodash-es";
 import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator";
@@ -48,6 +49,15 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
         this.includeSerdeLayer = init.includeSerdeLayer;
+    }
+
+    /**
+     * Gets the wrapper property name for this OAuth auth scheme.
+     * This is used to namespace OAuth options when multiple auth schemes are present.
+     * e.g., "OAuth" -> "oauth", "magical_auth" -> "magicalAuth"
+     */
+    public getWrapperPropertyName(): string {
+        return camelCase(this.authScheme.key);
     }
 
     public getFilePath(): ExportedFilePath {
@@ -822,6 +832,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const clientIdType = clientIdIsOptional ? `${supplierType} | undefined` : supplierType;
         const clientSecretType = clientSecretIsOptional ? `${supplierType} | undefined` : supplierType;
 
+        // Wrapper property name for namespacing OAuth options when multiple auth schemes are present
+        const wrapperPropertyName = this.getWrapperPropertyName();
+
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
@@ -861,6 +874,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     isExported: true,
                     type: "BaseClientOptions"
                 },
+                // Export the wrapper property name so aggregators can use it
+                `export const WRAPPER_PROPERTY_NAME = "${wrapperPropertyName}" as const;`,
                 {
                     kind: StructureKind.Function,
                     name: "createInstance",
@@ -868,6 +883,17 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
                     returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
                     statements: `
+        // Check for nested options first (when used with auth aggregators like AnyAuthProvider/RoutingAuthProvider)
+        const nestedOptions = (options as Record<string, unknown>)[WRAPPER_PROPERTY_NAME] as AuthOptions | undefined;
+        if (nestedOptions != null) {
+            // Use nested options - check token override first, then client credentials
+            if ("${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME}" in nestedOptions && nestedOptions.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} != null) {
+                return new ${TOKEN_OVERRIDE_CLASS_NAME}({ ...options, ${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME}: nestedOptions.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} });
+            } else if ("clientId" in nestedOptions && "clientSecret" in nestedOptions) {
+                return new ${CLASS_NAME}({ ...options, clientId: nestedOptions.clientId, clientSecret: nestedOptions.clientSecret });
+            }
+        }
+        // Fall back to flat options for backward compatibility (single auth scheme SDKs)
         if (${TOKEN_OVERRIDE_CLASS_NAME}.canCreate(options)) {
             return new ${TOKEN_OVERRIDE_CLASS_NAME}(options);
         } else if (${CLASS_NAME}.canCreate(options)) {
