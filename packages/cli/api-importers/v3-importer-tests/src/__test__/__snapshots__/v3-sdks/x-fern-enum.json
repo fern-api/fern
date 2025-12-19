@@ -80,6 +80,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test extension `x-fern-enum` for enums",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -114,22 +115,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test extension `x-fern-enum` for enums",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testExtensionXFernEnumForEnums",
+      "safeName": "testExtensionXFernEnumForEnums"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_extension_x_fern_enum_for_enums",
+      "safeName": "test_extension_x_fern_enum_for_enums"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_EXTENSION_X_FERN_ENUM_FOR_ENUMS",
+      "safeName": "TEST_EXTENSION_X_FERN_ENUM_FOR_ENUMS"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestExtensionXFernEnumForEnums",
+      "safeName": "TestExtensionXFernEnumForEnums"
     }
   },
   "constants": {

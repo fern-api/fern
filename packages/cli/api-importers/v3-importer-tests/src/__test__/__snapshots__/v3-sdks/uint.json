@@ -951,6 +951,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test spec for `uint` types specified as number formats.",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -987,22 +988,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test spec for `uint` types specified as number formats.",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testSpecForUintTypesSpecifiedAsNumberFormats",
+      "safeName": "testSpecForUintTypesSpecifiedAsNumberFormats"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_spec_for_uint_types_specified_as_number_formats",
+      "safeName": "test_spec_for_uint_types_specified_as_number_formats"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_SPEC_FOR_UINT_TYPES_SPECIFIED_AS_NUMBER_FORMATS",
+      "safeName": "TEST_SPEC_FOR_UINT_TYPES_SPECIFIED_AS_NUMBER_FORMATS"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestSpecForUintTypesSpecifiedAsNumberFormats",
+      "safeName": "TestSpecForUintTypesSpecifiedAsNumberFormats"
     }
   },
   "constants": {

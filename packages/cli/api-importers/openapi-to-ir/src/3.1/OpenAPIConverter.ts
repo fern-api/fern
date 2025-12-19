@@ -47,6 +47,11 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
         this.updateEndpointsWithDefaultUrl(defaultUrl);
 
+        // Set apiDisplayName from OpenAPI info.title
+        if (this.context.spec.info?.title) {
+            this.ir.apiDisplayName = this.context.spec.info.title;
+        }
+
         return this.finalizeIr();
     }
 

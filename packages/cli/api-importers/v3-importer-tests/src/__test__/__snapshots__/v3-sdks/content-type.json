@@ -1274,6 +1274,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test content-type parsing.",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1307,22 +1308,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test content-type parsing.",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testContentTypeParsing",
+      "safeName": "testContentTypeParsing"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_content_type_parsing",
+      "safeName": "test_content_type_parsing"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_CONTENT_TYPE_PARSING",
+      "safeName": "TEST_CONTENT_TYPE_PARSING"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestContentTypeParsing",
+      "safeName": "TestContentTypeParsing"
     }
   },
   "constants": {
