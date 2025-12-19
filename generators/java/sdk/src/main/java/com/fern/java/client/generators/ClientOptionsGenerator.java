@@ -895,13 +895,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addJavadoc("Create a new Builder initialized with values from an existing ClientOptions")
                 .addStatement("$T builder = new $T()", builderClassName, builderClassName)
                 .addStatement("builder.$L = clientOptions.$L()", environmentField.name, environmentField.name)
-                // We can only copy what's accessible via public methods so we can't get headers directly
                 .addStatement(
                         "builder.$L = $T.of(clientOptions.$L(null))",
                         TIMEOUT_FIELD.name,
                         Optional.class,
                         TIMEOUT_FIELD.name)
-                .addStatement("builder.$L = clientOptions.$L()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+                .addStatement("builder.$L = clientOptions.$L()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
+                .addStatement("builder.$L.putAll(clientOptions.$L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
+                .addStatement("builder.$L.putAll(clientOptions.$L)", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
+                .addStatement("builder.$L = clientOptions.$L()", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name);
 
         for (Map.Entry<VariableId, FieldSpec> entry : variableFields.entrySet()) {
             MethodSpec getter = variableGetters.get(entry.getKey());
