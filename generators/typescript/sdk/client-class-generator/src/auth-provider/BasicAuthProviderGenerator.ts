@@ -241,16 +241,12 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const passwordEnvVar = this.authScheme.passwordEnvVar;
 
         const usernameHint =
-            usernameEnvVar != null
-                ? `'auth.${usernameFieldName}' or '${usernameEnvVar}' env var`
-                : `'auth.${usernameFieldName}'`;
+            usernameEnvVar != null ? `'${usernameFieldName}' or '${usernameEnvVar}' env var` : `'${usernameFieldName}'`;
 
         const passwordHint =
-            passwordEnvVar != null
-                ? `'auth.${passwordFieldName}' or '${passwordEnvVar}' env var`
-                : `'auth.${passwordFieldName}'`;
+            passwordEnvVar != null ? `'${passwordFieldName}' or '${passwordEnvVar}' env var` : `'${passwordFieldName}'`;
 
-        return `return "Please provide ${usernameHint} and ${passwordHint}";`;
+        return `return "Please provide ${usernameHint} and ${passwordHint} when initializing the client";`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {

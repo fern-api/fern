@@ -31,7 +31,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
     }
 
     public static getAuthConfigErrorMessage(): string {
-        return "Please provide 'auth.clientId' or 'MY_CLIENT_ID' env var and 'auth.clientSecret' or 'MY_CLIENT_SECRET' env var";
+        return "Please provide 'clientId' or 'MY_CLIENT_ID' env var and 'clientSecret' or 'MY_CLIENT_SECRET' env var when initializing the client";
     }
 
     public async getAuthRequest({
