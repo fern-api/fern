@@ -302,18 +302,18 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             String clientSecretPropertyName,
             List<Map.Entry<String, String>> customPropertiesWithNames,
             HttpEndpoint httpEndpoint) {
-        // Custom properties (headers) must come BEFORE clientId/clientSecret for staged builders
+        // Required properties (clientId/clientSecret) must come first for staged builders,
+        // followed by optional custom properties (like scope) which are in _FinalStage
         CodeBlock.Builder requestBuilderCode = CodeBlock.builder()
-                .add("$T $L = $T.builder()", fetchTokenRequestType, GET_TOKEN_REQUEST_NAME, fetchTokenRequestType);
+                .add("$T $L = $T.builder()", fetchTokenRequestType, GET_TOKEN_REQUEST_NAME, fetchTokenRequestType)
+                .add(".$L($L)", clientIdPropertyName, CLIENT_ID_FIELD_NAME)
+                .add(".$L($L)", clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME);
 
         for (Map.Entry<String, String> customProp : customPropertiesWithNames) {
             requestBuilderCode.add(".$L($L)", customProp.getValue(), customProp.getKey());
         }
 
-        requestBuilderCode
-                .add(".$L($L)", clientIdPropertyName, CLIENT_ID_FIELD_NAME)
-                .add(".$L($L)", clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME)
-                .add(".build()");
+        requestBuilderCode.add(".build()");
 
         return MethodSpec.methodBuilder(FETCH_TOKEN_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
