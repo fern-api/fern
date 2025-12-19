@@ -860,6 +860,9 @@ export async function runAppPreviewServer({
                 context.logger.info("Restarting docs server...");
                 await restartNextJsServer();
 
+                // Wait 500ms for the server to be ready
+                await new Promise((resolve) => setTimeout(resolve, 500));
+
                 sendData({
                     version: 1,
                     type: "finishReload"
