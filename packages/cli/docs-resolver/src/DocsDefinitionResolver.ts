@@ -750,7 +750,7 @@ export class DocsDefinitionResolver {
         throw new Error(
             this.buildApiNotFoundErrorMessage(
                 apiSection,
-                this.apiWorkspaces.map((w) => w.workspaceName)
+                this.apiWorkspaces.map((w) => w.workspaceName).filter(isNonNullish)
             )
         );
     }
@@ -767,7 +767,7 @@ export class DocsDefinitionResolver {
         throw new Error(
             this.buildApiNotFoundErrorMessage(
                 apiSection,
-                this.ossWorkspaces.map((w) => w.workspaceName)
+                this.ossWorkspaces.map((w) => w.workspaceName).filter(isNonNullish)
             )
         );
     }
