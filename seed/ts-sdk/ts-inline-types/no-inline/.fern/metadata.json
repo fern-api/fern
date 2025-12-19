@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "enableInlineTypes": false
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

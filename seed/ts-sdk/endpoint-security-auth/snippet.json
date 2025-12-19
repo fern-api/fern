@@ -1,0 +1,71 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEndpointSecurityAuthClient } from \"@fern/endpoint-security-auth\";\n\nconst client = new SeedEndpointSecurityAuthClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.auth.getToken({\n    client_id: \"client_id\",\n    client_secret: \"client_secret\",\n    scope: \"scope\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithBearer"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEndpointSecurityAuthClient } from \"@fern/endpoint-security-auth\";\n\nconst client = new SeedEndpointSecurityAuthClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.user.getWithBearer();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithApiKey"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEndpointSecurityAuthClient } from \"@fern/endpoint-security-auth\";\n\nconst client = new SeedEndpointSecurityAuthClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.user.getWithApiKey();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithOAuth"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEndpointSecurityAuthClient } from \"@fern/endpoint-security-auth\";\n\nconst client = new SeedEndpointSecurityAuthClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.user.getWithOAuth();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithAnyAuth"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEndpointSecurityAuthClient } from \"@fern/endpoint-security-auth\";\n\nconst client = new SeedEndpointSecurityAuthClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.user.getWithAnyAuth();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithAllAuth"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEndpointSecurityAuthClient } from \"@fern/endpoint-security-auth\";\n\nconst client = new SeedEndpointSecurityAuthClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.user.getWithAllAuth();\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -370,6 +370,32 @@
       ],
       "additionalProperties": false
     },
+    "auth.EndpointSecuritySchemaDetails": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "auth.EndpointSecuritySchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "endpoint-security": {
+          "$ref": "#/definitions/auth.EndpointSecuritySchemaDetails"
+        }
+      },
+      "required": [
+        "endpoint-security"
+      ],
+      "additionalProperties": false
+    },
     "auth.ApiAuthSchema": {
       "anyOf": [
         {
@@ -380,6 +406,9 @@
         },
         {
           "$ref": "#/definitions/auth.AnyAuthSchemesSchema"
+        },
+        {
+          "$ref": "#/definitions/auth.EndpointSecuritySchema"
         }
       ]
     },

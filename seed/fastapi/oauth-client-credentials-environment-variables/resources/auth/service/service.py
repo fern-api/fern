@@ -69,10 +69,6 @@ class AbstractAuthService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_token_with_client_credentials.__globals__)
-
         router.post(
             path="/token",
             response_model=TokenResponse,
@@ -106,10 +102,6 @@ class AbstractAuthService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.refresh_token.__globals__)
 
         router.post(
             path="/token",

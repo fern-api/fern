@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "environmentEnumName": "MyCustomEnvironment"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

@@ -71,10 +71,6 @@ class AbstractInlinedRequestsService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.post_with_object_bodyand_response.__globals__)
-
         router.post(
             path="/req-bodies/object",
             response_model=ObjectWithOptionalField,

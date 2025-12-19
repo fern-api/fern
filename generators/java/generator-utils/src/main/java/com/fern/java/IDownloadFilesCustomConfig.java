@@ -49,4 +49,10 @@ public interface IDownloadFilesCustomConfig {
 
     @JsonProperty("gradle-plugin-management")
     Optional<String> gradlePluginManagement();
+
+    @Value.Default
+    @JsonProperty("gradle-central-dependency-management")
+    default Boolean gradleCentralDependencyManagement() {
+        return false;
+    }
 }

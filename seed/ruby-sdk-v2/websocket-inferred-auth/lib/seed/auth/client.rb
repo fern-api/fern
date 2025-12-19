@@ -21,13 +21,18 @@ module Seed
       #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token_with_client_credentials(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[client_id client_secret audience grant_type scope]
         body_bag = params.slice(*body_prop_names)
+
+        headers = {}
+        headers["X-Api-Key"] = params[:x_api_key] if params[:x_api_key]
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
+          headers: headers,
           body: Seed::Auth::Types::GetTokenRequest.new(body_bag).to_h,
           request_options: request_options
         )
@@ -56,13 +61,18 @@ module Seed
       #
       # @return [Seed::Auth::Types::TokenResponse]
       def refresh_token(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[client_id client_secret refresh_token audience grant_type scope]
         body_bag = params.slice(*body_prop_names)
+
+        headers = {}
+        headers["X-Api-Key"] = params[:x_api_key] if params[:x_api_key]
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token/refresh",
+          headers: headers,
           body: Seed::Auth::Types::RefreshTokenRequest.new(body_bag).to_h,
           request_options: request_options
         )

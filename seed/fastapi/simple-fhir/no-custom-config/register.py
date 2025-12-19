@@ -7,7 +7,6 @@ import types
 import typing
 
 import fastapi
-import starlette.exceptions
 from .core.abstract_fern_service import AbstractFernService
 from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
 from .core.exceptions.fern_http_exception import FernHTTPException
@@ -24,7 +23,7 @@ def register(
     _app.include_router(__register_service(root), dependencies=dependencies)
 
     _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)  # type: ignore
-    _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)  # type: ignore
+    _app.add_exception_handler(fastapi.HTTPException, http_exception_handler)  # type: ignore
     _app.add_exception_handler(Exception, default_exception_handler)  # type: ignore
 
 

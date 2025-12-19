@@ -22,13 +22,19 @@ module Seed
       #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[query]
         body_bag = params.slice(*body_prop_names)
+
+        headers = {}
+        headers["X-Endpoint-Version"] = params[:endpoint_version] if params[:endpoint_version]
+        headers["X-Async"] = params[:async] if params[:async]
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "headers",
+          headers: headers,
           body: Seed::Headers::Types::SendLiteralsInHeadersRequest.new(body_bag).to_h,
           request_options: request_options
         )

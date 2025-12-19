@@ -5455,6 +5455,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "OpenAPI overrides resolution",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -5494,22 +5495,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "OpenAPI overrides resolution",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "openApiOverridesResolution",
+      "safeName": "openApiOverridesResolution"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "open_api_overrides_resolution",
+      "safeName": "open_api_overrides_resolution"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "OPEN_API_OVERRIDES_RESOLUTION",
+      "safeName": "OPEN_API_OVERRIDES_RESOLUTION"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "OpenApiOverridesResolution",
+      "safeName": "OpenApiOverridesResolution"
     }
   },
   "constants": {

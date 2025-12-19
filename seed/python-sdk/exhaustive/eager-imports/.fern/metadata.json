@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "lazy_imports": false
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

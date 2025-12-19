@@ -22,6 +22,7 @@ module Seed
       #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def post_with_object_bodyand_response(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[string integer nested_object]
         body_bag = params.slice(*body_prop_names)
 

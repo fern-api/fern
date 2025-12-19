@@ -6,5 +6,6 @@
     "inline-path-parameters": true,
     "base-api-exception-class-name": "CustomApiException",
     "base-exception-class-name": "CustomException"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

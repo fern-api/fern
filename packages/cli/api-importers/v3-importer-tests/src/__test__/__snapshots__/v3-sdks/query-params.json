@@ -1359,6 +1359,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Query Parameters API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1392,22 +1393,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Query Parameters API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "queryParametersApi",
+      "safeName": "queryParametersApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "query_parameters_api",
+      "safeName": "query_parameters_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "QUERY_PARAMETERS_API",
+      "safeName": "QUERY_PARAMETERS_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "QueryParametersApi",
+      "safeName": "QueryParametersApi"
     }
   },
   "constants": {

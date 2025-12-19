@@ -104,10 +104,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_with_optional_field.__globals__)
-
         router.post(
             path="/object/get-and-return-with-optional-field",
             response_model=ObjectWithOptionalField,
@@ -150,10 +146,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_with_required_field.__globals__)
-
         router.post(
             path="/object/get-and-return-with-required-field",
             response_model=ObjectWithRequiredField,
@@ -193,10 +185,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_with_map_of_map.__globals__)
 
         router.post(
             path="/object/get-and-return-with-map-of-map",
@@ -239,10 +227,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_nested_with_optional_field.__globals__)
 
         router.post(
             path="/object/get-and-return-nested-with-optional-field",
@@ -290,10 +274,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_nested_with_required_field.__globals__)
-
         router.post(
             path="/object/get-and-return-nested-with-required-field/{string}",
             response_model=NestedObjectWithRequiredField,
@@ -335,10 +315,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_nested_with_required_field_as_list.__globals__)
 
         router.post(
             path="/object/get-and-return-nested-with-required-field-list",

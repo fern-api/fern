@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "OneOf No Discriminator Test API",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "oneOfNoDiscriminatorTestApi",
+      "unsafeName": "oneOfNoDiscriminatorTestApi",
     },
-    "originalName": "",
+    "originalName": "OneOf No Discriminator Test API",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "OneOfNoDiscriminatorTestApi",
+      "unsafeName": "OneOfNoDiscriminatorTestApi",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "ONE_OF_NO_DISCRIMINATOR_TEST_API",
+      "unsafeName": "ONE_OF_NO_DISCRIMINATOR_TEST_API",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "one_of_no_discriminator_test_api",
+      "unsafeName": "one_of_no_discriminator_test_api",
     },
   },
   "apiPlayground": undefined,

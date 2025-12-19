@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 1.0.0-rc72
-  createdAt: "2025-12-17"
+- version: 1.0.0-rc74
+  createdAt: "2025-12-19"
   changelogEntry:
     - type: feat
       summary: |
@@ -10,6 +10,30 @@
         the gem entrypoint will auto-load each file from `lib/<gem>/<path>.rb` if it exists. This
         allows users to add custom code (e.g., Sentry integration) without needing to fernignore
         generated files. Uses file existence check to avoid silently swallowing real errors.
+  irVersion: 61
+
+- version: 1.0.0-rc73
+  changelogEntry:
+    - summary: |
+        Fix endpoint header parameters being included in request body instead of HTTP headers.
+        Header parameters (like Idempotency-Key) are now properly extracted from params and
+        passed via the headers parameter in Request.new() calls.
+      type: fix
+    - summary: |
+        Add normalize_keys utility to accept both snake_case and camelCase parameter keys.
+        SDK endpoint methods now automatically convert camelCase keys (e.g., refundMethod)
+        to snake_case (e.g., refund_method) at the start of each method. This allows users
+        to pass JSON data with camelCase keys directly to SDK methods without manual conversion.
+      type: feat
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 1.0.0-rc72
+  changelogEntry:
+    - summary: |
+        Add sdkVersion as a top-level field in the generated metadata.json file.
+      type: chore
+  createdAt: "2025-12-18"
   irVersion: 61
 
 - version: 1.0.0-rc71

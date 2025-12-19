@@ -85,7 +85,8 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                             node: operation,
                             breadcrumbs: this.breadcrumbs
                         }),
-                        docs: operation.description
+                        docs: operation.description,
+                        methodName: undefined // AsyncAPI direct-to-IR doesn't support x-fern-sdk-method-name extension
                     });
                 }
             }

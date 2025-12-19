@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "should_generate_websocket_clients": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

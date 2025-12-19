@@ -6,5 +6,6 @@
     "pydantic_config": {
       "use_provided_defaults": true
     }
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

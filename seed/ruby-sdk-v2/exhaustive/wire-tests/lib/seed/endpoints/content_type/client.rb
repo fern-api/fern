@@ -21,6 +21,7 @@ module Seed
         #
         # @return [untyped]
         def post_json_patch_content_type(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
@@ -50,6 +51,7 @@ module Seed
         #
         # @return [untyped]
         def post_json_patch_content_with_charset_type(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",

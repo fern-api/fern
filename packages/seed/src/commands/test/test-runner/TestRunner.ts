@@ -59,6 +59,7 @@ export declare namespace TestRunner {
         shouldGenerateDynamicSnippetTests: boolean | undefined;
         inspect: boolean | undefined;
         license?: unknown;
+        smartCasing?: boolean;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -174,6 +175,7 @@ export abstract class TestRunner {
             const publishMetadata = configuration?.publishMetadata ?? undefined;
             const readme = configuration?.readmeConfig ?? undefined;
             const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
+            const smartCasing = generatorInvocation?.smartCasing;
 
             const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
                 absolutePathToAPIDefinition: absolutePathToApiDefinition,
@@ -229,7 +231,8 @@ export abstract class TestRunner {
                     shouldGenerateDynamicSnippetTests:
                         !disableDynamicSnippetTests && workspaceShouldGenerateDynamicSnippetTests(this.generator),
                     inspect,
-                    license
+                    license,
+                    smartCasing
                 });
 
                 generationStopwatch.stop();
