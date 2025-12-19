@@ -737,7 +737,7 @@ export class DocsDefinitionResolver {
     private getFernWorkspaceForApiSection(
         apiSection: docsYml.DocsNavigationItem.ApiSection
     ): AbstractAPIWorkspace<unknown> {
-        if (apiSection.apiName != null) {
+        if (apiSection.apiName != null && apiSection.apiName !== "") {
             const apiWorkspace = this.apiWorkspaces.find((workspace) => {
                 return workspace.workspaceName === apiSection.apiName;
             });
@@ -747,14 +747,16 @@ export class DocsDefinitionResolver {
         } else if (this.apiWorkspaces.length === 1 && this.apiWorkspaces[0] != null) {
             return this.apiWorkspaces[0];
         }
-        const errorMessage = apiSection.apiName
-            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
-            : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
-        throw new Error(errorMessage);
+        throw new Error(
+            this.buildApiNotFoundErrorMessage(
+                apiSection,
+                this.apiWorkspaces.map((w) => w.workspaceName)
+            )
+        );
     }
 
     private getOpenApiWorkspaceForApiSection(apiSection: docsYml.DocsNavigationItem.ApiSection): OSSWorkspace {
-        if (apiSection.apiName != null) {
+        if (apiSection.apiName != null && apiSection.apiName !== "") {
             const ossWorkspace = this.ossWorkspaces.find((workspace) => workspace.workspaceName === apiSection.apiName);
             if (ossWorkspace != null) {
                 return ossWorkspace;
@@ -762,10 +764,61 @@ export class DocsDefinitionResolver {
         } else if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
             return this.ossWorkspaces[0];
         }
-        const errorMessage = apiSection.apiName
-            ? `Failed to load API Definition '${apiSection.apiName}' referenced in docs.\nA valid API configuration was not found at the path: fern/apis/${apiSection.apiName}.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions`
-            : "Failed to load API Definition referenced in docs.\nLearn more about project structure:\nhttps://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions";
-        throw new Error(errorMessage);
+        throw new Error(
+            this.buildApiNotFoundErrorMessage(
+                apiSection,
+                this.ossWorkspaces.map((w) => w.workspaceName)
+            )
+        );
+    }
+
+    private buildApiNotFoundErrorMessage(
+        apiSection: docsYml.DocsNavigationItem.ApiSection,
+        availableWorkspaceNames: string[]
+    ): string {
+        const lines: string[] = [];
+        const apiTitle = apiSection.title;
+
+        if (apiSection.apiName === "") {
+            lines.push(`Failed to load API Definition for '${apiTitle}': api-name is empty.`);
+            lines.push("This may be caused by an unset environment variable.");
+        } else if (apiSection.apiName != null) {
+            lines.push(
+                `Failed to load API Definition '${apiSection.apiName}' referenced in docs (api: '${apiTitle}').`
+            );
+            lines.push(`No API workspace named '${apiSection.apiName}' was found.`);
+        } else if (availableWorkspaceNames.length === 0) {
+            lines.push(`Failed to load API Definition for '${apiTitle}': no API workspaces found.`);
+            lines.push("Make sure you have at least one API defined under fern/apis/.");
+        } else {
+            lines.push(`Failed to load API Definition for '${apiTitle}': api-name is required.`);
+            lines.push(
+                `You have ${availableWorkspaceNames.length} APIs, so you must specify which one to use with 'api-name'.`
+            );
+
+            const matchingWorkspace = availableWorkspaceNames.find((name) => name === apiTitle);
+            if (matchingWorkspace != null) {
+                lines.push("");
+                lines.push(`Hint: It looks like you may have intended to reference the '${matchingWorkspace}' API.`);
+                lines.push("Did you mean to add 'api-name' to your config? For example:");
+                lines.push("");
+                lines.push(`  - api: ${apiTitle}`);
+                lines.push(`    api-name: ${matchingWorkspace}`);
+            }
+        }
+
+        if (availableWorkspaceNames.length > 0) {
+            lines.push("");
+            lines.push(`Available APIs: ${availableWorkspaceNames.join(", ")}`);
+        }
+
+        lines.push("");
+        lines.push("Note: 'api' is the display title, while 'api-name' specifies which API workspace to use.");
+        lines.push(
+            "Learn more: https://buildwithfern.com/learn/docs/getting-started/project-structure#api-definitions"
+        );
+
+        return lines.join("\n");
     }
 
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
