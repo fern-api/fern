@@ -6,7 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Package Manager**: This project uses `pnpm` (version 9.4.0+) exclusively. Node.js 18+ required.
 
-**Common Commands**:
+**Important**: Commands from the root `package.json` can be run directly with `pnpm <command>`. However, when running commands defined in subfolder `package.json` files, always use `pnpm turbo run <command>` so that Turbo can execute dependent tasks first (e.g., compilation before testing).
+
+**Common Commands** (from root):
 ```bash
 # Initial setup
 pnpm bootstrap                    # Bootstrap the development environment
@@ -37,7 +39,7 @@ pnpm fern                       # Run local CLI directly
 pnpm seed:build                 # Build seed CLI for generator testing
 ```
 
-**Running Individual Tests**: Use Turbo filters, e.g., `pnpm test --filter @fern-api/cli`
+**Running Individual Package Commands**: For commands in subfolder packages, use `pnpm turbo run <command> --filter @fern-api/cli` (e.g., `pnpm turbo run test --filter @fern-api/cli`)
 
 **Dependency Management**: Run `pnpm depcheck` to check for unused dependencies
 
