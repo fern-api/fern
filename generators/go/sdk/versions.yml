@@ -6,7 +6,7 @@
         Add request scoping to wire tests using X-Test-Id header. Each test now sends a unique
         header that is used to filter WireMock request verification, enabling safe concurrent
         test execution without interference between tests.
-      type: feat
+      type: fix
   createdAt: "2025-12-18"
   irVersion: 60
 
