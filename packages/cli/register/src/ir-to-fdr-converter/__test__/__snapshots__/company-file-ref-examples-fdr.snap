@@ -1,4 +1,5 @@
 {
+  "apiName": "test",
   "auth": undefined,
   "authSchemes": {},
   "globalHeaders": [],

@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Auth Name Collision Test API",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "authNameCollisionTestApi",
+      "unsafeName": "authNameCollisionTestApi",
     },
-    "originalName": "",
+    "originalName": "Auth Name Collision Test API",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "AuthNameCollisionTestApi",
+      "unsafeName": "AuthNameCollisionTestApi",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "AUTH_NAME_COLLISION_TEST_API",
+      "unsafeName": "AUTH_NAME_COLLISION_TEST_API",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "auth_name_collision_test_api",
+      "unsafeName": "auth_name_collision_test_api",
     },
   },
   "apiPlayground": undefined,

@@ -736,6 +736,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Parameter Reference Test",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -772,22 +773,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Parameter Reference Test",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "parameterReferenceTest",
+      "safeName": "parameterReferenceTest"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "parameter_reference_test",
+      "safeName": "parameter_reference_test"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "PARAMETER_REFERENCE_TEST",
+      "safeName": "PARAMETER_REFERENCE_TEST"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "ParameterReferenceTest",
+      "safeName": "ParameterReferenceTest"
     }
   },
   "constants": {
