@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileLocation, GoFile } from "@fern-api/go-base";
 import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
@@ -24,7 +25,23 @@ export class InternalFilesGenerator {
         const errorsByNamespace = this.groupErrorsByNamespace();
 
         const files: GoFile[] = [];
-        for (const [_, errors] of errorsByNamespace.entries()) {
+
+        // Always generate a root error_codes.go file, even if there are no errors.
+        // This is required because client code always references ErrorCodes from the root package.
+        const rootImportPath = this.context.getRootImportPath();
+        const rootErrors = errorsByNamespace.get(rootImportPath) ?? [];
+        const rootLocation: FileLocation = {
+            importPath: rootImportPath,
+            directory: RelativeFilePath.of("")
+        };
+        files.push(this.generateErrorCodesFile(rootErrors, rootLocation));
+
+        // Generate error_codes.go files for other namespaces that have errors
+        for (const [importPath, errors] of errorsByNamespace.entries()) {
+            if (importPath === rootImportPath) {
+                // Already handled above
+                continue;
+            }
             const firstError = errors[0];
             if (firstError == null) {
                 continue;
