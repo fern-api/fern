@@ -884,7 +884,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
                     statements: `
         // Check for nested options first (when used with auth aggregators like AnyAuthProvider/RoutingAuthProvider)
-        const nestedOptions = (options as Record<string, unknown>)[WRAPPER_PROPERTY_NAME] as AuthOptions | undefined;
+        const nestedOptions = (options as unknown as Record<string, unknown>)[WRAPPER_PROPERTY_NAME] as AuthOptions | undefined;
         if (nestedOptions != null) {
             // Use nested options - check token override first, then client credentials
             if ("${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME}" in nestedOptions && nestedOptions.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} != null) {
