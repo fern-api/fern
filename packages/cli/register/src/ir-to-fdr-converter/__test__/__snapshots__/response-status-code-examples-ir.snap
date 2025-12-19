@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Session API",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "sessionApi",
+      "unsafeName": "sessionApi",
     },
-    "originalName": "",
+    "originalName": "Session API",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "SessionApi",
+      "unsafeName": "SessionApi",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "SESSION_API",
+      "unsafeName": "SESSION_API",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "session_api",
+      "unsafeName": "session_api",
     },
   },
   "apiPlayground": undefined,

@@ -6,5 +6,6 @@
     "enable-inline-types": true,
     "wrapped-aliases": false,
     "enable-forward-compatible-enums": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

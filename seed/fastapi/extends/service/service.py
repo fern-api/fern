@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import starlette
 from ..core.abstract_fern_service import AbstractFernService
 from ..core.exceptions.fern_http_exception import FernHTTPException
 from ..core.route_args import get_route_args
@@ -43,7 +42,9 @@ class AbstractRootService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.extended_inline_request_body, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -60,14 +61,10 @@ class AbstractRootService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.extended_inline_request_body.__globals__)
-
         router.post(
             path="/extends/extended-inline-request-body",
             response_model=None,
-            status_code=starlette.status.HTTP_204_NO_CONTENT,
+            status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractRootService.extended_inline_request_body.__doc__,
             **get_route_args(cls.extended_inline_request_body, default_tag=""),
         )(wrapper)

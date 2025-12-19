@@ -263,6 +263,7 @@
   },
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Webhooks",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -298,22 +299,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Webhooks",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "webhooks",
+      "safeName": "webhooks"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "webhooks",
+      "safeName": "webhooks"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "WEBHOOKS",
+      "safeName": "WEBHOOKS"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "Webhooks",
+      "safeName": "Webhooks"
     }
   },
   "constants": {

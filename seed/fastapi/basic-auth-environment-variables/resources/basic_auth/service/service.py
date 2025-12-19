@@ -56,7 +56,9 @@ class AbstractBasicAuthService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_with_basic_auth, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -75,10 +77,6 @@ class AbstractBasicAuthService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_with_basic_auth.__globals__)
-
         router.get(
             path="/basic-auth",
             response_model=bool,
@@ -94,9 +92,13 @@ class AbstractBasicAuthService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.post_with_basic_auth, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -114,10 +116,6 @@ class AbstractBasicAuthService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.post_with_basic_auth.__globals__)
 
         router.post(
             path="/basic-auth",

@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Multiple Security Headers Test API",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "multipleSecurityHeadersTestApi",
+      "unsafeName": "multipleSecurityHeadersTestApi",
     },
-    "originalName": "",
+    "originalName": "Multiple Security Headers Test API",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "MultipleSecurityHeadersTestApi",
+      "unsafeName": "MultipleSecurityHeadersTestApi",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "MULTIPLE_SECURITY_HEADERS_TEST_API",
+      "unsafeName": "MULTIPLE_SECURITY_HEADERS_TEST_API",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "multiple_security_headers_test_api",
+      "unsafeName": "multiple_security_headers_test_api",
     },
   },
   "apiPlayground": undefined,

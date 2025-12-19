@@ -1,5 +1,81 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.46.6
+  changelogEntry:
+    - summary: |
+        Support custom `x-fern-sdk-method-name` on AsyncAPI operations.
+      type: fix
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 4.46.5
+  changelogEntry:
+    - summary: |
+        Update to support IR version 62.6.0 with new WebSocketMessage.methodName field,
+        webhook response descriptions, and OpenAPI explode parameter support.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 62
+
+- version: 4.46.4-rc2
+  changelogEntry:
+    - summary: |
+        Add sdkVersion as a top-level field in the generated metadata.json file.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 4.46.4-rc1
+  changelogEntry:
+    - summary: |
+        Fix URL path stripping when base URL contains path prefixes.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 4.46.4-rc0
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to use `config.client.exported_class_name` for the client class name
+        instead of deriving it from the organization and workspace names. This ensures wire tests
+        import and instantiate the correct client class when a custom exported class name is configured.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 4.46.3
+  changelogEntry:
+    - summary: |
+        Fix empty request body issue where endpoints with all-optional fields would send an empty
+        body instead of `{}`. When an endpoint has a request body type but all fields are optional,
+        the SDK now correctly sends `{}` as valid JSON rather than omitting the body entirely.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 61
+
+- version: 4.46.2
+  changelogEntry:
+    - summary: |
+        Fix handling of newlines in default values for strings when using `config.pydantic_config.use_provided_defaults`.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 4.46.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth token handling for optional expires_in field with default fallback.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 4.46.0
+  changelogEntry:
+    - summary: |
+        FastAPI Python codegen now emits parameter markers via `typing.Annotated[...]` with standard Python defaults for better FastAPI/Pydantic compatibility.
+      type: feat
+  createdAt: "2025-12-16"
+  irVersion: 61
 
 - version: 4.45.10
   changelogEntry:

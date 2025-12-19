@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Balance Max Null Test API",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "balanceMaxNullTestApi",
+      "unsafeName": "balanceMaxNullTestApi",
     },
-    "originalName": "",
+    "originalName": "Balance Max Null Test API",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "BalanceMaxNullTestApi",
+      "unsafeName": "BalanceMaxNullTestApi",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "BALANCE_MAX_NULL_TEST_API",
+      "unsafeName": "BALANCE_MAX_NULL_TEST_API",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "balance_max_null_test_api",
+      "unsafeName": "balance_max_null_test_api",
     },
   },
   "apiPlayground": undefined,

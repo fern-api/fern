@@ -3407,6 +3407,16 @@
             }
           ]
         },
+        "method-name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "origin": {
           "$ref": "#/definitions/websocket.WebSocketOrigin"
         },

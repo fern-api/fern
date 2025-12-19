@@ -10,14 +10,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Company'
+              $ref: "#/components/schemas/Company"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Company'
+                $ref: "#/components/schemas/Company"
 components:
   schemas:
     Company:
@@ -30,7 +30,7 @@ components:
           examples:
             - Acme Inc.
         logo:
-          $ref: '#/components/schemas/File'
+          $ref: "#/components/schemas/File"
           examples:
             - url: https://images.example.com/logo.png
               mimetype: image/png

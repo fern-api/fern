@@ -6,7 +6,8 @@ FAST_API_MODULE = AST.Module.external(
     module_path=("fastapi",),
     dependency=AST.Dependency(
         name="fastapi",
-        version="^0.111.0",
+        version="0.123.5",
+        compatibility=AST.DependencyCompatibility.GREATER_THAN_OR_EQUAL,
     ),
 )
 
@@ -47,18 +48,37 @@ class APIRouter:
 class FastAPI:
     FastAPI = AST.TypeHint(type=_export("FastAPI"))
 
-    Path = AST.Expression(
-        AST.FunctionInvocation(
-            function_definition=_export(
-                "Path",
-            ),
-            args=[AST.Expression(AST.CodeWriter("..."))],
+    @staticmethod
+    def Path(
+        *,
+        variable_name: str,
+        wire_value: str,
+        docs: Optional[str],
+    ) -> AST.Expression:
+        kwargs: List[Tuple[str, AST.Expression]] = []
+        if variable_name != wire_value:
+            kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
+        if docs is not None:
+            kwargs.append(
+                (
+                    "description",
+                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n").replace("\r", "\\r") + '"')),
+                )
+            )
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=_export(
+                    "Path",
+                ),
+                kwargs=kwargs,
+            )
         )
-    )
 
     Request = AST.TypeHint(type=_export("requests", "Request"))
 
     HTTPException = _export("HTTPException")
+
+    HTTP_204_NO_CONTENT = _export("status", "HTTP_204_NO_CONTENT")
 
     HTTPBasic = _export("security", "HTTPBasic")
 
@@ -93,7 +113,7 @@ class FastAPI:
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=body_function_definition,
-                args=[AST.Expression(AST.CodeWriter("..."))],
+                args=[],
             )
         )
 
@@ -109,10 +129,8 @@ class FastAPI:
         )
 
     @staticmethod
-    def Header(*, is_optional: bool, wire_value: str) -> AST.Expression:
+    def Header(*, wire_value: str) -> AST.Expression:
         kwargs: List[Tuple[str, AST.Expression]] = []
-        if is_optional:
-            kwargs.append(("default", AST.Expression(AST.TypeHint.none())))
         kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
         return AST.Expression(
             AST.FunctionInvocation(
@@ -126,13 +144,11 @@ class FastAPI:
     @staticmethod
     def Query(
         *,
-        default: Optional[AST.Expression],
         variable_name: str,
         wire_value: str,
         docs: Optional[str],
     ) -> AST.Expression:
         kwargs: List[Tuple[str, AST.Expression]] = []
-        kwargs.append(("default", default if default is not None else AST.Expression("...")))
         if variable_name != wire_value:
             kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
         if docs is not None:
@@ -146,6 +162,32 @@ class FastAPI:
             AST.FunctionInvocation(
                 function_definition=_export(
                     "Query",
+                ),
+                kwargs=kwargs,
+            )
+        )
+
+    @staticmethod
+    def File(
+        *,
+        variable_name: str,
+        wire_value: str,
+        docs: Optional[str],
+    ) -> AST.Expression:
+        kwargs: List[Tuple[str, AST.Expression]] = []
+        if variable_name != wire_value:
+            kwargs.append(("alias", AST.Expression(AST.CodeWriter(f'"{wire_value}"'))))
+        if docs is not None:
+            kwargs.append(
+                (
+                    "description",
+                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n").replace("\r", "\\r") + '"')),
+                )
+            )
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=_export(
+                    "File",
                 ),
                 kwargs=kwargs,
             )

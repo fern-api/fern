@@ -60,11 +60,9 @@ import com.seed.oauthClientCredentialsMandatoryAuth.resources.auth.requests.GetT
 
 public class Example {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsMandatoryAuthClient client = SeedOauthClientCredentialsMandatoryAuthClient
-            .builder()
-            .clientId("<clientId>")
-            .clientSecret("<clientSecret>")
-            .build();
+        SeedOauthClientCredentialsMandatoryAuthClient client = SeedOauthClientCredentialsMandatoryAuthClient.withCredentials("<clientId>", "<clientSecret>")
+            .build()
+        ;
 
         client.auth().getTokenWithClientCredentials(
             GetTokenRequest
@@ -76,6 +74,29 @@ public class Example {
         );
     }
 }
+```
+## Authentication
+
+This SDK supports two authentication methods:
+
+### Option 1: Direct Bearer Token
+
+If you already have a valid access token, you can use it directly:
+
+```java
+SeedOauthClientCredentialsMandatoryAuthClient client = SeedOauthClientCredentialsMandatoryAuthClient.withToken("your-access-token")
+    .url("https://api.example.com")
+    .build();
+```
+
+### Option 2: OAuth Client Credentials
+
+The SDK can automatically handle token acquisition and refresh:
+
+```java
+SeedOauthClientCredentialsMandatoryAuthClient client = SeedOauthClientCredentialsMandatoryAuthClient.withCredentials("client-id", "client-secret")
+    .url("https://api.example.com")
+    .build();
 ```
 
 ## Base Url
@@ -152,7 +173,6 @@ SeedOauthClientCredentialsMandatoryAuthClient client = SeedOauthClientCredential
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.oauthClientCredentialsMandatoryAuth.SeedOauthClientCredentialsMandatoryAuthClient;
 import com.seed.oauthClientCredentialsMandatoryAuth.core.RequestOptions;
@@ -160,7 +180,7 @@ import com.seed.oauthClientCredentialsMandatoryAuth.core.RequestOptions;
 // Client level
 SeedOauthClientCredentialsMandatoryAuthClient client = SeedOauthClientCredentialsMandatoryAuthClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -168,7 +188,7 @@ client.auth().getTokenWithClientCredentials(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

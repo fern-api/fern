@@ -192,8 +192,19 @@ def get_request_body(
         # If both data and json are None, we send json data in the event extra properties are specified
         json_body = maybe_filter_request_body(json, request_options, omit)
 
-    # If you have an empty JSON body, you should just send None
-    return (json_body if json_body != {} else None), data_body if data_body != {} else None
+    has_additional_body_parameters = bool(
+        request_options is not None and request_options.get("additional_body_parameters")
+    )
+
+    # Only collapse empty dict to None when the body was not explicitly provided
+    # and there are no additional body parameters. This preserves explicit empty
+    # bodies (e.g., when an endpoint has a request body type but all fields are optional).
+    if json_body == {} and json is None and not has_additional_body_parameters:
+        json_body = None
+    if data_body == {} and data is None and not has_additional_body_parameters:
+        data_body = None
+
+    return json_body, data_body
 
 
 class HttpClient:
@@ -237,7 +248,7 @@ class HttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
@@ -301,9 +312,9 @@ class HttpClient:
             timeout=timeout,
         )
 
-        max_retries: int = request_options.get("max_retries", 0) if request_options is not None else 0
+        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
         if _should_retry(response=response):
-            if max_retries > retries:
+            if retries < max_retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
                 return self.request(
                     path=path,
@@ -340,7 +351,7 @@ class HttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> typing.Iterator[httpx.Response]:
@@ -454,7 +465,7 @@ class AsyncHttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
@@ -522,9 +533,9 @@ class AsyncHttpClient:
             timeout=timeout,
         )
 
-        max_retries: int = request_options.get("max_retries", 0) if request_options is not None else 0
+        max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
         if _should_retry(response=response):
-            if max_retries > retries:
+            if retries < max_retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
                 return await self.request(
                     path=path,
@@ -560,7 +571,7 @@ class AsyncHttpClient:
         ] = None,
         headers: typing.Optional[typing.Dict[str, typing.Any]] = None,
         request_options: typing.Optional[RequestOptions] = None,
-        retries: int = 2,
+        retries: int = 0,
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> typing.AsyncIterator[httpx.Response]:

@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Throttled Error Response Test",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "throttledErrorResponseTest",
+      "unsafeName": "throttledErrorResponseTest",
     },
-    "originalName": "",
+    "originalName": "Throttled Error Response Test",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "ThrottledErrorResponseTest",
+      "unsafeName": "ThrottledErrorResponseTest",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "THROTTLED_ERROR_RESPONSE_TEST",
+      "unsafeName": "THROTTLED_ERROR_RESPONSE_TEST",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "throttled_error_response_test",
+      "unsafeName": "throttled_error_response_test",
     },
   },
   "apiPlayground": undefined,

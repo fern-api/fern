@@ -23,11 +23,19 @@ module Seed
       # @option params [Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
       #
       # @return [untyped]
-      def send_(request_options: {}, **_params)
+      def send_(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        headers = {}
+        headers["operand"] = params[:operand] if params[:operand]
+        headers["maybeOperand"] = params[:maybe_operand] if params[:maybe_operand]
+        headers["operandOrColor"] = params[:operand_or_color] if params[:operand_or_color]
+        headers["maybeOperandOrColor"] = params[:maybe_operand_or_color] if params[:maybe_operand_or_color]
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "headers",
+          headers: headers,
           request_options: request_options
         )
         begin

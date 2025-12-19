@@ -85,9 +85,9 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_string, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -104,10 +104,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_string.__globals__)
-        
         router.post(
             path="/primitive/string",
             response_model=str,
@@ -123,9 +119,9 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_int, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -142,10 +138,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_int.__globals__)
-        
         router.post(
             path="/primitive/integer",
             response_model=int,
@@ -161,9 +153,9 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_long, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -180,10 +172,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_long.__globals__)
-        
         router.post(
             path="/primitive/long",
             response_model=int,
@@ -199,9 +187,9 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_double, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -218,10 +206,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_double.__globals__)
-        
         router.post(
             path="/primitive/double",
             response_model=float,
@@ -237,9 +221,9 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_bool, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -256,10 +240,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_bool.__globals__)
-        
         router.post(
             path="/primitive/boolean",
             response_model=bool,
@@ -275,9 +255,9 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_datetime, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -294,10 +274,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_datetime.__globals__)
-        
         router.post(
             path="/primitive/datetime",
             response_model=dt.datetime,
@@ -313,9 +289,9 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_date, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -332,10 +308,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_date.__globals__)
-        
         router.post(
             path="/primitive/date",
             response_model=dt.date,
@@ -351,9 +323,9 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_uuid, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -370,10 +342,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_uuid.__globals__)
-        
         router.post(
             path="/primitive/uuid",
             response_model=uuid.UUID,
@@ -389,9 +357,9 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_base_64, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -407,10 +375,6 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-        
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_base_64.__globals__)
         
         router.post(
             path="/primitive/base64",

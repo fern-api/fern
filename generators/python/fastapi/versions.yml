@@ -1,5 +1,42 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 2.0.1
+  changelogEntry:
+    - summary: |
+        Update to support IR version 62.6.0 with new WebSocketMessage.methodName field,
+        webhook response descriptions, and OpenAPI explode parameter support.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 62
+
+- version: 2.0.0
+  changelogEntry:
+    - type: break
+      summary: Minimum FastAPI version requirement increased and direct Starlette dependency removed
+      changed:
+        - >-
+          Removed workaround in FastAPI generator for https://github.com/fastapi/fastapi/issues/5065 by bumping
+          the minimum FastAPI version to 0.123.5 which addresses the issue (see https://github.com/fastapi/fastapi/pull/5077).
+          Generated FastAPI servers now require FastAPI >=0.123.5 when not using local output mode, which will
+          be reflected in the generated pyproject.toml.
+
+        - >-
+          Starlette is no longer a direct dependency. FastAPI will automatically manage the correct
+          Starlette version (>=0.40.0) as a transitive dependency. If you previously had Starlette as a
+          direct dependency, you can remove it from your `pyproject.toml` or `requirements.txt`.
+          FastAPI will handle the Starlette dependency automatically
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 1.14.0
+  changelogEntry:
+    - summary: |
+        FastAPI Python codegen now emits parameter markers via `typing.Annotated[...]` with standard Python defaults for better FastAPI/Pydantic compatibility.
+      type: feat
+  createdAt: "2025-12-16"
+  irVersion: 61
+
 - version: 1.13.2
   changelogEntry:
     - summary: |
@@ -202,15 +239,15 @@
     - type: fix
       summary: |
         The FastAPI generator now supports a new mode for pydantic model generation,
-        to use pydantic v1 on v2 versions. 
+        to use pydantic v1 on v2 versions.
 
         ```yml generators.yml
-        generators: 
-          server: 
+        generators:
+          server:
             - name: fernapi/fern-fastapi-server
               version: 1.6.0
-              config: 
-                pydantic: 
+              config:
+                pydantic:
                   version: "v1_on_v2"
         ````
 

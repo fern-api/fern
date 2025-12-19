@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Wildcard Status Code Conflict Test",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "wildcardStatusCodeConflictTest",
+      "unsafeName": "wildcardStatusCodeConflictTest",
     },
-    "originalName": "",
+    "originalName": "Wildcard Status Code Conflict Test",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "WildcardStatusCodeConflictTest",
+      "unsafeName": "WildcardStatusCodeConflictTest",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "WILDCARD_STATUS_CODE_CONFLICT_TEST",
+      "unsafeName": "WILDCARD_STATUS_CODE_CONFLICT_TEST",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "wildcard_status_code_conflict_test",
+      "unsafeName": "wildcard_status_code_conflict_test",
     },
   },
   "apiPlayground": undefined,

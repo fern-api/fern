@@ -22,6 +22,7 @@ module Seed
       #
       # @return [Seed::Problem::Types::CreateProblemResponse]
       def create_problem(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -56,6 +57,7 @@ module Seed
       #
       # @return [Seed::Problem::Types::UpdateProblemResponse]
       def update_problem(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -90,6 +92,7 @@ module Seed
       #
       # @return [untyped]
       def delete_problem(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
@@ -120,6 +123,7 @@ module Seed
       #
       # @return [Seed::Problem::Types::GetDefaultStarterFilesResponse]
       def get_default_starter_files(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[input_params output_type method_name]
         body_bag = params.slice(*body_prop_names)
 

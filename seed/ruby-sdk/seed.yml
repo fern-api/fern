@@ -73,6 +73,7 @@ allowedFailures:
   - client-side-params
   - content-type
   - cross-package-type-names
+  - dollar-string-examples
   - header-auth
   - empty-clients
   - enum
@@ -117,6 +118,7 @@ allowedFailures:
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-mandatory-auth
   - oauth-client-credentials-nested-root
+  - oauth-client-credentials-reference
   - oauth-client-credentials-with-variables
   - object
   - objects-with-imports
@@ -148,6 +150,7 @@ allowedFailures:
   - undiscriminated-unions
   - undiscriminated-union-with-response-property
   - unions
+  - endpoint-security-auth
   # Java-specific fixture for LocalDate support
   - unions-with-local-date
   - unknown

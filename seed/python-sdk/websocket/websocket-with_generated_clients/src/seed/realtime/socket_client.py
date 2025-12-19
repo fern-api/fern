@@ -68,7 +68,7 @@ class AsyncRealtimeSocketClient(EventEmitterMixin):
         """
         await self._send_model(message)
 
-    async def send_send_2(self, message: SendEvent2) -> None:
+    async def custom_send(self, message: SendEvent2) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent2.
@@ -142,7 +142,7 @@ class RealtimeSocketClient(EventEmitterMixin):
         """
         self._send_model(message)
 
-    def send_send_2(self, message: SendEvent2) -> None:
+    def custom_send(self, message: SendEvent2) -> None:
         """
         Send a message to the websocket connection.
         The message will be sent as a SendEvent2.

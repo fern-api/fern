@@ -28,6 +28,8 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
+import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview";
+import { listDocsPreview } from "./commands/docs-preview/listDocsPreview";
 import { downgrade } from "./commands/downgrade/downgrade";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
@@ -1253,7 +1255,7 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "test",
-        "Runs tests specified in --command, this spins up a mock server in the background that is terminated upon completion of the tests.",
+        false,
         (yargs) =>
             yargs
                 .option("api", {
@@ -1290,7 +1292,7 @@ function addTestCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "mock",
-        "Starts a mock server for an API.",
+        false,
         (yargs) =>
             yargs
                 .option("port", {
@@ -1471,14 +1473,72 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
 
 function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("docs", "Commands for managing your docs", (yargs) => {
-        // Add subcommands directly
-        addDocsPreviewCommand(yargs, cliContext);
+        addDocsDevCommand(yargs, cliContext);
         addDocsBrokenLinksCommand(yargs, cliContext);
+        addDocsPreviewCommand(yargs, cliContext);
         return yargs;
     });
 }
 
 function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("preview", "Commands for managing preview deployments", (yargs) => {
+        addDocsPreviewListCommand(yargs, cliContext);
+        addDocsPreviewDeleteCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsPreviewListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "list",
+        "List all preview deployments",
+        (yargs) =>
+            yargs
+                .option("limit", {
+                    type: "number",
+                    description: "Maximum number of preview deployments to display"
+                })
+                .option("page", {
+                    type: "number",
+                    description: "Page number for pagination (starts at 1)"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs preview list"
+            });
+            await listDocsPreview({
+                cliContext,
+                limit: argv.limit,
+                page: argv.page
+            });
+        }
+    );
+}
+
+function addDocsPreviewDeleteCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "delete <url>",
+        "Delete a preview deployment",
+        (yargs) =>
+            yargs.positional("url", {
+                type: "string",
+                description:
+                    "The FQDN of the preview deployment to delete (e.g. acme-preview-abc123.docs.buildwithfern.com)",
+                demandOption: true
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs preview delete"
+            });
+            await deleteDocsPreview({
+                cliContext,
+                previewUrl: argv.url
+            });
+        }
+    );
+}
+
+function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "dev",
         "Run a local development server to preview your docs",
@@ -1511,6 +1571,11 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 .option("backend-port", {
                     number: true,
                     description: "Run the development backend server on the following port"
+                })
+                .option("force-download", {
+                    boolean: true,
+                    default: false,
+                    description: "Force re-download of the docs preview bundle by deleting the cached bundle"
                 }),
         async (argv) => {
             if (argv.beta) {
@@ -1546,7 +1611,8 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
                 legacyPreview: argv.legacy,
-                backendPort
+                backendPort,
+                forceDownload: argv.forceDownload
             });
         }
     );

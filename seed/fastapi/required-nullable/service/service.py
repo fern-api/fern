@@ -55,19 +55,30 @@ class AbstractRootService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "optional_baz":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="An optional baz"))
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="An optional baz")],
+                        default=None,
+                    )
                 )
             elif parameter_name == "optional_nullable_baz":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="An optional baz"))
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="An optional baz")],
+                        default=None,
+                    )
                 )
             elif parameter_name == "required_baz":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=..., description="A required baz"))
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="A required baz")]
+                    )
                 )
             elif parameter_name == "required_nullable_baz":
                 new_parameters.append(
-                    parameter.replace(default=fastapi.Query(default=None, description="A required baz"))
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="A required baz")],
+                        default=None,
+                    )
                 )
             else:
                 new_parameters.append(parameter)
@@ -85,10 +96,6 @@ class AbstractRootService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_foo.__globals__)
-
         router.get(
             path="/foo",
             response_model=Foo,
@@ -104,11 +111,19 @@ class AbstractRootService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             elif parameter_name == "id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                )
             elif parameter_name == "x_idempotency_key":
-                new_parameters.append(parameter.replace(default=fastapi.Header(alias="X-Idempotency-Key")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Idempotency-Key")]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.update_foo, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -124,10 +139,6 @@ class AbstractRootService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_foo.__globals__)
 
         router.patch(
             path="/foo/{id}",

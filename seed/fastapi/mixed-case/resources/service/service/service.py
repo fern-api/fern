@@ -47,7 +47,11 @@ class AbstractServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "resource_id":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="ResourceID")]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_resource, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -64,10 +68,6 @@ class AbstractServiceService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_resource.__globals__)
-
         router.get(
             path="/resource/{resource_id}",
             response_model=Resource,
@@ -83,9 +83,15 @@ class AbstractServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page_limit":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()])
+                )
             elif parameter_name == "before_date":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=..., alias="beforeDate")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="beforeDate")]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.list_resources, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -101,10 +107,6 @@ class AbstractServiceService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_resources.__globals__)
 
         router.get(
             path="/resource",

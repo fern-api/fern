@@ -48,7 +48,10 @@ class AbstractUserService(AbstractFernService):
             elif parameter_name == "limit":
                 new_parameters.append(
                     parameter.replace(
-                        default=fastapi.Query(default=None, description="The maximum number of results to return.")
+                        annotation=typing.Annotated[
+                            parameter.annotation, fastapi.Query(description="The maximum number of results to return.")
+                        ],
+                        default=None,
                     )
                 )
             else:
@@ -66,10 +69,6 @@ class AbstractUserService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.list_.__globals__)
 
         router.get(
             path="/users/",

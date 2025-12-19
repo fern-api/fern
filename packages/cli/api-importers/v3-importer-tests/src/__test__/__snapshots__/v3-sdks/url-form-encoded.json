@@ -890,6 +890,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "URL Form Encoded API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -923,22 +924,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "URL Form Encoded API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "urlFormEncodedApi",
+      "safeName": "urlFormEncodedApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "url_form_encoded_api",
+      "safeName": "url_form_encoded_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "URL_FORM_ENCODED_API",
+      "safeName": "URL_FORM_ENCODED_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "UrlFormEncodedApi",
+      "safeName": "UrlFormEncodedApi"
     }
   },
   "constants": {

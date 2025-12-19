@@ -100,7 +100,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await mkdir(githubWorkflowsDir, { recursive: true });
         const githubCiTemplate = (await readFile(getAsIsFilepath(AsIsFiles.GithubCiYml))).toString();
 
-        // Use enableWireTests config to conditionally include wire-tests job
+        // Use enableWireTests config to conditionally include wire-tests in the test command
         const enableWireTests = this.rubyContext.customConfig.enableWireTests ?? false;
 
         const githubCiContents = template(githubCiTemplate)({ enableWireTests });
@@ -653,6 +653,25 @@ class ModuleFile {
                 .filter((importPath) => importPath.endsWith(".rb"))
                 .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
                 .join("\n");
+
+        // Add optional user require paths hook at the end (only if configured)
+        // This allows users to add custom code (e.g., Sentry integration) without fernignoring generated files
+        const requirePaths = this.context.customConfig?.requirePaths;
+        if (requirePaths != null && requirePaths.length > 0) {
+            const rootFolder = this.context.getRootFolderName();
+            const pathsArray = requirePaths.map((p) => `"${rootFolder}/${p}"`).join(", ");
+            const requirePathsHook = `
+
+# Load user-defined files if present (e.g., for Sentry integration)
+# Files are loaded from lib/${rootFolder}/ if they exist
+[${pathsArray}].each do |relative_path|
+  absolute_path = File.join(__dir__, "\#{relative_path}.rb")
+  require_relative relative_path if File.exist?(absolute_path)
+end`;
+
+            return dedent`${contents}` + requirePathsHook;
+        }
+
         return dedent`${contents}`;
     }
 

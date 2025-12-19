@@ -11,5 +11,6 @@
       "tokio-util": "0.7"
     },
     "enableWireTests": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

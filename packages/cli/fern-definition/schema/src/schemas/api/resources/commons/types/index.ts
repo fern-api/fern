@@ -2,6 +2,7 @@ export * from "./WithDocsSchema";
 export * from "./WithName";
 export * from "./WithAvailability";
 export * from "./WithDisplayName";
+export * from "./WithMethodName";
 export * from "./WithValidation";
 export * from "./WithAudiences";
 export * from "./DeclarationSchema";

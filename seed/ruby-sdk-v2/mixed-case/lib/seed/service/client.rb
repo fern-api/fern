@@ -21,6 +21,7 @@ module Seed
       #
       # @return [Seed::Service::Types::Resource]
       def get_resource(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -53,7 +54,7 @@ module Seed
       #
       # @return [Array[Seed::Service::Types::Resource]]
       def list_resources(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[page_limit before_date]
         query_params = {}
         query_params["page_limit"] = params[:page_limit] if params.key?(:page_limit)
