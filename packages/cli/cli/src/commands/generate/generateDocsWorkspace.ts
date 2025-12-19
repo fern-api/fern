@@ -82,7 +82,18 @@ export async function generateDocsWorkspace({
     if (!isRunningOnSelfHosted) {
         await cliContext.instrumentPostHogEvent({
             orgId: project.config.organization,
-            command: "fern generate --docs"
+            command: "fern generate --docs",
+            properties: {
+                preview,
+                instance: instance ?? docsWorkspace.config.instances[0]?.url,
+                instancesCount: docsWorkspace.config.instances.length,
+                apiWorkspacesCount: project.apiWorkspaces.length,
+                brokenLinks,
+                strictBrokenLinks,
+                disableTemplates: disableTemplates ?? false,
+                skipUpload: skipUpload ?? false,
+                isCI: isCI()
+            }
         });
     }
 

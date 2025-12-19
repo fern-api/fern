@@ -23,7 +23,12 @@ export async function testOutput({
 }): Promise<void> {
     await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern test"
+        command: "fern test",
+        properties: {
+            hasTestCommand: testCommand != null,
+            generationLanguage: generationLanguage ?? null,
+            apiWorkspacesCount: project.apiWorkspaces.length
+        }
     });
 
     if (testCommand == null) {

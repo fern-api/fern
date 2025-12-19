@@ -19,7 +19,11 @@ export async function mockServer({
 }): Promise<void> {
     await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern mock"
+        command: "fern mock",
+        properties: {
+            portProvided: port != null,
+            apiWorkspacesCount: project.apiWorkspaces.length
+        }
     });
 
     if (project.apiWorkspaces.length !== 1 || project.apiWorkspaces[0] == null) {

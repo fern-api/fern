@@ -33,7 +33,13 @@ export async function previewDocsWorkspace({
     if (legacyPreview) {
         await cliContext.instrumentPostHogEvent({
             orgId: project.config.organization,
-            command: "fern docs dev --legacy"
+            command: "fern docs dev --legacy",
+            properties: {
+                port,
+                brokenLinks,
+                bundlePathProvided: bundlePath != null,
+                apiWorkspacesCount: project.apiWorkspaces.length
+            }
         });
 
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
@@ -81,7 +87,15 @@ export async function previewDocsWorkspace({
 
     await cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern docs dev --beta"
+        command: "fern docs dev --beta",
+        properties: {
+            port,
+            backendPort,
+            brokenLinks,
+            bundlePathProvided: bundlePath != null,
+            forceDownload: forceDownload ?? false,
+            apiWorkspacesCount: project.apiWorkspaces.length
+        }
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
