@@ -163,6 +163,9 @@ class SdkGeneratorContext(ABC):
     def get_filepath_for_generated_oauth_token_provider(self) -> Filepath: ...
 
     @abstractmethod
+    def get_filepath_for_generated_inferred_auth_token_provider(self) -> Filepath: ...
+
+    @abstractmethod
     def get_filepath_for_generated_root_client(self) -> Filepath: ...
 
     @abstractmethod

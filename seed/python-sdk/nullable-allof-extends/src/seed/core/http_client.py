@@ -5,7 +5,6 @@ import email.utils
 import re
 import time
 import typing
-import urllib.parse
 from contextlib import asynccontextmanager, contextmanager
 from random import random
 
@@ -121,6 +120,30 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
 def _should_retry(response: httpx.Response) -> bool:
     retryable_400s = [429, 408, 409]
     return response.status_code >= 500 or response.status_code in retryable_400s
+
+
+def _build_url(base_url: str, path: typing.Optional[str]) -> str:
+    """
+    Build a full URL by joining a base URL with a path.
+
+    This function correctly handles base URLs that contain path prefixes (e.g., tenant-based URLs)
+    by using string concatenation instead of urllib.parse.urljoin(), which would incorrectly
+    strip path components when the path starts with '/'.
+
+    Example:
+        >>> _build_url("https://cloud.example.com/org/tenant/api", "/users")
+        'https://cloud.example.com/org/tenant/api/users'
+
+    Args:
+        base_url: The base URL, which may contain path prefixes.
+        path: The path to append. Can be None or empty string.
+
+    Returns:
+        The full URL with base_url and path properly joined.
+    """
+    if not path:
+        return base_url
+    return f"{base_url.rstrip('/')}/{path.lstrip('/')}"
 
 
 def _maybe_filter_none_from_multipart_data(
@@ -294,7 +317,7 @@ class HttpClient:
 
         response = self.httpx_client.request(
             method=method,
-            url=urllib.parse.urljoin(f"{base_url}/", path),
+            url=_build_url(base_url, path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -397,7 +420,7 @@ class HttpClient:
 
         with self.httpx_client.stream(
             method=method,
-            url=urllib.parse.urljoin(f"{base_url}/", path),
+            url=_build_url(base_url, path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -515,7 +538,7 @@ class AsyncHttpClient:
         # Add the input to each of these and do None-safety checks
         response = await self.httpx_client.request(
             method=method,
-            url=urllib.parse.urljoin(f"{base_url}/", path),
+            url=_build_url(base_url, path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -620,7 +643,7 @@ class AsyncHttpClient:
 
         async with self.httpx_client.stream(
             method=method,
-            url=urllib.parse.urljoin(f"{base_url}/", path),
+            url=_build_url(base_url, path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
