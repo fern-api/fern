@@ -332,9 +332,6 @@ export async function publishDocs({
                     if (skipUpload) {
                         context.logger.debug("Skip-upload mode: skipping dynamic IR uploads");
                     } else {
-                        // Upload all dynamic IRs (both generated and downloaded from SDK) to the docs S3 location
-                        // Even SDK dynamic IRs that already exist in the SDK S3 keyspace need to be uploaded
-                        // to the docs-specific S3 location for the docs renderer to access them
                         await uploadDynamicIRs({
                             dynamicIRs: dynamicIRsByLanguage,
                             dynamicIRUploadUrls: response.body.dynamicIRs,
@@ -567,21 +564,6 @@ async function checkAndDownloadExistingSdkDynamicIRs({
         return undefined;
     }
 
-    context.logger.debug(`[SDK Dynamic IR Check] Starting check for organization: ${organization}`);
-    context.logger.debug(
-        `[SDK Dynamic IR Check] Input snippetsConfig: ${JSON.stringify({
-            typescript: snippetsConfig.typescriptSdk?.package,
-            python: snippetsConfig.pythonSdk?.package,
-            java: snippetsConfig.javaSdk?.coordinate,
-            go: snippetsConfig.goSdk?.githubRepo,
-            csharp: snippetsConfig.csharpSdk?.package,
-            ruby: snippetsConfig.rubySdk?.gem,
-            php: snippetsConfig.phpSdk?.package,
-            swift: snippetsConfig.swiftSdk?.package,
-            rust: snippetsConfig.rustSdk?.package
-        })}`
-    );
-
     const snippetConfigWithVersions = await buildSnippetConfigurationWithVersions({
         fdr,
         workspace,
@@ -589,18 +571,10 @@ async function checkAndDownloadExistingSdkDynamicIRs({
         context
     });
 
-    context.logger.debug(
-        `[SDK Dynamic IR Check] Built snippet config with versions: ${JSON.stringify(snippetConfigWithVersions)}`
-    );
-
     if (Object.keys(snippetConfigWithVersions).length === 0) {
-        context.logger.debug(`[SDK Dynamic IR Check] No snippet configs with versions found, skipping S3 check`);
+        context.logger.debug(`[SDK Dynamic IR] No snippet configs with versions found, skipping S3 check`);
         return undefined;
     }
-
-    context.logger.debug(
-        `[SDK Dynamic IR Check] Checking S3 for existing SDK dynamic IRs for languages: ${Object.keys(snippetConfigWithVersions).join(", ")}`
-    );
 
     try {
         const response = await fdr.api.v1.register.checkSdkDynamicIrExists({
@@ -609,17 +583,14 @@ async function checkAndDownloadExistingSdkDynamicIRs({
         });
 
         if (!response.ok || !response.body) {
-            context.logger.debug(`[SDK Dynamic IR Check] API call failed or returned empty body`);
+            context.logger.debug(`[SDK Dynamic IR] API call failed or returned empty body`);
             return undefined;
         }
 
         const existingDynamicIrs = response.body.existingDynamicIrs;
-        context.logger.debug(
-            `[SDK Dynamic IR Check] S3 check response - found ${Object.keys(existingDynamicIrs).length} existing IRs: ${Object.keys(existingDynamicIrs).join(", ") || "none"}`
-        );
 
         if (Object.keys(existingDynamicIrs).length === 0) {
-            context.logger.debug("[SDK Dynamic IR Check] No existing SDK dynamic IRs found in S3");
+            context.logger.debug("[SDK Dynamic IR] No existing SDK dynamic IRs found in S3");
             return undefined;
         }
 
@@ -719,10 +690,6 @@ async function buildSnippetConfigurationWithVersions({
             continue;
         }
 
-        context.logger.debug(
-            `[SDK Dynamic IR Check] Processing ${config.language}: snippetName=${config.snippetName}, explicitVersion=${config.explicitVersion ?? "none"}`
-        );
-
         let version = config.explicitVersion;
         if (!version) {
             const versionResult = await computeSemanticVersionForLanguage({
@@ -733,24 +700,12 @@ async function buildSnippetConfigurationWithVersions({
                 context
             });
             version = versionResult?.version;
-            if (versionResult) {
-                context.logger.debug(
-                    `[SDK Dynamic IR Check] ${config.language}: computed version=${version} using generatorPackage=${versionResult.generatorPackage}`
-                );
-            } else {
-                context.logger.debug(
-                    `[SDK Dynamic IR Check] ${config.language}: could not compute version (no matching generator found)`
-                );
-            }
         }
 
         if (version) {
             result[config.language] = { packageName: config.snippetName, version };
-            context.logger.debug(
-                `[SDK Dynamic IR Check] ${config.language}: will check S3 with snippetName=${config.snippetName}, version=${version}`
-            );
         } else {
-            context.logger.debug(`[SDK Dynamic IR Check] ${config.language}: skipping S3 check (no version available)`);
+            context.logger.debug(`[SDK Dynamic IR] ${config.language}: skipping S3 check (no version available)`);
         }
     }
 
@@ -797,7 +752,6 @@ async function computeSemanticVersionForLanguage({
             fdrLanguage = "Swift";
             break;
         default:
-            context.logger.debug(`[SDK Dynamic IR Check] ${language}: unsupported language for version computation`);
             return undefined;
     }
 
@@ -824,19 +778,12 @@ async function computeSemanticVersionForLanguage({
                 }
             }
         }
-        context.logger.debug(
-            `[SDK Dynamic IR Check] ${language}: found ${candidatePackages.length} generator(s) with packages: [${candidatePackages.join(", ")}]`
-        );
     }
 
     if (!generatorPackage) {
-        context.logger.debug(`[SDK Dynamic IR Check] ${language}: no generator found with a package name`);
+        context.logger.debug(`[SDK Dynamic IR] ${language}: no generator found with a package name`);
         return undefined;
     }
-
-    context.logger.debug(
-        `[SDK Dynamic IR Check] ${language}: using generator "${matchedGeneratorName}" with package "${generatorPackage}" for version computation (snippetName="${snippetName}")`
-    );
 
     try {
         const response = await fdr.sdks.versions.computeSemanticVersion({
@@ -847,16 +794,16 @@ async function computeSemanticVersionForLanguage({
 
         if (!response.ok) {
             context.logger.debug(
-                `[SDK Dynamic IR Check] ${language}: version computation failed for package "${generatorPackage}"`
+                `[SDK Dynamic IR] ${language}: version computation failed for package "${generatorPackage}"`
             );
             return undefined;
         }
         context.logger.debug(
-            `[SDK Dynamic IR Check] ${language}: computed version ${response.body.version} for package "${generatorPackage}"`
+            `[SDK Dynamic IR] ${language}: computed version ${response.body.version} for package "${generatorPackage}"`
         );
         return { version: response.body.version, generatorPackage };
     } catch (error) {
-        context.logger.debug(`[SDK Dynamic IR Check] ${language}: error computing version: ${error}`);
+        context.logger.debug(`[SDK Dynamic IR] ${language}: error computing version: ${error}`);
         return undefined;
     }
 }
