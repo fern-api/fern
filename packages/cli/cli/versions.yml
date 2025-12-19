@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.0
+  changelogEntry:
+    - summary: |
+        Refactor `fern check` output with improved formatting and severity labels. Violations are now displayed in a hierarchical format grouped by `[sdk]` and `[docs]`, with `[error]` (red) and `[warning]` (yellow) labels for each violation. When multiple APIs exist, violations are further grouped by API name. Additional UX improvements include: blue-colored paths, cyan `[sdk]` and magenta `[docs]` headers for visual distinction, warnings displayed before errors, blank lines between violations for readability, and inline issue display when path is empty.
+      type: feat
+  createdAt: "2025-12-19"
+  irVersion: 62
+
 - version: 3.27.3
   changelogEntry:
     - summary: |
