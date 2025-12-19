@@ -24,7 +24,6 @@ import tmp from "tmp-promise";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 import { isAutoVersion } from "./VersionUtils";
 
-
 export async function runLocalGenerationForWorkspace({
     token,
     projectConfig,
@@ -246,7 +245,6 @@ export async function runLocalGenerationForWorkspace({
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
-
 
                 if (selfhostedGithubConfig != null && shouldCommit) {
                     await postProcessGithubSelfHosted(
