@@ -20,7 +20,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def with_mixed_case(request_options: {}, **_params)
+        def with_mixed_case(request_options: {}, **params)
+          Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -48,7 +49,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def no_ending_slash(request_options: {}, **_params)
+        def no_ending_slash(request_options: {}, **params)
+          Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -76,7 +78,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def with_ending_slash(request_options: {}, **_params)
+        def with_ending_slash(request_options: {}, **params)
+          Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
@@ -104,7 +107,8 @@ module Seed
         # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [String]
-        def with_underscores(request_options: {}, **_params)
+        def with_underscores(request_options: {}, **params)
+          Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",

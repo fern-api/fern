@@ -22,6 +22,7 @@ module Seed
       #
       # @return [String]
       def upload_file(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         if params[:name]

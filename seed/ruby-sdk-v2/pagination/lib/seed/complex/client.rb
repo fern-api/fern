@@ -21,6 +21,7 @@ module Seed
       #
       # @return [Seed::Complex::Types::PaginatedConversationResponse]
       def search(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :conversations,

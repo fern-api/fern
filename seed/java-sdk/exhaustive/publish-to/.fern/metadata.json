@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "publish-to": "central"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

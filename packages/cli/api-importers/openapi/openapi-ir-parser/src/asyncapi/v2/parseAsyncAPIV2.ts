@@ -309,14 +309,16 @@ export function parseAsyncAPIV2({
                 messages.push({
                     origin: "client",
                     name: "publish",
-                    body: convertSchemaWithExampleToSchema(publishSchema)
+                    body: convertSchemaWithExampleToSchema(publishSchema),
+                    methodName: undefined // AsyncAPI v2 doesn't support operations with custom method names
                 });
             }
             if (subscribeSchema != null) {
                 messages.push({
                     origin: "server",
                     name: "subscribe",
-                    body: convertSchemaWithExampleToSchema(subscribeSchema)
+                    body: convertSchemaWithExampleToSchema(subscribeSchema),
+                    methodName: undefined // AsyncAPI v2 doesn't support operations with custom method names
                 });
             }
             parsedChannels[channelPath] = {

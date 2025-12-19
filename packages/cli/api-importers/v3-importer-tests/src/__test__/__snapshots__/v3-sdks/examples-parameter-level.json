@@ -549,6 +549,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Tree API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -582,22 +583,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Tree API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "treeApi",
+      "safeName": "treeApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "tree_api",
+      "safeName": "tree_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TREE_API",
+      "safeName": "TREE_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TreeApi",
+      "safeName": "TreeApi"
     }
   },
   "constants": {

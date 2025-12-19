@@ -6,5 +6,6 @@
     "enableWireTests": true,
     "packageName": "sse_examples",
     "packageVersion": "0.1.0"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

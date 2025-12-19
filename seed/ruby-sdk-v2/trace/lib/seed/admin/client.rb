@@ -21,6 +21,7 @@ module Seed
       #
       # @return [untyped]
       def update_test_submission_status(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -51,6 +52,7 @@ module Seed
       #
       # @return [untyped]
       def send_test_submission_update(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -81,6 +83,7 @@ module Seed
       #
       # @return [untyped]
       def update_workspace_submission_status(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -111,6 +114,7 @@ module Seed
       #
       # @return [untyped]
       def send_workspace_submission_update(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -142,6 +146,7 @@ module Seed
       #
       # @return [untyped]
       def store_traced_test_case(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[submission_id test_case_id]
         body_params = params.except(*path_param_names)
         body_prop_names = %i[result trace_responses]
@@ -178,6 +183,7 @@ module Seed
       #
       # @return [untyped]
       def store_traced_test_case_v_2(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -208,6 +214,7 @@ module Seed
       #
       # @return [untyped]
       def store_traced_workspace(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[submission_id]
         body_params = params.except(*path_param_names)
         body_prop_names = %i[workspace_run_details trace_responses]
@@ -243,6 +250,7 @@ module Seed
       #
       # @return [untyped]
       def store_traced_workspace_v_2(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

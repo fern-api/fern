@@ -926,6 +926,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test spec for `description` settings defined in anyOf.",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -963,22 +964,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test spec for `description` settings defined in anyOf.",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testSpecForDescriptionSettingsDefinedInAnyOf",
+      "safeName": "testSpecForDescriptionSettingsDefinedInAnyOf"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_spec_for_description_settings_defined_in_any_of",
+      "safeName": "test_spec_for_description_settings_defined_in_any_of"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_SPEC_FOR_DESCRIPTION_SETTINGS_DEFINED_IN_ANY_OF",
+      "safeName": "TEST_SPEC_FOR_DESCRIPTION_SETTINGS_DEFINED_IN_ANY_OF"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestSpecForDescriptionSettingsDefinedInAnyOf",
+      "safeName": "TestSpecForDescriptionSettingsDefinedInAnyOf"
     }
   },
   "constants": {

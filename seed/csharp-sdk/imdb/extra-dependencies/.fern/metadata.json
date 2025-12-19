@@ -7,5 +7,6 @@
       "Moq": "4.20.70",
       "Moq.Contrib.HttpClient": "1.4.0"
     }
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

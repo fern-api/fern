@@ -21,6 +21,7 @@ module Seed
       #
       # @return [Seed::Bigunion::Types::BigUnion]
       def get(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -51,6 +52,7 @@ module Seed
       #
       # @return [Boolean]
       def update(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
@@ -80,6 +82,7 @@ module Seed
       #
       # @return [Hash[String, Boolean]]
       def update_many(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
