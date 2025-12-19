@@ -10,7 +10,7 @@ export namespace RoutingAuthProvider {
 
     export type AuthOptions = Partial<
         UnionToIntersection<
-            BearerAuthProvider.AuthOptions | HeaderAuthProvider.AuthOptions | OAuthAuthProvider.AuthOptions
+            BearerAuthProvider.AuthOptions | HeaderAuthProvider.AuthOptions | { oAuth?: OAuthAuthProvider.AuthOptions }
         >
     >;
 }

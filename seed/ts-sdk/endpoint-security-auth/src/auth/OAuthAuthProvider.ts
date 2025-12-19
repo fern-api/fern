@@ -148,8 +148,26 @@ export namespace OAuthAuthProvider {
     }
 
     export type Options = BaseClientOptions;
+    export const WRAPPER_PROPERTY_NAME = "oAuth" as const;
 
     export function createInstance(options: Options): core.AuthProvider {
+        // Check for nested options first (when used with auth aggregators like AnyAuthProvider/RoutingAuthProvider)
+        const nestedOptions = (options as unknown as Record<string, unknown>)[WRAPPER_PROPERTY_NAME] as
+            | AuthOptions
+            | undefined;
+        if (nestedOptions != null) {
+            // Use nested options - check token override first, then client credentials
+            if ("token" in nestedOptions && nestedOptions.token != null) {
+                return new OAuthTokenOverrideAuthProvider({ ...options, token: nestedOptions.token });
+            } else if ("clientId" in nestedOptions && "clientSecret" in nestedOptions) {
+                return new OAuthAuthProvider({
+                    ...options,
+                    clientId: nestedOptions.clientId,
+                    clientSecret: nestedOptions.clientSecret,
+                });
+            }
+        }
+        // Fall back to flat options for backward compatibility (single auth scheme SDKs)
         if (OAuthTokenOverrideAuthProvider.canCreate(options)) {
             return new OAuthTokenOverrideAuthProvider(options);
         } else if (OAuthAuthProvider.canCreate(options)) {
