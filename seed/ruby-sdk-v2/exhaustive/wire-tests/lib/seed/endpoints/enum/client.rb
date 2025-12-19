@@ -21,6 +21,7 @@ module Seed
         #
         # @return [Seed::Types::Enum::Types::WeatherReport]
         def get_and_return_enum(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",

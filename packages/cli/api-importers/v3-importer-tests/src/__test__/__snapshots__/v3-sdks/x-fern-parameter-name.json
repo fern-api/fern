@@ -473,6 +473,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test extension `x-fern-parameter-name` for parameters.",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -506,22 +507,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test extension `x-fern-parameter-name` for parameters.",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testExtensionXFernParameterNameForParameters",
+      "safeName": "testExtensionXFernParameterNameForParameters"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_extension_x_fern_parameter_name_for_parameters",
+      "safeName": "test_extension_x_fern_parameter_name_for_parameters"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_EXTENSION_X_FERN_PARAMETER_NAME_FOR_PARAMETERS",
+      "safeName": "TEST_EXTENSION_X_FERN_PARAMETER_NAME_FOR_PARAMETERS"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestExtensionXFernParameterNameForParameters",
+      "safeName": "TestExtensionXFernParameterNameForParameters"
     }
   },
   "constants": {

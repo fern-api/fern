@@ -7,5 +7,6 @@
       "include_union_utils": true
     },
     "use_inheritance_for_extended_models": false
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

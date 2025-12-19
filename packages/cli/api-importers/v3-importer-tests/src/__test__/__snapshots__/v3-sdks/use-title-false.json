@@ -53,6 +53,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Hume AI Batch API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -87,22 +88,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Hume AI Batch API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "humeAiBatchApi",
+      "safeName": "humeAiBatchApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "hume_ai_batch_api",
+      "safeName": "hume_ai_batch_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "HUME_AI_BATCH_API",
+      "safeName": "HUME_AI_BATCH_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "HumeAiBatchApi",
+      "safeName": "HumeAiBatchApi"
     }
   },
   "constants": {

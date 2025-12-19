@@ -128,10 +128,14 @@ export async function replaceReferencedMarkdown({
         }
 
         try {
-            const rawContent = await markdownLoader(filepath);
-
-            // Store the referenced file with its raw content (before variable substitution)
-            if (!collectedFiles.has(filepath)) {
+            // Check cache first to avoid redundant file reads and gray-matter parsing
+            const cached = collectedFiles.get(filepath);
+            let rawContent: string;
+            if (cached != null) {
+                rawContent = cached.content;
+            } else {
+                rawContent = await markdownLoader(filepath);
+                // Store the referenced file with its raw content (before variable substitution)
                 collectedFiles.set(filepath, {
                     absoluteFilePath: filepath,
                     relativeFilePath: relative(absolutePathToFernFolder, filepath),

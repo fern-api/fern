@@ -89,10 +89,6 @@ class AbstractUserService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_user.__globals__)
-
         router.get(
             path="/{tenant_id}/user/{user_id}",
             response_model=User,
@@ -126,10 +122,6 @@ class AbstractUserService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.create_user.__globals__)
 
         router.post(
             path="/{tenant_id}/user/",
@@ -169,10 +161,6 @@ class AbstractUserService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.update_user.__globals__)
-
         router.patch(
             path="/{tenant_id}/user/{user_id}",
             response_model=User,
@@ -211,10 +199,6 @@ class AbstractUserService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.search_users.__globals__)
-
         router.get(
             path="/{tenant_id}/user/{user_id}/search",
             response_model=typing.Sequence[User],
@@ -252,10 +236,6 @@ class AbstractUserService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_user_metadata.__globals__)
 
         router.get(
             path="/{tenant_id}/user/{user_id}/metadata/v{version}",
@@ -298,10 +278,6 @@ class AbstractUserService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_user_specifics.__globals__)
 
         router.get(
             path="/{tenant_id}/user/{user_id}/specifics/{version}/{thought}",

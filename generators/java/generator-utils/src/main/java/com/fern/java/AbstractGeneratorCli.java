@@ -265,7 +265,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
-    private static void copyGradleWrapperFromResources(Path outputDirectory) {
+    private static void copyGradleWrapperFromResources(Path outputDirectory, Optional<String> customDistributionUrl) {
         try {
             copyResourceFile("gradle-wrapper/gradlew", outputDirectory.resolve("gradlew"), true);
             copyResourceFile("gradle-wrapper/gradlew.bat", outputDirectory.resolve("gradlew.bat"), false);
@@ -275,10 +275,22 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     "gradle-wrapper/gradle/wrapper/gradle-wrapper.jar",
                     wrapperDir.resolve("gradle-wrapper.jar"),
                     false);
-            copyResourceFile(
-                    "gradle-wrapper/gradle/wrapper/gradle-wrapper.properties",
-                    wrapperDir.resolve("gradle-wrapper.properties"),
-                    false);
+            if (customDistributionUrl.isPresent()) {
+                // Write custom gradle-wrapper.properties with the user-provided distribution URL
+                String propertiesContent = "distributionBase=GRADLE_USER_HOME\n"
+                        + "distributionPath=wrapper/dists\n"
+                        + "distributionUrl=" + customDistributionUrl.get().replace(":", "\\:") + "\n"
+                        + "networkTimeout=10000\n"
+                        + "validateDistributionUrl=true\n"
+                        + "zipStoreBase=GRADLE_USER_HOME\n"
+                        + "zipStorePath=wrapper/dists\n";
+                Files.writeString(wrapperDir.resolve("gradle-wrapper.properties"), propertiesContent);
+            } else {
+                copyResourceFile(
+                        "gradle-wrapper/gradle/wrapper/gradle-wrapper.properties",
+                        wrapperDir.resolve("gradle-wrapper.properties"),
+                        false);
+            }
         } catch (IOException e) {
             throw new RuntimeException("Failed to copy gradle wrapper from resources", e);
         }
@@ -471,13 +483,19 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         .build());
 
         if (publishResult.generateFullProject()) {
-            addRootProjectFiles(publishResult.mavenCoordinate(), true, false, generatorConfig);
+            addRootProjectFiles(
+                    publishResult.mavenCoordinate(),
+                    true,
+                    false,
+                    generatorConfig,
+                    customConfig.gradlePluginManagement(),
+                    customConfig.gradleCentralDependencyManagement());
         }
         generatedFiles.forEach(
                 generatedFile -> generatedFile.write(outputDirectory, true, customConfig.packagePrefix()));
         copyLicenseFile(generatorConfig);
         if (publishResult.generateFullProject()) {
-            copyGradleWrapperFromResources(outputDirectory);
+            copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
         }
     }
 
@@ -512,14 +530,20 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         && mavenGithubPublishInfo.get().getSignature().isPresent())
                 || customConfigPublishToCentral(generatorConfig);
         // add project level files
-        addRootProjectFiles(maybeMavenCoordinate, true, addSignatureBlock, generatorConfig);
+        addRootProjectFiles(
+                maybeMavenCoordinate,
+                true,
+                addSignatureBlock,
+                generatorConfig,
+                customConfig.gradlePluginManagement(),
+                customConfig.gradleCentralDependencyManagement());
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         copyLicenseFile(generatorConfig);
-        copyGradleWrapperFromResources(outputDirectory);
+        copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
     }
 
     public boolean customConfigPublishToCentral(GeneratorConfig _generatorConfig) {
@@ -558,11 +582,13 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 Optional.of(mavenCoordinate),
                 false,
                 mavenRegistryConfigV2.getSignature().isPresent(),
-                generatorConfig);
+                generatorConfig,
+                customConfig.gradlePluginManagement(),
+                customConfig.gradleCentralDependencyManagement());
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         copyLicenseFile(generatorConfig);
-        copyGradleWrapperFromResources(outputDirectory);
+        copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());
 
         // run publish
         if (!generatorConfig.getDryRun()) {
@@ -624,7 +650,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             Optional<MavenCoordinate> maybeMavenCoordinate,
             boolean addTestBlock,
             boolean addSignaturePlugin,
-            GeneratorConfig generatorConfig) {
+            GeneratorConfig generatorConfig,
+            Optional<String> gradlePluginManagement,
+            boolean skipRepositories) {
         String repositoryUrl = addSignaturePlugin
                 ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
                 : "https://s01.oss.sonatype.org/content/repositories/releases/";
@@ -691,19 +719,28 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     + "}");
         }
 
+        buildGradle.skipRepositories(skipRepositories);
         addGeneratedFile(buildGradle.build());
-        String settingsGradleContents = "";
-        if (maybeMavenCoordinate.isPresent()) {
-            settingsGradleContents +=
-                    "rootProject.name = '" + maybeMavenCoordinate.get().getArtifact() + "'\n\n";
+        StringBuilder settingsGradleContents = new StringBuilder();
+
+        // Add plugin management block if configured (for enterprise environments)
+        if (gradlePluginManagement.isPresent()) {
+            settingsGradleContents.append(gradlePluginManagement.get()).append("\n\n");
         }
-        settingsGradleContents += getSubProjects().stream()
+
+        if (maybeMavenCoordinate.isPresent()) {
+            settingsGradleContents
+                    .append("rootProject.name = '")
+                    .append(maybeMavenCoordinate.get().getArtifact())
+                    .append("'\n\n");
+        }
+        settingsGradleContents.append(getSubProjects().stream()
                 .map(project -> "include '" + project + "'")
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining("\n")));
 
         addGeneratedFile(RawGeneratedFile.builder()
                 .filename("settings.gradle")
-                .contents(settingsGradleContents)
+                .contents(settingsGradleContents.toString())
                 .build());
         addGeneratedFile(GitIgnoreGenerator.getGitignore());
     }

@@ -35,7 +35,6 @@ jobs:
       - name: Run Tests
         run: bundle exec rake test
 
-
   publish:
     name: Publish to RubyGems.org
     runs-on: ubuntu-latest

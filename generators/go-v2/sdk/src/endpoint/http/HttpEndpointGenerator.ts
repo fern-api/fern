@@ -592,6 +592,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                             on: this.getReceiverCodeBlock({ subpackage, rawClient }),
                             selector: go.codeblock("baseURL")
                         }),
+                        this.context.callResolveEnvironmentBaseURL([
+                            go.selector({
+                                on: go.selector({
+                                    on: this.getReceiverCodeBlock({ subpackage, rawClient }),
+                                    selector: go.codeblock("options")
+                                }),
+                                selector: go.codeblock("Environment")
+                            }),
+                            go.TypeInstantiation.string(baseUrlName)
+                        ]),
                         this.context.getDefaultBaseUrlTypeInstantiation(endpoint)
                     ])
                 );

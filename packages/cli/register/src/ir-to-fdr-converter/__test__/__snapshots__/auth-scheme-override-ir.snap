@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Auth Scheme Override Test API",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "authSchemeOverrideTestApi",
+      "unsafeName": "authSchemeOverrideTestApi",
     },
-    "originalName": "",
+    "originalName": "Auth Scheme Override Test API",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "AuthSchemeOverrideTestApi",
+      "unsafeName": "AuthSchemeOverrideTestApi",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "AUTH_SCHEME_OVERRIDE_TEST_API",
+      "unsafeName": "AUTH_SCHEME_OVERRIDE_TEST_API",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "auth_scheme_override_test_api",
+      "unsafeName": "auth_scheme_override_test_api",
     },
   },
   "apiPlayground": undefined,

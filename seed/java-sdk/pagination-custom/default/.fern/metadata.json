@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "custom-pager-name": "FernCustomPaginator"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

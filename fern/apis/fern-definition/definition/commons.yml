@@ -19,6 +19,10 @@ types:
     properties:
       display-name: optional<string>
 
+  WithMethodName:
+    properties:
+      method-name: optional<string>
+
   WithValidation:
     properties:
       validation: optional<validation.ValidationSchema>

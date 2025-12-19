@@ -96,6 +96,16 @@ export class TestMethodBuilder {
             writer.writeLine("Assertions.assertNotNull(request);");
             writer.writeLine(`Assertions.assertEquals("${endpoint.method}", request.getMethod());`);
 
+            // For OAuth APIs, validate that the Authorization header contains the Bearer token
+            if (isOAuth) {
+                writer.writeLine("");
+                writer.writeLine("// Validate OAuth Authorization header");
+                writer.writeLine(
+                    'Assertions.assertEquals("Bearer test-token", request.getHeader("Authorization"), ' +
+                        '"OAuth Authorization header should contain Bearer token from OAuth flow");'
+                );
+            }
+
             this.headerValidator.generateHeaderValidation(writer, testExample);
 
             if (expectedRequestJson !== undefined && expectedRequestJson !== null) {

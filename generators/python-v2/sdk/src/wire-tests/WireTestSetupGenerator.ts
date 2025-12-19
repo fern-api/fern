@@ -301,34 +301,36 @@ def pytest_unconfigure(config: pytest.Config) -> None:
      * Gets the client class name to import in wire tests. Honors the same overrides as the main
      * Python generator, so that if an SDK config specifies a custom client class name, the wire
      * tests import and instantiate that exact class.
+     *
+     * The resolution order matches the Python v1 generator:
+     * 1. client.exported_class_name (if set, this is the exported class name)
+     * 2. client_class_name (deprecated top-level option)
+     * 3. client.class_name (the generated class name)
+     * 4. Fall back to PascalCase(org) + PascalCase(workspace)
      */
     private getClientClassName(): string {
         const orgName = this.context.config.organization;
         const workspaceName = this.context.config.workspaceName;
+        const customConfig = this.context.customConfig;
 
-        const customConfig = (this.context.config.customConfig ?? {}) as {
-            client?: { exported_class_name?: string; class_name?: string };
-            client_class_name?: string;
-        };
+        // First, resolve the base client class name (used for generation)
+        const clientClassName =
+            customConfig.client_class_name ??
+            customConfig.client?.class_name ??
+            this.toPascalCase(orgName) + this.toPascalCase(workspaceName);
 
-        if (customConfig.client?.exported_class_name != null) {
-            return customConfig.client.exported_class_name;
-        }
-        if (customConfig.client_class_name != null) {
-            return customConfig.client_class_name;
-        }
-        if (customConfig.client?.class_name != null) {
-            return customConfig.client.class_name;
-        }
+        // Then, resolve the exported class name (what users import)
+        // This is what wire tests should use since they import from the public API
+        const exportedClassName = customConfig.client?.exported_class_name ?? clientClassName;
 
-        const toPascalCase = (str: string) => {
-            return str
-                .split(/[-_]/)
-                .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
-                .join("");
-        };
+        return exportedClassName;
+    }
 
-        return toPascalCase(orgName) + toPascalCase(workspaceName);
+    private toPascalCase(str: string): string {
+        return str
+            .split(/[-_]/)
+            .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+            .join("");
     }
 
     /**

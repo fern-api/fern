@@ -1,0 +1,79 @@
+openapi: 3.0.1
+info:
+  title: oauth-client-credentials-reference
+  version: ''
+paths:
+  /token:
+    post:
+      operationId: auth_getToken
+      tags:
+        - Auth
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                Example1:
+                  value:
+                    access_token: access_token
+                    expires_in: 3600
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetTokenRequest'
+            examples:
+              Example1:
+                value:
+                  client_id: client_id
+                  client_secret: client_secret
+  /get-something:
+    get:
+      operationId: simple_getSomething
+      tags:
+        - Simple
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    TokenResponse:
+      title: TokenResponse
+      type: object
+      description: An OAuth token response.
+      properties:
+        access_token:
+          type: string
+          example: access_token
+        expires_in:
+          type: integer
+          example: 3600
+      required:
+        - access_token
+        - expires_in
+    GetTokenRequest:
+      title: GetTokenRequest
+      type: object
+      description: The request body for getting an OAuth token.
+      properties:
+        client_id:
+          type: string
+          example: client_id
+        client_secret:
+          type: string
+          example: client_secret
+      required:
+        - client_id
+        - client_secret
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

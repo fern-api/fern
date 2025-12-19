@@ -246,5 +246,14 @@ func decodeError(response *http.Response, errorDecoder ErrorDecoder) error {
 // isNil is used to determine if the request value is equal to nil (i.e. an interface
 // value that holds a nil concrete value is itself non-nil).
 func isNil(value interface{}) bool {
-	return value == nil || reflect.ValueOf(value).IsNil()
+	if value == nil {
+		return true
+	}
+	v := reflect.ValueOf(value)
+	switch v.Kind() {
+	case reflect.Chan, reflect.Func, reflect.Interface, reflect.Map, reflect.Pointer, reflect.Slice:
+		return v.IsNil()
+	default:
+		return false
+	}
 }

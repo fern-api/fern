@@ -57,10 +57,6 @@ class AbstractRetriesService(AbstractFernService):
                 )
                 raise e
 
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_users.__globals__)
-
         router.get(
             path="/users",
             response_model=typing.Sequence[User],

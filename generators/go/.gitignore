@@ -1,2 +1,7 @@
 *.swp
 .env
+
+# Go binaries created during local builds
+fern-go-sdk
+fern-go-model
+fern-go-fiber
