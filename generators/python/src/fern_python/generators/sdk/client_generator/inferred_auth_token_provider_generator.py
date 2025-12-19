@@ -175,19 +175,18 @@ class InferredAuthTokenProviderGenerator:
 
             token_endpoint = self._inferred_auth_scheme.token_endpoint
             endpoint_reference = token_endpoint.endpoint
-            subpackage_id = endpoint_reference.subpackage_id
-            if subpackage_id is not None:
-                writer.write_node(
-                    AST.Expression(
-                        AST.CodeWriter(
-                            self._get_write_auth_client_initialization(
-                                subpackage_id=subpackage_id,
-                                auth_client_member_name=self._get_auth_client_member_name(),
-                                is_async=is_async,
-                            ),
+            subpackage_id = self._get_subpackage_id_for_endpoint_reference(endpoint_reference)
+            writer.write_node(
+                AST.Expression(
+                    AST.CodeWriter(
+                        self._get_write_auth_client_initialization(
+                            subpackage_id=subpackage_id,
+                            auth_client_member_name=self._get_auth_client_member_name(),
+                            is_async=is_async,
                         ),
                     ),
-                )
+                ),
+            )
 
             if is_async:
                 writer.write_node(
@@ -243,6 +242,37 @@ class InferredAuthTokenProviderGenerator:
                 )
 
         return _write_constructor_body
+
+    def _get_subpackage_id_for_endpoint_reference(
+        self, endpoint_reference: ir_types.EndpointReference
+    ) -> ir_types.SubpackageId:
+        """
+        Returns the subpackage that owns the service for the provided endpoint reference.
+
+        If the endpoint reference already includes a subpackage_id, we use it.
+        Otherwise we try to infer it by matching subpackage.service to endpoint_reference.service_id.
+
+        If no subpackage is found, we raise an exception during generation to avoid emitting
+        a runtime-broken token provider (would otherwise crash due to missing _auth_client).
+        """
+        if endpoint_reference.subpackage_id is not None:
+            return endpoint_reference.subpackage_id
+
+        service_id = endpoint_reference.service_id
+        inferred_subpackage_id = next(
+            (
+                subpackage_id
+                for subpackage_id, subpackage in self._context.ir.subpackages.items()
+                if subpackage.service == service_id
+            ),
+            None,
+        )
+        if inferred_subpackage_id is None:
+            raise Exception(
+                "Inferred auth token endpoint must belong to a subpackage service. "
+                f"Could not find a subpackage associated with endpoint {endpoint_reference.endpoint_id}."
+            )
+        return inferred_subpackage_id
 
     def _get_write_member_initialization(
         self,
