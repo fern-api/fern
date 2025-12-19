@@ -1,4 +1,5 @@
 {
+  "apiName": "",
   "auth": {
     "description": "User authentication token",
     "headerWireValue": "x-user-token",
