@@ -902,7 +902,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TIMEOUT_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                 .addStatement("builder.$L.putAll(clientOptions.$L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
-                .addStatement("builder.$L.putAll(clientOptions.$L)", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
+                .addStatement(
+                        "builder.$L.putAll(clientOptions.$L)", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name);
 
         for (Map.Entry<VariableId, FieldSpec> entry : variableFields.entrySet()) {
