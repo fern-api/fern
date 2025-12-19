@@ -1,5 +1,5 @@
 {
-  "apiName": "",
+  "apiName": "Multiple Security Headers Test API",
   "auth": {
     "description": "The web3 wallet of the end user",
     "headerWireValue": "x-coinflow-auth-wallet",

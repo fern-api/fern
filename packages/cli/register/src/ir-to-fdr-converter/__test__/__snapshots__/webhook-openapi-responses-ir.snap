@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Webhook OpenAPI Responses Test",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "webhookOpenApiResponsesTest",
+      "unsafeName": "webhookOpenApiResponsesTest",
     },
-    "originalName": "",
+    "originalName": "Webhook OpenAPI Responses Test",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "WebhookOpenApiResponsesTest",
+      "unsafeName": "WebhookOpenApiResponsesTest",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "WEBHOOK_OPEN_API_RESPONSES_TEST",
+      "unsafeName": "WEBHOOK_OPEN_API_RESPONSES_TEST",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "webhook_open_api_responses_test",
+      "unsafeName": "webhook_open_api_responses_test",
     },
   },
   "apiPlayground": undefined,

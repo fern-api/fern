@@ -1,5 +1,5 @@
 {
-  "apiName": "",
+  "apiName": "Auth with Overrides Test API",
   "auth": {
     "description": undefined,
     "tokenName": "token",

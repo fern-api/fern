@@ -1,5 +1,5 @@
 {
-  "apiName": "",
+  "apiName": "Auth Scheme Override Test API",
   "auth": {
     "description": undefined,
     "tokenName": "apiKey",

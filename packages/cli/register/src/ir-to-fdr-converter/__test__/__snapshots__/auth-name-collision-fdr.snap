@@ -1,5 +1,5 @@
 {
-  "apiName": "",
+  "apiName": "Auth Name Collision Test API",
   "auth": {
     "description": undefined,
     "tokenName": "customToken",

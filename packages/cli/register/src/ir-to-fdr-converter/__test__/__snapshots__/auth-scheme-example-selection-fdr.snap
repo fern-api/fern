@@ -1,5 +1,5 @@
 {
-  "apiName": "",
+  "apiName": "Auth Scheme Example Selection Test API",
   "auth": {
     "description": "User authentication token",
     "headerWireValue": "x-user-token",
