@@ -450,7 +450,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             isStatic?: boolean;
             returnType: string;
             statements: string;
-            parameters?: Array<{ name: string; type: string }>;
+            parameters?: Array<{ name: string; type: string; initializer?: string }>;
         }> = [
             {
                 kind: StructureKind.Method,
@@ -483,7 +483,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 isAsync: true,
                 parameters: [
                     {
-                        name: "{ endpointMetadata } = {}",
+                        name: "{ endpointMetadata }",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
@@ -493,7 +493,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                                     context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
                                 )
                             ])
-                        )
+                        ),
+                        initializer: "{}"
                     }
                 ],
                 returnType: getTextOfTsNode(
@@ -519,7 +520,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 returnType: "Promise<string>",
                 parameters: [
                     {
-                        name: "{ endpointMetadata } = {}",
+                        name: "{ endpointMetadata }",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
@@ -529,7 +530,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                                     context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
                                 )
                             ])
-                        )
+                        ),
+                        initializer: "{}"
                     }
                 ],
                 statements: getTokenStatements
@@ -542,7 +544,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 returnType: "Promise<string>",
                 parameters: [
                     {
-                        name: "{ endpointMetadata } = {}",
+                        name: "{ endpointMetadata }",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
@@ -552,7 +554,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                                     context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
                                 )
                             ])
-                        )
+                        ),
+                        initializer: "{}"
                     }
                 ],
                 statements: refreshMethodStatements
@@ -667,7 +670,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 isAsync: true,
                 parameters: [
                     {
-                        name: "{ endpointMetadata } = {}",
+                        name: "{ endpointMetadata }",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
@@ -677,7 +680,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                                     context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
                                 )
                             ])
-                        )
+                        ),
+                        initializer: "{}"
                     }
                 ],
                 returnType: getTextOfTsNode(
