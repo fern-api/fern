@@ -3,7 +3,9 @@
   "generatorName": "fernapi/fern-ruby-sdk-v2",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "enableWireTests": true
-  },
-  "sdkVersion": "0.0.1"
+    "requirePaths": [
+      "custom_integration",
+      "sentry_integration"
+    ]
+  }
 }

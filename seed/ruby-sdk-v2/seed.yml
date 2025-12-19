@@ -54,6 +54,11 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+    - outputFolder: require-paths
+      customConfig:
+        requirePaths:
+          - custom_integration
+          - sentry_integration
     - outputFolder: readme-config
       customConfig:
         customReadmeSections:
