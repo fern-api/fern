@@ -1,5 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { replaceEnvVariables } from "@fern-api/core-utils";
+import { normalizeInstanceUrl } from "@fern-api/docs-resolver";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 
@@ -61,10 +62,50 @@ export async function runRemoteGenerationForDocsWorkspace({
         return;
     }
 
-    const maybeInstance = instances.find((instance) => instance.url === instanceUrl) ?? instances[0];
+    // If no instanceUrl is provided, use the first instance (single instance case)
+    // If instanceUrl is provided, find the matching instance using normalized URL comparison
+    let maybeInstance = instances[0];
+    if (instanceUrl != null) {
+        const normalizedInput = normalizeInstanceUrl(instanceUrl);
+        maybeInstance = instances.find((instance) => {
+            // Check against the instance URL
+            if (normalizeInstanceUrl(instance.url) === normalizedInput) {
+                return true;
+            }
+            // Also check against custom domains
+            if (instance.customDomain != null) {
+                const customDomains = Array.isArray(instance.customDomain)
+                    ? instance.customDomain
+                    : [instance.customDomain];
+                return customDomains.some((domain) => normalizeInstanceUrl(domain) === normalizedInput);
+            }
+            return false;
+        });
+
+        if (maybeInstance == null) {
+            const availableUrls = instances
+                .flatMap((instance) => {
+                    const urls = [instance.url];
+                    if (instance.customDomain != null) {
+                        if (Array.isArray(instance.customDomain)) {
+                            urls.push(...instance.customDomain);
+                        } else {
+                            urls.push(instance.customDomain);
+                        }
+                    }
+                    return urls;
+                })
+                .join(", ");
+            context.failAndThrow(
+                `No docs instance matching "${instanceUrl}". Available instances: ${availableUrls}. ` +
+                    `Note: The https:// prefix is optional.`
+            );
+            return;
+        }
+    }
 
     if (maybeInstance == null) {
-        context.failAndThrow(`No docs instance with url ${instanceUrl}. Failed to register.`);
+        context.failAndThrow(`No docs instance found. Failed to register.`);
         return;
     }
 
