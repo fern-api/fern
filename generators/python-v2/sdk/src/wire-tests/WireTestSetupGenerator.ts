@@ -1,4 +1,5 @@
 import { File } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock } from "@fern-api/mock-utils";
 import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -367,7 +368,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
     private buildEnvironmentSetup(): { imports: string; param: string } {
         const environments = this.ir.environments;
 
-        if (environments == null) {
+        if (environments?.environments.type != "multipleBaseUrls") {
             // No environments defined - use base_url directly
             return {
                 imports: "",
@@ -375,20 +376,9 @@ def pytest_unconfigure(config: pytest.Config) -> None:
             };
         }
 
-        const envConfig = environments.environments;
-
-        // Handle single base URL environment
-        if (envConfig.type === "singleBaseUrl") {
-            const environmentClassName = this.getEnvironmentClassName();
-            const modulePath = this.getModulePath();
-            return {
-                imports: `from ${modulePath}.environment import ${environmentClassName}`,
-                param: `environment=${environmentClassName}(base="http://localhost:8080")`
-            };
-        }
-
         // Handle multiple base URLs environment
-        if (envConfig.type === "multipleBaseUrls") {
+        if (environments?.environments.type === "multipleBaseUrls") {
+            const envConfig = environments.environments;
             const environmentClassName = this.getEnvironmentClassName();
             const modulePath = this.getModulePath();
 
@@ -403,11 +393,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
             };
         }
 
-        // Fallback to base_url
-        return {
-            imports: "",
-            param: 'base_url="http://localhost:8080"'
-        };
+        assertNever(environments.environments);
     }
 
     /**
