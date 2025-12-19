@@ -41,6 +41,7 @@ class AuthClient:
         from seed import SeedInferredAuthImplicitApiKey
 
         client = SeedInferredAuthImplicitApiKey(
+            base_url="https://yourhost.com/path/to/api",
             api_key="YOUR_API_KEY",
         )
         client.auth.get_token(
@@ -88,6 +89,7 @@ class AsyncAuthClient:
         from seed import AsyncSeedInferredAuthImplicitApiKey
 
         client = AsyncSeedInferredAuthImplicitApiKey(
+            base_url="https://yourhost.com/path/to/api",
             api_key="YOUR_API_KEY",
         )
 

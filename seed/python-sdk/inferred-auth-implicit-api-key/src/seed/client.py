@@ -44,6 +44,7 @@ class SeedInferredAuthImplicitApiKey:
     from seed import SeedInferredAuthImplicitApiKey
 
     client = SeedInferredAuthImplicitApiKey(
+        base_url="https://yourhost.com/path/to/api",
         api_key="YOUR_API_KEY",
     )
     """
@@ -152,6 +153,7 @@ class AsyncSeedInferredAuthImplicitApiKey:
     from seed import AsyncSeedInferredAuthImplicitApiKey
 
     client = AsyncSeedInferredAuthImplicitApiKey(
+        base_url="https://yourhost.com/path/to/api",
         api_key="YOUR_API_KEY",
     )
     """
