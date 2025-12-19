@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Code Samples Override Test API",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "codeSamplesOverrideTestApi",
+      "unsafeName": "codeSamplesOverrideTestApi",
     },
-    "originalName": "",
+    "originalName": "Code Samples Override Test API",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "CodeSamplesOverrideTestApi",
+      "unsafeName": "CodeSamplesOverrideTestApi",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "CODE_SAMPLES_OVERRIDE_TEST_API",
+      "unsafeName": "CODE_SAMPLES_OVERRIDE_TEST_API",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "code_samples_override_test_api",
+      "unsafeName": "code_samples_override_test_api",
     },
   },
   "apiPlayground": undefined,

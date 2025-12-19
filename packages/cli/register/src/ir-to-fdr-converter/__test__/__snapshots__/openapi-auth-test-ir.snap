@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Auth Test API",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "authTestApi",
+      "unsafeName": "authTestApi",
     },
-    "originalName": "",
+    "originalName": "Auth Test API",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "AuthTestApi",
+      "unsafeName": "AuthTestApi",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "AUTH_TEST_API",
+      "unsafeName": "AUTH_TEST_API",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "auth_test_api",
+      "unsafeName": "auth_test_api",
     },
   },
   "apiPlayground": undefined,

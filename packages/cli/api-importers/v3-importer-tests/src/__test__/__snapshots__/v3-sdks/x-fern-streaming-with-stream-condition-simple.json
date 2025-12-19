@@ -1474,6 +1474,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "TEST API v2",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1542,22 +1543,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "TEST API v2",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testApiV2",
+      "safeName": "testApiV2"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_api_v_2",
+      "safeName": "test_api_v_2"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_API_V_2",
+      "safeName": "TEST_API_V_2"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestApiV2",
+      "safeName": "TestApiV2"
     }
   },
   "constants": {

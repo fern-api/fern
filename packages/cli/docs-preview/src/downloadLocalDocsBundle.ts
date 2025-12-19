@@ -12,6 +12,10 @@ import xml2js from "xml2js";
 const PLATFORM_IS_WINDOWS = process.platform === "win32";
 const DOCS_PREFIX = chalk.cyan("[docs]:");
 const ETAG_FILENAME = "etag";
+
+// Progress bar label alignment - pad labels to the longest one for consistent bar positioning
+const PROGRESS_LABEL_WIDTH = "Downloading docs bundle".length;
+const formatProgressLabel = (label: string): string => label.padEnd(PROGRESS_LABEL_WIDTH, " ");
 const PREVIEW_FOLDER_NAME = "preview";
 const APP_PREVIEW_FOLDER_NAME = "app-preview";
 const BUNDLE_FOLDER_NAME = "bundle";
@@ -180,7 +184,7 @@ export async function downloadBundle({
         let progressBar: cliProgress.SingleBar | undefined;
         if (app && totalBytes > 0) {
             progressBar = new cliProgress.SingleBar({
-                format: `${DOCS_PREFIX} Downloading docs bundle [{bar}] {percentage}% | {value}/{total} MB`,
+                format: `${DOCS_PREFIX} ${formatProgressLabel("Downloading docs bundle")} [{bar}] {percentage}% | {value}/{total} MB`,
                 barCompleteChar: "\u2588",
                 barIncompleteChar: "\u2591",
                 hideCursor: true
@@ -235,7 +239,7 @@ export async function downloadBundle({
 
         if (app) {
             unzipProgressBar = new cliProgress.SingleBar({
-                format: `${DOCS_PREFIX} Unzipping docs bundle [{bar}] {percentage}%`,
+                format: `${DOCS_PREFIX} ${formatProgressLabel("Unzipping docs bundle")} [{bar}] {percentage}%`,
                 barCompleteChar: "\u2588",
                 barIncompleteChar: "\u2591",
                 hideCursor: true

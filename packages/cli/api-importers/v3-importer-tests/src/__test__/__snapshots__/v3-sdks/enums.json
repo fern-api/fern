@@ -785,6 +785,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Example API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -823,22 +824,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Example API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "exampleApi",
+      "safeName": "exampleApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "example_api",
+      "safeName": "example_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "EXAMPLE_API",
+      "safeName": "EXAMPLE_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "ExampleApi",
+      "safeName": "ExampleApi"
     }
   },
   "constants": {

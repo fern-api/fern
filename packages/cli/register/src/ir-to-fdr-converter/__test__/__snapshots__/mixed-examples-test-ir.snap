@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Mixed Examples Test - AI Overrides vs Human Examples",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "mixedExamplesTestAiOverridesVsHumanExamples",
+      "unsafeName": "mixedExamplesTestAiOverridesVsHumanExamples",
     },
-    "originalName": "",
+    "originalName": "Mixed Examples Test - AI Overrides vs Human Examples",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "MixedExamplesTestAiOverridesVsHumanExamples",
+      "unsafeName": "MixedExamplesTestAiOverridesVsHumanExamples",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "MIXED_EXAMPLES_TEST_AI_OVERRIDES_VS_HUMAN_EXAMPLES",
+      "unsafeName": "MIXED_EXAMPLES_TEST_AI_OVERRIDES_VS_HUMAN_EXAMPLES",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "mixed_examples_test_ai_overrides_vs_human_examples",
+      "unsafeName": "mixed_examples_test_ai_overrides_vs_human_examples",
     },
   },
   "apiPlayground": undefined,

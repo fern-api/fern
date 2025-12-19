@@ -207,10 +207,10 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         const headerEnvVar = this.authScheme.headerEnvVar;
 
         if (headerEnvVar != null) {
-            return `return "Please provide 'auth.${headerFieldName}' or set the '${headerEnvVar}' environment variable";`;
+            return `return "Please provide '${headerFieldName}' when initializing the client, or set the '${headerEnvVar}' environment variable";`;
         }
 
-        return `return "Please provide 'auth.${headerFieldName}'";`;
+        return `return "Please provide '${headerFieldName}' when initializing the client";`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {

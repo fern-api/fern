@@ -202,6 +202,14 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     : [])
             ],
             methods: [
+                {
+                    kind: StructureKind.Method,
+                    scope: Scope.Public,
+                    isStatic: true,
+                    name: "getAuthConfigErrorMessage",
+                    returnType: "string",
+                    statements: `return "Please provide the required authentication credentials when initializing the client";`
+                },
                 ...(this.authScheme.tokenEndpoint.expiryProperty
                     ? ([
                           {

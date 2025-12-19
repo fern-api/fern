@@ -23,7 +23,7 @@ export class HeaderAuthProvider implements core.AuthProvider {
     }
 
     public static getAuthConfigErrorMessage(): string {
-        return "Please provide 'auth.apiKey' or set the 'MY_API_KEY' environment variable";
+        return "Please provide 'apiKey' when initializing the client, or set the 'MY_API_KEY' environment variable";
     }
 
     public async getAuthRequest({

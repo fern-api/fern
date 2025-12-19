@@ -1,24 +1,25 @@
 {
   "apiName": {
-    "originalName": "",
+    "originalName": "Pet API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "petApi",
+      "safeName": "petApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "pet_api",
+      "safeName": "pet_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "PET_API",
+      "safeName": "PET_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "PetApi",
+      "safeName": "PetApi"
     }
   },
   "selfHosted": false,
+  "apiDisplayName": "Pet API",
   "auth": {
     "requirement": "ALL",
     "schemes": []
