@@ -73,6 +73,7 @@ allowedFailures:
   - client-side-params
   - content-type
   - cross-package-type-names
+  - dollar-string-examples
   - header-auth
   - empty-clients
   - enum

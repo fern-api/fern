@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.27.2
+  changelogEntry:
+    - summary: |
+        Fix example resolution to treat dollar-prefixed strings as literals when they don't match the valid example reference format. Strings like `"$3.00"`, `"$USD"`, or `"$PATH"` are now treated as literal values without requiring escaping. Valid example references (e.g., `$Type.Example` or `$import.Type.Example`) continue to work as expected.
+      type: fix
+  createdAt: "2025-12-19"
+  irVersion: 62
+
 - version: 3.27.1
   changelogEntry:
     - summary: |
