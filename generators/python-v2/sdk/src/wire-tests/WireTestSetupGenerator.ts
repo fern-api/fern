@@ -368,7 +368,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
     private buildEnvironmentSetup(): { imports: string; param: string } {
         const environments = this.ir.environments;
 
-        if (environments?.environments.type != "multipleBaseUrls") {
+        if (environments?.environments.type !== "multipleBaseUrls") {
             // No environments defined - use base_url directly
             return {
                 imports: "",
