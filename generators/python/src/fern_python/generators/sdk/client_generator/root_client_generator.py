@@ -1466,33 +1466,27 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     if p.initializer is None and (p.type_hint is None or not p.type_hint.is_optional)
                 ]
 
-                # If there is inferred auth, show those credentials (usually api_key) and omit other
-                # optional configuration for brevity.
+                # If there is inferred auth, use a nicer placeholder for those credentials (usually api_key),
+                # but still include other required parameters (e.g. base_url).
                 inferred_auth_param_names = {"api_key"}
-                inferred_required = [
-                    p for p in required_params if p.constructor_parameter_name in inferred_auth_param_names
-                ]
-                if inferred_required:
-                    kwargs: List[typing.Tuple[str, AST.Expression]] = []
-                    for p in inferred_required:
-                        placeholder = (
-                            AST.Expression('"YOUR_API_KEY"')
-                            if p.constructor_parameter_name == "api_key"
-                            else AST.Expression(f'"YOUR_{p.constructor_parameter_name.upper()}"')
-                        )
-                        kwargs.append((p.constructor_parameter_name, placeholder))
-                    return kwargs
-
-                # Fallback: include all required parameters with placeholders.
-                kwargs = []
+                kwargs: List[typing.Tuple[str, AST.Expression]] = []
                 for p in required_params:
                     # Skip internal/private params in examples.
                     if p.constructor_parameter_name.startswith("_"):
                         continue
                     if p.constructor_parameter_name == RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME:
                         continue
-                    placeholder = AST.Expression(f'"YOUR_{p.constructor_parameter_name.upper()}"')
-                    kwargs.append((p.constructor_parameter_name, placeholder))
+
+                    name = p.constructor_parameter_name
+                    if name in inferred_auth_param_names:
+                        kwargs.append((name, AST.Expression('"YOUR_API_KEY"')))
+                        continue
+                    if name == RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME:
+                        kwargs.append((name, AST.Expression('"https://yourhost.com/path/to/api"')))
+                        continue
+
+                    kwargs.append((name, AST.Expression(f'"YOUR_{name.upper()}"')))
+
                 return kwargs
 
             if self._use_kwargs_snippets:
