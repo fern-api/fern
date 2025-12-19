@@ -952,6 +952,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test vnd.fern.user+json;version=1 and /application-json",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -987,22 +988,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test vnd.fern.user+json;version=1 and /application-json",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testVndFernUserJsonVersion1AndApplicationJson",
+      "safeName": "testVndFernUserJsonVersion1AndApplicationJson"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_vnd_fern_user_json_version_1_and_application_json",
+      "safeName": "test_vnd_fern_user_json_version_1_and_application_json"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_VND_FERN_USER_JSON_VERSION_1_AND_APPLICATION_JSON",
+      "safeName": "TEST_VND_FERN_USER_JSON_VERSION_1_AND_APPLICATION_JSON"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestVndFernUserJsonVersion1AndApplicationJson",
+      "safeName": "TestVndFernUserJsonVersion1AndApplicationJson"
     }
   },
   "constants": {

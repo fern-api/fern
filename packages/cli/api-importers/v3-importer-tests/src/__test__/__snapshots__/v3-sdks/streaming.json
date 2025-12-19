@@ -3550,6 +3550,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Streaming API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -3588,22 +3589,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Streaming API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "streamingApi",
+      "safeName": "streamingApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "streaming_api",
+      "safeName": "streaming_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "STREAMING_API",
+      "safeName": "STREAMING_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "StreamingApi",
+      "safeName": "StreamingApi"
     }
   },
   "constants": {
