@@ -332,21 +332,15 @@ export async function publishDocs({
                     if (skipUpload) {
                         context.logger.debug("Skip-upload mode: skipping dynamic IR uploads");
                     } else {
-                        // Only upload dynamic IRs for languages that were generated (not downloaded from SDK)
-                        const dynamicIRsToUpload: Record<string, DynamicIr> = {};
-                        for (const [language, dynamicIr] of Object.entries(dynamicIRsByLanguage)) {
-                            if (!languagesWithExistingSdkDynamicIr.has(language)) {
-                                dynamicIRsToUpload[language] = dynamicIr;
-                            }
-                        }
-                        if (Object.keys(dynamicIRsToUpload).length > 0) {
-                            await uploadDynamicIRs({
-                                dynamicIRs: dynamicIRsToUpload,
-                                dynamicIRUploadUrls: response.body.dynamicIRs,
-                                context,
-                                apiId: response.body.apiDefinitionId
-                            });
-                        }
+                        // Upload all dynamic IRs (both generated and downloaded from SDK) to the docs S3 location
+                        // Even SDK dynamic IRs that already exist in the SDK S3 keyspace need to be uploaded
+                        // to the docs-specific S3 location for the docs renderer to access them
+                        await uploadDynamicIRs({
+                            dynamicIRs: dynamicIRsByLanguage,
+                            dynamicIRUploadUrls: response.body.dynamicIRs,
+                            context,
+                            apiId: response.body.apiDefinitionId
+                        });
                     }
                 }
 
