@@ -1,6 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml, generatorsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
@@ -576,7 +576,6 @@ async function checkAndDownloadExistingSdkDynamicIRs({
     const snippetConfigWithVersions = await buildSnippetConfigurationWithVersions({
         fdr,
         workspace,
-        organization,
         snippetsConfig
     });
 
@@ -634,57 +633,83 @@ async function checkAndDownloadExistingSdkDynamicIRs({
 async function buildSnippetConfigurationWithVersions({
     fdr,
     workspace,
-    organization,
     snippetsConfig
 }: {
     fdr: FdrClient;
     workspace: FernWorkspace;
-    organization: string;
     snippetsConfig: SnippetsConfig;
 }): Promise<Record<string, { packageName: string; version: string }>> {
     const result: Record<string, { packageName: string; version: string }> = {};
 
-    const snippetConfiguration: Record<string, string | undefined> = {
-        typescript: snippetsConfig.typescriptSdk?.package,
-        python: snippetsConfig.pythonSdk?.package,
-        java: snippetsConfig.javaSdk?.coordinate,
-        go: snippetsConfig.goSdk?.githubRepo,
-        csharp: snippetsConfig.csharpSdk?.package,
-        ruby: snippetsConfig.rubySdk?.gem,
-        php: snippetsConfig.phpSdk?.package,
-        swift: snippetsConfig.swiftSdk?.package,
-        rust: snippetsConfig.rustSdk?.package
-    };
+    const snippetConfigs: Array<{
+        language: string;
+        snippetName: string | undefined;
+        explicitVersion: string | undefined;
+    }> = [
+        {
+            language: "typescript",
+            snippetName: snippetsConfig.typescriptSdk?.package,
+            explicitVersion: snippetsConfig.typescriptSdk?.version
+        },
+        {
+            language: "python",
+            snippetName: snippetsConfig.pythonSdk?.package,
+            explicitVersion: snippetsConfig.pythonSdk?.version
+        },
+        {
+            language: "java",
+            snippetName: snippetsConfig.javaSdk?.coordinate,
+            explicitVersion: snippetsConfig.javaSdk?.version
+        },
+        {
+            language: "go",
+            snippetName: snippetsConfig.goSdk?.githubRepo,
+            explicitVersion: snippetsConfig.goSdk?.version
+        },
+        {
+            language: "csharp",
+            snippetName: snippetsConfig.csharpSdk?.package,
+            explicitVersion: snippetsConfig.csharpSdk?.version
+        },
+        {
+            language: "ruby",
+            snippetName: snippetsConfig.rubySdk?.gem,
+            explicitVersion: snippetsConfig.rubySdk?.version
+        },
+        {
+            language: "php",
+            snippetName: snippetsConfig.phpSdk?.package,
+            explicitVersion: snippetsConfig.phpSdk?.version
+        },
+        {
+            language: "swift",
+            snippetName: snippetsConfig.swiftSdk?.package,
+            explicitVersion: snippetsConfig.swiftSdk?.version
+        },
+        {
+            language: "rust",
+            snippetName: snippetsConfig.rustSdk?.package,
+            explicitVersion: snippetsConfig.rustSdk?.version
+        }
+    ];
 
-    if (!workspace.generatorsConfiguration?.groups) {
-        return result;
-    }
+    for (const config of snippetConfigs) {
+        if (!config.snippetName) {
+            continue;
+        }
 
-    for (const group of workspace.generatorsConfiguration.groups) {
-        for (const generatorInvocation of group.generators) {
-            if (!generatorInvocation.language) {
-                continue;
-            }
-
-            const packageName = generatorsYml.getPackageName({ generatorInvocation });
-            if (!packageName) {
-                continue;
-            }
-
-            const configuredPackage = snippetConfiguration[generatorInvocation.language];
-            if (configuredPackage !== packageName) {
-                continue;
-            }
-
-            const version = await computeSemanticVersionForLanguage({
+        let version = config.explicitVersion;
+        if (!version) {
+            version = await computeSemanticVersionForLanguage({
                 fdr,
-                packageName,
-                generatorInvocation
+                workspace,
+                language: config.language,
+                packageName: config.snippetName
             });
+        }
 
-            if (version) {
-                result[generatorInvocation.language] = { packageName, version };
-            }
+        if (version) {
+            result[config.language] = { packageName: config.snippetName, version };
         }
     }
 
@@ -693,54 +718,63 @@ async function buildSnippetConfigurationWithVersions({
 
 async function computeSemanticVersionForLanguage({
     fdr,
-    packageName,
-    generatorInvocation
+    workspace,
+    language,
+    packageName
 }: {
     fdr: FdrClient;
+    workspace: FernWorkspace;
+    language: string;
     packageName: string;
-    generatorInvocation: generatorsYml.GeneratorInvocation;
 }): Promise<string | undefined> {
-    if (generatorInvocation.language == null) {
-        return undefined;
-    }
-
-    let language: CjsFdrSdk.sdks.Language;
-    switch (generatorInvocation.language) {
+    let fdrLanguage: CjsFdrSdk.sdks.Language;
+    switch (language) {
         case "csharp":
-            language = "Csharp";
+            fdrLanguage = "Csharp";
             break;
         case "go":
-            language = "Go";
+            fdrLanguage = "Go";
             break;
         case "java":
-            language = "Java";
+            fdrLanguage = "Java";
             break;
         case "python":
-            language = "Python";
+            fdrLanguage = "Python";
             break;
         case "ruby":
-            language = "Ruby";
+            fdrLanguage = "Ruby";
             break;
         case "typescript":
-            language = "TypeScript";
+            fdrLanguage = "TypeScript";
             break;
         case "php":
-            language = "Php";
+            fdrLanguage = "Php";
             break;
         case "swift":
-            language = "Swift";
+            fdrLanguage = "Swift";
             break;
         default:
             return undefined;
     }
 
+    let githubRepository: string | undefined;
+    if (workspace.generatorsConfiguration?.groups) {
+        for (const group of workspace.generatorsConfiguration.groups) {
+            for (const generatorInvocation of group.generators) {
+                if (generatorInvocation.language === language) {
+                    if (generatorInvocation.outputMode.type === "githubV2") {
+                        githubRepository = `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
     try {
         const response = await fdr.sdks.versions.computeSemanticVersion({
-            githubRepository:
-                generatorInvocation.outputMode.type === "githubV2"
-                    ? `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`
-                    : undefined,
-            language,
+            githubRepository,
+            language: fdrLanguage,
             package: packageName
         });
 
