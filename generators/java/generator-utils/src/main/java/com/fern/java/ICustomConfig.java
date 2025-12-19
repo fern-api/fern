@@ -122,6 +122,15 @@ public interface ICustomConfig {
     @JsonProperty("gradle-distribution-url")
     Optional<String> gradleDistributionUrl();
 
+    @JsonProperty("gradle-plugin-management")
+    Optional<String> gradlePluginManagement();
+
+    @Value.Default
+    @JsonProperty("gradle-central-dependency-management")
+    default Boolean gradleCentralDependencyManagement() {
+        return false;
+    }
+
     enum PackageLayout {
         NESTED("nested"),
         FLAT("flat");

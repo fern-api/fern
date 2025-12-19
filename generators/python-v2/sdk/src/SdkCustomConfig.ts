@@ -28,9 +28,21 @@ const relativePathSchema = z
     })
     .transform((pathStr) => pathStr.replace(/^\/+|\/+$/g, ""));
 
+/**
+ * Schema for client configuration options that affect the generated client class name.
+ */
+const ClientConfigSchema = z.object({
+    filename: z.string().optional(),
+    class_name: z.string().optional(),
+    exported_filename: z.string().optional(),
+    exported_class_name: z.string().optional()
+});
+
 export const SdkCustomConfigSchema = z.object({
     enable_wire_tests: z.boolean().optional(),
-    package_path: relativePathSchema.optional()
+    package_path: relativePathSchema.optional(),
+    client: ClientConfigSchema.optional(),
+    client_class_name: z.string().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

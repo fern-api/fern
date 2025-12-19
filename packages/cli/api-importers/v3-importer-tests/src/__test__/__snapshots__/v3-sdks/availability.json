@@ -3946,6 +3946,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Deprecated params and fields",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -3984,22 +3985,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Deprecated params and fields",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "deprecatedParamsAndFields",
+      "safeName": "deprecatedParamsAndFields"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "deprecated_params_and_fields",
+      "safeName": "deprecated_params_and_fields"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "DEPRECATED_PARAMS_AND_FIELDS",
+      "safeName": "DEPRECATED_PARAMS_AND_FIELDS"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "DeprecatedParamsAndFields",
+      "safeName": "DeprecatedParamsAndFields"
     }
   },
   "constants": {

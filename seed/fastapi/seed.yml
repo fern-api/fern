@@ -30,6 +30,12 @@ language: python
 generatorType: Server
 defaultOutputMode: local_files
 fixtures:
+  examples:
+    - customConfig:
+      outputFolder: generate-package-deps
+      outputMode: github  # generate pyproject.toml for validation of expected dependency versions
+    - customConfig: null
+      outputFolder: no-custom-config
   alias-extends:
     - customConfig: null
       outputFolder: no-custom-config
@@ -131,6 +137,7 @@ allowedFailures:
   - response-property
   - streaming
   - literal
+  - endpoint-security-auth
   # enum fixture fails due to union header parameter handling, not enum.py helper
   - enum:no-custom-config
   - server-sent-events

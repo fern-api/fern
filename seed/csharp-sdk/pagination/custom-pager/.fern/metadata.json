@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "custom-pager-name": "MyPager"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

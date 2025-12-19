@@ -651,13 +651,30 @@ export function ${functionName}(server: MockServer): void {
                                 }
                             });
                         },
-                        reference: () => {
-                            // noop
+                        reference: (value) => {
+                            const allProperties = this.getAuthRequestParameters(value);
+                            const clientIdValue = allProperties[clientIdPropertyName];
+                            const clientSecretValue = allProperties[clientSecretPropertyName];
+                            if (clientIdValue) {
+                                authOptions.clientId = clientIdValue;
+                            }
+                            if (clientSecretValue) {
+                                authOptions.clientSecret = clientSecretValue;
+                            }
                         },
                         _other: () => {
                             // noop
                         }
                     });
+
+                    // Provide fallback values if clientId/clientSecret weren't extracted from the example
+                    // This is needed for wire tests to work with OAuth client credentials flow
+                    if (authOptions.clientId == null) {
+                        authOptions.clientId = code`"test_client_id"`;
+                    }
+                    if (authOptions.clientSecret == null) {
+                        authOptions.clientSecret = code`"test_client_secret"`;
+                    }
                 },
                 inferred: (auth) => {
                     const service = this.ir.services[auth.tokenEndpoint.endpoint.serviceId];
@@ -794,6 +811,15 @@ export function ${functionName}(server: MockServer): void {
                         });
                     }
                 });
+
+                // Provide fallback values if client_id/client_secret weren't in the example
+                // This ensures the mock server expects these fields when the test client sends them
+                if (!(clientIdPropertyName in minimalProperties)) {
+                    minimalProperties[clientIdPropertyName] = code`"test_client_id"`;
+                }
+                if (!(clientSecretPropertyName in minimalProperties)) {
+                    minimalProperties[clientSecretPropertyName] = code`"test_client_secret"`;
+                }
 
                 return code`${literalOf(minimalProperties)}`;
             },
@@ -1154,7 +1180,10 @@ describe("${serviceName}", () => {
             }
         }
 
-        const hasPagination = endpoint.pagination !== undefined;
+        // hasPagination determines if we need { once: false } for multiple mock requests
+        // This is set after isCursorMissing is computed to ensure we don't allow multiple
+        // requests when cursor is missing (since there's no next page to request)
+        let hasPagination = endpoint.pagination !== undefined;
         const expectedName =
             endpoint.pagination !== undefined
                 ? context.type.generateGetterForResponsePropertyAsString({
@@ -1171,10 +1200,20 @@ describe("${serviceName}", () => {
             endpoint.pagination !== undefined &&
             isPaginationResultsPathMissingInExample({
                 example,
-                endpoint,
-                retainOriginalCasing: context.retainOriginalCasing,
-                includeSerdeLayer: context.includeSerdeLayer
+                endpoint
             });
+
+        const isCursorMissing =
+            endpoint.pagination !== undefined &&
+            isPaginationCursorMissingInExample({
+                example,
+                endpoint
+            });
+
+        // If cursor is missing, we won't be making getNextPage() calls, so don't need { once: false }
+        if (isCursorMissing) {
+            hasPagination = false;
+        }
 
         const expectedDeclaration = code`const expected = ${expected};`;
 
@@ -1190,7 +1229,11 @@ describe("${serviceName}", () => {
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
                     endpoint.pagination.type !== "custom"
-                        ? code`
+                        ? isCursorMissing
+                            ? code`
+                            expect(${expectedName}).toEqual(${pageName}.data);
+                            `
+                            : code`
                             expect(${expectedName}).toEqual(${pageName}.data);
                             expect(${pageName}.hasNextPage()).toBe(true);
                             const nextPage = await ${pageName}.getNextPage();
@@ -1854,14 +1897,10 @@ function getResponseBodyJsonExample(response: ExampleResponse): unknown | undefi
 
 function isPaginationResultsPathMissingInExample({
     example,
-    endpoint,
-    retainOriginalCasing,
-    includeSerdeLayer
+    endpoint
 }: {
     example: ExampleEndpointCall;
     endpoint: HttpEndpoint;
-    retainOriginalCasing: boolean;
-    includeSerdeLayer: boolean;
 }): boolean {
     const pagination = endpoint.pagination;
     if (pagination == null || pagination.results == null) {
@@ -1876,14 +1915,12 @@ function isPaginationResultsPathMissingInExample({
     const resultsProperty = pagination.results;
 
     // Build the path segments using wire values for JSON walking
-    // When retainOriginalCasing is true or includeSerdeLayer is false, use wire values
-    // Otherwise use camelCase names (which match the serialized JSON)
-    const useWireValue = retainOriginalCasing || !includeSerdeLayer;
+    // JSON examples from IR are always in wire format (snake_case), so we must
+    // always use wire values to walk the JSON regardless of retainOriginalCasing
+    // or includeSerdeLayer settings (those affect generated code, not example JSON)
     const segments = [
-        ...(resultsProperty.propertyPath ?? []).map((item) =>
-            useWireValue ? item.name.originalName : item.name.camelCase.safeName
-        ),
-        useWireValue ? resultsProperty.property.name.wireValue : resultsProperty.property.name.name.camelCase.safeName
+        ...(resultsProperty.propertyPath ?? []).map((item) => item.name.originalName),
+        resultsProperty.property.name.wireValue
     ];
 
     let cursor: unknown = responseJson;
@@ -1896,4 +1933,67 @@ function isPaginationResultsPathMissingInExample({
 
     // If the leaf is explicitly undefined, treat it as "missing" for pagination purposes
     return cursor === undefined;
+}
+
+/**
+ * Checks if the pagination cursor/next property is missing from the example response.
+ * For cursor pagination, we need the "next" property; for offset pagination, we need "hasNextPage".
+ * If the cursor property is missing, we shouldn't generate hasNextPage().toBe(true) assertions
+ * since there won't be a cursor to indicate a next page.
+ */
+function isPaginationCursorMissingInExample({
+    example,
+    endpoint
+}: {
+    example: ExampleEndpointCall;
+    endpoint: HttpEndpoint;
+}): boolean {
+    const pagination = endpoint.pagination;
+    if (pagination == null) {
+        return true;
+    }
+
+    const responseJson = getResponseBodyJsonExample(example.response);
+    if (responseJson == null) {
+        return true;
+    }
+
+    // Get the cursor property based on pagination type
+    let cursorProperty;
+    if (pagination.type === "cursor") {
+        cursorProperty = pagination.next;
+    } else if (pagination.type === "offset") {
+        cursorProperty = pagination.hasNextPage;
+        // For offset pagination, hasNextPage is optional - if not defined, the SDK calculates it differently
+        if (cursorProperty == null) {
+            return false;
+        }
+    } else {
+        // Custom pagination - skip this check
+        return false;
+    }
+
+    if (cursorProperty == null) {
+        return true;
+    }
+
+    // Build the path segments using wire values for JSON walking
+    // JSON examples from IR are always in wire format (snake_case), so we must
+    // always use wire values to walk the JSON regardless of retainOriginalCasing
+    // or includeSerdeLayer settings (those affect generated code, not example JSON)
+    const segments = [
+        ...(cursorProperty.propertyPath ?? []).map((item) => item.name.originalName),
+        cursorProperty.property.name.wireValue
+    ];
+
+    let cursor: unknown = responseJson;
+    for (const key of segments) {
+        if (cursor == null || typeof cursor !== "object" || !(key in cursor)) {
+            return true;
+        }
+        cursor = (cursor as Record<string, unknown>)[key];
+    }
+
+    // If the leaf is explicitly undefined or null, treat it as "missing"
+    return cursor === undefined || cursor === null;
 }

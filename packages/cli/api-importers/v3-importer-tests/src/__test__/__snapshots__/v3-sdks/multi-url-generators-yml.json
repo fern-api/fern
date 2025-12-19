@@ -2776,6 +2776,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "User and Token API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -2843,22 +2844,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "User and Token API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "userAndTokenApi",
+      "safeName": "userAndTokenApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "user_and_token_api",
+      "safeName": "user_and_token_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "USER_AND_TOKEN_API",
+      "safeName": "USER_AND_TOKEN_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "UserAndTokenApi",
+      "safeName": "UserAndTokenApi"
     }
   },
   "constants": {

@@ -20,6 +20,7 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[type version name]
         body_bag = params.slice(*body_prop_names)
 

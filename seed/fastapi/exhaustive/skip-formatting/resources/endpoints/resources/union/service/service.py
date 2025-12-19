@@ -63,10 +63,6 @@ class AbstractEndpointsUnionService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_union.__globals__)
-        
         router.post(
             path="/union",
             response_model=Animal,

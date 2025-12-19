@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Human Examples Preserved Test",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "humanExamplesPreservedTest",
+      "unsafeName": "humanExamplesPreservedTest",
     },
-    "originalName": "",
+    "originalName": "Human Examples Preserved Test",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "HumanExamplesPreservedTest",
+      "unsafeName": "HumanExamplesPreservedTest",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "HUMAN_EXAMPLES_PRESERVED_TEST",
+      "unsafeName": "HUMAN_EXAMPLES_PRESERVED_TEST",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "human_examples_preserved_test",
+      "unsafeName": "human_examples_preserved_test",
     },
   },
   "apiPlayground": undefined,

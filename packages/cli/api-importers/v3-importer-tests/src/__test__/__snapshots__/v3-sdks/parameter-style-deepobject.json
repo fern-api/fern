@@ -1669,6 +1669,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Parameter Style DeepObject Test",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1704,22 +1705,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Parameter Style DeepObject Test",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "parameterStyleDeepObjectTest",
+      "safeName": "parameterStyleDeepObjectTest"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "parameter_style_deep_object_test",
+      "safeName": "parameter_style_deep_object_test"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "PARAMETER_STYLE_DEEP_OBJECT_TEST",
+      "safeName": "PARAMETER_STYLE_DEEP_OBJECT_TEST"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "ParameterStyleDeepObjectTest",
+      "safeName": "ParameterStyleDeepObjectTest"
     }
   },
   "constants": {

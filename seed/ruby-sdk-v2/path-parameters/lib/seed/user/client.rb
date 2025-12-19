@@ -22,6 +22,7 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def get_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -53,6 +54,7 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -86,6 +88,7 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def update_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[tenant_id user_id]
         body_params = params.except(*path_param_names)
 
@@ -123,7 +126,7 @@ module Seed
       #
       # @return [Array[Seed::User::Types::User]]
       def search_users(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
@@ -163,6 +166,7 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def get_user_metadata(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -199,6 +203,7 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def get_user_specifics(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",

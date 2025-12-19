@@ -60,11 +60,9 @@ import com.seed.oauthClientCredentialsMandatoryAuth.resources.auth.requests.GetT
 
 public class Example {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsMandatoryAuthClient client = SeedOauthClientCredentialsMandatoryAuthClient
-            .builder()
-            .clientId("<clientId>")
-            .clientSecret("<clientSecret>")
-            .build();
+        SeedOauthClientCredentialsMandatoryAuthClient client = SeedOauthClientCredentialsMandatoryAuthClient.withCredentials("<clientId>", "<clientSecret>")
+            .build()
+        ;
 
         client.auth().getTokenWithClientCredentials(
             GetTokenRequest

@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "use_typeddict_requests": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

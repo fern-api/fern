@@ -1,5 +1,131 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.24.4
+- version: 3.29.1
+  changelogEntry:
+    - summary: |
+        Make version optional when fetching dynamic IR from SDK uploads. If no version is explicitly specified in the api snippets config, the CLI will not send a version and the API will use the latest available version.
+      type: chore
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.29.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs preview delete <url>` command to delete preview deployments. This allows users to clean up preview sites that were generated with `fern generate --docs --preview`.
+      type: feat
+    - summary: |
+        Add `fern docs preview list` command to list all preview deployments with pagination support via `--limit` and `--page` options.
+      type: feat
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.28.0
+  changelogEntry:
+    - summary: |
+        Refactor `fern check` output with improved formatting and severity labels. Violations are now displayed in a hierarchical format grouped by `[sdk]` and `[docs]`, with `[error]` (red) and `[warning]` (yellow) labels for each violation. When multiple APIs exist, violations are further grouped by API name. Additional UX improvements include: blue-colored paths, cyan `[sdk]` and magenta `[docs]` headers for visual distinction, warnings displayed before errors, blank lines between violations for readability, and inline issue display when path is empty.
+      type: feat
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.27.3
+  changelogEntry:
+    - summary: |
+        Updates dynamic snippets to pull from an SDK version, if available and specified in the `api.snippets` configuration.
+      type: chore
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.27.2
+  changelogEntry:
+    - summary: |
+        Fix example resolution to treat dollar-prefixed strings as literals when they don't match the valid example reference format. Strings like `"$3.00"`, `"$USD"`, or `"$PATH"` are now treated as literal values without requiring escaping. Valid example references (e.g., `$Type.Example` or `$import.Type.Example`) continue to work as expected.
+      type: fix
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.27.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` hot reload to properly restart the docs server when files change.
+      type: fix
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.27.0
+  changelogEntry:
+    - summary: |
+        Add `ENDPOINT_SECURITY` value to `AuthSchemesRequirement` enum in the IR. 
+        This allows users to specify that authentication requirements are defined per-endpoint rather than globally. 
+        Users can now use `endpoint-security: {}` in their Fern API definition's `auth` field to indicate that security is configured on individual endpoints via the `security` field.
+      type: feat
+  createdAt: "2025-12-18"
+  irVersion: 62
+
+- version: 3.26.3
+  changelogEntry:
+    - summary: |
+        Add `x-fern-sdk-method-name` support for AsyncAPI operations.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 62
+
+- version: 3.26.2
+  changelogEntry:
+    - summary: |
+        Support custom environment variables and shell command operators in native local generation for seed testing.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 62
+
+- version: 3.26.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` to start the backend server before Next.js. Previously, Next.js would start immediately while the backend was still initializing, causing requests to fail if users opened the browser too quickly. The backend now fully initializes before Next.js starts accepting requests.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 62
+
+- version: 3.26.0
+  changelogEntry:
+    - summary: |
+        Allow omitting the `fernapi/` prefix in generator names in `generators.yml`. The prefix is now inferred by default, so `fern-typescript-sdk` is equivalent to `fernapi/fern-typescript-sdk`. Custom Docker orgs can still be specified explicitly (e.g., `myorg/my-generator`).
+      type: feat
+  createdAt: "2025-12-17"
+  irVersion: 62
+
+- version: 3.25.2
+  changelogEntry:
+    - summary: |
+        Add `--force-download` flag to `fern docs dev` command.
+      type: chore
+  createdAt: "2025-12-17"
+  irVersion: 62
+
+- version: 3.25.1
+  changelogEntry:
+    - summary: |
+        Fix endpoint resolver to use caller's casing generator instead of hardcoded
+        constant, ensuring OAuth endpoints respect smart casing settings.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 62
+
+- version: 3.25.0
+  changelogEntry:
+    - summary: |
+        Add user email to CLI PostHog events when not using an access token. This enables better user analytics by capturing the primary email address from Auth0 for logged-in users.
+      type: feat
+  createdAt: "2025-12-17"
+  irVersion: 62
+
+- version: 3.24.6
+  changelogEntry:
+    - summary: |
+        Remove unnecessary debug logging from `fern docs dev`.
+      type: chore
+  createdAt: "2025-12-17"
+  irVersion: 62
+
+- version: 3.24.5
   changelogEntry:
     - summary: |
         Fix discriminated unions with nullable object types to use samePropertiesAsObject instead of wrapping in a value property.
@@ -7,7 +133,7 @@
   createdAt: "2025-12-16"
   irVersion: 62
 
-- version: 3.24.3
+- version: 3.24.4
   changelogEntry:
     - summary: |
         Use Set for O(1) deduplication of referenced markdown files in `fern docs dev` to improve hot reload performance.
@@ -15,7 +141,7 @@
   createdAt: "2025-12-17"
   irVersion: 62
 
-- version: 3.24.2
+- version: 3.24.3
   changelogEntry:
     - summary: |
         Fix handling of empty allOf in additionalProperties by treating schemas with only metadata (example, description) as "any" type.
@@ -33,7 +159,7 @@
 
 - changelogEntry:
     - summary: |
-        Collects `fern docs dev` metrics in `.fern/app-preview/<timestamp>.debug.log` file.
+        Collects `fern docs dev` metrics in `.fern/logs/<timestamp>.debug.log` file.
       type: chore
   irVersion: 62
   createdAt: "2025-12-16"

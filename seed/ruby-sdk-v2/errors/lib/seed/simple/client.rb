@@ -20,6 +20,7 @@ module Seed
       #
       # @return [Seed::Simple::Types::FooResponse]
       def foo_without_endpoint_error(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -51,6 +52,7 @@ module Seed
       #
       # @return [Seed::Simple::Types::FooResponse]
       def foo(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -82,6 +84,7 @@ module Seed
       #
       # @return [Seed::Simple::Types::FooResponse]
       def foo_with_examples(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

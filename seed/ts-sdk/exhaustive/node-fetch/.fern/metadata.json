@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "fetchSupport": "node-fetch"
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

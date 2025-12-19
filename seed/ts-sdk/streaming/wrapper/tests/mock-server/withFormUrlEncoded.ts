@@ -18,13 +18,22 @@ export function withFormUrlEncoded(expectedBody: unknown, resolver: HttpResponse
             clonedRequest = request.clone();
             bodyText = await clonedRequest.text();
             if (bodyText === "") {
-                console.error("Request body is empty, expected a form-urlencoded body.");
-                return passthrough();
-            }
-            const params = new URLSearchParams(bodyText);
-            actualBody = {};
-            for (const [key, value] of params.entries()) {
-                actualBody[key] = value;
+                // Empty body is valid if expected body is also empty
+                const isExpectedEmpty =
+                    expectedBody != null &&
+                    typeof expectedBody === "object" &&
+                    Object.keys(expectedBody as Record<string, unknown>).length === 0;
+                if (!isExpectedEmpty) {
+                    console.error("Request body is empty, expected a form-urlencoded body.");
+                    return passthrough();
+                }
+                actualBody = {};
+            } else {
+                const params = new URLSearchParams(bodyText);
+                actualBody = {};
+                for (const [key, value] of params.entries()) {
+                    actualBody[key] = value;
+                }
             }
         } catch (error) {
             console.error(`Error processing form-urlencoded request body:\n\tError: ${error}\n\tBody: ${bodyText}`);

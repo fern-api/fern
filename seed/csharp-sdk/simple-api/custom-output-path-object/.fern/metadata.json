@@ -9,5 +9,6 @@
       "solution": ".",
       "other": "lib/SeedApi"
     }
-  }
+  },
+  "sdkVersion": "0.0.1"
 }
