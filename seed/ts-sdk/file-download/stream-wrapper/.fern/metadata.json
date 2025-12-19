@@ -6,5 +6,6 @@
         "fileResponseType": "stream",
         "streamType": "wrapper",
         "testFramework": "jest"
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

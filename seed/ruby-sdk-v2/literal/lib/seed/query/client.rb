@@ -29,7 +29,7 @@ module Seed
       #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[prompt optional_prompt alias_prompt alias_optional_prompt query stream optional_stream alias_stream alias_optional_stream]
         query_params = {}
         query_params["prompt"] = params[:prompt] if params.key?(:prompt)

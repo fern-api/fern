@@ -16,5 +16,6 @@
     "defaultFeatures": [
       "experimental"
     ]
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

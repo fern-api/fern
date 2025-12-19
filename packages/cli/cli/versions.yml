@@ -1,4 +1,65 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.29.1
+  changelogEntry:
+    - summary: |
+        Make version optional when fetching dynamic IR from SDK uploads. If no version is explicitly specified in the api snippets config, the CLI will not send a version and the API will use the latest available version.
+      type: chore
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.29.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs preview delete <url>` command to delete preview deployments. This allows users to clean up preview sites that were generated with `fern generate --docs --preview`.
+      type: feat
+    - summary: |
+        Add `fern docs preview list` command to list all preview deployments with pagination support via `--limit` and `--page` options.
+      type: feat
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.28.0
+  changelogEntry:
+    - summary: |
+        Refactor `fern check` output with improved formatting and severity labels. Violations are now displayed in a hierarchical format grouped by `[sdk]` and `[docs]`, with `[error]` (red) and `[warning]` (yellow) labels for each violation. When multiple APIs exist, violations are further grouped by API name. Additional UX improvements include: blue-colored paths, cyan `[sdk]` and magenta `[docs]` headers for visual distinction, warnings displayed before errors, blank lines between violations for readability, and inline issue display when path is empty.
+      type: feat
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.27.3
+  changelogEntry:
+    - summary: |
+        Updates dynamic snippets to pull from an SDK version, if available and specified in the `api.snippets` configuration.
+      type: chore
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.27.2
+  changelogEntry:
+    - summary: |
+        Fix example resolution to treat dollar-prefixed strings as literals when they don't match the valid example reference format. Strings like `"$3.00"`, `"$USD"`, or `"$PATH"` are now treated as literal values without requiring escaping. Valid example references (e.g., `$Type.Example` or `$import.Type.Example`) continue to work as expected.
+      type: fix
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.27.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` hot reload to properly restart the docs server when files change.
+      type: fix
+  createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.27.0
+  changelogEntry:
+    - summary: |
+        Add `ENDPOINT_SECURITY` value to `AuthSchemesRequirement` enum in the IR. 
+        This allows users to specify that authentication requirements are defined per-endpoint rather than globally. 
+        Users can now use `endpoint-security: {}` in their Fern API definition's `auth` field to indicate that security is configured on individual endpoints via the `security` field.
+      type: feat
+  createdAt: "2025-12-18"
+  irVersion: 62
+
 - version: 3.26.3
   changelogEntry:
     - summary: |

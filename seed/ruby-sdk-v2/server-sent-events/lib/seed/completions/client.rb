@@ -20,6 +20,7 @@ module Seed
       #
       # @return [untyped]
       def stream(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[query]
         body_bag = params.slice(*body_prop_names)
 

@@ -257,6 +257,7 @@ fixtures:
       outputFolder: no-custom-config
 allowedFailures:
   - any-auth
+  - endpoint-security-auth
   - csharp-namespace-collision:fully-qualified-namespaces
   - enum:forward-compatible-enums
   - enum:plain-enums

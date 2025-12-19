@@ -23,6 +23,7 @@ module Seed
       #
       # @return [Seed::Submission::Types::ExecutionSessionResponse]
       def create_execution_session(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -56,6 +57,7 @@ module Seed
       #
       # @return [Seed::Submission::Types::ExecutionSessionResponse, nil]
       def get_execution_session(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -87,6 +89,7 @@ module Seed
       #
       # @return [untyped]
       def stop_execution_session(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
@@ -114,7 +117,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Submission::Types::GetExecutionSessionStateResponse]
-      def get_execution_sessions_state(request_options: {}, **_params)
+      def get_execution_sessions_state(request_options: {}, **params)
+        Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",

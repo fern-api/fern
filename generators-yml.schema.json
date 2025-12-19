@@ -1518,6 +1518,32 @@
       ],
       "additionalProperties": false
     },
+    "fernDefinition.auth.EndpointSecuritySchemaDetails": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.EndpointSecuritySchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "endpoint-security": {
+          "$ref": "#/definitions/fernDefinition.auth.EndpointSecuritySchemaDetails"
+        }
+      },
+      "required": [
+        "endpoint-security"
+      ],
+      "additionalProperties": false
+    },
     "fernDefinition.auth.ApiAuthSchema": {
       "anyOf": [
         {
@@ -1528,6 +1554,9 @@
         },
         {
           "$ref": "#/definitions/fernDefinition.auth.AnyAuthSchemesSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.EndpointSecuritySchema"
         }
       ]
     },

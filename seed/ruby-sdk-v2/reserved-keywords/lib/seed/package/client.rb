@@ -21,7 +21,7 @@ module Seed
       #
       # @return [untyped]
       def test(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[for_]
         query_params = {}
         query_params["for"] = params[:for_] if params.key?(:for_)

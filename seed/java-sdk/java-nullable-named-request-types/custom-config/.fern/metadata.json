@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "respect-nullable-schemas": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

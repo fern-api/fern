@@ -588,6 +588,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Multiple 2xx Responses API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -621,22 +622,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Multiple 2xx Responses API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "multiple2XxResponsesApi",
+      "safeName": "multiple2XxResponsesApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "multiple_2_xx_responses_api",
+      "safeName": "multiple_2_xx_responses_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "MULTIPLE_2_XX_RESPONSES_API",
+      "safeName": "MULTIPLE_2_XX_RESPONSES_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "Multiple2XxResponsesApi",
+      "safeName": "Multiple2XxResponsesApi"
     }
   },
   "constants": {

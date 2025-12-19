@@ -21,6 +21,7 @@ module Seed
       #
       # @return [Array[Seed::Migration::Types::Migration]]
       def get_attempted_migrations(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         headers = {}
         headers["admin-key-header"] = params[:admin_key_header] if params[:admin_key_header]
 

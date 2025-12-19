@@ -874,6 +874,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Enum of separator characters",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -910,22 +911,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Enum of separator characters",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "enumOfSeparatorCharacters",
+      "safeName": "enumOfSeparatorCharacters"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "enum_of_separator_characters",
+      "safeName": "enum_of_separator_characters"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "ENUM_OF_SEPARATOR_CHARACTERS",
+      "safeName": "ENUM_OF_SEPARATOR_CHARACTERS"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "EnumOfSeparatorCharacters",
+      "safeName": "EnumOfSeparatorCharacters"
     }
   },
   "constants": {

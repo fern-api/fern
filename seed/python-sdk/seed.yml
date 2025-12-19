@@ -389,6 +389,7 @@ scripts:
         - poetry run pytest -rP .
 allowedFailures:
   - any-auth
+  - endpoint-security-auth
   - examples:client-filename
   - examples:legacy-wire-tests
   - exhaustive:additional_init_exports

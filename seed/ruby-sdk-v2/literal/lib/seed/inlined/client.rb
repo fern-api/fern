@@ -20,6 +20,7 @@ module Seed
       #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[prompt context query temperature stream aliased_context maybe_context object_with_literal]
         body_bag = params.slice(*body_prop_names)
 

@@ -969,6 +969,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Primitive Array API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1002,22 +1003,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Primitive Array API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "primitiveArrayApi",
+      "safeName": "primitiveArrayApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "primitive_array_api",
+      "safeName": "primitive_array_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "PRIMITIVE_ARRAY_API",
+      "safeName": "PRIMITIVE_ARRAY_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "PrimitiveArrayApi",
+      "safeName": "PrimitiveArrayApi"
     }
   },
   "constants": {

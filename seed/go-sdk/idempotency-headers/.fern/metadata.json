@@ -9,5 +9,6 @@
       "path": "github.com/idempotency-headers/fern"
     },
     "includeLegacyClientOptions": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

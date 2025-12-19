@@ -20,6 +20,7 @@ module Seed
       #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[client_id client_secret audience grant_type scope]
         body_bag = params.slice(*body_prop_names)
 
