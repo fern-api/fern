@@ -206,10 +206,10 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         const tokenEnvVar = this.authScheme.tokenEnvVar;
 
         if (tokenEnvVar != null) {
-            return `return "Please provide 'auth.${tokenFieldName}' or set the '${tokenEnvVar}' environment variable";`;
+            return `return "Please provide '${tokenFieldName}' when initializing the client, or set the '${tokenEnvVar}' environment variable";`;
         }
 
-        return `return "Please provide 'auth.${tokenFieldName}'";`;
+        return `return "Please provide '${tokenFieldName}' when initializing the client";`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {

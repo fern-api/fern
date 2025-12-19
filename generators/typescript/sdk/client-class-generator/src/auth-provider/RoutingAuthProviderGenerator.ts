@@ -97,10 +97,11 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
         const childClassNames = this.getChildAuthProviderClassNames(context);
 
         for (const className of childClassNames) {
+            // Import as value (not type-only) so we can call static methods
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: `./${className}.js`,
                 namedImports: [className],
-                isTypeOnly: true
+                isTypeOnly: false
             });
         }
 
@@ -125,8 +126,8 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeClass(context: SdkContext): void {
-        // Generate the error message map for user-friendly error messages
-        const errorMessageMapEntries = this.generateErrorMessageMapEntries(context);
+        // Generate the mapping from schemeKey to class name for calling static methods
+        const schemeKeyToClassName = this.getSchemeKeyToClassNameMap(context);
 
         context.sourceFile.addClass({
             name: CLASS_NAME,
@@ -175,7 +176,7 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
                         }
                     ],
                     returnType: "string",
-                    statements: this.generateGetAuthConfigErrorMessageStatements(errorMessageMapEntries)
+                    statements: this.generateGetAuthConfigErrorMessageStatements(schemeKeyToClassName)
                 },
                 {
                     kind: StructureKind.Method,
@@ -209,87 +210,43 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
         });
     }
 
-    private generateErrorMessageMapEntries(context: SdkContext): Map<string, string> {
+    private getSchemeKeyToClassNameMap(context: SdkContext): Map<string, string> {
         const entries = new Map<string, string>();
         for (const authScheme of this.ir.auth.schemes) {
             const schemeKey = authScheme.key;
             switch (authScheme.type) {
-                case "bearer": {
-                    const tokenFieldName = authScheme.token.camelCase.safeName;
-                    const tokenEnvVar = authScheme.tokenEnvVar;
-                    if (tokenEnvVar != null) {
-                        entries.set(
-                            schemeKey,
-                            `Please provide 'auth.${tokenFieldName}' or set the '${tokenEnvVar}' environment variable`
-                        );
-                    } else {
-                        entries.set(schemeKey, `Please provide 'auth.${tokenFieldName}'`);
+                case "bearer":
+                    entries.set(schemeKey, BearerAuthProviderGenerator.CLASS_NAME);
+                    break;
+                case "basic":
+                    entries.set(schemeKey, BasicAuthProviderGenerator.CLASS_NAME);
+                    break;
+                case "header":
+                    entries.set(schemeKey, HeaderAuthProviderGenerator.CLASS_NAME);
+                    break;
+                case "oauth":
+                    if (context.generateOAuthClients) {
+                        entries.set(schemeKey, OAuthAuthProviderGenerator.CLASS_NAME);
                     }
                     break;
-                }
-                case "basic": {
-                    const usernameFieldName = authScheme.username.camelCase.safeName;
-                    const passwordFieldName = authScheme.password.camelCase.safeName;
-                    const usernameEnvVar = authScheme.usernameEnvVar;
-                    const passwordEnvVar = authScheme.passwordEnvVar;
-                    const usernameHint =
-                        usernameEnvVar != null
-                            ? `'auth.${usernameFieldName}' or '${usernameEnvVar}' env var`
-                            : `'auth.${usernameFieldName}'`;
-                    const passwordHint =
-                        passwordEnvVar != null
-                            ? `'auth.${passwordFieldName}' or '${passwordEnvVar}' env var`
-                            : `'auth.${passwordFieldName}'`;
-                    entries.set(schemeKey, `Please provide ${usernameHint} and ${passwordHint}`);
-                    break;
-                }
-                case "header": {
-                    const headerFieldName = authScheme.name.name.camelCase.safeName;
-                    const headerEnvVar = authScheme.headerEnvVar;
-                    if (headerEnvVar != null) {
-                        entries.set(
-                            schemeKey,
-                            `Please provide 'auth.${headerFieldName}' or set the '${headerEnvVar}' environment variable`
-                        );
-                    } else {
-                        entries.set(schemeKey, `Please provide 'auth.${headerFieldName}'`);
-                    }
-                    break;
-                }
-                case "oauth": {
-                    if (context.generateOAuthClients && authScheme.configuration.type === "clientCredentials") {
-                        const clientIdEnvVar = authScheme.configuration.clientIdEnvVar;
-                        const clientSecretEnvVar = authScheme.configuration.clientSecretEnvVar;
-                        const clientIdHint =
-                            clientIdEnvVar != null
-                                ? `'auth.clientId' or '${clientIdEnvVar}' env var`
-                                : `'auth.clientId'`;
-                        const clientSecretHint =
-                            clientSecretEnvVar != null
-                                ? `'auth.clientSecret' or '${clientSecretEnvVar}' env var`
-                                : `'auth.clientSecret'`;
-                        entries.set(schemeKey, `Please provide ${clientIdHint} and ${clientSecretHint}`);
-                    }
-                    break;
-                }
                 case "inferred":
-                    // Inferred auth doesn't have a simple error message
-                    entries.set(schemeKey, `Please provide the required authentication credentials`);
+                    entries.set(schemeKey, InferredAuthProviderGenerator.CLASS_NAME);
                     break;
             }
         }
         return entries;
     }
 
-    private generateGetAuthConfigErrorMessageStatements(errorMessageMap: Map<string, string>): string {
-        const switchCases = Array.from(errorMessageMap.entries())
-            .map(([schemeKey, message]) => `case "${schemeKey}": return "${message}";`)
+    private generateGetAuthConfigErrorMessageStatements(schemeKeyToClassName: Map<string, string>): string {
+        // Generate switch cases that call each provider's static getAuthConfigErrorMessage() method
+        const switchCases = Array.from(schemeKeyToClassName.entries())
+            .map(([schemeKey, className]) => `case "${schemeKey}": return ${className}.getAuthConfigErrorMessage();`)
             .join("\n            ");
 
         return `
         switch (schemeKey) {
             ${switchCases}
-            default: return "Please provide the required authentication credentials for " + schemeKey;
+            default: return "Please provide the required authentication credentials for " + schemeKey + " when initializing the client";
         }`;
     }
 

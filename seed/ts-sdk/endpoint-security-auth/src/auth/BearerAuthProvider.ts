@@ -23,7 +23,7 @@ export class BearerAuthProvider implements core.AuthProvider {
     }
 
     public static getAuthConfigErrorMessage(): string {
-        return "Please provide 'auth.token' or set the 'MY_TOKEN' environment variable";
+        return "Please provide 'token' when initializing the client, or set the 'MY_TOKEN' environment variable";
     }
 
     public async getAuthRequest({

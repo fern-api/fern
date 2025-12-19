@@ -771,15 +771,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         clientIdEnvVar: string | undefined,
         clientSecretEnvVar: string | undefined
     ): string {
-        const clientIdHint =
-            clientIdEnvVar != null ? `'auth.clientId' or '${clientIdEnvVar}' env var` : `'auth.clientId'`;
+        const clientIdHint = clientIdEnvVar != null ? `'clientId' or '${clientIdEnvVar}' env var` : `'clientId'`;
 
         const clientSecretHint =
-            clientSecretEnvVar != null
-                ? `'auth.clientSecret' or '${clientSecretEnvVar}' env var`
-                : `'auth.clientSecret'`;
+            clientSecretEnvVar != null ? `'clientSecret' or '${clientSecretEnvVar}' env var` : `'clientSecret'`;
 
-        return `return "Please provide ${clientIdHint} and ${clientSecretHint}";`;
+        return `return "Please provide ${clientIdHint} and ${clientSecretHint} when initializing the client";`;
     }
 
     private getName(name: FernIr.Name | FernIr.NameAndWireValue): string {
