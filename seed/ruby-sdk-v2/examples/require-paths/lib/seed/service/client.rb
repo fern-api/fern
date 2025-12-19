@@ -21,6 +21,7 @@ module Seed
       #
       # @return [Seed::Types::Types::Movie]
       def get_movie(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -51,6 +52,7 @@ module Seed
       #
       # @return [String]
       def create_movie(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -85,17 +87,21 @@ module Seed
       #
       # @return [Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[shallow tag]
         query_params = {}
         query_params["shallow"] = params[:shallow] if params.key?(:shallow)
         query_params["tag"] = params[:tag] if params.key?(:tag)
-        params.except(*query_param_names)
+        params = params.except(*query_param_names)
+
+        headers = {}
+        headers["X-API-Version"] = params[:x_api_version] if params[:x_api_version]
 
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/metadata",
+          headers: headers,
           query: query_params,
           request_options: request_options
         )
@@ -123,6 +129,7 @@ module Seed
       #
       # @return [Seed::Types::Types::Response]
       def create_big_entity(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -154,6 +161,7 @@ module Seed
       #
       # @return [untyped]
       def refresh_token(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

@@ -23,6 +23,7 @@ module Seed
           #
           # @return [Seed::Types::Types::Exception]
           def get_exception(request_options: {}, **params)
+            params = Seed::Internal::Types::Utils.normalize_keys(params)
             request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
