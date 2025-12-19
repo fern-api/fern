@@ -224,7 +224,6 @@ export class WireTestGenerator {
                 return_: [],
                 body: go.codeblock((writer) => {
                     // Build the request body for WireMock's requests/find endpoint
-                    // Includes X-Test-Id header filtering for concurrency safety
                     writer.writeNode(go.codeblock('WiremockAdminURL := "http://localhost:8080/__admin"'));
                     writer.newLine();
                     writer.writeNode(go.codeblock("var reqBody bytes.Buffer"));
@@ -327,7 +326,7 @@ export class WireTestGenerator {
                     body: go.codeblock((writer) => {
                         writer.writeNode(go.codeblock('WireMockBaseURL := "http://localhost:8080"'));
                         writer.newLine();
-                        writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet, testFunctionName }));
+                        writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
                         writer.newLine();
                         writer.writeNode(this.callClientMethodAndAssert({ endpoint, snippet, testFunctionName }));
                     })
@@ -551,19 +550,12 @@ export class WireTestGenerator {
 
     private constructWiremockTestClient({
         endpoint,
-        snippet,
-        testFunctionName
+        snippet
     }: {
         endpoint: HttpEndpoint;
         snippet: string;
-        testFunctionName: string;
     }): go.CodeBlock {
-        // The dynamic snippets generator includes the X-Test-Id header with a placeholder.
-        // Replace the placeholder with the actual unique test function name.
-        const clientConstructor = this.parseClientConstructor(snippet).replace(
-            `"X-Test-Id": []string{"TEST-ID-PLACEHOLDER"}`,
-            `"X-Test-Id": []string{"${testFunctionName}"}`
-        );
+        const clientConstructor = this.parseClientConstructor(snippet);
         return go.codeblock((writer) => {
             writer.write(clientConstructor);
         });
@@ -579,7 +571,10 @@ export class WireTestGenerator {
         testFunctionName: string;
     }): go.CodeBlock {
         const requestBodyInstantiation = this.parseRequestBodyInstantiation(snippet);
-        const clientCall = this.parseClientCallFromSnippet(snippet);
+        const clientCall = this.parseClientCallFromSnippet(snippet).replace(
+            `"X-Test-Id": []string{"TEST-ID-PLACEHOLDER"}`,
+            `"X-Test-Id": []string{"${testFunctionName}"}`
+        );
 
         return go.codeblock((writer) => {
             if (requestBodyInstantiation) {

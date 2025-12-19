@@ -150,7 +150,9 @@ export class EndpointSnippetGenerator {
                         writer.writeLine();
                         writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
                         writer.writeLine();
-                        writer.writeNode(this.callClientMethodAndAssert({ endpoint, snippet }));
+                        writer.writeNode(
+                            this.callClientMethodAndAssert({ endpoint, snippet, includeTestIdHeader: true })
+                        );
                     })
                 })
             );
@@ -211,13 +213,30 @@ export class EndpointSnippetGenerator {
     private writeMethodInvocation({
         writer,
         endpoint,
-        snippet
+        snippet,
+        includeTestIdHeader
     }: {
         writer: go.Writer;
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        includeTestIdHeader?: boolean;
     }): void {
         const { otherArgs, requestArg } = this.getMethodArgs({ endpoint, snippet });
+        const optionArgsInvocation = includeTestIdHeader
+            ? [
+                  go.codeblock((writer) => {
+                      writer.writeNode(
+                          go.invokeFunc({
+                              func: go.typeReference({
+                                  name: "WithHTTPHeader",
+                                  importPath: this.context.getOptionImportPath()
+                              }),
+                              arguments_: [go.codeblock(`http.Header{"X-Test-Id": []string{"TEST-ID-PLACEHOLDER"}}`)]
+                          })
+                      );
+                  })
+              ]
+            : [];
 
         if (requestArg != null) {
             if (requestArg instanceof go.TypeInstantiation && go.TypeInstantiation.isNop(requestArg)) {
@@ -238,7 +257,12 @@ export class EndpointSnippetGenerator {
                     go.invokeMethod({
                         on: go.codeblock(CLIENT_VAR_NAME),
                         method: this.getMethod({ endpoint }),
-                        arguments_: [this.context.getContextTodoFunctionInvocation(), ...otherArgs, requestRef]
+                        arguments_: [
+                            this.context.getContextTodoFunctionInvocation(),
+                            ...otherArgs,
+                            requestRef,
+                            ...optionArgsInvocation
+                        ]
                     })
                 );
             }
@@ -247,7 +271,7 @@ export class EndpointSnippetGenerator {
                 go.invokeMethod({
                     on: go.codeblock(CLIENT_VAR_NAME),
                     method: this.getMethod({ endpoint }),
-                    arguments_: [this.context.getContextTodoFunctionInvocation(), ...otherArgs]
+                    arguments_: [this.context.getContextTodoFunctionInvocation(), ...otherArgs, ...optionArgsInvocation]
                 })
             );
         }
@@ -308,17 +332,6 @@ export class EndpointSnippetGenerator {
                             importPath: this.context.getOptionImportPath()
                         }),
                         arguments_: [go.codeblock(WIREMOCK_BASE_URL)]
-                    })
-                );
-            }),
-            go.codeblock((writer) => {
-                writer.writeNode(
-                    go.invokeFunc({
-                        func: go.typeReference({
-                            name: "WithHTTPHeader",
-                            importPath: this.context.getOptionImportPath()
-                        }),
-                        arguments_: [go.codeblock(`http.Header{"X-Test-Id": []string{"TEST-ID-PLACEHOLDER"}}`)]
                     })
                 );
             })
@@ -999,10 +1012,12 @@ export class EndpointSnippetGenerator {
 
     private callClientMethodAndAssert({
         endpoint,
-        snippet
+        snippet,
+        includeTestIdHeader
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        includeTestIdHeader?: boolean;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
             // IMPORTANT: currently not capturing the response/error values since its not trivial to determine
@@ -1010,7 +1025,7 @@ export class EndpointSnippetGenerator {
 
             // Call the method and capture response and error
             // writer.write("_, invocationErr := ");
-            this.writeMethodInvocation({ writer, endpoint, snippet });
+            this.writeMethodInvocation({ writer, endpoint, snippet, includeTestIdHeader: true });
             writer.writeLine();
             writer.writeLine();
 
