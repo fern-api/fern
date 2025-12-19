@@ -24,33 +24,59 @@ export class InternalFilesGenerator {
         // Group errors by their namespace (package location)
         const errorsByNamespace = this.groupErrorsByNamespace();
 
+        // Get all namespaces that have services (endpoints)
+        const namespacesWithServices = this.getNamespacesWithServices();
+
         const files: GoFile[] = [];
-
-        // Always generate a root error_codes.go file, even if there are no errors.
-        // This is required because client code always references ErrorCodes from the root package.
         const rootImportPath = this.context.getRootImportPath();
-        const rootErrors = errorsByNamespace.get(rootImportPath) ?? [];
-        const rootLocation: FileLocation = {
-            importPath: rootImportPath,
-            directory: RelativeFilePath.of("")
-        };
-        files.push(this.generateErrorCodesFile(rootErrors, rootLocation));
 
-        // Generate error_codes.go files for other namespaces that have errors
-        for (const [importPath, errors] of errorsByNamespace.entries()) {
-            if (importPath === rootImportPath) {
-                // Already handled above
-                continue;
-            }
-            const firstError = errors[0];
-            if (firstError == null) {
-                continue;
-            }
-            const location = this.context.getLocationForErrorId(firstError.name.errorId);
-            const file = this.generateErrorCodesFile(errors, location);
-            files.push(file);
+        // Generate error_codes.go for each namespace that has services
+        // Each namespace needs its own ErrorCodes variable that clients can reference
+        for (const location of namespacesWithServices) {
+            const errors = errorsByNamespace.get(location.importPath) ?? [];
+            files.push(this.generateErrorCodesFile(errors, location));
         }
+
+        // If root namespace has errors but no services, still generate root error_codes.go
+        const rootHasServices = namespacesWithServices.some((loc) => loc.importPath === rootImportPath);
+        if (!rootHasServices && errorsByNamespace.has(rootImportPath)) {
+            const rootErrors = errorsByNamespace.get(rootImportPath) ?? [];
+            const rootLocation: FileLocation = {
+                importPath: rootImportPath,
+                directory: RelativeFilePath.of("")
+            };
+            files.push(this.generateErrorCodesFile(rootErrors, rootLocation));
+        }
+
         return files;
+    }
+
+    private getNamespacesWithServices(): FileLocation[] {
+        const namespaces = new Map<string, FileLocation>();
+        const rootImportPath = this.context.getRootImportPath();
+
+        for (const service of Object.values(this.context.ir.services)) {
+            const location = this.context.getPackageLocation(service.name.fernFilepath);
+            if (!namespaces.has(location.importPath)) {
+                namespaces.set(location.importPath, location);
+            }
+        }
+
+        // If there are services at the root level (no subpackages), add root namespace
+        // This is determined by checking if any service has an empty packagePath
+        for (const service of Object.values(this.context.ir.services)) {
+            if (service.name.fernFilepath.packagePath.length === 0) {
+                if (!namespaces.has(rootImportPath)) {
+                    namespaces.set(rootImportPath, {
+                        importPath: rootImportPath,
+                        directory: RelativeFilePath.of("")
+                    });
+                }
+                break;
+            }
+        }
+
+        return Array.from(namespaces.values());
     }
 
     private groupErrorsByNamespace(): Map<string, ErrorDeclaration[]> {
