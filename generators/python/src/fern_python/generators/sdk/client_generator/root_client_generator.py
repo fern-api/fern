@@ -174,6 +174,20 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
         is_oauth_client_credentials = oauth_union is not None and oauth_union.type == "clientCredentials"
         has_inferred_auth = self._get_inferred_auth_scheme() is not None
+
+        base_url_example_value: Optional[AST.Expression] = None
+        if has_inferred_auth:
+            base_url_param = client_wrapper_generator._get_base_url_constructor_parameter()
+            if base_url_param.initializer is not None and isinstance(
+                base_url_param.initializer.expression, AST.CodeWriter
+            ):
+                code_writer = base_url_param.initializer.expression
+                if isinstance(code_writer._code_writer, str):
+                    initializer_str = code_writer._code_writer
+                    prefix = f"{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}="
+                    if initializer_str.startswith(prefix):
+                        base_url_example_value = AST.Expression(initializer_str[len(prefix) :])
+
         root_client_builder = RootClientGenerator.GeneratedRootClientBuilder(
             # HACK: This is a hack to get the module path for the root client to be from the root of the project
             module_path=self._context.get_module_path_in_project(()),
@@ -186,6 +200,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             ),
             oauth_token_override=is_oauth_client_credentials,
             use_kwargs_snippets=has_inferred_auth,
+            base_url_example_value=base_url_example_value,
         )
         self._generated_root_client = root_client_builder.build()
 
@@ -1411,6 +1426,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             constructor_parameters: Sequence[ConstructorParameter],
             oauth_token_override: bool = False,
             use_kwargs_snippets: bool = False,
+            base_url_example_value: Optional[AST.Expression] = None,
         ):
             self._module_path = module_path
             self._class_name = class_name
@@ -1418,6 +1434,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             self._constructor_parameters: List[ConstructorParameter] = list(constructor_parameters)
             self._oauth_token_override = oauth_token_override
             self._use_kwargs_snippets = use_kwargs_snippets
+            self._base_url_example_value = base_url_example_value
 
         def build(self) -> GeneratedRootClient:
             def create_class_reference(class_name: str) -> AST.ClassReference:
@@ -1482,7 +1499,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         kwargs.append((name, AST.Expression('"YOUR_API_KEY"')))
                         continue
                     if name == RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME:
-                        kwargs.append((name, AST.Expression('"https://yourhost.com/path/to/api"')))
+                        # Do not hardcode the URL; reuse the existing ClientWrapperGenerator initializer-derived value.
+                        if self._base_url_example_value is not None:
+                            kwargs.append((name, self._base_url_example_value))
+                        else:
+                            kwargs.append((name, AST.Expression(f'"YOUR_{name.upper()}"')))
                         continue
 
                     kwargs.append((name, AST.Expression(f'"YOUR_{name.upper()}"')))
