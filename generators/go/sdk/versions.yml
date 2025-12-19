@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.21.9
+  changelogEntry:
+    - summary: |
+        Generate error_codes.go per-namespace for multi-namespace Go SDKs. Each namespace now has its
+        own error_codes.go file containing only the error codes and error types from that namespace,
+        rather than a single global file with all errors.
+      type: feat
+  createdAt: "2025-12-19"
+  irVersion: 60
+
 - version: 1.21.8
   changelogEntry:
     - summary: |

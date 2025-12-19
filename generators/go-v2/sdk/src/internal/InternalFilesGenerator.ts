@@ -1,6 +1,6 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
-import { GoFile } from "@fern-api/go-base";
+import { FileLocation, GoFile } from "@fern-api/go-base";
+import { ErrorDeclaration } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class InternalFilesGenerator {
@@ -20,15 +20,52 @@ export class InternalFilesGenerator {
     }
 
     private generateErrorFiles(): GoFile[] {
+        // Group errors by their namespace (package location)
+        const errorsByNamespace = this.groupErrorsByNamespace();
+
+        const files: GoFile[] = [];
+        for (const [_, errors] of errorsByNamespace.entries()) {
+            const firstError = errors[0];
+            if (firstError == null) {
+                continue;
+            }
+            const location = this.context.getLocationForErrorId(firstError.name.errorId);
+            const file = this.generateErrorCodesFile(errors, location);
+            files.push(file);
+        }
+        return files;
+    }
+
+    private groupErrorsByNamespace(): Map<string, ErrorDeclaration[]> {
+        const errorsByNamespace = new Map<string, ErrorDeclaration[]>();
+
+        for (const errorDeclaration of Object.values(this.context.ir.errors ?? {})) {
+            const location = this.context.getLocationForErrorId(errorDeclaration.name.errorId);
+            const importPath = location.importPath;
+
+            if (!errorsByNamespace.has(importPath)) {
+                errorsByNamespace.set(importPath, []);
+            }
+            errorsByNamespace.get(importPath)?.push(errorDeclaration);
+        }
+
+        return errorsByNamespace;
+    }
+
+    private generateErrorCodesFile(errors: ErrorDeclaration[], location: FileLocation): GoFile {
+        const isRootPackage = location.importPath === this.context.getRootImportPath();
+        const packageName = isRootPackage
+            ? this.context.getRootPackageName()
+            : (location.importPath.split("/").pop() ?? this.context.getRootPackageName());
+
         const errorCodesContent = go.codeblock((writer) => {
-            // Then write the variable
             writer.write("var ErrorCodes ");
             writer.writeNode(this.context.getErrorCodesTypeReference());
             writer.write(" = ");
             writer.writeNode(
                 go.TypeInstantiation.struct({
                     typeReference: this.context.getErrorCodesTypeReference(),
-                    fields: Object.values(this.context.ir.errors ?? {}).map((errorDeclaration) => {
+                    fields: errors.map((errorDeclaration) => {
                         const errorTypeReference = go.typeReference({
                             name: this.context.getClassName(errorDeclaration.name.name),
                             importPath: this.context.getLocationForErrorId(errorDeclaration.name.errorId).importPath
@@ -69,16 +106,15 @@ export class InternalFilesGenerator {
             );
             writer.writeNewLineIfLastLineNot();
         });
-        return [
-            new GoFile({
-                node: errorCodesContent,
-                directory: RelativeFilePath.of(""),
-                filename: "error_codes.go",
-                packageName: this.context.getRootPackageName(),
-                rootImportPath: this.context.getRootImportPath(),
-                importPath: this.context.getRootImportPath(),
-                customConfig: this.context.customConfig
-            })
-        ];
+
+        return new GoFile({
+            node: errorCodesContent,
+            directory: location.directory,
+            filename: "error_codes.go",
+            packageName,
+            rootImportPath: this.context.getRootImportPath(),
+            importPath: location.importPath,
+            customConfig: this.context.customConfig
+        });
     }
 }
