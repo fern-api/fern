@@ -1143,7 +1143,10 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
             }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
-                command: "fern api update"
+                command: "fern api update",
+                properties: {
+                    apiProvided: argv.api != null
+                }
             });
             await updateApiSpec({
                 cliContext,
@@ -1173,7 +1176,11 @@ function addSelfUpdateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
-                command: "fern self-update"
+                command: "fern self-update",
+                properties: {
+                    versionProvided: argv.version != null,
+                    dryRun: argv.dryRun
+                }
             });
             await selfUpdate({
                 cliContext,
@@ -1197,7 +1204,10 @@ function addLoginCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             await cliContext.runTask(async (context) => {
                 await cliContext.instrumentPostHogEvent({
-                    command: "fern login"
+                    command: "fern login",
+                    properties: {
+                        deviceCode: argv.deviceCode
+                    }
                 });
                 await login(context, { useDeviceCodeFlow: argv.deviceCode });
             });
@@ -1238,7 +1248,11 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
-                command: "fern format"
+                command: "fern format",
+                properties: {
+                    ci: argv.ci,
+                    apiProvided: argv.api != null
+                }
             });
             await formatWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {

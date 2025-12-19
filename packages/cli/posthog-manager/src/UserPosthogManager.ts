@@ -40,7 +40,8 @@ export class UserPosthogManager implements PosthogManager {
             event: "CLI",
             properties: {
                 version: process.env.CLI_VERSION,
-                ...event,
+                orgId: event.orgId,
+                command: event.command,
                 ...event.properties,
                 usingAccessToken: false,
                 ...(userEmail != null ? { userEmail } : {})
