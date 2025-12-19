@@ -1,24 +1,25 @@
 {
   "apiName": {
-    "originalName": "",
+    "originalName": "Test API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testApi",
+      "safeName": "testApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_api",
+      "safeName": "test_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_API",
+      "safeName": "TEST_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestApi",
+      "safeName": "TestApi"
     }
   },
   "selfHosted": false,
+  "apiDisplayName": "Test API",
   "auth": {
     "requirement": "ALL",
     "schemes": []

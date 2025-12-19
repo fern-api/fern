@@ -1477,6 +1477,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Parameter Allow Empty Value Test",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1512,22 +1513,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Parameter Allow Empty Value Test",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "parameterAllowEmptyValueTest",
+      "safeName": "parameterAllowEmptyValueTest"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "parameter_allow_empty_value_test",
+      "safeName": "parameter_allow_empty_value_test"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "PARAMETER_ALLOW_EMPTY_VALUE_TEST",
+      "safeName": "PARAMETER_ALLOW_EMPTY_VALUE_TEST"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "ParameterAllowEmptyValueTest",
+      "safeName": "ParameterAllowEmptyValueTest"
     }
   },
   "constants": {

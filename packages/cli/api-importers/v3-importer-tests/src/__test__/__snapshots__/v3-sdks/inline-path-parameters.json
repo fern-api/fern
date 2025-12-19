@@ -2134,6 +2134,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Inlined path parameters",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -2239,22 +2240,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Inlined path parameters",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "inlinedPathParameters",
+      "safeName": "inlinedPathParameters"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "inlined_path_parameters",
+      "safeName": "inlined_path_parameters"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "INLINED_PATH_PARAMETERS",
+      "safeName": "INLINED_PATH_PARAMETERS"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "InlinedPathParameters",
+      "safeName": "InlinedPathParameters"
     }
   },
   "constants": {

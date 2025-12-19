@@ -1,4 +1,5 @@
 {
+  "apiName": "Auth Test API",
   "auth": {
     "description": "JWT Bearer token authentication",
     "tokenName": "token",
