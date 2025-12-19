@@ -55,11 +55,3 @@ require_relative "seed/ast/types/field_value"
 require_relative "seed/ast/types/container_value"
 require_relative "seed/ast/types/field_name"
 require_relative "seed/ast/types/object_field_value"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

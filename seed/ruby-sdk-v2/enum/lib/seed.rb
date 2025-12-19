@@ -53,11 +53,3 @@ require_relative "seed/path_param/client"
 require_relative "seed/query_param/client"
 require_relative "seed/query_param/types/send_enum_as_query_param_request"
 require_relative "seed/query_param/types/send_enum_list_as_query_param_request"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

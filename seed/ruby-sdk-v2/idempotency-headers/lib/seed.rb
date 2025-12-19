@@ -39,11 +39,3 @@ require_relative "seed/payment/types/currency"
 require_relative "seed/client"
 require_relative "seed/payment/client"
 require_relative "seed/payment/types/create_payment_request"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

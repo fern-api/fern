@@ -52,11 +52,3 @@ require_relative "seed/folder_d/service/client"
 require_relative "seed/foo/client"
 require_relative "seed/foo/types/find_request"
 require_relative "seed/environment"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

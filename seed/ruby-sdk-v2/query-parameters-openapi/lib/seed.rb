@@ -40,11 +40,3 @@ require_relative "seed/types/nested_user"
 require_relative "seed/types/search_request_neighbor"
 require_relative "seed/types/search_request_neighbor_required"
 require_relative "seed/types/search_response"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

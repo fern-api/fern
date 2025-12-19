@@ -52,11 +52,3 @@ require_relative "seed/service/types/with_form_encoding_request"
 require_relative "seed/service/types/my_other_request"
 require_relative "seed/service/types/optional_args_request"
 require_relative "seed/service/types/inline_type_request"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

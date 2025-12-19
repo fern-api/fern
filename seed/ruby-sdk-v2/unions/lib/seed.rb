@@ -95,11 +95,3 @@ require_relative "seed/union/types/shape"
 require_relative "seed/client"
 require_relative "seed/bigunion/client"
 require_relative "seed/union/client"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

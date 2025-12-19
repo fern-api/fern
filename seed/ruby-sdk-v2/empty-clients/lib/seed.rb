@@ -39,11 +39,3 @@ require_relative "seed/level_1/level_2/types/types/address"
 require_relative "seed/level_1/level_2/types/types/person"
 require_relative "seed/level_1/types/types/address"
 require_relative "seed/level_1/types/types/person"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

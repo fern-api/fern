@@ -77,11 +77,3 @@ require_relative "seed/no_auth/client"
 require_relative "seed/no_req_body/client"
 require_relative "seed/req_with_headers/client"
 require_relative "seed/req_with_headers/types/req_with_headers"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end

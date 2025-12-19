@@ -41,11 +41,3 @@ require_relative "seed/types/tree"
 require_relative "seed/file/types/file_info"
 require_relative "seed/file/types/file"
 require_relative "seed/file/directory/types/directory"
-
-# Load user-defined custom integration if present (e.g., for Sentry integration)
-# To use: create a file at lib/seed/custom_integration.rb
-begin
-  require_relative "custom_integration"
-rescue LoadError
-  # No custom integration file found - this is expected and fine
-end
