@@ -11,7 +11,7 @@ export declare class BearerAuthProvider implements core.AuthProvider {
 export declare namespace BearerAuthProvider {
     const AUTH_SCHEME: "bearer";
     const AUTH_CONFIG_ERROR_MESSAGE: string;
-    type Options = Partial<AuthOptions>;
+    type Options = AuthOptions;
     type AuthOptions = {
         [TOKEN_PARAM]?: core.Supplier<core.BearerToken>;
     };

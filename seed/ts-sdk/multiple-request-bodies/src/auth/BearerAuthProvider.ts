@@ -38,7 +38,7 @@ export namespace BearerAuthProvider {
     export const AUTH_SCHEME = "BearerAuthScheme" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
         `Please provide '${TOKEN_PARAM}' when initializing the client` as const;
-    export type Options = Partial<AuthOptions>;
+    export type Options = AuthOptions;
     export type AuthOptions = { [TOKEN_PARAM]: core.Supplier<core.BearerToken> };
 
     export function createInstance(options: Options): core.AuthProvider {
