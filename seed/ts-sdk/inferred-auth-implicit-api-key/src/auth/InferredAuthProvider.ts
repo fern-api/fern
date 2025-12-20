@@ -68,8 +68,7 @@ function getExpiresAt(expiresInSeconds: number): Date {
 
 export namespace InferredAuthProvider {
     export const AUTH_SCHEME = "InferredAuthScheme" as const;
-    export const AUTH_CONFIG_ERROR_MESSAGE: string =
-        "Please provide the required authentication credentials when initializing the client" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = "Please provide apiKey when initializing the client" as const;
 
     export interface AuthOptions {
         apiKey: core.Supplier<string>;

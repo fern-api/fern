@@ -3,8 +3,16 @@
 import { AuthClient } from "../api/resources/auth/client/Client.js";
 import type { BaseClientOptions } from "../BaseClient.js";
 import * as core from "../core/index.js";
+import * as errors from "../errors/index.js";
 
+const WRAPPER_PROPERTY = "inferredAuth" as const;
 const BUFFER_IN_MINUTES = 2 as const;
+
+function throwRequiredAuthParamErrorMessage(paramName: string): never {
+    throw new errors.SeedAnyAuthError({
+        message: `Please provide ${paramName} when initializing the client`,
+    });
+}
 
 export class InferredAuthProvider implements core.AuthProvider {
     private readonly client: AuthClient;
@@ -18,7 +26,7 @@ export class InferredAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: Partial<InferredAuthProvider.Options>): boolean {
-        return options?.xApiKey != null && options?.clientId != null && options?.clientSecret != null;
+        return options?.[WRAPPER_PROPERTY]?.clientId != null && options?.[WRAPPER_PROPERTY]?.clientSecret != null;
     }
 
     private async getCachedAuthRequest(): Promise<core.AuthRequest> {
@@ -50,11 +58,19 @@ export class InferredAuthProvider implements core.AuthProvider {
     }
 
     private async getAuthRequestFromTokenEndpoint(): Promise<core.AuthRequest> {
-        const response = await this.client.getTokenWithClientCredentials({
-            "X-Api-Key": await core.Supplier.get(this.options.xApiKey),
-            client_id: await core.Supplier.get(this.options.clientId),
-            client_secret: await core.Supplier.get(this.options.clientSecret),
-            scope: await core.Supplier.get(this.options.scope),
+        const clientId = await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.clientId);
+        if (clientId == null) {
+            throwRequiredAuthParamErrorMessage(`${WRAPPER_PROPERTY}.clientId`);
+        }
+
+        const clientSecret = await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.clientSecret);
+        if (clientSecret == null) {
+            throwRequiredAuthParamErrorMessage(`${WRAPPER_PROPERTY}.clientSecret`);
+        }
+
+        const response = await this.client.getToken({
+            client_id: clientId,
+            client_secret: clientSecret,
         });
         this.expiresAt = getExpiresAt(response.expires_in);
         return {
@@ -70,17 +86,15 @@ function getExpiresAt(expiresInSeconds: number): Date {
 }
 
 export namespace InferredAuthProvider {
-    export const AUTH_SCHEME = "InferredAuthScheme" as const;
+    export const AUTH_SCHEME = "InferredAuth" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
-        "Please provide xApiKey and clientId and clientSecret when initializing the client" as const;
-
-    export interface AuthOptions {
-        xApiKey: core.Supplier<string>;
-        clientId: core.Supplier<string>;
-        clientSecret: core.Supplier<string>;
-        scope?: core.Supplier<string>;
-    }
-
+        "Please provide clientId and clientSecret when initializing the client" as const;
+    export type AuthOptions = {
+        [WRAPPER_PROPERTY]: {
+            clientId: core.Supplier<string> | undefined;
+            clientSecret: core.Supplier<string> | undefined;
+        };
+    };
     export type Options = BaseClientOptions;
 
     export function createInstance(options: Options): core.AuthProvider {

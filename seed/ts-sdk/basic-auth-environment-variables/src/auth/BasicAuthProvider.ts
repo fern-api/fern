@@ -54,6 +54,8 @@ export class BasicAuthProvider implements core.AuthProvider {
 
 export namespace BasicAuthProvider {
     export const AUTH_SCHEME = "Basic" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string =
+        "Please provide username and password when initializing the client" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string =
         `Please provide '${USERNAME_PARAM}' when initializing the client, or set the '${ENV_USERNAME}' environment variable` as const;
     export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string =

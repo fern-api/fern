@@ -1208,22 +1208,56 @@ describe("${serviceName}", () => {
 
         let mockAuthSnippet: Code | undefined;
         if (this.shouldBuildMockAuthFile({ context })) {
-            const oauthScheme = this.ir.auth.schemes.find((s) => s.type === "oauth");
-            const inferredAuthScheme = this.ir.auth.schemes.find((s) => s.type === "inferred");
+            const mockFunctionNames: string[] = [];
 
-            let mockFunctionName: string | undefined;
-            if (oauthScheme && this.canMockOAuth()) {
-                mockFunctionName = `mock${upperFirst(camelCase(oauthScheme.key))}`;
-            } else if (inferredAuthScheme) {
-                mockFunctionName = `mock${upperFirst(camelCase(inferredAuthScheme.key))}`;
+            // Determine which auth schemes to mock based on auth requirement
+            const authRequirement = this.ir.auth.requirement;
+
+            if (authRequirement === "ANY" || authRequirement === "ALL") {
+                // For ANY and ALL: include all OAuth and InferredAuth schemes that exist
+                for (const scheme of this.ir.auth.schemes) {
+                    if (scheme.type === "oauth" && this.canMockOAuth()) {
+                        mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                    } else if (scheme.type === "inferred") {
+                        mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                    }
+                }
+            } else if (authRequirement === "ENDPOINT_SECURITY") {
+                // For ENDPOINT_SECURITY: only include schemes required by this endpoint
+                if (endpoint.security != null && endpoint.security.length > 0) {
+                    // Get all auth scheme keys required by this endpoint
+                    // endpoint.security is an array of collections where each collection is a Record<AuthSchemeKey, AuthScope[]>
+                    // We'll collect all unique auth scheme keys from all collections
+                    const requiredSchemeKeys = new Set<string>();
+                    for (const securityItem of endpoint.security) {
+                        for (const schemeKey of Object.keys(securityItem)) {
+                            requiredSchemeKeys.add(schemeKey);
+                        }
+                    }
+
+                    // Add mock calls for OAuth and InferredAuth schemes that are required by this endpoint
+                    for (const scheme of this.ir.auth.schemes) {
+                        if (requiredSchemeKeys.has(scheme.key)) {
+                            if (scheme.type === "oauth" && this.canMockOAuth()) {
+                                mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                            } else if (scheme.type === "inferred") {
+                                mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                            }
+                        }
+                    }
+                }
             }
 
-            if (mockFunctionName) {
-                mockAuthSnippet = code`${mockFunctionName}(server);\n`;
+            // Generate mock auth snippet with all required mock calls
+            if (mockFunctionNames.length > 0) {
+                const mockCalls = mockFunctionNames.map((name) => `${name}(server);`).join("\n");
+                mockAuthSnippet = code`${mockCalls}\n`;
+
+                // Add imports for all mock functions
                 context.importsManager.addImportFromRoot(
                     "wire/mockAuth",
                     {
-                        namedImports: [mockFunctionName]
+                        namedImports: mockFunctionNames
                     },
                     this.relativeTestPath
                 );

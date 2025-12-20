@@ -131,10 +131,22 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         );
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
         for (const param of authTokenParams) {
+            // Use Supplier (not EndpointSupplier) since inferred auth doesn't support endpoint-specific values
+            // The token endpoint is called from a private method without endpoint metadata
+            const supplierType = context.coreUtilities.fetcher.Supplier._getReferenceToType(param.type);
+
+            // When wrapped, properties can be undefined (accessed via optional chaining)
+            const propertyType = this.shouldUseWrapper
+                ? ts.factory.createUnionTypeNode([
+                      supplierType,
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                  ])
+                : supplierType;
+
             properties.push({
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(param.name),
-                type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(param.type)),
+                type: getTextOfTsNode(propertyType),
                 hasQuestionToken: param.isOptional,
                 docs: param.docs
             });
@@ -172,6 +184,22 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             context.sourceFile.addStatements(constant);
         }
         if (constants.filter((c) => c !== "").length > 0) {
+            context.sourceFile.addStatements(""); // blank line
+        }
+
+        // Add helper function for throwing required auth param errors
+        if (this.shouldUseWrapper) {
+            const errorConstructor = getTextOfTsNode(
+                context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+            );
+            context.sourceFile.addFunction({
+                name: "throwRequiredAuthParamErrorMessage",
+                parameters: [{ name: "paramName", type: "string" }],
+                returnType: "never",
+                statements: `throw new ${errorConstructor}({
+    message: \`Please provide \${paramName} when initializing the client\`
+});`
+            });
             context.sourceFile.addStatements(""); // blank line
         }
     }
@@ -362,7 +390,31 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         context: SdkContext;
         requestWrapper: GeneratedRequestWrapper;
     }): MethodDeclarationStructure {
+        const requestProperties = requestWrapper.getRequestProperties(context);
+
+        // Generate variable declarations and validation checks for each parameter
+        const parameterStatements: (string | WriterFunction | StatementStructures)[] = [];
+
+        if (this.shouldUseWrapper) {
+            // Generate: const paramName = await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.paramName);
+            // Generate: if(paramName == null) { throwRequiredAuthParamErrorMessage("\${WRAPPER_PROPERTY}.paramName"); }
+            for (const p of requestProperties) {
+                const varName = p.safeName;
+                parameterStatements.push(
+                    `const ${varName} = await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.${p.safeName});`
+                );
+
+                if (!p.isOptional) {
+                    parameterStatements.push(
+                        `if(${varName} == null) {\n    throwRequiredAuthParamErrorMessage(\`\${WRAPPER_PROPERTY}.${p.safeName}\`);\n}`
+                    );
+                }
+            }
+        }
+
         const statements: (string | WriterFunction | StatementStructures)[] = [
+            ...parameterStatements,
+            ...(parameterStatements.length > 0 ? [""] : []), // blank line after parameter setup
             // invoke the token endpoint to get the auth token
             getTextOfTsNode(
                 ts.factory.createVariableStatement(
@@ -485,27 +537,29 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         context: SdkContext;
         requestWrapper: GeneratedRequestWrapper;
     }): ts.Expression[] {
-        return [
-            ts.factory.createObjectLiteralExpression(
-                requestWrapper
-                    .getRequestProperties(context)
-                    .map((p) =>
-                        ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier(p.name),
-                            context.coreUtilities.fetcher.Supplier.get(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createThis(),
-                                        OPTIONS_FIELD_NAME
-                                    ),
-                                    ts.factory.createIdentifier(p.safeName)
-                                )
-                            )
-                        )
-                    ),
-                true
-            )
-        ];
+        const requestProperties = requestWrapper.getRequestProperties(context);
+
+        // Build the request object
+        const propertyAssignments = requestProperties.map((p) => {
+            let valueExpression: ts.Expression;
+
+            if (this.shouldUseWrapper) {
+                // When using wrapper, we've already extracted the value to a variable
+                // Just reference the variable name directly
+                valueExpression = ts.factory.createIdentifier(p.safeName);
+            } else {
+                // When not using wrapper, access the property and call Supplier.get
+                const propertyAccess = ts.factory.createPropertyAccessExpression(
+                    ts.factory.createPropertyAccessExpression(ts.factory.createThis(), OPTIONS_FIELD_NAME),
+                    ts.factory.createIdentifier(p.safeName)
+                );
+                valueExpression = context.coreUtilities.fetcher.Supplier.get(propertyAccess);
+            }
+
+            return ts.factory.createPropertyAssignment(ts.factory.createIdentifier(p.name), valueExpression);
+        });
+
+        return [ts.factory.createObjectLiteralExpression(propertyAssignments, true)];
     }
 
     private generateCanCreateStatements(context: SdkContext): string {
@@ -549,9 +603,22 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             this.ir.auth.schemes.find((scheme) => scheme.type === "inferred" && scheme === this.authScheme)?.key ??
             "InferredAuth";
 
+        // Get required parameter names for error message
+        const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
+            FernIr.AuthScheme.inferred(this.authScheme)
+        );
+        const requiredParamNames = authTokenParams
+            .filter((param) => !param.isOptional)
+            .map((param) => param.name)
+            .join(" and ");
+
+        const errorMessage = requiredParamNames
+            ? `Please provide ${requiredParamNames} when initializing the client`
+            : "Please provide the required authentication credentials when initializing the client";
+
         const statements: (string | WriterFunction | StatementStructures)[] = [
             `export const AUTH_SCHEME = "${authSchemeKey}" as const;`,
-            `export const AUTH_CONFIG_ERROR_MESSAGE: string = "Please provide the required authentication credentials when initializing the client" as const;`
+            `export const AUTH_CONFIG_ERROR_MESSAGE: string = "${errorMessage}" as const;`
         ];
 
         // Generate AuthOptions type based on shouldUseWrapper

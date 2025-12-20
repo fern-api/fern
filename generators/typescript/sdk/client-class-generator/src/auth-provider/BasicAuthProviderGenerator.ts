@@ -356,7 +356,8 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const passwordEnvVar = this.authScheme.passwordEnvVar;
 
         const statements: (string | WriterFunction | StatementStructures)[] = [
-            `export const AUTH_SCHEME = "${authSchemeKey}" as const;`
+            `export const AUTH_SCHEME = "${authSchemeKey}" as const;`,
+            `export const AUTH_CONFIG_ERROR_MESSAGE: string = "Please provide username and password when initializing the client" as const;`
         ];
 
         // Add AUTH_CONFIG_ERROR_MESSAGE constants for username and password

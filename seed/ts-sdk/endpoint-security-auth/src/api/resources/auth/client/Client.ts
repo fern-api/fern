@@ -28,8 +28,7 @@ export class AuthClient {
      * @example
      *     await client.auth.getToken({
      *         client_id: "client_id",
-     *         client_secret: "client_secret",
-     *         scope: "scope"
+     *         client_secret: "client_secret"
      *     })
      */
     public getToken(

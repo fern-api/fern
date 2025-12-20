@@ -43,7 +43,7 @@ export class InferredAuthProvider implements core.AuthProvider {
 export namespace InferredAuthProvider {
     export const AUTH_SCHEME = "InferredAuthScheme" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
-        "Please provide the required authentication credentials when initializing the client" as const;
+        "Please provide xApiKey and clientId and clientSecret when initializing the client" as const;
 
     export interface AuthOptions {
         xApiKey: core.Supplier<string>;

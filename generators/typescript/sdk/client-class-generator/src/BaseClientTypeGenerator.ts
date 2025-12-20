@@ -286,6 +286,12 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseCl
                         namedImports: ["OAuthAuthProvider"]
                     });
                     providerClassNames.push("OAuthAuthProvider");
+                } else if (authScheme.type === "inferred") {
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/InferredAuthProvider",
+                        namedImports: ["InferredAuthProvider"]
+                    });
+                    providerClassNames.push("InferredAuthProvider");
                 }
             }
 
@@ -326,6 +332,12 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseCl
                         namedImports: ["OAuthAuthProvider"]
                     });
                     providerClassNames.push("OAuthAuthProvider");
+                } else if (authScheme.type === "inferred") {
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/InferredAuthProvider",
+                        namedImports: ["InferredAuthProvider"]
+                    });
+                    providerClassNames.push("InferredAuthProvider");
                 }
             }
 
