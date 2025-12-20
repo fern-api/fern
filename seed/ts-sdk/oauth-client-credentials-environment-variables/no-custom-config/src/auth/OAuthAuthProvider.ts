@@ -165,7 +165,7 @@ export namespace OAuthAuthProvider {
         [CLIENT_SECRET_PARAM]?: core.Supplier<string> | undefined;
     };
     export type TokenOverride = {
-        [TOKEN_PARAM]?: core.Supplier<string>;
+        [TOKEN_PARAM]: core.Supplier<string>;
     };
     export type AuthOptions = ClientCredentials | TokenOverride;
     export type Options = BaseClientOptions & AuthOptions;

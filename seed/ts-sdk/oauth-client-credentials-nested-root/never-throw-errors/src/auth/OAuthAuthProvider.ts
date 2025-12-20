@@ -148,11 +148,11 @@ export namespace OAuthAuthProvider {
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
         `Insufficient options to create OAuthAuthProvider. Please provide '${CLIENT_ID_PARAM}' and '${CLIENT_SECRET_PARAM}', or ${TOKEN_PARAM}.` as const;
     export type ClientCredentials = {
-        [CLIENT_ID_PARAM]?: core.Supplier<string>;
-        [CLIENT_SECRET_PARAM]?: core.Supplier<string>;
+        [CLIENT_ID_PARAM]: core.Supplier<string>;
+        [CLIENT_SECRET_PARAM]: core.Supplier<string>;
     };
     export type TokenOverride = {
-        [TOKEN_PARAM]?: core.Supplier<string>;
+        [TOKEN_PARAM]: core.Supplier<string>;
     };
     export type AuthOptions = ClientCredentials | TokenOverride;
     export type Options = BaseClientOptions & AuthOptions;

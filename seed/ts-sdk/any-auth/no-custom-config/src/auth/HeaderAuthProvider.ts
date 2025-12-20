@@ -42,9 +42,9 @@ export namespace HeaderAuthProvider {
     export const AUTH_SCHEME = "ApiKey" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
         `Please provide '${PARAM_KEY}' when initializing the client, or set the '${ENV_HEADER_KEY}' environment variable` as const;
-    export type Options = Partial<AuthOptions>;
+    export type Options = AuthOptions;
     export type AuthOptions = {
-        [WRAPPER_PROPERTY]: { [PARAM_KEY]?: core.Supplier<string> | undefined };
+        [WRAPPER_PROPERTY]?: { [PARAM_KEY]?: core.Supplier<string> | undefined };
     };
 
     export function createInstance(options: Options): core.AuthProvider {

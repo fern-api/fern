@@ -839,18 +839,24 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const authSchemeKey = this.authScheme.key;
 
         // Generate interface types based on keepIfWrapper
+        // Fields should only have ? when they have env var fallbacks
+        const clientIdQuestion = clientIdIsOptional ? "?" : "";
+        const clientSecretQuestion = clientSecretIsOptional ? "?" : "";
+
         const wrappedClientCredsProps = this.keepIfWrapper(
-            `[WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]?: ${clientIdType}; [CLIENT_SECRET_PARAM]?: ${clientSecretType} };`
+            `[WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]${clientIdQuestion}: ${clientIdType}; [CLIENT_SECRET_PARAM]${clientSecretQuestion}: ${clientSecretType} };`
         );
         const inlinedClientCredsProps =
             wrappedClientCredsProps ||
-            `[CLIENT_ID_PARAM]?: ${clientIdType}; [CLIENT_SECRET_PARAM]?: ${clientSecretType}`;
+            `[CLIENT_ID_PARAM]${clientIdQuestion}: ${clientIdType}; [CLIENT_SECRET_PARAM]${clientSecretQuestion}: ${clientSecretType}`;
         const clientCredsType = `{\n        ${inlinedClientCredsProps}\n    }`;
 
+        // Token override is always required (no env var support for token override)
+        // When wrapped, both the wrapper and the token param should be optional
         const wrappedTokenOverrideProps = this.keepIfWrapper(
             `[WRAPPER_PROPERTY]?: { [TOKEN_PARAM]?: ${supplierType} };`
         );
-        const inlinedTokenOverrideProps = wrappedTokenOverrideProps || `[TOKEN_PARAM]?: ${supplierType}`;
+        const inlinedTokenOverrideProps = wrappedTokenOverrideProps || `[TOKEN_PARAM]: ${supplierType}`;
         const tokenOverrideType = `{\n        ${inlinedTokenOverrideProps}\n    }`;
 
         // Build AUTH_CONFIG_ERROR_MESSAGE based on whether env vars are available

@@ -55,7 +55,7 @@ export namespace BasicAuthProvider {
         `Please provide '${USERNAME_PARAM}' when initializing the client` as const;
     export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string =
         `Please provide '${PASSWORD_PARAM}' when initializing the client` as const;
-    export type Options = Partial<AuthOptions>;
+    export type Options = AuthOptions;
     export type AuthOptions = { [USERNAME_PARAM]: core.Supplier<string>; [PASSWORD_PARAM]: core.Supplier<string> };
 
     export function createInstance(options: Options): core.AuthProvider {

@@ -385,12 +385,18 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const usernamePropertyDef = `[USERNAME_PARAM]${authOptionsProperties[0]?.hasQuestionToken ? "?" : ""}: ${authOptionsProperties[0]?.type}`;
         const passwordPropertyDef = `[PASSWORD_PARAM]${authOptionsProperties[1]?.hasQuestionToken ? "?" : ""}: ${authOptionsProperties[1]?.type}`;
         const propertyDefs = `${usernamePropertyDef}; ${passwordPropertyDef}`;
-        const wrappedProperty = this.keepIfWrapper(`[WRAPPER_PROPERTY]: { ${propertyDefs} };\n    `);
+
+        // When wrapped (multiple auth schemes), the wrapper property should be optional
+        // When not wrapped, individual fields already have their own ?: markers based on env vars
+        const wrapperOptional = this.shouldUseWrapper;
+        const optionalMarker = wrapperOptional ? "?" : "";
+
+        const wrappedProperty = this.keepIfWrapper(`[WRAPPER_PROPERTY]${optionalMarker}: { ${propertyDefs} };\n    `);
         const authOptionsType = wrappedProperty ? `{\n        ${wrappedProperty}}` : `{ ${propertyDefs} }`;
 
         statements.push(
-            // Options = Partial<AuthOptions>
-            `export type ${OPTIONS_TYPE_NAME} = Partial<${AUTH_OPTIONS_TYPE_NAME}>;`,
+            // Options = AuthOptions (with optional properties handled inline)
+            `export type ${OPTIONS_TYPE_NAME} = ${AUTH_OPTIONS_TYPE_NAME};`,
             // AuthOptions with computed property names
             {
                 kind: StructureKind.TypeAlias,

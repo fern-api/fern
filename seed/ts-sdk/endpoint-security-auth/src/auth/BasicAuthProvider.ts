@@ -65,9 +65,9 @@ export namespace BasicAuthProvider {
         `Please provide '${USERNAME_PARAM}' when initializing the client, or set the '${ENV_USERNAME}' environment variable` as const;
     export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string =
         `Please provide '${PASSWORD_PARAM}' when initializing the client, or set the '${ENV_PASSWORD}' environment variable` as const;
-    export type Options = Partial<AuthOptions>;
+    export type Options = AuthOptions;
     export type AuthOptions = {
-        [WRAPPER_PROPERTY]: {
+        [WRAPPER_PROPERTY]?: {
             [USERNAME_PARAM]?: core.EndpointSupplier<string> | undefined;
             [PASSWORD_PARAM]?: core.EndpointSupplier<string> | undefined;
         };
