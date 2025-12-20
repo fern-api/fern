@@ -1,5 +1,5 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
-import { type ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { type ExportedFilePath, getPropertyKey, getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
 import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
@@ -7,6 +7,7 @@ import type { AuthProviderGenerator } from "./AuthProviderGenerator";
 
 export declare namespace BearerAuthProviderGenerator {
     export interface Init {
+        ir: FernIr.IntermediateRepresentation;
         authScheme: FernIr.BearerAuthScheme;
         neverThrowErrors: boolean;
         isAuthMandatory: boolean;
@@ -14,21 +15,36 @@ export declare namespace BearerAuthProviderGenerator {
 }
 
 const CLASS_NAME = "BearerAuthProvider";
-const TOKEN_FIELD_NAME = "token";
 const OPTIONS_TYPE_NAME = "Options";
 const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
     public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
+    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.BearerAuthScheme;
-    private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;
 
     constructor(init: BearerAuthProviderGenerator.Init) {
+        this.ir = init.ir;
         this.authScheme = init.authScheme;
-        this.neverThrowErrors = init.neverThrowErrors;
         this.isAuthMandatory = init.isAuthMandatory;
+    }
+
+    /**
+     * Gets the wrapper property name for this Bearer auth scheme.
+     * This is used to namespace Bearer options when multiple auth schemes are present.
+     * e.g., "Bearer" -> "bearer", "MyAuth" -> "myAuth"
+     */
+    public getWrapperPropertyName(): string {
+        // Find the auth scheme key in the IR
+        const authScheme = this.ir.auth.schemes.find(
+            (scheme) => scheme.type === "bearer" && scheme === this.authScheme
+        );
+        if (authScheme == null) {
+            throw new Error("Failed to find bearer auth scheme in IR");
+        }
+        return toCamelCase(authScheme.key);
     }
 
     public getFilePath(): ExportedFilePath {
@@ -87,38 +103,47 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
-        return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(CLASS_NAME), "createInstance"),
+            undefined,
+            constructorArgs
+        );
     }
 
     public writeToFile(context: SdkContext): void {
-        this.writeOptions(context);
+        this.writeConstants(context);
         this.writeClass(context);
+        this.writeOptions(context);
+    }
+
+    private writeConstants(context: SdkContext): void {
+        const wrapperPropertyName = this.getWrapperPropertyName();
+        const tokenFieldName = this.authScheme.token.camelCase.safeName;
+        const tokenEnvVar = this.authScheme.tokenEnvVar;
+
+        const constants: string[] = [];
+        constants.push(`const WRAPPER_PROPERTY = "${wrapperPropertyName}" as const;`);
+        constants.push(`const TOKEN_PARAM = "${tokenFieldName}" as const;`);
+
+        if (tokenEnvVar != null) {
+            constants.push(`const ENV_TOKEN = "${tokenEnvVar}" as const;`);
+        }
+
+        for (const constant of constants) {
+            context.sourceFile.addStatements(constant);
+        }
+        context.sourceFile.addStatements(""); // blank line
     }
 
     private writeClass(context: SdkContext): void {
-        const hasTokenEnv = this.authScheme.tokenEnvVar != null;
-        // Token is optional when auth is not mandatory OR when there's an env var fallback
-        const isTokenOptional = !this.isAuthMandatory || hasTokenEnv;
-
-        // For class fields, use Supplier<T> | undefined when the token is optional
-        const tokenType = context.coreUtilities.auth.BearerToken._getReferenceToType();
-        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(tokenType);
-
-        const tokenFieldType = isTokenOptional
-            ? ts.factory.createUnionTypeNode([
-                  supplierType,
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-              ])
-            : supplierType;
-
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
             implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
             properties: [
                 {
-                    name: TOKEN_FIELD_NAME,
-                    type: getTextOfTsNode(tokenFieldType),
+                    name: "options",
+                    type: `${CLASS_NAME}.${OPTIONS_TYPE_NAME}`,
                     hasQuestionToken: false,
                     isReadonly: true,
                     scope: Scope.Private
@@ -133,19 +158,11 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                     parameters: [
                         {
                             name: "options",
-                            type: getTextOfTsNode(this.getOptionsType())
+                            type: `Partial<${CLASS_NAME}.${OPTIONS_TYPE_NAME}>`
                         }
                     ],
                     returnType: "boolean",
                     statements: this.generatecanCreateStatements()
-                },
-                {
-                    kind: StructureKind.Method,
-                    scope: Scope.Public,
-                    isStatic: true,
-                    name: "getAuthConfigErrorMessage",
-                    returnType: "string",
-                    statements: this.generateGetAuthConfigErrorMessageStatements()
                 },
                 {
                     kind: StructureKind.Method,
@@ -181,120 +198,131 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                     parameters: [
                         {
                             name: "options",
-                            type: getTextOfTsNode(this.getOptionsType())
+                            type: `${CLASS_NAME}.${OPTIONS_TYPE_NAME}`
                         }
                     ],
-                    statements: [`this.${TOKEN_FIELD_NAME} = options.${this.authScheme.token.camelCase.safeName};`]
+                    statements: [`this.options = options;`]
                 }
             ]
         });
     }
 
     private generatecanCreateStatements(): string {
-        const tokenFieldName = this.authScheme.token.camelCase.safeName;
         const tokenEnvVar = this.authScheme.tokenEnvVar;
 
         if (tokenEnvVar != null) {
-            return `return options.${tokenFieldName} != null || process.env?.["${tokenEnvVar}"] != null;`;
+            return `return options?.[WRAPPER_PROPERTY]?.[TOKEN_PARAM] != null || process.env?.[ENV_TOKEN] != null;`;
         }
 
-        return `return options.${tokenFieldName} != null;`;
-    }
-
-    private generateGetAuthConfigErrorMessageStatements(): string {
-        const tokenFieldName = this.authScheme.token.camelCase.safeName;
-        const tokenEnvVar = this.authScheme.tokenEnvVar;
-
-        if (tokenEnvVar != null) {
-            return `return "Please provide '${tokenFieldName}' when initializing the client, or set the '${tokenEnvVar}' environment variable";`;
-        }
-
-        return `return "Please provide '${tokenFieldName}' when initializing the client";`;
+        return `return options?.[WRAPPER_PROPERTY]?.[TOKEN_PARAM] != null;`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {
         const tokenVar = this.authScheme.token.camelCase.unsafeName;
-        const tokenFieldName = this.authScheme.token.camelCase.safeName;
-
-        const tokenExpression =
-            this.authScheme.tokenEnvVar != null
-                ? `(${getTextOfTsNode(
-                      context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                          ts.factory.createPropertyAccessExpression(
-                              ts.factory.createThis(),
-                              ts.factory.createIdentifier(TOKEN_FIELD_NAME)
-                          ),
-                          ts.factory.createObjectLiteralExpression([
-                              ts.factory.createShorthandPropertyAssignment("endpointMetadata")
-                          ])
-                      )
-                  )}) ?? process.env?.["${this.authScheme.tokenEnvVar}"]`
-                : getTextOfTsNode(
-                      context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                          ts.factory.createPropertyAccessExpression(
-                              ts.factory.createThis(),
-                              ts.factory.createIdentifier(TOKEN_FIELD_NAME)
-                          ),
-                          ts.factory.createObjectLiteralExpression([
-                              ts.factory.createShorthandPropertyAssignment("endpointMetadata")
-                          ])
-                      )
-                  );
-
-        if (this.neverThrowErrors) {
-            return `
-        const ${tokenVar} = ${tokenExpression};
-
-        return {
-            headers: { Authorization: \`Bearer \${${tokenVar}}\` }
-        };
-        `;
-        }
-
-        const tokenErrorMessage =
-            this.authScheme.tokenEnvVar != null
-                ? `Please specify a ${tokenFieldName} by either passing it in to the constructor or initializing a ${this.authScheme.tokenEnvVar} environment variable`
-                : `Please specify a ${tokenFieldName} by passing it in to the constructor`;
-
+        const tokenEnvVar = this.authScheme.tokenEnvVar;
         const errorConstructor = getTextOfTsNode(
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
-        return `
-        const ${tokenVar} = ${tokenExpression};
+        // Build property access chain: this.options[WRAPPER_PROPERTY]?.[TOKEN_PARAM]
+        // Start with this.options (no optional chaining on this.options)
+        const thisOptionsAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "options");
+
+        // Add [WRAPPER_PROPERTY] with optional chaining
+        const wrapperAccess = ts.factory.createElementAccessExpression(
+            thisOptionsAccess,
+            ts.factory.createIdentifier("WRAPPER_PROPERTY")
+        );
+
+        // Add ?.[TOKEN_PARAM]
+        const tokenAccess = ts.factory.createElementAccessChain(
+            wrapperAccess,
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier("TOKEN_PARAM")
+        );
+
+        const supplierGetCall = context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
+            tokenAccess,
+            ts.factory.createObjectLiteralExpression([ts.factory.createShorthandPropertyAssignment("endpointMetadata")])
+        );
+        const supplierGetCode = getTextOfTsNode(supplierGetCall);
+
+        if (tokenEnvVar != null) {
+            return `
+        const ${tokenVar} =
+            (${supplierGetCode}) ??
+            process.env?.[ENV_TOKEN];
         if (${tokenVar} == null) {
             throw new ${errorConstructor}({
-                message: "${tokenErrorMessage}"
+                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE,
             });
         }
 
         return {
-            headers: { Authorization: \`Bearer \${${tokenVar}}\` }
+            headers: { Authorization: \`Bearer \${${tokenVar}}\` },
+        };
+        `;
+        }
+
+        return `
+        const ${tokenVar} = ${supplierGetCode};
+        if (${tokenVar} == null) {
+            throw new ${errorConstructor}({
+                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE,
+            });
+        }
+
+        return {
+            headers: { Authorization: \`Bearer \${${tokenVar}}\` },
         };
         `;
     }
 
     private writeOptions(context: SdkContext): void {
         const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
+        const authSchemeKey =
+            this.ir.auth.schemes.find((scheme) => scheme.type === "bearer" && scheme === this.authScheme)?.key ??
+            "Bearer";
+        const tokenEnvVar = this.authScheme.tokenEnvVar;
+
+        const statements: (string | any)[] = [`export const AUTH_SCHEME = "${authSchemeKey}" as const;`];
+
+        // Add AUTH_CONFIG_ERROR_MESSAGE constant
+        if (tokenEnvVar != null) {
+            statements.push(
+                `export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${TOKEN_PARAM}' when initializing the client, or set the '\${ENV_TOKEN}' environment variable\` as const;`
+            );
+        } else {
+            statements.push(
+                `export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${TOKEN_PARAM}' when initializing the client\` as const;`
+            );
+        }
+
+        statements.push(
+            // Options = Partial<AuthOptions>
+            `export type ${OPTIONS_TYPE_NAME} = Partial<${AUTH_OPTIONS_TYPE_NAME}>;`,
+            // AuthOptions with computed property names
+            {
+                kind: StructureKind.TypeAlias,
+                name: AUTH_OPTIONS_TYPE_NAME,
+                isExported: true,
+                type: `{\n        [WRAPPER_PROPERTY]: { ${authOptionsProperties.map((p) => `[TOKEN_PARAM]${p.hasQuestionToken ? "?" : ""}: ${p.type}`).join("; ")} };\n    }`
+            },
+            {
+                kind: StructureKind.Function,
+                name: "createInstance",
+                isExported: true,
+                parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
+                returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
+                statements: `return new ${CLASS_NAME}(options);`
+            }
+        );
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
             kind: StructureKind.Module,
-            statements: [
-                {
-                    kind: StructureKind.Interface,
-                    name: AUTH_OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    properties: authOptionsProperties
-                },
-                {
-                    kind: StructureKind.Interface,
-                    name: OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    extends: [AUTH_OPTIONS_TYPE_NAME]
-                }
-            ]
+            statements
         });
     }
 }

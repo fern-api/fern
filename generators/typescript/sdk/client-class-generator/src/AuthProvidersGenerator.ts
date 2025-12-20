@@ -47,12 +47,14 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
                     });
                 case "bearer":
                     return new BearerAuthProviderGenerator({
+                        ir,
                         authScheme,
                         neverThrowErrors,
                         isAuthMandatory: ir.sdkConfig.isAuthMandatory
                     });
                 case "header":
                     return new HeaderAuthProviderGenerator({
+                        ir,
                         authScheme,
                         neverThrowErrors,
                         isAuthMandatory: ir.sdkConfig.isAuthMandatory

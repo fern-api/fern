@@ -1,7 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
-import { camelCase } from "lodash-es";
 import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
 import { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator";
@@ -81,91 +80,116 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
         return classNames;
     }
 
-    private getAuthSchemeKeys(): string[] {
-        return this.ir.auth.schemes.map((scheme) => scheme.key);
-    }
-
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
         return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
     }
 
     public writeToFile(context: SdkContext): void {
-        this.writeOptions(context);
+        this.addImports(context);
         this.writeClass(context);
+        this.writeOptions(context);
     }
 
-    private writeOptions(context: SdkContext): void {
-        const childClassNames = this.getChildAuthProviderClassNames(context);
+    private addImports(context: SdkContext): void {
+        // Import NormalizedClientOptions type
+        context.sourceFile.addImportDeclaration({
+            moduleSpecifier: "../BaseClient",
+            namedImports: ["NormalizedClientOptions"],
+            isTypeOnly: true
+        });
 
+        // Import child auth provider classes
+        const childClassNames = this.getChildAuthProviderClassNames(context);
         for (const className of childClassNames) {
             // Import as value (not type-only) so we can call static methods
             context.sourceFile.addImportDeclaration({
-                moduleSpecifier: `./${className}.js`,
+                moduleSpecifier: `./${className}`,
                 namedImports: [className],
                 isTypeOnly: false
             });
         }
+    }
 
-        // Separate auth schemes into flat (Bearer, Basic, Header) and nested (OAuth, Inferred)
-        // OAuth and Inferred need to be nested to avoid property name conflicts (e.g., "token")
-        const flatAuthOptionsTypes: string[] = [];
-        const nestedAuthOptionsTypes: string[] = [];
+    private writeOptions(context: SdkContext): void {
+        // Collect AuthOptions and Options from all providers
+        const authOptionsTypes: string[] = [];
+        const optionsTypes: string[] = [];
 
         for (const authScheme of this.ir.auth.schemes) {
             switch (authScheme.type) {
                 case "bearer":
-                    flatAuthOptionsTypes.push(`${BearerAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
+                    authOptionsTypes.push(`${BearerAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
+                    optionsTypes.push(`${BearerAuthProviderGenerator.CLASS_NAME}.Options`);
                     break;
                 case "basic":
-                    flatAuthOptionsTypes.push(`${BasicAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
+                    authOptionsTypes.push(`${BasicAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
+                    optionsTypes.push(`${BasicAuthProviderGenerator.CLASS_NAME}.Options`);
                     break;
                 case "header":
-                    flatAuthOptionsTypes.push(`${HeaderAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
+                    authOptionsTypes.push(`${HeaderAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
+                    optionsTypes.push(`${HeaderAuthProviderGenerator.CLASS_NAME}.Options`);
                     break;
                 case "oauth":
                     if (context.generateOAuthClients) {
-                        // Wrap OAuth options under camelCased scheme key to avoid conflicts
-                        const wrapperName = camelCase(authScheme.key);
-                        nestedAuthOptionsTypes.push(
-                            `{ ${wrapperName}?: ${OAuthAuthProviderGenerator.CLASS_NAME}.AuthOptions }`
-                        );
+                        authOptionsTypes.push(`${OAuthAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
+                        optionsTypes.push(`${OAuthAuthProviderGenerator.CLASS_NAME}.Options`);
                     }
                     break;
-                case "inferred": {
-                    // Wrap Inferred options under camelCased scheme key to avoid conflicts
-                    const wrapperName = camelCase(authScheme.key);
-                    nestedAuthOptionsTypes.push(
-                        `{ ${wrapperName}?: ${InferredAuthProviderGenerator.CLASS_NAME}.AuthOptions }`
-                    );
+                case "inferred":
+                    authOptionsTypes.push(`${InferredAuthProviderGenerator.CLASS_NAME}.AuthOptions`);
+                    optionsTypes.push(`${InferredAuthProviderGenerator.CLASS_NAME}.Options`);
                     break;
-                }
             }
         }
 
-        // Combine flat and nested auth options
-        const allAuthOptionsTypes = [...flatAuthOptionsTypes, ...nestedAuthOptionsTypes];
+        const normalizedClientOptionsType = "NormalizedClientOptions";
 
-        // Use Partial intersection of all auth options to allow anonymous endpoints
-        // (some endpoints may not require any auth)
-        const typeCode = `
-    type UnionToIntersection<U> =
-        (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;
-
-    export type ${AUTH_OPTIONS_TYPE_NAME} = Partial<UnionToIntersection<
-        ${allAuthOptionsTypes.join(" | ")}
-    >>;`;
-
+        // Create namespace with types and createInstance function
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
             kind: StructureKind.Module,
-            statements: typeCode
+            statements: [
+                // Helper type to convert union to intersection
+                `type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void ? I : never;`,
+                "",
+                `export type AuthOptions<TAuthProviders extends readonly any[]> = Partial<UnionToIntersection<TAuthProviders[number]>>;`,
+                `export type Options<TOptions extends readonly any[]> = Partial<UnionToIntersection<TOptions[number]>>;`,
+                "",
+                `type InstantiatableAuthProviderWithScheme = {`,
+                `    canCreate: (opts: ${normalizedClientOptionsType}) => boolean;`,
+                `    createInstance: (opts: ${normalizedClientOptionsType}) => core.AuthProvider;`,
+                `    AUTH_SCHEME: string;`,
+                `    AUTH_CONFIG_ERROR_MESSAGE: string;`,
+                `};`,
+                "",
+                {
+                    kind: StructureKind.Function,
+                    name: "createInstance",
+                    isExported: true,
+                    parameters: [
+                        { name: "options", type: normalizedClientOptionsType },
+                        { name: "authProviderClasses", type: "InstantiatableAuthProviderWithScheme[]" }
+                    ],
+                    returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
+                    statements: `
+        const authProviders: [AuthScheme, core.AuthProvider, AuthConfigErrorMessage][] = authProviderClasses
+            .filter((providerClass) => providerClass.canCreate(options))
+            .map((providerClass) => [
+                providerClass.AUTH_SCHEME,
+                providerClass.createInstance(options),
+                providerClass.AUTH_CONFIG_ERROR_MESSAGE,
+            ]);
+
+        return new ${CLASS_NAME}(authProviders);`
+                }
+            ]
         });
     }
 
     private writeClass(context: SdkContext): void {
-        // Generate the mapping from schemeKey to class name for calling static methods
-        const schemeKeyToClassName = this.getSchemeKeyToClassNameMap(context);
+        // Add type aliases before the class
+        context.sourceFile.addStatements(["type AuthScheme = string;", "type AuthConfigErrorMessage = string;", ""]);
 
         context.sourceFile.addClass({
             name: CLASS_NAME,
@@ -176,8 +200,20 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
                     name: AUTH_PROVIDERS_FIELD_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode("Map", [
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            ts.factory.createTypeReferenceNode("AuthScheme"),
                             context.coreUtilities.auth.AuthProvider._getReferenceToType()
+                        ])
+                    ),
+                    hasQuestionToken: false,
+                    isReadonly: true,
+                    scope: Scope.Private
+                },
+                {
+                    name: "authConfigErrorMessages",
+                    type: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode("Map", [
+                            ts.factory.createTypeReferenceNode("AuthScheme"),
+                            ts.factory.createTypeReferenceNode("AuthConfigErrorMessage")
                         ])
                     ),
                     hasQuestionToken: false,
@@ -190,22 +226,20 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
                     parameters: [
                         {
                             name: "authProviders",
-                            type: getTextOfTsNode(
-                                ts.factory.createTypeReferenceNode("Map", [
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                    context.coreUtilities.auth.AuthProvider._getReferenceToType()
-                                ])
-                            )
+                            type: "[AuthScheme, core.AuthProvider, AuthConfigErrorMessage][]"
                         }
                     ],
-                    statements: [`this.${AUTH_PROVIDERS_FIELD_NAME} = authProviders;`]
+                    statements: [
+                        `this.${AUTH_PROVIDERS_FIELD_NAME} = new Map(authProviders.map(([scheme, provider]) => [scheme, provider]));`,
+                        `this.authConfigErrorMessages = new Map(authProviders.map(([scheme, , errorMessage]) => [scheme, errorMessage]));`
+                    ]
                 }
             ],
             methods: [
                 {
                     kind: StructureKind.Method,
                     scope: Scope.Private,
-                    isStatic: true,
+                    isStatic: false,
                     name: "getAuthConfigErrorMessage",
                     parameters: [
                         {
@@ -214,7 +248,7 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
                         }
                     ],
                     returnType: "string",
-                    statements: this.generateGetAuthConfigErrorMessageStatements(schemeKeyToClassName)
+                    statements: this.generateInstanceGetAuthConfigErrorMessageStatements()
                 },
                 {
                     kind: StructureKind.Method,
@@ -248,44 +282,12 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
         });
     }
 
-    private getSchemeKeyToClassNameMap(context: SdkContext): Map<string, string> {
-        const entries = new Map<string, string>();
-        for (const authScheme of this.ir.auth.schemes) {
-            const schemeKey = authScheme.key;
-            switch (authScheme.type) {
-                case "bearer":
-                    entries.set(schemeKey, BearerAuthProviderGenerator.CLASS_NAME);
-                    break;
-                case "basic":
-                    entries.set(schemeKey, BasicAuthProviderGenerator.CLASS_NAME);
-                    break;
-                case "header":
-                    entries.set(schemeKey, HeaderAuthProviderGenerator.CLASS_NAME);
-                    break;
-                case "oauth":
-                    if (context.generateOAuthClients) {
-                        entries.set(schemeKey, OAuthAuthProviderGenerator.CLASS_NAME);
-                    }
-                    break;
-                case "inferred":
-                    entries.set(schemeKey, InferredAuthProviderGenerator.CLASS_NAME);
-                    break;
-            }
-        }
-        return entries;
-    }
-
-    private generateGetAuthConfigErrorMessageStatements(schemeKeyToClassName: Map<string, string>): string {
-        // Generate switch cases that call each provider's static getAuthConfigErrorMessage() method
-        const switchCases = Array.from(schemeKeyToClassName.entries())
-            .map(([schemeKey, className]) => `case "${schemeKey}": return ${className}.getAuthConfigErrorMessage();`)
-            .join("\n            ");
-
+    private generateInstanceGetAuthConfigErrorMessageStatements(): string {
         return `
-        switch (schemeKey) {
-            ${switchCases}
-            default: return "Please provide the required authentication credentials for " + schemeKey + " when initializing the client";
-        }`;
+        return (
+            this.authConfigErrorMessages.get(schemeKey) ??
+            \`Please provide the required authentication credentials for \${schemeKey} when initializing the client\`
+        );`;
     }
 
     private generateGetAuthRequestStatements(): string {
@@ -310,7 +312,7 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
             const missingAuthHints = security.map((req) => {
                 const schemeKeys = Object.keys(req);
                 const missingSchemes = schemeKeys.filter((key) => !${providerMap}.has(key));
-                return missingSchemes.map((key) => ${CLASS_NAME}.getAuthConfigErrorMessage(key)).join(" AND ");
+                return missingSchemes.map((key) => this.getAuthConfigErrorMessage(key)).join(" AND ");
             }).join(" OR ");
             throw new Error(
                 "No authentication credentials provided that satisfy the endpoint's security requirements. " +
@@ -329,7 +331,7 @@ export class RoutingAuthProviderGenerator implements AuthProviderGenerator {
         for (const schemeKey of Object.keys(satisfiableRequirement)) {
             const provider = ${providerMap}.get(schemeKey);
             if (provider == null) {
-                throw new Error("Internal error: auth provider not found for scheme: " + schemeKey);
+                throw new Error(\`Internal error: auth provider not found for scheme: \${schemeKey}\`);
             }
             const authRequest = await provider.getAuthRequest({ endpointMetadata });
             Object.assign(combinedHeaders, authRequest.headers);

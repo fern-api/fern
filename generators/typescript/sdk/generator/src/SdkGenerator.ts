@@ -1827,22 +1827,22 @@ export class SdkGenerator {
                 run: ({ sourceFile }) => {
                     if (hasClient) {
                         sourceFile.addExportDeclaration({
-                            moduleSpecifier: "./client/Client.js",
+                            moduleSpecifier: "./client/Client",
                             namedExports: [clientClassName]
                         });
 
                         sourceFile.addExportDeclaration({
-                            moduleSpecifier: "./client/index.js"
+                            moduleSpecifier: "./client/index"
                         });
                     } else {
                         sourceFile.addExportDeclaration({
-                            moduleSpecifier: "./index.js"
+                            moduleSpecifier: "./index"
                         });
                     }
 
                     if (package_.subpackages.length > 0) {
                         sourceFile.addExportDeclaration({
-                            moduleSpecifier: "./resources/index.js"
+                            moduleSpecifier: "./resources/index"
                         });
                     }
                 }

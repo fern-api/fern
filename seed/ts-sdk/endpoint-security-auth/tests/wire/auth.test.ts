@@ -11,10 +11,9 @@ describe("AuthClient", () => {
 
         const client = new SeedEndpointSecurityAuthClient({
             maxRetries: 0,
-            token: "test",
-            apiKey: "test",
-            clientId: "client_id",
-            clientSecret: "client_secret",
+            bearer: { token: "test" },
+            apiKey: { apiKey: "test" },
+            oauth: { clientId: "client_id", clientSecret: "client_secret" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {

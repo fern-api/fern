@@ -478,7 +478,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         // InferredAuthProvider.Options needs to extend BaseClientOptions because it creates an AuthClient
         // which requires the full BaseClientOptions (environment, baseUrl, etc.)
         context.sourceFile.addImportDeclaration({
-            moduleSpecifier: "../BaseClient.js",
+            moduleSpecifier: "../BaseClient",
             namedImports: ["BaseClientOptions"],
             isTypeOnly: true
         });

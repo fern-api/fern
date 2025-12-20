@@ -17,6 +17,7 @@ export { getTextOfTsNode } from "./codegen-utils/getTextOfTsNode";
 export { InlineConsts } from "./codegen-utils/inlineConsts";
 export { isExpressionUndefined } from "./codegen-utils/isExpressionUndefined";
 export { maybeAddDocsNode, maybeAddDocsStructure } from "./codegen-utils/maybeAddDocs";
+export { toCamelCase } from "./codegen-utils/toCamelCase";
 export { writerToString } from "./codegen-utils/writerToString";
 export * from "./core-utilities";
 export { type CoreUtilities } from "./core-utilities/CoreUtilities";

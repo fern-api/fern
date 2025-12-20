@@ -21,7 +21,9 @@ export type BaseClientOptions = {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
-} & AnyAuthProvider.AuthOptions;
+} & AnyAuthProvider.AuthOptions<
+    [BearerAuthProvider.AuthOptions, HeaderAuthProvider.AuthOptions, OAuthAuthProvider.AuthOptions]
+>;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */
@@ -73,19 +75,11 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = Bas
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
-    normalized.authProvider ??= (() => {
-        const authProviders: core.AuthProvider[] = [];
-        if (BearerAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
-            authProviders.push(new BearerAuthProvider(normalizedWithNoOpAuthProvider));
-        }
-        if (HeaderAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
-            authProviders.push(new HeaderAuthProvider(normalizedWithNoOpAuthProvider));
-        }
-        if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
-            authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider));
-        }
-        return new AnyAuthProvider(authProviders);
-    })();
+    normalized.authProvider ??= AnyAuthProvider.createInstance(normalizedWithNoOpAuthProvider, [
+        BearerAuthProvider,
+        HeaderAuthProvider,
+        OAuthAuthProvider,
+    ]);
     return normalized;
 }
 

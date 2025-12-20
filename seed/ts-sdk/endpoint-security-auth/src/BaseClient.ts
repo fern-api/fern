@@ -21,7 +21,9 @@ export type BaseClientOptions = {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
-} & RoutingAuthProvider.AuthOptions;
+} & RoutingAuthProvider.AuthOptions<
+    [BearerAuthProvider.AuthOptions, HeaderAuthProvider.AuthOptions, OAuthAuthProvider.AuthOptions]
+>;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */
@@ -73,19 +75,11 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = Bas
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
-    normalized.authProvider ??= (() => {
-        const authProviders = new Map<string, core.AuthProvider>();
-        if (BearerAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
-            authProviders.set("Bearer", new BearerAuthProvider(normalizedWithNoOpAuthProvider));
-        }
-        if (HeaderAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
-            authProviders.set("ApiKey", new HeaderAuthProvider(normalizedWithNoOpAuthProvider));
-        }
-        if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
-            authProviders.set("OAuth", OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider));
-        }
-        return new RoutingAuthProvider(authProviders);
-    })();
+    normalized.authProvider ??= RoutingAuthProvider.createInstance(normalizedWithNoOpAuthProvider, [
+        BearerAuthProvider,
+        HeaderAuthProvider,
+        OAuthAuthProvider,
+    ]);
     return normalized;
 }
 

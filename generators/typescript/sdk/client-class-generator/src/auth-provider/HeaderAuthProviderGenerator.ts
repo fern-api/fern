@@ -1,5 +1,5 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
-import { type ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { type ExportedFilePath, getPropertyKey, getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
 import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
@@ -7,6 +7,7 @@ import type { AuthProviderGenerator } from "./AuthProviderGenerator";
 
 export declare namespace HeaderAuthProviderGenerator {
     export interface Init {
+        ir: FernIr.IntermediateRepresentation;
         authScheme: FernIr.HeaderAuthScheme;
         neverThrowErrors: boolean;
         isAuthMandatory: boolean;
@@ -14,22 +15,36 @@ export declare namespace HeaderAuthProviderGenerator {
 }
 
 const CLASS_NAME = "HeaderAuthProvider";
-const HEADER_FIELD_NAME = "headerValue";
 const OPTIONS_TYPE_NAME = "Options";
 const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
-    public static readonly HEADER_FIELD_NAME = HEADER_FIELD_NAME;
     public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
+    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.HeaderAuthScheme;
-    private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;
 
     constructor(init: HeaderAuthProviderGenerator.Init) {
+        this.ir = init.ir;
         this.authScheme = init.authScheme;
-        this.neverThrowErrors = init.neverThrowErrors;
         this.isAuthMandatory = init.isAuthMandatory;
+    }
+
+    /**
+     * Gets the wrapper property name for this Header auth scheme.
+     * This is used to namespace Header options when multiple auth schemes are present.
+     * e.g., "ApiKey" -> "apiKey", "MyAuth" -> "myAuth"
+     */
+    public getWrapperPropertyName(): string {
+        // Find the auth scheme key in the IR
+        const authScheme = this.ir.auth.schemes.find(
+            (scheme) => scheme.type === "header" && scheme === this.authScheme
+        );
+        if (authScheme == null) {
+            throw new Error("Failed to find header auth scheme in IR");
+        }
+        return toCamelCase(authScheme.key);
     }
 
     public getFilePath(): ExportedFilePath {
@@ -88,38 +103,49 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
-        return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(CLASS_NAME), "createInstance"),
+            undefined,
+            constructorArgs
+        );
     }
 
     public writeToFile(context: SdkContext): void {
-        this.writeOptions(context);
+        this.writeConstants(context);
         this.writeClass(context);
+        this.writeOptions(context);
+    }
+
+    private writeConstants(context: SdkContext): void {
+        const wrapperPropertyName = this.getWrapperPropertyName();
+        const headerFieldName = this.authScheme.name.name.camelCase.safeName;
+        const headerEnvVar = this.authScheme.headerEnvVar;
+        const headerName = this.authScheme.name.wireValue;
+
+        const constants: string[] = [];
+        constants.push(`const WRAPPER_PROPERTY = "${wrapperPropertyName}" as const;`);
+        constants.push(`const PARAM_KEY = "${headerFieldName}" as const;`);
+
+        if (headerEnvVar != null) {
+            constants.push(`const ENV_HEADER_KEY = "${headerEnvVar}" as const;`);
+        }
+        constants.push(`const HEADER_NAME = "${headerName}" as const;`);
+
+        for (const constant of constants) {
+            context.sourceFile.addStatements(constant);
+        }
+        context.sourceFile.addStatements(""); // blank line
     }
 
     private writeClass(context: SdkContext): void {
-        const hasHeaderEnv = this.authScheme.headerEnvVar != null;
-        // Header is optional when auth is not mandatory OR when there's an env var fallback
-        const isHeaderOptional = !this.isAuthMandatory || hasHeaderEnv;
-
-        // For class fields, use Supplier<T> | undefined when the header is optional
-        const headerType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
-        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerType);
-
-        const headerFieldType = isHeaderOptional
-            ? ts.factory.createUnionTypeNode([
-                  supplierType,
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-              ])
-            : supplierType;
-
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
             implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
             properties: [
                 {
-                    name: HEADER_FIELD_NAME,
-                    type: getTextOfTsNode(headerFieldType),
+                    name: "options",
+                    type: `${CLASS_NAME}.${OPTIONS_TYPE_NAME}`,
                     hasQuestionToken: false,
                     isReadonly: true,
                     scope: Scope.Private
@@ -134,19 +160,11 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                     parameters: [
                         {
                             name: "options",
-                            type: getTextOfTsNode(this.getOptionsType())
+                            type: `Partial<${CLASS_NAME}.${OPTIONS_TYPE_NAME}>`
                         }
                     ],
                     returnType: "boolean",
                     statements: this.generatecanCreateStatements()
-                },
-                {
-                    kind: StructureKind.Method,
-                    scope: Scope.Public,
-                    isStatic: true,
-                    name: "getAuthConfigErrorMessage",
-                    returnType: "string",
-                    statements: this.generateGetAuthConfigErrorMessageStatements()
                 },
                 {
                     kind: StructureKind.Method,
@@ -182,132 +200,131 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                     parameters: [
                         {
                             name: "options",
-                            type: getTextOfTsNode(this.getOptionsType())
+                            type: `${CLASS_NAME}.${OPTIONS_TYPE_NAME}`
                         }
                     ],
-                    statements: [`this.${HEADER_FIELD_NAME} = options.${this.authScheme.name.name.camelCase.safeName};`]
+                    statements: [`this.options = options;`]
                 }
             ]
         });
     }
 
     private generatecanCreateStatements(): string {
-        const headerFieldName = this.authScheme.name.name.camelCase.safeName;
         const headerEnvVar = this.authScheme.headerEnvVar;
 
         if (headerEnvVar != null) {
-            return `return options.${headerFieldName} != null || process.env?.["${headerEnvVar}"] != null;`;
+            return `return options?.[WRAPPER_PROPERTY]?.[PARAM_KEY] != null || process.env?.[ENV_HEADER_KEY] != null;`;
         }
 
-        return `return options.${headerFieldName} != null;`;
-    }
-
-    private generateGetAuthConfigErrorMessageStatements(): string {
-        const headerFieldName = this.authScheme.name.name.camelCase.safeName;
-        const headerEnvVar = this.authScheme.headerEnvVar;
-
-        if (headerEnvVar != null) {
-            return `return "Please provide '${headerFieldName}' when initializing the client, or set the '${headerEnvVar}' environment variable";`;
-        }
-
-        return `return "Please provide '${headerFieldName}' when initializing the client";`;
+        return `return options?.[WRAPPER_PROPERTY]?.[PARAM_KEY] != null;`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {
-        const headerVar = this.authScheme.name.name.camelCase.unsafeName;
-        const headerFieldName = this.authScheme.name.name.camelCase.safeName;
-
-        const headerExpression =
-            this.authScheme.headerEnvVar != null
-                ? `(${getTextOfTsNode(
-                      context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                          ts.factory.createPropertyAccessExpression(
-                              ts.factory.createThis(),
-                              ts.factory.createIdentifier(HEADER_FIELD_NAME)
-                          ),
-                          ts.factory.createObjectLiteralExpression([
-                              ts.factory.createShorthandPropertyAssignment("endpointMetadata")
-                          ])
-                      )
-                  )}) ?? process.env?.["${this.authScheme.headerEnvVar}"]`
-                : getTextOfTsNode(
-                      context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                          ts.factory.createPropertyAccessExpression(
-                              ts.factory.createThis(),
-                              ts.factory.createIdentifier(HEADER_FIELD_NAME)
-                          ),
-                          ts.factory.createObjectLiteralExpression([
-                              ts.factory.createShorthandPropertyAssignment("endpointMetadata")
-                          ])
-                      )
-                  );
-
-        if (this.neverThrowErrors) {
-            const headerValueExpression =
-                this.authScheme.prefix != null
-                    ? `${headerVar} != null ? \`${this.authScheme.prefix.trim()} \${${headerVar}}\` : undefined`
-                    : headerVar;
-
-            return `
-        const ${headerVar} = ${headerExpression};
-
-        const headerValue = ${headerValueExpression};
-
-        return {
-            headers: headerValue != null ? { "${this.authScheme.name.wireValue}": headerValue } : {}
-        };
-        `;
-        }
-
-        const headerErrorMessage =
-            this.authScheme.headerEnvVar != null
-                ? `Please specify a ${headerFieldName} by either passing it in to the constructor or initializing a ${this.authScheme.headerEnvVar} environment variable`
-                : `Please specify a ${headerFieldName} by passing it in to the constructor`;
-
+        const headerVar = "headerValue"; // Always use 'headerValue' as the variable name
+        const headerEnvVar = this.authScheme.headerEnvVar;
         const errorConstructor = getTextOfTsNode(
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
-        const headerValueExpression =
-            this.authScheme.prefix != null ? `\`${this.authScheme.prefix.trim()} \${${headerVar}}\`` : headerVar;
+        // Build property access chain: this.options[WRAPPER_PROPERTY]?.[PARAM_KEY]
+        // Start with this.options (no optional chaining on this.options)
+        const thisOptionsAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "options");
 
-        return `
-        const ${headerVar} = ${headerExpression};
+        // Add [WRAPPER_PROPERTY] without optional chaining
+        const wrapperAccess = ts.factory.createElementAccessExpression(
+            thisOptionsAccess,
+            ts.factory.createIdentifier("WRAPPER_PROPERTY")
+        );
+
+        // Add ?.[PARAM_KEY]
+        const paramAccess = ts.factory.createElementAccessChain(
+            wrapperAccess,
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier("PARAM_KEY")
+        );
+
+        const supplierGetCall = context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
+            paramAccess,
+            ts.factory.createObjectLiteralExpression([ts.factory.createShorthandPropertyAssignment("endpointMetadata")])
+        );
+        const supplierGetCode = getTextOfTsNode(supplierGetCall);
+
+        if (headerEnvVar != null) {
+            return `
+        const ${headerVar} =
+            (${supplierGetCode}) ??
+            process.env?.[ENV_HEADER_KEY];
         if (${headerVar} == null) {
             throw new ${errorConstructor}({
-                message: "${headerErrorMessage}"
+                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE,
             });
         }
 
-        const headerValue = ${headerValueExpression};
+        return {
+            headers: { [HEADER_NAME]: ${headerVar} },
+        };
+        `;
+        }
+
+        return `
+        const ${headerVar} = ${supplierGetCode};
+        if (${headerVar} == null) {
+            throw new ${errorConstructor}({
+                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE,
+            });
+        }
 
         return {
-            headers: { "${this.authScheme.name.wireValue}": headerValue }
+            headers: { [HEADER_NAME]: ${headerVar} },
         };
         `;
     }
 
     private writeOptions(context: SdkContext): void {
         const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
+        const authSchemeKey =
+            this.ir.auth.schemes.find((scheme) => scheme.type === "header" && scheme === this.authScheme)?.key ??
+            "ApiKey";
+        const headerEnvVar = this.authScheme.headerEnvVar;
+
+        const statements: (string | any)[] = [`export const AUTH_SCHEME = "${authSchemeKey}" as const;`];
+
+        // Add AUTH_CONFIG_ERROR_MESSAGE constant
+        if (headerEnvVar != null) {
+            statements.push(
+                `export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${PARAM_KEY}' when initializing the client, or set the '\${ENV_HEADER_KEY}' environment variable\` as const;`
+            );
+        } else {
+            statements.push(
+                `export const AUTH_CONFIG_ERROR_MESSAGE: string = \`Please provide '\${PARAM_KEY}' when initializing the client\` as const;`
+            );
+        }
+
+        statements.push(
+            // Options = Partial<AuthOptions>
+            `export type ${OPTIONS_TYPE_NAME} = Partial<${AUTH_OPTIONS_TYPE_NAME}>;`,
+            // AuthOptions with computed property names
+            {
+                kind: StructureKind.TypeAlias,
+                name: AUTH_OPTIONS_TYPE_NAME,
+                isExported: true,
+                type: `{\n        [WRAPPER_PROPERTY]: { [PARAM_KEY]${authOptionsProperties[0]?.hasQuestionToken ? "?" : ""}: ${authOptionsProperties[0]?.type} };\n    }`
+            },
+            {
+                kind: StructureKind.Function,
+                name: "createInstance",
+                isExported: true,
+                parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
+                returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
+                statements: `return new ${CLASS_NAME}(options);`
+            }
+        );
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
             kind: StructureKind.Module,
-            statements: [
-                {
-                    kind: StructureKind.Interface,
-                    name: AUTH_OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    properties: authOptionsProperties
-                },
-                {
-                    kind: StructureKind.Interface,
-                    name: OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    extends: [AUTH_OPTIONS_TYPE_NAME]
-                }
-            ]
+            statements
         });
     }
 }
