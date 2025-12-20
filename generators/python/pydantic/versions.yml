@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 1.11.2
+  changelogEntry:
+    - summary: |
+        Update to support IR version 62.6.0 with new WebSocketMessage.methodName field,
+        webhook response descriptions, and OpenAPI explode parameter support.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 62
+
 - version: 1.11.1
   changelogEntry:
     - summary: Fix forward ref detection for complex circular type cycles.

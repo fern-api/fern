@@ -132,7 +132,8 @@ function logViolationsGroup({
             if (title === "") {
                 title = violation.relativeFilepath;
             }
-            return violation.message;
+            const severityLabel = getSeverityLabel(violation.severity);
+            return `${severityLabel} ${violation.message}`;
         })
         .filter((message): message is string => message != null)
         .join("\n");
@@ -173,6 +174,19 @@ function getLogLevelForSeverity(severity: ValidationViolation["severity"]) {
             return LogLevel.Error;
         case "warning":
             return LogLevel.Warn;
+        default:
+            assertNever(severity);
+    }
+}
+
+function getSeverityLabel(severity: ValidationViolation["severity"]): string {
+    switch (severity) {
+        case "fatal":
+            return chalk.red("[error]");
+        case "error":
+            return chalk.red("[error]");
+        case "warning":
+            return chalk.yellow("[warning]");
         default:
             assertNever(severity);
     }

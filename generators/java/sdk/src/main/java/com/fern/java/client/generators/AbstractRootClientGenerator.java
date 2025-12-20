@@ -1397,32 +1397,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addStatement("this.clientSecret = clientSecret")
                         .build());
 
-                // Override setAuthentication to use OAuth flow
-                MethodSpec.Builder setAuthMethod = MethodSpec.methodBuilder("setAuthentication")
+                // Override build() to use OAuth flow with ClientOptions.Builder.from() pattern
+                MethodSpec.Builder credentialsBuildMethod = MethodSpec.methodBuilder("build")
                         .addAnnotation(Override.class)
-                        .addModifiers(Modifier.PROTECTED)
-                        .addParameter(generatedClientOptions.builderClassName(), "builder");
+                        .addModifiers(Modifier.PUBLIC)
+                        .returns(className());
 
-                setAuthMethod.addStatement(
-                        "$T.Builder authClientOptionsBuilder = $T.builder().environment(this.environment)",
-                        generatedClientOptions.getClassName(),
-                        generatedClientOptions.getClassName());
-
-                generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
-                    String variableName =
-                            variableDeclaration.getName().getCamelCase().getSafeName();
-                    MethodSpec variableMethod =
-                            generatedClientOptions.variableGetters().get(variableDeclaration.getId());
-                    setAuthMethod
-                            .beginControlFlow("if (this.$L != null)", variableName)
-                            .addStatement("authClientOptionsBuilder.$N(this.$L)", variableMethod, variableName)
-                            .endControlFlow();
-                });
-
-                setAuthMethod.addStatement(
-                        "$T authClient = new $T(authClientOptionsBuilder.build())",
-                        authClientClassName,
-                        authClientClassName);
+                credentialsBuildMethod.addStatement("validateConfiguration()");
+                credentialsBuildMethod.addStatement(
+                        "$T baseOptions = buildClientOptions()", generatedClientOptions.getClassName());
+                credentialsBuildMethod.addStatement(
+                        "$T authClient = new $T(baseOptions)", authClientClassName, authClientClassName);
 
                 // Build OAuthTokenSupplier constructor call with custom properties
                 CodeBlock.Builder oauthConstructorArgs = CodeBlock.builder().add("this.clientId, this.clientSecret");
@@ -1431,15 +1416,19 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 }
                 oauthConstructorArgs.add(", authClient");
 
-                setAuthMethod
-                        .addStatement(
-                                "$T oAuthTokenSupplier = new $T($L)",
-                                oauthTokenSupplierClassName,
-                                oauthTokenSupplierClassName,
-                                oauthConstructorArgs.build())
-                        .addStatement("builder.addHeader($S, oAuthTokenSupplier)", "Authorization");
+                credentialsBuildMethod.addStatement(
+                        "$T oAuthTokenSupplier = new $T($L)",
+                        oauthTokenSupplierClassName,
+                        oauthTokenSupplierClassName,
+                        oauthConstructorArgs.build());
+                credentialsBuildMethod.addStatement(
+                        "$T finalOptions = $T.Builder.from(baseOptions).addHeader($S, oAuthTokenSupplier).build()",
+                        generatedClientOptions.getClassName(),
+                        generatedClientOptions.getClassName(),
+                        "Authorization");
+                credentialsBuildMethod.addStatement("return new $T(finalOptions)", className());
 
-                credentialsAuthBuilder.addMethod(setAuthMethod.build());
+                credentialsAuthBuilder.addMethod(credentialsBuildMethod.build());
 
                 clientBuilder.addType(credentialsAuthBuilder.build());
 
