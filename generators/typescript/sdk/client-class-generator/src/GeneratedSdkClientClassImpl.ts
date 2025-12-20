@@ -1,4 +1,4 @@
-import { SetRequired } from "@fern-api/core-utils";
+import { assertNever, SetRequired } from "@fern-api/core-utils";
 import {
     AuthScheme,
     ExampleEndpointCall,
@@ -434,28 +434,34 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             });
 
-        if (authRequirement === "ANY") {
-            // For ANY auth, collect all providers and create AnyAuthProviderInstance
-            for (const authScheme of authSchemes) {
-                anyAuthProviders.push(getAuthProvider(authScheme));
-            }
-            if (anyAuthProviders.length > 0) {
-                this.authProvider = new AnyAuthProviderInstance(anyAuthProviders);
-            }
-        } else if (authRequirement === "ENDPOINT_SECURITY") {
-            // For ENDPOINT_SECURITY, collect all providers keyed by scheme key and create RoutingAuthProviderInstance
-            for (const authScheme of authSchemes) {
-                routingAuthProviders.set(authScheme.key, getAuthProvider(authScheme));
-            }
-            if (routingAuthProviders.size > 0) {
-                this.authProvider = new RoutingAuthProviderInstance(routingAuthProviders);
-            }
-        } else {
-            // For other auth requirements (e.g., ALL), use the first auth scheme
-            for (const authScheme of authSchemes) {
-                this.authProvider = getAuthProvider(authScheme);
+        switch (authRequirement) {
+            case "ANY":
+                // For ANY auth, collect all providers and create AnyAuthProviderInstance
+                for (const authScheme of authSchemes) {
+                    anyAuthProviders.push(getAuthProvider(authScheme));
+                }
+                if (anyAuthProviders.length > 0) {
+                    this.authProvider = new AnyAuthProviderInstance(anyAuthProviders);
+                }
                 break;
-            }
+            case "ENDPOINT_SECURITY":
+                // For ENDPOINT_SECURITY, collect all providers keyed by scheme key and create RoutingAuthProviderInstance
+                for (const authScheme of authSchemes) {
+                    routingAuthProviders.set(authScheme.key, getAuthProvider(authScheme));
+                }
+                if (routingAuthProviders.size > 0) {
+                    this.authProvider = new RoutingAuthProviderInstance(routingAuthProviders);
+                }
+                break;
+            case "ALL":
+                // For ALL auth requirements, use the first auth scheme
+                for (const authScheme of authSchemes) {
+                    this.authProvider = getAuthProvider(authScheme);
+                    break;
+                }
+                break;
+            default:
+                assertNever(authRequirement);
         }
     }
 
