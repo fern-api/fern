@@ -38,7 +38,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedAnyAuth;
 
-var client = new SeedAnyAuthClient("TOKEN");
+var client = new SeedAnyAuthClient("TOKEN", "client_id", "client_secret");
 await client.Auth.GetTokenAsync(
     new GetTokenRequest
     {
@@ -46,7 +46,6 @@ await client.Auth.GetTokenAsync(
         ClientSecret = "client_secret",
         Audience = "https://api.example.com",
         GrantType = "client_credentials",
-        Scope = "scope",
     }
 );
 ```

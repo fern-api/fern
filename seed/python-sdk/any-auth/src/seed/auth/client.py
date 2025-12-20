@@ -27,12 +27,7 @@ class AuthClient:
         return self._raw_client
 
     def get_token(
-        self,
-        *,
-        client_id: str,
-        client_secret: str,
-        scope: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
     ) -> TokenResponse:
         """
         Parameters
@@ -40,8 +35,6 @@ class AuthClient:
         client_id : str
 
         client_secret : str
-
-        scope : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -62,11 +55,10 @@ class AuthClient:
         client.auth.get_token(
             client_id="client_id",
             client_secret="client_secret",
-            scope="scope",
         )
         """
         _response = self._raw_client.get_token(
-            client_id=client_id, client_secret=client_secret, scope=scope, request_options=request_options
+            client_id=client_id, client_secret=client_secret, request_options=request_options
         )
         return _response.data
 
@@ -87,12 +79,7 @@ class AsyncAuthClient:
         return self._raw_client
 
     async def get_token(
-        self,
-        *,
-        client_id: str,
-        client_secret: str,
-        scope: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, *, client_id: str, client_secret: str, request_options: typing.Optional[RequestOptions] = None
     ) -> TokenResponse:
         """
         Parameters
@@ -100,8 +87,6 @@ class AsyncAuthClient:
         client_id : str
 
         client_secret : str
-
-        scope : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -127,13 +112,12 @@ class AsyncAuthClient:
             await client.auth.get_token(
                 client_id="client_id",
                 client_secret="client_secret",
-                scope="scope",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.get_token(
-            client_id=client_id, client_secret=client_secret, scope=scope, request_options=request_options
+            client_id=client_id, client_secret=client_secret, request_options=request_options
         )
         return _response.data

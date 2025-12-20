@@ -3,6 +3,7 @@
 package core
 
 import (
+	base64 "encoding/base64"
 	fmt "fmt"
 	http "net/http"
 	url "net/url"
@@ -32,6 +33,8 @@ type RequestOptions struct {
 	ApiKey          string
 	ClientID        string
 	ClientSecret    string
+	Username        string
+	Password        string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -59,6 +62,9 @@ func (r *RequestOptions) ToHeader() http.Header {
 	}
 	if r.ApiKey != "" {
 		header.Set("X-API-Key", fmt.Sprintf("%v", r.ApiKey))
+	}
+	if r.Username != "" && r.Password != "" {
+		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.Password)))
 	}
 	return header
 }
@@ -177,4 +183,15 @@ func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {
 // This is an internal method and should not be called directly.
 func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {
 	r.tokenGetter = getter
+}
+
+// BasicAuthOption implements the RequestOption interface.
+type BasicAuthOption struct {
+	Username string
+	Password string
+}
+
+func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Username = b.Username
+	opts.Password = b.Password
 }

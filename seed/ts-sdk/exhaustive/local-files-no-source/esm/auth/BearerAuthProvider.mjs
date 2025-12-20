@@ -10,19 +10,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import * as core from "../core/index.mjs";
 import * as errors from "../errors/index.mjs";
+const TOKEN_PARAM = "token";
 export class BearerAuthProvider {
     constructor(options) {
-        this.token = options.token;
+        this.options = options;
     }
     static canCreate(options) {
-        return options.token != null;
+        return (options === null || options === void 0 ? void 0 : options[TOKEN_PARAM]) != null;
     }
-    getAuthRequest(_arg) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const token = yield core.Supplier.get(this.token);
+    getAuthRequest() {
+        return __awaiter(this, arguments, void 0, function* ({ endpointMetadata, } = {}) {
+            const token = yield core.Supplier.get(this.options[TOKEN_PARAM]);
             if (token == null) {
                 throw new errors.SeedExhaustiveError({
-                    message: "Please specify a token by passing it in to the constructor",
+                    message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
                 });
             }
             return {
@@ -31,3 +32,11 @@ export class BearerAuthProvider {
         });
     }
 }
+(function (BearerAuthProvider) {
+    BearerAuthProvider.AUTH_SCHEME = "bearer";
+    BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE = `Please provide '${TOKEN_PARAM}' when initializing the client`;
+    function createInstance(options) {
+        return new BearerAuthProvider(options);
+    }
+    BearerAuthProvider.createInstance = createInstance;
+})(BearerAuthProvider || (BearerAuthProvider = {}));

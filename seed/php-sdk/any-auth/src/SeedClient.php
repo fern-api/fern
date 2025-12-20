@@ -6,6 +6,7 @@ use Seed\Auth\AuthClient;
 use Seed\User\UserClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Core\InferredAuthProvider;
 use Exception;
 
 class SeedClient
@@ -37,8 +38,17 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @var InferredAuthProvider $inferredAuthProvider
+     */
+    private InferredAuthProvider $inferredAuthProvider;
+
+    /**
      * @param ?string $token The token to use for authentication.
      * @param ?string $apiKey The apiKey to use for authentication.
+     * @param ?string $username The username to use for authentication.
+     * @param ?string $password The username to use for authentication.
+     * @param ?string $clientId
+     * @param ?string $clientSecret
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -50,10 +60,16 @@ class SeedClient
     public function __construct(
         ?string $token = null,
         ?string $apiKey = null,
+        ?string $username = null,
+        ?string $password = null,
+        ?string $clientId = null,
+        ?string $clientSecret = null,
         ?array $options = null,
     ) {
         $token ??= $this->getFromEnvOrThrow('MY_TOKEN', 'Please pass in token or set the environment variable MY_TOKEN.');
         $apiKey ??= $this->getFromEnvOrThrow('MY_API_KEY', 'Please pass in apiKey or set the environment variable MY_API_KEY.');
+        $username ??= $this->getFromEnvOrThrow('MY_USERNAME', 'Please pass in username or set the environment variable MY_USERNAME.');
+        $password ??= $this->getFromEnvOrThrow('MY_PASSWORD', 'Please pass in password or set the environment variable MY_PASSWORD.');
         $defaultHeaders = [
             'Authorization' => "Bearer $token",
             'X-API-Key' => $apiKey,
@@ -65,10 +81,23 @@ class SeedClient
 
         $this->options = $options ?? [];
 
+        $authRawClient = new RawClient(['headers' => []]);
+        $authClient = new AuthClient($authRawClient);
+        $inferredAuthOptions = [
+            'clientId' => $clientId ?? '',
+            'clientSecret' => $clientSecret ?? '',
+            'audience' => 'https://api.example.com',
+            'grantType' => 'client_credentials',
+        ];
+        $this->inferredAuthProvider = new InferredAuthProvider($authClient, $inferredAuthOptions);
+
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
+
+        $this->options['getAuthHeaders'] = fn () =>
+            $this->inferredAuthProvider->getAuthHeaders();
 
         $this->client = new RawClient(
             options: $this->options,

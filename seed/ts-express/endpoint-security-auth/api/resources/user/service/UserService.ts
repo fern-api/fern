@@ -33,6 +33,24 @@ export interface UserServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    getWithBasic(
+        req: express.Request<never, SeedEndpointSecurityAuth.User[], never, never>,
+        res: {
+            send: (responseBody: SeedEndpointSecurityAuth.User[]) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    getWithInferredAuth(
+        req: express.Request<never, SeedEndpointSecurityAuth.User[], never, never>,
+        res: {
+            send: (responseBody: SeedEndpointSecurityAuth.User[]) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
     getWithAnyAuth(
         req: express.Request<never, SeedEndpointSecurityAuth.User[], never, never>,
         res: {
@@ -162,6 +180,70 @@ export class UserService {
                 if (error instanceof errors.SeedEndpointSecurityAuthError) {
                     console.warn(
                         `Endpoint 'getWithOAuth' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/users", async (req, res, next) => {
+            try {
+                await this.methods.getWithBasic(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.user.getWithBasic.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedEndpointSecurityAuthError) {
+                    console.warn(
+                        `Endpoint 'getWithBasic' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/users", async (req, res, next) => {
+            try {
+                await this.methods.getWithInferredAuth(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.user.getWithInferredAuth.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedEndpointSecurityAuthError) {
+                    console.warn(
+                        `Endpoint 'getWithInferredAuth' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                     );
                     await error.send(res);
                 } else {
