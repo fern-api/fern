@@ -562,7 +562,7 @@ async function convertGenerator({
             maybeTopLevelReviewers
         }),
         keywords: generator.keywords,
-        smartCasing: generator["smart-casing"] ?? true,
+        smartCasing: generator["smart-casing"] ?? false, // Temp change to `false` to allow accurate local testing. DO NOT MERGE THIS.
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"
