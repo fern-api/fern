@@ -1,7 +1,15 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
 import { type ExportedFilePath, getPropertyKey, getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
-import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
+import {
+    type OptionalKind,
+    type PropertySignatureStructure,
+    Scope,
+    StatementStructures,
+    StructureKind,
+    ts,
+    WriterFunction
+} from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator";
 
@@ -285,7 +293,9 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
             "ApiKey";
         const headerEnvVar = this.authScheme.headerEnvVar;
 
-        const statements: (string | any)[] = [`export const AUTH_SCHEME = "${authSchemeKey}" as const;`];
+        const statements: (string | WriterFunction | StatementStructures)[] = [
+            `export const AUTH_SCHEME = "${authSchemeKey}" as const;`
+        ];
 
         // Add AUTH_CONFIG_ERROR_MESSAGE constant
         if (headerEnvVar != null) {

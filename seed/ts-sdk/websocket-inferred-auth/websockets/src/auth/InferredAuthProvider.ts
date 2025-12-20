@@ -4,17 +4,6 @@ import { AuthClient } from "../api/resources/auth/client/Client.js";
 import type { BaseClientOptions } from "../BaseClient.js";
 import * as core from "../core/index.js";
 
-export namespace InferredAuthProvider {
-    export interface AuthOptions {
-        xApiKey: core.Supplier<string>;
-        clientId: core.Supplier<string>;
-        clientSecret: core.Supplier<string>;
-        scope?: core.Supplier<string>;
-    }
-
-    export type Options = BaseClientOptions;
-}
-
 export class InferredAuthProvider implements core.AuthProvider {
     private readonly client: AuthClient;
     private readonly options: InferredAuthProvider.Options;
@@ -24,7 +13,15 @@ export class InferredAuthProvider implements core.AuthProvider {
         this.client = new AuthClient(options);
     }
 
-    public async getAuthRequest(): Promise<core.AuthRequest> {
+    public static canCreate(options: Partial<InferredAuthProvider.Options>): boolean {
+        return options?.xApiKey != null && options?.clientId != null && options?.clientSecret != null;
+    }
+
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
         return await this.getAuthRequestFromTokenEndpoint();
     }
 
@@ -40,5 +37,24 @@ export class InferredAuthProvider implements core.AuthProvider {
                 Authorization: `Bearer ${response.access_token}`,
             },
         };
+    }
+}
+
+export namespace InferredAuthProvider {
+    export const AUTH_SCHEME = "InferredAuthScheme" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string =
+        "Please provide the required authentication credentials when initializing the client" as const;
+
+    export interface AuthOptions {
+        xApiKey: core.Supplier<string>;
+        clientId: core.Supplier<string>;
+        clientSecret: core.Supplier<string>;
+        scope?: core.Supplier<string>;
+    }
+
+    export type Options = BaseClientOptions;
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new InferredAuthProvider(options);
     }
 }

@@ -4,7 +4,8 @@ import {
     getPropertyKey,
     getTextOfTsNode,
     maybeAddDocsStructure,
-    PackageId
+    PackageId,
+    toCamelCase
 } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
 import {
@@ -15,7 +16,6 @@ import {
     StatementStructures,
     StructureKind,
     ts,
-    VariableDeclarationKind,
     WriterFunction
 } from "ts-morph";
 
@@ -25,6 +25,7 @@ export declare namespace InferredAuthProviderGenerator {
     export interface Init {
         ir: FernIr.IntermediateRepresentation;
         authScheme: FernIr.InferredAuthScheme;
+        shouldUseWrapper: boolean;
     }
 }
 const CLASS_NAME = "InferredAuthProvider";
@@ -47,12 +48,18 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
     public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
     public static readonly GET_AUTH_REQUEST_METHOD_NAME = GET_AUTH_REQUEST_METHOD_NAME;
+    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.InferredAuthScheme;
     private readonly packageId: PackageId;
     private readonly endpoint: FernIr.HttpEndpoint;
+    private readonly shouldUseWrapper: boolean;
+    private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: InferredAuthProviderGenerator.Init) {
+        this.ir = init.ir;
         this.authScheme = init.authScheme;
+        this.shouldUseWrapper = init.shouldUseWrapper ?? false;
+        this.keepIfWrapper = this.shouldUseWrapper ? (str: string) => str : () => "";
         this.packageId = init.authScheme.tokenEndpoint.endpoint.subpackageId
             ? {
                   isRoot: false,
@@ -73,6 +80,21 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             );
         }
         this.endpoint = endpoint;
+    }
+
+    /**
+     * Gets the wrapper property name for this Inferred auth scheme.
+     * This is used to namespace Inferred auth options when multiple auth schemes are present.
+     */
+    public getWrapperPropertyName(): string {
+        // Find the auth scheme key in the IR
+        const authScheme = this.ir.auth.schemes.find(
+            (scheme) => scheme.type === "inferred" && scheme === this.authScheme
+        );
+        if (authScheme == null) {
+            throw new Error("Failed to find inferred auth scheme in IR");
+        }
+        return toCamelCase(authScheme.key);
     }
 
     public getFilePath(): ExportedFilePath {
@@ -121,13 +143,37 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
-        return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(CLASS_NAME), "createInstance"),
+            undefined,
+            constructorArgs
+        );
     }
 
     public writeToFile(context: SdkContext): void {
         const requestWrapper = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
-        this.writeOptions(context);
+        this.writeConstants(context);
         this.writeClass({ context, requestWrapper });
+        this.writeOptions(context);
+    }
+
+    private writeConstants(context: SdkContext): void {
+        const wrapperPropertyName = this.getWrapperPropertyName();
+
+        const constants: string[] = [];
+
+        constants.push(this.keepIfWrapper(`const WRAPPER_PROPERTY = "${wrapperPropertyName}" as const;`));
+
+        if (this.authScheme.tokenEndpoint.expiryProperty) {
+            constants.push(`const ${BUFFER_IN_MINUTES_VAR_NAME} = 2 as const;`);
+        }
+
+        for (const constant of constants.filter((c) => c !== "")) {
+            context.sourceFile.addStatements(constant);
+        }
+        if (constants.filter((c) => c !== "").length > 0) {
+            context.sourceFile.addStatements(""); // blank line
+        }
     }
 
     private writeClass({
@@ -137,19 +183,6 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         context: SdkContext;
         requestWrapper: GeneratedRequestWrapper;
     }): void {
-        if (this.authScheme.tokenEndpoint.expiryProperty) {
-            context.sourceFile.addVariableStatement({
-                kind: StructureKind.VariableStatement,
-                declarationKind: VariableDeclarationKind.Const,
-                declarations: [
-                    {
-                        name: BUFFER_IN_MINUTES_VAR_NAME,
-                        kind: StructureKind.VariableDeclaration,
-                        initializer: "2"
-                    }
-                ]
-            });
-        }
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
@@ -206,9 +239,15 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     kind: StructureKind.Method,
                     scope: Scope.Public,
                     isStatic: true,
-                    name: "getAuthConfigErrorMessage",
-                    returnType: "string",
-                    statements: `return "Please provide the required authentication credentials when initializing the client";`
+                    name: "canCreate",
+                    parameters: [
+                        {
+                            name: "options",
+                            type: `Partial<${CLASS_NAME}.${OPTIONS_TYPE_NAME}>`
+                        }
+                    ],
+                    returnType: "boolean",
+                    statements: this.generateCanCreateStatements(context)
                 },
                 ...(this.authScheme.tokenEndpoint.expiryProperty
                     ? ([
@@ -469,6 +508,28 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         ];
     }
 
+    private generateCanCreateStatements(context: SdkContext): string {
+        const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
+            FernIr.AuthScheme.inferred(this.authScheme)
+        );
+
+        // For inferred auth, we check if all the required auth token params are present
+        // The wrapper access is only used if shouldUseWrapper is true
+        const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
+
+        const checks = authTokenParams
+            .filter((param) => !param.isOptional)
+            .map((param) => `options?.${wrapperAccess}${getPropertyKey(param.name)} != null`)
+            .join(" && ");
+
+        // If there are no required params, always return true
+        if (checks.length === 0) {
+            return "return true;";
+        }
+
+        return `return ${checks};`;
+    }
+
     private getAuthClientTypeNode(context: SdkContext): ts.TypeNode {
         return context.sdkClientClass.getReferenceToClientClass(this.packageId).getTypeNode();
     }
@@ -484,30 +545,63 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         });
 
         const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
+        const authSchemeKey =
+            this.ir.auth.schemes.find((scheme) => scheme.type === "inferred" && scheme === this.authScheme)?.key ??
+            "InferredAuth";
+
+        const statements: (string | WriterFunction | StatementStructures)[] = [
+            `export const AUTH_SCHEME = "${authSchemeKey}" as const;`,
+            `export const AUTH_CONFIG_ERROR_MESSAGE: string = "Please provide the required authentication credentials when initializing the client" as const;`
+        ];
+
+        // Generate AuthOptions type based on shouldUseWrapper
+        if (authOptionsProperties.length > 0) {
+            if (this.shouldUseWrapper) {
+                // Wrapped version: { [WRAPPER_PROPERTY]: { prop1: type1, prop2: type2 } }
+                const propertyDefs = authOptionsProperties
+                    .map((p) => `${p.name}${p.hasQuestionToken ? "?" : ""}: ${p.type}`)
+                    .join("; ");
+
+                statements.push({
+                    kind: StructureKind.TypeAlias,
+                    name: AUTH_OPTIONS_TYPE_NAME,
+                    isExported: true,
+                    type: `{\n        [WRAPPER_PROPERTY]: { ${propertyDefs} };\n    }`
+                });
+            } else {
+                // Inlined version: interface with properties directly
+                statements.push({
+                    kind: StructureKind.Interface,
+                    name: AUTH_OPTIONS_TYPE_NAME,
+                    isExported: true,
+                    properties: authOptionsProperties
+                });
+            }
+        }
+
+        // Options = BaseClientOptions (no AuthOptions since all params come from AuthOptions)
+        statements.push({
+            kind: StructureKind.TypeAlias,
+            name: OPTIONS_TYPE_NAME,
+            isExported: true,
+            type: "BaseClientOptions"
+        });
+
+        // Add createInstance factory function
+        statements.push({
+            kind: StructureKind.Function,
+            name: "createInstance",
+            isExported: true,
+            parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
+            returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
+            statements: `return new ${CLASS_NAME}(options);`
+        });
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
             kind: StructureKind.Module,
-            statements: [
-                {
-                    kind: StructureKind.Interface,
-                    name: AUTH_OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    properties: authOptionsProperties
-                },
-                {
-                    // Use type alias instead of interface because BaseClientOptions may include union types
-                    // (e.g., AtLeastOneOf pattern for AnyAuthProvider.AuthOptions)
-                    // TypeScript interfaces can only extend object types with statically known members
-                    kind: StructureKind.TypeAlias,
-                    name: OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    // Options extends BaseClientOptions because InferredAuthProvider creates an AuthClient
-                    // which requires the full BaseClientOptions (environment, baseUrl, etc.)
-                    type: "BaseClientOptions"
-                }
-            ]
+            statements
         });
     }
 }

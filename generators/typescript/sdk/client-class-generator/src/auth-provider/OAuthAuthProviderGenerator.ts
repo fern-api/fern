@@ -11,7 +11,7 @@ export declare namespace OAuthAuthProviderGenerator {
         authScheme: FernIr.OAuthScheme;
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
-        shouldUseWrapper?: boolean;
+        shouldUseWrapper: boolean;
     }
 }
 

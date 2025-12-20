@@ -46,11 +46,16 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
                 case "inferred":
                     return new InferredAuthProviderGenerator({
                         ir,
-                        authScheme
+                        authScheme,
+                        shouldUseWrapper
                     });
                 case "basic":
                     return new BasicAuthProviderGenerator({
-                        authScheme
+                        ir,
+                        authScheme,
+                        neverThrowErrors,
+                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        shouldUseWrapper
                     });
                 case "bearer":
                     return new BearerAuthProviderGenerator({
