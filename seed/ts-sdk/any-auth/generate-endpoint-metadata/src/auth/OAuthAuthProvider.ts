@@ -161,18 +161,15 @@ export namespace OAuthAuthProvider {
     export const AUTH_SCHEME = "OAuth" as const;
     export const AUTH_CONFIG_ERROR_MESSAGE: string =
         `Insufficient options to create OAuthAuthProvider. Please provide either '${CLIENT_ID_PARAM}' or '${ENV_CLIENT_ID}' env var and '${CLIENT_SECRET_PARAM}' or '${ENV_CLIENT_SECRET}' env var, or ${TOKEN_PARAM}.` as const;
-
-    export interface ClientCredentials {
+    export type ClientCredentials = {
         [WRAPPER_PROPERTY]?: {
             [CLIENT_ID_PARAM]?: core.EndpointSupplier<string> | undefined;
             [CLIENT_SECRET_PARAM]?: core.EndpointSupplier<string> | undefined;
         };
-    }
-
-    export interface TokenOverride {
+    };
+    export type TokenOverride = {
         [WRAPPER_PROPERTY]?: { [TOKEN_PARAM]?: core.EndpointSupplier<string> };
-    }
-
+    };
     export type AuthOptions = ClientCredentials | TokenOverride;
     export type Options = BaseClientOptions & AuthOptions;
 

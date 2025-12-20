@@ -11,6 +11,7 @@ export declare namespace OAuthAuthProviderGenerator {
         authScheme: FernIr.OAuthScheme;
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
+        shouldUseWrapper?: boolean;
     }
 }
 
@@ -39,12 +40,14 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     private readonly authScheme: FernIr.OAuthScheme;
     private readonly neverThrowErrors: boolean;
     private readonly includeSerdeLayer: boolean;
+    private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: OAuthAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
         this.includeSerdeLayer = init.includeSerdeLayer;
+        this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
     /**
@@ -163,7 +166,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const clientSecretEnvVar = oauthConfig.clientSecretEnvVar;
 
         const constants: string[] = [];
-        constants.push(`const WRAPPER_PROPERTY = "${wrapperPropertyName}" as const;`);
+        constants.push(this.keepIfWrapper(`const WRAPPER_PROPERTY = "${wrapperPropertyName}" as const;`));
         constants.push(`const CLIENT_ID_PARAM = "${CLIENT_ID_VAR_NAME}" as const;`);
         constants.push(`const CLIENT_SECRET_PARAM = "${CLIENT_SECRET_VAR_NAME}" as const;`);
         constants.push(`const TOKEN_PARAM = "${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME}" as const;`);
@@ -175,19 +178,33 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             constants.push(`const ENV_CLIENT_SECRET = "${clientSecretEnvVar}" as const;`);
         }
 
-        // Error messages
-        constants.push(
-            `const CLIENT_ID_REQUIRED_ERROR_MESSAGE =\n    \`\${CLIENT_ID_PARAM} is required; either pass it as an argument or set the \${ENV_CLIENT_ID} environment variable\` as const;`
-        );
-        constants.push(
-            `const CLIENT_SECRET_REQUIRED_ERROR_MESSAGE =\n    \`\${CLIENT_SECRET_PARAM} is required; either pass it as an argument or set the \${ENV_CLIENT_SECRET} environment variable\` as const;`
-        );
+        // Error messages - conditional based on whether env vars are defined
+        if (clientIdEnvVar != null) {
+            constants.push(
+                `const CLIENT_ID_REQUIRED_ERROR_MESSAGE =\n    \`\${CLIENT_ID_PARAM} is required; either pass it as an argument or set the \${ENV_CLIENT_ID} environment variable\` as const;`
+            );
+        } else {
+            constants.push(
+                `const CLIENT_ID_REQUIRED_ERROR_MESSAGE =\n    \`\${CLIENT_ID_PARAM} is required\` as const;`
+            );
+        }
+
+        if (clientSecretEnvVar != null) {
+            constants.push(
+                `const CLIENT_SECRET_REQUIRED_ERROR_MESSAGE =\n    \`\${CLIENT_SECRET_PARAM} is required; either pass it as an argument or set the \${ENV_CLIENT_SECRET} environment variable\` as const;`
+            );
+        } else {
+            constants.push(
+                `const CLIENT_SECRET_REQUIRED_ERROR_MESSAGE =\n    \`\${CLIENT_SECRET_PARAM} is required\` as const;`
+            );
+        }
+
         constants.push(
             `const TOKEN_PARAM_REQUIRED_ERROR_MESSAGE = \`\${TOKEN_PARAM} is required. Please provide it in options.\` as const;`
         );
         constants.push(`const BUFFER_IN_MINUTES = 2 as const;`);
 
-        for (const constant of constants) {
+        for (const constant of constants.filter((c) => c !== "")) {
             context.sourceFile.addStatements(constant);
         }
         context.sourceFile.addStatements(""); // blank line
@@ -599,6 +616,11 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             }
         ];
 
+        // TokenOverride uses wrapper access pattern based on shouldUseWrapper
+        const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
+        const canCreateCheck = `return options?.${wrapperAccess}[TOKEN_PARAM] != null;`;
+        const tokenAccessCode = `const token = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[TOKEN_PARAM];`;
+
         const methods = [
             {
                 kind: StructureKind.Method as const,
@@ -607,7 +629,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 name: "canCreate",
                 isAsync: false,
                 returnType: `options is ${CLASS_NAME}.TokenOverride`,
-                statements: `return options?.[WRAPPER_PROPERTY]?.[TOKEN_PARAM] != null;`,
+                statements: canCreateCheck,
                 parameters: [
                     {
                         name: "options?",
@@ -642,7 +664,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     ])
                 ),
                 statements: `
-        const token = this.${OPTIONS_FIELD_NAME}[WRAPPER_PROPERTY]?.[TOKEN_PARAM];
+        ${tokenAccessCode}
         if (token == null) {
             throw new ${getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression())}({
                 message: TOKEN_PARAM_REQUIRED_ERROR_MESSAGE,
@@ -693,15 +715,13 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         clientIdEnvVar: string | undefined,
         clientSecretEnvVar: string | undefined
     ): string {
-        const clientIdCheck =
-            clientIdEnvVar != null
-                ? `options?.[WRAPPER_PROPERTY]?.[CLIENT_ID_PARAM] != null || process.env?.[ENV_CLIENT_ID] != null`
-                : `options?.[WRAPPER_PROPERTY]?.[CLIENT_ID_PARAM] != null`;
+        const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
-        const clientSecretCheck =
-            clientSecretEnvVar != null
-                ? `options?.[WRAPPER_PROPERTY]?.[CLIENT_SECRET_PARAM] != null || process.env?.[ENV_CLIENT_SECRET] != null`
-                : `options?.[WRAPPER_PROPERTY]?.[CLIENT_SECRET_PARAM] != null`;
+        const clientIdEnvCheck = clientIdEnvVar != null ? " || process.env?.[ENV_CLIENT_ID] != null" : "";
+        const clientSecretEnvCheck = clientSecretEnvVar != null ? " || process.env?.[ENV_CLIENT_SECRET] != null" : "";
+
+        const clientIdCheck = `options?.${wrapperAccess}[CLIENT_ID_PARAM] != null${clientIdEnvCheck}`;
+        const clientSecretCheck = `options?.${wrapperAccess}[CLIENT_SECRET_PARAM] != null${clientSecretEnvCheck}`;
 
         return `return (${clientIdCheck}) && (${clientSecretCheck});`;
     }
@@ -711,9 +731,11 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
+        const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
+
         if (clientIdEnvVar != null) {
             return `
-        const supplier = this.${OPTIONS_FIELD_NAME}[WRAPPER_PROPERTY]?.[CLIENT_ID_PARAM];
+        const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_ID_PARAM];
         if (supplier != null) {
             return core.EndpointSupplier.get(supplier, { endpointMetadata });
         }
@@ -728,7 +750,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }
 
         return `
-        const supplier = this.${OPTIONS_FIELD_NAME}[WRAPPER_PROPERTY]?.[CLIENT_ID_PARAM];
+        const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_ID_PARAM];
         if (supplier == null) {
             throw new ${errorConstructor}({
                 message: CLIENT_ID_REQUIRED_ERROR_MESSAGE,
@@ -746,9 +768,11 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
+        const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
+
         if (clientSecretEnvVar != null) {
             return `
-        const supplier = this.${OPTIONS_FIELD_NAME}[WRAPPER_PROPERTY]?.[CLIENT_SECRET_PARAM];
+        const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_SECRET_PARAM];
         if (supplier != null) {
             return core.EndpointSupplier.get(supplier, { endpointMetadata });
         }
@@ -763,7 +787,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }
 
         return `
-        const supplier = this.${OPTIONS_FIELD_NAME}[WRAPPER_PROPERTY]?.[CLIENT_SECRET_PARAM];
+        const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_SECRET_PARAM];
         if (supplier == null) {
             throw new ${errorConstructor}({
                 message: CLIENT_SECRET_REQUIRED_ERROR_MESSAGE,
@@ -814,38 +838,53 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const authSchemeKey = this.authScheme.key;
 
+        // Generate interface types based on keepIfWrapper
+        const wrappedClientCredsProps = this.keepIfWrapper(
+            `[WRAPPER_PROPERTY]?: { [CLIENT_ID_PARAM]?: ${clientIdType}; [CLIENT_SECRET_PARAM]?: ${clientSecretType} };`
+        );
+        const inlinedClientCredsProps =
+            wrappedClientCredsProps ||
+            `[CLIENT_ID_PARAM]?: ${clientIdType}; [CLIENT_SECRET_PARAM]?: ${clientSecretType}`;
+        const clientCredsType = `{\n        ${inlinedClientCredsProps}\n    }`;
+
+        const wrappedTokenOverrideProps = this.keepIfWrapper(
+            `[WRAPPER_PROPERTY]?: { [TOKEN_PARAM]?: ${supplierType} };`
+        );
+        const inlinedTokenOverrideProps = wrappedTokenOverrideProps || `[TOKEN_PARAM]?: ${supplierType}`;
+        const tokenOverrideType = `{\n        ${inlinedTokenOverrideProps}\n    }`;
+
+        // Build AUTH_CONFIG_ERROR_MESSAGE based on whether env vars are available
+        let authConfigErrorMessage: string;
+        if (clientIdIsOptional && clientSecretIsOptional) {
+            authConfigErrorMessage = `export const AUTH_CONFIG_ERROR_MESSAGE: string =\n    \`Insufficient options to create OAuthAuthProvider. Please provide either '\${CLIENT_ID_PARAM}' or '\${ENV_CLIENT_ID}' env var and '\${CLIENT_SECRET_PARAM}' or '\${ENV_CLIENT_SECRET}' env var, or \${TOKEN_PARAM}.\` as const;`;
+        } else if (clientIdIsOptional) {
+            authConfigErrorMessage = `export const AUTH_CONFIG_ERROR_MESSAGE: string =\n    \`Insufficient options to create OAuthAuthProvider. Please provide '\${CLIENT_ID_PARAM}' (or '\${ENV_CLIENT_ID}' env var) and '\${CLIENT_SECRET_PARAM}', or \${TOKEN_PARAM}.\` as const;`;
+        } else if (clientSecretIsOptional) {
+            authConfigErrorMessage = `export const AUTH_CONFIG_ERROR_MESSAGE: string =\n    \`Insufficient options to create OAuthAuthProvider. Please provide '\${CLIENT_ID_PARAM}' and '\${CLIENT_SECRET_PARAM}' (or '\${ENV_CLIENT_SECRET}' env var), or \${TOKEN_PARAM}.\` as const;`;
+        } else {
+            authConfigErrorMessage = `export const AUTH_CONFIG_ERROR_MESSAGE: string =\n    \`Insufficient options to create OAuthAuthProvider. Please provide '\${CLIENT_ID_PARAM}' and '\${CLIENT_SECRET_PARAM}', or \${TOKEN_PARAM}.\` as const;`;
+        }
+
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
             kind: StructureKind.Module,
             statements: [
                 `export const AUTH_SCHEME = "${authSchemeKey}" as const;`,
-                `export const AUTH_CONFIG_ERROR_MESSAGE: string =\n    \`Insufficient options to create OAuthAuthProvider. Please provide either '\${CLIENT_ID_PARAM}' or '\${ENV_CLIENT_ID}' env var and '\${CLIENT_SECRET_PARAM}' or '\${ENV_CLIENT_SECRET}' env var, or \${TOKEN_PARAM}.\` as const;`,
-                // ClientCredentials interface with computed property names
+                authConfigErrorMessage,
+                // ClientCredentials type
                 {
-                    kind: StructureKind.Interface,
+                    kind: StructureKind.TypeAlias,
                     name: "ClientCredentials",
                     isExported: true,
-                    properties: [
-                        {
-                            name: "[WRAPPER_PROPERTY]",
-                            hasQuestionToken: true,
-                            type: `{ [CLIENT_ID_PARAM]?: ${clientIdType}; [CLIENT_SECRET_PARAM]?: ${clientSecretType} }`
-                        }
-                    ]
+                    type: clientCredsType
                 },
-                // TokenOverride interface with computed property names
+                // TokenOverride type
                 {
-                    kind: StructureKind.Interface,
+                    kind: StructureKind.TypeAlias,
                     name: "TokenOverride",
                     isExported: true,
-                    properties: [
-                        {
-                            name: "[WRAPPER_PROPERTY]",
-                            hasQuestionToken: true,
-                            type: `{ [TOKEN_PARAM]?: ${supplierType} }`
-                        }
-                    ]
+                    type: tokenOverrideType
                 },
                 // AuthOptions union type
                 {

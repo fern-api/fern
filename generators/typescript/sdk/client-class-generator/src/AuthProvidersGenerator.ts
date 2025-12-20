@@ -20,12 +20,19 @@ export declare namespace AuthProvidersGenerator {
         authScheme: AuthScheme | { type: "any" } | { type: "routing" };
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
+        shouldUseWrapper: boolean;
     }
 }
 
 export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
     private readonly authProviderGenerator: AuthProviderGenerator | undefined;
-    constructor({ ir, authScheme, neverThrowErrors, includeSerdeLayer }: AuthProvidersGenerator.Init) {
+    constructor({
+        ir,
+        authScheme,
+        neverThrowErrors,
+        includeSerdeLayer,
+        shouldUseWrapper
+    }: AuthProvidersGenerator.Init) {
         this.authProviderGenerator = (() => {
             switch (authScheme.type) {
                 case "any":
@@ -50,21 +57,24 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
                         ir,
                         authScheme,
                         neverThrowErrors,
-                        isAuthMandatory: ir.sdkConfig.isAuthMandatory
+                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        shouldUseWrapper
                     });
                 case "header":
                     return new HeaderAuthProviderGenerator({
                         ir,
                         authScheme,
                         neverThrowErrors,
-                        isAuthMandatory: ir.sdkConfig.isAuthMandatory
+                        isAuthMandatory: ir.sdkConfig.isAuthMandatory,
+                        shouldUseWrapper
                     });
                 case "oauth":
                     return new OAuthAuthProviderGenerator({
                         ir,
                         authScheme,
                         neverThrowErrors,
-                        includeSerdeLayer
+                        includeSerdeLayer,
+                        shouldUseWrapper
                     });
                 default:
                     assertNever(authScheme);

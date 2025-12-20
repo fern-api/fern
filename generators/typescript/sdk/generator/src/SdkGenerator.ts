@@ -1391,13 +1391,17 @@ export class SdkGenerator {
     private generateAuthProviders(): void {
         const authRequirement = this.intermediateRepresentation.auth.requirement;
 
+        // Determine if we should use wrapper properties (only for ANY and ENDPOINT_SECURITY)
+        const shouldUseWrapper = authRequirement === "ANY" || authRequirement === "ENDPOINT_SECURITY";
+
         // Generate individual auth providers for all auth schemes
         for (const authScheme of this.intermediateRepresentation.auth.schemes) {
             const authProvidersGenerator = new AuthProvidersGenerator({
                 ir: this.intermediateRepresentation,
                 authScheme,
                 neverThrowErrors: this.config.neverThrowErrors,
-                includeSerdeLayer: this.config.includeSerdeLayer
+                includeSerdeLayer: this.config.includeSerdeLayer,
+                shouldUseWrapper
             });
             if (!authProvidersGenerator.shouldWriteFile()) {
                 continue;
@@ -1418,7 +1422,8 @@ export class SdkGenerator {
                 ir: this.intermediateRepresentation,
                 authScheme: { type: "any" },
                 neverThrowErrors: this.config.neverThrowErrors,
-                includeSerdeLayer: this.config.includeSerdeLayer
+                includeSerdeLayer: this.config.includeSerdeLayer,
+                shouldUseWrapper
             });
             this.withSourceFile({
                 filepath: anyAuthProvidersGenerator.getFilePath(),
@@ -1433,7 +1438,8 @@ export class SdkGenerator {
                 ir: this.intermediateRepresentation,
                 authScheme: { type: "routing" },
                 neverThrowErrors: this.config.neverThrowErrors,
-                includeSerdeLayer: this.config.includeSerdeLayer
+                includeSerdeLayer: this.config.includeSerdeLayer,
+                shouldUseWrapper
             });
             this.withSourceFile({
                 filepath: routingAuthProvidersGenerator.getFilePath(),

@@ -3,38 +3,47 @@
 import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
-export namespace HeaderAuthProvider {
-    export interface AuthOptions {
-        headerTokenAuth?: core.Supplier<string> | undefined;
-    }
-
-    export interface Options extends AuthOptions {}
-}
+const PARAM_KEY = "headerTokenAuth" as const;
+const ENV_HEADER_KEY = "HEADER_TOKEN_ENV_VAR" as const;
+const HEADER_NAME = "x-api-key" as const;
 
 export class HeaderAuthProvider implements core.AuthProvider {
-    private readonly headerValue: core.Supplier<string> | undefined;
+    private readonly options: HeaderAuthProvider.Options;
 
     constructor(options: HeaderAuthProvider.Options) {
-        this.headerValue = options.headerTokenAuth;
+        this.options = options;
     }
 
-    public static canCreate(options: HeaderAuthProvider.Options): boolean {
-        return options.headerTokenAuth != null || process.env?.HEADER_TOKEN_ENV_VAR != null;
+    public static canCreate(options: Partial<HeaderAuthProvider.Options>): boolean {
+        return options?.[PARAM_KEY] != null || process.env?.[ENV_HEADER_KEY] != null;
     }
 
-    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
-        const headerTokenAuth = (await core.Supplier.get(this.headerValue)) ?? process.env?.HEADER_TOKEN_ENV_VAR;
-        if (headerTokenAuth == null) {
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
+        const headerValue = (await core.Supplier.get(this.options[PARAM_KEY])) ?? process.env?.[ENV_HEADER_KEY];
+        if (headerValue == null) {
             throw new errors.SeedHeaderTokenEnvironmentVariableError({
-                message:
-                    "Please specify a headerTokenAuth by either passing it in to the constructor or initializing a HEADER_TOKEN_ENV_VAR environment variable",
+                message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
             });
         }
 
-        const headerValue = `test_prefix ${headerTokenAuth}`;
-
         return {
-            headers: { "x-api-key": headerValue },
+            headers: { [HEADER_NAME]: headerValue },
         };
+    }
+}
+
+export namespace HeaderAuthProvider {
+    export const AUTH_SCHEME = "Header" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string =
+        `Please provide '${PARAM_KEY}' when initializing the client, or set the '${ENV_HEADER_KEY}' environment variable` as const;
+    export type Options = Partial<AuthOptions>;
+    export type AuthOptions = { [PARAM_KEY]?: core.Supplier<string> | undefined };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new HeaderAuthProvider(options);
     }
 }

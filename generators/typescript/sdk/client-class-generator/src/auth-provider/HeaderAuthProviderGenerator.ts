@@ -11,6 +11,7 @@ export declare namespace HeaderAuthProviderGenerator {
         authScheme: FernIr.HeaderAuthScheme;
         neverThrowErrors: boolean;
         isAuthMandatory: boolean;
+        shouldUseWrapper: boolean;
     }
 }
 
@@ -24,11 +25,15 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.HeaderAuthScheme;
     private readonly isAuthMandatory: boolean;
+    private readonly shouldUseWrapper: boolean;
+    private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: HeaderAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
         this.isAuthMandatory = init.isAuthMandatory;
+        this.shouldUseWrapper = init.shouldUseWrapper;
+        this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
     /**
@@ -117,13 +122,14 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeConstants(context: SdkContext): void {
-        const wrapperPropertyName = this.getWrapperPropertyName();
         const headerFieldName = this.authScheme.name.name.camelCase.safeName;
         const headerEnvVar = this.authScheme.headerEnvVar;
         const headerName = this.authScheme.name.wireValue;
+        const wrapperPropertyName = this.getWrapperPropertyName();
 
         const constants: string[] = [];
-        constants.push(`const WRAPPER_PROPERTY = "${wrapperPropertyName}" as const;`);
+
+        constants.push(this.keepIfWrapper(`const WRAPPER_PROPERTY = "${wrapperPropertyName}" as const;`));
         constants.push(`const PARAM_KEY = "${headerFieldName}" as const;`);
 
         if (headerEnvVar != null) {
@@ -131,7 +137,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         }
         constants.push(`const HEADER_NAME = "${headerName}" as const;`);
 
-        for (const constant of constants) {
+        for (const constant of constants.filter((c) => c !== "")) {
             context.sourceFile.addStatements(constant);
         }
         context.sourceFile.addStatements(""); // blank line
@@ -211,12 +217,10 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
 
     private generatecanCreateStatements(): string {
         const headerEnvVar = this.authScheme.headerEnvVar;
+        const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
-        if (headerEnvVar != null) {
-            return `return options?.[WRAPPER_PROPERTY]?.[PARAM_KEY] != null || process.env?.[ENV_HEADER_KEY] != null;`;
-        }
-
-        return `return options?.[WRAPPER_PROPERTY]?.[PARAM_KEY] != null;`;
+        const envCheck = headerEnvVar != null ? " || process.env?.[ENV_HEADER_KEY] != null" : "";
+        return `return options?.${wrapperAccess}[PARAM_KEY] != null${envCheck};`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {
@@ -226,22 +230,28 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
-        // Build property access chain: this.options[WRAPPER_PROPERTY]?.[PARAM_KEY]
-        // Start with this.options (no optional chaining on this.options)
+        // Build property access chain based on keepIfWrapper
         const thisOptionsAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "options");
 
-        // Add [WRAPPER_PROPERTY] without optional chaining
-        const wrapperAccess = ts.factory.createElementAccessExpression(
-            thisOptionsAccess,
-            ts.factory.createIdentifier("WRAPPER_PROPERTY")
-        );
-
-        // Add ?.[PARAM_KEY]
-        const paramAccess = ts.factory.createElementAccessChain(
-            wrapperAccess,
-            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            ts.factory.createIdentifier("PARAM_KEY")
-        );
+        let paramAccess: ts.Expression;
+        if (this.shouldUseWrapper) {
+            // Wrapped: this.options[WRAPPER_PROPERTY]?.[PARAM_KEY]
+            const wrapperAccess = ts.factory.createElementAccessExpression(
+                thisOptionsAccess,
+                ts.factory.createIdentifier("WRAPPER_PROPERTY")
+            );
+            paramAccess = ts.factory.createElementAccessChain(
+                wrapperAccess,
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier("PARAM_KEY")
+            );
+        } else {
+            // Inlined: this.options[PARAM_KEY]
+            paramAccess = ts.factory.createElementAccessExpression(
+                thisOptionsAccess,
+                ts.factory.createIdentifier("PARAM_KEY")
+            );
+        }
 
         const supplierGetCall = context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
             paramAccess,
@@ -249,25 +259,13 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         );
         const supplierGetCode = getTextOfTsNode(supplierGetCall);
 
-        if (headerEnvVar != null) {
-            return `
-        const ${headerVar} =
-            (${supplierGetCode}) ??
-            process.env?.[ENV_HEADER_KEY];
-        if (${headerVar} == null) {
-            throw new ${errorConstructor}({
-                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE,
-            });
-        }
-
-        return {
-            headers: { [HEADER_NAME]: ${headerVar} },
-        };
-        `;
-        }
+        const envFallback =
+            headerEnvVar != null
+                ? `\n            (${supplierGetCode}) ??\n            process.env?.[ENV_HEADER_KEY]`
+                : supplierGetCode;
 
         return `
-        const ${headerVar} = ${supplierGetCode};
+        const ${headerVar} = ${envFallback};
         if (${headerVar} == null) {
             throw new ${errorConstructor}({
                 message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE,
@@ -300,6 +298,11 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
             );
         }
 
+        // Generate AuthOptions type based on keepIfWrapper
+        const propertyDef = `[PARAM_KEY]${authOptionsProperties[0]?.hasQuestionToken ? "?" : ""}: ${authOptionsProperties[0]?.type}`;
+        const wrappedProperty = this.keepIfWrapper(`[WRAPPER_PROPERTY]: { ${propertyDef} };\n    `);
+        const authOptionsType = wrappedProperty ? `{\n        ${wrappedProperty}}` : `{ ${propertyDef} }`;
+
         statements.push(
             // Options = Partial<AuthOptions>
             `export type ${OPTIONS_TYPE_NAME} = Partial<${AUTH_OPTIONS_TYPE_NAME}>;`,
@@ -308,7 +311,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                 kind: StructureKind.TypeAlias,
                 name: AUTH_OPTIONS_TYPE_NAME,
                 isExported: true,
-                type: `{\n        [WRAPPER_PROPERTY]: { [PARAM_KEY]${authOptionsProperties[0]?.hasQuestionToken ? "?" : ""}: ${authOptionsProperties[0]?.type} };\n    }`
+                type: authOptionsType
             },
             {
                 kind: StructureKind.Function,
