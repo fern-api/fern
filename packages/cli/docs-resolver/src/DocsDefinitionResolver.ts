@@ -724,15 +724,16 @@ export class DocsDefinitionResolver {
                           "product-switcher": this.parsedDocsConfig.theme.productSwitcher
                       }
                     : undefined,
+            // custom header/footer components
+            header: this.parsedDocsConfig.header,
+            footer: this.parsedDocsConfig.footer,
             // deprecated
             logo: undefined,
             logoV2: undefined,
             colors: undefined,
             colorsV2: undefined,
             typography: undefined,
-            backgroundImage: undefined,
-            header: undefined,
-            footer: undefined
+            backgroundImage: undefined
         };
         return config;
     }
