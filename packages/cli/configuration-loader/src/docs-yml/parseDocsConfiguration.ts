@@ -39,6 +39,28 @@ function resolveIconPath(
 }
 
 /**
+ * Resolves an IconConfig to a single icon value for use with FDR SDK types that don't support themed icons.
+ * If a themed icon is provided, prefers the light icon, then dark, then undefined.
+ * This is a compatibility layer for navbar links which use FDR SDK types that expect string | undefined.
+ */
+function resolveIconConfigToSingleValue(
+    iconConfig: docsYml.RawSchemas.IconConfig | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): AbsoluteFilePath | string | undefined {
+    if (iconConfig == null) {
+        return undefined;
+    }
+
+    if (typeof iconConfig === "string") {
+        return resolveIconPath(iconConfig, absoluteFilepathToDocsConfig);
+    }
+
+    // For themed icons, prefer light, then dark
+    const iconValue = iconConfig.light ?? iconConfig.dark;
+    return resolveIconPath(iconValue, absoluteFilepathToDocsConfig);
+}
+
+/**
  * Resolves a themed icon configuration from the raw schema format.
  * Handles both simple string icons and themed icon objects with light/dark variants.
  */
@@ -1041,7 +1063,7 @@ async function expandFolderConfiguration({
     return {
         type: "section",
         title,
-        icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+        icon: resolveThemedIcon(rawConfig.icon, absolutePathToConfig),
         contents,
         slug,
         collapsed: rawConfig.collapsed ?? undefined,
@@ -1178,7 +1200,7 @@ function parsePageConfig(
         title: item.page,
         absolutePath: resolveFilepath(item.path, absolutePathToConfig),
         slug: item.slug,
-        icon: resolveIconPath(item.icon, absolutePathToConfig),
+        icon: resolveThemedIcon(item.icon, absolutePathToConfig),
         hidden: item.hidden,
         noindex: item.noindex,
         viewers: parseRoles(item.viewers),
@@ -1418,8 +1440,8 @@ function convertNavbarLinks(
             return {
                 type: "dropdown",
                 text: navbarLink.text,
-                icon: resolveIconPath(navbarLink.icon, absoluteFilepathToDocsConfig),
-                rightIcon: resolveIconPath(navbarLink.rightIcon, absoluteFilepathToDocsConfig),
+                icon: resolveIconConfigToSingleValue(navbarLink.icon, absoluteFilepathToDocsConfig),
+                rightIcon: resolveIconConfigToSingleValue(navbarLink.rightIcon, absoluteFilepathToDocsConfig),
                 rounded: navbarLink.rounded,
                 viewers,
                 links:
@@ -1428,8 +1450,8 @@ function convertNavbarLinks(
                         target: link.target,
                         url: CjsFdrSdk.Url(link.url ?? link.href ?? "/"),
                         text: link.text,
-                        icon: resolveIconPath(link.icon, absoluteFilepathToDocsConfig),
-                        rightIcon: resolveIconPath(link.rightIcon, absoluteFilepathToDocsConfig),
+                        icon: resolveIconConfigToSingleValue(link.icon, absoluteFilepathToDocsConfig),
+                        rightIcon: resolveIconConfigToSingleValue(link.rightIcon, absoluteFilepathToDocsConfig),
                         rounded: link.rounded,
                         viewers: convertRoleToRoleIds(link.viewers)
                     })) ?? []
@@ -1441,8 +1463,8 @@ function convertNavbarLinks(
             text: navbarLink.text,
             url: CjsFdrSdk.Url(navbarLink.href ?? navbarLink.url ?? "/"),
             target: navbarLink.target,
-            icon: resolveIconPath(navbarLink.icon, absoluteFilepathToDocsConfig),
-            rightIcon: resolveIconPath(navbarLink.rightIcon, absoluteFilepathToDocsConfig),
+            icon: resolveIconConfigToSingleValue(navbarLink.icon, absoluteFilepathToDocsConfig),
+            rightIcon: resolveIconConfigToSingleValue(navbarLink.rightIcon, absoluteFilepathToDocsConfig),
             rounded: navbarLink.rounded,
             viewers
         };
