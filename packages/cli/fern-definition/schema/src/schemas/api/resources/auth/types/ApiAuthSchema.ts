@@ -4,4 +4,8 @@
 
 import * as FernDefinition from "../../../index";
 
-export type ApiAuthSchema = string | FernDefinition.AuthSchemeReferenceSchema | FernDefinition.AnyAuthSchemesSchema;
+export type ApiAuthSchema =
+    | string
+    | FernDefinition.AuthSchemeReferenceSchema
+    | FernDefinition.AnyAuthSchemesSchema
+    | FernDefinition.EndpointSecuritySchema;

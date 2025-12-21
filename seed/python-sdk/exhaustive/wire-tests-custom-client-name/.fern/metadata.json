@@ -1,0 +1,12 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "enable_wire_tests": true,
+    "client": {
+      "class_name": "Exhaustive"
+    }
+  },
+  "sdkVersion": "0.0.1"
+}

@@ -1,4 +1,8 @@
-import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
+import {
+    addDefaultDockerOrgIfNotPresent,
+    generatorsYml,
+    loadGeneratorsConfiguration
+} from "@fern-api/configuration-loader";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
@@ -34,6 +38,9 @@ export async function getGeneratorMetadata({
                     return;
                 }
 
+                // Normalize the generator filter to add default Docker org prefix if not present
+                const normalizedGeneratorFilter = addDefaultDockerOrgIfNotPresent(generatorFilter);
+
                 for (const group of generatorsConfiguration.groups) {
                     // If the current group is not in the specified groups, skip it
                     if (groupFilter !== group.groupName) {
@@ -42,7 +49,7 @@ export async function getGeneratorMetadata({
 
                     // Log version of generator to stdout
                     for (const generator of group.generators) {
-                        if (generatorFilter === generator.name) {
+                        if (normalizedGeneratorFilter === generator.name) {
                             maybeGenerator = generator;
                         }
                     }

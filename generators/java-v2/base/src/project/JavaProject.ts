@@ -2,7 +2,8 @@ import { AbstractProject, File } from "@fern-api/base-generator";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseJavaCustomConfigSchema } from "@fern-api/java-ast";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { mkdir } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
+import path from "path";
 import { AbstractJavaGeneratorContext } from "../context/AbstractJavaGeneratorContext";
 
 /**
@@ -16,7 +17,15 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
     }
 
     public addJavaFiles(file: File): void {
+        const filepath = file.directory.length > 0 ? `${file.directory}/${file.filename}` : file.filename;
+        this.context.logger.debug(`Generating ${filepath}`);
         this.sourceFiles.push(file);
+    }
+
+    public override addRawFiles(file: File): void {
+        const filepath = file.directory.length > 0 ? `${file.directory}/${file.filename}` : file.filename;
+        this.context.logger.debug(`Generating ${filepath}`);
+        super.addRawFiles(file);
     }
 
     public async persist(): Promise<void> {
@@ -30,6 +39,9 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
         const gradlewPath = join(this.absolutePathToOutputDirectory, RelativeFilePath.of("gradlew"));
         const gradlewExists = await doesPathExist(gradlewPath, "file");
         if (gradlewExists) {
+            // Apply gradle-distribution-url override if configured
+            await this.applyGradleDistributionUrlOverride();
+
             this.context.logger.debug(`JavaProject: Running spotlessApply`);
             await loggingExeca(this.context.logger, "./gradlew", [":spotlessApply"], {
                 doNotPipeOutput: false,
@@ -54,5 +66,49 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
     private async mkdir(absolutePathToDirectory: AbsoluteFilePath): Promise<void> {
         this.context.logger.debug(`mkdir ${absolutePathToDirectory}`);
         await mkdir(absolutePathToDirectory, { recursive: true });
+    }
+
+    /**
+     * Apply gradle-distribution-url override if configured.
+     * This ensures the Gradle wrapper uses the custom distribution URL
+     * when downloading Gradle, which is essential for enterprise networks
+     * that cannot access services.gradle.org.
+     */
+    private async applyGradleDistributionUrlOverride(): Promise<void> {
+        const customUrl = this.context.customConfig["gradle-distribution-url"];
+        this.context.logger.info(`JavaProject: gradle-distribution-url value: ${customUrl ?? "not configured"}`);
+
+        if (customUrl == null) {
+            this.context.logger.info(`JavaProject: No gradle-distribution-url configured, using default`);
+            return;
+        }
+
+        this.context.logger.info(`JavaProject: Applying gradle-distribution-url override: ${customUrl}`);
+
+        const wrapperPropertiesPath = join(
+            this.absolutePathToOutputDirectory,
+            RelativeFilePath.of("gradle/wrapper/gradle-wrapper.properties")
+        );
+
+        // Ensure the gradle/wrapper directory exists
+        const wrapperDir = path.dirname(wrapperPropertiesPath);
+        await mkdir(wrapperDir, { recursive: true });
+
+        // Escape colons in the URL as required by Java properties file format
+        const escapedUrl = customUrl.replace(/:/g, "\\:");
+
+        const propertiesContent = `distributionBase=GRADLE_USER_HOME
+distributionPath=wrapper/dists
+distributionUrl=${escapedUrl}
+networkTimeout=10000
+validateDistributionUrl=true
+zipStoreBase=GRADLE_USER_HOME
+zipStorePath=wrapper/dists
+`;
+
+        await writeFile(wrapperPropertiesPath, propertiesContent);
+        this.context.logger.info(
+            `JavaProject: Successfully wrote custom gradle-wrapper.properties to ${wrapperPropertiesPath}`
+        );
     }
 }

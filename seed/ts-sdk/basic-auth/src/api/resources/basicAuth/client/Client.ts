@@ -4,11 +4,12 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as SeedBasicAuth from "../../../index.js";
 
 export declare namespace BasicAuthClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
@@ -78,21 +79,7 @@ export class BasicAuthClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedBasicAuthError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling GET /basic-auth.");
-            case "unknown":
-                throw new errors.SeedBasicAuthError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/basic-auth");
     }
 
     /**
@@ -166,20 +153,6 @@ export class BasicAuthClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedBasicAuthError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling POST /basic-auth.");
-            case "unknown":
-                throw new errors.SeedBasicAuthError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/basic-auth");
     }
 }

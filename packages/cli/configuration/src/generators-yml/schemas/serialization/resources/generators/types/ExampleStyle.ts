@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ExampleStyle: core.serialization.Schema<serializers.ExampleStyle.Raw, FernDefinition.ExampleStyle> =
+export const ExampleStyle: core.serialization.Schema<serializers.ExampleStyle.Raw, GeneratorsYml.ExampleStyle> =
     core.serialization.enum_(["minimal", "comprehensive"]);
 
 export declare namespace ExampleStyle {

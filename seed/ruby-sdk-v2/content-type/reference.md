@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.patch(request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">patch</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -15,7 +15,7 @@
 ```ruby
 client.service.patch(
   application: 'application',
-  requireAuth: true
+  require_auth: true
 );
 ```
 </dd>
@@ -43,6 +43,14 @@ client.service.patch(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -51,7 +59,7 @@ client.service.patch(
 </dl>
 </details>
 
-<details><summary><code>client.service.patch_complex(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">patch_complex</a>(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -91,7 +99,7 @@ client.service.patch_complex(
   email: 'email',
   nickname: 'nickname',
   bio: 'bio',
-  profileImageUrl: 'profileImageUrl',
+  profile_image_url: 'profileImageUrl',
   settings: {}
 );
 ```
@@ -140,7 +148,7 @@ client.service.patch_complex(
 <dl>
 <dd>
 
-**metadata:** `Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]` 
+**metadata:** `Internal::Types::Hash[String, Object]` 
     
 </dd>
 </dl>
@@ -188,7 +196,15 @@ client.service.patch_complex(
 <dl>
 <dd>
 
-**settings:** `Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]` 
+**settings:** `Internal::Types::Hash[String, Object]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>
@@ -200,7 +216,7 @@ client.service.patch_complex(
 </dl>
 </details>
 
-<details><summary><code>client.service.named_patch_with_mixed(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">named_patch_with_mixed</a>(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -230,7 +246,7 @@ This should trigger the NPE issue when optional fields aren't initialized.
 ```ruby
 client.service.named_patch_with_mixed(
   id: 'id',
-  appId: 'appId',
+  app_id: 'appId',
   instructions: 'instructions',
   active: true
 );
@@ -276,6 +292,14 @@ client.service.named_patch_with_mixed(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -284,7 +308,7 @@ client.service.named_patch_with_mixed(
 </dl>
 </details>
 
-<details><summary><code>client.service.optional_merge_patch_test(request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">optional_merge_patch_test</a>(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -315,11 +339,11 @@ This endpoint should:
 
 ```ruby
 client.service.optional_merge_patch_test(
-  requiredField: 'requiredField',
-  optionalString: 'optionalString',
-  optionalInteger: 1,
-  optionalBoolean: true,
-  nullableString: 'nullableString'
+  required_field: 'requiredField',
+  optional_string: 'optionalString',
+  optional_integer: 1,
+  optional_boolean: true,
+  nullable_string: 'nullableString'
 );
 ```
 </dd>
@@ -371,6 +395,14 @@ client.service.optional_merge_patch_test(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -379,7 +411,7 @@ client.service.optional_merge_patch_test(
 </dl>
 </details>
 
-<details><summary><code>client.service.regular_patch(id, request) -> </code></summary>
+<details><summary><code>client.service.<a href="/lib/seed/service/client.rb">regular_patch</a>(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -408,8 +440,8 @@ Regular PATCH endpoint without merge-patch semantics
 ```ruby
 client.service.regular_patch(
   id: 'id',
-  field1: 'field1',
-  field2: 1
+  field_1: 'field1',
+  field_2: 1
 );
 ```
 </dd>
@@ -442,6 +474,14 @@ client.service.regular_patch(
 <dd>
 
 **field_2:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Service::RequestOptions` 
     
 </dd>
 </dl>

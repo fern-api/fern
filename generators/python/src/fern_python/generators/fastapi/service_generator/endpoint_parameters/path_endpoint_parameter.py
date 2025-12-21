@@ -18,8 +18,12 @@ class PathEndpointParameter(EndpointParameter):
     def get_type(self) -> AST.TypeHint:
         return convert_to_singular_type(self._context, self._path_parameter.value_type)
 
-    def get_default(self) -> AST.Expression:
-        return FastAPI.Path
+    def get_fastapi_marker(self) -> AST.Expression:
+        return FastAPI.Path(
+            variable_name=self.get_name(),
+            wire_value=self._path_parameter.name.original_name,
+            docs=self._path_parameter.docs,
+        )
 
     @staticmethod
     def get_variable_name_of_path_parameter(path_parameter: ir_types.PathParameter) -> str:

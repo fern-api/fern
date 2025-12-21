@@ -3,11 +3,11 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { ResolveAliasesSchema } from "./ResolveAliasesSchema";
 
-export const ResolveAliases: core.serialization.Schema<serializers.ResolveAliases.Raw, FernDefinition.ResolveAliases> =
+export const ResolveAliases: core.serialization.Schema<serializers.ResolveAliases.Raw, GeneratorsYml.ResolveAliases> =
     core.serialization.undiscriminatedUnion([core.serialization.boolean(), ResolveAliasesSchema]);
 
 export declare namespace ResolveAliases {

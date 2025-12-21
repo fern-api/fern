@@ -1389,6 +1389,54 @@ the next page of results.
 </dl>
 </details>
 
+<details><summary><code>client.users.listUsernamesWithOptionalResponse() -> SyncPagingIterable&lt;String&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.users().listWithCursorPagination(
+    ListUsersCursorPaginationRequest
+        .builder()
+        .startingAfter("starting_after")
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**startingAfter:** `Optional<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.users.listWithGlobalConfig() -> SyncPagingIterable&lt;String&gt;</code></summary>
 <dl>
 <dd>
@@ -1423,6 +1471,51 @@ client.users().listWithGlobalConfig(
 <dd>
 
 **offset:** `Optional<Integer>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.listWithOptionalData() -> SyncPagingIterable&lt;User&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.users().listWithOptionalData(
+    ListUsersOptionalDataRequest
+        .builder()
+        .page(1)
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `Optional<Integer>` — Defaults to first page
     
 </dd>
 </dl>

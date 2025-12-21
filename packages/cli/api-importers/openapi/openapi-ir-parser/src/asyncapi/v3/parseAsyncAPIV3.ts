@@ -32,6 +32,7 @@ interface ChannelEvents {
     subscribe: OpenAPIV3.ReferenceObject[];
     publish: OpenAPIV3.ReferenceObject[];
     __parsedMessages: WebsocketMessageSchema[];
+    operationMethodNames?: Record<string, string>; // operationId -> methodName mapping
 }
 
 const CHANNEL_REFERENCE_PREFIX = "#/channels/";
@@ -151,7 +152,13 @@ export function parseAsyncAPIV3({
 
         const channelPath = getChannelPathFromOperation(operation);
         if (!channelEvents[channelPath]) {
-            channelEvents[channelPath] = { subscribe: [], publish: [], __parsedMessages: [] };
+            channelEvents[channelPath] = { subscribe: [], publish: [], __parsedMessages: [], operationMethodNames: {} };
+        }
+
+        // Extract method name from x-fern-sdk-method-name extension
+        const methodName = getExtension<string>(operation, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME);
+        if (methodName && channelEvents[channelPath].operationMethodNames) {
+            channelEvents[channelPath].operationMethodNames[operationId] = methodName;
         }
 
         if (operation.action === "receive") {
@@ -173,7 +180,8 @@ export function parseAsyncAPIV3({
                 origin: "server",
                 messageSchemas: messageSchemas[channelPath] ?? {},
                 duplicatedMessageIds,
-                context
+                context,
+                operationMethodNames: events.operationMethodNames
             })
         );
 
@@ -184,7 +192,8 @@ export function parseAsyncAPIV3({
                 origin: "client",
                 messageSchemas: messageSchemas[channelPath] ?? {},
                 duplicatedMessageIds,
-                context
+                context,
+                operationMethodNames: events.operationMethodNames
             })
         );
 
@@ -258,7 +267,8 @@ export function parseAsyncAPIV3({
                     schema: parameterSchema,
                     variableReference: undefined,
                     availability: convertAvailability(parameter),
-                    source
+                    source,
+                    explode: undefined
                 };
 
                 if (type === "header") {
@@ -438,7 +448,8 @@ function convertMessageReferencesToWebsocketSchemas({
     origin,
     messageSchemas,
     duplicatedMessageIds,
-    context
+    context,
+    operationMethodNames
 }: {
     messages: OpenAPIV3.ReferenceObject[];
     channelPath: string;
@@ -446,6 +457,7 @@ function convertMessageReferencesToWebsocketSchemas({
     messageSchemas: Record<SchemaId, SchemaWithExample>;
     duplicatedMessageIds: Array<SchemaId>;
     context: AsyncAPIV3ParserContext;
+    operationMethodNames?: Record<string, string>;
 }): WebsocketMessageSchema[] {
     const results: WebsocketMessageSchema[] = [];
 
@@ -459,10 +471,13 @@ function convertMessageReferencesToWebsocketSchemas({
 
         const schema = messageSchemas[schemaId];
         if (schema != null) {
+            const potentialMethodName = operationMethodNames ? Object.values(operationMethodNames)[i] : undefined;
+
             results.push({
                 origin,
                 name: schemaId ?? `${origin}Message${i + 1}`,
-                body: convertSchemaWithExampleToSchema(schema)
+                body: convertSchemaWithExampleToSchema(schema),
+                methodName: potentialMethodName
             });
         }
     });

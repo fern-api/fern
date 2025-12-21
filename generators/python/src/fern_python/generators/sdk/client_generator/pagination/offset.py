@@ -19,8 +19,9 @@ class OffsetPagination(Paginator):
         pydantic_parse_expression: AST.Expression,
         config: PaginationSnippetConfig,
         offset: ir_types.OffsetPagination,
+        response_is_optional: bool = False,
     ):
-        super().__init__(context, is_async, pydantic_parse_expression, config)
+        super().__init__(context, is_async, pydantic_parse_expression, config, response_is_optional)
         self.offset = offset
 
     def init_custom_vars_pre_next(self, *, writer: AST.NodeWriter) -> None:
@@ -73,7 +74,7 @@ class OffsetPagination(Paginator):
 
     def get_step(self) -> str:
         if self.offset.step is not None:
-            return f"len({Paginator.PAGINATION_ITEMS_VARIABLE})"
+            return f"len({Paginator.PAGINATION_ITEMS_VARIABLE} or [])"
         return "1"
 
     def get_results_property(self) -> ir_types.ResponseProperty:

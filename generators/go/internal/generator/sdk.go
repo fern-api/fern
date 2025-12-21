@@ -45,6 +45,9 @@ var (
 	//go:embed sdk/internal/http.go
 	httpInternalFile string
 
+	//go:embed sdk/internal/environment.go
+	environmentInternalFile string
+
 	//go:embed sdk/internal/multipart.go
 	multipartFile string
 
@@ -65,6 +68,9 @@ var (
 
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
+
+	//go:embed sdk/core/oauth.go
+	oauthFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -290,6 +296,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	sdkConfig *ir.SdkConfig,
 	moduleConfig *ModuleConfig,
 	sdkVersion string,
+	environmentsConfig *common.EnvironmentsConfig,
 ) error {
 	importPath := path.Join(f.baseImportPath, "core")
 	f.P("// RequestOption adapts the behavior of the client or an individual request.")
@@ -298,17 +305,35 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("}")
 	f.P()
 
+	// Check if OAuth is configured
+	hasOAuth := getOAuthClientCredentials(auth) != nil
+
+	// Generate TokenGetter type if OAuth is configured
+	if hasOAuth {
+		f.P("// TokenGetter is a function that returns an access token.")
+		f.P("type TokenGetter func() (string, error)")
+		f.P()
+	}
+
+	isMultiURL := isMultipleBaseUrlsEnvironment(environmentsConfig)
+
 	f.P("// RequestOptions defines all of the possible request options.")
 	f.P("//")
 	f.P("// This type is primarily used by the generated code and is not meant")
 	f.P("// to be used directly; use the option package instead.")
 	f.P("type RequestOptions struct {")
 	f.P("BaseURL string")
+	if isMultiURL {
+		f.P("Environment interface{}")
+	}
 	f.P("HTTPClient HTTPClient")
 	f.P("HTTPHeader http.Header")
 	f.P("BodyProperties map[string]interface{}")
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
+	if hasOAuth {
+		f.P("tokenGetter TokenGetter")
+	}
 
 	// Generate the exported RequestOptions type that all clients can act upon.
 	for _, authScheme := range auth.Schemes {
@@ -328,6 +353,14 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				" ",
 				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
 			)
+		}
+		if authScheme.Oauth != nil {
+			f.P("ClientID string")
+			f.P("ClientSecret string")
+			// Only add Token field if there's no Bearer auth (which already provides Token)
+			if !hasBearerAuth(auth) {
+				f.P("Token string")
+			}
 		}
 	}
 	for _, header := range headers {
@@ -370,7 +403,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0)
+		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL)
 	}
 
 	// Generate the ToHeader method.
@@ -417,6 +450,19 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
 			f.P("}")
 		}
+		if authScheme.Oauth != nil && !hasBearerAuth(auth) {
+			// When Token is provided directly, use it for Authorization header
+			// Skip if Bearer auth exists, as it already handles the Token field
+			f.P(`if r.Token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + r.Token)`)
+			f.P("}")
+			// If no token is set but tokenGetter is configured, use it to get the token
+			f.P(`if header.Get("Authorization") == "" && r.tokenGetter != nil {`)
+			f.P(`if token, err := r.tokenGetter(); err == nil && token != "" {`)
+			f.P(`header.Set("Authorization", "Bearer " + token)`)
+			f.P("}")
+			f.P("}")
+		}
 	}
 	for _, header := range headers {
 		valueTypeFormat := formatForValueType(header.ValueType, f.types)
@@ -455,7 +501,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL); err != nil {
 		return err
 	}
 
@@ -493,6 +539,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 	auth *ir.ApiAuth,
 	headers []*ir.HttpHeader,
 	asIdempotentRequestOption bool,
+	isMultiURL bool,
 ) error {
 	if err := f.writeOptionStruct("BaseURL", "string", true, asIdempotentRequestOption); err != nil {
 		return err
@@ -511,6 +558,11 @@ func (f *fileWriter) writeRequestOptionStructs(
 	}
 	if err := f.writeOptionStruct("MaxAttempts", "uint", true, asIdempotentRequestOption); err != nil {
 		return err
+	}
+	if isMultiURL {
+		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
+			return err
+		}
 	}
 
 	if auth != nil {
@@ -556,6 +608,44 @@ func (f *fileWriter) writeRequestOptionStructs(
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
 				}
+			}
+			if authScheme.Oauth != nil {
+				if err := f.writeOptionStruct("ClientID", "string", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+				if err := f.writeOptionStruct("ClientSecret", "string", true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+				// The client credentials option requires special care because it sets
+				// two parameters.
+				f.P("// ClientCredentialsOption implements the RequestOption interface.")
+				f.P("type ClientCredentialsOption struct {")
+				f.P("ClientID string")
+				f.P("ClientSecret string")
+				f.P("}")
+				f.P()
+
+				f.P("func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {")
+				f.P("opts.ClientID = c.ClientID")
+				f.P("opts.ClientSecret = c.ClientSecret")
+				f.P("}")
+				f.P()
+
+				// Add TokenOption struct for direct token usage.
+				// Skip if Bearer auth exists, as it already provides TokenOption.
+				if !hasBearerAuth(auth) {
+					if err := f.writeOptionStruct("Token", "string", true, asIdempotentRequestOption); err != nil {
+						return err
+					}
+				}
+
+				// Add SetTokenGetter method for internal use
+				f.P("// SetTokenGetter sets the token getter function for OAuth.")
+				f.P("// This is an internal method and should not be called directly.")
+				f.P("func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {")
+				f.P("r.tokenGetter = getter")
+				f.P("}")
+				f.P()
 			}
 		}
 	}
@@ -659,6 +749,7 @@ func (f *fileWriter) WriteIdempotentRequestOptions(
 func (f *fileWriter) WriteRequestOptions(
 	auth *ir.ApiAuth,
 	headers []*ir.HttpHeader,
+	environmentsConfig *common.EnvironmentsConfig,
 ) (*GeneratedAuth, error) {
 	// Now that we know where the types will be generated, format the generated type names as needed.
 	var (
@@ -723,6 +814,20 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("}")
 	f.P("}")
 	f.P()
+
+	// Generate the WithEnvironment option for multi-URL environments.
+	if isMultipleBaseUrlsEnvironment(environmentsConfig) {
+		// Import the root package to get the Environment type
+		rootImportPath := f.baseImportPath
+		f.P("// WithEnvironment sets the environment for the client, which determines")
+		f.P("// the base URL for each endpoint.")
+		f.P("func WithEnvironment(environment ", f.scope.AddImport(rootImportPath), ".Environment) *core.EnvironmentOption {")
+		f.P("return &core.EnvironmentOption{")
+		f.P("Environment: environment,")
+		f.P("}")
+		f.P("}")
+		f.P()
+	}
 
 	// Generate the auth functional options.
 	includeCustomAuthDocs := auth.Docs != nil && len(*auth.Docs) > 0
@@ -835,6 +940,81 @@ func (f *fileWriter) WriteRequestOptions(
 			f.P("}")
 			f.P()
 		}
+		if authScheme.Oauth != nil {
+			if i == 0 {
+				option = ast.NewCallExpr(
+					ast.NewImportedReference(
+						"WithClientCredentials",
+						importPath,
+					),
+					[]ast.Expr{
+						ast.NewBasicLit(`"<YOUR_CLIENT_ID>"`),
+						ast.NewBasicLit(`"<YOUR_CLIENT_SECRET>"`),
+					},
+				)
+				oauthConfig := authScheme.Oauth.Configuration.ClientCredentials
+				if oauthConfig != nil {
+					if oauthConfig.ClientIdEnvVar != nil {
+						environmentVars = append(environmentVars, *oauthConfig.ClientIdEnvVar)
+					}
+					if oauthConfig.ClientSecretEnvVar != nil {
+						environmentVars = append(environmentVars, *oauthConfig.ClientSecretEnvVar)
+					}
+				}
+			}
+			f.P("// WithClientID sets the clientID auth request parameter.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientID(clientID string) *core.ClientIDOption {")
+			f.P("return &core.ClientIDOption{")
+			f.P("ClientID: clientID,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			f.P("// WithClientSecret sets the clientSecret auth request parameter.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientSecret(clientSecret string) *core.ClientSecretOption {")
+			f.P("return &core.ClientSecretOption{")
+			f.P("ClientSecret: clientSecret,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			f.P("// WithClientCredentials sets both the clientID and clientSecret auth request parameters.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithClientCredentials(clientID string, clientSecret string) *core.ClientCredentialsOption {")
+			f.P("return &core.ClientCredentialsOption{")
+			f.P("ClientID: clientID,")
+			f.P("ClientSecret: clientSecret,")
+			f.P("}")
+			f.P("}")
+			f.P()
+
+			// Only add WithToken if there's no Bearer auth (which already provides WithToken)
+			if !hasBearerAuth(auth) {
+				f.P("// WithToken sets the OAuth token directly, bypassing the client credentials flow.")
+				f.P("// Use this when you already have an access token.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				f.P("func WithToken(token string) *core.TokenOption {")
+				f.P("return &core.TokenOption{")
+				f.P("Token: token,")
+				f.P("}")
+				f.P("}")
+				f.P()
+			}
+		}
 	}
 
 	for _, header := range headers {
@@ -934,11 +1114,17 @@ func (f *fileWriter) WriteClient(
 
 	receiver := typeNameToReceiver(clientName)
 
+	// Check if OAuth is configured
+	oauthClientCredentials := getOAuthClientCredentials(irAuth)
+
 	// Generate the client implementation.
 	f.P("type ", clientName, " struct {")
 	f.P("baseURL string")
 	f.P("caller *internal.Caller")
 	f.P("header http.Header")
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider *core.OAuthTokenProvider")
+	}
 	f.P()
 	if len(endpoints) > 0 {
 		f.P("WithRawResponse *", rawClientName)
@@ -978,6 +1164,20 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			continue
 		}
+		if authScheme.Oauth != nil && authScheme.Oauth.Configuration != nil && authScheme.Oauth.Configuration.ClientCredentials != nil {
+			oauthConfig := authScheme.Oauth.Configuration.ClientCredentials
+			if oauthConfig.ClientIdEnvVar != nil {
+				f.P(`if options.ClientID == "" {`)
+				f.P(`options.ClientID = os.Getenv("`, *oauthConfig.ClientIdEnvVar, `")`)
+				f.P("}")
+			}
+			if oauthConfig.ClientSecretEnvVar != nil {
+				f.P(`if options.ClientSecret == "" {`)
+				f.P(`options.ClientSecret = os.Getenv("`, *oauthConfig.ClientSecretEnvVar, `")`)
+				f.P("}")
+			}
+			continue
+		}
 	}
 	for _, header := range headers {
 		if header.Env != nil {
@@ -986,6 +1186,42 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			continue
 		}
+	}
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider := core.NewOAuthTokenProvider(options.ClientID, options.ClientSecret)")
+		// Create an auth client to fetch tokens
+		// We need to create a separate RequestOptions without the token getter to avoid infinite recursion
+		f.P("authOptions := core.NewRequestOptions()")
+		f.P("authOptions.BaseURL = options.BaseURL")
+		f.P("authOptions.HTTPClient = options.HTTPClient")
+		// Import the auth package
+		authImportPath := packagePathToImportPath(f.baseImportPath, []string{"auth"})
+		authPackage := f.scope.AddImport(authImportPath)
+		f.P("authClient := ", authPackage, ".NewClient(authOptions)")
+		// Set up the token getter function that will be called by ToHeader()
+		f.P("options.SetTokenGetter(func() (string, error) {")
+		f.P("return oauthTokenProvider.GetOrFetch(func() (string, int, error) {")
+		// Fetch a new token from the auth endpoint
+		fernImportPath := f.baseImportPath
+		fernPackage := f.scope.AddImport(fernImportPath)
+		f.P("response, err := authClient.GetTokenWithClientCredentials(context.Background(), &", fernPackage, ".GetTokenRequest{")
+		f.P("ClientId: options.ClientID,")
+		f.P("ClientSecret: options.ClientSecret,")
+		f.P("})")
+		f.P("if err != nil {")
+		f.P("return \"\", 0, err")
+		f.P("}")
+		errorsPackage := f.scope.AddImport("errors")
+		f.P("if response.AccessToken == nil {")
+		f.P("return \"\", 0, ", errorsPackage, ".New(\"oauth response missing access token\")")
+		f.P("}")
+		f.P("expiresIn := core.DefaultExpirySeconds")
+		f.P("if response.ExpiresIn != nil {")
+		f.P("expiresIn = *response.ExpiresIn")
+		f.P("}")
+		f.P("return *response.AccessToken, expiresIn, nil")
+		f.P("})")
+		f.P("})")
 	}
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
@@ -996,6 +1232,9 @@ func (f *fileWriter) WriteClient(
 	f.P("},")
 	f.P("),")
 	f.P("header: options.ToHeader(),")
+	if oauthClientCredentials != nil {
+		f.P("oauthTokenProvider: oauthTokenProvider,")
+	}
 	if len(endpoints) > 0 {
 		f.P(" WithRawResponse: ", rawClientConstructorName, "(options),")
 	}
@@ -1020,11 +1259,21 @@ func (f *fileWriter) WriteClient(
 		}
 		f.P(") ", endpoint.ReturnValues, " {")
 		f.P("options := ", endpoint.OptionConstructor)
-		f.P("baseURL := internal.ResolveBaseURL(")
-		f.P("options.BaseURL,")
-		f.P(receiver, ".baseURL,")
-		f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
-		f.P(")")
+		if endpoint.BaseURLName != "" {
+			f.P("baseURL := internal.ResolveBaseURL(")
+			f.P("options.BaseURL,")
+			f.P(fmt.Sprintf("internal.ResolveEnvironmentBaseURL(options.Environment, %q),", endpoint.BaseURLName))
+			f.P(receiver, ".baseURL,")
+			f.P(fmt.Sprintf("internal.ResolveEnvironmentBaseURL(%s.options.Environment, %q),", receiver, endpoint.BaseURLName))
+			f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
+			f.P(")")
+		} else {
+			f.P("baseURL := internal.ResolveBaseURL(")
+			f.P("options.BaseURL,")
+			f.P(receiver, ".baseURL,")
+			f.P(fmt.Sprintf("%q,", endpoint.BaseURL))
+			f.P(")")
+		}
 		baseURLVariable := "baseURL"
 		if len(endpoint.PathSuffix) > 0 {
 			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
@@ -2252,6 +2501,7 @@ type endpoint struct {
 	SuccessfulReturnValues      string
 	ErrorReturnValues           string
 	BaseURL                     string
+	BaseURLName                 string // For multi-URL environments, the name of the base URL field (e.g., "Ec2", "S3")
 	OptionConstructor           string
 	PathSuffix                  string
 	Method                      string
@@ -2573,6 +2823,13 @@ func (f *fileWriter) endpointFromIR(
 	if err != nil {
 		return nil, err
 	}
+	// For multi-URL environments, get the base URL name (e.g., "Ec2", "S3")
+	// Use irEndpoint.BaseUrl directly since it contains the base URL ID (e.g., "ec2"),
+	// not the environment ID (e.g., "production")
+	var baseURLName string
+	if irEndpoint.BaseUrl != nil {
+		baseURLName = baseURLNameFromID(irEnvironmentsConfig, *irEndpoint.BaseUrl)
+	}
 
 	// Consolidate the irEndpoint's full path into a path suffix that
 	// can be applied to the irEndpoint at construction time.
@@ -2657,6 +2914,7 @@ func (f *fileWriter) endpointFromIR(
 		ErrorReturnValues:           errorReturnValues,
 		OptionConstructor:           optionConstructor,
 		BaseURL:                     baseURL,
+		BaseURLName:                 baseURLName,
 		PathSuffix:                  pathSuffix,
 		Method:                      irMethodToMethodEnum(irEndpoint.Method),
 		ErrorDecoderParameterName:   errorDecoderParameterName,
@@ -2953,10 +3211,10 @@ func (f *fileWriter) WriteRequestType(
 	f.WriteSetterMethods(typeName, propertyNames, propertyTypes, propertySafeNames)
 
 	var (
-		referenceType            string
-		referenceIsPointer       bool
-		referenceFieldIsPointer  bool
-		referenceLiteral         string
+		referenceType           string
+		referenceIsPointer      bool
+		referenceFieldIsPointer bool
+		referenceLiteral        string
 	)
 	if reference := endpoint.RequestBody.Reference; reference != nil {
 		fullType := typeReferenceToGoType(reference.RequestBodyType, f.types, f.scope, f.baseImportPath, importPath, false)
@@ -3060,15 +3318,34 @@ func environmentsToEnvironmentsVariable(
 	writer *fileWriter,
 	useCore bool,
 ) (*GeneratedEnvironment, error) {
+	importPath := writer.baseImportPath
+	if useCore {
+		importPath = path.Join(importPath, "core")
+	}
+
+	isMultiURL := environmentsConfig.Environments.MultipleBaseUrls != nil
+
+	if isMultiURL {
+		multiURLEnvs := environmentsConfig.Environments.MultipleBaseUrls
+		baseURLs := make(map[common.EnvironmentBaseUrlId]string)
+		for _, baseURL := range multiURLEnvs.BaseUrls {
+			baseURLs[baseURL.Id] = baseURL.Name.PascalCase.UnsafeName
+		}
+
+		writer.P("// Environment defines the environment with multiple base URLs.")
+		writer.P("type Environment struct {")
+		for _, baseURL := range multiURLEnvs.BaseUrls {
+			writer.P(baseURL.Name.PascalCase.UnsafeName, " string")
+		}
+		writer.P("}")
+		writer.P()
+	}
+
 	writer.P("// Environments defines all of the API environments.")
 	writer.P("// These values can be used with the WithBaseURL")
 	writer.P("// RequestOption to override the client's default environment,")
 	writer.P("// if any.")
 	writer.P("var Environments = struct {")
-	importPath := writer.baseImportPath
-	if useCore {
-		importPath = path.Join(importPath, "core")
-	}
 	declarationVisitor := &environmentsDeclarationVisitor{
 		types:      writer.types,
 		writer:     writer,
@@ -3147,10 +3424,6 @@ func (e *environmentsDeclarationVisitor) VisitSingleBaseUrl(url *common.SingleBa
 }
 
 func (e *environmentsDeclarationVisitor) VisitMultipleBaseUrls(url *common.MultipleBaseUrlsEnvironments) error {
-	baseURLs := make(map[common.EnvironmentBaseUrlId]string)
-	for _, baseURL := range url.BaseUrls {
-		baseURLs[baseURL.Id] = baseURL.Name.PascalCase.UnsafeName
-	}
 	for i, environment := range url.Environments {
 		if i == 0 {
 			e.value = ast.NewImportedReference(
@@ -3159,11 +3432,7 @@ func (e *environmentsDeclarationVisitor) VisitMultipleBaseUrls(url *common.Multi
 			)
 		}
 		e.writer.WriteDocs(environment.Docs)
-		e.writer.P(environment.Name.PascalCase.UnsafeName, " struct {")
-		for _, environmentURL := range environmentURLMapToSortedSlice(environment.Urls) {
-			e.writer.P(baseURLs[environmentURL.ID], " string")
-		}
-		e.writer.P("}")
+		e.writer.P(environment.Name.PascalCase.UnsafeName, " Environment")
 	}
 	return nil
 }
@@ -3187,11 +3456,7 @@ func (e *environmentsValueVisitor) VisitMultipleBaseUrls(url *common.MultipleBas
 	}
 	for _, environment := range url.Environments {
 		environmentURLs := environmentURLMapToSortedSlice(environment.Urls)
-		e.writer.P(environment.Name.PascalCase.UnsafeName, ": struct {")
-		for _, environmentURL := range environmentURLs {
-			e.writer.P(baseURLs[environmentURL.ID], " string")
-		}
-		e.writer.P("}{")
+		e.writer.P(environment.Name.PascalCase.UnsafeName, ": Environment{")
 		for _, environmentURL := range environmentURLs {
 			e.writer.P(baseURLs[environmentURL.ID], fmt.Sprintf(": %q,", environmentURL.URL))
 		}
@@ -3211,6 +3476,22 @@ func environmentURLFromID(environmentsConfig *common.EnvironmentsConfig, id comm
 		return "", err
 	}
 	return urlVisitor.value, nil
+}
+
+func baseURLNameFromID(environmentsConfig *common.EnvironmentsConfig, id common.EnvironmentBaseUrlId) string {
+	if environmentsConfig == nil || environmentsConfig.Environments.MultipleBaseUrls == nil {
+		return ""
+	}
+	for _, baseURL := range environmentsConfig.Environments.MultipleBaseUrls.BaseUrls {
+		if baseURL.Id == id {
+			return baseURL.Name.PascalCase.UnsafeName
+		}
+	}
+	return ""
+}
+
+func isMultipleBaseUrlsEnvironment(environmentsConfig *common.EnvironmentsConfig) bool {
+	return environmentsConfig != nil && environmentsConfig.Environments.MultipleBaseUrls != nil
 }
 
 type environmentsURLVisitor struct {
@@ -3746,4 +4027,39 @@ func shouldGenerateHeader(header *ir.HttpHeader, types map[common.TypeId]*ir.Typ
 // shouldGenerateHeaderAuthScheme returns true if the given header auth scheme should be generated.
 func shouldGenerateHeaderAuthScheme(auth *ir.HeaderAuthScheme, types map[common.TypeId]*ir.TypeDeclaration) bool {
 	return auth.HeaderEnvVar != nil || !isLiteralType(auth.ValueType, types)
+}
+
+// getOAuthScheme returns the OAuth scheme from the auth configuration, or nil if not present.
+func getOAuthScheme(auth *ir.ApiAuth) *ir.OAuthScheme {
+	if auth == nil {
+		return nil
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Oauth != nil {
+			return scheme.Oauth
+		}
+	}
+	return nil
+}
+
+// hasBearerAuth returns true if the auth configuration has a bearer auth scheme.
+func hasBearerAuth(auth *ir.ApiAuth) bool {
+	if auth == nil {
+		return false
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Bearer != nil {
+			return true
+		}
+	}
+	return false
+}
+
+// getOAuthClientCredentials returns the OAuth client credentials configuration, or nil if not present.
+func getOAuthClientCredentials(auth *ir.ApiAuth) *ir.OAuthClientCredentials {
+	oauth := getOAuthScheme(auth)
+	if oauth == nil || oauth.Configuration == nil {
+		return nil
+	}
+	return oauth.Configuration.ClientCredentials
 }

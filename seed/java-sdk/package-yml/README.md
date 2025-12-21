@@ -150,7 +150,6 @@ SeedPackageYmlClient client = SeedPackageYmlClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.packageYml.SeedPackageYmlClient;
 import com.seed.packageYml.core.RequestOptions;
@@ -158,7 +157,7 @@ import com.seed.packageYml.core.RequestOptions;
 // Client level
 SeedPackageYmlClient client = SeedPackageYmlClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -166,7 +165,7 @@ client.echo(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

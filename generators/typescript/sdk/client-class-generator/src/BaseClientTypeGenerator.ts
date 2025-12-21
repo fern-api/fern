@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import type { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
@@ -34,7 +35,8 @@ export class BaseClientTypeGenerator {
             });
         }
 
-        context.sourceFile.addInterface(context.baseClient.generateBaseClientOptionsInterface(context));
+        this.generateBaseClientOptionsType(context);
+
         context.sourceFile.addInterface(context.baseClient.generateBaseRequestOptionsInterface(context));
         if (this.generateIdempotentRequestOptions) {
             context.sourceFile.addInterface(context.baseClient.generateBaseIdempotentRequestOptionsInterface(context));
@@ -43,6 +45,93 @@ export class BaseClientTypeGenerator {
         this.generateNormalizedClientOptionsTypes(context);
         this.generateNormalizeClientOptionsFunction(context);
         this.generateNormalizeClientOptionsWithAuthFunction(context);
+    }
+
+    private generateBaseClientOptionsType(context: SdkContext): void {
+        const baseInterface = context.baseClient.generateBaseClientOptionsInterface(context);
+        const authOptionsTypes = this.getAuthOptionsTypes(context);
+
+        if (authOptionsTypes.length === 0) {
+            context.sourceFile.addInterface(baseInterface);
+            return;
+        }
+
+        const basePropertiesStr = baseInterface.properties
+            .map((prop) => {
+                const docs = prop.docs ? `/** ${prop.docs.join(" ")} */\n    ` : "";
+                const questionMark = prop.hasQuestionToken ? "?" : "";
+                return `${docs}${prop.name}${questionMark}: ${prop.type};`;
+            })
+            .join("\n    ");
+
+        const authOptionsIntersection = authOptionsTypes.join(" & ");
+        const typeCode = `
+export type BaseClientOptions = {
+    ${basePropertiesStr}
+} & ${authOptionsIntersection};`;
+
+        context.sourceFile.addStatements(typeCode);
+    }
+
+    private getAuthOptionsTypes(context: SdkContext): string[] {
+        const authOptionsTypes: string[] = [];
+        const authRequirement = this.ir.auth.requirement;
+
+        if (authRequirement === "ANY") {
+            // Get all auth options types for the tuple parameter
+            const authProviderOptionsTypes: string[] = [];
+            for (const authScheme of this.ir.auth.schemes) {
+                const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);
+                if (authOptionsType != null) {
+                    authProviderOptionsTypes.push(authOptionsType);
+                }
+            }
+            if (authProviderOptionsTypes.length > 0) {
+                authOptionsTypes.push(`AnyAuthProvider.AuthOptions<[${authProviderOptionsTypes.join(", ")}]>`);
+            }
+        } else if (authRequirement === "ENDPOINT_SECURITY") {
+            // Get all auth options types for the tuple parameter
+            const authProviderOptionsTypes: string[] = [];
+            for (const authScheme of this.ir.auth.schemes) {
+                const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);
+                if (authOptionsType != null) {
+                    authProviderOptionsTypes.push(authOptionsType);
+                }
+            }
+            if (authProviderOptionsTypes.length > 0) {
+                authOptionsTypes.push(`RoutingAuthProvider.AuthOptions<[${authProviderOptionsTypes.join(", ")}]>`);
+            }
+        } else {
+            for (const authScheme of this.ir.auth.schemes) {
+                const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);
+                if (authOptionsType != null) {
+                    authOptionsTypes.push(authOptionsType);
+                    break;
+                }
+            }
+        }
+
+        return authOptionsTypes;
+    }
+
+    private getAuthOptionsTypeForScheme(authScheme: FernIr.AuthScheme, context: SdkContext): string | undefined {
+        switch (authScheme.type) {
+            case "bearer":
+                return "BearerAuthProvider.AuthOptions";
+            case "basic":
+                return "BasicAuthProvider.AuthOptions";
+            case "header":
+                return "HeaderAuthProvider.AuthOptions";
+            case "oauth":
+                if (!context.generateOAuthClients) {
+                    return undefined;
+                }
+                return "OAuthAuthProvider.AuthOptions";
+            case "inferred":
+                return "InferredAuthProvider.AuthOptions";
+            default:
+                assertNever(authScheme);
+        }
     }
 
     private generateNormalizeClientOptionsFunction(context: SdkContext): void {
@@ -55,7 +144,6 @@ export class BaseClientTypeGenerator {
                 ts.factory.createStringLiteral("JavaScript")
             ]);
 
-            // X-Fern-SDK-Name and X-Fern-SDK-Version headers (only if npmPackage exists)
             if (context.npmPackage != null) {
                 fernHeaderEntries.push(
                     [
@@ -69,21 +157,18 @@ export class BaseClientTypeGenerator {
                 );
             }
 
-            // User-Agent header
             if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
                 fernHeaderEntries.push([
                     this.ir.sdkConfig.platformHeaders.userAgent.header,
                     ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value)
                 ]);
             } else if (context.npmPackage != null) {
-                // Fallback: generate User-Agent header from npm package info
                 fernHeaderEntries.push([
                     "User-Agent",
                     ts.factory.createStringLiteral(`${context.npmPackage.packageName}/${context.npmPackage.version}`)
                 ]);
             }
 
-            // X-Fern-Runtime and X-Fern-Runtime-Version headers
             fernHeaderEntries.push(
                 ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
                 ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
@@ -122,7 +207,7 @@ export class BaseClientTypeGenerator {
         }
 
         const functionCode = `
-export function normalizeClientOptions<T extends BaseClientOptions>(
+export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
 ): NormalizedClientOptions<T> {${headersSection}    return {
         ...options,
@@ -142,21 +227,19 @@ export function normalizeClientOptions<T extends BaseClientOptions>(
     private generateNormalizedClientOptionsTypes(context: SdkContext): void {
         const shouldGenerateAuthCode = this.shouldGenerateAuthCode();
 
-        // Generate NormalizedClientOptions with optional authProvider only if auth is configured
         const authProviderProperty = shouldGenerateAuthCode
             ? `\n    authProvider?: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};`
             : "";
 
         let typesCode = `
-export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
+export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: ${getTextOfTsNode(context.coreUtilities.logging.Logger._getReferenceToType())};${authProviderProperty}
 }`;
 
-        // Only generate NormalizedClientOptionsWithAuth if there are auth schemes
         if (shouldGenerateAuthCode) {
             typesCode += `
 
-export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions> = NormalizedClientOptions<T> & {
     authProvider: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};
 }`;
         }
@@ -164,117 +247,172 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
         context.sourceFile.addStatements(typesCode);
     }
 
-    private generateNormalizeClientOptionsWithAuthFunction(context: SdkContext): void {
-        // Determine which auth provider to use
-        let authProviderCreation = "";
-        const isAnyAuth = this.ir.auth.requirement === "ANY";
+    private hasOAuthScheme(): boolean {
+        return this.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
+    }
 
-        // Handle ANY auth case - create AnyAuthProvider that aggregates all schemes
-        if (isAnyAuth) {
+    private generateNormalizeClientOptionsWithAuthFunction(context: SdkContext): void {
+        let authProviderCreation = "";
+        const authRequirement = this.ir.auth.requirement;
+
+        if (authRequirement === "ANY") {
+            // Use AnyAuthProvider for ANY auth - tries all providers in sequence
             context.sourceFile.addImportDeclaration({
-                moduleSpecifier: "./auth/AnyAuthProvider.js",
+                moduleSpecifier: "./auth/AnyAuthProvider",
                 namedImports: ["AnyAuthProvider"]
             });
 
-            // Import all auth provider classes
-            const providerImports: string[] = [];
-            const providerInstantiations: string[] = [];
+            const providerClassNames: string[] = [];
 
             for (const authScheme of this.ir.auth.schemes) {
-                if (authScheme.type === "bearer") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/BearerAuthProvider.js",
-                        namedImports: ["BearerAuthProvider"]
-                    });
-                    providerImports.push("BearerAuthProvider");
-                    providerInstantiations.push(
-                        "if (BearerAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new BearerAuthProvider(normalizedWithNoOpAuthProvider)); }"
-                    );
-                } else if (authScheme.type === "basic") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/BasicAuthProvider.js",
-                        namedImports: ["BasicAuthProvider"]
-                    });
-                    providerImports.push("BasicAuthProvider");
-                    providerInstantiations.push(
-                        "if (BasicAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new BasicAuthProvider(normalizedWithNoOpAuthProvider)); }"
-                    );
-                } else if (authScheme.type === "header") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/HeaderAuthProvider.js",
-                        namedImports: ["HeaderAuthProvider"]
-                    });
-                    providerImports.push("HeaderAuthProvider");
-                    providerInstantiations.push(
-                        "if (HeaderAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new HeaderAuthProvider(normalizedWithNoOpAuthProvider)); }"
-                    );
-                } else if (authScheme.type === "oauth") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/OAuthAuthProvider.js",
-                        namedImports: ["OAuthAuthProvider"]
-                    });
-                    providerImports.push("OAuthAuthProvider");
-                    providerInstantiations.push(
-                        "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider)); }"
-                    );
+                switch (authScheme.type) {
+                    case "bearer":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/BearerAuthProvider",
+                            namedImports: ["BearerAuthProvider"]
+                        });
+                        providerClassNames.push("BearerAuthProvider");
+                        break;
+                    case "basic":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/BasicAuthProvider",
+                            namedImports: ["BasicAuthProvider"]
+                        });
+                        providerClassNames.push("BasicAuthProvider");
+                        break;
+                    case "header":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/HeaderAuthProvider",
+                            namedImports: ["HeaderAuthProvider"]
+                        });
+                        providerClassNames.push("HeaderAuthProvider");
+                        break;
+                    case "oauth":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/OAuthAuthProvider",
+                            namedImports: ["OAuthAuthProvider"]
+                        });
+                        providerClassNames.push("OAuthAuthProvider");
+                        break;
+                    case "inferred":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/InferredAuthProvider",
+                            namedImports: ["InferredAuthProvider"]
+                        });
+                        providerClassNames.push("InferredAuthProvider");
+                        break;
+                    default:
+                        assertNever(authScheme);
                 }
             }
 
-            // Generate code to instantiate providers array and pass to AnyAuthProvider
-            authProviderCreation = `(() => {
-        const authProviders: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())}[] = [];
-        ${providerInstantiations.join("\n        ")}
-        return new AnyAuthProvider(authProviders);
-    })()`;
-        } else {
-            // Only generate auth provider for non-ANY auth schemes
+            const providerList = providerClassNames.join(", ");
+
+            authProviderCreation = `AnyAuthProvider.createInstance(normalizedWithNoOpAuthProvider, [${providerList}])`;
+        } else if (authRequirement === "ENDPOINT_SECURITY") {
+            // Use RoutingAuthProvider for ENDPOINT_SECURITY - routes based on endpoint metadata
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: "./auth/RoutingAuthProvider",
+                namedImports: ["RoutingAuthProvider"]
+            });
+
+            const providerClassNames: string[] = [];
+
             for (const authScheme of this.ir.auth.schemes) {
-                if (authScheme.type === "bearer") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/BearerAuthProvider.js",
-                        namedImports: ["BearerAuthProvider"]
-                    });
-                    authProviderCreation = "new BearerAuthProvider(normalizedWithNoOpAuthProvider)";
-                    break;
-                } else if (authScheme.type === "basic") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/BasicAuthProvider.js",
-                        namedImports: ["BasicAuthProvider"]
-                    });
-                    authProviderCreation = "new BasicAuthProvider(normalizedWithNoOpAuthProvider)";
-                    break;
-                } else if (authScheme.type === "header") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/HeaderAuthProvider.js",
-                        namedImports: ["HeaderAuthProvider"]
-                    });
-                    authProviderCreation = "new HeaderAuthProvider(normalizedWithNoOpAuthProvider)";
-                    break;
-                } else if (authScheme.type === "oauth") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/OAuthAuthProvider.js",
-                        namedImports: ["OAuthAuthProvider"]
-                    });
-                    authProviderCreation = "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
-                    break;
-                } else if (authScheme.type === "inferred") {
-                    context.sourceFile.addImportDeclaration({
-                        moduleSpecifier: "./auth/InferredAuthProvider.js",
-                        namedImports: ["InferredAuthProvider"]
-                    });
-                    authProviderCreation = "new InferredAuthProvider(normalizedWithNoOpAuthProvider)";
-                    break;
+                switch (authScheme.type) {
+                    case "bearer":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/BearerAuthProvider",
+                            namedImports: ["BearerAuthProvider"]
+                        });
+                        providerClassNames.push("BearerAuthProvider");
+                        break;
+                    case "basic":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/BasicAuthProvider",
+                            namedImports: ["BasicAuthProvider"]
+                        });
+                        providerClassNames.push("BasicAuthProvider");
+                        break;
+                    case "header":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/HeaderAuthProvider",
+                            namedImports: ["HeaderAuthProvider"]
+                        });
+                        providerClassNames.push("HeaderAuthProvider");
+                        break;
+                    case "oauth":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/OAuthAuthProvider",
+                            namedImports: ["OAuthAuthProvider"]
+                        });
+                        providerClassNames.push("OAuthAuthProvider");
+                        break;
+                    case "inferred":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/InferredAuthProvider",
+                            namedImports: ["InferredAuthProvider"]
+                        });
+                        providerClassNames.push("InferredAuthProvider");
+                        break;
+                    default:
+                        assertNever(authScheme);
+                }
+            }
+
+            const providerList = providerClassNames.join(", ");
+
+            authProviderCreation = `RoutingAuthProvider.createInstance(normalizedWithNoOpAuthProvider, [${providerList}])`;
+        } else {
+            for (const authScheme of this.ir.auth.schemes) {
+                switch (authScheme.type) {
+                    case "bearer":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/BearerAuthProvider",
+                            namedImports: ["BearerAuthProvider"]
+                        });
+                        authProviderCreation = "new BearerAuthProvider(normalizedWithNoOpAuthProvider)";
+                        break;
+                    case "basic":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/BasicAuthProvider",
+                            namedImports: ["BasicAuthProvider"]
+                        });
+                        authProviderCreation = "new BasicAuthProvider(normalizedWithNoOpAuthProvider)";
+                        break;
+                    case "header":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/HeaderAuthProvider",
+                            namedImports: ["HeaderAuthProvider"]
+                        });
+                        authProviderCreation = "new HeaderAuthProvider(normalizedWithNoOpAuthProvider)";
+                        break;
+                    case "oauth":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/OAuthAuthProvider",
+                            namedImports: ["OAuthAuthProvider"]
+                        });
+                        authProviderCreation = "OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)";
+                        break;
+                    case "inferred":
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: "./auth/InferredAuthProvider",
+                            namedImports: ["InferredAuthProvider"]
+                        });
+                        authProviderCreation = "new InferredAuthProvider(normalizedWithNoOpAuthProvider)";
+                        break;
+                    default:
+                        assertNever(authScheme);
                 }
             }
         }
 
-        // If no auth provider creation code, don't generate the function
         if (!authProviderCreation) {
             return;
         }
 
         const functionCode = `
-export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
+export function normalizeClientOptionsWithAuth<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(${OPTIONS_PARAMETER_NAME}) as NormalizedClientOptionsWithAuth<T>;
@@ -283,7 +421,7 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     return normalized;
 }
 
-function withNoOpAuthProvider<T extends BaseClientOptions>(
+function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
     options: NormalizedClientOptions<T>
 ): NormalizedClientOptionsWithAuth<T> {
     return {
@@ -298,7 +436,6 @@ function withNoOpAuthProvider<T extends BaseClientOptions>(
     private getRootHeaders(context: SdkContext): GeneratedHeader[] {
         const headers: GeneratedHeader[] = [
             ...this.ir.headers
-                // auth headers are handled separately
                 .filter((header) => !this.isAuthorizationHeader(header))
                 .map((header) => {
                     const headerName = this.getOptionKeyForHeader(header);

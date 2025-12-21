@@ -73,9 +73,9 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_with_optional_field, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -92,10 +92,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_with_optional_field.__globals__)
-        
         router.post(
             path="/object/get-and-return-with-optional-field",
             response_model=ObjectWithOptionalField,
@@ -111,9 +107,9 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_with_required_field, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -130,10 +126,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_with_required_field.__globals__)
-        
         router.post(
             path="/object/get-and-return-with-required-field",
             response_model=ObjectWithRequiredField,
@@ -149,9 +141,9 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_with_map_of_map, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -168,10 +160,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_with_map_of_map.__globals__)
-        
         router.post(
             path="/object/get-and-return-with-map-of-map",
             response_model=ObjectWithMapOfMap,
@@ -187,9 +175,9 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_nested_with_optional_field, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -206,10 +194,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_nested_with_optional_field.__globals__)
-        
         router.post(
             path="/object/get-and-return-nested-with-optional-field",
             response_model=NestedObjectWithOptionalField,
@@ -225,11 +209,11 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "string":
-                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_nested_with_required_field, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -246,10 +230,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                 )
                 raise e
         
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_nested_with_required_field.__globals__)
-        
         router.post(
             path="/object/get-and-return-nested-with-required-field/{string}",
             response_model=NestedObjectWithRequiredField,
@@ -265,9 +245,9 @@ class AbstractEndpointsObjectService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(default=fastapi.Depends(FernAuth)))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_nested_with_required_field_as_list, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -283,10 +263,6 @@ class AbstractEndpointsObjectService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-        
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.get_and_return_nested_with_required_field_as_list.__globals__)
         
         router.post(
             path="/object/get-and-return-nested-with-required-field-list",

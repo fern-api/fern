@@ -1,10 +1,20 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isPlainObject } from "@fern-api/core-utils";
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import {
+    isRawTextType,
+    parseRawBytesType,
+    parseRawFileType,
+    parseRawTextType,
+    RawSchemas
+} from "@fern-api/fern-definition-schema";
 import {
     Availability,
     ExampleWebhookCall,
+    HttpResponse,
+    HttpResponseBody,
     InlinedWebhookPayloadProperty,
+    JsonResponse,
+    StreamingResponse,
     Webhook,
     WebhookGroup,
     WebhookPayload
@@ -17,6 +27,7 @@ import { TypeResolver } from "../resolvers/TypeResolver";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability } from "./convertDeclaration";
 import { convertHttpHeader } from "./services/convertHttpService";
+import { getObjectPropertyFromResolvedType } from "./services/getObjectPropertyFromResolvedType";
 import { convertTypeReferenceExample } from "./type-declarations/convertExampleType";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
 
@@ -49,6 +60,7 @@ export function convertWebhookGroup({
                       )
                     : [],
             payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),
+            responses: convertWebhookResponses({ webhook, file, typeResolver }),
             examples:
                 webhook.examples != null
                     ? convertWebhookExamples({
@@ -187,4 +199,163 @@ function convertWebhookExamples({
             workspace
         })
     }));
+}
+
+function convertWebhookResponses({
+    webhook,
+    file,
+    typeResolver
+}: {
+    webhook: RawSchemas.WebhookSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): HttpResponse[] | undefined {
+    const responses: HttpResponse[] = [];
+
+    // Convert response
+    if (webhook.response != null) {
+        const responseBody = convertWebhookResponseBody({ response: webhook.response, file, typeResolver });
+        const statusCode = typeof webhook.response !== "string" ? webhook.response["status-code"] : undefined;
+        const docs = typeof webhook.response !== "string" ? webhook.response.docs : undefined;
+        responses.push({
+            body: responseBody,
+            statusCode,
+            isWildcardStatusCode: undefined,
+            docs
+        });
+    }
+
+    // Convert response-stream
+    if (webhook["response-stream"] != null) {
+        const streamResponse = convertWebhookStreamResponseBody({
+            responseStream: webhook["response-stream"],
+            file,
+            typeResolver
+        });
+        if (streamResponse != null) {
+            const streamDocs =
+                typeof webhook["response-stream"] !== "string" ? webhook["response-stream"].docs : undefined;
+            responses.push({
+                body: HttpResponseBody.streaming(streamResponse),
+                statusCode: undefined,
+                isWildcardStatusCode: undefined,
+                docs: streamDocs
+            });
+        }
+    }
+
+    return responses.length > 0 ? responses : undefined;
+}
+
+function convertWebhookResponseBody({
+    response,
+    file,
+    typeResolver
+}: {
+    response: RawSchemas.HttpResponseSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): HttpResponseBody.FileDownload | HttpResponseBody.Text | HttpResponseBody.Json | HttpResponseBody.Bytes | undefined {
+    const docs = typeof response !== "string" ? response.docs : undefined;
+    const responseType = typeof response === "string" ? response : response.type;
+
+    if (responseType != null) {
+        if (parseRawFileType(responseType) != null) {
+            return HttpResponseBody.fileDownload({
+                docs,
+                v2Examples: undefined
+            });
+        } else if (parseRawTextType(responseType) != null) {
+            return HttpResponseBody.text({
+                docs,
+                v2Examples: undefined
+            });
+        } else if (parseRawBytesType(responseType) != null) {
+            return HttpResponseBody.bytes({
+                docs,
+                v2Examples: undefined
+            });
+        } else {
+            return convertWebhookJsonResponse(response, docs, file, typeResolver);
+        }
+    }
+
+    return undefined;
+}
+
+function convertWebhookStreamResponseBody({
+    responseStream,
+    file,
+    typeResolver
+}: {
+    responseStream: RawSchemas.HttpResponseStreamSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): StreamingResponse | undefined {
+    const docs = typeof responseStream !== "string" ? responseStream.docs : undefined;
+    const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
+    const streamFormat = typeof responseStream === "string" ? "json" : (responseStream.format ?? "json");
+
+    if (isRawTextType(typeReference)) {
+        return StreamingResponse.text({
+            docs,
+            v2Examples: undefined
+        });
+    } else if (typeof responseStream !== "string" && streamFormat === "sse") {
+        return StreamingResponse.sse({
+            docs,
+            payload: file.parseTypeReference(typeReference),
+            terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
+            v2Examples: undefined
+        });
+    } else {
+        return StreamingResponse.json({
+            docs,
+            payload: file.parseTypeReference(typeReference),
+            terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
+            v2Examples: undefined
+        });
+    }
+}
+
+function convertWebhookJsonResponse(
+    response: RawSchemas.HttpResponseSchema | string,
+    docs: string | undefined,
+    file: FernFileContext,
+    typeResolver: TypeResolver
+): HttpResponseBody.Json | undefined {
+    const responseTypeReference = typeof response !== "string" ? response.type : response;
+    if (responseTypeReference == null) {
+        return undefined;
+    }
+    const responseBodyType = file.parseTypeReference(
+        typeof response === "string" ? response : { ...response, type: responseTypeReference }
+    );
+    const resolvedType = typeResolver.resolveTypeOrThrow({
+        type: responseTypeReference,
+        file
+    });
+    const responseProperty = typeof response !== "string" ? response.property : undefined;
+    if (responseProperty != null) {
+        return HttpResponseBody.json(
+            JsonResponse.nestedPropertyAsResponse({
+                docs,
+                responseBodyType,
+                responseProperty: getObjectPropertyFromResolvedType({
+                    typeResolver,
+                    file,
+                    resolvedType,
+                    property: responseProperty
+                }),
+                v2Examples: undefined
+            })
+        );
+    }
+    return HttpResponseBody.json(
+        JsonResponse.response({
+            docs,
+            responseBodyType,
+            v2Examples: undefined
+        })
+    );
 }

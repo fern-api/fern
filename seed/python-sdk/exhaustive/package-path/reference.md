@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_list_of_primitives</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py">get_and_return_list_of_primitives</a>(...) -> AsyncHttpResponse[typing.List[str]]</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.endpoints.container.get_and_return_list_of_primitives(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_list_of_objects</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py">get_and_return_list_of_objects</a>(...) -> AsyncHttpResponse[typing.List[ObjectWithRequiredField]]</code></summary>
 <dl>
 <dd>
 
@@ -122,7 +122,7 @@ client.endpoints.container.get_and_return_list_of_objects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_set_of_primitives</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py">get_and_return_set_of_primitives</a>(...) -> AsyncHttpResponse[typing.Set[str]]</code></summary>
 <dl>
 <dd>
 
@@ -179,7 +179,7 @@ client.endpoints.container.get_and_return_set_of_primitives(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_set_of_objects</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py">get_and_return_set_of_objects</a>(...) -> AsyncHttpResponse[typing.List[ObjectWithRequiredField]]</code></summary>
 <dl>
 <dd>
 
@@ -241,7 +241,7 @@ client.endpoints.container.get_and_return_set_of_objects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_map_prim_to_prim</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py">get_and_return_map_prim_to_prim</a>(...) -> AsyncHttpResponse[typing.Dict[str, str]]</code></summary>
 <dl>
 <dd>
 
@@ -298,7 +298,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_map_of_prim_to_object</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py">get_and_return_map_of_prim_to_object</a>(...) -> AsyncHttpResponse[typing.Dict[str, ObjectWithRequiredField]]</code></summary>
 <dl>
 <dd>
 
@@ -360,7 +360,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_optional</a>(...)</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py">get_and_return_optional</a>(...) -> AsyncHttpResponse[typing.Optional[ObjectWithRequiredField]]</code></summary>
 <dl>
 <dd>
 
@@ -421,7 +421,7 @@ client.endpoints.container.get_and_return_optional(
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>client.endpoints.content_type.<a href="src/seed/endpoints/content_type/client.py">post_json_patch_content_type</a>(...)</code></summary>
+<details><summary><code>client.endpoints.content_type.<a href="src/seed/matryoshka/doll/structure/endpoints/content_type/client.py">post_json_patch_content_type</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -595,7 +595,7 @@ client.endpoints.content_type.post_json_patch_content_type(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.content_type.<a href="src/seed/endpoints/content_type/client.py">post_json_patch_content_with_charset_type</a>(...)</code></summary>
+<details><summary><code>client.endpoints.content_type.<a href="src/seed/matryoshka/doll/structure/endpoints/content_type/client.py">post_json_patch_content_with_charset_type</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -770,7 +770,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 </details>
 
 ## Endpoints Enum
-<details><summary><code>client.endpoints.enum.<a href="src/seed/endpoints/enum/client.py">get_and_return_enum</a>(...)</code></summary>
+<details><summary><code>client.endpoints.enum.<a href="src/seed/matryoshka/doll/structure/endpoints/enum/client.py">get_and_return_enum</a>(...) -> AsyncHttpResponse[WeatherReport]</code></summary>
 <dl>
 <dd>
 
@@ -828,7 +828,7 @@ client.endpoints.enum.get_and_return_enum(
 </details>
 
 ## Endpoints HttpMethods
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_get</a>(...)</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/matryoshka/doll/structure/endpoints/http_methods/client.py">test_get</a>(...) -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -885,7 +885,7 @@ client.endpoints.http_methods.test_get(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_post</a>(...)</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/matryoshka/doll/structure/endpoints/http_methods/client.py">test_post</a>(...) -> AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -942,7 +942,7 @@ client.endpoints.http_methods.test_post(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_put</a>(...)</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/matryoshka/doll/structure/endpoints/http_methods/client.py">test_put</a>(...) -> AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -1008,7 +1008,7 @@ client.endpoints.http_methods.test_put(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_patch</a>(...)</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/matryoshka/doll/structure/endpoints/http_methods/client.py">test_patch</a>(...) -> AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -1191,7 +1191,7 @@ client.endpoints.http_methods.test_patch(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_delete</a>(...)</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/matryoshka/doll/structure/endpoints/http_methods/client.py">test_delete</a>(...) -> AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -1249,7 +1249,7 @@ client.endpoints.http_methods.test_delete(
 </details>
 
 ## Endpoints Object
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_optional_field</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py">get_and_return_with_optional_field</a>(...) -> AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -1423,7 +1423,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_required_field</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py">get_and_return_with_required_field</a>(...) -> AsyncHttpResponse[ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -1480,7 +1480,7 @@ client.endpoints.object.get_and_return_with_required_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_map_of_map</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py">get_and_return_with_map_of_map</a>(...) -> AsyncHttpResponse[ObjectWithMapOfMap]</code></summary>
 <dl>
 <dd>
 
@@ -1537,7 +1537,7 @@ client.endpoints.object.get_and_return_with_map_of_map(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_optional_field</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py">get_and_return_nested_with_optional_field</a>(...) -> AsyncHttpResponse[NestedObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -1627,7 +1627,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_required_field</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py">get_and_return_nested_with_required_field</a>(...) -> AsyncHttpResponse[NestedObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -1726,7 +1726,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_nested_with_required_field_as_list</a>(...)</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py">get_and_return_nested_with_required_field_as_list</a>(...) -> AsyncHttpResponse[NestedObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -1840,7 +1840,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 </details>
 
 ## Endpoints Params
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py">get_with_path</a>(...) -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -1911,7 +1911,7 @@ client.endpoints.params.get_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_inline_path</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py">get_with_inline_path</a>(...) -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -1982,7 +1982,7 @@ client.endpoints.params.get_with_inline_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py">get_with_query</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2062,7 +2062,7 @@ client.endpoints.params.get_with_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_allow_multiple_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py">get_with_allow_multiple_query</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2142,7 +2142,7 @@ client.endpoints.params.get_with_allow_multiple_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_path_and_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py">get_with_path_and_query</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2222,7 +2222,7 @@ client.endpoints.params.get_with_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">get_with_inline_path_and_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py">get_with_inline_path_and_query</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -2302,7 +2302,7 @@ client.endpoints.params.get_with_inline_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">modify_with_path</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py">modify_with_path</a>(...) -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -2382,7 +2382,7 @@ client.endpoints.params.modify_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed/endpoints/params/client.py">modify_with_inline_path</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py">modify_with_inline_path</a>(...) -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -2463,7 +2463,7 @@ client.endpoints.params.modify_with_inline_path(
 </details>
 
 ## Endpoints Primitive
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_string</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py">get_and_return_string</a>(...) -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -2520,7 +2520,7 @@ client.endpoints.primitive.get_and_return_string(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_int</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py">get_and_return_int</a>(...) -> AsyncHttpResponse[int]</code></summary>
 <dl>
 <dd>
 
@@ -2577,7 +2577,7 @@ client.endpoints.primitive.get_and_return_int(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_long</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py">get_and_return_long</a>(...) -> AsyncHttpResponse[int]</code></summary>
 <dl>
 <dd>
 
@@ -2634,7 +2634,7 @@ client.endpoints.primitive.get_and_return_long(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_double</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py">get_and_return_double</a>(...) -> AsyncHttpResponse[float]</code></summary>
 <dl>
 <dd>
 
@@ -2691,7 +2691,7 @@ client.endpoints.primitive.get_and_return_double(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_bool</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py">get_and_return_bool</a>(...) -> AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -2748,7 +2748,7 @@ client.endpoints.primitive.get_and_return_bool(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_datetime</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py">get_and_return_datetime</a>(...) -> AsyncHttpResponse[dt.datetime]</code></summary>
 <dl>
 <dd>
 
@@ -2809,7 +2809,7 @@ client.endpoints.primitive.get_and_return_datetime(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_date</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py">get_and_return_date</a>(...) -> AsyncHttpResponse[dt.date]</code></summary>
 <dl>
 <dd>
 
@@ -2870,7 +2870,7 @@ client.endpoints.primitive.get_and_return_date(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_uuid</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py">get_and_return_uuid</a>(...) -> AsyncHttpResponse[uuid.UUID]</code></summary>
 <dl>
 <dd>
 
@@ -2931,7 +2931,7 @@ client.endpoints.primitive.get_and_return_uuid(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed/endpoints/primitive/client.py">get_and_return_base_64</a>(...)</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py">get_and_return_base_64</a>(...) -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -2989,7 +2989,7 @@ client.endpoints.primitive.get_and_return_base_64(
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.endpoints.put.<a href="src/seed/endpoints/put/client.py">add</a>(...)</code></summary>
+<details><summary><code>client.endpoints.put.<a href="src/seed/matryoshka/doll/structure/endpoints/put/client.py">add</a>(...) -> AsyncHttpResponse[PutResponse]</code></summary>
 <dl>
 <dd>
 
@@ -3047,7 +3047,7 @@ client.endpoints.put.add(
 </details>
 
 ## Endpoints Union
-<details><summary><code>client.endpoints.union.<a href="src/seed/endpoints/union/client.py">get_and_return_union</a>(...)</code></summary>
+<details><summary><code>client.endpoints.union.<a href="src/seed/matryoshka/doll/structure/endpoints/union/client.py">get_and_return_union</a>(...) -> AsyncHttpResponse[Animal]</code></summary>
 <dl>
 <dd>
 
@@ -3109,7 +3109,7 @@ client.endpoints.union.get_and_return_union(
 </details>
 
 ## Endpoints Urls
-<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_mixed_case</a>()</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/matryoshka/doll/structure/endpoints/urls/client.py">with_mixed_case</a>() -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -3156,7 +3156,7 @@ client.endpoints.urls.with_mixed_case()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">no_ending_slash</a>()</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/matryoshka/doll/structure/endpoints/urls/client.py">no_ending_slash</a>() -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -3203,7 +3203,7 @@ client.endpoints.urls.no_ending_slash()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_ending_slash</a>()</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/matryoshka/doll/structure/endpoints/urls/client.py">with_ending_slash</a>() -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -3250,7 +3250,7 @@ client.endpoints.urls.with_ending_slash()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="src/seed/endpoints/urls/client.py">with_underscores</a>()</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/matryoshka/doll/structure/endpoints/urls/client.py">with_underscores</a>() -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -3298,7 +3298,7 @@ client.endpoints.urls.with_underscores()
 </details>
 
 ## InlinedRequests
-<details><summary><code>client.inlined_requests.<a href="src/seed/inlined_requests/client.py">post_with_object_bodyand_response</a>(...)</code></summary>
+<details><summary><code>client.inlined_requests.<a href="src/seed/matryoshka/doll/structure/inlined_requests/client.py">post_with_object_bodyand_response</a>(...) -> AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -3412,7 +3412,7 @@ client.inlined_requests.post_with_object_bodyand_response(
 </details>
 
 ## NoAuth
-<details><summary><code>client.no_auth.<a href="src/seed/no_auth/client.py">post_with_no_auth</a>(...)</code></summary>
+<details><summary><code>client.no_auth.<a href="src/seed/matryoshka/doll/structure/no_auth/client.py">post_with_no_auth</a>(...) -> AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -3484,7 +3484,7 @@ client.no_auth.post_with_no_auth(
 </details>
 
 ## NoReqBody
-<details><summary><code>client.no_req_body.<a href="src/seed/no_req_body/client.py">get_with_no_request_body</a>()</code></summary>
+<details><summary><code>client.no_req_body.<a href="src/seed/matryoshka/doll/structure/no_req_body/client.py">get_with_no_request_body</a>() -> AsyncHttpResponse[ObjectWithOptionalField]</code></summary>
 <dl>
 <dd>
 
@@ -3531,7 +3531,7 @@ client.no_req_body.get_with_no_request_body()
 </dl>
 </details>
 
-<details><summary><code>client.no_req_body.<a href="src/seed/no_req_body/client.py">post_with_no_request_body</a>()</code></summary>
+<details><summary><code>client.no_req_body.<a href="src/seed/matryoshka/doll/structure/no_req_body/client.py">post_with_no_request_body</a>() -> AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -3579,7 +3579,7 @@ client.no_req_body.post_with_no_request_body()
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.req_with_headers.<a href="src/seed/req_with_headers/client.py">get_with_custom_header</a>(...)</code></summary>
+<details><summary><code>client.req_with_headers.<a href="src/seed/matryoshka/doll/structure/req_with_headers/client.py">get_with_custom_header</a>(...) -> AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 

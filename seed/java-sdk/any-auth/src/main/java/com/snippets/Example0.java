@@ -14,7 +14,6 @@ public class Example0 {
                 .getToken(GetTokenRequest.builder()
                         .clientId("client_id")
                         .clientSecret("client_secret")
-                        .scope("scope")
                         .build());
     }
 }

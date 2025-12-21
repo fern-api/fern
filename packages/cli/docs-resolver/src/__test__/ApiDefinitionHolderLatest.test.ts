@@ -5,6 +5,7 @@ import { ApiDefinitionHolderLatest } from "../ApiDefinitionHolderLatest";
 it.skip("finds subpackage by exact match", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
         id: FdrAPI.ApiDefinitionId("test"),
+        apiName: undefined,
         subpackages: {
             [FdrAPI.api.v1.SubpackageId("test")]: {
                 id: FdrAPI.api.v1.SubpackageId("test"),
@@ -35,6 +36,7 @@ it.skip("finds subpackage by exact match", () => {
 it.skip("finds subpackage from yaml/yml files", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
         id: FdrAPI.ApiDefinitionId("test"),
+        apiName: undefined,
         subpackages: {
             [FdrAPI.api.v1.SubpackageId("test")]: {
                 id: FdrAPI.api.v1.SubpackageId("test"),
@@ -66,6 +68,7 @@ it.skip("finds subpackage from yaml/yml files", () => {
 it.skip("finds endpoint by id and by path/method", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
         id: FdrAPI.ApiDefinitionId("test"),
+        apiName: undefined,
         subpackages: {},
         endpoints: {
             [FdrAPI.EndpointId("getUser")]: {
@@ -109,6 +112,7 @@ it.skip("finds endpoint by id and by path/method", () => {
 it.skip("finds websocket by id and by path", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
         id: FdrAPI.ApiDefinitionId("test"),
+        apiName: undefined,
         subpackages: {},
         endpoints: {},
         websockets: {
@@ -143,6 +147,7 @@ it.skip("finds websocket by id and by path", () => {
 it.skip("finds webhook by id and by path/method", () => {
     const apiDefinitionHolder = new ApiDefinitionHolderLatest({
         id: FdrAPI.ApiDefinitionId("test"),
+        apiName: undefined,
         subpackages: {},
         endpoints: {},
         websockets: {},
@@ -155,6 +160,7 @@ it.skip("finds webhook by id and by path/method", () => {
                 headers: [],
                 payloads: [],
                 examples: [],
+                responses: [],
                 description: "description",
                 availability: undefined,
                 namespace: [],

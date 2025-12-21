@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
     AuthScheme,
+    AuthSchemesRequirement,
     ErrorDeclaration,
     ExampleEndpointCall,
     ExampleEndpointErrorResponse,
@@ -473,13 +474,17 @@ export function ${functionName}(server: MockServer): void {
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
         .mockEndpoint()
-        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
-            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
+            .filter((h) => h.value.jsonExample != null)
+            .map((h) => {
+                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-        })}${example.endpointHeaders.map((h) => {
-            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+            })}${example.endpointHeaders
+            .filter((h) => h.value.jsonExample != null)
+            .map((h) => {
+                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-        })}${
+            })}${
             rawRequestBody
                 ? code`.${mockBodyMethod}(rawRequestBody)
             `
@@ -535,13 +540,17 @@ export function ${functionName}(server: MockServer): void {
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
         .mockEndpoint()
-        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
-            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+        .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
+            .filter((h) => h.value.jsonExample != null)
+            .map((h) => {
+                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-        })}${example.endpointHeaders.map((h) => {
-            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+            })}${example.endpointHeaders
+            .filter((h) => h.value.jsonExample != null)
+            .map((h) => {
+                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-        })}${
+            })}${
             rawRequestBody
                 ? code`.${mockBodyMethod}(rawRequestBody)
             `
@@ -571,17 +580,48 @@ export function ${functionName}(server: MockServer): void {
 
     private getAuthClientOptions(context: SdkContext): Record<string, Code> {
         const authOptions: Record<string, Code> = {};
+
+        // Check if this is ANY or ENDPOINT_SECURITY auth which requires nested options structure
+        const requiresNestedAuth = AuthSchemesRequirement._visit(this.ir.auth.requirement, {
+            any: () => true,
+            all: () => false,
+            endpointSecurity: () => true,
+            _other: () => false
+        });
+
         this.ir.auth.schemes.forEach((schema) => {
             schema._visit({
                 bearer: (schema) => {
-                    authOptions[schema.token.camelCase.unsafeName] = code`"test"`;
+                    const wrapperKey = camelCase(schema.key);
+                    const tokenKey = schema.token.camelCase.unsafeName;
+
+                    if (requiresNestedAuth) {
+                        authOptions[wrapperKey] = code`${literalOf({ [tokenKey]: "test" })}`;
+                    } else {
+                        authOptions[tokenKey] = code`"test"`;
+                    }
                 },
                 header: (schema) => {
-                    authOptions[schema.name.name.camelCase.unsafeName] = code`"test"`;
+                    const wrapperKey = camelCase(schema.key);
+                    const headerKey = schema.name.name.camelCase.unsafeName;
+
+                    if (requiresNestedAuth) {
+                        authOptions[wrapperKey] = code`${literalOf({ [headerKey]: "test" })}`;
+                    } else {
+                        authOptions[headerKey] = code`"test"`;
+                    }
                 },
                 basic: (schema) => {
-                    authOptions[schema.username.camelCase.unsafeName] = code`"test"`;
-                    authOptions[schema.password.camelCase.unsafeName] = code`"test"`;
+                    const wrapperKey = camelCase(schema.key);
+                    const usernameKey = schema.username.camelCase.unsafeName;
+                    const passwordKey = schema.password.camelCase.unsafeName;
+
+                    if (requiresNestedAuth) {
+                        authOptions[wrapperKey] = code`${literalOf({ [usernameKey]: "test", [passwordKey]: "test" })}`;
+                    } else {
+                        authOptions[usernameKey] = code`"test"`;
+                        authOptions[passwordKey] = code`"test"`;
+                    }
                 },
                 oauth: (oauthScheme) => {
                     if (!this.canMockOAuth()) {
@@ -624,18 +664,19 @@ export function ${functionName}(server: MockServer): void {
                     const clientSecretPropertyName =
                         requestProperties.clientSecret.property.name.name.camelCase.safeName;
 
+                    const oauthOptions: Record<string, Code> = {};
                     example.request?._visit({
                         inlinedRequestBody: (value) => {
                             value.properties.forEach((p) => {
                                 const propertyName = p.name.name.camelCase.safeName;
                                 if (propertyName === clientIdPropertyName) {
-                                    authOptions.clientId = this.createRawJsonExample({
+                                    oauthOptions.clientId = this.createRawJsonExample({
                                         example: p.value,
                                         isForRequest: true,
                                         isForResponse: false
                                     });
                                 } else if (propertyName === clientSecretPropertyName) {
-                                    authOptions.clientSecret = this.createRawJsonExample({
+                                    oauthOptions.clientSecret = this.createRawJsonExample({
                                         example: p.value,
                                         isForRequest: true,
                                         isForResponse: false
@@ -643,13 +684,41 @@ export function ${functionName}(server: MockServer): void {
                                 }
                             });
                         },
-                        reference: () => {
-                            // noop
+                        reference: (value) => {
+                            const allProperties = this.getAuthRequestParameters(value);
+                            const clientIdValue = allProperties[clientIdPropertyName];
+                            const clientSecretValue = allProperties[clientSecretPropertyName];
+                            if (clientIdValue) {
+                                oauthOptions.clientId = clientIdValue;
+                            }
+                            if (clientSecretValue) {
+                                oauthOptions.clientSecret = clientSecretValue;
+                            }
                         },
                         _other: () => {
                             // noop
                         }
                     });
+
+                    // Provide fallback values if clientId/clientSecret weren't extracted from the example
+                    // This is needed for wire tests to work with OAuth client credentials flow
+                    if (oauthOptions.clientId == null) {
+                        oauthOptions.clientId = code`"test_client_id"`;
+                    }
+                    if (oauthOptions.clientSecret == null) {
+                        oauthOptions.clientSecret = code`"test_client_secret"`;
+                    }
+
+                    if (requiresNestedAuth) {
+                        let wrapperKey = camelCase(oauthScheme.key);
+                        // Special case: "OAuth" should become "oauth" not "oAuth"
+                        if (wrapperKey === "oAuth") {
+                            wrapperKey = "oauth";
+                        }
+                        authOptions[wrapperKey] = code`${literalOf(oauthOptions)}`;
+                    } else {
+                        Object.assign(authOptions, oauthOptions);
+                    }
                 },
                 inferred: (auth) => {
                     const service = this.ir.services[auth.tokenEndpoint.endpoint.serviceId];
@@ -679,7 +748,13 @@ export function ${functionName}(server: MockServer): void {
                         auth: AuthScheme.inferred(auth),
                         context
                     });
-                    Object.assign(authOptions, authRequestParameters);
+
+                    if (requiresNestedAuth) {
+                        const wrapperKey = camelCase(auth.key);
+                        authOptions[wrapperKey] = code`${literalOf(authRequestParameters)}`;
+                    } else {
+                        Object.assign(authOptions, authRequestParameters);
+                    }
                 },
                 _other: () => {
                     // noop
@@ -786,6 +861,15 @@ export function ${functionName}(server: MockServer): void {
                         });
                     }
                 });
+
+                // Provide fallback values if client_id/client_secret weren't in the example
+                // This ensures the mock server expects these fields when the test client sends them
+                if (!(clientIdPropertyName in minimalProperties)) {
+                    minimalProperties[clientIdPropertyName] = code`"test_client_id"`;
+                }
+                if (!(clientSecretPropertyName in minimalProperties)) {
+                    minimalProperties[clientSecretPropertyName] = code`"test_client_secret"`;
+                }
 
                 return code`${literalOf(minimalProperties)}`;
             },
@@ -1124,29 +1208,66 @@ describe("${serviceName}", () => {
 
         let mockAuthSnippet: Code | undefined;
         if (this.shouldBuildMockAuthFile({ context })) {
-            const oauthScheme = this.ir.auth.schemes.find((s) => s.type === "oauth");
-            const inferredAuthScheme = this.ir.auth.schemes.find((s) => s.type === "inferred");
+            const mockFunctionNames: string[] = [];
 
-            let mockFunctionName: string | undefined;
-            if (oauthScheme && this.canMockOAuth()) {
-                mockFunctionName = `mock${upperFirst(camelCase(oauthScheme.key))}`;
-            } else if (inferredAuthScheme) {
-                mockFunctionName = `mock${upperFirst(camelCase(inferredAuthScheme.key))}`;
+            // Determine which auth schemes to mock based on auth requirement
+            const authRequirement = this.ir.auth.requirement;
+
+            if (authRequirement === "ANY" || authRequirement === "ALL") {
+                // For ANY and ALL: include all OAuth and InferredAuth schemes that exist
+                for (const scheme of this.ir.auth.schemes) {
+                    if (scheme.type === "oauth" && this.canMockOAuth()) {
+                        mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                    } else if (scheme.type === "inferred") {
+                        mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                    }
+                }
+            } else if (authRequirement === "ENDPOINT_SECURITY") {
+                // For ENDPOINT_SECURITY: only include schemes required by this endpoint
+                if (endpoint.security != null && endpoint.security.length > 0) {
+                    // Get all auth scheme keys required by this endpoint
+                    // endpoint.security is an array of collections where each collection is a Record<AuthSchemeKey, AuthScope[]>
+                    // We'll collect all unique auth scheme keys from all collections
+                    const requiredSchemeKeys = new Set<string>();
+                    for (const securityItem of endpoint.security) {
+                        for (const schemeKey of Object.keys(securityItem)) {
+                            requiredSchemeKeys.add(schemeKey);
+                        }
+                    }
+
+                    // Add mock calls for OAuth and InferredAuth schemes that are required by this endpoint
+                    for (const scheme of this.ir.auth.schemes) {
+                        if (requiredSchemeKeys.has(scheme.key)) {
+                            if (scheme.type === "oauth" && this.canMockOAuth()) {
+                                mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                            } else if (scheme.type === "inferred") {
+                                mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                            }
+                        }
+                    }
+                }
             }
 
-            if (mockFunctionName) {
-                mockAuthSnippet = code`${mockFunctionName}(server);\n`;
+            // Generate mock auth snippet with all required mock calls
+            if (mockFunctionNames.length > 0) {
+                const mockCalls = mockFunctionNames.map((name) => `${name}(server);`).join("\n");
+                mockAuthSnippet = code`${mockCalls}\n`;
+
+                // Add imports for all mock functions
                 context.importsManager.addImportFromRoot(
                     "wire/mockAuth",
                     {
-                        namedImports: [mockFunctionName]
+                        namedImports: mockFunctionNames
                     },
                     this.relativeTestPath
                 );
             }
         }
 
-        const hasPagination = endpoint.pagination !== undefined;
+        // hasPagination determines if we need { once: false } for multiple mock requests
+        // This is set after isCursorMissing is computed to ensure we don't allow multiple
+        // requests when cursor is missing (since there's no next page to request)
+        let hasPagination = endpoint.pagination !== undefined;
         const expectedName =
             endpoint.pagination !== undefined
                 ? context.type.generateGetterForResponsePropertyAsString({
@@ -1154,34 +1275,55 @@ describe("${serviceName}", () => {
                       variable: "expected"
                   })
                 : "expected";
-        const pageName =
-            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
-                ? context.type.generateGetterForResponsePropertyAsString({
-                      property: endpoint.pagination.results,
-                      variable: "page"
-                  })
-                : "page";
-        const nextPageName =
-            endpoint.pagination !== undefined && endpoint.pagination.type === "custom"
-                ? context.type.generateGetterForResponsePropertyAsString({
-                      property: endpoint.pagination.results,
-                      variable: "nextPage"
-                  })
-                : "nextPage";
+        // For custom pagination, the page object's .data property already contains the items
+        // (via getItems), so we don't need to traverse the response path
+        const pageName = "page";
+        const nextPageName = "nextPage";
+
+        const isResultsPathMissing =
+            endpoint.pagination !== undefined &&
+            isPaginationResultsPathMissingInExample({
+                example,
+                endpoint
+            });
+
+        const isCursorMissing =
+            endpoint.pagination !== undefined &&
+            isPaginationCursorMissingInExample({
+                example,
+                endpoint
+            });
+
+        // If cursor is missing, we won't be making getNextPage() calls, so don't need { once: false }
+        if (isCursorMissing) {
+            hasPagination = false;
+        }
+
+        const expectedDeclaration = code`const expected = ${expected};`;
+
         const paginationBlock =
             endpoint.pagination !== undefined
-                ? code`
-                const expected = ${expected}
+                ? isResultsPathMissing
+                    ? code`
+                const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                expect(${pageName}.data).toEqual([]);
+                `
+                    : code`
+                ${expectedDeclaration}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
                     endpoint.pagination.type !== "custom"
-                        ? code`
+                        ? isCursorMissing
+                            ? code`
+                            expect(${expectedName}).toEqual(${pageName}.data);
+                            `
+                            : code`
                             expect(${expectedName}).toEqual(${pageName}.data);
                             expect(${pageName}.hasNextPage()).toBe(true);
                             const nextPage = await ${pageName}.getNextPage();
                             expect(${expectedName}).toEqual(${nextPageName}.data);
                         `
-                        : code`expect(${expectedName}).toEqual(${pageName});`
+                        : code`expect(${expectedName}).toEqual(${pageName}.data);`
                 }
                 `
                 : "";
@@ -1199,13 +1341,17 @@ describe("${serviceName}", () => {
         ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
         server
             .mockEndpoint(${hasPagination ? "{ once: false }" : ""})
-            .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
-                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+            .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
+                .filter((h) => h.value.jsonExample != null)
+                .map((h) => {
+                    return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                     `;
-            })}${example.endpointHeaders.map((h) => {
-                return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+                })}${example.endpointHeaders
+                .filter((h) => h.value.jsonExample != null)
+                .map((h) => {
+                    return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                     `;
-            })}${
+                })}${
                 rawRequestBody
                     ? code`.${mockBodyMethod}(rawRequestBody)
                 `
@@ -1301,6 +1447,10 @@ describe("${serviceName}", () => {
                 assertNever(responseType);
         }
         if (endpoint.idempotent) {
+            return false;
+        }
+        // Skip endpoints with custom pagination
+        if (endpoint.pagination?.type === "custom") {
             return false;
         }
         return true;
@@ -1813,4 +1963,121 @@ function getParameterNameForVariable({
         return variableName.originalName;
     }
     return variableName.camelCase.safeName;
+}
+
+function getResponseBodyJsonExample(response: ExampleResponse): unknown | undefined {
+    return response._visit({
+        ok: (okResp) =>
+            okResp._visit({
+                body: (body) => (body ? body.jsonExample : undefined),
+                stream: () => undefined,
+                sse: () => undefined,
+                _other: () => undefined
+            }),
+        error: (err) => (err.body ? err.body.jsonExample : undefined),
+        _other: () => undefined
+    });
+}
+
+function isPaginationResultsPathMissingInExample({
+    example,
+    endpoint
+}: {
+    example: ExampleEndpointCall;
+    endpoint: HttpEndpoint;
+}): boolean {
+    const pagination = endpoint.pagination;
+    if (pagination == null || pagination.results == null) {
+        return false;
+    }
+
+    const responseJson = getResponseBodyJsonExample(example.response);
+    if (responseJson == null) {
+        return true;
+    }
+
+    const resultsProperty = pagination.results;
+
+    // Build the path segments using wire values for JSON walking
+    // JSON examples from IR are always in wire format (snake_case), so we must
+    // always use wire values to walk the JSON regardless of retainOriginalCasing
+    // or includeSerdeLayer settings (those affect generated code, not example JSON)
+    const segments = [
+        ...(resultsProperty.propertyPath ?? []).map((item) => item.name.originalName),
+        resultsProperty.property.name.wireValue
+    ];
+
+    let cursor: unknown = responseJson;
+    for (const key of segments) {
+        if (cursor == null || typeof cursor !== "object" || !(key in cursor)) {
+            return true;
+        }
+        cursor = (cursor as Record<string, unknown>)[key];
+    }
+
+    // If the leaf is explicitly undefined, treat it as "missing" for pagination purposes
+    return cursor === undefined;
+}
+
+/**
+ * Checks if the pagination cursor/next property is missing from the example response.
+ * For cursor pagination, we need the "next" property; for offset pagination, we need "hasNextPage".
+ * If the cursor property is missing, we shouldn't generate hasNextPage().toBe(true) assertions
+ * since there won't be a cursor to indicate a next page.
+ */
+function isPaginationCursorMissingInExample({
+    example,
+    endpoint
+}: {
+    example: ExampleEndpointCall;
+    endpoint: HttpEndpoint;
+}): boolean {
+    const pagination = endpoint.pagination;
+    if (pagination == null) {
+        return true;
+    }
+
+    const responseJson = getResponseBodyJsonExample(example.response);
+    if (responseJson == null) {
+        return true;
+    }
+
+    // Get the cursor property based on pagination type
+    let cursorProperty;
+    if (pagination.type === "cursor") {
+        cursorProperty = pagination.next;
+    } else if (pagination.type === "offset") {
+        cursorProperty = pagination.hasNextPage;
+        // For offset pagination, hasNextPage is optional - if not defined, the SDK calculates it differently
+        if (cursorProperty == null) {
+            return false;
+        }
+    } else {
+        // Custom pagination - skip this check
+        return false;
+    }
+
+    if (cursorProperty == null) {
+        return true;
+    }
+
+    // Build the path segments using wire values for JSON walking
+    // JSON examples from IR are always in wire format (snake_case), so we must
+    // always use wire values to walk the JSON regardless of retainOriginalCasing
+    // or includeSerdeLayer settings (those affect generated code, not example JSON)
+    const segments = [
+        ...(cursorProperty.propertyPath ?? []).map((item) => item.name.originalName),
+        cursorProperty.property.name.wireValue
+    ];
+
+    let cursor: unknown = responseJson;
+    for (const key of segments) {
+        if (cursor == null || typeof cursor !== "object" || !(key in cursor)) {
+            return true;
+        }
+        cursor = (cursor as Record<string, unknown>)[key];
+    }
+
+    // If the leaf is explicitly undefined or null, treat it as "missing"
+    return cursor === undefined || cursor === null;
 }

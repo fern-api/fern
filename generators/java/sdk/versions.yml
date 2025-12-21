@@ -1,3 +1,320 @@
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 3.27.4
+  changelogEntry:
+    - summary: |
+        Fix OAuth client credentials flow to include custom headers, timeouts, and retries in token requests by using ClientOptions.Builder.from() pattern.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 3.27.3
+  changelogEntry:
+    - summary: |
+        Fix streaming endpoint return types to use Iterable instead of Optional, fix missing ArrayList import for empty list literals, and fix OAuth wire tests to use withCredentials() pattern.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 3.27.2
+  changelogEntry:
+    - summary: |
+        Support configurable Node.js and Java V2 executable paths via NODE_PATH and JAVA_V2_PATH environment variables for local seed testing.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 3.27.1
+  changelogEntry:
+    - summary: |
+        Add sdkVersion as a top-level field in the generated metadata.json file.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 61
+
+- version: 3.27.0
+  changelogEntry:
+    - summary: |
+        Add `gradle-central-dependency-management` configuration option (boolean, default false).
+        When enabled, this skips generating the `repositories` block in `build.gradle` files,
+        allowing `dependencyResolutionManagement` in `settings.gradle` with
+        `RepositoriesMode.FAIL_ON_PROJECT_REPOS` to work correctly.
+
+        This should be used in conjunction with `gradle-plugin-management` when configuring
+        central repository management on enterprise networks.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-central-dependency-management: true
+          gradle-plugin-management: |
+            pluginManagement {
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/gradle-plugins/' }
+                }
+            }
+            dependencyResolutionManagement {
+                repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/maven-releases/' }
+                }
+            }
+        ```
+      type: feat
+  createdAt: "2025-12-17"
+  irVersion: 61
+
+- version: 3.26.0
+  changelogEntry:
+    - summary: |
+        Add `gradle-plugin-management` configuration option to inject custom plugin management
+        and dependency resolution configuration into `settings.gradle`. This enables SDK generation
+        on enterprise networks that cannot access the Gradle Plugin Portal (`plugins.gradle.org`)
+        by configuring internal Artifactory/Nexus repositories for plugin resolution.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-plugin-management: |
+            pluginManagement {
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/gradle-plugins/' }
+                }
+            }
+            dependencyResolutionManagement {
+                repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+                repositories {
+                    maven { url 'https://internal-artifactory.example.com/maven-releases/' }
+                }
+            }
+        ```
+      type: feat
+    - summary: |
+        Fix `gradle-distribution-url` override in Java V2 generator to properly create the
+        `gradle/wrapper` directory before writing `gradle-wrapper.properties`.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 61
+
+- version: 3.25.1
+  changelogEntry:
+    - summary: |
+        Fix form-urlencoded request body handling to properly serialize request objects using
+        Jackson's convertValue, preserving wire names from @JsonProperty annotations.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 61
+
+- version: 3.25.0
+  changelogEntry:
+    - summary: |
+        Add `gradle-distribution-url` configuration option to allow overriding the Gradle wrapper
+        distribution URL. This enables SDK generation on enterprise networks that cannot access
+        `services.gradle.org` by pointing to an internal Gradle distribution mirror.
+
+        Configuration example:
+        ```yaml
+        config:
+          gradle-distribution-url: https://internal-mirror.example.com/gradle/gradle-8.14.3-bin.zip
+        ```
+      type: feat
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.5
+  changelogEntry:
+    - summary: |
+        Fix OAuth token handling for optional expires_in field with default fallback, and skip
+        literal properties in OAuth request building.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.4
+  changelogEntry:
+    - summary: |
+        Mitigate OutOfMemoryError when generating SDKs for large specs. (Specifically, the IR preprocessing
+        preprocessing step now modifies the JSON tree in-place and avoids calling `.deepCopy()`.)
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.3
+  changelogEntry:
+    - summary: |
+        Update libpng16-16 in container to fix CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 61
+
+- version: 3.24.2
+  changelogEntry:
+    - summary: |
+        Pass full `ClientOptions` instead of just `httpClient()` to custom pagination `create()` method.
+        This gives custom pager implementations access to all client configuration including base URL,
+        headers, and other options needed for making subsequent pagination requests.
+      type: fix
+  createdAt: "2025-12-15"
+  irVersion: 61
+
+- version: 3.24.1
+  changelogEntry:
+    - summary: |
+        Fix Jackson deserialization conflict when a property starts with `with` (e.g., `withLabel`) and
+        another property matches the suffix (e.g., `label`).
+      type: fix
+  createdAt: "2025-12-11"
+  irVersion: 61
+
+- version: 3.24.0
+  changelogEntry:
+    - summary: |
+        Add support for configuring the default timeout via `default-timeout-in-seconds` in generators.yml.
+        Previously, the default timeout was hardcoded to 60 seconds. Now you can customize it:
+
+        Configuration example:
+        ```yaml
+        config:
+          default-timeout-in-seconds: 120
+        ```
+      type: feat
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 3.23.4
+  changelogEntry:
+    - summary: |
+        OAuth token override is now always enabled for APIs with OAuth client credentials authentication.
+        The `oauth-token-override` config flag has been removed - SDK users can always choose between
+        providing a pre-generated bearer token directly or using the OAuth client credentials flow.
+
+        Generated usage:
+        ```java
+        // Option 1: Direct bearer token (bypass OAuth flow)
+        SeedApiClient client = SeedApiClient.withToken("my-pre-generated-bearer-token")
+            .url("https://api.example.com")
+            .build();
+
+        // Option 2: OAuth client credentials flow (automatic token management)
+        SeedApiClient client = SeedApiClient.withCredentials("your-client-id", "your-client-secret")
+            .url("https://api.example.com")
+            .build();
+        ```
+      type: chore
+  createdAt: "2025-12-09"
+  irVersion: 61
+
+- version: 3.23.3
+  changelogEntry:
+    - summary: |
+        Fix OptionalNullable query parameters to correctly apply .orElse(default) for parameters with
+        default values. Previously, only java.util.Optional was recognized for default value handling,
+        causing OptionalNullable parameters to be passed directly without unwrapping. Now both Optional
+        and OptionalNullable types are handled correctly: parameters with defaults use .orElse(default),
+        and parameters without defaults use appropriate presence checks (!isAbsent() for OptionalNullable,
+        isPresent() for Optional).
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 61
+
+- version: 3.23.2
+  changelogEntry:
+    - summary: |
+        Revert OAuth staged builder compatibility changes.
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 61
+
+- version: 3.23.1
+  changelogEntry:
+    - summary: |
+        Fix duplicate case label compilation errors when multiple error types map to the same HTTP
+        status code. The generator now deduplicates errors by status code, keeping the first error
+        declaration for each code. This prevents Java compilation errors in generated switch statements.
+      type: fix
+  createdAt: "2025-12-06"
+  irVersion: 61
+
+- version: 3.23.0
+  changelogEntry:
+    - summary: |
+        Add OAuth token override support with compile-time safe staged builder pattern. When
+        `oauth-token-override: true` is configured, SDK users can choose between the OAuth client
+        credentials flow or providing a pre-generated bearer token directly.
+
+        Configuration example:
+        ```yaml
+        config:
+          oauth-token-override: true
+        ```
+
+        Generated usage:
+        ```java
+        // Option 1: Direct bearer token (bypass OAuth flow)
+        SeedApiClient client = SeedApiClient.withToken("my-pre-generated-bearer-token")
+            .url("https://api.example.com")
+            .build();
+
+        // Option 2: OAuth client credentials flow (automatic token management)
+        SeedApiClient client = SeedApiClient.withCredentials("your-client-id", "your-client-secret")
+            .url("https://api.example.com")
+            .build();
+        ```
+      type: feat
+  createdAt: "2025-12-05"
+  irVersion: 61
+
+- version: 3.22.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred authentication schemes. Inferred auth allows SDKs to automatically
+        fetch tokens from custom (non-OAuth) token endpoints using `scheme: bearer` with `get-token`
+        configuration. The generated `InferredAuthTokenSupplier` class handles token caching and
+        automatic refresh with a 2-minute buffer before expiry.
+
+        Configuration example:
+        ```yaml
+        auth:
+          scheme: bearer
+          get-token:
+            endpoint: POST auth.retrieveToken
+        ```
+
+        Generated usage:
+        ```java
+        SeedApiClient client = SeedApiClient.builder()
+            .apiKey("your-api-key")
+            .build();
+        // Token is automatically fetched and refreshed as needed
+        ```
+      type: feat
+  createdAt: "2025-12-05"
+  irVersion: 61
+
+- version: 3.21.1
+  changelogEntry:
+    - summary: |
+        Fix header parameters with `x-fern-parameter-name` to use the correct HTTP header name (wire value) instead of the SDK parameter name.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 3.21.0
+  changelogEntry:
+    - summary: |
+        Remove unused kotlin-stdlib from Gradle base image to address CVE-2020-29582 in container.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 3.20.2
+  changelogEntry:
+    - summary: |
+        Improve generator logging by removing verbose "java v2 generator" status messages and adding per-file logging. Each generated file is now logged individually, matching the C# generator pattern.
+      type: fix
+  createdAt: "2025-12-02"
+  irVersion: 61
+
 - version: 3.20.1
   changelogEntry:
     - summary: |
@@ -292,7 +609,7 @@
 - version: 3.14.3
   changelogEntry:
     - summary: |
-        Skip empty object validation in wire tests for optional request bodies. When request bodies are optional(nullable(T)) where T has only optional properties, wire tests now correctly skip {} validation when Optional.empty() is passed, matching actual SDK behavior.
+        Skip empty object validation in wire tests for optional request bodies. When request bodies are optional(nullable(T)) where T has only optional properties, wire tests now correctly skip `{}` validation when Optional.empty() is passed, matching actual SDK behavior.
       type: fix
   createdAt: "2025-11-11"
   irVersion: 61
@@ -378,7 +695,7 @@
 - version: 3.11.6
   changelogEntry:
     - summary: |
-        Fix path parameter prefixes (e.g., v{version}) being split into separate segments, producing URLs like .../v/1 instead of .../v1.
+        Fix path parameter prefixes (e.g., `v{version}`) being split into separate segments, producing URLs like .../v/1 instead of .../v1.
       type: fix
   createdAt: "2025-11-04"
   irVersion: 61

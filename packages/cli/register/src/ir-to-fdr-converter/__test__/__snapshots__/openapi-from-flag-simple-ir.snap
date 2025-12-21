@@ -1,23 +1,23 @@
 {
-  "apiDisplayName": undefined,
+  "apiDisplayName": "Simple OpenAPI Test",
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "simpleOpenApiTest",
+      "unsafeName": "simpleOpenApiTest",
     },
-    "originalName": "",
+    "originalName": "Simple OpenAPI Test",
     "pascalCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "SimpleOpenApiTest",
+      "unsafeName": "SimpleOpenApiTest",
     },
     "screamingSnakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "SIMPLE_OPEN_API_TEST",
+      "unsafeName": "SIMPLE_OPEN_API_TEST",
     },
     "snakeCase": {
-      "safeName": "",
-      "unsafeName": "",
+      "safeName": "simple_open_api_test",
+      "unsafeName": "simple_open_api_test",
     },
   },
   "apiPlayground": undefined,
@@ -118,6 +118,7 @@
       "displayName": "BadRequestError",
       "docs": "Invalid user data",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "CreateUserRequestBadRequestError",
@@ -210,6 +211,7 @@
       "displayName": "ServiceUnavailableError",
       "docs": "Service is unhealthy",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetHealthRequestServiceUnavailableError",
@@ -302,6 +304,7 @@
       "displayName": "NotFoundError",
       "docs": "User not found",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetUserRequestNotFoundError",
@@ -555,6 +558,7 @@
                 },
               },
             },
+            "docs": "Service is healthy",
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
@@ -661,6 +665,7 @@
                     },
                   },
                 },
+                "docs": "Service is healthy",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
@@ -671,6 +676,7 @@
           "allPathParameters": [
             {
               "docs": "The unique identifier of the user",
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -804,6 +810,7 @@
           "pathParameters": [
             {
               "docs": "The unique identifier of the user",
+              "explode": undefined,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -856,6 +863,7 @@
               "allowMultiple": false,
               "availability": undefined,
               "docs": "Whether to include user metadata",
+              "explode": undefined,
               "name": {
                 "name": {
                   "camelCase": {
@@ -962,6 +970,7 @@
                 },
               },
             },
+            "docs": "User found successfully",
             "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
@@ -1076,6 +1085,7 @@
                     },
                   },
                 },
+                "docs": "User found successfully",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
@@ -1260,6 +1270,7 @@
                 },
               },
             },
+            "docs": "User created successfully",
             "isWildcardStatusCode": undefined,
             "statusCode": 201,
           },
@@ -1421,6 +1432,7 @@
                     },
                   },
                 },
+                "docs": "User created successfully",
                 "isWildcardStatusCode": undefined,
                 "statusCode": 201,
               },

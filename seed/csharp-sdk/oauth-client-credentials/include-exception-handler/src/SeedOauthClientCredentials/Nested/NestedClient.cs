@@ -8,8 +8,16 @@ public partial class NestedClient
 
     internal NestedClient(RawClient client)
     {
-        _client = client;
-        Api = new ApiClient(_client);
+        try
+        {
+            _client = client;
+            Api = new ApiClient(_client);
+        }
+        catch (Exception ex)
+        {
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
     }
 
     public ApiClient Api { get; }

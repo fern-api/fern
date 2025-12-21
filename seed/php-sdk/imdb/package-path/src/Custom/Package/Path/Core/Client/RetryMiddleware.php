@@ -16,6 +16,8 @@ class RetryMiddleware
         'baseDelay' => 1000
     ];
     private const RETRY_STATUS_CODES = [408, 429];
+    private const MAX_RETRY_DELAY = 60000; // 60 seconds in milliseconds
+    private const JITTER_FACTOR = 0.2; // 20% random jitter
 
     /**
      * @var callable(RequestInterface, array): PromiseInterface
@@ -133,7 +135,7 @@ class RetryMiddleware
                 return $value;
             }
 
-            return $this->doRetry($request, $options);
+            return $this->doRetry($request, $options, $value);
         };
     }
 
@@ -171,12 +173,85 @@ class RetryMiddleware
      *     delay: int,
      *     retryAttempt: int,
      * } $options
+     * @param ?ResponseInterface $response
      * @return PromiseInterface
      */
-    private function doRetry(RequestInterface $request, array $options): PromiseInterface
+    private function doRetry(RequestInterface $request, array $options, ?ResponseInterface $response = null): PromiseInterface
     {
-        $options['delay'] = $this->exponentialDelay(++$options['retryAttempt']);
+        $options['delay'] = $this->getRetryDelay(++$options['retryAttempt'], $response);
         return $this($request, $options);
+    }
+
+    /**
+     * Calculate the retry delay based on response headers or exponential backoff.
+     *
+     * @param int $retryAttempt
+     * @param ?ResponseInterface $response
+     * @return int milliseconds
+     */
+    private function getRetryDelay(int $retryAttempt, ?ResponseInterface $response): int
+    {
+        if ($response !== null) {
+            // Check Retry-After header
+            $retryAfter = $response->getHeaderLine('Retry-After');
+            if ($retryAfter !== '') {
+                // Try parsing as integer (seconds)
+                if (is_numeric($retryAfter)) {
+                    $retryAfterSeconds = (int)$retryAfter;
+                    if ($retryAfterSeconds > 0) {
+                        return min($retryAfterSeconds * 1000, self::MAX_RETRY_DELAY);
+                    }
+                }
+
+                // Try parsing as HTTP date
+                $retryAfterDate = strtotime($retryAfter);
+                if ($retryAfterDate !== false) {
+                    $delay = ($retryAfterDate - time()) * 1000;
+                    if ($delay > 0) {
+                        return min(max($delay, 0), self::MAX_RETRY_DELAY);
+                    }
+                }
+            }
+
+            // Check X-RateLimit-Reset header
+            $rateLimitReset = $response->getHeaderLine('X-RateLimit-Reset');
+            if ($rateLimitReset !== '' && is_numeric($rateLimitReset)) {
+                $resetTime = (int)$rateLimitReset;
+                $delay = ($resetTime * 1000) - (int)(microtime(true) * 1000);
+                if ($delay > 0) {
+                    return $this->addPositiveJitter(min($delay, self::MAX_RETRY_DELAY));
+                }
+            }
+        }
+
+        // Fall back to exponential backoff with symmetric jitter
+        return $this->addSymmetricJitter(
+            min($this->exponentialDelay($retryAttempt), self::MAX_RETRY_DELAY)
+        );
+    }
+
+    /**
+     * Add positive jitter (0% to +20%) to the delay.
+     *
+     * @param int $delay
+     * @return int
+     */
+    private function addPositiveJitter(int $delay): int
+    {
+        $jitterMultiplier = 1 + (mt_rand() / mt_getrandmax()) * self::JITTER_FACTOR;
+        return (int)($delay * $jitterMultiplier);
+    }
+
+    /**
+     * Add symmetric jitter (-10% to +10%) to the delay.
+     *
+     * @param int $delay
+     * @return int
+     */
+    private function addSymmetricJitter(int $delay): int
+    {
+        $jitterMultiplier = 1 + ((mt_rand() / mt_getrandmax()) - 0.5) * self::JITTER_FACTOR;
+        return (int)($delay * $jitterMultiplier);
     }
 
     /**

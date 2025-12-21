@@ -19,38 +19,32 @@ public class AsyncSeedOauthClientCredentialsDefaultClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
-    private String clientId = null;
-
-    private String clientSecret = null;
-
-    private String grantType = null;
-
-    private Environment environment;
+    protected Environment environment;
 
     private OkHttpClient httpClient;
 
     /**
-     * Sets clientId
+     * Creates a builder that uses a pre-generated access token for authentication.
+     * Use this when you already have a valid access token and want to bypass
+     * the OAuth client credentials flow.
+     *
+     * @param token The access token to use for Authorization header
+     * @return A builder configured for token authentication
      */
-    public AsyncSeedOauthClientCredentialsDefaultClientBuilder clientId(String clientId) {
-        this.clientId = clientId;
-        return this;
+    public static _TokenAuth withToken(String token) {
+        return new _TokenAuth(token);
     }
 
     /**
-     * Sets clientSecret
+     * Creates a builder that uses OAuth client credentials for authentication.
+     * The builder will automatically handle token acquisition and refresh.
+     *
+     * @param clientId The OAuth client ID
+     * @param clientSecret The OAuth client secret
+     * @return A builder configured for OAuth client credentials authentication
      */
-    public AsyncSeedOauthClientCredentialsDefaultClientBuilder clientSecret(String clientSecret) {
-        this.clientSecret = clientSecret;
-        return this;
-    }
-
-    /**
-     * Sets grantType
-     */
-    public AsyncSeedOauthClientCredentialsDefaultClientBuilder grantType(String grantType) {
-        this.grantType = grantType;
-        return this;
+    public static _CredentialsAuth withCredentials(String clientId, String clientSecret) {
+        return new _CredentialsAuth(clientId, clientSecret);
     }
 
     public AsyncSeedOauthClientCredentialsDefaultClientBuilder url(String url) {
@@ -134,16 +128,7 @@ public class AsyncSeedOauthClientCredentialsDefaultClientBuilder {
      * }
      * }</pre>
      */
-    protected void setAuthentication(ClientOptions.Builder builder) {
-        if (this.clientId != null && this.clientSecret != null) {
-            ClientOptions.Builder authClientOptionsBuilder =
-                    ClientOptions.builder().environment(this.environment);
-            AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
-            OAuthTokenSupplier oAuthTokenSupplier =
-                    new OAuthTokenSupplier(this.clientId, this.clientSecret, this.grantType, authClient);
-            builder.addHeader("Authorization", oAuthTokenSupplier);
-        }
-    }
+    protected void setAuthentication(ClientOptions.Builder builder) {}
 
     /**
      * Sets the request timeout configuration.
@@ -220,5 +205,42 @@ public class AsyncSeedOauthClientCredentialsDefaultClientBuilder {
     public AsyncSeedOauthClientCredentialsDefaultClient build() {
         validateConfiguration();
         return new AsyncSeedOauthClientCredentialsDefaultClient(buildClientOptions());
+    }
+
+    public static final class _TokenAuth extends AsyncSeedOauthClientCredentialsDefaultClientBuilder {
+        private final String token;
+
+        _TokenAuth(String token) {
+            this.token = token;
+        }
+
+        @Override
+        protected void setAuthentication(ClientOptions.Builder builder) {
+            builder.addHeader("Authorization", "Bearer " + this.token);
+        }
+    }
+
+    public static final class _CredentialsAuth extends AsyncSeedOauthClientCredentialsDefaultClientBuilder {
+        private final String clientId;
+
+        private final String clientSecret;
+
+        _CredentialsAuth(String clientId, String clientSecret) {
+            this.clientId = clientId;
+            this.clientSecret = clientSecret;
+        }
+
+        @Override
+        public AsyncSeedOauthClientCredentialsDefaultClient build() {
+            validateConfiguration();
+            ClientOptions baseOptions = buildClientOptions();
+            AuthClient authClient = new AuthClient(baseOptions);
+            OAuthTokenSupplier oAuthTokenSupplier =
+                    new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
+            ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
+                    .addHeader("Authorization", oAuthTokenSupplier)
+                    .build();
+            return new AsyncSeedOauthClientCredentialsDefaultClient(finalOptions);
+        }
     }
 }

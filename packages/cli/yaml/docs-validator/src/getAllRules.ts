@@ -2,6 +2,7 @@ import { Rule } from "./Rule";
 import { AccentColorContrastRule } from "./rules/accent-color-contrast";
 import { AllRolesMustBeDeclaredRule } from "./rules/all-roles-must-be-declared";
 import { FilepathsExistRule } from "./rules/filepaths-exist";
+import { NoCircularRedirectsRule } from "./rules/no-circular-redirects";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs";
 import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs";
 import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation";
@@ -11,18 +12,21 @@ import { ValidFrontmatter } from "./rules/valid-frontmatter";
 import { ValidInstanceUrlRule } from "./rules/valid-instance-url";
 import { ValidLocalReferencesRule } from "./rules/valid-local-references";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link";
+import { ValidOpenApiExamples } from "./rules/valid-openapi-examples";
 import { ValidateProductFileRule } from "./rules/validate-product-file";
 import { ValidateVersionFileRule } from "./rules/validate-version-file";
 
 const allRules = [
     FilepathsExistRule,
     NoOpenApiV2InDocsRule, // Check OpenAPI v2 first (more fundamental issue)
+    ValidOpenApiExamples, // Validate human examples in OpenAPI specs
     NoNonComponentRefsRule, // Check non-component references (will skip v2 files)
     ValidLocalReferencesRule, // Validate that local references actually exist
     OnlyVersionedNavigation,
     ValidateVersionFileRule,
     ValidateProductFileRule,
     ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
+    NoCircularRedirectsRule, // Detect circular redirect chains
     AccentColorContrastRule,
     ValidMarkdownLinks,
     ValidFileTypes,

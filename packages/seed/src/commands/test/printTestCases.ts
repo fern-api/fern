@@ -8,8 +8,9 @@ export function printTestCases(result: TestRunner.TestResult[]): void {
             Name: r.id,
             "Output Folder": !r.outputFolder ? " -- " : r.outputFolder,
             Result: r.type,
-            "Generation Time": r.metrics.generationTime,
-            "Compile Time": r.metrics.compileTime,
+            "Generation Time": r.metrics.generationTime ?? "",
+            "Build Time": r.metrics.buildTime ?? "",
+            "Test Time": r.metrics.testTime ?? "",
             "Failure Type": r.type === "failure" ? r.cause : "",
             "Failure Message": r.type === "failure" ? r.message : ""
         };

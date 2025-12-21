@@ -1,5 +1,6 @@
 [project]
 name = "fern_exhaustive"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_exhaustive"
@@ -30,7 +31,7 @@ classifiers = [
     "Typing :: Typed"
 ]
 packages = [
-    { include = "seed", from = "in/here/please/src"}
+    { include = "seed/matryoshka/doll/structure", from = "src"}
 ]
 
 [tool.poetry.urls]

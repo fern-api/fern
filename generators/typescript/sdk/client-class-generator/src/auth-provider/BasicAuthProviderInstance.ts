@@ -1,8 +1,8 @@
-import { BasicAuthScheme } from "@fern-fern/ir-sdk/api";
+import type { BasicAuthScheme } from "@fern-fern/ir-sdk/api";
 import { getPropertyKey } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import type { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { AuthProviderInstance } from "./AuthProviderInstance";
+import type { AuthProviderInstance } from "./AuthProviderInstance";
 
 export class BasicAuthProviderInstance implements AuthProviderInstance {
     private readonly authScheme: BasicAuthScheme;
@@ -16,7 +16,14 @@ export class BasicAuthProviderInstance implements AuthProviderInstance {
             namedImports: ["BasicAuthProvider"]
         });
 
-        return ts.factory.createNewExpression(ts.factory.createIdentifier("BasicAuthProvider"), undefined, params);
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier("BasicAuthProvider"),
+                "createInstance"
+            ),
+            undefined,
+            params
+        );
     }
 
     public getSnippetProperties(_context: SdkContext): ts.ObjectLiteralElementLike[] {

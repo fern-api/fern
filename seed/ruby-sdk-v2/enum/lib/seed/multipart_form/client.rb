@@ -20,6 +20,7 @@ module Seed
       #
       # @return [untyped]
       def multipart_form(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         if params[:color]
@@ -47,22 +48,23 @@ module Seed
           )
         end
 
-        _request = Seed::Internal::Multipart::Request.new(
+        request = Seed::Internal::Multipart::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "multipart",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
     end
   end

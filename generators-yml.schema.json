@@ -64,6 +64,22 @@
         }
       ]
     },
+    "aliases": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "groups": {
       "oneOf": [
         {
@@ -91,6 +107,16 @@
       "oneOf": [
         {
           "$ref": "#/definitions/ai.AIServicesSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "autorelease": {
+      "oneOf": [
+        {
+          "type": "boolean"
         },
         {
           "type": "null"
@@ -1492,6 +1518,32 @@
       ],
       "additionalProperties": false
     },
+    "fernDefinition.auth.EndpointSecuritySchemaDetails": {
+      "type": "object",
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.EndpointSecuritySchema": {
+      "type": "object",
+      "properties": {
+        "docs": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "endpoint-security": {
+          "$ref": "#/definitions/fernDefinition.auth.EndpointSecuritySchemaDetails"
+        }
+      },
+      "required": [
+        "endpoint-security"
+      ],
+      "additionalProperties": false
+    },
     "fernDefinition.auth.ApiAuthSchema": {
       "anyOf": [
         {
@@ -1502,6 +1554,9 @@
         },
         {
           "$ref": "#/definitions/fernDefinition.auth.AnyAuthSchemesSchema"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.EndpointSecuritySchema"
         }
       ]
     },
@@ -1600,6 +1655,15 @@
         {
           "$ref": "#/definitions/generators.ResolveAliasesSchema"
         }
+      ]
+    },
+    "generators.DefaultIntegerFormat": {
+      "type": "string",
+      "enum": [
+        "int32",
+        "int64",
+        "uint32",
+        "uint64"
       ]
     },
     "generators.OpenAPISettingsSchema": {
@@ -1859,6 +1923,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-integer-format": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.DefaultIntegerFormat"
             },
             {
               "type": "null"
@@ -2330,6 +2404,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-integer-format": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.DefaultIntegerFormat"
             },
             {
               "type": "null"
@@ -3721,6 +3805,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/group.GeneratorPublishMetadataSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "autorelease": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"

@@ -1,4 +1,4 @@
-import { SetRequired } from "@fern-api/core-utils";
+import { assertNever, SetRequired } from "@fern-api/core-utils";
 import {
     AuthScheme,
     ExampleEndpointCall,
@@ -37,10 +37,9 @@ import {
     InterfaceDeclarationStructure,
     MethodDeclarationStructure,
     ModuleDeclarationStructure,
-    OptionalKind,
-    PropertySignatureStructure,
     Scope,
     StructureKind,
+    TypeAliasDeclarationStructure,
     ts
 } from "ts-morph";
 import { Code, code } from "ts-poet";
@@ -51,7 +50,8 @@ import {
     BearerAuthProviderInstance,
     HeaderAuthProviderInstance,
     InferredAuthProviderInstance,
-    OAuthAuthProviderInstance
+    OAuthAuthProviderInstance,
+    RoutingAuthProviderInstance
 } from "./auth-provider";
 import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
@@ -418,8 +418,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
         }
 
-        const isAnyAuth = intermediateRepresentation.auth.requirement === "ANY";
+        const authRequirement = intermediateRepresentation.auth.requirement;
         const anyAuthProviders: AuthProviderInstance[] = [];
+        const routingAuthProviders: Map<string, AuthProviderInstance> = new Map();
 
         const getAuthProvider = (authScheme: AuthScheme): AuthProviderInstance =>
             AuthScheme._visit<AuthProviderInstance>(authScheme, {
@@ -433,19 +434,34 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             });
 
-        for (const authScheme of authSchemes) {
-            if (isAnyAuth) {
-                const authProvider = getAuthProvider(authScheme);
-                anyAuthProviders.push(authProvider);
-            } else {
-                this.authProvider = getAuthProvider(authScheme);
+        switch (authRequirement) {
+            case "ANY":
+                // For ANY auth, collect all providers and create AnyAuthProviderInstance
+                for (const authScheme of authSchemes) {
+                    anyAuthProviders.push(getAuthProvider(authScheme));
+                }
+                if (anyAuthProviders.length > 0) {
+                    this.authProvider = new AnyAuthProviderInstance(anyAuthProviders);
+                }
                 break;
-            }
-        }
-
-        // After the loop, if isAnyAuth, create AnyAuthProviderInstance with all collected providers
-        if (isAnyAuth && anyAuthProviders.length > 0) {
-            this.authProvider = new AnyAuthProviderInstance(anyAuthProviders);
+            case "ENDPOINT_SECURITY":
+                // For ENDPOINT_SECURITY, collect all providers keyed by scheme key and create RoutingAuthProviderInstance
+                for (const authScheme of authSchemes) {
+                    routingAuthProviders.set(authScheme.key, getAuthProvider(authScheme));
+                }
+                if (routingAuthProviders.size > 0) {
+                    this.authProvider = new RoutingAuthProviderInstance(routingAuthProviders);
+                }
+                break;
+            case "ALL":
+                // For ALL auth requirements, use the first auth scheme
+                for (const authScheme of authSchemes) {
+                    this.authProvider = getAuthProvider(authScheme);
+                    break;
+                }
+                break;
+            default:
+                assertNever(authRequirement);
         }
     }
 
@@ -679,11 +695,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             )
                         )
                     ),
-                    initializer:
-                        optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
-                        !context.baseClient.anyRequiredBaseClientOptions(context)
-                            ? "{}"
-                            : undefined
+                    initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
                 }
             ];
             const statements = code`
@@ -707,11 +719,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 )
                             )
                         ),
-                        initializer:
-                            optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
-                            !context.baseClient.anyRequiredBaseClientOptions(context)
-                                ? "{}"
-                                : undefined
+                        initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
                     }
                 ]
             });
@@ -996,14 +1004,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return properties;
     }
 
-    private generateOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
-        const properties: OptionalKind<PropertySignatureStructure>[] = [];
-
+    private generateOptionsInterface(context: SdkContext): TypeAliasDeclarationStructure {
+        // Use type alias instead of interface because BaseClientOptions may include union types
+        // (e.g., AtLeastOneOf pattern for AnyAuthProvider.AuthOptions)
+        // TypeScript interfaces can only extend object types with statically known members
         return {
-            kind: StructureKind.Interface,
+            kind: StructureKind.TypeAlias,
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
-            properties,
-            extends: [getTextOfTsNode(context.sdkClientClass.getReferenceToBaseClientOptions().getTypeNode())],
+            type: getTextOfTsNode(context.sdkClientClass.getReferenceToBaseClientOptions().getTypeNode()),
             isExported: true
         };
     }

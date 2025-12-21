@@ -4,7 +4,7 @@ image: fernapi/fern-postman
 changelogLocation: ../../generators/postman/versions.yml
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/postman-generator dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/postman-generator
   docker:
     file: ./generators/postman/Dockerfile
     image: fernapi/fern-postman
@@ -12,7 +12,7 @@ publish:
 test:
   docker:
     image: fernapi/fern-postman:latest
-    command: pnpm --filter @fern-api/postman-generator dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/postman-generator
 fixtures:
   imdb:
     - customConfig: null

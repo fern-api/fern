@@ -1,0 +1,340 @@
+{
+  "apiName": "Webhook OpenAPI Responses Test",
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_paymentSessions",
+    ],
+    "types": [
+      "PaymentSession",
+      "PaymentSessionCompletedEvent",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {
+    "subpackage_paymentSessions": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "paymentSessions",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_paymentSessions",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [
+        {
+          "description": "Webhook triggered when a payment session is completed",
+          "examples": [
+            {
+              "name": "paymentSessionsPaymentSessionCompletedWebhookExample",
+              "payload": {
+                "eventId": "evt_xyz789",
+                "eventType": "payment_session.completed",
+                "paymentSession": {
+                  "amount": 1.1,
+                  "createdAt": "2024-01-15T09:30:00Z",
+                  "currency": "string",
+                  "id": "ps_abc123",
+                  "status": "pending",
+                },
+                "timestamp": "2024-01-15T09:30:00Z",
+              },
+            },
+          ],
+          "headers": [],
+          "id": "paymentSessionCompletedWebhook",
+          "method": "POST",
+          "name": "Payment session completed webhook",
+          "path": [],
+          "payload": {
+            "description": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "PaymentSessionCompletedEvent",
+              },
+            },
+          },
+          "responses": [
+            {
+              "description": "Webhook received successfully (HTTP 204 No Content)",
+              "isWildcard": undefined,
+              "statusCode": 204,
+              "type": {
+                "extends": [],
+                "extraProperties": undefined,
+                "properties": [],
+                "type": "object",
+              },
+            },
+            {
+              "description": "Invalid payload or authentication failure",
+              "isWildcard": undefined,
+              "statusCode": 400,
+              "type": {
+                "extends": [],
+                "extraProperties": undefined,
+                "properties": [],
+                "type": "object",
+              },
+            },
+            {
+              "description": "Server error processing webhook",
+              "isWildcard": undefined,
+              "statusCode": 500,
+              "type": {
+                "extends": [],
+                "extraProperties": undefined,
+                "properties": [],
+                "type": "object",
+              },
+            },
+          ],
+        },
+      ],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "PaymentSession": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "PaymentSession",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Unique payment session identifier",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Current status of the payment session",
+            "key": "status",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "PaymentSessionStatus",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Payment amount",
+            "key": "amount",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "double",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Currency code",
+            "key": "currency",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Customer identifier",
+            "key": "customerId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "When the session was created",
+            "key": "createdAt",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "type": "datetime",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "PaymentSessionCompletedEvent": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "PaymentSessionCompletedEvent",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Unique event identifier",
+            "key": "eventId",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Type of the event",
+            "key": "eventType",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "PaymentSessionCompletedEventEventType",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "paymentSession",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "PaymentSession",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "When the event occurred",
+            "key": "timestamp",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "type": "datetime",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "PaymentSessionCompletedEventEventType": {
+      "availability": undefined,
+      "description": "Type of the event",
+      "displayName": undefined,
+      "name": "PaymentSessionCompletedEventEventType",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "payment_session.completed",
+          },
+        ],
+      },
+    },
+    "PaymentSessionStatus": {
+      "availability": undefined,
+      "description": "Current status of the payment session",
+      "displayName": undefined,
+      "name": "PaymentSessionStatus",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "pending",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "processing",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "completed",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "failed",
+          },
+        ],
+      },
+    },
+  },
+}

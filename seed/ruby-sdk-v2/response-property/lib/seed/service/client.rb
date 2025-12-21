@@ -20,23 +20,25 @@ module Seed
       #
       # @return [Seed::Service::Types::Response]
       def get_movie(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::Response.load(_response.body)
+          Seed::Service::Types::Response.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -50,23 +52,25 @@ module Seed
       #
       # @return [Seed::Service::Types::Response]
       def get_movie_docs(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::Response.load(_response.body)
+          Seed::Service::Types::Response.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -80,23 +84,25 @@ module Seed
       #
       # @return [Seed::Types::StringResponse]
       def get_movie_name(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::StringResponse.load(_response.body)
+          Seed::Types::StringResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -110,23 +116,25 @@ module Seed
       #
       # @return [Seed::Service::Types::Response]
       def get_movie_metadata(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::Response.load(_response.body)
+          Seed::Service::Types::Response.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -140,22 +148,24 @@ module Seed
       #
       # @return [Seed::Service::Types::Response, nil]
       def get_optional_movie(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # @param request_options [Hash]
@@ -168,23 +178,25 @@ module Seed
       #
       # @return [Seed::Service::Types::WithDocs, nil]
       def get_optional_movie_docs(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Service::Types::OptionalWithDocs.load(_response.body)
+          Seed::Service::Types::OptionalWithDocs.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -198,23 +210,25 @@ module Seed
       #
       # @return [Seed::Types::StringResponse, nil]
       def get_optional_movie_name(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "movie",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::OptionalStringResponse.load(_response.body)
+          Seed::Types::OptionalStringResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
     end

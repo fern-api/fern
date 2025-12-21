@@ -1,17 +1,15 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
 export const V62_TO_V61_MIGRATION: IrMigration<
-    IntermediateRepresentation,
+    IrVersions.V62.ir.IntermediateRepresentation,
     IrVersions.V61.ir.IntermediateRepresentation
 > = {
     laterVersion: "v62",
     earlierVersion: "v61",
     firstGeneratorVersionToConsumeNewIR: {
-        // All generators currently expect v61, so they haven't been updated to v62 yet
         [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -23,9 +21,9 @@ export const V62_TO_V61_MIGRATION: IrMigration<
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PYTHON_FASTAPI]: "2.0.1",
+        [GeneratorName.PYTHON_PYDANTIC]: "1.11.2",
+        [GeneratorName.PYTHON_SDK]: "4.46.5",
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -47,51 +45,20 @@ export const V62_TO_V61_MIGRATION: IrMigration<
             unrecognizedObjectKeys: "passthrough",
             skipValidation: true
         }),
-    migrateBackwards: (v62: IntermediateRepresentation): IrVersions.V61.ir.IntermediateRepresentation => {
+    migrateBackwards: (
+        v62: IrVersions.V62.IntermediateRepresentation
+    ): IrVersions.V61.ir.IntermediateRepresentation => {
         return {
             ...v62,
-            errors: resolveErrorDeclarationConflicts(v62.errors),
-            services: Object.fromEntries(
-                Object.entries(v62.services).map(([key, service]) => [key, convertHttpService(service)])
-            )
+            errors: resolveErrorDeclarationConflicts(v62.errors)
         };
     }
 };
 
 function resolveErrorDeclarationConflicts(
-    errors: IntermediateRepresentation["errors"]
-): Record<string, IrVersions.V61.errors.ErrorDeclaration> {
-    const resolvedErrors: Record<string, IrVersions.V61.errors.ErrorDeclaration> = {};
-
-    for (const [errorId, errorDeclaration] of Object.entries(errors)) {
-        const isWildcard = errorDeclaration.isWildcardStatusCode === true;
-
-        if (!isWildcard) {
-            // For non-wildcard errors, set isWildcardStatusCode to undefined since v61 didn't use it
-            const { isWildcardStatusCode, ...v61ErrorDeclaration } = errorDeclaration;
-            resolvedErrors[errorId] = {
-                ...v61ErrorDeclaration,
-                isWildcardStatusCode: undefined
-            } as IrVersions.V61.errors.ErrorDeclaration;
-        }
-        // Wildcard errors are not supported in v61, so we don't include them in the resolved errors
-    }
-
-    return resolvedErrors;
-}
-
-function convertHttpService(service: IntermediateRepresentation["services"][string]): IrVersions.V61.http.HttpService {
-    return {
-        ...service,
-        endpoints: service.endpoints.map(convertHttpEndpoint)
-    } as IrVersions.V61.http.HttpService;
-}
-
-function convertHttpEndpoint(
-    endpoint: IntermediateRepresentation["services"][string]["endpoints"][number]
-): IrVersions.V61.http.HttpEndpoint {
-    return {
-        ...endpoint,
-        errors: endpoint.errors
-    } as IrVersions.V61.http.HttpEndpoint;
+    errors: Record<string, IrVersions.V62.ErrorDeclaration>
+): Record<string, IrVersions.V61.ErrorDeclaration> {
+    return Object.fromEntries(
+        Object.entries(errors).filter(([_, errorDeclaration]) => errorDeclaration.isWildcardStatusCode !== true)
+    );
 }

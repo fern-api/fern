@@ -13,8 +13,8 @@ export declare namespace HttpEndpointGenerator {
     }
 }
 
-const QUERY_PARAMETER_BAG_NAME = "_query";
-export const HTTP_RESPONSE_VN = "_response";
+const QUERY_PARAMETER_BAG_NAME = "query_params";
+export const HTTP_RESPONSE_VN = "response";
 export const PARAMS_VN = "params";
 export const CODE_VN = "code";
 export const ERROR_CLASS_VN = "error_class";
@@ -49,6 +49,22 @@ export class HttpEndpointGenerator {
 
         const statements: ruby.AstNode[] = [];
 
+        // Normalize params to convert camelCase keys to snake_case
+        // This allows SDK methods to accept both snake_case and camelCase keys
+        statements.push(
+            ruby.codeblock((writer) => {
+                writer.write(`${PARAMS_VN} = `);
+                ruby.invokeMethod({
+                    on: ruby.classReference({
+                        name: "Utils",
+                        modules: [this.context.getRootModuleName(), "Internal", "Types"]
+                    }),
+                    method: "normalize_keys",
+                    arguments_: [ruby.codeblock(PARAMS_VN)]
+                }).write(writer);
+            })
+        );
+
         const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
         if (requestBodyCodeBlock?.code != null) {
             statements.push(requestBodyCodeBlock.code);
@@ -59,17 +75,30 @@ export class HttpEndpointGenerator {
             statements.push(queryParameterCodeBlock.code);
         }
 
+        const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
+        if (headerParameterCodeBlock?.code != null) {
+            statements.push(headerParameterCodeBlock.code);
+        }
+
         const pathParameterReferences = this.getPathParameterReferences({ endpoint });
+        const baseUrlName = this.getBaseUrlNameForEndpoint(endpoint);
         const sendRequestCodeBlock = rawClient.sendRequest({
             baseUrl: ruby.codeblock(""),
             pathParameterReferences,
             endpoint,
             requestType: request?.getRequestType(),
             queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
-            bodyReference: requestBodyCodeBlock?.requestBodyReference
+            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+            bodyReference: requestBodyCodeBlock?.requestBodyReference,
+            baseUrlName
         });
 
-        let requestStatements = this.generateRequestProcedure({ endpoint, sendRequestCodeBlock });
+        const isCustomPagination = endpoint.pagination?.type === "custom";
+        let requestStatements = this.generateRequestProcedure({
+            endpoint,
+            sendRequestCodeBlock,
+            storeResponseInVariable: isCustomPagination
+        });
 
         const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
         const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
@@ -77,8 +106,32 @@ export class HttpEndpointGenerator {
 
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
-                case "custom":
+                case "custom": {
+                    const customPagerClassName = this.context.customConfig.customPagerName ?? "CustomPager";
+                    const itemField = endpoint.pagination.results.property.name.wireValue;
+                    requestStatements = [
+                        ...requestStatements,
+                        ruby.invokeMethod({
+                            on: ruby.classReference({
+                                name: customPagerClassName,
+                                modules: [this.context.getRootModuleName(), "Internal"]
+                            }),
+                            method: "new",
+                            arguments_: [ruby.codeblock("parsed_response")],
+                            keywordArguments: [
+                                ruby.keywordArgument({
+                                    name: "item_field",
+                                    value: ruby.codeblock(`:${itemField}`)
+                                }),
+                                ruby.keywordArgument({
+                                    name: "raw_client",
+                                    value: ruby.codeblock("@client")
+                                })
+                            ]
+                        })
+                    ];
                     break;
+                }
                 case "cursor":
                     requestStatements = [
                         ruby.invokeMethod({
@@ -190,10 +243,12 @@ export class HttpEndpointGenerator {
 
     private generateRequestProcedure({
         endpoint,
-        sendRequestCodeBlock
+        sendRequestCodeBlock,
+        storeResponseInVariable
     }: {
         endpoint: HttpEndpoint;
         sendRequestCodeBlock?: ruby.CodeBlock;
+        storeResponseInVariable?: boolean;
     }): ruby.AstNode[] {
         const statements: ruby.AstNode[] = [];
 
@@ -202,7 +257,7 @@ export class HttpEndpointGenerator {
         } else {
             statements.push(
                 ruby.codeblock((writer) => {
-                    writer.write(`_request = ${PARAMS_VN}`);
+                    writer.write(`request = ${PARAMS_VN}`);
                 })
             );
         }
@@ -239,7 +294,8 @@ export class HttpEndpointGenerator {
                                     case "json":
                                         this.loadResponseBodyFromJson({
                                             writer,
-                                            typeReference: endpoint.response.body.value.responseBodyType
+                                            typeReference: endpoint.response.body.value.responseBodyType,
+                                            storeInVariable: storeResponseInVariable
                                         });
                                         break;
                                     default:
@@ -282,17 +338,23 @@ export class HttpEndpointGenerator {
 
     private loadResponseBodyFromJson({
         writer,
-        typeReference
+        typeReference,
+        storeInVariable
     }: {
         writer: ruby.Writer;
         typeReference: TypeReference;
+        storeInVariable?: boolean;
     }): void {
         switch (typeReference.type) {
-            case "named":
-                writer.writeLine(
-                    `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`
-                );
+            case "named": {
+                const loadExpression = `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`;
+                if (storeInVariable) {
+                    writer.writeLine(`parsed_response = ${loadExpression}`);
+                } else {
+                    writer.writeLine(loadExpression);
+                }
                 break;
+            }
             default:
                 break;
         }
@@ -360,5 +422,18 @@ export class HttpEndpointGenerator {
         normalized = normalized.replace(/(^|,\s*)nil(?:,\s*nil)+(?=,|\]|$)/g, "$1nil");
         normalized = normalized.replace(/Hash\[untyped,\s*untyped\]/g, "Hash");
         return normalized;
+    }
+
+    private getBaseUrlNameForEndpoint(endpoint: HttpEndpoint): string | undefined {
+        if (!this.context.isMultipleBaseUrlsEnvironment()) {
+            return undefined;
+        }
+
+        const baseUrlId = endpoint.baseUrl ?? this.context.getDefaultBaseUrlId();
+        if (baseUrlId == null) {
+            return undefined;
+        }
+
+        return this.context.getBaseUrlName(baseUrlId);
     }
 }

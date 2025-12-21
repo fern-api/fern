@@ -143,7 +143,6 @@ SeedHeaderTokenClient client = SeedHeaderTokenClient
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.headerToken.SeedHeaderTokenClient;
 import com.seed.headerToken.core.RequestOptions;
@@ -151,7 +150,7 @@ import com.seed.headerToken.core.RequestOptions;
 // Client level
 SeedHeaderTokenClient client = SeedHeaderTokenClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -159,7 +158,7 @@ client.service().getWithBearerToken(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

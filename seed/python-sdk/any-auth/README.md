@@ -12,6 +12,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 - [Usage](#usage)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
+- [Oauth Token Override](#oauth-token-override)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -44,7 +45,6 @@ client = SeedAnyAuth(
 client.auth.get_token(
     client_id="client_id",
     client_secret="client_secret",
-    scope="scope",
 )
 ```
 
@@ -68,7 +68,6 @@ async def main() -> None:
     await client.auth.get_token(
         client_id="client_id",
         client_secret="client_secret",
-        scope="scope",
     )
 
 
@@ -88,6 +87,24 @@ try:
 except ApiError as e:
     print(e.status_code)
     print(e.body)
+```
+
+## Oauth Token Override
+
+This SDK supports two authentication methods: OAuth client credentials flow (automatic token management) or direct bearer token authentication. You can choose between these options when initializing the client:
+
+```python
+from seed import SeedAnyAuth
+
+# Option 1: Direct bearer token (bypass OAuth flow)
+client = SeedAnyAuth(..., token="my-pre-generated-bearer-token")
+
+from seed import SeedAnyAuth
+
+# Option 2: OAuth client credentials flow (automatic token management)
+client = SeedAnyAuth(
+    ..., client_id="your-client-id", client_secret="your-client-secret"
+)
 ```
 
 ## Advanced

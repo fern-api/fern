@@ -1,4 +1,10 @@
 export const AsIsFiles = {
+    // GitHub CI workflow
+    GithubCiYml: "github-ci.yml",
+
+    // Gitignore
+    Gitignore: "gitignore",
+
     // Public-facing error classes
     ApiError: "errors/api_error.Template.rb",
     ClientError: "errors/client_error.Template.rb",
@@ -17,6 +23,7 @@ export const AsIsFiles = {
     OffsetItemIterator: "internal/iterators/offset_item_iterator.Template.rb",
     CursorPageIterator: "internal/iterators/cursor_page_iterator.Template.rb",
     OffsetPageIterator: "internal/iterators/offset_page_iterator.Template.rb",
+    CustomPager: "internal/iterators/custom_pager.Template.rb",
 
     // HTTP
     HttpBaseRequest: "internal/http/base_request.Template.rb",
@@ -102,5 +109,6 @@ const asIsTopoValue = {
     [AsIsFiles.CursorItemIterator]: 27,
     [AsIsFiles.OffsetItemIterator]: 28,
     [AsIsFiles.CursorPageIterator]: 29,
-    [AsIsFiles.OffsetPageIterator]: 30
+    [AsIsFiles.OffsetPageIterator]: 30,
+    [AsIsFiles.CustomPager]: 31
 };

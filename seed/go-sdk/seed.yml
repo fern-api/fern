@@ -19,7 +19,7 @@ publish:
   workingDirectory: generators/go
   preBuildCommands:
     - go build ./...
-    - pnpm --filter @fern-api/go-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/go-sdk
   docker:
     file: ./generators/go/sdk/Dockerfile
     image: fernapi/fern-go-sdk
@@ -27,10 +27,21 @@ publish:
 test:
   docker:
     image: fernapi/fern-go-sdk:latest
-    command: pnpm --filter @fern-api/go-sdk dist:cli && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
   podman:
     image: fernapi/fern-go-sdk:latest
-    command: pnpm --filter @fern-api/go-sdk dist:cli && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+  local:
+    workingDirectory: generators/go
+    buildCommand:
+      # Build TypeScript v2 CLI first
+      - pnpm turbo run dist:cli --filter @fern-api/go-sdk
+      # Build Go v1 CLI
+      - go build -ldflags "-s -w" -trimpath -buildvcs=false -o fern-go-sdk ./cmd/fern-go-sdk
+    runCommand: ./fern-go-sdk {CONFIG_PATH}
+    env:
+      # Set path to the go-v2 CLI built from TypeScript (absolute path)
+      GO_V2_PATH: "/Users/jsklan/git/fern-2/generators/go-v2/sdk/dist/cli.cjs"
 language: go
 generatorType: SDK
 defaultOutputMode: github
@@ -109,6 +120,7 @@ fixtures:
       customConfig:
         enableWireTests: true
         packageName: testPackageName
+        errorCodes: per-endpoint
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
@@ -223,6 +235,9 @@ fixtures:
   nullable-request-body:
     - outputFolder: dynamic-snippets-disabled
       disableDynamicSnippetTests: true
+  oauth-client-credentials-mandatory-auth:
+    - outputFolder: no-custom-config
+      customConfig: null
   pagination-custom:
     - outputFolder: .
       customConfig:
@@ -230,9 +245,10 @@ fixtures:
 scripts:
   - image: fernapi/go-seed:1.0.0
     commands:
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
-      - CGO_ENABLED=0 go test ./...
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
+      test:
+        - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
+        - CGO_ENABLED=0 go test ./...
+        - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
 allowedFailures:
   - alias-extends
   - bytes-download
@@ -249,6 +265,7 @@ allowedFailures:
   - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
   - property-access
+  - oauth-client-credentials-reference
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination

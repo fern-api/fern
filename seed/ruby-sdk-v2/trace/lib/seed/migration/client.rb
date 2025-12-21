@@ -20,22 +20,28 @@ module Seed
       # @option params [String] :admin_key_header
       #
       # @return [Array[Seed::Migration::Types::Migration]]
-      def get_attempted_migrations(request_options: {}, **_params)
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+      def get_attempted_migrations(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        headers = {}
+        headers["admin-key-header"] = params[:admin_key_header] if params[:admin_key_header]
+
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
           method: "GET",
-          path: "/migration-info/all"
+          path: "/migration-info/all",
+          headers: headers,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
     end
   end

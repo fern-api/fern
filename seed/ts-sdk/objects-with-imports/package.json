@@ -2,7 +2,10 @@
     "name": "@fern/objects-with-imports",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:objects-with-imports/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/objects-with-imports/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

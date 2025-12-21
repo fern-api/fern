@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { AuthSchemeDeclarationSchema } from "../../fernDefinition/resources/auth/types/AuthSchemeDeclarationSchema";
 import { ApiConfigurationSchema } from "./ApiConfigurationSchema";
@@ -18,7 +18,7 @@ import { ApiDefinitionSettingsSchema } from "./ApiDefinitionSettingsSchema";
 
 export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
     serializers.GeneratorsConfigurationSchema.Raw,
-    FernDefinition.GeneratorsConfigurationSchema
+    GeneratorsYml.GeneratorsConfigurationSchema
 > = core.serialization.object({
     "auth-schemes": core.serialization.record(core.serialization.string(), AuthSchemeDeclarationSchema).optional(),
     api: ApiConfigurationSchema.optional(),
@@ -26,9 +26,13 @@ export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
     metadata: OutputMetadataSchema.optional(),
     readme: ReadmeSchema.optional(),
     "default-group": core.serialization.string().optional(),
+    aliases: core.serialization
+        .record(core.serialization.string(), core.serialization.list(core.serialization.string()))
+        .optional(),
     groups: core.serialization.record(core.serialization.string(), GeneratorGroupSchema).optional(),
     reviewers: ReviewersSchema.optional(),
     ai: AiServicesSchema.optional(),
+    autorelease: core.serialization.boolean().optional(),
     openapi: GeneratorsOpenApiSchema.optional(),
     "openapi-overrides": core.serialization.string().optional(),
     "spec-origin": core.serialization.string().optional(),
@@ -44,9 +48,11 @@ export declare namespace GeneratorsConfigurationSchema {
         metadata?: OutputMetadataSchema.Raw | null;
         readme?: ReadmeSchema.Raw | null;
         "default-group"?: string | null;
+        aliases?: Record<string, string[]> | null;
         groups?: Record<string, GeneratorGroupSchema.Raw> | null;
         reviewers?: ReviewersSchema.Raw | null;
         ai?: AiServicesSchema.Raw | null;
+        autorelease?: boolean | null;
         openapi?: GeneratorsOpenApiSchema.Raw | null;
         "openapi-overrides"?: string | null;
         "spec-origin"?: string | null;

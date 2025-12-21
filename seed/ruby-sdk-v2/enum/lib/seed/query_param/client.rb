@@ -24,31 +24,32 @@ module Seed
       #
       # @return [untyped]
       def send_(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
-        _query = {}
-        _query["operand"] = params[:operand] if params.key?(:operand)
-        _query["maybeOperand"] = params[:maybe_operand] if params.key?(:maybe_operand)
-        _query["operandOrColor"] = params[:operand_or_color] if params.key?(:operand_or_color)
-        _query["maybeOperandOrColor"] = params[:maybe_operand_or_color] if params.key?(:maybe_operand_or_color)
-        params.except(*_query_param_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        query_param_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
+        query_params = {}
+        query_params["operand"] = params[:operand] if params.key?(:operand)
+        query_params["maybeOperand"] = params[:maybe_operand] if params.key?(:maybe_operand)
+        query_params["operandOrColor"] = params[:operand_or_color] if params.key?(:operand_or_color)
+        query_params["maybeOperandOrColor"] = params[:maybe_operand_or_color] if params.key?(:maybe_operand_or_color)
+        params.except(*query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "query",
-          query: _query
+          query: query_params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # @param request_options [Hash]
@@ -65,31 +66,32 @@ module Seed
       #
       # @return [untyped]
       def send_list(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
-        _query = {}
-        _query["operand"] = params[:operand] if params.key?(:operand)
-        _query["maybeOperand"] = params[:maybe_operand] if params.key?(:maybe_operand)
-        _query["operandOrColor"] = params[:operand_or_color] if params.key?(:operand_or_color)
-        _query["maybeOperandOrColor"] = params[:maybe_operand_or_color] if params.key?(:maybe_operand_or_color)
-        params.except(*_query_param_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        query_param_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
+        query_params = {}
+        query_params["operand"] = params[:operand] if params.key?(:operand)
+        query_params["maybeOperand"] = params[:maybe_operand] if params.key?(:maybe_operand)
+        query_params["operandOrColor"] = params[:operand_or_color] if params.key?(:operand_or_color)
+        query_params["maybeOperandOrColor"] = params[:maybe_operand_or_color] if params.key?(:maybe_operand_or_color)
+        params.except(*query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "query-list",
-          query: _query
+          query: query_params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
     end
   end

@@ -7,5 +7,5 @@ client = Seed::Client.new(
 
 client.payment.create(
   amount: 1,
-  currency: 
+  currency: 'USD'
 );

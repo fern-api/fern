@@ -5,21 +5,16 @@ import com.seed.inferredAuthImplicitNoExpiry.resources.auth.requests.GetTokenReq
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedInferredAuthImplicitNoExpiryClient client = SeedInferredAuthImplicitNoExpiryClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedInferredAuthImplicitNoExpiryClient client = SeedInferredAuthImplicitNoExpiryClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
-        client.auth().getTokenWithClientCredentials(
-            GetTokenRequest
-                .builder()
-                .xApiKey("X-Api-Key")
-                .clientId("client_id")
-                .clientSecret("client_secret")
-                .audience("https://api.example.com")
-                .grantType("client_credentials")
-                .scope("scope")
-                .build()
-        );
+        client.auth()
+                .getTokenWithClientCredentials(GetTokenRequest.builder()
+                        .xApiKey("X-Api-Key")
+                        .clientId("client_id")
+                        .clientSecret("client_secret")
+                        .scope("scope")
+                        .build());
     }
 }

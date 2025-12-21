@@ -3,6 +3,7 @@
  */
 package com.seed.pagination.core.pagination;
 
+import com.seed.pagination.core.ClientOptions;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -62,12 +63,12 @@ public class AsyncFernCustomPaginator<T> implements BiDirectionalPage<T> {
      * Create an AsyncCustomPager from an initial response.
      *
      * @param initialResponse The first page response from the API
-     * @param client The async HTTP client to use for subsequent requests
+     * @param clientOptions The client options containing HTTP client and other configuration
      * @param requestOptions Request options for authentication, headers, etc.
      * @return A CompletableFuture containing the new AsyncCustomPager instance
      */
     public static <T> CompletableFuture<AsyncFernCustomPaginator<T>> createAsync(
-            Object initialResponse, okhttp3.OkHttpClient client, Object requestOptions) {
+            Object initialResponse, ClientOptions clientOptions, Object requestOptions) {
         throw new UnsupportedOperationException("AsyncFernCustomPaginator must be implemented. "
                 + "Please implement this class in core/AsyncFernCustomPaginator.java to define your async pagination logic. "
                 + "This file has been added to .fernignore and will not be overwritten. "

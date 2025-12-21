@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { ApiDefinitionSchema } from "./ApiDefinitionSchema";
 
 export const ApiDefinitionList: core.serialization.Schema<
     serializers.ApiDefinitionList.Raw,
-    FernDefinition.ApiDefinitionList
+    GeneratorsYml.ApiDefinitionList
 > = core.serialization.list(ApiDefinitionSchema);
 
 export declare namespace ApiDefinitionList {

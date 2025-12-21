@@ -61,6 +61,15 @@ types:
         docs: The totall number of /users
       data: list<User>
 
+  ListUsersOptionalDataPaginationResponse:
+    properties:
+      hasNextPage: optional<boolean>
+      page: optional<Page>
+      total_count:
+        type: integer
+        docs: The totall number of /users
+      data: optional<list<User>>
+
   ListUsersMixedTypePaginationResponse:
     properties:
       next: string
@@ -228,6 +237,7 @@ service:
             docs: Defaults to first page
           limit:
             type: optional<integer>
+            default: 123
             docs: |
               The maximum number of elements to return.
               This is also used as the step size in this
@@ -303,6 +313,23 @@ service:
               the next page of results.
       response: root.UsernameCursor
 
+    listUsernamesWithOptionalResponse:
+      pagination:
+        cursor: $request.starting_after
+        next_cursor: $response.cursor.after
+        results: $response.cursor.data
+      method: GET
+      path: ""
+      request:
+        name: ListUsernamesWithOptionalResponseRequest
+        query-parameters:
+          starting_after:
+            type: optional<string>
+            docs: |
+              The cursor used for pagination in order to fetch
+              the next page of results.
+      response: optional<root.UsernameCursor>
+
     listWithGlobalConfig:
       method: GET
       path: ""
@@ -313,3 +340,52 @@ service:
           offset:
             type: optional<integer>
       response: UsernameContainer
+
+    listWithOptionalData:
+      pagination:
+        offset: $request.page
+        results: $response.data
+      method: GET
+      path: /optional-data
+      request:
+        name: ListUsersOptionalDataRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: Defaults to first page
+            default: 0
+      response: ListUsersOptionalDataPaginationResponse
+      examples:
+        - name: WithData
+          query-parameters:
+            page: 1
+          response:
+            body:
+              hasNextPage: true
+              page:
+                page: 1
+                next:
+                  page: 2
+                  starting_after: "next_cursor"
+                per_page: 10
+                total_page: 5
+              total_count: 50
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
+        - name: WithoutData
+          query-parameters:
+            page: 1
+          response:
+            body:
+              hasNextPage: false
+              page:
+                page: 1
+                next:
+                  page: 2
+                  starting_after: "next_cursor"
+                per_page: 10
+                total_page: 1
+              total_count: 0

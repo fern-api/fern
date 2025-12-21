@@ -513,7 +513,8 @@
       "type": {
         "type": "unknown"
       },
-      "examples": []
+      "examples": [],
+      "headers": []
     },
     "error_:UnauthorizedError": {
       "name": {
@@ -569,7 +570,8 @@
       "type": {
         "type": "unknown"
       },
-      "examples": []
+      "examples": [],
+      "headers": []
     }
   },
   "services": {
@@ -1139,7 +1141,8 @@
               },
               "type": "json"
             },
-            "statusCode": 200
+            "statusCode": 200,
+            "docs": "Successful token response"
           },
           "errors": [
             {

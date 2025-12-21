@@ -1,5 +1,133 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.21.8
+  changelogEntry:
+    - summary: |
+        Add request scoping to wire tests using X-Test-Id header. Each test now sends a unique
+        header that is used to filter WireMock request verification, enabling safe concurrent
+        test execution without interference between tests.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 60
+
+- version: 1.21.7
+  changelogEntry:
+    - summary: Fix nil check in caller
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 60
+
+- version: 1.21.6
+  changelogEntry:
+    - summary: Add GO_V2_PATH environment variable support for configurable v2 binary path during local development and testing
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 60
+
+- version: 1.21.5
+  changelogEntry:
+    - summary: |
+        Fix duplicate test function generation in wire tests. When multiple endpoints map to the
+        same test function name, subsequent occurrences now get numeric suffixes (e.g., Test2, Test3)
+        to avoid Go compilation errors while preserving all test coverage.
+      type: fix
+  createdAt: "2025-12-18"
+  irVersion: 60
+
+- version: 1.21.4
+  changelogEntry:
+    - summary: |
+        Add sdkVersion as a top-level field in the generated metadata.json file.
+      type: chore
+  createdAt: "2025-12-18"
+  irVersion: 60
+
+- version: 1.21.3
+  changelogEntry:
+    - summary: |
+        Fix multi-URL environment resolution to fall back to client-level environment when
+        per-request environment is not specified. This ensures endpoints correctly resolve
+        their base URL when the environment is set at client construction time.
+      type: fix
+  createdAt: "2025-12-17"
+  irVersion: 60
+
+- version: 1.21.2
+  changelogEntry:
+    - summary: |
+        Fix retry logic to reset request body before each retry attempt.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 60
+
+- version: 1.21.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth token handling for optional expires_in field. Use pointer conversion for optional
+        request fields and check ExpiresIn as pointer type with default fallback.
+      type: fix
+  createdAt: "2025-12-16"
+  irVersion: 60
+
+- version: 1.21.0
+  changelogEntry:
+    - summary: |
+        Add support for multi-URL environments via `x-fern-server-name` extension. APIs with multiple
+        base URLs per environment can now route different endpoints to different base URLs automatically.
+        The SDK generates a named `Environment` struct with fields for each base URL, and endpoints
+        resolve their base URL using the `ResolveEnvironmentBaseURL` function.
+      type: feat
+  createdAt: "2025-12-15"
+  irVersion: 60
+
+- version: 1.20.2
+  changelogEntry:
+    - summary: |
+        Fix OAuth token fetching to use GetOrFetch instead of GetToken.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 60
+
+- version: 1.20.1
+  changelogEntry:
+    - summary: |
+        Improve OAuth token fetching with concurrency protection and better error handling.
+        Multiple concurrent requests now share a single token fetch instead of each triggering
+        their own. Added nil pointer checks for OAuth responses and a 1-hour default expiry
+        fallback when the server doesn't provide an expires_in value.
+      type: fix
+  createdAt: "2025-12-12"
+  irVersion: 60
+
+- version: 1.20.0
+  changelogEntry:
+    - summary: |
+        Add `errorCodes` config option with values `per-endpoint` or `global`. The `global` mode (default)
+        generates a shared `error_codes.go` file for all errors. The `per-endpoint` mode generates error
+        handling code inline for each endpoint, which is more robust for namespaced APIs or APIs where
+        different endpoints have different error schemas for the same status code.
+      type: feat
+  createdAt: "2025-12-11"
+  irVersion: 60
+
+- version: 1.19.0
+  changelogEntry:
+    - summary: |
+        Add OAuth token fetching support. The SDK now automatically fetches and caches OAuth tokens
+        using client credentials when configured. Tokens are refreshed automatically when expired.
+      type: feat
+  createdAt: "2025-12-10"
+  irVersion: 60
+
+- version: 1.18.4
+  changelogEntry:
+    - summary: |
+        Fix snippet generation for object types with optional fields that have no example value.
+        Previously, these fields would generate invalid Go code with `<nil>` instead of being omitted.
+      type: fix
+  createdAt: "2025-12-02"
+  irVersion: 60
+
 - version: 1.18.3
   changelogEntry:
     - summary: Fix handling of reserved identifiers in field names and make dynamic snippets match.

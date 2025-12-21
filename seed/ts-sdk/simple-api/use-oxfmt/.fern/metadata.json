@@ -1,8 +1,9 @@
 {
-  "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-typescript-sdk",
-  "generatorVersion": "latest",
-  "generatorConfig": {
-    "formatter": "oxfmt"
-  }
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "latest",
+    "generatorConfig": {
+        "formatter": "oxfmt"
+    },
+    "sdkVersion": "0.0.1"
 }

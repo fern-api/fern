@@ -1,4 +1,5 @@
 {
+  "apiName": "OneOf References Mapping Test API",
   "auth": undefined,
   "authSchemes": {},
   "globalHeaders": [],
@@ -22,7 +23,20 @@
           {
             "availability": undefined,
             "description": "Bad request",
-            "examples": [],
+            "examples": [
+              {
+                "description": undefined,
+                "name": undefined,
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "INVALID_REQUEST",
+                    "message": "The request was invalid",
+                  },
+                },
+              },
+            ],
+            "headers": undefined,
             "isWildcard": undefined,
             "name": "BadRequestError",
             "statusCode": 400,
@@ -378,47 +392,40 @@
       "displayName": undefined,
       "name": "EventRequest",
       "shape": {
-        "discriminant": undefined,
-        "type": "discriminatedUnion",
+        "type": "undiscriminatedUnion",
         "variants": [
           {
-            "additionalProperties": {
-              "extends": [
-                "UserEvent",
-              ],
-              "extraProperties": undefined,
-              "properties": [],
-            },
             "availability": undefined,
             "description": undefined,
-            "discriminantValue": "user",
             "displayName": "user",
+            "type": {
+              "default": undefined,
+              "type": "id",
+              "value": "UserEvent",
+            },
+            "typeName": "UserEvent",
           },
           {
-            "additionalProperties": {
-              "extends": [
-                "SystemEvent",
-              ],
-              "extraProperties": undefined,
-              "properties": [],
-            },
             "availability": undefined,
             "description": undefined,
-            "discriminantValue": "system",
             "displayName": "system",
+            "type": {
+              "default": undefined,
+              "type": "id",
+              "value": "SystemEvent",
+            },
+            "typeName": "SystemEvent",
           },
           {
-            "additionalProperties": {
-              "extends": [
-                "ErrorEvent",
-              ],
-              "extraProperties": undefined,
-              "properties": [],
-            },
             "availability": undefined,
             "description": undefined,
-            "discriminantValue": "error",
             "displayName": "error",
+            "type": {
+              "default": undefined,
+              "type": "id",
+              "value": "ErrorEvent",
+            },
+            "typeName": "ErrorEvent",
           },
         ],
       },

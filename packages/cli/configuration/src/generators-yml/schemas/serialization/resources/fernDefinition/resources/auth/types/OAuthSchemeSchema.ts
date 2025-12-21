@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { AuthScope } from "./AuthScope";
 import { OAuthGetTokenEndpointSchema } from "./OAuthGetTokenEndpointSchema";
@@ -12,7 +12,7 @@ import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const OAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.OAuthSchemeSchema.Raw,
-    FernDefinition.fernDefinition.OAuthSchemeSchema
+    GeneratorsYml.fernDefinition.OAuthSchemeSchema
 > = core.serialization
     .object({
         scheme: core.serialization.stringLiteral("oauth"),

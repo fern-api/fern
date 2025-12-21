@@ -9,5 +9,6 @@
     "extra_dependencies": {
       "boto3": "1.28.57"
     }
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

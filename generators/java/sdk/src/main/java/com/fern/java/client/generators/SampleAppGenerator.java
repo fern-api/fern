@@ -31,6 +31,8 @@ public final class SampleAppGenerator extends AbstractFilesGenerator {
 
     @Override
     public List<GeneratedFile> generateFiles() {
+        boolean skipRepositories = generatorContext.getCustomConfig() != null
+                && generatorContext.getCustomConfig().gradleCentralDependencyManagement();
         GeneratedBuildGradle buildGradle = GeneratedBuildGradle.builder()
                 .directoryPrefix(SAMPLE_APP_DIRECTORY)
                 .addPlugins(GradlePlugin.builder()
@@ -42,6 +44,7 @@ public final class SampleAppGenerator extends AbstractFilesGenerator {
                 .addDependencies()
                 .addDependencies(RootProjectGradleDependency.INSTANCE)
                 .shouldSignPackage(false)
+                .skipRepositories(skipRepositories)
                 .build();
         TypeSpec appTypeSpec = TypeSpec.classBuilder("App")
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)

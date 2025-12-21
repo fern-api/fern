@@ -60,11 +60,9 @@ import com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRe
 
 public class Example {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient
-            .builder()
-            .clientId("<clientId>")
-            .clientSecret("<clientSecret>")
-            .build();
+        SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.withCredentials("<clientId>", "<clientSecret>")
+            .build()
+        ;
 
         client.auth().getToken(
             GetTokenRequest
@@ -75,6 +73,29 @@ public class Example {
         );
     }
 }
+```
+## Authentication
+
+This SDK supports two authentication methods:
+
+### Option 1: Direct Bearer Token
+
+If you already have a valid access token, you can use it directly:
+
+```java
+SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.withToken("your-access-token")
+    .url("https://api.example.com")
+    .build();
+```
+
+### Option 2: OAuth Client Credentials
+
+The SDK can automatically handle token acquisition and refresh:
+
+```java
+SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient.withCredentials("client-id", "client-secret")
+    .url("https://api.example.com")
+    .build();
 ```
 
 ## Base Url
@@ -151,7 +172,6 @@ SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefau
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
-
 ```java
 import com.seed.oauthClientCredentialsDefault.SeedOauthClientCredentialsDefaultClient;
 import com.seed.oauthClientCredentialsDefault.core.RequestOptions;
@@ -159,7 +179,7 @@ import com.seed.oauthClientCredentialsDefault.core.RequestOptions;
 // Client level
 SeedOauthClientCredentialsDefaultClient client = SeedOauthClientCredentialsDefaultClient
     .builder()
-    .timeout(10)
+    .timeout(60)
     .build();
 
 // Request level
@@ -167,7 +187,7 @@ client.auth().getToken(
     ...,
     RequestOptions
         .builder()
-        .timeout(10)
+        .timeout(60)
         .build()
 );
 ```

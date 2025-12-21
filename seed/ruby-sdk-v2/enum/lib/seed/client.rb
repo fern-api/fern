@@ -5,12 +5,12 @@ module Seed
     # @param base_url [String, nil]
     #
     # @return [void]
-    def initialize(base_url:)
+    def initialize(base_url: nil)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
-          "User-Agent": "fern_enum/0.0.1",
-          "X-Fern-Language": "Ruby"
+          "User-Agent" => "fern_enum/0.0.1",
+          "X-Fern-Language" => "Ruby"
         }
       )
     end

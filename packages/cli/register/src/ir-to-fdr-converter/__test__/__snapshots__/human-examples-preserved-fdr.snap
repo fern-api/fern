@@ -1,0 +1,526 @@
+{
+  "apiName": "Human Examples Preserved Test",
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_products",
+    ],
+    "types": [
+      "CreateProductRequest",
+      "Product",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {
+    "subpackage_products": {
+      "description": undefined,
+      "displayName": "products",
+      "endpoints": [
+        {
+          "auth": false,
+          "authV2": undefined,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": "Create a new product",
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": undefined,
+              "path": "/products",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": {
+                "id": "a3f1c9e2-4b7d-4f8a-9c2e-1d2b3f4a5c6d",
+                "inStock": false,
+                "price": 79.99,
+                "title": "supersonic flux capacitor Headphones",
+              },
+              "requestBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "a3f1c9e2-4b7d-4f8a-9c2e-1d2b3f4a5c6d",
+                  "inStock": false,
+                  "price": 79.99,
+                  "title": "supersonic flux capacitor Headphones",
+                },
+              },
+              "responseBody": {
+                "createdAt": "2024-01-15T10:30:00Z",
+                "id": "a3f1c9e2-4b7d-4f8a-9c2e-1d2b3f4a5c6d",
+                "inStock": false,
+                "price": 79.99,
+                "title": "supersonic flux capacitor Headphones",
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "createdAt": "2024-01-15T10:30:00Z",
+                  "id": "a3f1c9e2-4b7d-4f8a-9c2e-1d2b3f4a5c6d",
+                  "inStock": false,
+                  "price": 79.99,
+                  "title": "supersonic flux capacitor Headphones",
+                },
+              },
+              "responseStatusCode": 201,
+            },
+          ],
+          "headers": [],
+          "id": "createProduct",
+          "includeInApiExplorer": undefined,
+          "method": "POST",
+          "multiAuth": undefined,
+          "name": "Create a product",
+          "originalEndpointId": "endpoint_products.createProduct",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/products",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "protocol": {
+            "type": "rest",
+          },
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "type": {
+              "contentType": "application/json",
+              "description": undefined,
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "CreateProductRequest",
+                },
+              },
+              "type": "json",
+            },
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "description": undefined,
+                "type": {
+                  "contentType": "application/json",
+                  "description": undefined,
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "default": undefined,
+                      "type": "id",
+                      "value": "CreateProductRequest",
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+            ],
+          },
+          "response": {
+            "description": "Product created successfully",
+            "isWildcard": undefined,
+            "statusCode": 201,
+            "type": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Product",
+              },
+            },
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "description": "Product created successfully",
+                "isWildcard": undefined,
+                "statusCode": 201,
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "Product",
+                  },
+                },
+              },
+            ],
+          },
+          "slug": undefined,
+        },
+        {
+          "auth": false,
+          "authV2": undefined,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": "Retrieve a product by ID",
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": undefined,
+              "path": "/products/productId",
+              "pathParameters": {
+                "productId": "productId",
+              },
+              "queryParameters": {},
+              "requestBody": undefined,
+              "requestBodyV3": undefined,
+              "responseBody": {
+                "createdAt": "2024-01-15T09:30:00Z",
+                "description": "string",
+                "id": "string",
+                "inStock": true,
+                "price": 1.1,
+                "title": "string",
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "createdAt": "2024-01-15T09:30:00Z",
+                  "description": "string",
+                  "id": "string",
+                  "inStock": true,
+                  "price": 1.1,
+                  "title": "string",
+                },
+              },
+              "responseStatusCode": 200,
+            },
+          ],
+          "headers": [],
+          "id": "getProduct",
+          "includeInApiExplorer": undefined,
+          "method": "GET",
+          "multiAuth": undefined,
+          "name": "Get a product",
+          "originalEndpointId": "endpoint_products.getProduct",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/products/",
+              },
+              {
+                "type": "pathParameter",
+                "value": "productId",
+              },
+              {
+                "type": "literal",
+                "value": "",
+              },
+            ],
+            "pathParameters": [
+              {
+                "availability": undefined,
+                "description": undefined,
+                "explode": undefined,
+                "key": "productId",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": "uuid",
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+            ],
+          },
+          "protocol": {
+            "type": "rest",
+          },
+          "queryParameters": [],
+          "request": undefined,
+          "requestsV2": {
+            "requests": undefined,
+          },
+          "response": {
+            "description": "Product retrieved successfully",
+            "isWildcard": undefined,
+            "statusCode": 200,
+            "type": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "Product",
+              },
+            },
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "description": "Product retrieved successfully",
+                "isWildcard": undefined,
+                "statusCode": 200,
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "Product",
+                  },
+                },
+              },
+            ],
+          },
+          "slug": undefined,
+        },
+      ],
+      "name": "products",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_products",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "CreateProductRequest": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "CreateProductRequest",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Optional client-provided ID",
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": "uuid",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Product title",
+            "key": "title",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Product price",
+            "key": "price",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "double",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Whether the product is in stock",
+            "key": "inStock",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "type": "boolean",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "Product": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "Product",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "title",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "price",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "double",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "inStock",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "type": "boolean",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "createdAt",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "type": "datetime",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "description",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "nullable",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

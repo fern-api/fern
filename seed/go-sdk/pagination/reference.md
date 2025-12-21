@@ -1511,6 +1511,58 @@ the next page of results.
 </dl>
 </details>
 
+<details><summary><code>client.Users.ListUsernamesWithOptionalResponse() -> *fern.UsernameCursor</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersCursorPaginationRequest{
+        StartingAfter: fern.String(
+            "starting_after",
+        ),
+    }
+client.Users.ListWithCursorPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**startingAfter:** `*string` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Users.ListWithGlobalConfig() -> *fern.UsernameContainer</code></summary>
 <dl>
 <dd>
@@ -1549,6 +1601,55 @@ client.Users.ListWithGlobalConfig(
 <dd>
 
 **offset:** `*int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.ListWithOptionalData() -> *fern.ListUsersOptionalDataPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &fern.ListUsersOptionalDataRequest{
+        Page: fern.Int(
+            1,
+        ),
+    }
+client.Users.ListWithOptionalData(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Defaults to first page
     
 </dd>
 </dl>

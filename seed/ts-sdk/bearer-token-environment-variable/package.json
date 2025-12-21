@@ -2,7 +2,10 @@
     "name": "@fern/bearer-token-environment-variable",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:bearer-token-environment-variable/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bearer-token-environment-variable/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

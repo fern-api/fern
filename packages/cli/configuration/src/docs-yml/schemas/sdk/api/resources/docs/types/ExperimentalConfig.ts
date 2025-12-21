@@ -26,4 +26,6 @@ export interface ExperimentalConfig {
     dynamicSnippets?: boolean;
     /** Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples. */
     aiExamples?: boolean;
+    /** Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters. */
+    aiExampleStyleInstructions?: string;
 }

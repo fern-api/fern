@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const FormParameterEncoding: core.serialization.Schema<
     serializers.FormParameterEncoding.Raw,
-    FernDefinition.FormParameterEncoding
+    GeneratorsYml.FormParameterEncoding
 > = core.serialization.enum_(["form", "json"]);
 
 export declare namespace FormParameterEncoding {

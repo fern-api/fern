@@ -1,4 +1,5 @@
 {
+  "apiName": "Auth Test API",
   "auth": {
     "description": "JWT Bearer token authentication",
     "tokenName": "token",
@@ -34,7 +35,20 @@
           {
             "availability": undefined,
             "description": "Unauthorized",
-            "examples": [],
+            "examples": [
+              {
+                "description": undefined,
+                "name": undefined,
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "UNAUTHORIZED",
+                    "message": "Authentication required",
+                  },
+                },
+              },
+            ],
+            "headers": undefined,
             "isWildcard": undefined,
             "name": "UnauthorizedError",
             "statusCode": 401,

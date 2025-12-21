@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
 export const ProtobufTypeSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.ProtobufTypeSchema.Raw,
-    FernDefinition.fernDefinition.ProtobufTypeSchema
+    GeneratorsYml.fernDefinition.ProtobufTypeSchema
 > = core.serialization.object({
     type: core.serialization.string(),
 });

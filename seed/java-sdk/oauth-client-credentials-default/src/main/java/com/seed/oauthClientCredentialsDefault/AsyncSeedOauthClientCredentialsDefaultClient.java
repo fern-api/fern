@@ -46,7 +46,23 @@ public class AsyncSeedOauthClientCredentialsDefaultClient {
         return this.simpleClient.get();
     }
 
-    public static AsyncSeedOauthClientCredentialsDefaultClientBuilder builder() {
-        return new AsyncSeedOauthClientCredentialsDefaultClientBuilder();
+    /**
+     * Creates a client builder using a pre-generated access token.
+     * @param token The access token to use for authentication
+     * @return A builder configured for token authentication
+     */
+    public static AsyncSeedOauthClientCredentialsDefaultClientBuilder._TokenAuth withToken(String token) {
+        return AsyncSeedOauthClientCredentialsDefaultClientBuilder.withToken(token);
+    }
+
+    /**
+     * Creates a client builder using OAuth client credentials.
+     * @param clientId The OAuth client ID
+     * @param clientSecret The OAuth client secret
+     * @return A builder configured for OAuth authentication
+     */
+    public static AsyncSeedOauthClientCredentialsDefaultClientBuilder._CredentialsAuth withCredentials(
+            String clientId, String clientSecret) {
+        return AsyncSeedOauthClientCredentialsDefaultClientBuilder.withCredentials(clientId, clientSecret);
     }
 }

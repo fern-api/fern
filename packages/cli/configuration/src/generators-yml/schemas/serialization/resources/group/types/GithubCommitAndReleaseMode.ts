@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const GithubCommitAndReleaseMode: core.serialization.Schema<
     serializers.GithubCommitAndReleaseMode.Raw,
-    FernDefinition.GithubCommitAndReleaseMode
+    GeneratorsYml.GithubCommitAndReleaseMode
 > = core.serialization.enum_(["commit", "release"]);
 
 export declare namespace GithubCommitAndReleaseMode {

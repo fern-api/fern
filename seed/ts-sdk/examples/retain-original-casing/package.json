@@ -2,7 +2,10 @@
     "name": "@fern/examples",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:examples/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/examples/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

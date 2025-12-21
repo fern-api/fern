@@ -13,8 +13,18 @@ import (
 )
 
 // v2BinPath is the path to the go-v2 binary included in the SDK
-// generator docker image.
-const v2BinPath = "/bin/go-v2"
+// generator docker image. Can be overridden with GO_V2_PATH environment variable.
+const defaultV2BinPath = "/bin/go-v2"
+
+// getV2BinPath returns the path to the go-v2 binary, checking for environment variable override
+func getV2BinPath() string {
+	if envPath := os.Getenv("GO_V2_PATH"); envPath != "" {
+		fmt.Printf("DEBUG: Using GO_V2_PATH environment variable: %s\n", envPath)
+		return envPath
+	}
+	fmt.Printf("DEBUG: GO_V2_PATH not set, using default: %s\n", defaultV2BinPath)
+	return defaultV2BinPath
+}
 
 // Generator represents a shim used to go-v2 SDK generator.
 type Generator struct {
@@ -34,6 +44,7 @@ func (g *Generator) Run() error {
 		return errors.New("internal error; failed to resolve configuration file path")
 	}
 
+	v2BinPath := getV2BinPath()
 	if _, err := os.Stat(v2BinPath); os.IsNotExist(err) {
 		return fmt.Errorf("go-v2 binary not found at %s", v2BinPath)
 	}

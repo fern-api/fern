@@ -90,5 +90,3 @@ await client.search({
 </dd>
 </dl>
 </details>
-
-## 

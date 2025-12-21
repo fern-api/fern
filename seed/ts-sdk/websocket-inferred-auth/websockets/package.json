@@ -2,7 +2,10 @@
     "name": "@fern/websocket-inferred-auth",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:websocket-inferred-auth/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/websocket-inferred-auth/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
@@ -46,9 +49,9 @@
         "ws": "^8.16.0"
     },
     "devDependencies": {
-        "@types/ws": "^8.5.10",
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",
+        "@types/ws": "^8.5.10",
         "vitest": "^3.2.4",
         "msw": "2.11.2",
         "@types/node": "^18.19.70",

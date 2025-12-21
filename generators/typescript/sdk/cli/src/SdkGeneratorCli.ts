@@ -72,8 +72,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             packageJson: parsed?.packageJson,
             publishToJsr: parsed?.publishToJsr ?? false,
             omitUndefined: parsed?.omitUndefined ?? true,
+            writeUnitTests: parsed?.writeUnitTests ?? true,
             generateWireTests: parsed?.generateWireTests ?? true,
             noScripts: parsed?.noScripts ?? false,
+            skipNpmPkgFix: parsed?.skipNpmPkgFix ?? false,
             useBigInt: parsed?.useBigInt ?? false,
             useLegacyExports: parsed?.useLegacyExports ?? false,
             streamType: parsed?.streamType ?? "web",
@@ -95,7 +97,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             linter: parsed?.linter ?? "biome",
             formatter: parsed?.formatter ?? "biome",
             generateSubpackageExports: parsed?.generateSubpackageExports ?? false,
-            offsetSemantics: parsed?.offsetSemantics ?? "item-index"
+            offsetSemantics: parsed?.offsetSemantics ?? "item-index",
+            customPagerName: parsed?.customPagerName ?? "CustomPager"
         };
 
         if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
@@ -213,7 +216,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 allowExtraFields: customConfig.allowExtraFields ?? false,
                 inlineFileProperties: customConfig.inlineFileProperties ?? true,
                 inlinePathParameters: customConfig.inlinePathParameters ?? true,
-                writeUnitTests: customConfig.generateWireTests ?? config.writeUnitTests,
+                writeUnitTests: customConfig.writeUnitTests ?? true,
+                generateWireTests: customConfig.generateWireTests ?? true,
                 executionEnvironment: this.executionEnvironment(config),
                 packageJson: customConfig.packageJson,
                 outputJsr: customConfig.publishToJsr ?? false,
@@ -221,7 +225,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 useBigInt: customConfig.useBigInt ?? false,
                 enableInlineTypes: customConfig.enableInlineTypes ?? true,
                 useLegacyExports,
-                generateWireTests: customConfig.generateWireTests ?? false,
                 streamType: customConfig.streamType ?? "web",
                 fileResponseType: customConfig.fileResponseType ?? "binary-response",
                 formDataSupport: customConfig.formDataSupport ?? "Node18",
@@ -241,7 +244,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 formatter: customConfig.formatter,
                 linter: customConfig.linter,
                 generateSubpackageExports: customConfig.generateSubpackageExports ?? false,
-                offsetSemantics: customConfig.offsetSemantics
+                offsetSemantics: customConfig.offsetSemantics,
+                customPagerName: customConfig.customPagerName ?? "CustomPager"
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -339,6 +343,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
     protected shouldTolerateRepublish(_customConfig: SdkCustomConfig): boolean {
         const customConfig = this.customConfigWithOverrides(_customConfig);
         return customConfig.tolerateRepublish;
+    }
+
+    protected shouldSkipNpmPkgFix(_customConfig: SdkCustomConfig): boolean {
+        const customConfig = this.customConfigWithOverrides(_customConfig);
+        return customConfig.skipNpmPkgFix ?? false;
     }
 
     protected publishToJsr(_customConfig: SdkCustomConfig): boolean {

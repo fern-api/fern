@@ -33,7 +33,7 @@ import { State } from "./State";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getTypeFromTypeReference, stripNullableWrapperForExtends } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedTypeDeclaration {
     name: string | undefined;
@@ -228,7 +228,7 @@ export function buildObjectTypeDeclaration({
             namespace,
             declarationDepth: declarationDepth + 1
         });
-        extendedSchemas.push(getTypeFromTypeReference(allOfTypeReference));
+        extendedSchemas.push(stripNullableWrapperForExtends(getTypeFromTypeReference(allOfTypeReference)));
     }
 
     for (const inlineSchemaId of schemasToInline) {
@@ -258,7 +258,7 @@ export function buildObjectTypeDeclaration({
                 namespace,
                 declarationDepth: declarationDepth + 1
             });
-            extendedSchemas.push(getTypeFromTypeReference(extendedSchemaTypeReference));
+            extendedSchemas.push(stripNullableWrapperForExtends(getTypeFromTypeReference(extendedSchemaTypeReference)));
         }
     }
 
@@ -345,7 +345,7 @@ function getAllParentSchemasToInline({
 }
 
 // Helper function to extract properties directly from a Schema object
-function getPropertiesFromSchema(
+export function getPropertiesFromSchema(
     context: OpenApiIrConverterContext,
     schema: Schema,
     namespace: string | undefined
@@ -364,7 +364,7 @@ function getPropertiesFromSchema(
     return { properties: [], allOf: [] };
 }
 
-function getProperties(
+export function getProperties(
     context: OpenApiIrConverterContext,
     schemaId: SchemaId,
     namespace: string | undefined
@@ -713,7 +713,7 @@ function startsWithNumber(str: string): boolean {
     return STARTS_WITH_NUMBER.test(str);
 }
 
-function getSchemaIdOfResolvedType({
+export function getSchemaIdOfResolvedType({
     schema,
     context,
     namespace

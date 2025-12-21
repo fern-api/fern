@@ -2,7 +2,10 @@
     "name": "@fern/bytes-upload",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:bytes-upload/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bytes-upload/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

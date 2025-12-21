@@ -20,25 +20,27 @@ module Seed
       #
       # @return [untyped]
       def patch(request_options: {}, **params)
-        _body_prop_names = %i[application require_auth]
-        _body_bag = params.slice(*_body_prop_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        body_prop_names = %i[application require_auth]
+        body_bag = params.slice(*body_prop_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "",
-          body: Seed::Service::Types::PatchProxyRequest.new(_body_bag).to_h
+          body: Seed::Service::Types::PatchProxyRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Update with JSON merge patch - complex types.
@@ -57,27 +59,29 @@ module Seed
       #
       # @return [untyped]
       def patch_complex(request_options: {}, **params)
-        _path_param_names = %i[id]
-        _body = params.except(*_path_param_names)
-        _body_prop_names = %i[name age active metadata tags email nickname bio profile_image_url settings]
-        _body_bag = _body.slice(*_body_prop_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[id]
+        body_params = params.except(*path_param_names)
+        body_prop_names = %i[name age active metadata tags email nickname bio profile_image_url settings]
+        body_bag = body_params.slice(*body_prop_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "complex/#{params[:id]}",
-          body: Seed::Service::Types::PatchComplexRequest.new(_body_bag).to_h
+          body: Seed::Service::Types::PatchComplexRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Named request with mixed optional/nullable fields and merge-patch content type.
@@ -94,27 +98,29 @@ module Seed
       #
       # @return [untyped]
       def named_patch_with_mixed(request_options: {}, **params)
-        _path_param_names = %i[id]
-        _body = params.except(*_path_param_names)
-        _body_prop_names = %i[app_id instructions active]
-        _body_bag = _body.slice(*_body_prop_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[id]
+        body_params = params.except(*path_param_names)
+        body_prop_names = %i[app_id instructions active]
+        body_bag = body_params.slice(*body_prop_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "named-mixed/#{params[:id]}",
-          body: Seed::Service::Types::NamedMixedPatchRequest.new(_body_bag).to_h
+          body: Seed::Service::Types::NamedMixedPatchRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
@@ -132,25 +138,27 @@ module Seed
       #
       # @return [untyped]
       def optional_merge_patch_test(request_options: {}, **params)
-        _body_prop_names = %i[required_field optional_string optional_integer optional_boolean nullable_string]
-        _body_bag = params.slice(*_body_prop_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        body_prop_names = %i[required_field optional_string optional_integer optional_boolean nullable_string]
+        body_bag = params.slice(*body_prop_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "optional-merge-patch-test",
-          body: Seed::Service::Types::OptionalMergePatchRequest.new(_body_bag).to_h
+          body: Seed::Service::Types::OptionalMergePatchRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Regular PATCH endpoint without merge-patch semantics
@@ -166,27 +174,29 @@ module Seed
       #
       # @return [untyped]
       def regular_patch(request_options: {}, **params)
-        _path_param_names = %i[id]
-        _body = params.except(*_path_param_names)
-        _body_prop_names = %i[field_1 field_2]
-        _body_bag = _body.slice(*_body_prop_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[id]
+        body_params = params.except(*path_param_names)
+        body_prop_names = %i[field_1 field_2]
+        body_bag = body_params.slice(*body_prop_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "regular/#{params[:id]}",
-          body: Seed::Service::Types::RegularPatchRequest.new(_body_bag).to_h
+          body: Seed::Service::Types::RegularPatchRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
     end
   end

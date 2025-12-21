@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "decodeNullableToOptional": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

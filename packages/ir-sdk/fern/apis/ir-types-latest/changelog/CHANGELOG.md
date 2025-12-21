@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v63.0.0] - 2025-12-18
+- Feature: Add `ENDPOINT_SECURITY` value to `AuthSchemesRequirement` enum to support per-endpoint authentication configuration. 
+  When `auth.requirement` is set to `ENDPOINT_SECURITY`, the API definition declares that authentication requirements are specified on individual endpoints rather than globally. 
+  All defined auth schemes are included in `auth.schemes` for generators to reference when processing endpoint-specific security.
+
+## [v62.6.0] - 2025-12-18
+- Feature: Add optional `methodName` field to `WebSocketMessage` for custom SDK method naming in websocket operations
+- Feature: Support `x-fern-sdk-method-name` extension in AsyncAPI v3 for custom websocket method names
+
+## [v62.5.0] - 2025-12-14
+- Feature: Add optional `docs` field to `HttpResponse` for webhook response descriptions
+- Feature: Enhanced webhook response documentation support from OpenAPI specifications
+
+## [v62.4.0] - 2025-12-14
+- Feature: Add `explode` field to PathParameter and QueryParameter types for OpenAPI parameter serialization control
+
+## [v62.3.0] - 2025-12-11
+- Feature: Add parameters and values to dynamic IR `InferredAuth` to support dynamic snippet generation for inferred auth
+
+## [v62.2.0] - 2025-12-10
+- Fix: Propogate webhook responses from OpenAPI to IR
+
+## [v62.1.0] - 2025-11-25
+
+- Feature: Add `isWildcardStatusCode` field to IR for 4XX/5XX wildcard status code support
+- Feature: Add optional `apiPlayground` field to `HttpEndpoint` to control API playground visibility via `x-fern-playground-enabled` extension
+- Feature: Add support for preserving error response headers in IR
+- Feature: Add refresh token endpoint option to inferred auth
+- Feature: Add service-level docs support (docs field on `HttpService`)
+
+## [v62.0.0] - 2025-11-04
+
+- Feature: Add file upload examples support to IR (breaking change - adds new union variant to `ExampleRequestBody`)
+- Feature: Add support for parsing minItems and maxItems from OpenAPI array schemas (`ListValidationRules`)
+- Feature: Add optional `postmanCollectionLink` field to `EndpointSnippetRequest` for API reference configuration
+
 ## [v61.7.0] - 2025-10-31
 
 - Feature: Add GenerationMetadata to IR

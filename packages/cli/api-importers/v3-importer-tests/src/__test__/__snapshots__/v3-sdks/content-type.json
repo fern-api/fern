@@ -596,7 +596,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "The sample response"
           },
           "docs": "Test multipart request with different content types.\n",
           "v2Examples": {
@@ -654,7 +655,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "The sample response"
               }
             ]
           }
@@ -1202,7 +1204,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "The sample response"
           },
           "docs": "Test request with dual content types.\n",
           "v2Examples": {
@@ -1258,7 +1261,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "The sample response"
               }
             ]
           }
@@ -1270,6 +1274,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Test content-type parsing.",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1303,22 +1308,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Test content-type parsing.",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "testContentTypeParsing",
+      "safeName": "testContentTypeParsing"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "test_content_type_parsing",
+      "safeName": "test_content_type_parsing"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TEST_CONTENT_TYPE_PARSING",
+      "safeName": "TEST_CONTENT_TYPE_PARSING"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "TestContentTypeParsing",
+      "safeName": "TestContentTypeParsing"
     }
   },
   "constants": {

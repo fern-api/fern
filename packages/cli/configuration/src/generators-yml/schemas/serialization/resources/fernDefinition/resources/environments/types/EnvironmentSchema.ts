@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { SingleBaseUrlEnvironmentSchema } from "./SingleBaseUrlEnvironmentSchema";
 import { MultipleBaseUrlsEnvironmentSchema } from "./MultipleBaseUrlsEnvironmentSchema";
 
 export const EnvironmentSchema: core.serialization.Schema<
     serializers.fernDefinition.EnvironmentSchema.Raw,
-    FernDefinition.fernDefinition.EnvironmentSchema
+    GeneratorsYml.fernDefinition.EnvironmentSchema
 > = core.serialization.undiscriminatedUnion([
     core.serialization.string(),
     SingleBaseUrlEnvironmentSchema,

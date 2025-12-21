@@ -4,7 +4,7 @@ export default defineConfig({
     test: {
         globals: true,
         include: ["**/*.{test,spec}.ts"],
-        exclude: ["**/node_modules/**", "**/dist/**"],
+        exclude: ["**/node_modules/**", "**/dist/**", "**/lib/**"],
         server: {
             deps: {
                 fallbackCJS: true

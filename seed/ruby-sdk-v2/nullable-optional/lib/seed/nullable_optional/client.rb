@@ -23,22 +23,24 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def get_user(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{params[:user_id]}"
+          path: "/api/users/#{params[:user_id]}",
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::NullableOptional::Types::UserResponse.load(_response.body)
+          Seed::NullableOptional::Types::UserResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -54,23 +56,25 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def create_user(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/api/users",
-          body: Seed::NullableOptional::Types::CreateUserRequest.new(params).to_h
+          body: Seed::NullableOptional::Types::CreateUserRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::NullableOptional::Types::UserResponse.load(_response.body)
+          Seed::NullableOptional::Types::UserResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -87,23 +91,25 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def update_user(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/users/#{params[:user_id]}",
-          body: Seed::NullableOptional::Types::UpdateUserRequest.new(params).to_h
+          body: Seed::NullableOptional::Types::UpdateUserRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::NullableOptional::Types::UserResponse.load(_response.body)
+          Seed::NullableOptional::Types::UserResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -123,31 +129,32 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def list_users(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[limit offset include_deleted sort_by]
-        _query = {}
-        _query["limit"] = params[:limit] if params.key?(:limit)
-        _query["offset"] = params[:offset] if params.key?(:offset)
-        _query["includeDeleted"] = params[:include_deleted] if params.key?(:include_deleted)
-        _query["sortBy"] = params[:sort_by] if params.key?(:sort_by)
-        params.except(*_query_param_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        query_param_names = %i[limit offset include_deleted sort_by]
+        query_params = {}
+        query_params["limit"] = params[:limit] if params.key?(:limit)
+        query_params["offset"] = params[:offset] if params.key?(:offset)
+        query_params["includeDeleted"] = params[:include_deleted] if params.key?(:include_deleted)
+        query_params["sortBy"] = params[:sort_by] if params.key?(:sort_by)
+        params.except(*query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users",
-          query: _query
+          query: query_params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Search users
@@ -166,31 +173,32 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def search_users(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[query department role is_active]
-        _query = {}
-        _query["query"] = params[:query] if params.key?(:query)
-        _query["department"] = params[:department] if params.key?(:department)
-        _query["role"] = params[:role] if params.key?(:role)
-        _query["isActive"] = params[:is_active] if params.key?(:is_active)
-        params.except(*_query_param_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        query_param_names = %i[query department role is_active]
+        query_params = {}
+        query_params["query"] = params[:query] if params.key?(:query)
+        query_params["department"] = params[:department] if params.key?(:department)
+        query_params["role"] = params[:role] if params.key?(:role)
+        query_params["isActive"] = params[:is_active] if params.key?(:is_active)
+        params.except(*query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users/search",
-          query: _query
+          query: query_params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Create a complex profile to test nullable enums and unions
@@ -205,23 +213,25 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def create_complex_profile(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/api/profiles/complex",
-          body: Seed::NullableOptional::Types::ComplexProfile.new(params).to_h
+          body: Seed::NullableOptional::Types::ComplexProfile.new(params).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::NullableOptional::Types::ComplexProfile.load(_response.body)
+          Seed::NullableOptional::Types::ComplexProfile.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -238,22 +248,24 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def get_complex_profile(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/profiles/complex/#{params[:profile_id]}"
+          path: "/api/profiles/complex/#{params[:profile_id]}",
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::NullableOptional::Types::ComplexProfile.load(_response.body)
+          Seed::NullableOptional::Types::ComplexProfile.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -270,28 +282,30 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def update_complex_profile(request_options: {}, **params)
-        _path_param_names = %i[profile_id]
-        _body = params.except(*_path_param_names)
-        _body_prop_names = %i[nullable_role nullable_status nullable_notification nullable_search_result nullable_array]
-        _body_bag = _body.slice(*_body_prop_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[profile_id]
+        body_params = params.except(*path_param_names)
+        body_prop_names = %i[nullable_role nullable_status nullable_notification nullable_search_result nullable_array]
+        body_bag = body_params.slice(*body_prop_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/profiles/complex/#{params[:profile_id]}",
-          body: Seed::NullableOptional::Types::UpdateComplexProfileRequest.new(_body_bag).to_h
+          body: Seed::NullableOptional::Types::UpdateComplexProfileRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::NullableOptional::Types::ComplexProfile.load(_response.body)
+          Seed::NullableOptional::Types::ComplexProfile.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -307,23 +321,25 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::DeserializationTestResponse]
       def test_deserialization(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/api/test/deserialization",
-          body: Seed::NullableOptional::Types::DeserializationTestRequest.new(params).to_h
+          body: Seed::NullableOptional::Types::DeserializationTestRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::NullableOptional::Types::DeserializationTestResponse.load(_response.body)
+          Seed::NullableOptional::Types::DeserializationTestResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -342,30 +358,31 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def filter_by_role(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[role status secondary_role]
-        _query = {}
-        _query["role"] = params[:role] if params.key?(:role)
-        _query["status"] = params[:status] if params.key?(:status)
-        _query["secondaryRole"] = params[:secondary_role] if params.key?(:secondary_role)
-        params.except(*_query_param_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        query_param_names = %i[role status secondary_role]
+        query_params = {}
+        query_params["role"] = params[:role] if params.key?(:role)
+        query_params["status"] = params[:status] if params.key?(:status)
+        query_params["secondaryRole"] = params[:secondary_role] if params.key?(:secondary_role)
+        params.except(*query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users/filter",
-          query: _query
+          query: query_params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Get notification settings which may be null
@@ -381,21 +398,23 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::NotificationMethod, nil]
       def get_notification_settings(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{params[:user_id]}/notifications"
+          path: "/api/users/#{params[:user_id]}/notifications",
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Update tags to test array handling
@@ -411,27 +430,29 @@ module Seed
       #
       # @return [Array[String]]
       def update_tags(request_options: {}, **params)
-        _path_param_names = %i[user_id]
-        _body = params.except(*_path_param_names)
-        _body_prop_names = %i[tags categories labels]
-        _body_bag = _body.slice(*_body_prop_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[user_id]
+        body_params = params.except(*path_param_names)
+        body_prop_names = %i[tags categories labels]
+        body_bag = body_params.slice(*body_prop_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
           path: "/api/users/#{params[:user_id]}/tags",
-          body: Seed::NullableOptional::Types::UpdateTagsRequest.new(_body_bag).to_h
+          body: Seed::NullableOptional::Types::UpdateTagsRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Get search results with nullable unions
@@ -446,25 +467,27 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::SearchResult], nil]
       def get_search_results(request_options: {}, **params)
-        _body_prop_names = %i[query filters include_types]
-        _body_bag = params.slice(*_body_prop_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        body_prop_names = %i[query filters include_types]
+        body_bag = params.slice(*body_prop_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/api/search",
-          body: Seed::NullableOptional::Types::SearchRequest.new(_body_bag).to_h
+          body: Seed::NullableOptional::Types::SearchRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
     end
   end

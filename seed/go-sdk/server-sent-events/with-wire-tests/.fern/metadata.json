@@ -1,0 +1,13 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-go-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "enableWireTests": true,
+    "packageName": "sse",
+    "module": {
+      "path": "github.com/fern-api/sse-go"
+    }
+  },
+  "sdkVersion": "0.0.1"
+}

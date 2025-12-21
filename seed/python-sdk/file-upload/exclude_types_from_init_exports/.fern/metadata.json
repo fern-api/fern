@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "exclude_types_from_init_exports": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

@@ -3,34 +3,50 @@
 import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
-export namespace BearerAuthProvider {
-    export interface Options {
-        token?: core.Supplier<core.BearerToken | undefined>;
-    }
-}
+const WRAPPER_PROPERTY = "bearer" as const;
+const TOKEN_PARAM = "token" as const;
+const ENV_TOKEN = "MY_TOKEN" as const;
 
 export class BearerAuthProvider implements core.AuthProvider {
-    private readonly token: core.Supplier<core.BearerToken | undefined> | undefined;
+    private readonly options: BearerAuthProvider.Options;
 
     constructor(options: BearerAuthProvider.Options) {
-        this.token = options.token;
+        this.options = options;
     }
 
-    public static canCreate(options: BearerAuthProvider.Options): boolean {
-        return options.token != null || process.env?.MY_TOKEN != null;
+    public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
+        return options?.[WRAPPER_PROPERTY]?.[TOKEN_PARAM] != null || process.env?.[ENV_TOKEN] != null;
     }
 
-    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
-        const token = (await core.Supplier.get(this.token)) ?? process.env?.MY_TOKEN;
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
+        const token =
+            (await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.[TOKEN_PARAM])) ?? process.env?.[ENV_TOKEN];
         if (token == null) {
             throw new errors.SeedAnyAuthError({
-                message:
-                    "Please specify a token by either passing it in to the constructor or initializing a MY_TOKEN environment variable",
+                message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
             });
         }
 
         return {
             headers: { Authorization: `Bearer ${token}` },
         };
+    }
+}
+
+export namespace BearerAuthProvider {
+    export const AUTH_SCHEME = "Bearer" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string =
+        `Please provide '${TOKEN_PARAM}' when initializing the client, or set the '${ENV_TOKEN}' environment variable` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = {
+        [WRAPPER_PROPERTY]?: { [TOKEN_PARAM]?: core.Supplier<core.BearerToken> | undefined };
+    };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BearerAuthProvider(options);
     }
 }

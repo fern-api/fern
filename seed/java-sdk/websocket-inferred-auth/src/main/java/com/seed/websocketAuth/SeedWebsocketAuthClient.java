@@ -6,6 +6,7 @@ package com.seed.websocketAuth;
 import com.seed.websocketAuth.core.ClientOptions;
 import com.seed.websocketAuth.core.Suppliers;
 import com.seed.websocketAuth.resources.auth.AuthClient;
+import com.seed.websocketAuth.resources.realtime.RealtimeClient;
 import java.util.function.Supplier;
 
 public class SeedWebsocketAuthClient {
@@ -13,13 +14,20 @@ public class SeedWebsocketAuthClient {
 
     protected final Supplier<AuthClient> authClient;
 
+    protected final Supplier<RealtimeClient> realtimeClient;
+
     public SeedWebsocketAuthClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.authClient = Suppliers.memoize(() -> new AuthClient(clientOptions));
+        this.realtimeClient = Suppliers.memoize(() -> new RealtimeClient(clientOptions));
     }
 
     public AuthClient auth() {
         return this.authClient.get();
+    }
+
+    public RealtimeClient realtime() {
+        return this.realtimeClient.get();
     }
 
     public static SeedWebsocketAuthClientBuilder builder() {

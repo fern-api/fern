@@ -4,6 +4,7 @@ language: ruby
 generatorType: SDK
 defaultOutputMode: github
 image: fernapi/fern-ruby-sdk-v2
+imageAliases: [fernapi/fern-ruby-sdk]
 changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
 
 buildScripts:
@@ -17,14 +18,14 @@ buildScripts:
 test:
   docker:
     image: fernapi/fern-ruby-sdk-v2:latest
-    command: pnpm --filter @fern-api/ruby-sdk dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/ruby-sdk
   podman:
     image: fernapi/fern-ruby-sdk-v2:latest
-    command: pnpm --filter @fern-api/ruby-sdk podmanTagLatest
+    command: pnpm turbo run podmanTagLatest --filter @fern-api/ruby-sdk
 
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/ruby-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
   docker:
     file: ./generators/ruby-v2/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk-v2
@@ -33,13 +34,31 @@ publish:
 scripts:
   - image: ruby:3.3
     commands:
-      - bundle install
-      - bundle exec rake test
+      build:
+        - bundle install
+      test:
+        - bundle exec rake test
 
 fixtures:
+  exhaustive:
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
+  pagination-custom:
+    - customConfig:
+        customPagerName: FooPager
+      outputFolder: .
   examples:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
+    - outputFolder: require-paths
+      customConfig:
+        requirePaths:
+          - custom_integration
+          - sentry_integration
     - outputFolder: readme-config
       customConfig:
         customReadmeSections:
@@ -66,9 +85,6 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
-
-allowedFailures:
-  - nullable-request-body
 
 features:
   requestOptions: true

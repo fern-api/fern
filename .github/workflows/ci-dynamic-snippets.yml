@@ -41,10 +41,10 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: 🧪 Build
-        run: pnpm --filter=@fern-api/typescript-dynamic-snippets compile
+        run: pnpm turbo run compile --filter=@fern-api/typescript-dynamic-snippets
 
       - name: 🧪 Test
-        run: pnpm --filter=@fern-api/typescript-dynamic-snippets test
+        run: pnpm turbo run test --filter=@fern-api/typescript-dynamic-snippets
 
   test-python:
     runs-on: ubuntu-latest
@@ -71,10 +71,10 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: 🧪 Build
-        run: pnpm --filter=@fern-api/python-dynamic-snippets compile
+        run: pnpm turbo run compile --filter=@fern-api/python-dynamic-snippets
 
       - name: 🧪 Test
-        run: pnpm --filter=@fern-api/python-dynamic-snippets test
+        run: pnpm turbo run test --filter=@fern-api/python-dynamic-snippets
 
   test-csharp:
     runs-on: ubuntu-latest
@@ -101,10 +101,10 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: 🧪 Build
-        run: pnpm --filter=@fern-api/csharp-dynamic-snippets compile
+        run: pnpm turbo run compile --filter=@fern-api/csharp-dynamic-snippets
 
       - name: 🧪 Test
-        run: pnpm --filter=@fern-api/csharp-dynamic-snippets test
+        run: pnpm turbo run test --filter=@fern-api/csharp-dynamic-snippets
 
   test-go:
     runs-on: ubuntu-latest
@@ -131,10 +131,10 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: 🧪 Build
-        run: pnpm --filter=@fern-api/go-dynamic-snippets compile
+        run: pnpm turbo run compile --filter=@fern-api/go-dynamic-snippets
 
       - name: 🧪 Test
-        run: pnpm --filter=@fern-api/go-dynamic-snippets test
+        run: pnpm turbo run test --filter=@fern-api/go-dynamic-snippets
 
   test-ruby:
     runs-on: ubuntu-latest
@@ -161,10 +161,10 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: 🧪 Build
-        run: pnpm --filter=@fern-api/ruby-dynamic-snippets compile
+        run: pnpm turbo run compile --filter=@fern-api/ruby-dynamic-snippets
 
       - name: 🧪 Test
-        run: pnpm --filter=@fern-api/ruby-dynamic-snippets test
+        run: pnpm turbo run test --filter=@fern-api/ruby-dynamic-snippets
 
   test-php:
     runs-on: ubuntu-latest
@@ -191,10 +191,10 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: 🧪 Build
-        run: pnpm --filter=@fern-api/php-dynamic-snippets compile
+        run: pnpm turbo run compile --filter=@fern-api/php-dynamic-snippets
 
       - name: 🧪 Test
-        run: pnpm --filter=@fern-api/php-dynamic-snippets test
+        run: pnpm turbo run test --filter=@fern-api/php-dynamic-snippets
 
   test-swift:
     runs-on: ubuntu-latest
@@ -221,10 +221,10 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: 🧪 Build
-        run: pnpm --filter=@fern-api/swift-dynamic-snippets compile
+        run: pnpm turbo run compile --filter=@fern-api/swift-dynamic-snippets
 
       - name: 🧪 Test
-        run: pnpm --filter=@fern-api/swift-dynamic-snippets test
+        run: pnpm turbo run test --filter=@fern-api/swift-dynamic-snippets
 
   test-java:
     runs-on: ubuntu-latest
@@ -251,7 +251,7 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: 🧪 Build
-        run: pnpm --filter=@fern-api/java-dynamic-snippets compile
+        run: pnpm turbo run compile --filter=@fern-api/java-dynamic-snippets
 
       - name: 🧪 Test
-        run: pnpm --filter=@fern-api/java-dynamic-snippets test
+        run: pnpm turbo run test --filter=@fern-api/java-dynamic-snippets

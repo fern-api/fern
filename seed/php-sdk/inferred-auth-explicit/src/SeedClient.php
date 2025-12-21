@@ -49,6 +49,11 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @var InferredAuthProvider $inferredAuthProvider
+     */
+    private InferredAuthProvider $inferredAuthProvider;
+
+    /**
      * @param ?string $clientId
      * @param ?string $clientSecret
      * @param ?string $scope
@@ -90,14 +95,15 @@ class SeedClient
             'scope' => $scope ?? '',
             'xApiKey' => $xApiKey ?? '',
         ];
-        $inferredAuthProvider = new InferredAuthProvider($authClient, $inferredAuthOptions);
-        $authHeaders = $inferredAuthProvider->getAuthHeaders();
+        $this->inferredAuthProvider = new InferredAuthProvider($authClient, $inferredAuthOptions);
 
-        $defaultHeaders = array_merge($defaultHeaders, $authHeaders);
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
+
+        $this->options['getAuthHeaders'] = fn () =>
+            $this->inferredAuthProvider->getAuthHeaders();
 
         $this->client = new RawClient(
             options: $this->options,

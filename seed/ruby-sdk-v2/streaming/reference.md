@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.generate_stream(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
+<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">generate_stream</a>(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -15,7 +15,7 @@
 ```ruby
 client.dummy.generate_stream(
   stream: true,
-  numEvents: 1
+  num_events: 1
 );
 ```
 </dd>
@@ -43,6 +43,14 @@ client.dummy.generate_stream(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Dummy::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -51,7 +59,7 @@ client.dummy.generate_stream(
 </dl>
 </details>
 
-<details><summary><code>client.dummy.generate(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
+<details><summary><code>client.dummy.<a href="/lib/seed/dummy/client.rb">generate</a>(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +74,7 @@ client.dummy.generate_stream(
 ```ruby
 client.dummy.generate(
   stream: false,
-  numEvents: 5
+  num_events: 5
 );
 ```
 </dd>
@@ -91,6 +99,14 @@ client.dummy.generate(
 <dd>
 
 **num_events:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Dummy::RequestOptions` 
     
 </dd>
 </dl>

@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { BaseTypeReferenceSchema } from "./BaseTypeReferenceSchema";
 import { WithName } from "../../commons/types/WithName";
@@ -11,7 +11,7 @@ import { WithAudiences } from "../../commons/types/WithAudiences";
 
 export const TypeReferenceDeclarationWithName: core.serialization.ObjectSchema<
     serializers.fernDefinition.TypeReferenceDeclarationWithName.Raw,
-    FernDefinition.fernDefinition.TypeReferenceDeclarationWithName
+    GeneratorsYml.fernDefinition.TypeReferenceDeclarationWithName
 > = core.serialization
     .object({
         type: core.serialization.string(),

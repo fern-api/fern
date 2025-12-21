@@ -5,7 +5,7 @@ import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } 
 import { ServiceClient } from "../resources/service/client/Client.js";
 
 export declare namespace NotificationClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 }
 
 export class NotificationClient {

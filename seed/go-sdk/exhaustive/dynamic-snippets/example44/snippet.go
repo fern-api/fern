@@ -22,7 +22,7 @@ func do() {
         String: "string",
         Integer: 1,
         NestedObject: &types.ObjectWithOptionalField{
-            String: fern.String(
+            FieldString: fern.String(
                 "string",
             ),
             Integer: fern.Int(

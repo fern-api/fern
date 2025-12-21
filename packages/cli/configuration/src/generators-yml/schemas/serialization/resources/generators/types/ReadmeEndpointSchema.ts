@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { ReadmeEndpointObjectSchema } from "./ReadmeEndpointObjectSchema";
 
 export const ReadmeEndpointSchema: core.serialization.Schema<
     serializers.ReadmeEndpointSchema.Raw,
-    FernDefinition.ReadmeEndpointSchema
+    GeneratorsYml.ReadmeEndpointSchema
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), ReadmeEndpointObjectSchema]);
 
 export declare namespace ReadmeEndpointSchema {

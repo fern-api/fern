@@ -30,7 +30,6 @@ async fn main() {
                 client_secret: "client_secret".to_string(),
                 audience: "https://api.example.com".to_string(),
                 grant_type: "client_credentials".to_string(),
-                scope: Some("scope".to_string()),
             },
             None,
         )
@@ -75,14 +74,6 @@ async fn main() {
 <dd>
 
 **grant_type:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `Option<String>` 
     
 </dd>
 </dl>

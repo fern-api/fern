@@ -18,7 +18,6 @@ client.auth().getToken(
         .builder()
         .clientId("client_id")
         .clientSecret("client_secret")
-        .scope("scope")
         .build()
 );
 ```
@@ -60,14 +59,6 @@ client.auth().getToken(
 <dd>
 
 **grantType:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `Optional<String>` 
     
 </dd>
 </dl>

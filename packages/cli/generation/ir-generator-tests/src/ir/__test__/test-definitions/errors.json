@@ -1209,6 +1209,7 @@
             ],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         },
         "error_commons:BadRequestError": {
@@ -1373,6 +1374,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         },
         "error_commons:InternalServerError": {
@@ -1537,6 +1539,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         },
         "error_simple:FooTooMuch": {
@@ -1701,6 +1704,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         },
         "error_simple:FooTooLittle": {
@@ -1865,6 +1869,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         }
     },
@@ -2227,7 +2232,8 @@
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -4785,7 +4791,8 @@
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -8581,7 +8588,8 @@
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [

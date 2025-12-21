@@ -4,11 +4,12 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedObjectsWithImports from "../../../index.js";
 
 export declare namespace OptionalClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
@@ -73,23 +74,7 @@ export class OptionalClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedObjectsWithImportsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedObjectsWithImportsTimeoutError(
-                    "Timeout exceeded when calling POST /send-optional-body.",
-                );
-            case "unknown":
-                throw new errors.SeedObjectsWithImportsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/send-optional-body");
     }
 
     /**
@@ -143,23 +128,7 @@ export class OptionalClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedObjectsWithImportsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedObjectsWithImportsTimeoutError(
-                    "Timeout exceeded when calling POST /send-optional-typed-body.",
-                );
-            case "unknown":
-                throw new errors.SeedObjectsWithImportsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/send-optional-typed-body");
     }
 
     /**
@@ -227,22 +196,11 @@ export class OptionalClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedObjectsWithImportsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedObjectsWithImportsTimeoutError(
-                    "Timeout exceeded when calling POST /deploy/{actionId}/versions/{id}.",
-                );
-            case "unknown":
-                throw new errors.SeedObjectsWithImportsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/deploy/{actionId}/versions/{id}",
+        );
     }
 }

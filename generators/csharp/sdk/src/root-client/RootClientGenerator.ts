@@ -6,6 +6,7 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AuthScheme,
     HttpHeader,
+    InferredAuthScheme,
     Literal,
     OAuthScheme,
     PrimitiveTypeV1,
@@ -16,6 +17,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "../endpoint/http/RawClient";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils";
 import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
@@ -49,10 +51,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     private serviceId: ServiceId | undefined;
     private grpcClientInfo: GrpcClientInfo | undefined;
     private oauth: OAuthScheme | undefined;
+    private inferred: InferredAuthScheme | undefined;
 
     constructor(context: SdkGeneratorContext) {
         super(context);
         this.oauth = context.getOauth();
+        this.inferred = context.getInferredAuth();
         this.rawClient = new RawClient(context);
         this.serviceId = this.context.ir.rootPackage.service;
         this.grpcClientInfo =
@@ -81,7 +85,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      */
     private generateWebsocketFactories(cls: ast.Class) {
         if (this.settings.enableWebsockets) {
-            // add functions to create the websocket api client
             for (const subpackage of this.getSubpackages()) {
                 if (subpackage.websocket != null) {
                     const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
@@ -131,7 +134,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         class_.addConstructor(this.getConstructorMethod());
 
         for (const subpackage of this.getSubpackages()) {
-            // skip subpackages that have no endpoints (recursively)
             if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
                 class_.addField({
                     access: ast.Access.Public,
@@ -181,7 +183,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             parameters.push(
                 this.csharp.parameter({
                     name: param.name,
-                    type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }),
+                    type: this.context.csharpTypeMapper.convert({
+                        reference: param.typeReference
+                    }),
                     docs: param.docs
                 })
             );
@@ -268,114 +272,192 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             access: ast.Access.Public,
             parameters,
             body: this.csharp.codeblock((writer) => {
-                for (const param of optionalParameters) {
-                    if (param.environmentVariable != null) {
-                        writer.writeLine(`${param.name} ??= ${GetFromEnvironmentOrThrow}(`);
-                        writer.indent();
-                        writer.writeNode(this.csharp.string_({ string: param.environmentVariable }));
-                        writer.writeLine(",");
-                        writer.writeLine(
-                            `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
-                        );
-                        writer.dedent();
-                        writer.writeLine(");");
-                    }
-                }
-                writer.write("var defaultHeaders = ");
-                writer.writeNodeStatement(
-                    this.csharp.instantiateClass({
-                        classReference: this.generation.Types.Headers,
-                        arguments_: [headerDictionary]
-                    })
-                );
-
-                writer.write("clientOptions ??= ");
-                writer.writeNodeStatement(
-                    this.csharp.instantiateClass({
-                        classReference: this.generation.Types.ClientOptions,
-                        arguments_: []
-                    })
-                );
-
-                for (const param of literalParameters) {
-                    if (param.header != null) {
-                        writer.controlFlow("if", this.csharp.codeblock(`clientOptions.${param.name} != null`));
-                        writer.write(`defaultHeaders["${param.header.name}"] = `);
-                        if (param.value.type === "string") {
-                            writer.write(`clientOptions.${param.name}`);
-                        } else {
-                            writer.write(`clientOptions.${param.name}.ToString()!`);
-                        }
-                        writer.writeLine(";");
-                        writer.endControlFlow();
-                    }
-                }
-
-                writer.controlFlow("foreach", this.csharp.codeblock("var header in defaultHeaders"));
-                writer.controlFlow("if", this.csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)"));
-                writer.writeLine("clientOptions.Headers[header.Key] = header.Value;");
-                writer.endControlFlow();
-                writer.endControlFlow();
-
-                if (this.oauth != null) {
-                    const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
-                        this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
-                    );
-
-                    const arguments_ = [
-                        this.generation.Types.RawClient.new({
-                            arguments_: [this.csharp.codeblock("clientOptions.Clone()")]
-                        })
-                    ];
-                    writer.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
-                    writer.writeNode(
-                        this.csharp.instantiateClass({
-                            classReference: authClientClassReference,
-                            arguments_,
-                            forceUseConstructor: true
-                        })
-                    );
-                    writer.writeTextStatement(")");
-
-                    writer.writeNode(
-                        this.csharp.codeblock((writer) => {
-                            writer.write(
-                                `clientOptions.Headers["Authorization"] = new Func<string>( () => tokenProvider.${this.names.methods.getAccessTokenAsync}().Result );`
+                const writeConstructorBody = (innerWriter: typeof writer) => {
+                    for (const param of optionalParameters) {
+                        if (param.environmentVariable != null) {
+                            innerWriter.writeLine(`${param.name} ??= ${GetFromEnvironmentOrThrow}(`);
+                            innerWriter.indent();
+                            innerWriter.writeNode(this.csharp.string_({ string: param.environmentVariable }));
+                            innerWriter.writeLine(",");
+                            innerWriter.writeLine(
+                                `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
                             );
-                        })
-                    );
-                }
-
-                writer.writeLine(`${this.members.clientName} = `);
-                writer.writeNodeStatement(
-                    this.csharp.instantiateClass({
-                        classReference: this.generation.Types.RawClient,
-                        arguments_: [this.csharp.codeblock("clientOptions")]
-                    })
-                );
-                if (this.grpcClientInfo != null) {
-                    writer.writeLine("_grpc = _client.Grpc");
-                    writer.write(this.grpcClientInfo.privatePropertyName);
-                    writer.write(" = ");
-                    writer.writeNodeStatement(
+                            innerWriter.dedent();
+                            innerWriter.writeLine(");");
+                        }
+                    }
+                    innerWriter.write("var defaultHeaders = ");
+                    innerWriter.writeNodeStatement(
                         this.csharp.instantiateClass({
-                            classReference: this.grpcClientInfo.classReference,
-                            arguments_: [this.csharp.codeblock("_grpc.Channel")]
+                            classReference: this.generation.Types.Headers,
+                            arguments_: [headerDictionary]
                         })
                     );
-                }
-                const arguments_ = [this.csharp.codeblock("_client")];
-                for (const subpackage of this.getSubpackages()) {
-                    // skip subpackages that have no endpoints (recursively)
-                    if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
-                        writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
-                        writer.writeNodeStatement(
+
+                    innerWriter.write("clientOptions ??= ");
+                    innerWriter.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.generation.Types.ClientOptions,
+                            arguments_: []
+                        })
+                    );
+
+                    if (this.settings.includeExceptionHandler) {
+                        innerWriter.write("clientOptions.ExceptionHandler = ");
+                        innerWriter.writeNodeStatement(
                             this.csharp.instantiateClass({
-                                classReference: this.context.getSubpackageClassReference(subpackage),
-                                arguments_
+                                classReference: this.generation.Types.ExceptionHandler,
+                                arguments_: [
+                                    this.csharp.instantiateClass({
+                                        classReference: this.generation.Types.CustomExceptionInterceptor,
+                                        arguments_: []
+                                    })
+                                ]
                             })
                         );
                     }
+
+                    for (const param of literalParameters) {
+                        if (param.header != null) {
+                            innerWriter.controlFlow("if", this.csharp.codeblock(`clientOptions.${param.name} != null`));
+                            innerWriter.write(`defaultHeaders["${param.header.name}"] = `);
+                            if (param.value.type === "string") {
+                                innerWriter.write(`clientOptions.${param.name}`);
+                            } else {
+                                innerWriter.write(`clientOptions.${param.name}.ToString()!`);
+                            }
+                            innerWriter.writeLine(";");
+                            innerWriter.endControlFlow();
+                        }
+                    }
+
+                    innerWriter.controlFlow("foreach", this.csharp.codeblock("var header in defaultHeaders"));
+                    innerWriter.controlFlow(
+                        "if",
+                        this.csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)")
+                    );
+                    innerWriter.writeLine("clientOptions.Headers[header.Key] = header.Value;");
+                    innerWriter.endControlFlow();
+                    innerWriter.endControlFlow();
+
+                    if (this.oauth != null) {
+                        const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
+                            this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
+                        );
+
+                        const arguments_ = [
+                            this.generation.Types.RawClient.new({
+                                arguments_: [this.csharp.codeblock("clientOptions.Clone()")]
+                            })
+                        ];
+                        innerWriter.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
+                        innerWriter.writeNode(
+                            this.csharp.instantiateClass({
+                                classReference: authClientClassReference,
+                                arguments_,
+                                forceUseConstructor: true
+                            })
+                        );
+                        innerWriter.writeTextStatement(")");
+
+                        innerWriter.writeTextStatement(
+                            `clientOptions.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
+                        );
+                    }
+
+                    if (this.inferred != null) {
+                        const authClientClassReference = this.context.getSubpackageClassReferenceForServiceId(
+                            this.inferred.tokenEndpoint.endpoint.serviceId
+                        );
+
+                        const credentialParams = this.getInferredAuthCredentialParams();
+
+                        const arguments_ = [
+                            this.generation.Types.RawClient.new({
+                                arguments_: [this.csharp.codeblock("clientOptions.Clone()")]
+                            })
+                        ];
+
+                        innerWriter.write("var inferredAuthProvider = new InferredAuthTokenProvider(");
+                        for (const param of credentialParams) {
+                            innerWriter.write(`${param}, `);
+                        }
+                        innerWriter.writeNode(
+                            this.csharp.instantiateClass({
+                                classReference: authClientClassReference,
+                                arguments_,
+                                forceUseConstructor: true
+                            })
+                        );
+                        innerWriter.writeTextStatement(")");
+
+                        const authenticatedHeaders = this.inferred.tokenEndpoint.authenticatedRequestHeaders;
+                        if (authenticatedHeaders.length === 0) {
+                            this.context.logger.warn(
+                                "Inferred auth scheme has no authenticated request headers. At least one header should be specified."
+                            );
+                        }
+                        for (const authHeader of authenticatedHeaders) {
+                            const headerName = authHeader.headerName;
+                            innerWriter.writeNode(
+                                this.csharp.codeblock((writer) => {
+                                    writer.write(
+                                        `clientOptions.Headers["${headerName}"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => (await inferredAuthProvider.${this.names.methods.getAuthHeadersAsync}().ConfigureAwait(false)).First().Value);`
+                                    );
+                                })
+                            );
+                        }
+                    }
+
+                    innerWriter.writeLine(`${this.members.clientName} = `);
+                    innerWriter.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.generation.Types.RawClient,
+                            arguments_: [this.csharp.codeblock("clientOptions")]
+                        })
+                    );
+                    if (this.grpcClientInfo != null) {
+                        innerWriter.writeLine("_grpc = _client.Grpc");
+                        innerWriter.write(this.grpcClientInfo.privatePropertyName);
+                        innerWriter.write(" = ");
+                        innerWriter.writeNodeStatement(
+                            this.csharp.instantiateClass({
+                                classReference: this.grpcClientInfo.classReference,
+                                arguments_: [this.csharp.codeblock("_grpc.Channel")]
+                            })
+                        );
+                    }
+                    const arguments_ = [this.csharp.codeblock("_client")];
+                    for (const subpackage of this.getSubpackages()) {
+                        if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
+                            innerWriter.writeLine(`${subpackage.name.pascalCase.safeName} = `);
+                            innerWriter.writeNodeStatement(
+                                this.csharp.instantiateClass({
+                                    classReference: this.context.getSubpackageClassReference(subpackage),
+                                    arguments_
+                                })
+                            );
+                        }
+                    }
+                };
+
+                if (this.settings.includeExceptionHandler) {
+                    writer.controlFlowWithoutStatement("try");
+                    writeConstructorBody(writer);
+                    writer.endControlFlow();
+                    writer.controlFlow("catch", this.csharp.codeblock("Exception ex"));
+                    writer.write("var interceptor = ");
+                    writer.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.generation.Types.CustomExceptionInterceptor,
+                            arguments_: []
+                        })
+                    );
+                    writer.writeLine("interceptor.Intercept(ex);");
+                    writer.writeLine("throw;");
+                    writer.endControlFlow();
+                } else {
+                    writeConstructorBody(writer);
                 }
             })
         };
@@ -405,7 +487,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 switch (scheme.type) {
                     case "header":
                         if (scheme.headerEnvVar == null || includeEnvVarArguments) {
-                            // assuming type is string for now to avoid generating complex example types here.
                             arguments_.push(this.csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
                         }
                         break;
@@ -428,8 +509,30 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             arguments_.push(this.csharp.codeblock('"CLIENT_ID"'));
                             arguments_.push(this.csharp.codeblock('"CLIENT_SECRET"'));
                         } else {
-                            // default to bearer
                             arguments_.push(this.csharp.codeblock('"TOKEN"'));
+                        }
+                        break;
+                    }
+                    case "inferred": {
+                        if (this.context.getInferredAuth() != null) {
+                            const inferredScheme = this.context.getInferredAuth();
+                            if (inferredScheme) {
+                                const tokenEndpointReference = inferredScheme.tokenEndpoint.endpoint;
+                                const tokenEndpointHttpService = this.context.getHttpService(
+                                    tokenEndpointReference.serviceId
+                                );
+                                if (tokenEndpointHttpService != null) {
+                                    const tokenEndpoint = this.context.resolveEndpoint(
+                                        tokenEndpointHttpService,
+                                        tokenEndpointReference.endpointId
+                                    );
+
+                                    const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
+                                    for (const credential of credentials) {
+                                        arguments_.push(this.csharp.codeblock(`"${credential.wireValue}"`));
+                                    }
+                                }
+                            }
                         }
                         break;
                     }
@@ -504,7 +607,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             prefix: scheme.prefix
                         },
                         typeReference: scheme.valueType,
-                        type: this.context.csharpTypeMapper.convert({ reference: scheme.valueType }),
+                        type: this.context.csharpTypeMapper.convert({
+                            reference: scheme.valueType
+                        }),
                         environmentVariable: scheme.headerEnvVar
                     }
                 ];
@@ -523,7 +628,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         },
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                            v2: PrimitiveTypeV2.string({
+                                default: undefined,
+                                validation: undefined
+                            })
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.tokenEnvVar
@@ -541,7 +649,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         isOptional,
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                            v2: PrimitiveTypeV2.string({
+                                default: undefined,
+                                validation: undefined
+                            })
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.usernameEnvVar
@@ -552,7 +663,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         isOptional,
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                            v2: PrimitiveTypeV2.string({
+                                default: undefined,
+                                validation: undefined
+                            })
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.passwordEnvVar
@@ -568,7 +682,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         isOptional,
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                            v2: PrimitiveTypeV2.string({
+                                default: undefined,
+                                validation: undefined
+                            })
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.configuration.clientIdEnvVar
@@ -579,19 +696,60 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         isOptional,
                         typeReference: TypeReference.primitive({
                             v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({ default: undefined, validation: undefined })
+                            v2: PrimitiveTypeV2.string({
+                                default: undefined,
+                                validation: undefined
+                            })
                         }),
                         type: this.Primitive.string,
                         environmentVariable: scheme.configuration.clientSecretEnvVar
                     }
                 ];
             } else {
-                this.context.logger.warn("Auth schems is set to oauth, but no oauth configuration is provided");
+                this.context.logger.warn(
+                    `Auth scheme is set to OAuth (type: ${scheme.type}), but no OAuth configuration is provided. ` +
+                        `Make sure the IR includes OAuth configuration with client credentials.`
+                );
                 return [];
             }
         } else if (scheme.type === "inferred") {
-            this.context.logger.warn("Inferred auth scheme is not supported for C# SDK");
-            return [];
+            if (this.inferred != null) {
+                const parameters: ConstructorParameter[] = [];
+                const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
+                const tokenEndpointHttpService = this.context.getHttpService(tokenEndpointReference.serviceId);
+                if (tokenEndpointHttpService == null) {
+                    this.context.logger.warn(
+                        `Service with id ${tokenEndpointReference.serviceId} not found for inferred auth`
+                    );
+                    return [];
+                }
+                const tokenEndpoint = this.context.resolveEndpoint(
+                    tokenEndpointHttpService,
+                    tokenEndpointReference.endpointId
+                );
+
+                const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
+                for (const credential of credentials) {
+                    const typeRef = this.context.csharpTypeMapper.convert({
+                        reference: credential.typeReference
+                    });
+                    parameters.push({
+                        name: credential.camelName,
+                        docs: credential.docs ?? `The ${credential.camelName} for authentication.`,
+                        isOptional: isOptional || credential.isOptional,
+                        typeReference: credential.typeReference,
+                        type: typeRef
+                    });
+                }
+
+                return parameters;
+            } else {
+                this.context.logger.warn(
+                    `Auth scheme is set to inferred (type: ${scheme.type}), but no inferred auth configuration is provided. ` +
+                        `Make sure the IR includes inferred auth configuration with a token endpoint.`
+                );
+                return [];
+            }
         } else {
             assertNever(scheme);
         }
@@ -609,7 +767,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             docs: header.docs,
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
             typeReference: header.valueType,
-            type: this.context.csharpTypeMapper.convert({ reference: header.valueType })
+            type: this.context.csharpTypeMapper.convert({
+                reference: header.valueType
+            })
         };
     }
 
@@ -640,5 +800,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private getSubpackages(): Subpackage[] {
         return this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
+    }
+
+    private getInferredAuthCredentialParams(): string[] {
+        if (this.inferred == null) {
+            return [];
+        }
+
+        const params: string[] = [];
+        const tokenEndpointReference = this.inferred.tokenEndpoint.endpoint;
+        const tokenEndpointHttpService = this.context.getHttpService(tokenEndpointReference.serviceId);
+        if (tokenEndpointHttpService == null) {
+            return [];
+        }
+        const tokenEndpoint = this.context.resolveEndpoint(tokenEndpointHttpService, tokenEndpointReference.endpointId);
+
+        const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
+        return credentials.map((credential) => credential.camelName);
     }
 }

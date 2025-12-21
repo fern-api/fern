@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.get_user(user_id) -> </code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user</a>(user_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```ruby
-client.user.get_user('userId');
+client.user.get_user(user_id: 'userId');
 ```
 </dd>
 </dl>
@@ -50,6 +50,14 @@ This ID is unique to each user.
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -58,7 +66,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.user.create_user(request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_user</a>(request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -119,6 +127,14 @@ This name is unique to each user.
 
 The age of the user.
 This property is not required.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>

@@ -18,7 +18,11 @@ export abstract class AbstractSwiftGeneratorCli<
     }
 
     protected async generateMetadata(context: SwiftGeneratorContext): Promise<void> {
-        const content = JSON.stringify(context.ir.generationMetadata, null, 2);
+        const metadata = {
+            ...context.ir.generationMetadata,
+            sdkVersion: context.version
+        };
+        const content = JSON.stringify(metadata, null, 2);
         context.project.addRawFiles(
             new File(this.GENERATION_METADATA_FILENAME, this.GENERATION_METADATA_FILEPATH, content)
         );

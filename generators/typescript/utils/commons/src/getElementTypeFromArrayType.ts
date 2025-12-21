@@ -1,5 +1,4 @@
 import { ts } from "ts-morph";
-import { getTextOfTsNode } from "./codegen-utils/getTextOfTsNode";
 
 export function getElementTypeFromArrayType(typeNode: ts.TypeNode): ts.TypeNode {
     if (ts.isArrayTypeNode(typeNode)) {
@@ -14,7 +13,5 @@ export function getElementTypeFromArrayType(typeNode: ts.TypeNode): ts.TypeNode 
             }
         }
     }
-
-    console.log(getTextOfTsNode(typeNode));
     throw new Error("TypeNode is not an array type");
 }

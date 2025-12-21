@@ -14,7 +14,8 @@ export type AuthValues =
     | dynamic.AuthValues.Basic
     | dynamic.AuthValues.Bearer
     | dynamic.AuthValues.Header
-    | dynamic.AuthValues.Oauth;
+    | dynamic.AuthValues.Oauth
+    | dynamic.AuthValues.Inferred;
 
 /**
  * The @fern-api/dynamic-ir-sdk doesn't include the serialization layer, so the casing
@@ -41,9 +42,6 @@ export function convertDynamicEndpointSnippetRequest(
 
 function convertExampleAuth(auth: dynamic.AuthValues | undefined): AuthValues | undefined {
     if (auth == null) {
-        return undefined;
-    }
-    if (auth.type === "inferred") {
         return undefined;
     }
 

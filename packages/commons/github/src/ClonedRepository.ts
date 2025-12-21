@@ -113,7 +113,18 @@ export class ClonedRepository {
 
     public async push(): Promise<void> {
         await this.git.cwd(this.clonePath);
-        await this.git.push();
+        const currentBranch = await this.getCurrentBranch();
+        try {
+            await this.git.push();
+        } catch (err) {
+            const msg = String(err);
+            const isNoUpstream = msg.includes("has no upstream branch") || msg.includes("no upstream branch");
+            if (isNoUpstream) {
+                await this.pushUpstream(currentBranch);
+                return;
+            }
+            throw err;
+        }
     }
 
     public async pushWithMergingRemote(): Promise<void> {

@@ -6,13 +6,13 @@ module Seed
     # @param header_token_auth [String]
     #
     # @return [void]
-    def initialize(base_url:, header_token_auth:)
+    def initialize(header_token_auth:, base_url: nil)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
-          "User-Agent": "fern_header-auth/0.0.1",
-          "X-Fern-Language": "Ruby",
-          "x-api-key": "test_prefix #{header_token_auth}"
+          "User-Agent" => "fern_header-auth/0.0.1",
+          "X-Fern-Language" => "Ruby",
+          "x-api-key" => "test_prefix #{header_token_auth}"
         }
       )
     end

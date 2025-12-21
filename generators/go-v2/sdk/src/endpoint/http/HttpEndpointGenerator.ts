@@ -131,7 +131,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
+                    // In per-endpoint mode, build error decoder inline. In global mode, use the global ErrorCodes.
+                    errorDecoder: this.context.isPerEndpointErrorCodes() ? errorDecoder : undefined,
                     rawClient: false
                 })
             );
@@ -186,7 +187,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
+                    // In per-endpoint mode, build error decoder inline. In global mode, use the global ErrorCodes.
+                    errorDecoder: this.context.isPerEndpointErrorCodes() ? errorDecoder : undefined,
                     rawClient: false,
                     encodeQuery: false
                 })
@@ -464,7 +466,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
+                    // In per-endpoint mode, build error decoder inline. In global mode, use the global ErrorCodes.
+                    errorDecoder: this.context.isPerEndpointErrorCodes() ? errorDecoder : undefined,
                     rawClient: true
                 })
             );
@@ -568,21 +571,55 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         subpackage: Subpackage | undefined;
         rawClient?: boolean;
     }): go.CodeBlock {
+        const baseUrlName = this.context.getBaseUrlNameForEndpoint(endpoint);
         return go.codeblock((writer) => {
             writer.write("baseURL := ");
-            writer.writeNode(
-                this.context.callResolveBaseURL([
-                    go.selector({
-                        on: go.codeblock("options"),
-                        selector: go.codeblock("BaseURL")
-                    }),
-                    go.selector({
-                        on: this.getReceiverCodeBlock({ subpackage, rawClient }),
-                        selector: go.codeblock("baseURL")
-                    }),
-                    this.context.getDefaultBaseUrlTypeInstantiation(endpoint)
-                ])
-            );
+            if (baseUrlName != null) {
+                writer.writeNode(
+                    this.context.callResolveBaseURL([
+                        go.selector({
+                            on: go.codeblock("options"),
+                            selector: go.codeblock("BaseURL")
+                        }),
+                        this.context.callResolveEnvironmentBaseURL([
+                            go.selector({
+                                on: go.codeblock("options"),
+                                selector: go.codeblock("Environment")
+                            }),
+                            go.TypeInstantiation.string(baseUrlName)
+                        ]),
+                        go.selector({
+                            on: this.getReceiverCodeBlock({ subpackage, rawClient }),
+                            selector: go.codeblock("baseURL")
+                        }),
+                        this.context.callResolveEnvironmentBaseURL([
+                            go.selector({
+                                on: go.selector({
+                                    on: this.getReceiverCodeBlock({ subpackage, rawClient }),
+                                    selector: go.codeblock("options")
+                                }),
+                                selector: go.codeblock("Environment")
+                            }),
+                            go.TypeInstantiation.string(baseUrlName)
+                        ]),
+                        this.context.getDefaultBaseUrlTypeInstantiation(endpoint)
+                    ])
+                );
+            } else {
+                writer.writeNode(
+                    this.context.callResolveBaseURL([
+                        go.selector({
+                            on: go.codeblock("options"),
+                            selector: go.codeblock("BaseURL")
+                        }),
+                        go.selector({
+                            on: this.getReceiverCodeBlock({ subpackage, rawClient }),
+                            selector: go.codeblock("baseURL")
+                        }),
+                        this.context.getDefaultBaseUrlTypeInstantiation(endpoint)
+                    ])
+                );
+            }
         });
     }
 

@@ -1,4 +1,5 @@
 {
+  "apiName": "Simple OpenAPI Test",
   "auth": undefined,
   "authSchemes": {},
   "globalHeaders": [],
@@ -22,7 +23,21 @@
           {
             "availability": undefined,
             "description": "Service is unhealthy",
-            "examples": [],
+            "examples": [
+              {
+                "description": undefined,
+                "name": undefined,
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "USER_NOT_FOUND",
+                    "details": {},
+                    "message": "The requested user could not be found",
+                  },
+                },
+              },
+            ],
+            "headers": undefined,
             "isWildcard": undefined,
             "name": "ServiceUnavailableError",
             "statusCode": 503,
@@ -140,7 +155,21 @@
           {
             "availability": undefined,
             "description": "User not found",
-            "examples": [],
+            "examples": [
+              {
+                "description": undefined,
+                "name": undefined,
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "USER_NOT_FOUND",
+                    "details": {},
+                    "message": "The requested user could not be found",
+                  },
+                },
+              },
+            ],
+            "headers": undefined,
             "isWildcard": undefined,
             "name": "NotFoundError",
             "statusCode": 404,
@@ -310,7 +339,21 @@
           {
             "availability": undefined,
             "description": "Invalid user data",
-            "examples": [],
+            "examples": [
+              {
+                "description": undefined,
+                "name": undefined,
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "USER_NOT_FOUND",
+                    "details": {},
+                    "message": "The requested user could not be found",
+                  },
+                },
+              },
+            ],
+            "headers": undefined,
             "isWildcard": undefined,
             "name": "BadRequestError",
             "statusCode": 400,

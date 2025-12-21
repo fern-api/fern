@@ -2,7 +2,11 @@ import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, generatorsYml } from "@fern-api/co
 import { TaskContext } from "@fern-api/task-context";
 
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
-import { getGeneratorNameOrThrow } from "./getGeneratorName";
+import {
+    addDefaultDockerOrgIfNotPresent,
+    getGeneratorNameOrThrow,
+    removeDefaultDockerOrgIfPresent
+} from "./getGeneratorName";
 import { getLatestGeneratorVersion } from "./getGeneratorVersions";
 import { updateGeneratorGroup } from "./updateGeneratorGroup";
 
@@ -19,7 +23,10 @@ export async function addGenerator({
     context: TaskContext;
     cliVersion: string;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
+    // Normalize the generator name for lookups (adds fernapi/ if not present)
     const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
+    // Use shorthand name (without fernapi/) for writing to config
+    const shorthandGeneratorName = removeDefaultDockerOrgIfPresent(normalizedGeneratorName);
 
     const invocation = GENERATOR_INVOCATIONS[normalizedGeneratorName];
 
@@ -28,11 +35,16 @@ export async function addGenerator({
         groupName,
         context,
         update: async (group) => {
-            if (group.generators.some((generator) => generator.name === normalizedGeneratorName)) {
+            // Check for duplicates using normalized name (handles both shorthand and full names in existing config)
+            if (
+                group.generators.some(
+                    (generator) => addDefaultDockerOrgIfNotPresent(generator.name) === normalizedGeneratorName
+                )
+            ) {
                 context.failAndThrow(`${generatorName} is already installed in group ${groupName}.`);
             }
             group.generators.push({
-                name: normalizedGeneratorName,
+                name: shorthandGeneratorName,
                 ...invocation,
                 // Fall back to the hardcoded version if a "latest" does not yet exist
                 version:

@@ -1,27 +1,63 @@
-import { FernIr } from "@fern-fern/ir-sdk";
-import { ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
+import type { FernIr } from "@fern-fern/ir-sdk";
+import { type ExportedFilePath, getPropertyKey, getTextOfTsNode, toCamelCase } from "@fern-typescript/commons";
+import type { SdkContext } from "@fern-typescript/contexts";
+import {
+    type OptionalKind,
+    type PropertySignatureStructure,
+    Scope,
+    StatementStructures,
+    StructureKind,
+    ts,
+    WriterFunction
+} from "ts-morph";
 
-import { AuthProviderGenerator } from "./AuthProviderGenerator";
+import type { AuthProviderGenerator } from "./AuthProviderGenerator";
 
 export declare namespace BasicAuthProviderGenerator {
     export interface Init {
+        ir: FernIr.IntermediateRepresentation;
         authScheme: FernIr.BasicAuthScheme;
+        neverThrowErrors: boolean;
+        isAuthMandatory: boolean;
+        shouldUseWrapper: boolean;
     }
 }
 
 const CLASS_NAME = "BasicAuthProvider";
-const USERNAME_FIELD_NAME = "username";
-const PASSWORD_FIELD_NAME = "password";
 const OPTIONS_TYPE_NAME = "Options";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
+    public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
+    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.BasicAuthScheme;
+    private readonly neverThrowErrors: boolean;
+    private readonly isAuthMandatory: boolean;
+    private readonly shouldUseWrapper: boolean;
+    private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: BasicAuthProviderGenerator.Init) {
+        this.ir = init.ir;
         this.authScheme = init.authScheme;
+        this.neverThrowErrors = init.neverThrowErrors;
+        this.isAuthMandatory = init.isAuthMandatory;
+        this.shouldUseWrapper = init.shouldUseWrapper;
+        this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
+    }
+
+    /**
+     * Gets the wrapper property name for this Basic auth scheme.
+     * This is used to namespace Basic auth options when multiple auth schemes are present.
+     * e.g., "BasicAuth" -> "basicAuth", "MyAuth" -> "myAuth"
+     */
+    public getWrapperPropertyName(): string {
+        // Find the auth scheme key in the IR
+        const authScheme = this.ir.auth.schemes.find((scheme) => scheme.type === "basic" && scheme === this.authScheme);
+        if (authScheme == null) {
+            throw new Error("Failed to find basic auth scheme in IR");
+        }
+        return toCamelCase(authScheme.key);
     }
 
     public getFilePath(): ExportedFilePath {
@@ -48,62 +84,104 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${OPTIONS_TYPE_NAME}`);
     }
 
+    public getAuthOptionsType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
+        const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
+        const isUsernameOptional = !this.isAuthMandatory || hasUsernameEnv;
+        const isPasswordOptional = !this.isAuthMandatory || hasPasswordEnv;
+
+        // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
+        // When there's no env var fallback, use Supplier<T> directly.
+        const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(stringType);
+
+        // For env var fallback: prop?: Supplier<T> | undefined
+        const usernamePropertyType = hasUsernameEnv
+            ? ts.factory.createUnionTypeNode([
+                  supplierType,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : supplierType;
+
+        const passwordPropertyType = hasPasswordEnv
+            ? ts.factory.createUnionTypeNode([
+                  supplierType,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : supplierType;
+
+        return [
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(this.authScheme.username.camelCase.safeName),
+                hasQuestionToken: isUsernameOptional,
+                type: getTextOfTsNode(usernamePropertyType),
+                docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
+            },
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(this.authScheme.password.camelCase.safeName),
+                hasQuestionToken: isPasswordOptional,
+                type: getTextOfTsNode(passwordPropertyType),
+                docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
+            }
+        ];
+    }
+
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
-        return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
+        return ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(CLASS_NAME), "createInstance"),
+            undefined,
+            constructorArgs
+        );
     }
 
     public writeToFile(context: SdkContext): void {
-        this.writeOptions(context);
+        this.writeConstants(context);
         this.writeClass(context);
+        this.writeOptions(context);
+    }
+
+    private writeConstants(context: SdkContext): void {
+        const usernameFieldName = this.authScheme.username.camelCase.safeName;
+        const passwordFieldName = this.authScheme.password.camelCase.safeName;
+        const usernameEnvVar = this.authScheme.usernameEnvVar;
+        const passwordEnvVar = this.authScheme.passwordEnvVar;
+        const wrapperPropertyName = this.getWrapperPropertyName();
+
+        const constants: string[] = [];
+
+        constants.push(this.keepIfWrapper(`const WRAPPER_PROPERTY = "${wrapperPropertyName}" as const;`));
+        constants.push(`const USERNAME_PARAM = "${usernameFieldName}" as const;`);
+        constants.push(`const PASSWORD_PARAM = "${passwordFieldName}" as const;`);
+
+        if (usernameEnvVar != null) {
+            constants.push(`const ENV_USERNAME = "${usernameEnvVar}" as const;`);
+        }
+
+        if (passwordEnvVar != null) {
+            constants.push(`const ENV_PASSWORD = "${passwordEnvVar}" as const;`);
+        }
+
+        for (const constant of constants.filter((c) => c !== "")) {
+            context.sourceFile.addStatements(constant);
+        }
+        context.sourceFile.addStatements(""); // blank line
     }
 
     private writeClass(context: SdkContext): void {
-        const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
-        const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
-
-        const usernameFieldType = hasUsernameEnv
-            ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                      ts.factory.createUnionTypeNode([
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                      ])
-                  ),
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-              ])
-            : context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-              );
-
-        const passwordFieldType = hasPasswordEnv
-            ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                      ts.factory.createUnionTypeNode([
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                      ])
-                  ),
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-              ])
-            : context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-              );
-
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
             implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
             properties: [
                 {
-                    name: USERNAME_FIELD_NAME,
-                    type: getTextOfTsNode(usernameFieldType),
-                    hasQuestionToken: false,
-                    isReadonly: true,
-                    scope: Scope.Private
-                },
-                {
-                    name: PASSWORD_FIELD_NAME,
-                    type: getTextOfTsNode(passwordFieldType),
+                    name: "options",
+                    type: `${CLASS_NAME}.${OPTIONS_TYPE_NAME}`,
                     hasQuestionToken: false,
                     isReadonly: true,
                     scope: Scope.Private
@@ -113,8 +191,38 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                 {
                     kind: StructureKind.Method,
                     scope: Scope.Public,
+                    isStatic: true,
+                    name: "canCreate",
+                    parameters: [
+                        {
+                            name: "options",
+                            type: `Partial<${CLASS_NAME}.${OPTIONS_TYPE_NAME}>`
+                        }
+                    ],
+                    returnType: "boolean",
+                    statements: this.generateCanCreateStatements()
+                },
+                {
+                    kind: StructureKind.Method,
+                    scope: Scope.Public,
                     name: "getAuthRequest",
                     isAsync: true,
+                    parameters: [
+                        {
+                            name: "{ endpointMetadata }",
+                            type: getTextOfTsNode(
+                                ts.factory.createTypeLiteralNode([
+                                    ts.factory.createPropertySignature(
+                                        undefined,
+                                        "endpointMetadata",
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                    )
+                                ])
+                            ),
+                            initializer: "{}"
+                        }
+                    ],
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
                             context.coreUtilities.auth.AuthRequest._getReferenceToType()
@@ -128,154 +236,219 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                     parameters: [
                         {
                             name: "options",
-                            type: getTextOfTsNode(this.getOptionsType())
+                            type: `${CLASS_NAME}.${OPTIONS_TYPE_NAME}`
                         }
                     ],
-                    statements: [
-                        `this.${USERNAME_FIELD_NAME} = options.${this.authScheme.username.camelCase.safeName};`,
-                        `this.${PASSWORD_FIELD_NAME} = options.${this.authScheme.password.camelCase.safeName};`
-                    ]
+                    statements: [`this.options = options;`]
                 }
             ]
         });
     }
 
+    private generateCanCreateStatements(): string {
+        const usernameEnvVar = this.authScheme.usernameEnvVar;
+        const passwordEnvVar = this.authScheme.passwordEnvVar;
+        const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
+
+        const usernameEnvCheck = usernameEnvVar != null ? " || process.env?.[ENV_USERNAME] != null" : "";
+        const passwordEnvCheck = passwordEnvVar != null ? " || process.env?.[ENV_PASSWORD] != null" : "";
+
+        return `return (options?.${wrapperAccess}[USERNAME_PARAM] != null${usernameEnvCheck}) && (options?.${wrapperAccess}[PASSWORD_PARAM] != null${passwordEnvCheck});`;
+    }
+
     private generateGetAuthRequestStatements(context: SdkContext): string {
         const usernameVar = this.authScheme.username.camelCase.unsafeName;
         const passwordVar = this.authScheme.password.camelCase.unsafeName;
-        const usernameFieldName = this.authScheme.username.camelCase.safeName;
-        const passwordFieldName = this.authScheme.password.camelCase.safeName;
+        const usernameEnvVar = this.authScheme.usernameEnvVar;
+        const passwordEnvVar = this.authScheme.passwordEnvVar;
 
-        const usernameExpression =
-            this.authScheme.usernameEnvVar != null
-                ? `(${getTextOfTsNode(
-                      context.coreUtilities.fetcher.Supplier.get(
-                          ts.factory.createPropertyAccessExpression(
-                              ts.factory.createThis(),
-                              ts.factory.createIdentifier(USERNAME_FIELD_NAME)
-                          )
-                      )
-                  )}) ?? process.env?.["${this.authScheme.usernameEnvVar}"]`
-                : getTextOfTsNode(
-                      context.coreUtilities.fetcher.Supplier.get(
-                          ts.factory.createPropertyAccessExpression(
-                              ts.factory.createThis(),
-                              ts.factory.createIdentifier(USERNAME_FIELD_NAME)
-                          )
-                      )
-                  );
+        // Build property access chain based on shouldUseWrapper
+        const thisOptionsAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "options");
 
-        const passwordExpression =
-            this.authScheme.passwordEnvVar != null
-                ? `(${getTextOfTsNode(
-                      context.coreUtilities.fetcher.Supplier.get(
-                          ts.factory.createPropertyAccessExpression(
-                              ts.factory.createThis(),
-                              ts.factory.createIdentifier(PASSWORD_FIELD_NAME)
-                          )
-                      )
-                  )}) ?? process.env?.["${this.authScheme.passwordEnvVar}"]`
-                : getTextOfTsNode(
-                      context.coreUtilities.fetcher.Supplier.get(
-                          ts.factory.createPropertyAccessExpression(
-                              ts.factory.createThis(),
-                              ts.factory.createIdentifier(PASSWORD_FIELD_NAME)
-                          )
-                      )
-                  );
+        let usernameAccess: ts.Expression;
+        let passwordAccess: ts.Expression;
 
-        const usernameErrorMessage =
-            this.authScheme.usernameEnvVar != null
-                ? `Please specify a ${usernameFieldName} by either passing it in to the constructor or initializing a ${this.authScheme.usernameEnvVar} environment variable`
-                : `Please specify a ${usernameFieldName} by passing it in to the constructor`;
+        if (this.shouldUseWrapper) {
+            // Wrapped: this.options[WRAPPER_PROPERTY]?.[USERNAME_PARAM]
+            const wrapperAccess = ts.factory.createElementAccessExpression(
+                thisOptionsAccess,
+                ts.factory.createIdentifier("WRAPPER_PROPERTY")
+            );
+            usernameAccess = ts.factory.createElementAccessChain(
+                wrapperAccess,
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier("USERNAME_PARAM")
+            );
+            passwordAccess = ts.factory.createElementAccessChain(
+                wrapperAccess,
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier("PASSWORD_PARAM")
+            );
+        } else {
+            // Inlined: this.options[USERNAME_PARAM]
+            usernameAccess = ts.factory.createElementAccessExpression(
+                thisOptionsAccess,
+                ts.factory.createIdentifier("USERNAME_PARAM")
+            );
+            passwordAccess = ts.factory.createElementAccessExpression(
+                thisOptionsAccess,
+                ts.factory.createIdentifier("PASSWORD_PARAM")
+            );
+        }
 
-        const passwordErrorMessage =
-            this.authScheme.passwordEnvVar != null
-                ? `Please specify a ${passwordFieldName} by either passing it in to the constructor or initializing a ${this.authScheme.passwordEnvVar} environment variable`
-                : `Please specify a ${passwordFieldName} by passing it in to the constructor`;
-
-        const errorConstructor = getTextOfTsNode(
-            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+        const usernameSupplierGetCall = context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
+            usernameAccess,
+            ts.factory.createObjectLiteralExpression([ts.factory.createShorthandPropertyAssignment("endpointMetadata")])
         );
+        const usernameSupplierGetCode = getTextOfTsNode(usernameSupplierGetCall);
 
-        return `
-        const ${usernameVar} = ${usernameExpression};
+        const passwordSupplierGetCall = context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
+            passwordAccess,
+            ts.factory.createObjectLiteralExpression([ts.factory.createShorthandPropertyAssignment("endpointMetadata")])
+        );
+        const passwordSupplierGetCode = getTextOfTsNode(passwordSupplierGetCall);
+
+        const usernameEnvFallback =
+            usernameEnvVar != null
+                ? `\n            (${usernameSupplierGetCode}) ??\n            process.env?.[ENV_USERNAME]`
+                : usernameSupplierGetCode;
+
+        const passwordEnvFallback =
+            passwordEnvVar != null
+                ? `\n            (${passwordSupplierGetCode}) ??\n            process.env?.[ENV_PASSWORD]`
+                : passwordSupplierGetCode;
+
+        if (this.neverThrowErrors) {
+            // When neverThrowErrors is true, return empty headers if credentials are missing
+            return `
+        const ${usernameVar} = ${usernameEnvFallback};
         if (${usernameVar} == null) {
-            throw new ${errorConstructor}({
-                message: "${usernameErrorMessage}"
-            });
+            return { headers: {} };
         }
 
-        const ${passwordVar} = ${passwordExpression};
+        const ${passwordVar} = ${passwordEnvFallback};
         if (${passwordVar} == null) {
-            throw new ${errorConstructor}({
-                message: "${passwordErrorMessage}"
-            });
+            return { headers: {} };
         }
-        
+
         const authHeader = ${getTextOfTsNode(
             context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
                 ts.factory.createIdentifier(usernameVar),
                 ts.factory.createIdentifier(passwordVar)
             )
         )};
-        
+
         return {
-            headers: authHeader != null ? { Authorization: authHeader } : {}
+            headers: authHeader != null ? { Authorization: authHeader } : {},
         };
         `;
+        } else {
+            // When neverThrowErrors is false, throw an error if credentials are missing
+            const errorConstructor = getTextOfTsNode(
+                context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+            );
+
+            return `
+        const ${usernameVar} = ${usernameEnvFallback};
+        if (${usernameVar} == null) {
+            throw new ${errorConstructor}({
+                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
+            });
+        }
+
+        const ${passwordVar} = ${passwordEnvFallback};
+        if (${passwordVar} == null) {
+            throw new ${errorConstructor}({
+                message: ${CLASS_NAME}.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
+            });
+        }
+
+        const authHeader = ${getTextOfTsNode(
+            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                ts.factory.createIdentifier(usernameVar),
+                ts.factory.createIdentifier(passwordVar)
+            )
+        )};
+
+        return {
+            headers: authHeader != null ? { Authorization: authHeader } : {},
+        };
+        `;
+        }
     }
 
     private writeOptions(context: SdkContext): void {
-        const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
-        const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
+        const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
+        const authSchemeKey =
+            this.ir.auth.schemes.find((scheme) => scheme.type === "basic" && scheme === this.authScheme)?.key ??
+            "BasicAuth";
+        const usernameEnvVar = this.authScheme.usernameEnvVar;
+        const passwordEnvVar = this.authScheme.passwordEnvVar;
 
-        const usernameProperty: PropertySignatureStructure = {
-            kind: StructureKind.PropertySignature,
-            name: getPropertyKey(this.authScheme.username.camelCase.safeName),
-            hasQuestionToken: hasUsernameEnv,
-            type: getTextOfTsNode(
-                context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                    hasUsernameEnv
-                        ? ts.factory.createUnionTypeNode([
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                          ])
-                        : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                )
-            ),
-            docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
-        };
+        const statements: (string | WriterFunction | StatementStructures)[] = [
+            `export const AUTH_SCHEME = "${authSchemeKey}" as const;`,
+            `export const AUTH_CONFIG_ERROR_MESSAGE: string = "Please provide username and password when initializing the client" as const;`
+        ];
 
-        const passwordProperty: PropertySignatureStructure = {
-            kind: StructureKind.PropertySignature,
-            name: getPropertyKey(this.authScheme.password.camelCase.safeName),
-            hasQuestionToken: hasPasswordEnv,
-            type: getTextOfTsNode(
-                context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                    hasPasswordEnv
-                        ? ts.factory.createUnionTypeNode([
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                          ])
-                        : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                )
-            ),
-            docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
-        };
+        // Add AUTH_CONFIG_ERROR_MESSAGE constants for username and password
+        if (usernameEnvVar != null) {
+            statements.push(
+                `export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string = \`Please provide '\${USERNAME_PARAM}' when initializing the client, or set the '\${ENV_USERNAME}' environment variable\` as const;`
+            );
+        } else {
+            statements.push(
+                `export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string = \`Please provide '\${USERNAME_PARAM}' when initializing the client\` as const;`
+            );
+        }
+
+        if (passwordEnvVar != null) {
+            statements.push(
+                `export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string = \`Please provide '\${PASSWORD_PARAM}' when initializing the client, or set the '\${ENV_PASSWORD}' environment variable\` as const;`
+            );
+        } else {
+            statements.push(
+                `export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string = \`Please provide '\${PASSWORD_PARAM}' when initializing the client\` as const;`
+            );
+        }
+
+        // Generate AuthOptions type based on keepIfWrapper
+        const usernamePropertyDef = `[USERNAME_PARAM]${authOptionsProperties[0]?.hasQuestionToken ? "?" : ""}: ${authOptionsProperties[0]?.type}`;
+        const passwordPropertyDef = `[PASSWORD_PARAM]${authOptionsProperties[1]?.hasQuestionToken ? "?" : ""}: ${authOptionsProperties[1]?.type}`;
+        const propertyDefs = `${usernamePropertyDef}; ${passwordPropertyDef}`;
+
+        // When wrapped (multiple auth schemes), the wrapper property should be optional
+        // When not wrapped, individual fields already have their own ?: markers based on env vars
+        const wrapperOptional = this.shouldUseWrapper;
+        const optionalMarker = wrapperOptional ? "?" : "";
+
+        const wrappedProperty = this.keepIfWrapper(`[WRAPPER_PROPERTY]${optionalMarker}: { ${propertyDefs} };\n    `);
+        const authOptionsType = wrappedProperty ? `{\n        ${wrappedProperty}}` : `{ ${propertyDefs} }`;
+
+        statements.push(
+            // Options = AuthOptions (with optional properties handled inline)
+            `export type ${OPTIONS_TYPE_NAME} = ${AUTH_OPTIONS_TYPE_NAME};`,
+            // AuthOptions with computed property names
+            {
+                kind: StructureKind.TypeAlias,
+                name: AUTH_OPTIONS_TYPE_NAME,
+                isExported: true,
+                type: authOptionsType
+            },
+            {
+                kind: StructureKind.Function,
+                name: "createInstance",
+                isExported: true,
+                parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
+                returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
+                statements: `return new ${CLASS_NAME}(options);`
+            }
+        );
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
             kind: StructureKind.Module,
-            statements: [
-                {
-                    kind: StructureKind.Interface,
-                    name: OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    properties: [usernameProperty, passwordProperty]
-                }
-            ]
+            statements
         });
     }
 }

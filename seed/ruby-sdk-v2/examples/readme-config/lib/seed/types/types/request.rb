@@ -4,7 +4,7 @@ module Seed
   module Types
     module Types
       class Request < Internal::Types::Model
-        field :request, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
+        field :request, -> { Object }, optional: false, nullable: false
       end
     end
   end

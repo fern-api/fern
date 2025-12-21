@@ -20,3 +20,13 @@ groups:
           mode: push
           uri: fern-api/php-sdk-tests
           branch: java-builder-extension
+  go-sdk:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/go-sdk-tests
+          branch: java-builder-extension

@@ -11,6 +11,13 @@ namespace SeedOauthClientCredentials.Core;
 internal partial class RawClient(ClientOptions clientOptions)
 {
     private const int MaxRetryDelayMs = 60000;
+    private const double JitterFactor = 0.2;
+#if NET6_0_OR_GREATER
+    // Use Random.Shared for thread-safe random number generation on .NET 6+
+#else
+    private static readonly object JitterLock = new();
+    private static readonly Random JitterRandom = new();
+#endif
     internal int BaseRetryDelay { get; set; } = 1000;
 
     /// <summary>
@@ -19,7 +26,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     internal readonly ClientOptions Options = clientOptions;
 
     [Obsolete("Use SendRequestAsync instead.")]
-    internal Task<global::SeedOauthClientCredentials.Core.ApiResponse> MakeRequestAsync(
+    internal global::System.Threading.Tasks.Task<global::SeedOauthClientCredentials.Core.ApiResponse> MakeRequestAsync(
         global::SeedOauthClientCredentials.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
@@ -27,30 +34,30 @@ internal partial class RawClient(ClientOptions clientOptions)
         return SendRequestAsync(request, cancellationToken);
     }
 
-    internal async Task<global::SeedOauthClientCredentials.Core.ApiResponse> SendRequestAsync(
+    internal async global::System.Threading.Tasks.Task<global::SeedOauthClientCredentials.Core.ApiResponse> SendRequestAsync(
         global::SeedOauthClientCredentials.Core.BaseRequest request,
         CancellationToken cancellationToken = default
     )
     {
         // Apply the request timeout.
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var timeout = request.Options?.Timeout ?? Options.Timeout;
         cts.CancelAfter(timeout);
 
-        var httpRequest = CreateHttpRequest(request);
+        var httpRequest = await CreateHttpRequestAsync(request).ConfigureAwait(false);
         // Send the request.
         return await SendWithRetriesAsync(httpRequest, request.Options, cts.Token)
             .ConfigureAwait(false);
     }
 
-    internal async Task<global::SeedOauthClientCredentials.Core.ApiResponse> SendRequestAsync(
+    internal async global::System.Threading.Tasks.Task<global::SeedOauthClientCredentials.Core.ApiResponse> SendRequestAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken = default
     )
     {
         // Apply the request timeout.
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var timeout = options?.Timeout ?? Options.Timeout;
         cts.CancelAfter(timeout);
 
@@ -58,7 +65,9 @@ internal partial class RawClient(ClientOptions clientOptions)
         return await SendWithRetriesAsync(request, options, cts.Token).ConfigureAwait(false);
     }
 
-    private static async Task<HttpRequestMessage> CloneRequestAsync(HttpRequestMessage request)
+    private static async global::System.Threading.Tasks.Task<HttpRequestMessage> CloneRequestAsync(
+        HttpRequestMessage request
+    )
     {
         var clonedRequest = new HttpRequestMessage(request.Method, request.RequestUri);
         clonedRequest.Version = request.Version;
@@ -109,7 +118,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
     /// </summary>
-    private async Task<global::SeedOauthClientCredentials.Core.ApiResponse> SendWithRetriesAsync(
+    private async global::System.Threading.Tasks.Task<global::SeedOauthClientCredentials.Core.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
         IRequestOptions? options,
         CancellationToken cancellationToken
@@ -138,7 +147,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 break;
             }
 
-            var delayMs = Math.Min(BaseRetryDelay * (int)Math.Pow(2, i), MaxRetryDelayMs);
+            var delayMs = GetRetryDelayFromHeaders(response, i);
             await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
             using var retryRequest = await CloneRequestAsync(request).ConfigureAwait(false);
             response = await httpClient
@@ -163,6 +172,80 @@ internal partial class RawClient(ClientOptions clientOptions)
         return statusCode is 408 or 429 or >= 500;
     }
 
+    private static int AddPositiveJitter(int delayMs)
+    {
+#if NET6_0_OR_GREATER
+        var random = Random.Shared.NextDouble();
+#else
+        double random;
+        lock (JitterLock)
+        {
+            random = JitterRandom.NextDouble();
+        }
+#endif
+        var jitterMultiplier = 1 + random * JitterFactor;
+        return (int)(delayMs * jitterMultiplier);
+    }
+
+    private static int AddSymmetricJitter(int delayMs)
+    {
+#if NET6_0_OR_GREATER
+        var random = Random.Shared.NextDouble();
+#else
+        double random;
+        lock (JitterLock)
+        {
+            random = JitterRandom.NextDouble();
+        }
+#endif
+        var jitterMultiplier = 1 + (random - 0.5) * JitterFactor;
+        return (int)(delayMs * jitterMultiplier);
+    }
+
+    private int GetRetryDelayFromHeaders(HttpResponseMessage response, int retryAttempt)
+    {
+        if (response.Headers.TryGetValues("Retry-After", out var retryAfterValues))
+        {
+            var retryAfter = retryAfterValues.FirstOrDefault();
+            if (!string.IsNullOrEmpty(retryAfter))
+            {
+                if (int.TryParse(retryAfter, out var retryAfterSeconds) && retryAfterSeconds > 0)
+                {
+                    return Math.Min(retryAfterSeconds * 1000, MaxRetryDelayMs);
+                }
+
+                if (DateTimeOffset.TryParse(retryAfter, out var retryAfterDate))
+                {
+                    var delay = (int)(retryAfterDate - DateTimeOffset.UtcNow).TotalMilliseconds;
+                    if (delay > 0)
+                    {
+                        return Math.Min(delay, MaxRetryDelayMs);
+                    }
+                }
+            }
+        }
+
+        if (response.Headers.TryGetValues("X-RateLimit-Reset", out var rateLimitResetValues))
+        {
+            var rateLimitReset = rateLimitResetValues.FirstOrDefault();
+            if (
+                !string.IsNullOrEmpty(rateLimitReset)
+                && long.TryParse(rateLimitReset, out var resetTime)
+            )
+            {
+                var resetDateTime = DateTimeOffset.FromUnixTimeSeconds(resetTime);
+                var delay = (int)(resetDateTime - DateTimeOffset.UtcNow).TotalMilliseconds;
+                if (delay > 0)
+                {
+                    return AddPositiveJitter(Math.Min(delay, MaxRetryDelayMs));
+                }
+            }
+        }
+
+        var exponentialDelay = Math.Min(BaseRetryDelay * (1 << retryAttempt), MaxRetryDelayMs);
+        return AddSymmetricJitter(exponentialDelay);
+    }
+
     private static bool IsRetryableContent(HttpRequestMessage request)
     {
         return request.Content switch
@@ -174,7 +257,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         };
     }
 
-    internal HttpRequestMessage CreateHttpRequest(
+    internal async global::System.Threading.Tasks.Task<HttpRequestMessage> CreateHttpRequestAsync(
         global::SeedOauthClientCredentials.Core.BaseRequest request
     )
     {
@@ -182,10 +265,10 @@ internal partial class RawClient(ClientOptions clientOptions)
         var httpRequest = new HttpRequestMessage(request.Method, url);
         httpRequest.Content = request.CreateContent();
         var mergedHeaders = new Dictionary<string, List<string>>();
-        MergeHeaders(mergedHeaders, Options.Headers);
+        await MergeHeadersAsync(mergedHeaders, Options.Headers).ConfigureAwait(false);
         MergeAdditionalHeaders(mergedHeaders, Options.AdditionalHeaders);
-        MergeHeaders(mergedHeaders, request.Headers);
-        MergeHeaders(mergedHeaders, request.Options?.Headers);
+        await MergeHeadersAsync(mergedHeaders, request.Headers).ConfigureAwait(false);
+        await MergeHeadersAsync(mergedHeaders, request.Options?.Headers).ConfigureAwait(false);
 
         MergeAdditionalHeaders(mergedHeaders, request.Options?.AdditionalHeaders ?? []);
         SetHeaders(httpRequest, mergedHeaders);
@@ -290,7 +373,7 @@ internal partial class RawClient(ClientOptions clientOptions)
         return result;
     }
 
-    private static void MergeHeaders(
+    private static async SystemTask MergeHeadersAsync(
         Dictionary<string, List<string>> mergedHeaders,
         Headers? headers
     )
@@ -302,8 +385,8 @@ internal partial class RawClient(ClientOptions clientOptions)
 
         foreach (var header in headers)
         {
-            var value = header.Value?.Match(str => str, func => func.Invoke());
-            if (value != null)
+            var value = await header.Value.ResolveAsync().ConfigureAwait(false);
+            if (value is not null)
             {
                 mergedHeaders[header.Key] = [value];
             }

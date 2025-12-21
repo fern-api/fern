@@ -23,22 +23,31 @@ module Seed
       # @option params [Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
       #
       # @return [untyped]
-      def send_(request_options: {}, **_params)
-        _request = Seed::Internal::JSON::Request.new(
+      def send_(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        headers = {}
+        headers["operand"] = params[:operand] if params[:operand]
+        headers["maybeOperand"] = params[:maybe_operand] if params[:maybe_operand]
+        headers["operandOrColor"] = params[:operand_or_color] if params[:operand_or_color]
+        headers["maybeOperandOrColor"] = params[:maybe_operand_or_color] if params[:maybe_operand_or_color]
+
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "headers"
+          path: "headers",
+          headers: headers,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
     end
   end

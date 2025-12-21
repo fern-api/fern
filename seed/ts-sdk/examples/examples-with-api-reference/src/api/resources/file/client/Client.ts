@@ -6,7 +6,7 @@ import { NotificationClient } from "../resources/notification/client/Client.js";
 import { ServiceClient } from "../resources/service/client/Client.js";
 
 export declare namespace FileClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 }
 
 export class FileClient {

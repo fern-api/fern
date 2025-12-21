@@ -70,10 +70,28 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @JsonProperty("custom-pager-name")
     Optional<String> customPagerName();
 
+    @JsonProperty("default-timeout-in-seconds")
+    Optional<Integer> defaultTimeoutInSeconds();
+
     @Override
     @Value.Default
     @JsonProperty("collapse-optional-nullable")
     default Boolean collapseOptionalNullable() {
+        return false;
+    }
+
+    @Override
+    @JsonProperty("gradle-distribution-url")
+    Optional<String> gradleDistributionUrl();
+
+    @Override
+    @JsonProperty("gradle-plugin-management")
+    Optional<String> gradlePluginManagement();
+
+    @Override
+    @Value.Default
+    @JsonProperty("gradle-central-dependency-management")
+    default Boolean gradleCentralDependencyManagement() {
         return false;
     }
 

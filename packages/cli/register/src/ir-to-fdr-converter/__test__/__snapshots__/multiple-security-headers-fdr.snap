@@ -1,4 +1,5 @@
 {
+  "apiName": "Multiple Security Headers Test API",
   "auth": {
     "description": "The web3 wallet of the end user",
     "headerWireValue": "x-coinflow-auth-wallet",
@@ -67,7 +68,20 @@
           {
             "availability": undefined,
             "description": "Unauthorized",
-            "examples": [],
+            "examples": [
+              {
+                "description": undefined,
+                "name": undefined,
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "UNAUTHORIZED",
+                    "message": "Authentication required",
+                  },
+                },
+              },
+            ],
+            "headers": undefined,
             "isWildcard": undefined,
             "name": "UnauthorizedError",
             "statusCode": 401,

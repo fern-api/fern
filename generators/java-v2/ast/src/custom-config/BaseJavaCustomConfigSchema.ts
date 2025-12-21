@@ -26,6 +26,10 @@ export const BaseJavaCustomConfigSchema = z.object({
     "collapse-optional-nullable": z.boolean().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
     "custom-pager-name": z.string().optional(),
+    "default-timeout-in-seconds": z.number().optional(),
+    "gradle-distribution-url": z.string().optional(),
+    "gradle-plugin-management": z.string().optional(),
+    "gradle-central-dependency-management": z.boolean().optional(),
 
     // Deprecated.
     "wrapped-aliases": z.boolean().optional()

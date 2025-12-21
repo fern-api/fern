@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubLicenseSchema } from "../../license/types/GithubLicenseSchema";
 
 export const GithubPushSchema: core.serialization.ObjectSchema<
     serializers.GithubPushSchema.Raw,
-    FernDefinition.GithubPushSchema
+    GeneratorsYml.GithubPushSchema
 > = core.serialization.object({
     repository: core.serialization.string(),
     license: GithubLicenseSchema.optional(),

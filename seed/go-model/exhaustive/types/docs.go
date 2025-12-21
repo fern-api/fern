@@ -68,17 +68,17 @@ type ObjectWithDocs struct {
 	// - ** /: PHPDoc comment end
 	// - *: Can interfere with comment blocks
 	// - &: HTML entities
-	String string `json:"string" url:"string"`
+	FieldString string `json:"string" url:"string"`
 
 	extraProperties map[string]any
 	rawJSON         json.RawMessage
 }
 
-func (o *ObjectWithDocs) GetString() string {
+func (o *ObjectWithDocs) GetFieldString() string {
 	if o == nil {
 		return ""
 	}
-	return o.String
+	return o.FieldString
 }
 
 func (o *ObjectWithDocs) GetExtraProperties() map[string]any {

@@ -5,6 +5,9 @@ module <%= gem_namespace %>
     module Http
       # @api private
       class RawClient
+        # @return [String] The base URL for requests
+        attr_reader :base_url
+
         # @param base_url [String] The base url for the request.
         # @param max_retries [Integer] The number of times to retry a failed request, defaults to 2.
         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
@@ -44,6 +47,13 @@ module <%= gem_namespace %>
         # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
         # @return [URI::Generic] The URL.
         def build_url(request)
+          # If the path is already an absolute URL, use it directly
+          if request.path.start_with?("http://", "https://")
+            url = request.path
+            url = "#{url}?#{encode_query(request.query)}" if request.query&.any?
+            return URI.parse(url)
+          end
+
           path = request.path.start_with?("/") ? request.path[1..] : request.path
           base = request.base_url || @base_url
           url = "#{base.chomp("/")}/#{path}"
@@ -95,7 +105,12 @@ module <%= gem_namespace %>
           http.max_retries = @max_retries
           http
         end
+
+        # @return [String]
+        def inspect
+          "#<#{self.class.name}:0x#{object_id.to_s(16)} @base_url=#{@base_url.inspect}>"
+        end
       end
     end
   end
-end        
+end                                

@@ -2,7 +2,10 @@
     "name": "@fern/error-property",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:error-property/fern",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/error-property/fern.git"
+    },
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

@@ -43,9 +43,15 @@ class AbstractFooService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                )
             elif parameter_name == "optional_string":
-                new_parameters.append(parameter.replace(default=fastapi.Query(default=..., alias="optionalString")))
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="optionalString")]
+                    )
+                )
             else:
                 new_parameters.append(parameter)
         setattr(cls.find, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -61,10 +67,6 @@ class AbstractFooService(AbstractFernService):
                     + "the endpoint's errors list in your Fern Definition."
                 )
                 raise e
-
-        # this is necessary for FastAPI to find forward-ref'ed type hints.
-        # https://github.com/tiangolo/fastapi/pull/5077
-        wrapper.__globals__.update(cls.find.__globals__)
 
         router.post(
             path="/",

@@ -1,0 +1,405 @@
+name: Create PRs to Remediate vulns
+
+# ============================================================
+# This workflow runs two independent security scans:
+#
+# 1. Dependabot Alerts (create-dependabot-prs job)
+#    - Fetches open Dependabot alerts from GitHub
+#    - Creates PRs for each alert with instructions for Devin AI
+#
+# 2. Grype Container Scan (create-grype-pr-{CONTAINER_NAME} jobs)
+#    - Builds the Docker container
+#    - Scans it with grype for OS and package vulnerabilities
+#    - Creates a PR if actionable vulnerabilities are found
+#
+# TOKEN REQUIREMENTS:
+# - FERN_GITHUB_TOKEN: PAT with `security_events` scope for Dependabot alerts
+# - GITHUB_TOKEN: Default token for creating branches and PRs
+# - DEVIN_AI_PR_BOT_SLACK_TOKEN: For Slack notifications to Devin AI
+# ============================================================
+
+on:
+  schedule:
+    # Run at 5AM EST (10AM UTC) every day
+    - cron: "0 10 * * *"
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  create-dependabot-prs:
+    name: Check Dependabot alerts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Fetch Dependabot alerts
+        id: fetch-alerts
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.PR_BOT_GH_PAT }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            // Fetch all open Dependabot alerts using FERN_GITHUB_TOKEN
+            let alerts = [];
+            try {
+              const response = await github.rest.dependabot.listAlertsForRepo({
+                owner,
+                repo,
+                state: 'open',
+                per_page: 100
+              });
+              alerts = response.data;
+            } catch (error) {
+              if (error.status === 403) {
+                console.log('ERROR: Unable to access Dependabot alerts. This is likely because:');
+                console.log('1. The FERN_GITHUB_TOKEN secret is not set, OR');
+                console.log('2. The token does not have the required `security_events` scope');
+                console.log('');
+                console.log('To fix: Ensure FERN_GITHUB_TOKEN is a PAT (classic) with `security_events` scope');
+                core.setOutput('alerts_json', '[]');
+                return;
+              }
+              throw error;
+            }
+
+            if (alerts.length === 0) {
+              console.log('No open Dependabot alerts found.');
+              core.setOutput('alerts_json', '[]');
+              return;
+            }
+
+            console.log(`Found ${alerts.length} open Dependabot alerts.`);
+            core.setOutput('alerts_json', JSON.stringify(alerts));
+      - name: Create PRs and send Slack notifications
+        id: create-prs
+        if: steps.fetch-alerts.outputs.alerts_json != '[]'
+        uses: actions/github-script@v7
+        env:
+          # ============================================================
+          # DEVIN PROMPT CONFIGURATION
+          # Edit the prompt below to customize instructions for Devin
+          # ============================================================
+          DEVIN_PROMPT: |
+            @devin-ai-integration Please resolve this Dependabot security alert.
+
+            **Instructions:**
+            1. Analyze the vulnerability and understand its impact
+            2. Update the affected dependency to a secure version. If updating a poetry lock file, use the same version of poetry used to generate the existing one.
+            3. Ideally resolve this without using an override - prefer updating the dependency directly
+            4. If an override is absolutely necessary, document why in the PR description
+            5. Run tests to ensure the update doesn't break anything
+            6. Push your fix to this PR branch and tag @davidkonigsberg for review
+            7. Delete the scaffold file (.github/dependabot-alerts/alert-*.md) as part of your fix
+            8. Update the PR title, if needed, to pass CI checks
+
+            **Alert Details:**
+          ALERTS_JSON: ${{ steps.fetch-alerts.outputs.alerts_json }}
+          SLACK_TOKEN: ${{ secrets.DEVIN_AI_PR_BOT_SLACK_TOKEN }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const devinPrompt = process.env.DEVIN_PROMPT;
+            const slackToken = process.env.SLACK_TOKEN;
+            const slackChannelId = 'C0A23CZEFNF';
+            const devinMention = '<@U088PL5FS3B>';
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const baseBranch = 'main';
+
+            const alerts = JSON.parse(process.env.ALERTS_JSON || '[]');
+            if (alerts.length === 0) {
+              console.log('No alerts to process.');
+              return;
+            }
+
+            console.log(`Processing ${alerts.length} Dependabot alerts.`);
+
+            // Fetch existing OPEN PRs to check for duplicates (closed PRs should not block new ones)
+            const existingPRs = await github.paginate(github.rest.pulls.list, {
+              owner,
+              repo,
+              state: 'open',
+              per_page: 100
+            });
+
+            // Create a set of alert numbers that already have open PRs
+            const existingAlertNumbers = new Set();
+            // Also track packages that already have open PRs to avoid creating multiple PRs for the same package
+            const existingPackages = new Set();
+            for (const pr of existingPRs) {
+              const alertMatch = pr.title.match(/\[Dependabot Alert #(\d+)\]/);
+              if (alertMatch) {
+                existingAlertNumbers.add(parseInt(alertMatch[1]));
+                // Extract package name from PR title (format: "[Dependabot Alert #N] SEVERITY: packageName vulnerability")
+                const packageMatch = pr.title.match(/\[Dependabot Alert #\d+\] \w+: (.+) vulnerability/);
+                if (packageMatch) {
+                  existingPackages.add(packageMatch[1]);
+                }
+              }
+            }
+
+            console.log(`Found ${existingAlertNumbers.size} existing open PRs for Dependabot alerts.`);
+            console.log(`Found ${existingPackages.size} packages with existing open PRs: ${[...existingPackages].join(', ')}`);
+
+            // Track packages we create PRs for in this run to avoid duplicates within the same run
+            const packagesWithNewPRs = new Set();
+
+            // Get the base branch ref for creating new branches
+            const baseRef = await github.rest.git.getRef({
+              owner,
+              repo,
+              ref: `heads/${baseBranch}`,
+            });
+            const baseCommitSha = baseRef.data.object.sha;
+
+            const baseCommit = await github.rest.git.getCommit({
+              owner,
+              repo,
+              commit_sha: baseCommitSha,
+            });
+            const baseTreeSha = baseCommit.data.tree.sha;
+
+            // Helper function to send Slack notification
+            async function sendSlackNotification(prInfo) {
+              const message = `${devinMention} *New Dependabot Alert PR Created*\nNew PR created for Dependabot security alert. Please open a PR into the \`fern\` repo to address the dependabot alert "<${prInfo.alertUrl}|${prInfo.alertName}>". Follow the instructions in the <${prInfo.url}|PR>.`;
+              
+              try {
+                const response = await fetch('https://slack.com/api/chat.postMessage', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${slackToken}`
+                  },
+                  body: JSON.stringify({
+                    channel: slackChannelId,
+                    text: message,
+                    mrkdwn: true
+                  })
+                });
+                
+                const result = await response.json();
+                if (result.ok) {
+                  console.log(`Sent Slack notification for PR #${prInfo.number}: ${prInfo.alertName}`);
+                } else {
+                  console.error(`Failed to send Slack notification for PR #${prInfo.number}: ${result.error}`);
+                }
+              } catch (error) {
+                console.error(`Error sending Slack notification for PR #${prInfo.number}: ${error.message}`);
+              }
+            }
+
+            // Create PRs for new alerts
+            let createdCount = 0;
+            let skippedDueToPackage = 0;
+            for (const alert of alerts) {
+              if (existingAlertNumbers.has(alert.number)) {
+                console.log(`PR already exists for alert #${alert.number}, skipping.`);
+                continue;
+              }
+
+              const severity = alert.security_advisory?.severity || 'unknown';
+              const packageName = alert.security_vulnerability?.package?.name || 'unknown package';
+
+              // Skip if there's already an open PR for this package (either existing or created in this run)
+              if (existingPackages.has(packageName) || packagesWithNewPRs.has(packageName)) {
+                console.log(`PR already exists for package "${packageName}" (alert #${alert.number}), skipping to avoid duplicate PRs.`);
+                skippedDueToPackage++;
+                continue;
+              }
+              const ecosystem = alert.security_vulnerability?.package?.ecosystem || 'unknown';
+              const vulnerableVersionRange = alert.security_vulnerability?.vulnerable_version_range || 'unknown';
+              const patchedVersions = alert.security_vulnerability?.first_patched_version?.identifier || 'No patch available';
+              const cveId = alert.security_advisory?.cve_id || 'N/A';
+              const ghsaId = alert.security_advisory?.ghsa_id || 'N/A';
+              const summary = alert.security_advisory?.summary || 'No summary available';
+              const description = alert.security_advisory?.description || 'No description available';
+              const manifestPath = alert.dependency?.manifest_path || 'unknown';
+
+              const branchName = `dependabot-alert-${alert.number}-devin`;
+              const filePath = `.github/dependabot-alerts/alert-${alert.number}.md`;
+
+              // Check if branch already exists - if so, delete it (it's from a closed PR)
+              try {
+                await github.rest.git.getRef({
+                  owner,
+                  repo,
+                  ref: `heads/${branchName}`,
+                });
+                // Branch exists but no open PR (we already checked for open PRs above)
+                // Delete the old branch so we can create a fresh one
+                console.log(`Deleting old branch ${branchName} from closed PR...`);
+                await github.rest.git.deleteRef({
+                  owner,
+                  repo,
+                  ref: `heads/${branchName}`,
+                });
+              } catch (e) {
+                if (e.status !== 404) throw e;
+                // Branch doesn't exist, which is fine
+              }
+
+              const prTitle = `[Dependabot Alert #${alert.number}] ${severity.toUpperCase()}: ${packageName} vulnerability`;
+
+              const alertContent = `${devinPrompt}
+            - **Package:** ${packageName} (${ecosystem})
+            - **Severity:** ${severity.toUpperCase()}
+            - **Vulnerable versions:** ${vulnerableVersionRange}
+            - **Patched version:** ${patchedVersions}
+            - **CVE:** ${cveId}
+            - **GHSA:** ${ghsaId}
+            - **Manifest:** ${manifestPath}
+
+            **Summary:**
+            ${summary}
+
+            **Description:**
+            ${description}
+
+            ---
+            [View Dependabot Alert](https://github.com/${owner}/${repo}/security/dependabot/${alert.number})
+            `;
+
+              try {
+                // Create a blob with the alert content
+                const blob = await github.rest.git.createBlob({
+                  owner,
+                  repo,
+                  content: alertContent,
+                  encoding: 'utf-8',
+                });
+
+                // Create a tree with the new file
+                const tree = await github.rest.git.createTree({
+                  owner,
+                  repo,
+                  base_tree: baseTreeSha,
+                  tree: [
+                    {
+                      path: filePath,
+                      mode: '100644',
+                      type: 'blob',
+                      sha: blob.data.sha,
+                    },
+                  ],
+                });
+
+                // Create a commit
+                const commit = await github.rest.git.createCommit({
+                  owner,
+                  repo,
+                  message: `[Dependabot Alert #${alert.number}] Scaffold PR for ${packageName}`,
+                  tree: tree.data.sha,
+                  parents: [baseCommitSha],
+                });
+
+                // Create the branch
+                await github.rest.git.createRef({
+                  owner,
+                  repo,
+                  ref: `refs/heads/${branchName}`,
+                  sha: commit.data.sha,
+                });
+
+                // Create the PR
+                const pr = await github.rest.pulls.create({
+                  owner,
+                  repo,
+                  title: prTitle,
+                  head: branchName,
+                  base: baseBranch,
+                  body: alertContent,
+                  draft: true,
+                });
+
+                console.log(`Created PR for alert #${alert.number}: ${packageName}`);
+                createdCount++;
+
+                // Track this package so we don't create duplicate PRs for other alerts affecting the same package
+                packagesWithNewPRs.add(packageName);
+
+                // Send Slack notification immediately after creating the PR
+                const alertUrl = `https://github.com/${owner}/${repo}/security/dependabot/${alert.number}`;
+                await sendSlackNotification({
+                  number: pr.data.number,
+                  url: pr.data.html_url,
+                  alertName: summary,
+                  alertUrl
+                });
+              } catch (error) {
+                console.error(`Failed to create PR for alert #${alert.number}: ${error.message}`);
+              }
+            }
+
+            console.log(`Created ${createdCount} new PRs from Dependabot alerts.`);
+            if (skippedDueToPackage > 0) {
+              console.log(`Skipped ${skippedDueToPackage} alerts because PRs already exist for those packages.`);
+            }
+
+  # ============================================================
+  # GRYPE CONTAINER VULNERABILITY SCANS
+  # Builds the Docker containers and scans them with grype for
+  # OS-level and package vulnerabilities.
+  # ============================================================
+
+  create-grype-pr-java-sdk:
+    name: Run grype scan - java SDK
+    runs-on: Seed
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Configure AWS Credentials
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: "arn:aws:iam::985111089818:role/github-ci"
+          aws-region: "us-east-1"
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Build the Java SDK distribution tar (Gradle)
+        run: cd generators/java && ./gradlew :sdk:distTar
+
+      - name: Build the Java v2 SDK CLI (TypeScript/Node)
+        run: pnpm turbo run dist:cli --filter @fern-api/java-sdk
+
+      - name: Build container
+        run: docker build -f generators/java/sdk/Dockerfile -t java-sdk:grype-scan .
+
+      - name: Push to ECR (to keep AWS scans up to date)
+        if: ${{ github.event_name != 'workflow_dispatch' }}
+        run: |
+          aws sts get-caller-identity
+          docker tag java-sdk:grype-scan 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:latest-${{ github.sha }}
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 985111089818.dkr.ecr.us-east-1.amazonaws.com
+          docker push 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:latest-${{ github.sha }}
+
+      - name: Install grype
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Run grype scan
+        run: |
+          grype docker:java-sdk:grype-scan -o json > grype-report.json
+
+      # ============================================================
+      # IGNORED CVEs CONFIGURATION
+      # Add CVEs here that have been reviewed and accepted as risks.
+      # Format: One CVE ID per line in the ignored_cves input
+      # ============================================================
+      - name: Process vulnerabilities and create PR
+        uses: ./.github/actions/process-grype-vulns
+        with:
+          container_name: java-sdk
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          slack_token: ${{ secrets.DEVIN_AI_PR_BOT_SLACK_TOKEN }}
+          ignored_cves: ""

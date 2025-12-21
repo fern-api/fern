@@ -180,6 +180,7 @@ function getObjectUtils(schema) {
                         value: raw,
                         transformBase: (rawBase) => schema.parse(rawBase, opts),
                         transformExtension: (rawExtension) => extension.parse(rawExtension, opts),
+                        breadcrumbsPrefix: opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix,
                     });
                 },
                 json: (parsed, opts) => {
@@ -188,6 +189,7 @@ function getObjectUtils(schema) {
                         value: parsed,
                         transformBase: (parsedBase) => schema.json(parsedBase, opts),
                         transformExtension: (parsedExtension) => extension.json(parsedExtension, opts),
+                        breadcrumbsPrefix: opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix,
                     });
                 },
                 getType: () => Schema_1.SchemaType.OBJECT,
@@ -224,7 +226,18 @@ function getObjectUtils(schema) {
         },
     };
 }
-function validateAndTransformExtendedObject({ extensionKeys, value, transformBase, transformExtension, }) {
+function validateAndTransformExtendedObject({ extensionKeys, value, transformBase, transformExtension, breadcrumbsPrefix = [], }) {
+    if (!(0, isPlainObject_1.isPlainObject)(value)) {
+        return {
+            ok: false,
+            errors: [
+                {
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, "object"),
+                },
+            ],
+        };
+    }
     const extensionPropertiesSet = new Set(extensionKeys);
     const [extensionProperties, baseProperties] = (0, partition_1.partition)((0, keys_1.keys)(value), (key) => extensionPropertiesSet.has(key));
     const transformedBase = transformBase((0, filterObject_1.filterObject)(value, baseProperties));

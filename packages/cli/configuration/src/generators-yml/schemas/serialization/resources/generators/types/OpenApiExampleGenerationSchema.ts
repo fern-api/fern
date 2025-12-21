@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { RequestOrResponseExampleGenerationSchema } from "./RequestOrResponseExampleGenerationSchema";
 
 export const OpenApiExampleGenerationSchema: core.serialization.ObjectSchema<
     serializers.OpenApiExampleGenerationSchema.Raw,
-    FernDefinition.OpenApiExampleGenerationSchema
+    GeneratorsYml.OpenApiExampleGenerationSchema
 > = core.serialization.object({
     request: RequestOrResponseExampleGenerationSchema.optional(),
     response: RequestOrResponseExampleGenerationSchema.optional(),

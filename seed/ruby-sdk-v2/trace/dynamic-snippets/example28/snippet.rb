@@ -6,6 +6,6 @@ client = Seed::Client.new(
 );
 
 client.sysprop.set_num_warm_instances(
-  ,
-  1
+  language: 'JAVA',
+  num_warm_instances: 1
 );

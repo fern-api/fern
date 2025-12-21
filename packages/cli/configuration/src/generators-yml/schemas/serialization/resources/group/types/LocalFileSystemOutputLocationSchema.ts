@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const LocalFileSystemOutputLocationSchema: core.serialization.ObjectSchema<
     serializers.LocalFileSystemOutputLocationSchema.Raw,
-    FernDefinition.LocalFileSystemOutputLocationSchema
+    GeneratorsYml.LocalFileSystemOutputLocationSchema
 > = core.serialization.object({
     path: core.serialization.string(),
 });

@@ -546,7 +546,8 @@
                 "type": "response"
               },
               "type": "json"
-            }
+            },
+            "docs": "Successfully subscribed"
           },
           "docs": "Subscribe to receive webhook notifications",
           "v2Examples": {
@@ -624,7 +625,8 @@
                     "type": "response"
                   },
                   "type": "json"
-                }
+                },
+                "docs": "Successfully subscribed"
               }
             ]
           }
@@ -636,6 +638,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Callbacks Test API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -669,22 +672,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Callbacks Test API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "callbacksTestApi",
+      "safeName": "callbacksTestApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "callbacks_test_api",
+      "safeName": "callbacks_test_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "CALLBACKS_TEST_API",
+      "safeName": "CALLBACKS_TEST_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "CallbacksTestApi",
+      "safeName": "CallbacksTestApi"
     }
   },
   "constants": {

@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubLicenseSchema } from "../../license/types/GithubLicenseSchema";
 import { GithubCommitAndReleaseMode } from "./GithubCommitAndReleaseMode";
 
 export const GithubCommitAndReleaseSchema: core.serialization.ObjectSchema<
     serializers.GithubCommitAndReleaseSchema.Raw,
-    FernDefinition.GithubCommitAndReleaseSchema
+    GeneratorsYml.GithubCommitAndReleaseSchema
 > = core.serialization.object({
     repository: core.serialization.string(),
     license: GithubLicenseSchema.optional(),

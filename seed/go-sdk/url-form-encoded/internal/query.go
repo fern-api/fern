@@ -70,6 +70,9 @@ func QueryValuesWithDefaults(v interface{}, defaults map[string]interface{}) (ur
 	if err != nil {
 		return values, err
 	}
+	if !val.IsValid() {
+		return values, nil
+	}
 
 	// apply defaults to zero-value fields directly on the original struct
 	valType := val.Type()

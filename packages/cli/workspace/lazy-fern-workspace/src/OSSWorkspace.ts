@@ -75,6 +75,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             ),
             removeDiscriminantsFromSchemas: convertRemoveDiscriminantsFromSchemas(specs),
             coerceOptionalSchemasToNullable: specs.every((spec) => spec.settings?.coerceOptionalSchemasToNullable),
+            coerceEnumsToLiterals: specs.every((spec) => spec.settings?.coerceEnumsToLiterals),
             onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
             inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
             objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
@@ -103,7 +104,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 return { except: excepts };
             })(),
             exampleGeneration: specs[0]?.settings?.exampleGeneration,
-            groupEnvironmentsByHost: specs.some((spec) => spec.settings?.groupEnvironmentsByHost)
+            groupEnvironmentsByHost: specs.some((spec) => spec.settings?.groupEnvironmentsByHost),
+            defaultIntegerFormat: specs[0]?.settings?.defaultIntegerFormat
         });
         this.specs = specs;
         this.allSpecs = allSpecs;
@@ -116,6 +118,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             respectNullableSchemas: this.respectNullableSchemas,
             wrapReferencesToNullableInOptional: this.wrapReferencesToNullableInOptional,
             coerceOptionalSchemasToNullable: this.coerceOptionalSchemasToNullable,
+            coerceEnumsToLiterals: this.coerceEnumsToLiterals,
             inlinePathParameters: this.inlinePathParameters,
             objectQueryParameters: this.objectQueryParameters,
             exampleGeneration: this.exampleGeneration,
@@ -125,7 +128,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             resolveAliases: this.resolveAliases,
             removeDiscriminantsFromSchemas: this.removeDiscriminantsFromSchemas,
             groupMultiApiEnvironments: this.groupMultiApiEnvironments,
-            groupEnvironmentsByHost: this.groupEnvironmentsByHost
+            groupEnvironmentsByHost: this.groupEnvironmentsByHost,
+            defaultIntegerFormat: this.defaultIntegerFormat
         };
     }
 

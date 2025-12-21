@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "disable-required-property-builder-checks": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

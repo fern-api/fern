@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.submission.stop_execution_session('sessionId');
+client.submission.stop_execution_session(session_id: 'sessionId');

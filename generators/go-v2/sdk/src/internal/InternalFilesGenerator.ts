@@ -11,6 +11,10 @@ export class InternalFilesGenerator {
     }
 
     public generate(): GoFile[] {
+        // Skip generating error_codes.go when errorCodes is "per-endpoint"
+        if (this.context.customConfig.errorCodes === "per-endpoint") {
+            return [];
+        }
         const errorFiles = this.generateErrorFiles();
         return [...errorFiles];
     }

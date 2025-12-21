@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { MavenOutputSignatureSchema } from "./MavenOutputSignatureSchema";
 
 export const MavenOutputLocationSchema: core.serialization.ObjectSchema<
     serializers.MavenOutputLocationSchema.Raw,
-    FernDefinition.MavenOutputLocationSchema
+    GeneratorsYml.MavenOutputLocationSchema
 > = core.serialization.object({
     url: core.serialization.string().optional(),
     coordinate: core.serialization.string(),

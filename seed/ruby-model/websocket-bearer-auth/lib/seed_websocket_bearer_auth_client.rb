@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "seed_websocket_bearer_auth_client/realtime_no_auth/types/no_auth_send_event"
+require_relative "seed_websocket_bearer_auth_client/realtime_no_auth/types/no_auth_receive_event"
 require_relative "seed_websocket_bearer_auth_client/realtime/types/send_event"
 require_relative "seed_websocket_bearer_auth_client/realtime/types/send_snake_case"
 require_relative "seed_websocket_bearer_auth_client/realtime/types/receive_event"

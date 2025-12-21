@@ -2,13 +2,19 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { Subpackage } from "@fern-fern/ir-sdk/api";
+import { InferredAuthScheme, Literal, Subpackage } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments";
 import { Comments } from "../utils/comments";
 
 const TOKEN_PARAMETER_NAME = "token";
+
+interface InferredAuthParameter {
+    snakeName: string;
+    isOptional: boolean;
+    literal?: Literal;
+}
 
 export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     public doGenerate(): RubyFile {
@@ -47,14 +53,26 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
     private getInitializeMethod(): ruby.Method {
         const parameters: ruby.KeywordParameter[] = [];
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
 
         const baseUrlParameter = ruby.parameters.keyword({
             name: "base_url",
             type: ruby.Type.nilable(ruby.Type.string()),
-            initializer: undefined,
+            initializer: ruby.nilValue(),
             docs: "Override the default base URL for the API, e.g., `https://api.example.com`"
         });
         parameters.push(baseUrlParameter);
+
+        if (isMultiUrl) {
+            const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+            const environmentParameter = ruby.parameters.keyword({
+                name: "environment",
+                type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.string())),
+                initializer: defaultEnvironmentReference != null ? defaultEnvironmentReference : ruby.nilValue(),
+                docs: "The environment URLs to use for requests"
+            });
+            parameters.push(environmentParameter);
+        }
 
         const authenticationParameters = this.getAuthenticationParameters();
         parameters.push(...authenticationParameters);
@@ -68,20 +86,183 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             returnType: ruby.Type.void()
         });
 
+        const inferredAuth = this.context.getInferredAuth();
+        if (inferredAuth != null) {
+            method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth));
+        }
+
+        if (isMultiUrl) {
+            method.addStatement(
+                ruby.codeblock((writer) => {
+                    writer.writeLine(`@base_url = base_url`);
+                    writer.writeLine(`@environment = environment`);
+                })
+            );
+        }
+
+        const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+
         method.addStatement(
             ruby.codeblock((writer) => {
                 writer.write(`@raw_client = `);
                 writer.writeNode(this.context.getRawClientClassReference());
                 writer.writeLine(`.new(`);
                 writer.indent();
-                writer.writeLine(`base_url: base_url,`);
-                writer.writeLine(`headers: ${this.getRawClientHeaders()}`);
+                if (isMultiUrl) {
+                    const multiUrlEnvs = this.context.getMultipleBaseUrlsEnvironments();
+                    const defaultBaseUrlId = multiUrlEnvs?.baseUrls[0]?.id;
+                    const defaultBaseUrlName =
+                        defaultBaseUrlId != null ? this.context.getBaseUrlName(defaultBaseUrlId) : undefined;
+                    if (defaultBaseUrlName != null) {
+                        writer.writeLine(`base_url: base_url || environment&.dig(:${defaultBaseUrlName}),`);
+                    } else {
+                        writer.writeLine(`base_url: base_url,`);
+                    }
+                } else {
+                    writer.write(`base_url: base_url`);
+                    if (defaultEnvironmentReference != null) {
+                        writer.write(" || ");
+                        writer.writeNode(defaultEnvironmentReference);
+                    }
+                    writer.writeLine(`,`);
+                }
+                writer.write(`headers: `);
+                writer.writeNode(this.getRawClientHeaders());
+                if (inferredAuth != null) {
+                    writer.writeLine(`.merge(@auth_provider.auth_headers)`);
+                } else {
+                    writer.newLine();
+                }
                 writer.dedent();
                 writer.writeLine(`)`);
             })
         );
 
         return method;
+    }
+
+    private getInferredAuthInitializationStatement(scheme: InferredAuthScheme): ruby.AstNode {
+        const inferredParams = this.getParametersForInferredAuth(scheme);
+
+        // Get the auth service/endpoint info to determine the auth client class
+        const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[tokenEndpointReference.serviceId];
+        const subpackageId = service?.name.fernFilepath.packagePath[0]?.pascalCase.safeName ?? "Auth";
+
+        // Get the token endpoint to check its baseUrl
+        const tokenEndpoint = service?.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
+        const tokenEndpointBaseUrlId = tokenEndpoint?.baseUrl;
+
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+
+        return ruby.codeblock((writer) => {
+            // Create an unauthenticated raw client for the auth endpoint
+            writer.writeLine(`# Create an unauthenticated client for the auth endpoint`);
+            writer.write(`auth_raw_client = `);
+            writer.writeNode(this.context.getRawClientClassReference());
+            writer.writeLine(`.new(`);
+            writer.indent();
+
+            // Resolve base URL with proper fallback to default environment
+            // For multi-URL environments, use the token endpoint's baseUrl if specified,
+            // otherwise fall back to the first base URL
+            if (isMultiUrl) {
+                const multiUrlEnvs = this.context.getMultipleBaseUrlsEnvironments();
+                // Prefer the token endpoint's baseUrl if specified, otherwise use the first base URL
+                const authBaseUrlId = tokenEndpointBaseUrlId ?? multiUrlEnvs?.baseUrls[0]?.id;
+                const authBaseUrlName = authBaseUrlId != null ? this.context.getBaseUrlName(authBaseUrlId) : undefined;
+                if (authBaseUrlName != null) {
+                    writer.writeLine(`base_url: base_url || environment&.dig(:${authBaseUrlName}),`);
+                } else {
+                    writer.writeLine(`base_url: base_url,`);
+                }
+            } else {
+                writer.write(`base_url: base_url`);
+                if (defaultEnvironmentReference != null) {
+                    writer.write(" || ");
+                    writer.writeNode(defaultEnvironmentReference);
+                }
+                writer.writeLine(`,`);
+            }
+            writer.writeLine(`headers: {`);
+            writer.indent();
+
+            // Add X-Fern-Language header
+            const hasParams = inferredParams.length > 0;
+            writer.writeLine(`"X-Fern-Language" => "Ruby"${hasParams ? "," : ""}`);
+
+            // Add any header-based auth params to the auth client headers
+            for (let i = 0; i < inferredParams.length; i++) {
+                const param = inferredParams[i];
+                if (param == null) {
+                    continue;
+                }
+                const headerName = this.snakeToHeaderCase(param.snakeName);
+                const isLast = i === inferredParams.length - 1;
+                writer.writeLine(`"${headerName}" => ${param.snakeName}${isLast ? "" : ","}`);
+            }
+
+            writer.dedent();
+            writer.writeLine(`}`);
+            writer.dedent();
+            writer.writeLine(`)`);
+            writer.newLine();
+
+            // Create the auth client
+            writer.writeLine(`# Create the auth client for token retrieval`);
+            writer.write(`auth_client = `);
+            writer.writeNode(
+                ruby.classReference({
+                    name: "Client",
+                    modules: [this.context.getRootModule().name, subpackageId],
+                    fullyQualified: true
+                })
+            );
+            writer.writeLine(`.new(client: auth_raw_client)`);
+            writer.newLine();
+
+            // Create the auth provider with auth_client and options
+            writer.writeLine(`# Create the auth provider with the auth client and credentials`);
+            writer.write(`@auth_provider = `);
+            writer.writeNode(this.getInferredAuthProviderClassReference());
+            writer.writeLine(`.new(`);
+            writer.indent();
+            writer.writeLine(`auth_client: auth_client,`);
+            writer.write(`options: { base_url: base_url`);
+            for (const param of inferredParams) {
+                if (param == null) {
+                    continue;
+                }
+                writer.write(`, ${param.snakeName}: ${param.snakeName}`);
+            }
+            writer.writeLine(` }`);
+            writer.dedent();
+            writer.writeLine(`)`);
+        });
+    }
+
+    private snakeToHeaderCase(snakeName: string): string {
+        // Convert snake_case to X-Header-Case (e.g., api_key -> X-Api-Key)
+        // If the name already starts with x_, don't add another X- prefix
+        const parts = snakeName.split("_");
+        const startsWithX = parts[0]?.toLowerCase() === "x";
+
+        if (startsWithX) {
+            // x_api_key -> X-Api-Key (use existing x as the X- prefix)
+            return parts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join("-");
+        } else {
+            // api_key -> X-Api-Key (add X- prefix)
+            return "X-" + parts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join("-");
+        }
+    }
+
+    private getInferredAuthProviderClassReference(): ruby.ClassReference {
+        return ruby.classReference({
+            name: "InferredAuthProvider",
+            modules: [this.context.getRootModule().name, "Internal"],
+            fullyQualified: true
+        });
     }
 
     private getAuthenticationParameters(): ruby.KeywordParameter[] {
@@ -119,12 +300,94 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     parameters.push(param);
                     break;
                 }
+                case "inferred": {
+                    const inferredParams = this.getParametersForInferredAuth(scheme);
+                    for (const inferredParam of inferredParams) {
+                        const param = ruby.parameters.keyword({
+                            name: inferredParam.snakeName,
+                            type: inferredParam.isOptional ? ruby.Type.nilable(ruby.Type.string()) : ruby.Type.string(),
+                            initializer: inferredParam.isOptional ? ruby.nilValue() : undefined,
+                            docs: undefined
+                        });
+                        parameters.push(param);
+                    }
+                    break;
+                }
                 default:
                     break;
             }
         }
 
         return parameters;
+    }
+
+    private getParametersForInferredAuth(scheme: InferredAuthScheme): InferredAuthParameter[] {
+        const parameters: InferredAuthParameter[] = [];
+
+        // Get the token endpoint to extract request properties
+        const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[tokenEndpointReference.serviceId];
+        if (service == null) {
+            this.context.logger.warn(`Service with id ${tokenEndpointReference.serviceId} not found for inferred auth`);
+            return [];
+        }
+
+        const endpoint = service.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
+        if (endpoint == null) {
+            this.context.logger.warn(
+                `Endpoint with id ${tokenEndpointReference.endpointId} not found for inferred auth`
+            );
+            return [];
+        }
+
+        // Extract parameters from the token endpoint request
+        const sdkRequest = endpoint.sdkRequest;
+        if (sdkRequest != null && sdkRequest.shape.type === "wrapper") {
+            // Get the request body properties
+            const requestBody = endpoint.requestBody;
+            if (requestBody != null && requestBody.type === "inlinedRequestBody") {
+                for (const property of requestBody.properties) {
+                    const literal = this.maybeLiteral(property.valueType);
+                    if (literal == null) {
+                        // Only add non-literal properties as constructor parameters
+                        parameters.push({
+                            snakeName: property.name.name.snakeCase.unsafeName,
+                            isOptional: this.isOptional(property.valueType)
+                        });
+                    }
+                }
+            }
+
+            // Also add header parameters from the endpoint
+            for (const header of endpoint.headers) {
+                const literal = this.maybeLiteral(header.valueType);
+                if (literal == null) {
+                    parameters.push({
+                        snakeName: header.name.name.snakeCase.unsafeName,
+                        isOptional: this.isOptional(header.valueType)
+                    });
+                }
+            }
+        }
+
+        return parameters;
+    }
+
+    private isOptional(typeReference: { type: string }): boolean {
+        return typeReference.type === "container" || typeReference.type === "unknown";
+    }
+
+    private maybeLiteral(typeReference: {
+        type: string;
+        container?: { type: string; literal?: Literal };
+    }): Literal | undefined {
+        if (typeReference.type === "container") {
+            const container = typeReference as { type: string; container: { type: string; literal?: Literal } };
+            if (container.container?.type === "literal") {
+                return container.container.literal;
+            }
+        }
+        return undefined;
     }
 
     private getRawClientHeaders(): ruby.TypeLiteral {
@@ -170,6 +433,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         return new ruby.Method({
             name: subpackage.name.snakeCase.safeName,
             kind: ruby.MethodKind.Instance,
@@ -182,12 +446,21 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             ),
             statements: [
                 ruby.codeblock((writer) => {
-                    writer.writeLine(
-                        `@${subpackage.name.snakeCase.safeName} ||= ` +
-                            `${rootModule.name}::` +
-                            `${subpackage.name.pascalCase.safeName}::` +
-                            `Client.new(client: @raw_client)`
-                    );
+                    if (isMultiUrl) {
+                        writer.writeLine(
+                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                                `${rootModule.name}::` +
+                                `${subpackage.name.pascalCase.safeName}::` +
+                                `Client.new(client: @raw_client, base_url: @base_url, environment: @environment)`
+                        );
+                    } else {
+                        writer.writeLine(
+                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                                `${rootModule.name}::` +
+                                `${subpackage.name.pascalCase.safeName}::` +
+                                `Client.new(client: @raw_client)`
+                        );
+                    }
                 })
             ]
         });

@@ -8,7 +8,6 @@ use Seed\Requests\SearchRequest;
 use Seed\Types\SearchResponse;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\Types\Constant;
 use Seed\Core\Json\JsonSerializer;
 use Seed\Core\Types\Union;
 use Seed\Types\User;
@@ -28,7 +27,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -57,11 +56,11 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
+
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
 
         $this->client = new RawClient(
             options: $this->options,
@@ -88,8 +87,8 @@ class SeedClient
         $query = [];
         $query['limit'] = $request->limit;
         $query['id'] = $request->id;
-        $query['date'] = $request->date->format(Constant::DateFormat);
-        $query['deadline'] = $request->deadline->format(Constant::DateTimeFormat);
+        $query['date'] = JsonSerializer::serializeDate($request->date);
+        $query['deadline'] = JsonSerializer::serializeDateTime($request->deadline);
         $query['bytes'] = $request->bytes;
         $query['user'] = $request->user;
         $query['neighborRequired'] = JsonSerializer::serializeUnion($request->neighborRequired, new Union(User::class, NestedUser::class, 'string', 'integer'));
@@ -97,7 +96,7 @@ class SeedClient
             $query['userList'] = $request->userList;
         }
         if ($request->optionalDeadline != null) {
-            $query['optionalDeadline'] = $request->optionalDeadline;
+            $query['optionalDeadline'] = JsonSerializer::serializeDateTime($request->optionalDeadline);
         }
         if ($request->keyValue != null) {
             $query['keyValue'] = $request->keyValue;

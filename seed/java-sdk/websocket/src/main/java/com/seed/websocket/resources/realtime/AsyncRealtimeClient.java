@@ -19,9 +19,10 @@ public class AsyncRealtimeClient {
      * @param sessionId the sessionId path parameter
      * @param model Optional model query parameter
      * @param temperature Optional temperature query parameter
+     * @param languageCode Optional languageCode query parameter
      */
     public RealtimeWebSocketClient realtimeWebSocket(
-            String sessionId, Optional<String> model, Optional<Integer> temperature) {
-        return new RealtimeWebSocketClient(clientOptions, sessionId, model, temperature);
+            String sessionId, Optional<String> model, Optional<Integer> temperature, Optional<String> languageCode) {
+        return new RealtimeWebSocketClient(clientOptions, sessionId, model, temperature, languageCode);
     }
 }

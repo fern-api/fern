@@ -799,7 +799,8 @@
                             }
                         },
                         "status-code": null,
-                        "isWildcardStatusCode": null
+                        "isWildcardStatusCode": null,
+                        "docs": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1411,6 +1412,7 @@
                     },
                     "docs": null
                 },
+                "responses": null,
                 "examples": null,
                 "v2Examples": null,
                 "availability": null,

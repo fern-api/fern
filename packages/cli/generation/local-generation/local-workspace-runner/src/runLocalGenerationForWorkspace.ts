@@ -232,7 +232,7 @@ export async function runLocalGenerationForWorkspace({
                     context: interactiveTaskContext,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: version,
-                    writeUnitTests: organization.ok ? (organization?.body.snippetUnitTestsEnabled ?? false) : false,
+                    writeUnitTests: true,
                     generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
                     generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
                     includeOptionalRequestPropertyExamples: false,
@@ -373,7 +373,7 @@ async function postProcessGithubSelfHosted(
                 const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
 
                 try {
-                    await octokit.pulls.create({
+                    const { data: pullRequest } = await octokit.pulls.create({
                         owner,
                         repo,
                         title: prTitle,
@@ -383,9 +383,7 @@ async function postProcessGithubSelfHosted(
                         draft: false
                     });
 
-                    context.logger.info(
-                        `Created pull request ${head} -> ${baseBranch} on ${selfhostedGithubConfig.uri}`
-                    );
+                    context.logger.info(`Created pull request: ${pullRequest.html_url}`);
                 } catch (error) {
                     const message = error instanceof Error ? error.message : String(error);
                     if (message.includes("A pull request already exists for")) {

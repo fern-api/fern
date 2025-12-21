@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.get_organization(tenant_id, organization_id) -> Seed::Organizations::Types::Organization</code></summary>
+<details><summary><code>client.organizations.<a href="/lib/seed/organizations/client.rb">get_organization</a>(tenant_id, organization_id) -> Seed::Organizations::Types::Organization</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.organizations.get_organization('organization_id');
+client.organizations.get_organization(organization_id: 'organization_id');
 ```
 </dd>
 </dl>
@@ -40,6 +40,14 @@ client.organizations.get_organization('organization_id');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Organizations::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -48,7 +56,7 @@ client.organizations.get_organization('organization_id');
 </dl>
 </details>
 
-<details><summary><code>client.organizations.get_organization_user(tenant_id, organization_id, user_id) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.organizations.<a href="/lib/seed/organizations/client.rb">get_organization_user</a>(tenant_id, organization_id, user_id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -62,8 +70,8 @@ client.organizations.get_organization('organization_id');
 
 ```ruby
 client.organizations.get_organization_user(
-  organizationId: 'organization_id',
-  userId: 'user_id'
+  organization_id: 'organization_id',
+  user_id: 'user_id'
 );
 ```
 </dd>
@@ -99,6 +107,14 @@ client.organizations.get_organization_user(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Organizations::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -107,7 +123,7 @@ client.organizations.get_organization_user(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.search_organizations(tenant_id, organization_id) -> Internal::Types::Array[Seed::Organizations::Types::Organization]</code></summary>
+<details><summary><code>client.organizations.<a href="/lib/seed/organizations/client.rb">search_organizations</a>(tenant_id, organization_id) -> Internal::Types::Array[Seed::Organizations::Types::Organization]</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +137,7 @@ client.organizations.get_organization_user(
 
 ```ruby
 client.organizations.search_organizations(
-  organizationId: 'organization_id',
+  organization_id: 'organization_id',
   limit: 1
 );
 ```
@@ -158,6 +174,14 @@ client.organizations.search_organizations(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Organizations::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -167,7 +191,7 @@ client.organizations.search_organizations(
 </details>
 
 ## User
-<details><summary><code>client.user.get_user(tenant_id, user_id) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user</a>(tenant_id, user_id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -180,7 +204,7 @@ client.organizations.search_organizations(
 <dd>
 
 ```ruby
-client.user.get_user(userId: 'user_id');
+client.user.get_user(user_id: 'user_id');
 ```
 </dd>
 </dl>
@@ -207,6 +231,14 @@ client.user.get_user(userId: 'user_id');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -215,7 +247,7 @@ client.user.get_user(userId: 'user_id');
 </dl>
 </details>
 
-<details><summary><code>client.user.create_user(tenant_id, request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">create_user</a>(tenant_id, request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -228,10 +260,10 @@ client.user.get_user(userId: 'user_id');
 <dd>
 
 ```ruby
-client.user.create_user({
+client.user.create_user(
   name: 'name',
   tags: ['tags', 'tags']
-});
+);
 ```
 </dd>
 </dl>
@@ -258,6 +290,14 @@ client.user.create_user({
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -266,7 +306,7 @@ client.user.create_user({
 </dl>
 </details>
 
-<details><summary><code>client.user.update_user(tenant_id, user_id, request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">update_user</a>(tenant_id, user_id, request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -279,7 +319,11 @@ client.user.create_user({
 <dd>
 
 ```ruby
-client.user.update_user(userId: 'user_id');
+client.user.update_user(
+  user_id: 'user_id',
+  name: 'name',
+  tags: ['tags', 'tags']
+);
 ```
 </dd>
 </dl>
@@ -314,6 +358,14 @@ client.user.update_user(userId: 'user_id');
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -322,7 +374,7 @@ client.user.update_user(userId: 'user_id');
 </dl>
 </details>
 
-<details><summary><code>client.user.search_users(tenant_id, user_id) -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">search_users</a>(tenant_id, user_id) -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -336,7 +388,7 @@ client.user.update_user(userId: 'user_id');
 
 ```ruby
 client.user.search_users(
-  userId: 'user_id',
+  user_id: 'user_id',
   limit: 1
 );
 ```
@@ -373,6 +425,14 @@ client.user.search_users(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -381,7 +441,7 @@ client.user.search_users(
 </dl>
 </details>
 
-<details><summary><code>client.user.get_user_metadata(tenant_id, user_id, version) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user_metadata</a>(tenant_id, user_id, version) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -409,7 +469,7 @@ Test endpoint with path parameter that has a text prefix (v{version})
 
 ```ruby
 client.user.get_user_metadata(
-  userId: 'user_id',
+  user_id: 'user_id',
   version: 1
 );
 ```
@@ -446,6 +506,14 @@ client.user.get_user_metadata(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -454,7 +522,7 @@ client.user.get_user_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.user.get_user_specifics(tenant_id, user_id, version, thought) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_user_specifics</a>(tenant_id, user_id, version, thought) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -482,7 +550,7 @@ Test endpoint with path parameters listed in different order than found in path
 
 ```ruby
 client.user.get_user_specifics(
-  userId: 'user_id',
+  user_id: 'user_id',
   version: 1,
   thought: 'thought'
 );
@@ -525,6 +593,14 @@ client.user.get_user_specifics(
 <dd>
 
 **thought:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
     
 </dd>
 </dl>

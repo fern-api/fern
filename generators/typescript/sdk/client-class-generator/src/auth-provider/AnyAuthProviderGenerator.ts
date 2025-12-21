@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
-import { Scope, StructureKind, ts } from "ts-morph";
+import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
 
 export declare namespace AnyAuthProviderGenerator {
@@ -12,6 +12,7 @@ export declare namespace AnyAuthProviderGenerator {
 
 const CLASS_NAME = "AnyAuthProvider";
 const AUTH_PROVIDERS_FIELD_NAME = "authProviders";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -40,12 +41,77 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
         throw new Error("AnyAuthProvider does not have an Options type");
     }
 
+    public getAuthOptionsType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsProperties(_context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        // AnyAuthProvider's AuthOptions is generic and parameterized by the providers array,
+        // so we don't need to return individual properties here
+        return undefined;
+    }
+
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
         return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
     }
 
     public writeToFile(context: SdkContext): void {
+        this.addImports(context);
         this.writeClass(context);
+        this.writeOptions(context);
+    }
+
+    private addImports(context: SdkContext): void {
+        // Import NormalizedClientOptions type
+        context.sourceFile.addImportDeclaration({
+            moduleSpecifier: "../BaseClient",
+            namedImports: ["NormalizedClientOptions"],
+            isTypeOnly: true
+        });
+    }
+
+    private writeOptions(context: SdkContext): void {
+        const normalizedClientOptionsType = "NormalizedClientOptions";
+
+        // Create namespace with types and createInstance function
+        context.sourceFile.addModule({
+            name: CLASS_NAME,
+            isExported: true,
+            kind: StructureKind.Module,
+            statements: [
+                // Helper type to convert union to intersection
+                `type UnionToIntersection<U> = (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;`,
+                "",
+                `type AtLeastOneOf<T extends readonly any[]> = {`,
+                `    [K in keyof T]: T[K] & Partial<UnionToIntersection<Exclude<T[number], T[K]>>>;`,
+                `}[number];`,
+                "",
+                `export type ${AUTH_OPTIONS_TYPE_NAME}<TAuthProviders extends readonly any[]> = AtLeastOneOf<TAuthProviders>;`,
+                `export type Options<TOptions extends readonly any[]> = Partial<UnionToIntersection<TOptions[number]>>;`,
+                "",
+                `type InstantiatableAuthProvider = {`,
+                `    canCreate: (opts: ${normalizedClientOptionsType}) => boolean;`,
+                `    createInstance: (opts: ${normalizedClientOptionsType}) => core.AuthProvider;`,
+                `};`,
+                "",
+                {
+                    kind: StructureKind.Function,
+                    name: "createInstance",
+                    isExported: true,
+                    parameters: [
+                        { name: "options", type: normalizedClientOptionsType },
+                        { name: "authProviderClasses", type: "InstantiatableAuthProvider[]" }
+                    ],
+                    returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
+                    statements: `
+        const authProviders: core.AuthProvider[] = authProviderClasses
+            .filter((providerClass) => providerClass.canCreate(options))
+            .map((providerClass) => providerClass.createInstance(options));
+
+        return new ${CLASS_NAME}(authProviders);`
+                }
+            ]
+        });
     }
 
     private writeClass(context: SdkContext): void {

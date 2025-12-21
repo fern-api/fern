@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const MessageNamingSettingsSchema: core.serialization.Schema<
     serializers.MessageNamingSettingsSchema.Raw,
-    FernDefinition.MessageNamingSettingsSchema
+    GeneratorsYml.MessageNamingSettingsSchema
 > = core.serialization.enum_(["v1", "v2"]);
 
 export declare namespace MessageNamingSettingsSchema {

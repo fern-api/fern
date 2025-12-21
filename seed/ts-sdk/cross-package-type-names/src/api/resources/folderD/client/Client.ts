@@ -5,7 +5,7 @@ import { type NormalizedClientOptions, normalizeClientOptions } from "../../../.
 import { ServiceClient } from "../resources/service/client/Client.js";
 
 export declare namespace FolderDClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 }
 
 export class FolderDClient {

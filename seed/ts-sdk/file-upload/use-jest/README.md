@@ -5,6 +5,25 @@
 
 The Seed TypeScript library provides convenient access to the Seed APIs from TypeScript.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
+- [Exception Handling](#exception-handling)
+- [File Uploads](#file-uploads)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Aborting Requests](#aborting-requests)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Logging](#logging)
+  - [Runtime Compatibility](#runtime-compatibility)
+- [Contributing](#contributing)
+
 ## Installation
 
 ```sh
@@ -21,8 +40,8 @@ Instantiate and use the client with the following:
 
 ```typescript
 import { createReadStream } from "fs";
-import { SeedFileUploadClient } from "@fern/file-upload";
 import * as fs from "fs";
+import { SeedFileUploadClient } from "@fern/file-upload";
 
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
 await client.service.justFile({
@@ -30,7 +49,7 @@ await client.service.justFile({
 });
 ```
 
-## Request And Response Types
+## Request and Response Types
 
 The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
 following namespace:
@@ -69,8 +88,8 @@ You can upload files using the client:
 
 ```typescript
 import { createReadStream } from "fs";
-import { SeedFileUploadClient } from "@fern/file-upload";
 import * as fs from "fs";
+import { SeedFileUploadClient } from "@fern/file-upload";
 
 const client = new SeedFileUploadClient({ environment: "YOUR_BASE_URL" });
 await client.service.justFile({
@@ -114,6 +133,15 @@ For example, `fs.ReadStream` has a `path` property which the SDK uses to retriev
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { SeedFileUploadClient } from "@fern/file-upload";
+
+const client = new SeedFileUploadClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.service.justFile(..., {
     headers: {
         'X-Custom-Header': 'custom value'

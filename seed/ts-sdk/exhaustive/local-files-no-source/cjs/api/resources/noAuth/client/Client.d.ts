@@ -2,8 +2,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
 export declare namespace NoAuthClient {
-    interface Options extends BaseClientOptions {
-    }
+    type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }

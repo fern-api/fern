@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v62
 displayName: C# Model
 image: fernapi/fern-csharp-model
 changelogLocation: ../../generators/csharp/model/versions.yml
@@ -6,12 +6,18 @@ changelogLocation: ../../generators/csharp/model/versions.yml
 buildScripts:
   compileScript:
     commands:
-      - dotnet build src -c Release .
+      - |
+        solution_file="$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
+        if [ -z "$solution_file" ]; then
+          echo "ERROR: No .slnx file found"
+          exit 1
+        fi
+        dotnet build "$solution_file" -c Release
 
 publish:
   preBuildCommands:
     - ./.github/actions/install
-    - pnpm --filter @fern-api/fern-csharp-model dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-model
   docker:
     file: ./generators/csharp/model/Dockerfile
     image: fernapi/fern-csharp-model
@@ -19,14 +25,14 @@ publish:
 test:
   docker:
     image: fernapi/fern-csharp-model:latest
-    command: pnpm --filter @fern-api/fern-csharp-model dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-csharp-model
   podman:
     image: fernapi/fern-csharp-model:latest
-    command: pnpm --filter @fern-api/fern-csharp-model podmanTagLatest
+    command: pnpm turbo run podmanTagLatest --filter @fern-api/fern-csharp-model
   local:
     workingDirectory: generators/csharp
     buildCommand:
-      - pnpm --filter @fern-api/fern-csharp-model dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-model
     runCommand: node --enable-source-maps model/dist/cli.cjs {CONFIG_PATH}
 
 language: csharp
@@ -50,5 +56,29 @@ fixtures:
 scripts:
   - image: fernapi/csharp-seed
     commands:
-      - dotnet restore src
-      - dotnet build src -c Release --no-restore
+      build:
+        - |        
+          # Check for .NET 10
+          # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
+          # otherwise install .NET 10 
+          command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }
+
+          # Find the solution file
+          solution_file="$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
+          if [ -z "$solution_file" ]; then
+            echo "ERROR: No .slnx file found"
+            exit 1
+          fi
+          
+          dotnet restore "$solution_file"
+          dotnet build "$solution_file" -c Release --no-restore
+      test:
+        - |        
+          # Find the solution file
+          solution_file="$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
+          if [ -z "$solution_file" ]; then
+            echo "ERROR: No .slnx file found"
+            exit 1
+          fi
+          
+          dotnet test "$solution_file" --no-restore --no-build -c Release

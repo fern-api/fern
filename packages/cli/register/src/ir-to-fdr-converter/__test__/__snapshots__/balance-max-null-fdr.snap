@@ -1,0 +1,322 @@
+{
+  "apiName": "Balance Max Null Test API",
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": "Production server",
+        "description": "Returns tiered rate information with nullable balance_max",
+        "environments": [
+          {
+            "baseUrl": "https://api.example.com/v1",
+            "id": "Production server",
+          },
+        ],
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/rates",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "fixed_rate": {
+                "tiers": [
+                  {
+                    "balance_max": "100000000",
+                    "balance_min": "0",
+                    "rate_bps": 200,
+                  },
+                  {
+                    "balance_max": "500000000",
+                    "balance_min": "100000000",
+                    "rate_bps": 350,
+                  },
+                  {
+                    "balance_max": null,
+                    "balance_min": "500000000",
+                    "rate_bps": 450,
+                  },
+                ],
+              },
+              "rate_type": "fixed",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "fixed_rate": {
+                  "tiers": [
+                    {
+                      "balance_max": "100000000",
+                      "balance_min": "0",
+                      "rate_bps": 200,
+                    },
+                    {
+                      "balance_max": "500000000",
+                      "balance_min": "100000000",
+                      "rate_bps": 350,
+                    },
+                    {
+                      "balance_max": null,
+                      "balance_min": "500000000",
+                      "rate_bps": 450,
+                    },
+                  ],
+                },
+                "rate_type": "fixed",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getRates",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": undefined,
+        "name": "Get tiered rates",
+        "originalEndpointId": "endpoint_.getRates",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/rates",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Tiered rates retrieved successfully",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "RateResponse",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Tiered rates retrieved successfully",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "RateResponse",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [
+      "RateResponse",
+      "FixedRate",
+      "RateTier",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "FixedRate": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "FixedRate",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "List of rate tiers",
+            "key": "tiers",
+            "propertyAccess": undefined,
+            "valueType": {
+              "itemType": {
+                "default": undefined,
+                "type": "id",
+                "value": "RateTier",
+              },
+              "type": "list",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "RateResponse": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "RateResponse",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "The type of rate structure",
+            "key": "rate_type",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "RateResponseRateType",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "fixed_rate",
+            "propertyAccess": undefined,
+            "valueType": {
+              "default": undefined,
+              "type": "id",
+              "value": "FixedRate",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "RateResponseRateType": {
+      "availability": undefined,
+      "description": "The type of rate structure",
+      "displayName": undefined,
+      "name": "RateResponseRateType",
+      "shape": {
+        "default": undefined,
+        "type": "enum",
+        "values": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "fixed",
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "value": "variable",
+          },
+        ],
+      },
+    },
+    "RateTier": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "RateTier",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": "Minimum balance for this tier",
+            "key": "balance_min",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Maximum balance for this tier (null means no upper limit)",
+            "key": "balance_max",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+                "type": "nullable",
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Rate in basis points",
+            "key": "rate_bps",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "integer",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

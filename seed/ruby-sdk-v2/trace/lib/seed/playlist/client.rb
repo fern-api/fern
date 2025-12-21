@@ -25,34 +25,35 @@ module Seed
       #
       # @return [Seed::Playlist::Types::Playlist]
       def create_playlist(request_options: {}, **params)
-        _path_param_names = %i[service_param]
-        _body = params.except(*_path_param_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[service_param]
+        body_params = params.except(*path_param_names)
 
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[datetime optional_datetime]
-        _query = {}
-        _query["datetime"] = params[:datetime] if params.key?(:datetime)
-        _query["optionalDatetime"] = params[:optional_datetime] if params.key?(:optional_datetime)
-        params = params.except(*_query_param_names)
+        query_param_names = %i[datetime optional_datetime]
+        query_params = {}
+        query_params["datetime"] = params[:datetime] if params.key?(:datetime)
+        query_params["optionalDatetime"] = params[:optional_datetime] if params.key?(:optional_datetime)
+        params = params.except(*query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/v2/playlist/#{params[:service_param]}/create",
-          query: _query,
-          body: Seed::Playlist::Types::PlaylistCreateRequest.new(_body).to_h
+          query: query_params,
+          body: Seed::Playlist::Types::PlaylistCreateRequest.new(body_params).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Playlist::Types::Playlist.load(_response.body)
+          Seed::Playlist::Types::Playlist.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -74,32 +75,33 @@ module Seed
       #
       # @return [Array[Seed::Playlist::Types::Playlist]]
       def get_playlists(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[limit other_field multi_line_docs optional_multiple_field multiple_field]
-        _query = {}
-        _query["limit"] = params[:limit] if params.key?(:limit)
-        _query["otherField"] = params[:other_field] if params.key?(:other_field)
-        _query["multiLineDocs"] = params[:multi_line_docs] if params.key?(:multi_line_docs)
-        _query["optionalMultipleField"] = params[:optional_multiple_field] if params.key?(:optional_multiple_field)
-        _query["multipleField"] = params[:multiple_field] if params.key?(:multiple_field)
-        params = params.except(*_query_param_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        query_param_names = %i[limit other_field multi_line_docs optional_multiple_field multiple_field]
+        query_params = {}
+        query_params["limit"] = params[:limit] if params.key?(:limit)
+        query_params["otherField"] = params[:other_field] if params.key?(:other_field)
+        query_params["multiLineDocs"] = params[:multi_line_docs] if params.key?(:multi_line_docs)
+        query_params["optionalMultipleField"] = params[:optional_multiple_field] if params.key?(:optional_multiple_field)
+        query_params["multipleField"] = params[:multiple_field] if params.key?(:multiple_field)
+        params = params.except(*query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/v2/playlist/#{params[:service_param]}/all",
-          query: _query
+          query: query_params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Returns a playlist
@@ -116,22 +118,24 @@ module Seed
       #
       # @return [Seed::Playlist::Types::Playlist]
       def get_playlist(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
           method: "GET",
-          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}"
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Playlist::Types::Playlist.load(_response.body)
+          Seed::Playlist::Types::Playlist.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -149,22 +153,24 @@ module Seed
       #
       # @return [Seed::Playlist::Types::Playlist, nil]
       def update_playlist(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
           method: "PUT",
           path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Deletes a playlist
@@ -181,21 +187,23 @@ module Seed
       #
       # @return [untyped]
       def delete_playlist(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}"
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
     end
   end

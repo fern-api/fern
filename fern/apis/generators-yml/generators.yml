@@ -13,5 +13,5 @@ groups:
           path: ../../../packages/cli/configuration/src/generators-yml/schemas
         config:
           outputSourceFiles: true
-          namespaceExport: FernDefinition
+          namespaceExport: GeneratorsYml
           retainOriginalCasing: true

@@ -3,6 +3,7 @@
 package core
 
 import (
+	base64 "encoding/base64"
 	fmt "fmt"
 	http "net/http"
 	url "net/url"
@@ -12,6 +13,9 @@ import (
 type RequestOption interface {
 	applyRequestOptions(*RequestOptions)
 }
+
+// TokenGetter is a function that returns an access token.
+type TokenGetter func() (string, error)
 
 // RequestOptions defines all of the possible request options.
 //
@@ -24,8 +28,13 @@ type RequestOptions struct {
 	BodyProperties  map[string]interface{}
 	QueryParameters url.Values
 	MaxAttempts     uint
+	tokenGetter     TokenGetter
 	Token           string
 	ApiKey          string
+	ClientID        string
+	ClientSecret    string
+	Username        string
+	Password        string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -53,6 +62,9 @@ func (r *RequestOptions) ToHeader() http.Header {
 	}
 	if r.ApiKey != "" {
 		header.Set("X-API-Key", fmt.Sprintf("%v", r.ApiKey))
+	}
+	if r.Username != "" && r.Password != "" {
+		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.Password)))
 	}
 	return header
 }
@@ -136,4 +148,50 @@ type ApiKeyOption struct {
 
 func (a *ApiKeyOption) applyRequestOptions(opts *RequestOptions) {
 	opts.ApiKey = a.ApiKey
+}
+
+// ClientIDOption implements the RequestOption interface.
+type ClientIDOption struct {
+	ClientID string
+}
+
+func (c *ClientIDOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientID = c.ClientID
+}
+
+// ClientSecretOption implements the RequestOption interface.
+type ClientSecretOption struct {
+	ClientSecret string
+}
+
+func (c *ClientSecretOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientSecret = c.ClientSecret
+}
+
+// ClientCredentialsOption implements the RequestOption interface.
+type ClientCredentialsOption struct {
+	ClientID     string
+	ClientSecret string
+}
+
+func (c *ClientCredentialsOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientID = c.ClientID
+	opts.ClientSecret = c.ClientSecret
+}
+
+// SetTokenGetter sets the token getter function for OAuth.
+// This is an internal method and should not be called directly.
+func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {
+	r.tokenGetter = getter
+}
+
+// BasicAuthOption implements the RequestOption interface.
+type BasicAuthOption struct {
+	Username string
+	Password string
+}
+
+func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Username = b.Username
+	opts.Password = b.Password
 }

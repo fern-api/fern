@@ -18,8 +18,9 @@ class CursorPagination(Paginator):
         pydantic_parse_expression: AST.Expression,
         config: PaginationSnippetConfig,
         cursor: ir_types.CursorPagination,
+        response_is_optional: bool = False,
     ):
-        super().__init__(context, is_async, pydantic_parse_expression, config)
+        super().__init__(context, is_async, pydantic_parse_expression, config, response_is_optional)
         self.cursor = cursor
         self._next_none_safe_condition = self._get_none_safe_property_condition(self.cursor.next)
         self._next_property = (

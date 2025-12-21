@@ -23,30 +23,31 @@ module Seed
         #
         # @return [Seed::FolderA::Service::Types::Response]
         def get_direct_thread(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.symbolize_keys(params)
-          _query_param_names = %i[ids tags]
-          _query = {}
-          _query["ids"] = params[:ids] if params.key?(:ids)
-          _query["tags"] = params[:tags] if params.key?(:tags)
-          params.except(*_query_param_names)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          query_param_names = %i[ids tags]
+          query_params = {}
+          query_params["ids"] = params[:ids] if params.key?(:ids)
+          query_params["tags"] = params[:tags] if params.key?(:tags)
+          params.except(*query_param_names)
 
-          _request = Seed::Internal::JSON::Request.new(
+          request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
             path: "",
-            query: _query
+            query: query_params,
+            request_options: request_options
           )
           begin
-            _response = @client.send(_request)
+            response = @client.send(request)
           rescue Net::HTTPRequestTimeout
             raise Seed::Errors::TimeoutError
           end
-          code = _response.code.to_i
+          code = response.code.to_i
           if code.between?(200, 299)
-            Seed::FolderA::Service::Types::Response.load(_response.body)
+            Seed::FolderA::Service::Types::Response.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-            raise error_class.new(_response.body, code: code)
+            raise error_class.new(response.body, code: code)
           end
         end
       end

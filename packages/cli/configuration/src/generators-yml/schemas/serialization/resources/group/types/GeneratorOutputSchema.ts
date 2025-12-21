@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { NpmOutputLocationSchema } from "./NpmOutputLocationSchema";
 import { MavenOutputLocationSchema } from "./MavenOutputLocationSchema";
@@ -16,7 +16,7 @@ import { CratesOutputLocationSchema } from "./CratesOutputLocationSchema";
 
 export const GeneratorOutputSchema: core.serialization.Schema<
     serializers.GeneratorOutputSchema.Raw,
-    FernDefinition.GeneratorOutputSchema
+    GeneratorsYml.GeneratorOutputSchema
 > = core.serialization
     .union("location", {
         npm: NpmOutputLocationSchema,
@@ -28,7 +28,7 @@ export const GeneratorOutputSchema: core.serialization.Schema<
         rubygems: RubyGemsOutputLocationSchema,
         crates: CratesOutputLocationSchema,
     })
-    .transform<FernDefinition.GeneratorOutputSchema>({
+    .transform<GeneratorsYml.GeneratorOutputSchema>({
         transform: (value) => value,
         untransform: (value) => value,
     });

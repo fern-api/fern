@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { WithAudiences } from "../../commons/types/WithAudiences";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const SingleBaseUrlEnvironmentSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.SingleBaseUrlEnvironmentSchema.Raw,
-    FernDefinition.fernDefinition.SingleBaseUrlEnvironmentSchema
+    GeneratorsYml.fernDefinition.SingleBaseUrlEnvironmentSchema
 > = core.serialization
     .object({
         url: core.serialization.string(),

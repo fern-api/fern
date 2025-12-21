@@ -212,9 +212,10 @@ function fetcherImpl(args) {
                     };
                     logger.debug("HTTP request succeeded", metadata);
                 }
+                const body = yield (0, getResponseBody_js_1.getResponseBody)(response, args.responseType);
                 return {
                     ok: true,
-                    body: (yield (0, getResponseBody_js_1.getResponseBody)(response, args.responseType)),
+                    body: body,
                     headers: response.headers,
                     rawResponse: (0, RawResponse_js_1.toRawResponse)(response),
                 };

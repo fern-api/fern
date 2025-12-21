@@ -59,7 +59,9 @@ async function buildFromPublishConfig(
         const workingDir = publishConfig.workingDirectory
             ? path.join(repoRoot, publishConfig.workingDirectory)
             : repoRoot;
-        await runCommands(preBuild, context, workingDir, shouldPipeOutput(logLevel));
+        // Transform pip install commands to pipx to avoid PEP 668 externally-managed-environment errors
+        const transformedCommands = preBuild.map(transformPipToPipx);
+        await runCommands(transformedCommands, context, workingDir, shouldPipeOutput(logLevel));
     }
 
     const publishAliases = dockerConfig.aliases ?? [];
@@ -172,6 +174,22 @@ function modifyDockerBuildCommand(
     }
 
     return modified;
+}
+
+/**
+ * Transforms `pip install <package>` commands to `pipx install <package>`.
+ * This avoids PEP 668 "externally-managed-environment" errors on modern
+ * macOS/Homebrew Python installations that block system-wide pip installs.
+ */
+function transformPipToPipx(command: string): string {
+    // Match "pip install <package>" or "pip3 install <package>"
+    // but not "pip install -r requirements.txt" or other flag-based installs
+    const pipInstallMatch = command.match(/^(pip3?)\s+install\s+([a-zA-Z0-9_-]+)$/);
+    if (pipInstallMatch) {
+        const packageName = pipInstallMatch[2];
+        return `pipx install ${packageName}`;
+    }
+    return command;
 }
 
 export function shouldPipeOutput(logLevel: LogLevel): boolean {

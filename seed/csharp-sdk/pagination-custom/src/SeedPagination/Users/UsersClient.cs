@@ -27,7 +27,7 @@ public partial class UsersClient
         {
             _query["starting_after"] = request.StartingAfter;
         }
-        var httpRequest = _client.CreateHttpRequest(
+        var httpRequest = await _client.CreateHttpRequestAsync(
             new JsonRequest
             {
                 BaseUrl = _client.Options.BaseUrl,

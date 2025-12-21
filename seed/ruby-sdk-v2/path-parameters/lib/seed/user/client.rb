@@ -22,22 +22,24 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def get_user(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}"
+          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}",
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::User::Types::User.load(_response.body)
+          Seed::User::Types::User.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -52,23 +54,25 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/#{params[:tenant_id]}/user/",
-          body: Seed::User::Types::User.new(params).to_h
+          body: Seed::User::Types::User.new(params).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::User::Types::User.load(_response.body)
+          Seed::User::Types::User.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -84,26 +88,28 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def update_user(request_options: {}, **params)
-        _path_param_names = %i[tenant_id user_id]
-        _body = params.except(*_path_param_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        path_param_names = %i[tenant_id user_id]
+        body_params = params.except(*path_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/#{params[:tenant_id]}/user/#{params[:user_id]}",
-          body: Seed::User::Types::User.new(_body).to_h
+          body: Seed::User::Types::User.new(body_params).to_h,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::User::Types::User.load(_response.body)
+          Seed::User::Types::User.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -120,28 +126,29 @@ module Seed
       #
       # @return [Array[Seed::User::Types::User]]
       def search_users(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[limit]
-        _query = {}
-        _query["limit"] = params[:limit] if params.key?(:limit)
-        params = params.except(*_query_param_names)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        query_param_names = %i[limit]
+        query_params = {}
+        query_params["limit"] = params[:limit] if params.key?(:limit)
+        params = params.except(*query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/search",
-          query: _query
+          query: query_params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Test endpoint with path parameter that has a text prefix (v{version})
@@ -159,22 +166,24 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def get_user_metadata(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/metadata/v#{params[:version]}"
+          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/metadata/v#{params[:version]}",
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::User::Types::User.load(_response.body)
+          Seed::User::Types::User.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
 
@@ -194,22 +203,24 @@ module Seed
       #
       # @return [Seed::User::Types::User]
       def get_user_specifics(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/specifics/#{params[:version]}/#{params[:thought]}"
+          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/specifics/#{params[:version]}/#{params[:thought]}",
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::User::Types::User.load(_response.body)
+          Seed::User::Types::User.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
     end

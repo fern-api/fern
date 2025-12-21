@@ -3,17 +3,18 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { FormParameterEncoding } from "./FormParameterEncoding";
 import { OpenApiFilterSchema } from "./OpenApiFilterSchema";
 import { OpenApiExampleGenerationSchema } from "./OpenApiExampleGenerationSchema";
 import { ResolveAliases } from "./ResolveAliases";
+import { DefaultIntegerFormat } from "./DefaultIntegerFormat";
 import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema";
 
 export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
     serializers.OpenApiSettingsSchema.Raw,
-    FernDefinition.OpenApiSettingsSchema
+    GeneratorsYml.OpenApiSettingsSchema
 > = core.serialization
     .object({
         "only-include-referenced-schemas": core.serialization.boolean().optional(),
@@ -32,6 +33,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "inline-all-of-schemas": core.serialization.boolean().optional(),
         "resolve-aliases": ResolveAliases.optional(),
         "group-multi-api-environments": core.serialization.boolean().optional(),
+        "default-integer-format": DefaultIntegerFormat.optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -53,5 +55,6 @@ export declare namespace OpenApiSettingsSchema {
         "inline-all-of-schemas"?: boolean | null;
         "resolve-aliases"?: ResolveAliases.Raw | null;
         "group-multi-api-environments"?: boolean | null;
+        "default-integer-format"?: DefaultIntegerFormat.Raw | null;
     }
 }
