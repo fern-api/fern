@@ -1,29 +1,17 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.6/.schema/devbox.schema.json",
-  "packages": {
-    "nodejs@22": {},
-    "pnpm@9.4.0": {},
-    "go@1.23": {},
-    "python@3.10": {},
-    "poetry@1.8": {},
-    "jdk@11": {},
-    "jdk17": {
-      "version": "latest"
-    },
-    "buf": {
-      "version": "latest"
-    },
-    "git-lfs": {
-      "version": "latest"
-    },
-    "protobuf": {
-      "version": "latest"
-    }
-  },
-  "env": {
-    "JAVA_HOME": "$DEVBOX_PACKAGES_DIR/openjdk-11",
-    "JAVA_17_HOME": "$DEVBOX_PACKAGES_DIR/openjdk-17"
-  },
+  "packages": [
+    "nodejs@22",
+    "pnpm@9.4.0",
+    "go@1.23",
+    "python@3.10",
+    "poetry@1.8",
+    "jdk@11",
+    "jdk@17",
+    "buf@latest",
+    "git-lfs@latest",
+    "protobuf@latest"
+  ],
   "shell": {
     "init_hook": [
       "echo 'Fern development environment loaded!'",
@@ -31,7 +19,7 @@
       "echo 'pnpm:' $(pnpm --version)",
       "echo 'Go:' $(go version)",
       "echo 'Python:' $(python --version)",
-      "echo 'Java:' $(java --version | head -1)"
+      "echo 'Java:' $(java --version 2>&1 | head -1)"
     ],
     "scripts": {
       "bootstrap": "pnpm install",
