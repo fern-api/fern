@@ -723,6 +723,9 @@ export class DocsDefinitionResolver {
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher
                       }
                     : undefined,
+            // custom header/footer components
+            header: this.parsedDocsConfig.header,
+            footer: this.parsedDocsConfig.footer,
             // deprecated
             logo: undefined,
             logoV2: undefined,

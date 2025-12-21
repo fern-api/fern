@@ -49,4 +49,8 @@ export interface DocsConfiguration {
     integrations?: FernDocsConfig.IntegrationsConfig;
     css?: FernDocsConfig.CssConfig;
     js?: FernDocsConfig.JsConfig;
+    /** Relative filepath to a compiled JavaScript file that exports a custom header React component. */
+    header?: string;
+    /** Relative filepath to a compiled JavaScript file that exports a custom footer React component. */
+    footer?: string;
 }

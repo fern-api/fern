@@ -85,7 +85,11 @@ export async function parseDocsConfiguration({
 
         pageActions,
 
-        experimental
+        experimental,
+
+        /* custom header/footer components */
+        header: rawHeader,
+        footer: rawFooter
     } = rawDocsConfiguration;
 
     const landingPage = parsePageConfig(rawDocsConfiguration.landingPage, absoluteFilepathToDocsConfig);
@@ -126,13 +130,18 @@ export async function parseDocsConfiguration({
 
     const metadataPromise = convertMetadata(rawMetadata, absoluteFilepathToDocsConfig);
 
-    const [navigation, pages, typography, css, js, metadata] = await Promise.all([
+    const headerPromise = convertHeaderFooterConfig(rawHeader, absoluteFilepathToDocsConfig);
+    const footerPromise = convertHeaderFooterConfig(rawFooter, absoluteFilepathToDocsConfig);
+
+    const [navigation, pages, typography, css, js, metadata, header, footer] = await Promise.all([
         convertedNavigationPromise,
         pagesPromise,
         typographyPromise,
         cssPromise,
         jsPromise,
-        metadataPromise
+        metadataPromise,
+        headerPromise,
+        footerPromise
     ]);
 
     return {
@@ -215,7 +224,11 @@ export async function parseDocsConfiguration({
 
         pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
 
-        experimental
+        experimental,
+
+        /* custom header/footer components */
+        header,
+        footer
     };
 }
 
@@ -313,6 +326,18 @@ async function convertJsConfig(
     }
 
     return { remote, files };
+}
+
+async function convertHeaderFooterConfig(
+    filepath: string | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): Promise<string | undefined> {
+    if (filepath == null) {
+        return undefined;
+    }
+    const absolutePath = resolveFilepath(filepath, absoluteFilepathToDocsConfig);
+    const content = await readFile(absolutePath);
+    return content.toString();
 }
 
 function convertPageActions(
