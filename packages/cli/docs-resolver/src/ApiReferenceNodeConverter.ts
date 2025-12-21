@@ -880,9 +880,20 @@ export class ApiReferenceNodeConverter {
         return fileId;
     }
 
+    /**
+     * Resolves a ThemedIcon to a single icon value for use with FDR SDK types.
+     * If a themed icon is provided, prefers the light icon, then dark.
+     * This is a compatibility layer since FDR SDK types don't support themed icons yet.
+     */
     private resolveIconFileId(
-        iconPath: string | AbsoluteFilePath | undefined
+        themedIcon: docsYml.ThemedIcon | undefined
     ): FernNavigation.V1.FileId | string | undefined {
+        if (themedIcon == null) {
+            return undefined;
+        }
+
+        // Prefer light icon, then dark
+        const iconPath = themedIcon.light ?? themedIcon.dark;
         if (iconPath == null) {
             return undefined;
         }
