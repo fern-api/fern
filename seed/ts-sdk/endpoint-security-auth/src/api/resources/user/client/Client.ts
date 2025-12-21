@@ -36,7 +36,10 @@ export class UserClient {
     private async __getWithBearer(
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedEndpointSecurityAuth.User[]>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _metadata: core.EndpointMetadata = { security: [{ Bearer: [] }] };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
+            endpointMetadata: _metadata,
+        });
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
@@ -54,6 +57,7 @@ export class UserClient {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
         });
@@ -87,7 +91,10 @@ export class UserClient {
     private async __getWithApiKey(
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedEndpointSecurityAuth.User[]>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _metadata: core.EndpointMetadata = { security: [{ ApiKey: [] }] };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
+            endpointMetadata: _metadata,
+        });
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
@@ -105,6 +112,7 @@ export class UserClient {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
         });
@@ -138,7 +146,10 @@ export class UserClient {
     private async __getWithOAuth(
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedEndpointSecurityAuth.User[]>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _metadata: core.EndpointMetadata = { security: [{ OAuth: ["read-only"] }] };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
+            endpointMetadata: _metadata,
+        });
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
@@ -156,6 +167,117 @@ export class UserClient {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedEndpointSecurityAuth.User[], rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedEndpointSecurityAuthError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+    }
+
+    /**
+     * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.getWithBasic()
+     */
+    public getWithBasic(
+        requestOptions?: UserClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithBasic(requestOptions));
+    }
+
+    private async __getWithBasic(
+        requestOptions?: UserClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedEndpointSecurityAuth.User[]>> {
+        const _metadata: core.EndpointMetadata = { security: [{ Basic: [] }] };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
+            endpointMetadata: _metadata,
+        });
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body as SeedEndpointSecurityAuth.User[], rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedEndpointSecurityAuthError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+    }
+
+    /**
+     * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.user.getWithInferredAuth()
+     */
+    public getWithInferredAuth(
+        requestOptions?: UserClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithInferredAuth(requestOptions));
+    }
+
+    private async __getWithInferredAuth(
+        requestOptions?: UserClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedEndpointSecurityAuth.User[]>> {
+        const _metadata: core.EndpointMetadata = { security: [{ InferredAuth: [] }] };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
+            endpointMetadata: _metadata,
+        });
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "users",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
         });
@@ -189,7 +311,12 @@ export class UserClient {
     private async __getWithAnyAuth(
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedEndpointSecurityAuth.User[]>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _metadata: core.EndpointMetadata = {
+            security: [{ Bearer: [] }, { ApiKey: [] }, { OAuth: ["read-only"] }, { Basic: [] }, { InferredAuth: [] }],
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
+            endpointMetadata: _metadata,
+        });
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
@@ -207,6 +334,7 @@ export class UserClient {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
         });
@@ -240,7 +368,12 @@ export class UserClient {
     private async __getWithAllAuth(
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedEndpointSecurityAuth.User[]>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _metadata: core.EndpointMetadata = {
+            security: [{ Bearer: [], ApiKey: [], OAuth: ["read-only"], Basic: [], InferredAuth: [] }],
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
+            endpointMetadata: _metadata,
+        });
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
@@ -258,6 +391,7 @@ export class UserClient {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
         });

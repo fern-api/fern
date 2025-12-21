@@ -3,36 +3,36 @@
 import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
-export namespace BasicAuthProvider {
-    export interface AuthOptions {
-        username: core.Supplier<string>;
-        password: core.Supplier<string>;
-    }
-
-    export interface Options extends AuthOptions {}
-}
+const USERNAME_PARAM = "username" as const;
+const PASSWORD_PARAM = "password" as const;
 
 export class BasicAuthProvider implements core.AuthProvider {
-    private readonly username: core.Supplier<string>;
-    private readonly password: core.Supplier<string>;
+    private readonly options: BasicAuthProvider.Options;
 
     constructor(options: BasicAuthProvider.Options) {
-        this.username = options.username;
-        this.password = options.password;
+        this.options = options;
     }
 
-    public async getAuthRequest(): Promise<core.AuthRequest> {
-        const username = await core.Supplier.get(this.username);
+    public static canCreate(options: Partial<BasicAuthProvider.Options>): boolean {
+        return options?.[USERNAME_PARAM] != null && options?.[PASSWORD_PARAM] != null;
+    }
+
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
+        const username = await core.Supplier.get(this.options[USERNAME_PARAM]);
         if (username == null) {
             throw new errors.SeedBasicAuthError({
-                message: "Please specify a username by passing it in to the constructor",
+                message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_USERNAME,
             });
         }
 
-        const password = await core.Supplier.get(this.password);
+        const password = await core.Supplier.get(this.options[PASSWORD_PARAM]);
         if (password == null) {
             throw new errors.SeedBasicAuthError({
-                message: "Please specify a password by passing it in to the constructor",
+                message: BasicAuthProvider.AUTH_CONFIG_ERROR_MESSAGE_PASSWORD,
             });
         }
 
@@ -44,5 +44,21 @@ export class BasicAuthProvider implements core.AuthProvider {
         return {
             headers: authHeader != null ? { Authorization: authHeader } : {},
         };
+    }
+}
+
+export namespace BasicAuthProvider {
+    export const AUTH_SCHEME = "basic" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string =
+        "Please provide username and password when initializing the client" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE_USERNAME: string =
+        `Please provide '${USERNAME_PARAM}' when initializing the client` as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE_PASSWORD: string =
+        `Please provide '${PASSWORD_PARAM}' when initializing the client` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [USERNAME_PARAM]: core.Supplier<string>; [PASSWORD_PARAM]: core.Supplier<string> };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BasicAuthProvider(options);
     }
 }

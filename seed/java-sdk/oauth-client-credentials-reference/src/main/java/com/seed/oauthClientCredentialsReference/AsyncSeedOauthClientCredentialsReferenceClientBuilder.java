@@ -231,13 +231,16 @@ public class AsyncSeedOauthClientCredentialsReferenceClientBuilder {
         }
 
         @Override
-        protected void setAuthentication(ClientOptions.Builder builder) {
-            ClientOptions.Builder authClientOptionsBuilder =
-                    ClientOptions.builder().environment(this.environment);
-            AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
+        public AsyncSeedOauthClientCredentialsReferenceClient build() {
+            validateConfiguration();
+            ClientOptions baseOptions = buildClientOptions();
+            AuthClient authClient = new AuthClient(baseOptions);
             OAuthTokenSupplier oAuthTokenSupplier =
                     new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
-            builder.addHeader("Authorization", oAuthTokenSupplier);
+            ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
+                    .addHeader("Authorization", oAuthTokenSupplier)
+                    .build();
+            return new AsyncSeedOauthClientCredentialsReferenceClient(finalOptions);
         }
     }
 }

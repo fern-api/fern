@@ -32,6 +32,12 @@ func NewClient(options *core.RequestOptions) *Client {
 	if options.ClientSecret == "" {
 		options.ClientSecret = os.Getenv("MY_CLIENT_SECRET")
 	}
+	if options.Username == "" {
+		options.Username = os.Getenv("MY_USERNAME")
+	}
+	if options.Password == "" {
+		options.Password = os.Getenv("MY_PASSWORD")
+	}
 	return &Client{
 		WithRawResponse: NewRawClient(options),
 		options:         options,
@@ -78,6 +84,34 @@ func (c *Client) GetWithOAuth(
 	opts ...option.RequestOption,
 ) ([]*fern.User, error) {
 	response, err := c.WithRawResponse.GetWithOAuth(
+		ctx,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) GetWithBasic(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) ([]*fern.User, error) {
+	response, err := c.WithRawResponse.GetWithBasic(
+		ctx,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+func (c *Client) GetWithInferredAuth(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) ([]*fern.User, error) {
+	response, err := c.WithRawResponse.GetWithInferredAuth(
 		ctx,
 		opts...,
 	)

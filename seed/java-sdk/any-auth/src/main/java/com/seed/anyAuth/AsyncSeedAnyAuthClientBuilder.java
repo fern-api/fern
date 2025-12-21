@@ -5,8 +5,10 @@ package com.seed.anyAuth;
 
 import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.Environment;
+import com.seed.anyAuth.core.InferredAuthTokenSupplier;
 import com.seed.anyAuth.core.OAuthTokenSupplier;
 import com.seed.anyAuth.resources.auth.AuthClient;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -22,6 +24,14 @@ public class AsyncSeedAnyAuthClientBuilder {
     private String token = System.getenv("MY_TOKEN");
 
     private String apiKey = System.getenv("MY_API_KEY");
+
+    private String username = System.getenv("MY_USERNAME");
+
+    private String password = System.getenv("MY_PASSWORD");
+
+    private String clientId = null;
+
+    private String clientSecret = null;
 
     protected Environment environment;
 
@@ -67,6 +77,28 @@ public class AsyncSeedAnyAuthClientBuilder {
      */
     public static _CredentialsAuth withCredentials(String clientId, String clientSecret) {
         return new _CredentialsAuth(clientId, clientSecret);
+    }
+
+    public AsyncSeedAnyAuthClientBuilder credentials(String username, String password) {
+        this.username = username;
+        this.password = password;
+        return this;
+    }
+
+    /**
+     * Sets clientId
+     */
+    public AsyncSeedAnyAuthClientBuilder clientId(String clientId) {
+        this.clientId = clientId;
+        return this;
+    }
+
+    /**
+     * Sets clientSecret
+     */
+    public AsyncSeedAnyAuthClientBuilder clientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
+        return this;
     }
 
     public AsyncSeedAnyAuthClientBuilder url(String url) {
@@ -155,6 +187,20 @@ public class AsyncSeedAnyAuthClientBuilder {
             builder.addHeader("Authorization", "Bearer " + this.token);
         }
         builder.addHeader("X-API-Key", this.apiKey);
+        if (this.username != null && this.password != null) {
+            String unencodedToken = this.username + ":" + this.password;
+            String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
+            builder.addHeader("Authorization", "Basic " + encodedToken);
+        }
+        if (this.clientId != null && this.clientSecret != null) {
+            ClientOptions.Builder authClientOptionsBuilder =
+                    ClientOptions.builder().environment(this.environment);
+            AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
+            InferredAuthTokenSupplier inferredAuthTokenSupplier =
+                    new InferredAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
+            builder.addHeader(
+                    "Authorization", () -> inferredAuthTokenSupplier.get().get("Authorization"));
+        }
     }
 
     /**
@@ -255,26 +301,22 @@ public class AsyncSeedAnyAuthClientBuilder {
 
         private final String clientSecret;
 
-        private String scope = null;
-
         _CredentialsAuth(String clientId, String clientSecret) {
             this.clientId = clientId;
             this.clientSecret = clientSecret;
         }
 
-        public _CredentialsAuth scope(String scope) {
-            this.scope = scope;
-            return this;
-        }
-
         @Override
-        protected void setAuthentication(ClientOptions.Builder builder) {
-            ClientOptions.Builder authClientOptionsBuilder =
-                    ClientOptions.builder().environment(this.environment);
-            AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
+        public AsyncSeedAnyAuthClient build() {
+            validateConfiguration();
+            ClientOptions baseOptions = buildClientOptions();
+            AuthClient authClient = new AuthClient(baseOptions);
             OAuthTokenSupplier oAuthTokenSupplier =
-                    new OAuthTokenSupplier(this.clientId, this.clientSecret, this.scope, authClient);
-            builder.addHeader("Authorization", oAuthTokenSupplier);
+                    new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
+            ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
+                    .addHeader("Authorization", oAuthTokenSupplier)
+                    .build();
+            return new AsyncSeedAnyAuthClient(finalOptions);
         }
     }
 }

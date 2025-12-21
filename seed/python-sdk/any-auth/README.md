@@ -45,7 +45,6 @@ client = SeedAnyAuth(
 client.auth.get_token(
     client_id="client_id",
     client_secret="client_secret",
-    scope="scope",
 )
 ```
 
@@ -69,7 +68,6 @@ async def main() -> None:
     await client.auth.get_token(
         client_id="client_id",
         client_secret="client_secret",
-        scope="scope",
     )
 
 

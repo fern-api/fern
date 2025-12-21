@@ -3,37 +3,46 @@
 import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
-export namespace HeaderAuthProvider {
-    export interface AuthOptions {
-        headerTokenAuth: core.Supplier<string>;
-    }
-
-    export interface Options extends AuthOptions {}
-}
+const PARAM_KEY = "headerTokenAuth" as const;
+const HEADER_NAME = "x-api-key" as const;
 
 export class HeaderAuthProvider implements core.AuthProvider {
-    private readonly headerValue: core.Supplier<string>;
+    private readonly options: HeaderAuthProvider.Options;
 
     constructor(options: HeaderAuthProvider.Options) {
-        this.headerValue = options.headerTokenAuth;
+        this.options = options;
     }
 
-    public static canCreate(options: HeaderAuthProvider.Options): boolean {
-        return options.headerTokenAuth != null;
+    public static canCreate(options: Partial<HeaderAuthProvider.Options>): boolean {
+        return options?.[PARAM_KEY] != null;
     }
 
-    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
-        const headerTokenAuth = await core.Supplier.get(this.headerValue);
-        if (headerTokenAuth == null) {
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
+        const headerValue = await core.Supplier.get(this.options[PARAM_KEY]);
+        if (headerValue == null) {
             throw new errors.SeedHeaderTokenError({
-                message: "Please specify a headerTokenAuth by passing it in to the constructor",
+                message: HeaderAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
             });
         }
 
-        const headerValue = `test_prefix ${headerTokenAuth}`;
-
         return {
-            headers: { "x-api-key": headerValue },
+            headers: { [HEADER_NAME]: headerValue },
         };
+    }
+}
+
+export namespace HeaderAuthProvider {
+    export const AUTH_SCHEME = "Header" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string =
+        `Please provide '${PARAM_KEY}' when initializing the client` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [PARAM_KEY]: core.Supplier<string> };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new HeaderAuthProvider(options);
     }
 }

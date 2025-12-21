@@ -15,8 +15,7 @@
 ```typescript
 await client.auth.getToken({
     client_id: "client_id",
-    client_secret: "client_secret",
-    scope: "scope"
+    client_secret: "client_secret"
 });
 
 ```
@@ -150,6 +149,88 @@ await client.user.getWithApiKey();
 
 ```typescript
 await client.user.getWithOAuth();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getWithBasic</a>() -> SeedEndpointSecurityAuth.User[]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.user.getWithBasic();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getWithInferredAuth</a>() -> SeedEndpointSecurityAuth.User[]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.user.getWithInferredAuth();
 
 ```
 </dd>

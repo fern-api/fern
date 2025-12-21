@@ -2,19 +2,21 @@
 
 import { SeedAnyAuthClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
-import { mockOAuth } from "./mockAuth";
+import { mockInferredAuth, mockOAuth } from "./mockAuth";
 
 describe("UserClient", () => {
     test("get", async () => {
         const server = mockServerPool.createServer();
         mockOAuth(server);
+        mockInferredAuth(server);
 
         const client = new SeedAnyAuthClient({
             maxRetries: 0,
-            token: "test",
-            apiKey: "test",
-            clientId: "client_id",
-            clientSecret: "client_secret",
+            bearer: { token: "test" },
+            apiKey: { apiKey: "test" },
+            oauth: { clientId: "client_id", clientSecret: "client_secret" },
+            basic: { username: "test", password: "test" },
+            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
             environment: server.baseUrl,
         });
 
@@ -40,13 +42,15 @@ describe("UserClient", () => {
     test("getAdmins", async () => {
         const server = mockServerPool.createServer();
         mockOAuth(server);
+        mockInferredAuth(server);
 
         const client = new SeedAnyAuthClient({
             maxRetries: 0,
-            token: "test",
-            apiKey: "test",
-            clientId: "client_id",
-            clientSecret: "client_secret",
+            bearer: { token: "test" },
+            apiKey: { apiKey: "test" },
+            oauth: { clientId: "client_id", clientSecret: "client_secret" },
+            basic: { username: "test", password: "test" },
+            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
             environment: server.baseUrl,
         });
 
