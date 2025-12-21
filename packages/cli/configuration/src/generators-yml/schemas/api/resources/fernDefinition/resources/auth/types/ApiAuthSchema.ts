@@ -7,4 +7,5 @@ import * as FernDefinition from "../../../../../index";
 export type ApiAuthSchema =
     | string
     | FernDefinition.fernDefinition.AuthSchemeReferenceSchema
-    | FernDefinition.fernDefinition.AnyAuthSchemesSchema;
+    | FernDefinition.fernDefinition.AnyAuthSchemesSchema
+    | FernDefinition.fernDefinition.EndpointSecuritySchema;

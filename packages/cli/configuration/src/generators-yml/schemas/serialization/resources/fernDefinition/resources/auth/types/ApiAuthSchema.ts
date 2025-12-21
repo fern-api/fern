@@ -7,6 +7,7 @@ import * as FernDefinition from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { AuthSchemeReferenceSchema } from "./AuthSchemeReferenceSchema";
 import { AnyAuthSchemesSchema } from "./AnyAuthSchemesSchema";
+import { EndpointSecuritySchema } from "./EndpointSecuritySchema";
 
 export const ApiAuthSchema: core.serialization.Schema<
     serializers.fernDefinition.ApiAuthSchema.Raw,
@@ -15,8 +16,9 @@ export const ApiAuthSchema: core.serialization.Schema<
     core.serialization.string(),
     AuthSchemeReferenceSchema,
     AnyAuthSchemesSchema,
+    EndpointSecuritySchema,
 ]);
 
 export declare namespace ApiAuthSchema {
-    export type Raw = string | AuthSchemeReferenceSchema.Raw | AnyAuthSchemesSchema.Raw;
+    export type Raw = string | AuthSchemeReferenceSchema.Raw | AnyAuthSchemesSchema.Raw | EndpointSecuritySchema.Raw;
 }
