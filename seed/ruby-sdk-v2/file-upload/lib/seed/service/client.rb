@@ -94,7 +94,8 @@ module Seed
         end
 
         _request = Seed::Internal::Multipart::Request.new(
-          method: POST,
+          base_url: request_options[:base_url],
+          method: "POST",
           path: "",
           body: body
         )
@@ -125,7 +126,8 @@ module Seed
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
         _request = Seed::Internal::Multipart::Request.new(
-          method: POST,
+          base_url: request_options[:base_url],
+          method: "POST",
           path: "/just-file",
           body: body
         )
@@ -161,7 +163,8 @@ module Seed
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
         _request = Seed::Internal::Multipart::Request.new(
-          method: POST,
+          base_url: request_options[:base_url],
+          method: "POST",
           path: "/just-file-with-query-params",
           body: body
         )
@@ -212,7 +215,8 @@ module Seed
         end
 
         _request = Seed::Internal::Multipart::Request.new(
-          method: POST,
+          base_url: request_options[:base_url],
+          method: "POST",
           path: "/with-content-type",
           body: body
         )
@@ -255,7 +259,8 @@ module Seed
         end
 
         _request = Seed::Internal::Multipart::Request.new(
-          method: POST,
+          base_url: request_options[:base_url],
+          method: "POST",
           path: "/with-form-encoding",
           body: body
         )
@@ -361,7 +366,8 @@ module Seed
         end
 
         _request = Seed::Internal::Multipart::Request.new(
-          method: POST,
+          base_url: request_options[:base_url],
+          method: "POST",
           path: "",
           body: body
         )
@@ -399,7 +405,8 @@ module Seed
         end
 
         _request = Seed::Internal::Multipart::Request.new(
-          method: POST,
+          base_url: request_options[:base_url],
+          method: "POST",
           path: "/optional-args",
           body: body
         )
@@ -436,7 +443,8 @@ module Seed
         end
 
         _request = Seed::Internal::Multipart::Request.new(
-          method: POST,
+          base_url: request_options[:base_url],
+          method: "POST",
           path: "/inline-type",
           body: body
         )

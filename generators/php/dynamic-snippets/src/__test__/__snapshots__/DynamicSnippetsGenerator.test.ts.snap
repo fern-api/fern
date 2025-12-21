@@ -373,17 +373,33 @@ $client->imdb->createMovie(
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] = `
-"[
-  {
-    "severity": "WARNING",
-    "path": [],
-    "message": "Invalid multi url environment"
-  }
-]"
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Environments;
+use Acme\\S3\\Requests\\GetPresignedURLRequest;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+    environment: Environments::custom(ec2: 'https://custom.ec2.aws.com', s3: 'https://custom.s3.aws.com'),
+);
+$client->s3->getPresignedURL(
+    new GetPresignedURLRequest([
+        's3Key' => 'xyz',
+    ]),
+);
+"
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Invalid multi url environment' 1`] = `
 "[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "The provided environments are invalid; got: [ec2], expected: [ec2, s3]"
+  },
   {
     "severity": "WARNING",
     "path": [],

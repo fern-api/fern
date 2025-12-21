@@ -6,5 +6,10 @@ import * as FernIr from "../../../index";
 
 export interface HttpResponse {
     statusCode: number | undefined;
+    /**
+     * When true, indicates that the status-code represents a wildcard pattern (e.g., 4XX or 5XX).
+     * The status-code field will contain the base value (400 for 4XX, 500 for 5XX).
+     */
+    isWildcardStatusCode: boolean | undefined;
     body: FernIr.HttpResponseBody | undefined;
 }

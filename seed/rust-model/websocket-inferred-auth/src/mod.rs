@@ -1,3 +1,13 @@
+//! Request and response types for the WebsocketAuth
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 3 types for API operations
+//! - **Model Types**: 7 types for data representation
+
 pub mod auth_token_response;
 pub mod realtime_send_event;
 pub mod realtime_send_snake_case;

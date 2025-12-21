@@ -35,7 +35,6 @@
       "servers": [],
       "description": "Returns the user with the provided user ID.",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/users/{user_id}",
       "examples": [
@@ -170,7 +169,6 @@
       "servers": [],
       "description": "Returns the user with the provided user ID.",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/organizations/{organization_id}/users/{user_id}",
       "examples": [
@@ -391,7 +389,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/organizations/{organization_id}/search",
       "examples": [

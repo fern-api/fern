@@ -302,6 +302,7 @@ types:
       - environments.WithEnvironmentsSchema
     properties:
       auth: optional<auth.ApiAuthSchema>
+      auth-schemes: optional<map<string, auth.AuthSchemeDeclarationSchema>>
       specs: APIConfigurationV2SpecsSchema
       settings: optional<APIConfigurationV2SettingsSchema>
 

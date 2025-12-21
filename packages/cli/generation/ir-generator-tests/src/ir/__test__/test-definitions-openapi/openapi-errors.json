@@ -83,6 +83,7 @@
                 "wireValue": "BadRequestError"
             },
             "statusCode": 400,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "unknown"
             },
@@ -142,6 +143,7 @@
                 "wireValue": "UnauthorizedError"
             },
             "statusCode": 401,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "unknown"
             },
@@ -201,6 +203,7 @@
                 "wireValue": "ForbiddenError"
             },
             "statusCode": 403,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "unknown"
             },
@@ -260,6 +263,7 @@
                 "wireValue": "TooManyRequestsError"
             },
             "statusCode": 429,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "unknown"
             },
@@ -367,7 +371,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200
+                        "status-code": 200,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -1023,7 +1028,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 201
+                        "status-code": 201,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [

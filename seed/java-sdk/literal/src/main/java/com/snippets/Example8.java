@@ -13,8 +13,8 @@ public class Example8 {
 
         client.reference()
                 .send(SendRequest.builder()
-                        .context("You're super wise")
                         .query("What is the weather today")
+                        .context("You're super wise")
                         .containerObject(ContainerObject.builder()
                                 .nestedObjects(Arrays.asList(NestedObjectWithLiterals.builder()
                                         .strProp("strProp")

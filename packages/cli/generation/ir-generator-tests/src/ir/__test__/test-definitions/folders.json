@@ -343,6 +343,7 @@
                 "wireValue": "NotFoundError"
             },
             "statusCode": 404,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "primitive",
                 "primitive": {
@@ -431,7 +432,8 @@
                     "sdkRequest": null,
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -621,7 +623,8 @@
                     "sdkRequest": null,
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -811,7 +814,8 @@
                     "sdkRequest": null,
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -963,7 +967,8 @@
                     "sdkRequest": null,
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1152,7 +1157,8 @@
                     "sdkRequest": null,
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1278,7 +1284,8 @@
                     },
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [

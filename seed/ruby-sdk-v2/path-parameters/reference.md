@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.organizations.get_organization();
+client.organizations.get_organization('organization_id');
 ```
 </dd>
 </dl>

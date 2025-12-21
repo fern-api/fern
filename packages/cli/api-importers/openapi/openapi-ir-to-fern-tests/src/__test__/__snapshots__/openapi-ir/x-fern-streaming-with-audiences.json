@@ -100,7 +100,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/user/{userId}",
       "examples": [
@@ -258,7 +257,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/user/{userId}",
       "examples": [

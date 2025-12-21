@@ -1,0 +1,457 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [
+          {
+            "availability": undefined,
+            "description": "Specific bad request error",
+            "examples": [],
+            "isWildcard": undefined,
+            "name": "BadRequestError",
+            "statusCode": 400,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "TestOperationRequestBadRequestError",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Specific server error",
+            "examples": [],
+            "isWildcard": undefined,
+            "name": "InternalServerError",
+            "statusCode": 500,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "TestOperationRequestInternalServerError",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Generic client error (wildcard pattern)",
+            "examples": [],
+            "isWildcard": true,
+            "name": "ClientRequestError",
+            "statusCode": 400,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "TestOperationRequestClientRequestError",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": "Generic server error (wildcard pattern)",
+            "examples": [],
+            "isWildcard": true,
+            "name": "ServerError",
+            "statusCode": 500,
+            "type": {
+              "type": "alias",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "TestOperationRequestServerError",
+              },
+            },
+          },
+        ],
+        "examples": [
+          {
+            "codeSamples": undefined,
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/test",
+            "pathParameters": {},
+            "queryParameters": {},
+            "requestBody": {
+              "value": "string",
+            },
+            "requestBodyV3": {
+              "type": "json",
+              "value": {
+                "value": "string",
+              },
+            },
+            "responseBody": {
+              "message": "string",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "message": "string",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "testOperation",
+        "includeInApiExplorer": undefined,
+        "method": "POST",
+        "multiAuth": undefined,
+        "name": "Test operation with conflicting status codes",
+        "originalEndpointId": "endpoint_.testOperation",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/test",
+            },
+          ],
+          "pathParameters": [],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": {
+          "description": undefined,
+          "type": {
+            "contentType": "application/json",
+            "shape": {
+              "extends": [],
+              "extraProperties": undefined,
+              "properties": [
+                {
+                  "availability": undefined,
+                  "description": undefined,
+                  "key": "value",
+                  "propertyAccess": undefined,
+                  "valueType": {
+                    "type": "primitive",
+                    "value": {
+                      "default": undefined,
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "regex": undefined,
+                      "type": "string",
+                    },
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+        },
+        "requestsV2": {
+          "requests": [
+            {
+              "description": undefined,
+              "type": {
+                "contentType": "application/json",
+                "shape": {
+                  "extends": [],
+                  "extraProperties": undefined,
+                  "properties": [
+                    {
+                      "availability": undefined,
+                      "description": undefined,
+                      "key": "value",
+                      "propertyAccess": undefined,
+                      "valueType": {
+                        "type": "primitive",
+                        "value": {
+                          "default": undefined,
+                          "format": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "regex": undefined,
+                          "type": "string",
+                        },
+                      },
+                    },
+                  ],
+                  "type": "object",
+                },
+                "type": "json",
+              },
+            },
+          ],
+        },
+        "response": {
+          "description": "Success response",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "testOperation_Response_200",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Success response",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "testOperation_Response_200",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "TestOperationRequestBadRequestError": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "TestOperationRequestBadRequestError",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "error",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "specific",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "type": "boolean",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "TestOperationRequestClientRequestError": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "TestOperationRequestClientRequestError",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "error",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "wildcard",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "type": "boolean",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "TestOperationRequestInternalServerError": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "TestOperationRequestInternalServerError",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "error",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "server_specific",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "type": "boolean",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "TestOperationRequestServerError": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "TestOperationRequestServerError",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "error",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "server_wildcard",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "type": "boolean",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "testOperation_Response_200": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "testOperation_Response_200",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "message",
+            "propertyAccess": undefined,
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

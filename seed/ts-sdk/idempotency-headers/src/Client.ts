@@ -2,7 +2,7 @@
 
 import { PaymentClient } from "./api/resources/payment/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedIdempotencyHeadersClient {
     export interface Options extends BaseClientOptions {}
@@ -11,11 +11,11 @@ export declare namespace SeedIdempotencyHeadersClient {
 }
 
 export class SeedIdempotencyHeadersClient {
-    protected readonly _options: SeedIdempotencyHeadersClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedIdempotencyHeadersClient.Options>;
     protected _payment: PaymentClient | undefined;
 
     constructor(options: SeedIdempotencyHeadersClient.Options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get payment(): PaymentClient {

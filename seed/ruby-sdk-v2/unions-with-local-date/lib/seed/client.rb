@@ -20,6 +20,11 @@ module Seed
       @bigunion ||= Seed::Bigunion::Client.new(client: @raw_client)
     end
 
+    # @return [Seed::Types::Client]
+    def types
+      @types ||= Seed::Types::Client.new(client: @raw_client)
+    end
+
     # @return [Seed::Union::Client]
     def union
       @union ||= Seed::Union::Client.new(client: @raw_client)

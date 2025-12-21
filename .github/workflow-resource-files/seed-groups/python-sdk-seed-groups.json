@@ -41,7 +41,7 @@
       "fixtures": [
         "variables",
         "file-upload:use_typeddict_requests",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "extends",
         "enum:real-enum",
         "object",
@@ -66,7 +66,6 @@
     {
       "fixtures": [
         "circular-references:no-inheritance-for-extended-models",
-        "server-sent-event-examples",
         "pagination:no-custom-config",
         "exhaustive:skip-pydantic-validation",
         "alias-extends:no-inheritance-for-extended-models",
@@ -109,7 +108,6 @@
     },
     {
       "fixtures": [
-        "server-sent-events",
         "version-no-default",
         "nullable-optional",
         "optional",
@@ -176,7 +174,7 @@
         "exhaustive:pydantic-v2-wrapped",
         "exhaustive:infinite-timeout",
         "oauth-client-credentials-nested-root",
-        "custom-auth",
+        "header-auth",
         "alias-extends:no-custom-config",
         "errors",
         "response-property",

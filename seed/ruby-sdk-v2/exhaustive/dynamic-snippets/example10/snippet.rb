@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.endpoints.http_methods.test_get();
+client.endpoints.http_methods.test_get('id');

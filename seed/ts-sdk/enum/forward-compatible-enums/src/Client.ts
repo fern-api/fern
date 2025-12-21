@@ -6,7 +6,7 @@ import { MultipartFormClient } from "./api/resources/multipartForm/client/Client
 import { PathParamClient } from "./api/resources/pathParam/client/Client.js";
 import { QueryParamClient } from "./api/resources/queryParam/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedEnumClient {
     export interface Options extends BaseClientOptions {}
@@ -15,7 +15,7 @@ export declare namespace SeedEnumClient {
 }
 
 export class SeedEnumClient {
-    protected readonly _options: SeedEnumClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedEnumClient.Options>;
     protected _headers: HeadersClient | undefined;
     protected _inlinedRequest: InlinedRequestClient | undefined;
     protected _multipartForm: MultipartFormClient | undefined;

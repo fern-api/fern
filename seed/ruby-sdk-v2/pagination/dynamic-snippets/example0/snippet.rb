@@ -5,9 +5,12 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.complex.search({
-  pagination: {
-    per_page: 1,
-    starting_after: 'starting_after'
+client.complex.search(
+  'index',
+  {
+    pagination: {
+      per_page: 1,
+      starting_after: 'starting_after'
+    }
   }
-});
+);

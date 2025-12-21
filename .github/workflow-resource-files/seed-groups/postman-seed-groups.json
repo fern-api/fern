@@ -94,7 +94,7 @@
     {
       "fixtures": [
         "accept-header",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "nullable",
         "inferred-auth-implicit",
         "single-url-environment-default",
@@ -137,7 +137,7 @@
         "idempotency-headers",
         "simple-fhir",
         "any-auth",
-        "custom-auth",
+        "header-auth",
         "undiscriminated-unions",
         "plain-text",
         "pagination-custom"

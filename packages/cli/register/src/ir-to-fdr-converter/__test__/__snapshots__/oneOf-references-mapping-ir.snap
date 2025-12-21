@@ -118,6 +118,7 @@
       "displayName": "BadRequestError",
       "docs": "Bad request",
       "examples": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "CreateEventRequestBadRequestError",
         "fernFilepath": {
@@ -424,6 +425,7 @@
                 },
               },
             },
+            "isWildcardStatusCode": undefined,
             "statusCode": 200,
           },
           "retries": undefined,
@@ -592,6 +594,7 @@
                     },
                   },
                 },
+                "isWildcardStatusCode": undefined,
                 "statusCode": 200,
               },
             ],

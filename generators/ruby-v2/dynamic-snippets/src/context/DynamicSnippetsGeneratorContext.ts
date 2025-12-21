@@ -89,7 +89,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getPropertyName(name: FernIr.Name): string {
-        return this.getName(name.camelCase.safeName);
+        return this.getName(name.snakeCase.safeName);
     }
 
     private getName(name: string): string {

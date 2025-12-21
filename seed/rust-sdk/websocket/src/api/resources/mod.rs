@@ -2,6 +2,7 @@
 //!
 //! This module contains client implementations for:
 //!
+//! - **Empty**
 //! - **Realtime**
 
 use crate::{ApiError, ClientConfig};

@@ -4,6 +4,7 @@
 //!
 //! - **Headers**
 //! - **InlinedRequest**
+//! - **MultipartForm**
 //! - **PathParam**
 //! - **QueryParam**
 //! - **Unknown**

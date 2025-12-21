@@ -31,8 +31,11 @@ types:
         type: set<commons.SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
+      security: optional<GlobalSecurity>
       globalHeaders: optional<list<GlobalHeader>>
       idempotencyHeaders: optional<list<IdempotencyHeader>>
+
+  GlobalSecurity: list<map<commons.SecuritySchemeId, list<string>>>
 
   Schemas:
     properties:
@@ -171,7 +174,13 @@ types:
       - commons.WithNamespace
     properties:
       authed: boolean
-      security: EndpointSecurity
+      security:
+        docs: |
+          Security requirements for this endpoint.
+          This is populated from the OpenAPI `security` field.
+          When absent, it inherits from the global security requirements.
+          When an empty list is provided, it means no security is required.
+        type: optional<EndpointSecurity>
       internal: optional<boolean>
       idempotent: optional<boolean>
       method: HttpMethod

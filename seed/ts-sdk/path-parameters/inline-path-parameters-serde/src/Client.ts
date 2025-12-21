@@ -3,7 +3,7 @@
 import { OrganizationsClient } from "./api/resources/organizations/client/Client.js";
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedPathParametersClient {
     export interface Options extends BaseClientOptions {}
@@ -12,7 +12,7 @@ export declare namespace SeedPathParametersClient {
 }
 
 export class SeedPathParametersClient {
-    protected readonly _options: SeedPathParametersClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedPathParametersClient.Options>;
     protected _organizations: OrganizationsClient | undefined;
     protected _user: UserClient | undefined;
 

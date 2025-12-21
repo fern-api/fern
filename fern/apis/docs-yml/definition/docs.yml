@@ -1007,6 +1007,9 @@ types:
       display-errors:
         type: optional<boolean>
         docs: Defaults to false
+      tag-description-pages:
+        type: optional<boolean>
+        docs: If true, a page will be created for each tag in the OpenAPI spec that contains a description.
       snippets: optional<SnippetsConfiguration>
       postman:
         type: optional<string>

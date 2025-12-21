@@ -122,7 +122,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/filters",
       "examples": [
@@ -336,7 +335,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/products",
       "examples": [

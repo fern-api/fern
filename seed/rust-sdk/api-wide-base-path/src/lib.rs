@@ -18,8 +18,8 @@
 //!         .post(
 //!             &"pathParam".to_string(),
 //!             &"serviceParam".to_string(),
-//!             &"resourceParam".to_string(),
 //!             &1,
+//!             &"resourceParam".to_string(),
 //!             None,
 //!         )
 //!         .await;

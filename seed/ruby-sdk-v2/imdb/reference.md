@@ -70,7 +70,7 @@ client.imdb.create_movie({
 <dd>
 
 ```ruby
-client.imdb.get_movie();
+client.imdb.get_movie('movieId');
 ```
 </dd>
 </dl>

@@ -146,6 +146,9 @@ function getCustomSections(
 }
 
 function parseCustomConfigOrUndefined(logger: Logger, customConfig: unknown): SdkCustomConfigSchema | undefined {
+    if (customConfig == null) {
+        return undefined;
+    }
     try {
         return SdkCustomConfigSchema.parse(customConfig);
     } catch (error) {

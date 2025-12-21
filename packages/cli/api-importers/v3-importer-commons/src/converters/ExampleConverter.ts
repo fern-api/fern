@@ -3,6 +3,8 @@ import { OpenAPIV3_1 } from "openapi-types";
 
 import { AbstractConverter, AbstractConverterContext, APIError } from "..";
 
+const LITERAL_REGEX = /^literal<\s*(?:"(.*)"|(true|false))\s*>$/;
+
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
@@ -167,6 +169,12 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 validExample: this.example,
                 errors: []
             };
+        }
+
+        // Check for x-fern-type: literal<...> extension and return the literal value as the example
+        const maybeLiteralExample = this.maybeConvertLiteralFernType(resolvedSchema);
+        if (maybeLiteralExample != null) {
+            return maybeLiteralExample;
         }
 
         if (Array.isArray(resolvedSchema.type)) {
@@ -1071,6 +1079,42 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             }
             return Object.values(examples ?? {})[0] as Type;
         }
+        return undefined;
+    }
+
+    private maybeConvertLiteralFernType(resolvedSchema: OpenAPIV3_1.SchemaObject): ExampleConverter.Output | undefined {
+        const fernType = (resolvedSchema as Record<string, unknown>)["x-fern-type"];
+        if (typeof fernType !== "string") {
+            return undefined;
+        }
+
+        const literalMatch = fernType.match(LITERAL_REGEX);
+        if (literalMatch == null) {
+            return undefined;
+        }
+
+        // Group 1 captures string literals (e.g., literal<"value">)
+        if (literalMatch[1] != null) {
+            return {
+                isValid: true,
+                coerced: false,
+                usedProvidedExample: false,
+                validExample: literalMatch[1],
+                errors: []
+            };
+        }
+
+        // Group 2 captures boolean literals (e.g., literal<true> or literal<false>)
+        if (literalMatch[2] != null) {
+            return {
+                isValid: true,
+                coerced: false,
+                usedProvidedExample: false,
+                validExample: literalMatch[2] === "true",
+                errors: []
+            };
+        }
+
         return undefined;
     }
 

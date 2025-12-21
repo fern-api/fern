@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.file.notification.service.get_exception();
+client.file.notification.service.get_exception('notificationId');

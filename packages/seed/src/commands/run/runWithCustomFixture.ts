@@ -44,7 +44,7 @@ export async function runWithCustomFixture({
     let scriptRunner: ScriptRunner | undefined = undefined;
 
     if (!skipScripts) {
-        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext);
+        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext, logLevel);
     }
 
     if (local) {

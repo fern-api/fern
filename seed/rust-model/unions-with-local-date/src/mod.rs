@@ -1,3 +1,13 @@
+//! Request and response types for the Unions
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 1 types for API operations
+//! - **Model Types**: 53 types for data representation
+
 pub mod bigunion_big_union;
 pub mod bigunion_normal_sweet;
 pub mod bigunion_thankful_factor;

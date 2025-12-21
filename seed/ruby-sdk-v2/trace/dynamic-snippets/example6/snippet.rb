@@ -5,4 +5,8 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.admin.store_traced_test_case_v_2();
+client.admin.store_traced_test_case_v_2(
+  'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  'testCaseId',
+
+);

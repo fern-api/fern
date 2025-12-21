@@ -97,6 +97,10 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "enable_wire_tests" in generator_config.custom_config:
             enable_wire_tests = generator_config.custom_config.get("enable_wire_tests")
 
+        package_path = None
+        if generator_config.custom_config is not None and "package_path" in generator_config.custom_config:
+            package_path = generator_config.custom_config.get("package_path")
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -107,6 +111,7 @@ class AbstractGenerator(ABC):
             )
             if project_config is not None
             else generator_config.organization,
+            package_path=package_path,
             project_config=project_config,
             sorted_modules=self.get_sorted_modules(),
             flat_layout=self.is_flat_layout(generator_config=generator_config),
@@ -296,7 +301,7 @@ class AbstractGenerator(ABC):
         logger.debug("Adding test file: tests/custom/test_client.py")
         client_test_content = self._get_client_test()
         logger.debug(f"Client test file contents:\n{client_test_content}")
-        project.add_file("tests/custom/test_client.py", client_test_content)
+        project.add_source_file("tests/custom/test_client.py", client_test_content)
         logger.debug("Finished writing files for GitHub repository.")
 
     def _get_github_workflow_legacy(self, output_mode: GithubOutputMode, write_unit_tests: bool) -> str:

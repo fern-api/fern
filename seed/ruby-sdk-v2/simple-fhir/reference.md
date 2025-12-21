@@ -12,7 +12,7 @@
 <dd>
 
 ```ruby
-client.get_account();
+client.get_account('account_id');
 ```
 </dd>
 </dl>

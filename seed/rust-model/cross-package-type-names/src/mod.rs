@@ -1,3 +1,13 @@
+//! Request and response types for the CrossPackageTypeNames
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 3 types for API operations
+//! - **Model Types**: 5 types for data representation
+
 pub mod commons_imported;
 pub mod folder_a_service_response;
 pub mod folder_b_common_foo;

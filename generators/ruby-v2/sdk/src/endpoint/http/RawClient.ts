@@ -82,7 +82,9 @@ export class RawClient {
                         `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalMultipartRequest()}.new(`
                     );
                     writer.indent();
-                    writer.writeLine(`method: ${endpoint.method.toUpperCase()},`);
+                    this.writeBaseUrlDeclaration(writer);
+                    writer.writeLine(",");
+                    writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
                     writer.write(`path: `);
                     this.writePathString({ writer, endpoint, pathParameterReferences });
                     writer.writeLine(",");

@@ -8,7 +8,7 @@ client = Acme::Client.new(token: '<YOUR_API_KEY>');
 client.service.get_metadata(
   shallow: false,
   tag: ['development', 'public'],
-  xAPIVersion: '0.0.1'
+  x_api_version: '0.0.1'
 );
 "
 `;
@@ -31,7 +31,7 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
 client.service.create_big_entity({
-  extendedMovie: {
+  extended_movie: {
     cast: ['John Travolta', 'Samuel L. Jackson', 'Uma Thurman', 'Bruce Willis'],
     id: 'movie-sda231x',
     title: 'Pulp Fiction',
@@ -160,7 +160,7 @@ client = Acme::Client.new();
 
 client.service.just_file_with_query_params(
   integer: 42,
-  maybeString: 'exists'
+  maybe_string: 'exists'
 );
 "
 `;
@@ -170,7 +170,7 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.imdb.get_movie();
+client.imdb.get_movie('movie_xyz');
 "
 `;
 
@@ -214,7 +214,7 @@ client = Acme::Client.new(
   environment: Acme::Environment::PRODUCTION
 );
 
-client.s3.get_presigned_url(s3Key: 'xyz');
+client.s3.get_presigned_url(s3key: 'xyz');
 "
 `;
 
@@ -226,7 +226,7 @@ client = Acme::Client.new(
   environment: Acme::Environment::STAGING
 );
 
-client.s3.get_presigned_url(s3Key: 'xyz');
+client.s3.get_presigned_url(s3key: 'xyz');
 "
 `;
 
@@ -249,8 +249,8 @@ client.nullable.create_user(
   username: 'john.doe',
   tags: ['admin'],
   metadata: {
-    createdAt: '1980-01-01T00:00:00Z',
-    updatedAt: '1980-01-01T00:00:00Z',
+    created_at: '1980-01-01T00:00:00Z',
+    updated_at: '1980-01-01T00:00:00Z',
     avatar: nil,
     activated: nil
   },

@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.imdb.get_movie();
+client.imdb.get_movie('movieId');

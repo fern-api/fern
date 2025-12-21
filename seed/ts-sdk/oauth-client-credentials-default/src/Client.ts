@@ -5,65 +5,38 @@ import { NestedClient } from "./api/resources/nested/client/Client.js";
 import { NestedNoAuthClient } from "./api/resources/nestedNoAuth/client/Client.js";
 import { SimpleClient } from "./api/resources/simple/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
-import * as core from "./core/index.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedOauthClientCredentialsDefaultClient {
-    export interface Options extends BaseClientOptions {
-        clientId: core.Supplier<string>;
-        clientSecret: core.Supplier<string>;
-    }
+    export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedOauthClientCredentialsDefaultClient {
-    protected readonly _options: SeedOauthClientCredentialsDefaultClient.Options;
-    private readonly _oauthTokenProvider: core.OAuthTokenProvider;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedOauthClientCredentialsDefaultClient.Options>;
     protected _auth: AuthClient | undefined;
     protected _nestedNoAuth: NestedNoAuthClient | undefined;
     protected _nested: NestedClient | undefined;
     protected _simple: SimpleClient | undefined;
 
     constructor(options: SeedOauthClientCredentialsDefaultClient.Options) {
-        this._options = normalizeClientOptions(options);
-
-        this._oauthTokenProvider = new core.OAuthTokenProvider({
-            clientId: this._options.clientId,
-
-            clientSecret: this._options.clientSecret,
-            authClient: new AuthClient({
-                ...this._options,
-                environment: this._options.environment,
-            }),
-        });
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get auth(): AuthClient {
-        return (this._auth ??= new AuthClient({
-            ...this._options,
-            token: async () => await this._oauthTokenProvider.getToken(),
-        }));
+        return (this._auth ??= new AuthClient(this._options));
     }
 
     public get nestedNoAuth(): NestedNoAuthClient {
-        return (this._nestedNoAuth ??= new NestedNoAuthClient({
-            ...this._options,
-            token: async () => await this._oauthTokenProvider.getToken(),
-        }));
+        return (this._nestedNoAuth ??= new NestedNoAuthClient(this._options));
     }
 
     public get nested(): NestedClient {
-        return (this._nested ??= new NestedClient({
-            ...this._options,
-            token: async () => await this._oauthTokenProvider.getToken(),
-        }));
+        return (this._nested ??= new NestedClient(this._options));
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient({
-            ...this._options,
-            token: async () => await this._oauthTokenProvider.getToken(),
-        }));
+        return (this._simple ??= new SimpleClient(this._options));
     }
 }

@@ -27,7 +27,7 @@ Get a user by ID
 <dd>
 
 ```ruby
-client.nullable_optional.get_user();
+client.nullable_optional.get_user('userId');
 ```
 </dd>
 </dl>
@@ -148,20 +148,23 @@ Update a user (partial update)
 <dd>
 
 ```ruby
-client.nullable_optional.update_user({
-  username: 'username',
-  email: 'email',
-  phone: 'phone',
-  address: {
-    street: 'street',
-    city: 'city',
-    state: 'state',
-    zipCode: 'zipCode',
-    country: 'country',
-    buildingId: 'buildingId',
-    tenantId: 'tenantId'
+client.nullable_optional.update_user(
+  'userId',
+  {
+    username: 'username',
+    email: 'email',
+    phone: 'phone',
+    address: {
+      street: 'street',
+      city: 'city',
+      state: 'state',
+      zipCode: 'zipCode',
+      country: 'country',
+      buildingId: 'buildingId',
+      tenantId: 'tenantId'
+    }
   }
-});
+);
 ```
 </dd>
 </dl>
@@ -462,7 +465,7 @@ Get a complex profile by ID
 <dd>
 
 ```ruby
-client.nullable_optional.get_complex_profile();
+client.nullable_optional.get_complex_profile('profileId');
 ```
 </dd>
 </dl>
@@ -769,7 +772,7 @@ Get notification settings which may be null
 <dd>
 
 ```ruby
-client.nullable_optional.get_notification_settings();
+client.nullable_optional.get_notification_settings('userId');
 ```
 </dd>
 </dl>

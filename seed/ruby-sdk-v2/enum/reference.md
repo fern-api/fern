@@ -151,7 +151,10 @@ client.inlined_request.send_(
 <dd>
 
 ```ruby
-client.path_param.send_();
+client.path_param.send_(
+  ,
+
+);
 ```
 </dd>
 </dl>

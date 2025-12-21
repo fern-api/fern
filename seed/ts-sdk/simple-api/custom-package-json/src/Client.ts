@@ -2,7 +2,7 @@
 
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedSimpleApiClient {
     export interface Options extends BaseClientOptions {}
@@ -11,11 +11,11 @@ export declare namespace SeedSimpleApiClient {
 }
 
 export class SeedSimpleApiClient {
-    protected readonly _options: SeedSimpleApiClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedSimpleApiClient.Options>;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedSimpleApiClient.Options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get user(): UserClient {

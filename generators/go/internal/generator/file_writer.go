@@ -9,6 +9,7 @@ import (
 	"path"
 	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/ir"
@@ -215,6 +216,19 @@ func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string,
 		// Use safe name for parameter to avoid reserved keywords
 		paramName := propertySafeNames[i]
 		propertyType := propertyTypes[i]
+
+		// If the safe name is empty (e.g., for "_" or numeric keys), derive from the property name
+		if paramName == "" {
+			// Convert the exported property name to an unexported parameter name
+			// e.g., "Underscore" -> "underscore", "Field1" -> "field1"
+			if len(propertyName) > 0 {
+				runes := []rune(propertyName)
+				runes[0] = unicode.ToLower(runes[0])
+				paramName = string(runes)
+			} else {
+				paramName = "value"
+			}
+		}
 
 		if receiver == paramName {
 			receiver = fmt.Sprintf("_%s", setterName)

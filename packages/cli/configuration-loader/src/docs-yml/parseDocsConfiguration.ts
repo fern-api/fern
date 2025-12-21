@@ -991,6 +991,7 @@ async function convertNavigationItem({
                     : { type: "all" },
             availability: rawConfig.availability,
             showErrors: rawConfig.displayErrors ?? true,
+            tagDescriptionPages: rawConfig.tagDescriptionPages ?? false,
             snippetsConfiguration:
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })

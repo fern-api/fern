@@ -46,6 +46,7 @@ jobs:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     permissions:
+      contents: read   # Required for checkout
       id-token: write  # Required for OIDC
     steps:
       - name: Checkout repo

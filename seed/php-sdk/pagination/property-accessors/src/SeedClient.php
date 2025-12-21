@@ -71,6 +71,7 @@ class SeedClient
             $this->options['headers'] ?? [],
         );
 
+
         $this->client = new RawClient(
             options: $this->options,
         );

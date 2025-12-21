@@ -5,6 +5,9 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.endpoints.http_methods.test_put({
-  string: 'string'
-});
+client.endpoints.http_methods.test_put(
+  'id',
+  {
+    string: 'string'
+  }
+);

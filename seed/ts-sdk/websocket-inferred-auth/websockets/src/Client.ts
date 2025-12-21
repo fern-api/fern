@@ -2,34 +2,22 @@
 
 import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { RealtimeClient } from "./api/resources/realtime/client/Client.js";
-import { InferredAuthProvider } from "./auth/InferredAuthProvider.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
-import type * as core from "./core/index.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedWebsocketAuthClient {
-    export interface Options extends BaseClientOptions {
-        xApiKey: string;
-        clientId: string;
-        clientSecret: string;
-        scope?: string;
-    }
+    export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedWebsocketAuthClient {
-    protected readonly _options: SeedWebsocketAuthClient.Options;
-    protected readonly _authProvider: core.AuthProvider;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedWebsocketAuthClient.Options>;
     protected _auth: AuthClient | undefined;
     protected _realtime: RealtimeClient | undefined;
 
     constructor(options: SeedWebsocketAuthClient.Options) {
-        this._options = normalizeClientOptions(options);
-        this._authProvider = new InferredAuthProvider({
-            client: this,
-            authTokenParameters: { ...this._options },
-        });
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get auth(): AuthClient {
@@ -37,6 +25,6 @@ export class SeedWebsocketAuthClient {
     }
 
     public get realtime(): RealtimeClient {
-        return (this._realtime ??= new RealtimeClient({ ...this._options, authProvider: this._authProvider }));
+        return (this._realtime ??= new RealtimeClient(this._options));
     }
 }

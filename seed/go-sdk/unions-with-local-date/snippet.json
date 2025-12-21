@@ -35,6 +35,28 @@
         },
         {
             "id": {
+                "path": "/time",
+                "method": "PATCH",
+                "identifier_override": "endpoint_types.update"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/unions-with-local-date/fern\"\n\tfernclient \"github.com/unions-with-local-date/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Types.Update(\n\tcontext.TODO(),\n\t\u0026fern.UnionWithTime{\n\t\tDate: fern.MustParseDate(\n\t\t\t\"1994-01-01\",\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/time/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_types.get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/unions-with-local-date/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Types.Get(\n\tcontext.TODO(),\n\t\"date-example\",\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_bigunion.get"

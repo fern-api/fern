@@ -231,6 +231,17 @@ export class ReadmeGenerator {
                 githubRepository: this.readmeConfig.remote.repoUrl,
                 installationToken: this.readmeConfig.remote.installationToken
             });
+            // If a specific branch is specified, checkout that branch to get the README from it
+            if (this.readmeConfig.remote.branch != null) {
+                try {
+                    await clonedRepository.checkout(this.readmeConfig.remote.branch);
+                } catch (error) {
+                    // If checkout fails (e.g., branch doesn't exist), fall back to the default branch
+                    console.warn(
+                        `Failed to checkout branch ${this.readmeConfig.remote.branch}, using default branch instead`
+                    );
+                }
+            }
             return await clonedRepository.getReadme();
         }
         return undefined;

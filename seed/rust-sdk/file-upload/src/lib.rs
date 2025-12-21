@@ -17,7 +17,7 @@
 //!         .service
 //!         .just_file(
 //!             &JustFileRequest {
-//!                 file: todo!("Missing file value"),
+//!                 file: std::fs::read("path/to/file").expect("Failed to read file"),
 //!             },
 //!             None,
 //!         )

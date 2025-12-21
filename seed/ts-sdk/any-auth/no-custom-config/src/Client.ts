@@ -3,63 +3,28 @@
 import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
-import * as core from "./core/index.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedAnyAuthClient {
-    export interface Options extends BaseClientOptions {
-        clientId?: core.Supplier<string>;
-        clientSecret?: core.Supplier<string>;
-    }
+    export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedAnyAuthClient {
-    protected readonly _options: SeedAnyAuthClient.Options;
-    private readonly _oauthTokenProvider: core.OAuthTokenProvider;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedAnyAuthClient.Options>;
     protected _auth: AuthClient | undefined;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedAnyAuthClient.Options) {
-        this._options = normalizeClientOptions(options);
-
-        const clientId = this._options.clientId ?? process.env.MY_CLIENT_ID;
-        if (clientId == null) {
-            throw new Error(
-                "clientId is required; either pass it as an argument or set the MY_CLIENT_ID environment variable",
-            );
-        }
-
-        const clientSecret = this._options.clientSecret ?? process.env.MY_CLIENT_SECRET;
-        if (clientSecret == null) {
-            throw new Error(
-                "clientSecret is required; either pass it as an argument or set the MY_CLIENT_SECRET environment variable",
-            );
-        }
-
-        this._oauthTokenProvider = new core.OAuthTokenProvider({
-            clientId,
-
-            clientSecret,
-            authClient: new AuthClient({
-                ...this._options,
-                environment: this._options.environment,
-            }),
-        });
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get auth(): AuthClient {
-        return (this._auth ??= new AuthClient({
-            ...this._options,
-            token: async () => await this._oauthTokenProvider.getToken(),
-        }));
+        return (this._auth ??= new AuthClient(this._options));
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient({
-            ...this._options,
-            token: async () => await this._oauthTokenProvider.getToken(),
-        }));
+        return (this._user ??= new UserClient(this._options));
     }
 }

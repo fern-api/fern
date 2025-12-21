@@ -1,4 +1,5 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
+import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 export declare namespace ParamsClient {
@@ -8,7 +9,7 @@ export declare namespace ParamsClient {
     }
 }
 export declare class ParamsClient {
-    protected readonly _options: ParamsClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<ParamsClient.Options>;
     constructor(options: ParamsClient.Options);
     /**
      * GET with path param
@@ -116,5 +117,4 @@ export declare class ParamsClient {
      */
     modifyWithInlinePath(request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __modifyWithInlinePath;
-    protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

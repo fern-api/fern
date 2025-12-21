@@ -108,7 +108,7 @@ fixtures:
 allowedFailures:
   - api-wide-base-path
   - audiences
-  - auth-environment-variables
+  - header-auth-environment-variable
   - client-side-params:with-custom-config
   - client-side-params:no-custom-config
   - cross-package-type-names

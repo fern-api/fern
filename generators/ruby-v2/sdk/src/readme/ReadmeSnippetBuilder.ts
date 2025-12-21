@@ -185,9 +185,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             rescue ${this.rootPackageClientName}::Errors::ServerError
                 puts "API returned some other 5xx status, this is probably a bug"
             rescue ${this.rootPackageClientName}::Errors::ResponseError => e
-                puts "API returned an unexpected status other than 5xx: #{e.code} {e.message}"
+                puts "API returned an unexpected status other than 5xx: #{e.code} #{e.message}"
             rescue ${this.rootPackageClientName}::Errors::ApiError => e
-                puts "Some other error occurred when calling the API: {e.message}"
+                puts "Some other error occurred when calling the API: #{e.message}"
             end
         `);
     }
@@ -365,7 +365,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return undefined;
         }
 
-        return `${this.rootPackageClientName}::Environment::${defaultEnvironment.name.pascalCase.unsafeName}`;
+        return `${this.rootPackageClientName}::Environment::${defaultEnvironment.name.screamingSnakeCase.safeName}`;
     }
 
     private getRootPackageClientName(): string {

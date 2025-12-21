@@ -1,0 +1,89 @@
+openapi: 3.0.3
+info:
+  title: Wildcard Status Code Conflict Test
+  version: 1.0.0
+  description: Tests the scenario where both specific status codes (400) and wildcard patterns (4XX) are present
+paths:
+  /test:
+    post:
+      operationId: testOperation
+      summary: Test operation with conflicting status codes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+              required:
+                - value
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                required:
+                  - message
+        "400":
+          description: Specific bad request error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  specific:
+                    type: boolean
+                required:
+                  - error
+                  - specific
+        "4XX":
+          description: Generic client error (wildcard pattern)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  wildcard:
+                    type: boolean
+                required:
+                  - error
+                  - wildcard
+        "500":
+          description: Specific server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  server_specific:
+                    type: boolean
+                required:
+                  - error
+                  - server_specific
+        "5XX":
+          description: Generic server error (wildcard pattern)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  server_wildcard:
+                    type: boolean
+                required:
+                  - error
+                  - server_wildcard

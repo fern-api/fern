@@ -102,6 +102,7 @@ service:
       source:
         openapi: openapi/trains/openapi.yml
     get-booking:
+      auth: true
       display-name: Get a booking
       docs: Returns the details of a specific booking.
       errors:
@@ -139,6 +140,7 @@ service:
       source:
         openapi: openapi/trains/openapi.yml
     get-bookings:
+      auth: true
       display-name: List existing bookings
       docs: Returns a list of all trip bookings by the authenticated user.
       errors:

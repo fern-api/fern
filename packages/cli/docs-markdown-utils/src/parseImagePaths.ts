@@ -523,6 +523,11 @@ function isExternalUrl(url: string): boolean {
     return /^(https?:)?\/\//.test(url);
 }
 
+function isWindowsAbsolutePath(path: string): boolean {
+    // Match Windows drive letter paths like C:\, D:\, c:/, etc.
+    return /^[a-zA-Z]:[\\/]/.test(path);
+}
+
 function isDataUrl(url: string): boolean {
     return url.startsWith("data:");
 }
@@ -583,11 +588,16 @@ export function replaceImagePathsAndUrls(
                 return `file:${fileId}`;
             }
 
-            const resolvedFromRoot = resolvePath(image, metadata);
-            if (resolvedFromRoot) {
-                const fallbackFileId = fileIdsMap.get(resolvedFromRoot);
-                if (fallbackFileId) {
-                    return `file:${fallbackFileId}`;
+            // Only try resolvePath fallback for Unix absolute paths (starting with /)
+            // Skip for Windows absolute paths (e.g., C:\...) since they are already absolute
+            // and resolvePath would throw an error trying to create a RelativeFilePath from them
+            if (!isWindowsAbsolutePath(image)) {
+                const resolvedFromRoot = resolvePath(image, metadata);
+                if (resolvedFromRoot) {
+                    const fallbackFileId = fileIdsMap.get(resolvedFromRoot);
+                    if (fallbackFileId) {
+                        return `file:${fallbackFileId}`;
+                    }
                 }
             }
             return undefined;

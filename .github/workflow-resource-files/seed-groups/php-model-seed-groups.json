@@ -24,7 +24,7 @@
         "package-yml",
         "inferred-auth-explicit",
         "validation",
-        "custom-auth",
+        "header-auth",
         "pagination"
       ],
       "groupTotalTimeSeconds": 435
@@ -117,7 +117,7 @@
     },
     {
       "fixtures": [
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "alias-extends",
         "nullable",
         "server-sent-events",

@@ -7,6 +7,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { generatorsYml } from "..";
 import { Audiences } from "../commons";
 import {
+    ApiConfigurationV2SpecsSchema,
     ApiDefinitionSettingsSchema,
     GeneratorInvocationSchema,
     GeneratorsConfigurationSchema,
@@ -151,6 +152,15 @@ export interface GeneratorInvocation {
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
     readme: ReadmeSchema | undefined;
     settings: ApiDefinitionSettingsSchema | undefined;
+    /**
+     * Override the API configuration for this generator.
+     * When provided, these values take precedence over the top-level api configuration.
+     */
+    apiOverride?: {
+        specs?: ApiConfigurationV2SpecsSchema;
+        auth?: RawSchemas.ApiAuthSchema;
+        "auth-schemes"?: Record<string, RawSchemas.AuthSchemeDeclarationSchema>;
+    };
 }
 
 export const GenerationLanguage = {

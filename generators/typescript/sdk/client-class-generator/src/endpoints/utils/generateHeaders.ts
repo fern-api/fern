@@ -47,6 +47,15 @@ export function generateHeaders({
         endpoint.auth &&
         context.authProvider.isAuthEndpoint(endpoint) === false
     ) {
+        const metadataArg = generatedSdkClientClass.getGenerateEndpointMetadata()
+            ? ts.factory.createObjectLiteralExpression([
+                  ts.factory.createPropertyAssignment(
+                      "endpointMetadata",
+                      generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+                  )
+              ])
+            : undefined;
+
         statements.push(
             ts.factory.createVariableStatement(
                 undefined,
@@ -57,7 +66,8 @@ export function generateHeaders({
                             undefined,
                             context.coreUtilities.auth.AuthRequest._getReferenceToType(),
                             context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
-                                generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
+                                generatedSdkClientClass.getReferenceToAuthProviderOrThrow(),
+                                metadataArg
                             )
                         )
                     ],
@@ -69,14 +79,6 @@ export function generateHeaders({
     }
 
     const elements: GeneratedHeader[] = [];
-
-    const authorizationHeaderValue = generatedSdkClientClass.getAuthorizationHeaderValue({ context });
-    if (authorizationHeaderValue != null && endpoint.auth && !context.authProvider.isAuthEndpoint(endpoint)) {
-        elements.push({
-            header: "Authorization",
-            value: authorizationHeaderValue
-        });
-    }
 
     for (const header of [...service.headers, ...endpoint.headers]) {
         elements.push({
@@ -105,11 +107,6 @@ export function generateHeaders({
             ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
         )
     );
-
-    const customAuthorizationHeaderValue = generatedSdkClientClass.getCustomAuthorizationHeadersValue();
-    if (customAuthorizationHeaderValue != null) {
-        onlyDefinedHeaders.push(ts.factory.createSpreadAssignment(customAuthorizationHeaderValue));
-    }
 
     for (const additionalSpreadHeader of additionalSpreadHeaders) {
         onlyDefinedHeaders.push(

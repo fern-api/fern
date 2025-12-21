@@ -110,9 +110,13 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 <dd>
 
 ```ruby
-client.optional.send_optional_nullable_with_all_optional_properties({
-  updateDraft: true
-});
+client.optional.send_optional_nullable_with_all_optional_properties(
+  'actionId',
+  'id',
+  {
+    updateDraft: true
+  }
+);
 ```
 </dd>
 </dl>

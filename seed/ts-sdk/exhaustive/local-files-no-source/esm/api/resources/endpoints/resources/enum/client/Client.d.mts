@@ -1,4 +1,5 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
+import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
 import type * as SeedExhaustive from "../../../../../index.mjs";
 export declare namespace EnumClient {
@@ -8,7 +9,7 @@ export declare namespace EnumClient {
     }
 }
 export declare class EnumClient {
-    protected readonly _options: EnumClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<EnumClient.Options>;
     constructor(options: EnumClient.Options);
     /**
      * @param {SeedExhaustive.types.WeatherReport} request
@@ -19,5 +20,4 @@ export declare class EnumClient {
      */
     getAndReturnEnum(request: SeedExhaustive.types.WeatherReport, requestOptions?: EnumClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport>;
     private __getAndReturnEnum;
-    protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

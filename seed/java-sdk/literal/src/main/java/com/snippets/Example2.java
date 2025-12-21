@@ -17,8 +17,8 @@ public class Example2 {
                         .objectWithLiteral(ATopLevelLiteral.builder()
                                 .nestedLiteral(ANestedLiteral.builder().build())
                                 .build())
-                        .temperature(10.1)
                         .context("You're super wise")
+                        .temperature(10.1)
                         .maybeContext("You're super wise")
                         .build());
     }

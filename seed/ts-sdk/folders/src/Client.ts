@@ -3,7 +3,7 @@
 import { AClient } from "./api/resources/a/client/Client.js";
 import { FolderClient } from "./api/resources/folder/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
@@ -15,7 +15,7 @@ export declare namespace SeedApiClient {
 }
 
 export class SeedApiClient {
-    protected readonly _options: SeedApiClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
     protected _a: AClient | undefined;
     protected _folder: FolderClient | undefined;
 

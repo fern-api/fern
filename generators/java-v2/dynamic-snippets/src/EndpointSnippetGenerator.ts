@@ -17,6 +17,41 @@ const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
     value: "STRING"
 };
 
+/**
+ * For query parameters with allow-multiple and optional types, the Dynamic IR produces
+ * optional<list<optional<T>>> or list<optional<T>>. However, Java SDK builders have
+ * convenience overloads that accept List<T> directly. This function unwraps the optional
+ * from list items so we generate List<T> instead of List<Optional<T>>.
+ *
+ * Note: We only unwrap "optional", not "nullable". Nullable list items (list<nullable<T>>)
+ * are a distinct case where items genuinely can be null, and the SDK expects List<Optional<T>>.
+ */
+function unwrapOptionalFromListItems(typeReference: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
+    if (typeReference.type === "optional" && typeReference.value.type === "list") {
+        const listType = typeReference.value;
+        const itemType = listType.value;
+        if (itemType.type === "optional") {
+            return {
+                type: "optional",
+                value: {
+                    type: "list",
+                    value: itemType.value
+                }
+            };
+        }
+    }
+    if (typeReference.type === "list") {
+        const itemType = typeReference.value;
+        if (itemType.type === "optional") {
+            return {
+                type: "list",
+                value: itemType.value
+            };
+        }
+    }
+    return typeReference;
+}
+
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
     private formatter: AbstractFormatter | undefined;
@@ -60,6 +95,18 @@ export class EndpointSnippetGenerator {
             customConfig: this.context.customConfig,
             formatter: this.formatter
         });
+    }
+
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<java.AstNode> {
+        throw new Error("Unsupported");
     }
 
     private buildCodeBlock({
@@ -665,7 +712,9 @@ export class EndpointSnippetGenerator {
         const queryParameterFields = sortedQueryParameters.map((queryParameter) => ({
             name: this.context.getMethodName(queryParameter.name.name),
             value: this.context.dynamicTypeLiteralMapper.convert({
-                typeReference: queryParameter.typeReference,
+                // Unwrap optional from list items for allow-multiple query params.
+                // Java SDK builders have convenience overloads that accept List<T>.
+                typeReference: unwrapOptionalFromListItems(queryParameter.typeReference),
                 value: queryParameter.value,
                 as: "request"
             })

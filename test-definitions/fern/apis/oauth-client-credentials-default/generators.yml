@@ -6,7 +6,7 @@ groups:
         version: latest
         ir-version: v61
         github:
-          token: "{{ GITHUB_TOKEN }}"
+          token: ${GITHUB_TOKEN}
           mode: push
           uri: fern-api/php-sdk-tests
           branch: oauth-client-credentials-default

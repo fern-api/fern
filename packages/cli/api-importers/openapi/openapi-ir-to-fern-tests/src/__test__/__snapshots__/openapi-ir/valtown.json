@@ -189,7 +189,6 @@
       "servers": [],
       "description": "Search for vals across the platform",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/search/vals",
       "examples": [
@@ -433,7 +432,6 @@
       "servers": [],
       "description": "Get basic details about a user, given their username",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/alias/{username}",
       "examples": [
@@ -965,7 +963,6 @@
       "servers": [],
       "description": "Get a val",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/alias/{username}/{val_name}",
       "examples": [
@@ -1361,7 +1358,6 @@
       "servers": [],
       "description": "Get profile information for the current user",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/me",
       "examples": [
@@ -1558,7 +1554,6 @@
       "servers": [],
       "description": "Get vals liked by the current user",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/me/likes",
       "examples": [
@@ -2199,7 +2194,6 @@
       "servers": [],
       "description": "Get comments related to current user, either given or received",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/me/comments",
       "examples": [
@@ -2719,7 +2713,6 @@
       "servers": [],
       "description": "Get vals that depend on any of the user's vals",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/me/references",
       "examples": [
@@ -2991,7 +2984,6 @@
       "servers": [],
       "description": "List blobs in your account",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/blob",
       "examples": [
@@ -3084,7 +3076,6 @@
       "servers": [],
       "description": "Get a blob’s contents.",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/blob/{key}",
       "examples": [],
@@ -3300,7 +3291,6 @@
       "servers": [],
       "description": "Get basic information about a user",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/users/{user_id}",
       "examples": [
@@ -3514,7 +3504,6 @@
       "servers": [],
       "description": "List a user's vals",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/users/{user_id}/vals",
       "examples": [
@@ -4894,7 +4883,6 @@
       "servers": [],
       "description": "Run JavaScript or TypeScript without saving it permanently as a val",
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/v1/eval",
       "examples": [
@@ -5191,7 +5179,6 @@
       "servers": [],
       "description": "Run JavaScript or TypeScript without saving it permanently as a val",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/eval/{code}",
       "examples": [
@@ -5283,7 +5270,6 @@
       "servers": [],
       "description": "Run a val, specify any parameters in a querystring",
       "authed": false,
-      "security": [],
       "availability": "Deprecated",
       "method": "GET",
       "path": "/v1/run/{valname}",
@@ -5397,7 +5383,6 @@
       "servers": [],
       "description": "Run a val, with arguments in the request body",
       "authed": false,
-      "security": [],
       "availability": "Deprecated",
       "method": "POST",
       "path": "/v1/run/{valname}",
@@ -7152,7 +7137,6 @@
       "servers": [],
       "description": "Get a val by id",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/vals/{val_id}",
       "examples": [
@@ -7845,7 +7829,6 @@
       "servers": [],
       "description": "List versions of a val",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/vals/{val_id}/versions",
       "examples": [
@@ -8493,7 +8476,6 @@
       "servers": [],
       "description": "Get a specific version of a val",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/v1/vals/{val_id}/versions/{version}",
       "examples": [

@@ -184,7 +184,7 @@ client.inlined.send_(
 <dd>
 
 ```ruby
-client.path.send_();
+client.path.send_('123');
 ```
 </dd>
 </dl>

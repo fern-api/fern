@@ -1,0 +1,8 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "package_path": "in/here/please"
+  }
+}

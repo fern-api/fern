@@ -374,7 +374,7 @@ export class DynamicTypeInstantiationMapper {
                     typeReference: structTypeReference,
                     fields: [
                         {
-                            name: this.context.getTypeName(unionVariant.discriminantValue.name),
+                            name: this.context.getFieldName(unionVariant.discriminantValue.name),
                             value: this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })
                         },
                         ...baseFields
@@ -392,7 +392,7 @@ export class DynamicTypeInstantiationMapper {
                         typeReference: structTypeReference,
                         fields: [
                             {
-                                name: this.context.getTypeName(unionVariant.discriminantValue.name),
+                                name: this.context.getFieldName(unionVariant.discriminantValue.name),
                                 value: this.convert({
                                     typeReference: unionVariant.typeReference,
                                     value: record[unionVariant.discriminantValue.wireValue]
@@ -411,7 +411,7 @@ export class DynamicTypeInstantiationMapper {
                     fields: [
                         {
                             // Unions with no properties require the discriminant property to be set.
-                            name: this.context.getTypeName(discriminatedUnionTypeInstance.discriminantValue.name),
+                            name: this.context.getFieldName(discriminatedUnionTypeInstance.discriminantValue.name),
                             value: go.TypeInstantiation.string(unionVariant.discriminantValue.wireValue)
                         },
                         ...baseFields
@@ -441,7 +441,7 @@ export class DynamicTypeInstantiationMapper {
             this.context.errors.scope(property.name.wireValue);
             try {
                 return {
-                    name: this.context.getTypeName(property.name.name),
+                    name: this.context.getFieldName(property.name.name),
                     value: this.convert(property)
                 };
             } finally {
@@ -470,7 +470,7 @@ export class DynamicTypeInstantiationMapper {
                 this.context.errors.scope(property.name.wireValue);
                 try {
                     return {
-                        name: this.context.getTypeName(property.name.name),
+                        name: this.context.getFieldName(property.name.name),
                         value: this.convert(property)
                     };
                 } finally {

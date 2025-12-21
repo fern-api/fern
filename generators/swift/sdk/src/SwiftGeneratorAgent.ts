@@ -97,7 +97,8 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
         return {
             sourceDirectory: "fern/output",
             uri: this.publishConfig.uri,
-            token: this.publishConfig.token
+            token: this.publishConfig.token,
+            branch: undefined
         };
     }
 }

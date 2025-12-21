@@ -7,6 +7,7 @@ export declare namespace ResponseErrorConverter {
         responseError: OpenAPIV3_1.ResponseObject;
         methodName: string;
         statusCode: number;
+        isWildcardStatusCode?: boolean;
     }
 
     export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
@@ -14,6 +15,7 @@ export declare namespace ResponseErrorConverter {
         errorType: TypeReference;
         displayName: string;
         statusCode: number;
+        isWildcardStatusCode?: boolean;
     }
 }
 
@@ -21,6 +23,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
     private readonly responseError: OpenAPIV3_1.ResponseObject;
     private readonly statusCode: number;
     private readonly methodName: string;
+    private readonly isWildcardStatusCode?: boolean;
 
     constructor({
         context,
@@ -29,18 +32,20 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         group,
         method,
         methodName,
-        statusCode
+        statusCode,
+        isWildcardStatusCode
     }: ResponseErrorConverter.Args) {
         super({ context, breadcrumbs, group, method });
         this.responseError = responseError;
         this.statusCode = statusCode;
         this.methodName = methodName;
+        this.isWildcardStatusCode = isWildcardStatusCode;
     }
 
     public convert(): ResponseErrorConverter.Output | undefined {
         if (!this.responseError.content) {
             // TODO: Handle 204 in a first class manner.
-            const errorName = ERROR_NAMES_BY_STATUS_CODE[this.statusCode];
+            const errorName = this.getErrorNameForStatusCode(this.statusCode, this.isWildcardStatusCode);
             if (errorName == null) {
                 this.context.logger.warn(`No error name found for status code ${this.statusCode}`);
                 return undefined;
@@ -65,13 +70,14 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                 errorType: TypeReference.unknown(),
                 displayName: errorName,
                 statusCode: this.statusCode,
+                isWildcardStatusCode: this.isWildcardStatusCode,
                 inlinedTypes: {},
                 examples: {}
             };
         }
 
         const jsonContentTypes = Object.keys(this.responseError.content).filter((type) => type.includes("json"));
-        const errorName = ERROR_NAMES_BY_STATUS_CODE[this.statusCode];
+        const errorName = this.getErrorNameForStatusCode(this.statusCode, this.isWildcardStatusCode);
         if (errorName == null) {
             this.context.logger.warn(`No error name found for status code ${this.statusCode}`);
             return undefined;
@@ -132,9 +138,23 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             errorType: convertedSchema.type,
             displayName: errorName,
             statusCode: this.statusCode,
+            isWildcardStatusCode: this.isWildcardStatusCode,
             inlinedTypes: convertedSchema.inlinedTypes,
             examples: convertedSchema.examples
         };
+    }
+
+    private getErrorNameForStatusCode(statusCode: number, isWildcard?: boolean): string | undefined {
+        if (isWildcard) {
+            if (statusCode === 400) {
+                return "ClientRequestError";
+            }
+            if (statusCode === 500) {
+                return "ServerError";
+            }
+        }
+
+        return ERROR_NAMES_BY_STATUS_CODE[statusCode];
     }
 
     private getErrorIdFromErrorName(errorName: string): string {
