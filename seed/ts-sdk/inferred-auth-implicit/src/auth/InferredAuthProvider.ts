@@ -4,18 +4,7 @@ import { AuthClient } from "../api/resources/auth/client/Client.js";
 import type { BaseClientOptions } from "../BaseClient.js";
 import * as core from "../core/index.js";
 
-export namespace InferredAuthProvider {
-    export interface AuthOptions {
-        xApiKey: core.Supplier<string>;
-        clientId: core.Supplier<string>;
-        clientSecret: core.Supplier<string>;
-        scope?: core.Supplier<string>;
-    }
-
-    export type Options = BaseClientOptions;
-}
-
-const BUFFER_IN_MINUTES = 2;
+const BUFFER_IN_MINUTES = 2 as const;
 
 export class InferredAuthProvider implements core.AuthProvider {
     private readonly client: AuthClient;
@@ -26,6 +15,10 @@ export class InferredAuthProvider implements core.AuthProvider {
     constructor(options: InferredAuthProvider.Options) {
         this.options = options;
         this.client = new AuthClient(options);
+    }
+
+    public static canCreate(options: Partial<InferredAuthProvider.Options>): boolean {
+        return options?.xApiKey != null && options?.clientId != null && options?.clientSecret != null;
     }
 
     private async getCachedAuthRequest(): Promise<core.AuthRequest> {
@@ -41,7 +34,11 @@ export class InferredAuthProvider implements core.AuthProvider {
         return this.authRequestPromise;
     }
 
-    public async getAuthRequest(): Promise<core.AuthRequest> {
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
         try {
             const authRequest = await this.getCachedAuthRequest();
             return authRequest;
@@ -70,4 +67,23 @@ export class InferredAuthProvider implements core.AuthProvider {
 
 function getExpiresAt(expiresInSeconds: number): Date {
     return new Date(Date.now() + expiresInSeconds * 1000 - BUFFER_IN_MINUTES * 60 * 1000);
+}
+
+export namespace InferredAuthProvider {
+    export const AUTH_SCHEME = "InferredAuthScheme" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string =
+        "Please provide xApiKey and clientId and clientSecret when initializing the client" as const;
+
+    export interface AuthOptions {
+        xApiKey: core.Supplier<string>;
+        clientId: core.Supplier<string>;
+        clientSecret: core.Supplier<string>;
+        scope?: core.Supplier<string>;
+    }
+
+    export type Options = BaseClientOptions;
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new InferredAuthProvider(options);
+    }
 }

@@ -415,7 +415,9 @@ function convertThemeConfig(
         tabs: theme.tabs ?? "default",
         body: theme.body ?? "default",
         pageActions: theme.pageActions ?? "default",
-        footerNav: theme.footerNav ?? "default"
+        footerNav: theme.footerNav ?? "default",
+        languageSwitcher: theme.languageSwitcher ?? "default",
+        productSwitcher: theme.productSwitcher ?? "default"
     };
 }
 

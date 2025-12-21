@@ -41,11 +41,10 @@ Instantiate and use the client with the following:
 ```typescript
 import { SeedAnyAuthClient } from "@fern/any-auth";
 
-const client = new SeedAnyAuthClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN", apiKey: "YOUR_API_KEY", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET" });
+const client = new SeedAnyAuthClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN", apiKey: "YOUR_API_KEY", clientId: "YOUR_CLIENT_ID", clientSecret: "YOUR_CLIENT_SECRET", username: "YOUR_USERNAME", password: "YOUR_PASSWORD" });
 await client.auth.getToken({
     client_id: "client_id",
-    client_secret: "client_secret",
-    scope: "scope"
+    client_secret: "client_secret"
 });
 ```
 

@@ -1,4 +1,32 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.0
+  changelogEntry:
+    - summary: |
+        Add support for endpoint-level security configuration via new `endpoint-security` auth requirement type.
+        This allows APIs to specify different authentication schemes per endpoint, enabling fine-grained control
+        over which endpoints accept which auth methods (e.g., some endpoints use Bearer, others use API Key).
+      type: feat
+    - summary: |
+        Add `RoutingAuthProvider` that dynamically routes authentication requests based on endpoint metadata.
+        When `auth: endpoint-security` is configured, the SDK uses endpoint metadata to determine which auth
+        provider to use for each request. `AnyAuthProvider` remains the default for `auth: any` configurations.
+      type: feat
+    - summary: |
+        Refactor all auth providers to use factory pattern with static `createInstance` methods. This enables
+        type-safe provider instantiation, conditional provider creation based on available credentials, and
+        better error messages with scheme-specific context.
+      type: chore
+    - summary: |
+        Add conditional wrapper properties for auth options to prevent naming conflicts when multiple auth
+        schemes are configured (e.g., `options.bearer.token` vs `options.oauth.token`).
+      type: feat
+    - summary: |
+        Make `endpointMetadata` parameter optional in `EndpointSupplier.get()` to allow auth providers
+        to handle endpoints without metadata gracefully while maintaining backward compatibility.
+      type: chore
+  createdAt: "2025-12-19"
+  irVersion: 63
+
 - version: 3.42.8
   changelogEntry:
     - summary: |

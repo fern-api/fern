@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { ApiDefinitionPathSchema } from "./ApiDefinitionPathSchema";
 import { ApiDefinitionWithOverridesSchema } from "./ApiDefinitionWithOverridesSchema";
@@ -13,7 +13,7 @@ import { ApiDefinitionSchema } from "./ApiDefinitionSchema";
 
 export const ApiConfigurationSchemaInternal: core.serialization.Schema<
     serializers.ApiConfigurationSchemaInternal.Raw,
-    FernDefinition.ApiConfigurationSchemaInternal
+    GeneratorsYml.ApiConfigurationSchemaInternal
 > = core.serialization.undiscriminatedUnion([
     ApiDefinitionPathSchema,
     ApiDefinitionWithOverridesSchema,

@@ -17,8 +17,7 @@ client.auth.get_token(
   client_id: 'client_id',
   client_secret: 'client_secret',
   audience: 'https://api.example.com',
-  grant_type: 'client_credentials',
-  scope: 'scope'
+  grant_type: 'client_credentials'
 );
 ```
 </dd>
@@ -59,14 +58,6 @@ client.auth.get_token(
 <dd>
 
 **grant_type:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `String` 
     
 </dd>
 </dl>
@@ -168,6 +159,86 @@ client.user.get_with_bearer();
 </details>
 
 <details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_o_auth</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.user.get_with_bearer();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_basic</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.user.get_with_bearer();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::User::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/lib/seed/user/client.rb">get_with_inferred_auth</a>() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 

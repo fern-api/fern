@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { AuthVariable } from "./AuthVariable";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const BasicAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.BasicAuthSchemeSchema.Raw,
-    FernDefinition.fernDefinition.BasicAuthSchemeSchema
+    GeneratorsYml.fernDefinition.BasicAuthSchemeSchema
 > = core.serialization
     .object({
         scheme: core.serialization.stringLiteral("basic"),

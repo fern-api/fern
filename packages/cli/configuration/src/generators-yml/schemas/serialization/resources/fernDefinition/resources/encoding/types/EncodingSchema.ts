@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { ProtobufTypeSchema } from "./ProtobufTypeSchema";
 
 export const EncodingSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.EncodingSchema.Raw,
-    FernDefinition.fernDefinition.EncodingSchema
+    GeneratorsYml.fernDefinition.EncodingSchema
 > = core.serialization.object({
     proto: ProtobufTypeSchema.optional(),
 });

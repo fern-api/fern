@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
 export const AuthScope: core.serialization.Schema<
     serializers.fernDefinition.AuthScope.Raw,
-    FernDefinition.fernDefinition.AuthScope
+    GeneratorsYml.fernDefinition.AuthScope
 > = core.serialization.string();
 
 export declare namespace AuthScope {

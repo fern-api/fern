@@ -32,7 +32,9 @@ export class UserClient {
     }
 
     private async __get(requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
-        const _metadata: core.EndpointMetadata = { security: [{ Bearer: [] }, { ApiKey: [] }, { OAuth: [] }] };
+        const _metadata: core.EndpointMetadata = {
+            security: [{ Bearer: [] }, { ApiKey: [] }, { OAuth: [] }, { Basic: [] }, { InferredAuth: [] }],
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
             endpointMetadata: _metadata,
         });

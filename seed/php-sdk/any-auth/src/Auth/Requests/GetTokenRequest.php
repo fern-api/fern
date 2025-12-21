@@ -32,18 +32,11 @@ class GetTokenRequest extends JsonSerializableType
     public string $grantType;
 
     /**
-     * @var ?string $scope
-     */
-    #[JsonProperty('scope')]
-    public ?string $scope;
-
-    /**
      * @param array{
      *   clientId: string,
      *   clientSecret: string,
      *   audience: 'https://api.example.com',
      *   grantType: 'client_credentials',
-     *   scope?: ?string,
      * } $values
      */
     public function __construct(
@@ -53,6 +46,5 @@ class GetTokenRequest extends JsonSerializableType
         $this->clientSecret = $values['clientSecret'];
         $this->audience = $values['audience'];
         $this->grantType = $values['grantType'];
-        $this->scope = $values['scope'] ?? null;
     }
 }

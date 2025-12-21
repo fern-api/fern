@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { TypeReferenceDeclarationWithName } from "../../types/types/TypeReferenceDeclarationWithName";
 
 export const TypeReferenceDeclarationWithEnvOverrideSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.TypeReferenceDeclarationWithEnvOverrideSchema.Raw,
-    FernDefinition.fernDefinition.TypeReferenceDeclarationWithEnvOverrideSchema
+    GeneratorsYml.fernDefinition.TypeReferenceDeclarationWithEnvOverrideSchema
 > = core.serialization
     .object({
         env: core.serialization.string().optional(),

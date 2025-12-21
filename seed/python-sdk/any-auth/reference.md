@@ -23,7 +23,6 @@ client = SeedAnyAuth(
 client.auth.get_token(
     client_id="client_id",
     client_secret="client_secret",
-    scope="scope",
 )
 
 ```
@@ -49,14 +48,6 @@ client.auth.get_token(
 <dd>
 
 **client_secret:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `typing.Optional[str]` 
     
 </dd>
 </dl>

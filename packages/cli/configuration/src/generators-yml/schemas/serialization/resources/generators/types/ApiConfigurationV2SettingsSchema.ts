@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { OpenApiSettingsSchema } from "./OpenApiSettingsSchema";
 import { AsyncApiSettingsSchema } from "./AsyncApiSettingsSchema";
 
 export const ApiConfigurationV2SettingsSchema: core.serialization.ObjectSchema<
     serializers.ApiConfigurationV2SettingsSchema.Raw,
-    FernDefinition.ApiConfigurationV2SettingsSchema
+    GeneratorsYml.ApiConfigurationV2SettingsSchema
 > = core.serialization.object({}).extend(OpenApiSettingsSchema).extend(AsyncApiSettingsSchema);
 
 export declare namespace ApiConfigurationV2SettingsSchema {

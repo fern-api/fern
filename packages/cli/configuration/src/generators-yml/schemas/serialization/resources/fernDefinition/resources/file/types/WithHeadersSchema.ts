@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { HttpHeaderSchema } from "../../service/types/HttpHeaderSchema";
 
 export const WithHeadersSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.WithHeadersSchema.Raw,
-    FernDefinition.fernDefinition.WithHeadersSchema
+    GeneratorsYml.fernDefinition.WithHeadersSchema
 > = core.serialization.object({
     headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
 });

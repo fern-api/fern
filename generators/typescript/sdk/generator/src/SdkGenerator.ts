@@ -3,6 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExampleEndpointCall,
     HttpEndpoint,
@@ -259,14 +260,21 @@ export class SdkGenerator {
         this.context = context;
         this.namespaceExport = namespaceExport;
         this.intermediateRepresentation = intermediateRepresentation;
+
+        // Auto-enable generateEndpointMetadata when ENDPOINT_SECURITY is set
+        // because RoutingAuthProvider requires endpoint metadata to function
+        if (intermediateRepresentation.auth.requirement === FernIr.AuthSchemesRequirement.EndpointSecurity) {
+            config.generateEndpointMetadata = true;
+        }
         this.config = config;
+
         this.npmPackage = npmPackage;
         this.rawConfig = rawConfig;
         this.generateJestTests = generateJestTests;
         this.generateOAuthClients =
-            this.config.generateOAuthClients &&
+            config.generateOAuthClients &&
             this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
-        this.shouldGenerateWebsocketClients = this.config.shouldGenerateWebsocketClients;
+        this.shouldGenerateWebsocketClients = config.shouldGenerateWebsocketClients;
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -285,13 +293,13 @@ export class SdkGenerator {
         });
         this.publicExportsManager = new PublicExportsManager();
         this.coreUtilitiesManager = new CoreUtilitiesManager({
-            streamType: this.config.streamType,
-            formDataSupport: this.config.formDataSupport,
-            fetchSupport: this.config.fetchSupport,
+            streamType: config.streamType,
+            formDataSupport: config.formDataSupport,
+            fetchSupport: config.fetchSupport,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
-            generateEndpointMetadata: this.config.generateEndpointMetadata,
-            customPagerName: this.config.customPagerName
+            generateEndpointMetadata: config.generateEndpointMetadata,
+            customPagerName: config.customPagerName
         });
 
         const apiDirectory: ExportedDirectory[] = [
@@ -503,7 +511,7 @@ export class SdkGenerator {
             ir: intermediateRepresentation,
             dependencyManager: this.dependencyManager,
             rootDirectory: this.rootDirectory,
-            writeUnitTests: this.config.writeUnitTests,
+            writeUnitTests: config.writeUnitTests,
             includeSerdeLayer: config.includeSerdeLayer,
             generateWireTests: config.generateWireTests,
             useBigInt: config.useBigInt,
@@ -524,9 +532,9 @@ export class SdkGenerator {
             config: this.rawConfig,
             readmeConfigBuilder: new ReadmeConfigBuilder({
                 endpointSnippets: this.endpointSnippets,
-                fileResponseType: this.config.fileResponseType,
-                fetchSupport: this.config.fetchSupport,
-                generateSubpackageExports: this.config.generateSubpackageExports
+                fileResponseType: config.fileResponseType,
+                fetchSupport: config.fetchSupport,
+                generateSubpackageExports: config.generateSubpackageExports
             }),
             ir: intermediateRepresentation
         });
@@ -1381,36 +1389,41 @@ export class SdkGenerator {
     }
 
     private generateAuthProviders(): void {
-        const isAnyAuth = this.intermediateRepresentation.auth.requirement === "ANY";
+        const authRequirement = this.intermediateRepresentation.auth.requirement;
 
-        if (isAnyAuth) {
-            // For ANY auth, we need to generate all individual auth providers first,
-            // then generate the AnyAuthProvider that aggregates them
-            for (const authScheme of this.intermediateRepresentation.auth.schemes) {
-                const authProvidersGenerator = new AuthProvidersGenerator({
-                    ir: this.intermediateRepresentation,
-                    authScheme,
-                    neverThrowErrors: this.config.neverThrowErrors,
-                    includeSerdeLayer: this.config.includeSerdeLayer
-                });
-                if (!authProvidersGenerator.shouldWriteFile()) {
-                    continue;
-                }
-                this.withSourceFile({
-                    filepath: authProvidersGenerator.getFilePath(),
-                    run: ({ sourceFile, importsManager }) => {
-                        const context = this.generateSdkContext({ sourceFile, importsManager });
-                        authProvidersGenerator.writeToFile(context);
-                    }
-                });
+        // Determine if we should use wrapper properties (only for ANY and ENDPOINT_SECURITY)
+        const shouldUseWrapper = authRequirement === "ANY" || authRequirement === "ENDPOINT_SECURITY";
+
+        // Generate individual auth providers for all auth schemes
+        for (const authScheme of this.intermediateRepresentation.auth.schemes) {
+            const authProvidersGenerator = new AuthProvidersGenerator({
+                ir: this.intermediateRepresentation,
+                authScheme,
+                neverThrowErrors: this.config.neverThrowErrors,
+                includeSerdeLayer: this.config.includeSerdeLayer,
+                shouldUseWrapper
+            });
+            if (!authProvidersGenerator.shouldWriteFile()) {
+                continue;
             }
+            this.withSourceFile({
+                filepath: authProvidersGenerator.getFilePath(),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    authProvidersGenerator.writeToFile(context);
+                }
+            });
+        }
 
-            // Now generate the AnyAuthProvider that aggregates all the individual providers
+        // Generate aggregator auth provider based on auth requirement
+        if (authRequirement === "ANY") {
+            // For ANY auth, generate AnyAuthProvider that tries all providers in sequence
             const anyAuthProvidersGenerator = new AuthProvidersGenerator({
                 ir: this.intermediateRepresentation,
                 authScheme: { type: "any" },
                 neverThrowErrors: this.config.neverThrowErrors,
-                includeSerdeLayer: this.config.includeSerdeLayer
+                includeSerdeLayer: this.config.includeSerdeLayer,
+                shouldUseWrapper
             });
             this.withSourceFile({
                 filepath: anyAuthProvidersGenerator.getFilePath(),
@@ -1419,26 +1432,22 @@ export class SdkGenerator {
                     anyAuthProvidersGenerator.writeToFile(context);
                 }
             });
-        } else {
-            // For non-ANY auth, generate auth providers as before
-            for (const authScheme of this.intermediateRepresentation.auth.schemes) {
-                const authProvidersGenerator = new AuthProvidersGenerator({
-                    ir: this.intermediateRepresentation,
-                    authScheme,
-                    neverThrowErrors: this.config.neverThrowErrors,
-                    includeSerdeLayer: this.config.includeSerdeLayer
-                });
-                if (!authProvidersGenerator.shouldWriteFile()) {
-                    continue;
+        } else if (authRequirement === "ENDPOINT_SECURITY") {
+            // For ENDPOINT_SECURITY, generate RoutingAuthProvider that routes based on endpoint metadata
+            const routingAuthProvidersGenerator = new AuthProvidersGenerator({
+                ir: this.intermediateRepresentation,
+                authScheme: { type: "routing" },
+                neverThrowErrors: this.config.neverThrowErrors,
+                includeSerdeLayer: this.config.includeSerdeLayer,
+                shouldUseWrapper
+            });
+            this.withSourceFile({
+                filepath: routingAuthProvidersGenerator.getFilePath(),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    routingAuthProvidersGenerator.writeToFile(context);
                 }
-                this.withSourceFile({
-                    filepath: authProvidersGenerator.getFilePath(),
-                    run: ({ sourceFile, importsManager }) => {
-                        const context = this.generateSdkContext({ sourceFile, importsManager });
-                        authProvidersGenerator.writeToFile(context);
-                    }
-                });
-            }
+            });
         }
     }
 
@@ -1824,22 +1833,22 @@ export class SdkGenerator {
                 run: ({ sourceFile }) => {
                     if (hasClient) {
                         sourceFile.addExportDeclaration({
-                            moduleSpecifier: "./client/Client.js",
+                            moduleSpecifier: "./client/Client",
                             namedExports: [clientClassName]
                         });
 
                         sourceFile.addExportDeclaration({
-                            moduleSpecifier: "./client/index.js"
+                            moduleSpecifier: "./client/index"
                         });
                     } else {
                         sourceFile.addExportDeclaration({
-                            moduleSpecifier: "./index.js"
+                            moduleSpecifier: "./index"
                         });
                     }
 
                     if (package_.subpackages.length > 0) {
                         sourceFile.addExportDeclaration({
-                            moduleSpecifier: "./resources/index.js"
+                            moduleSpecifier: "./resources/index"
                         });
                     }
                 }

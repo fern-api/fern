@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const PathParameterOrder: core.serialization.Schema<
     serializers.PathParameterOrder.Raw,
-    FernDefinition.PathParameterOrder
+    GeneratorsYml.PathParameterOrder
 > = core.serialization.enum_(["url-order", "spec-order"]);
 
 export declare namespace PathParameterOrder {

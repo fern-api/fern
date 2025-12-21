@@ -8,6 +8,8 @@ auth:
     - Bearer
     - ApiKey
     - OAuth
+    - Basic
+    - InferredAuth
 auth-schemes:
   Bearer:
     scheme: bearer
@@ -27,3 +29,14 @@ auth-schemes:
       response-properties:
         access-token: $response.access_token
         expires-in: $response.expires_in
+  Basic:
+    scheme: basic
+    username:
+      name: username
+      env: MY_USERNAME
+    password:
+      name: password
+      env: MY_PASSWORD
+  InferredAuth:
+    scheme: bearer
+    get-token: POST /token

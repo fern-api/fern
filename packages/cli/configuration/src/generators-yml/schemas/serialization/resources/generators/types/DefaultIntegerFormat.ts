@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const DefaultIntegerFormat: core.serialization.Schema<
     serializers.DefaultIntegerFormat.Raw,
-    FernDefinition.DefaultIntegerFormat
+    GeneratorsYml.DefaultIntegerFormat
 > = core.serialization.enum_(["int32", "int64", "uint32", "uint64"]);
 
 export declare namespace DefaultIntegerFormat {

@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { PypiOutputMetadataSchema } from "./PypiOutputMetadataSchema";
 
 export const PypiOutputLocationSchema: core.serialization.ObjectSchema<
     serializers.PypiOutputLocationSchema.Raw,
-    FernDefinition.PypiOutputLocationSchema
+    GeneratorsYml.PypiOutputLocationSchema
 > = core.serialization.object({
     url: core.serialization.string().optional(),
     "package-name": core.serialization.string(),

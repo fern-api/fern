@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { AuthSchemeReferenceSchema } from "./AuthSchemeReferenceSchema";
 
 export const AnyAuthItem: core.serialization.Schema<
     serializers.fernDefinition.AnyAuthItem.Raw,
-    FernDefinition.fernDefinition.AnyAuthItem
+    GeneratorsYml.fernDefinition.AnyAuthItem
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), AuthSchemeReferenceSchema]);
 
 export declare namespace AnyAuthItem {

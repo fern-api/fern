@@ -585,39 +585,6 @@
                             },
                             "propertyAccess": null,
                             "variable": null
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "scope",
-                                    "camelCase": {
-                                        "unsafeName": "scope",
-                                        "safeName": "scope"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "scope",
-                                        "safeName": "scope"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SCOPE",
-                                        "safeName": "SCOPE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Scope",
-                                        "safeName": "Scope"
-                                    }
-                                },
-                                "wireValue": "scope"
-                            },
-                            "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
-                            },
-                            "propertyAccess": null,
-                            "variable": null
                         }
                     ]
                 },

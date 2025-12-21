@@ -2,19 +2,18 @@
 
 import { SeedEndpointSecurityAuthClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
-import { mockOAuth } from "./mockAuth";
+import { mockInferredAuth, mockOAuth } from "./mockAuth";
 
 describe("UserClient", () => {
     test("getWithBearer", async () => {
         const server = mockServerPool.createServer();
-        mockOAuth(server);
-
         const client = new SeedEndpointSecurityAuthClient({
             maxRetries: 0,
-            token: "test",
-            apiKey: "test",
-            clientId: "client_id",
-            clientSecret: "client_secret",
+            bearer: { token: "test" },
+            apiKey: { apiKey: "test" },
+            oauth: { clientId: "client_id", clientSecret: "client_secret" },
+            basic: { username: "test", password: "test" },
+            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
             environment: server.baseUrl,
         });
 
@@ -39,14 +38,13 @@ describe("UserClient", () => {
 
     test("getWithApiKey", async () => {
         const server = mockServerPool.createServer();
-        mockOAuth(server);
-
         const client = new SeedEndpointSecurityAuthClient({
             maxRetries: 0,
-            token: "test",
-            apiKey: "test",
-            clientId: "client_id",
-            clientSecret: "client_secret",
+            bearer: { token: "test" },
+            apiKey: { apiKey: "test" },
+            oauth: { clientId: "client_id", clientSecret: "client_secret" },
+            basic: { username: "test", password: "test" },
+            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
             environment: server.baseUrl,
         });
 
@@ -75,10 +73,11 @@ describe("UserClient", () => {
 
         const client = new SeedEndpointSecurityAuthClient({
             maxRetries: 0,
-            token: "test",
-            apiKey: "test",
-            clientId: "client_id",
-            clientSecret: "client_secret",
+            bearer: { token: "test" },
+            apiKey: { apiKey: "test" },
+            oauth: { clientId: "client_id", clientSecret: "client_secret" },
+            basic: { username: "test", password: "test" },
+            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
             environment: server.baseUrl,
         });
 
@@ -101,16 +100,82 @@ describe("UserClient", () => {
         ]);
     });
 
-    test("getWithAnyAuth", async () => {
+    test("getWithBasic", async () => {
         const server = mockServerPool.createServer();
-        mockOAuth(server);
+        const client = new SeedEndpointSecurityAuthClient({
+            maxRetries: 0,
+            bearer: { token: "test" },
+            apiKey: { apiKey: "test" },
+            oauth: { clientId: "client_id", clientSecret: "client_secret" },
+            basic: { username: "test", password: "test" },
+            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = [
+            { id: "id", name: "name" },
+            { id: "id", name: "name" },
+        ];
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.user.getWithBasic();
+        expect(response).toEqual([
+            {
+                id: "id",
+                name: "name",
+            },
+            {
+                id: "id",
+                name: "name",
+            },
+        ]);
+    });
+
+    test("getWithInferredAuth", async () => {
+        const server = mockServerPool.createServer();
+        mockInferredAuth(server);
 
         const client = new SeedEndpointSecurityAuthClient({
             maxRetries: 0,
-            token: "test",
-            apiKey: "test",
-            clientId: "client_id",
-            clientSecret: "client_secret",
+            bearer: { token: "test" },
+            apiKey: { apiKey: "test" },
+            oauth: { clientId: "client_id", clientSecret: "client_secret" },
+            basic: { username: "test", password: "test" },
+            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = [
+            { id: "id", name: "name" },
+            { id: "id", name: "name" },
+        ];
+        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.user.getWithInferredAuth();
+        expect(response).toEqual([
+            {
+                id: "id",
+                name: "name",
+            },
+            {
+                id: "id",
+                name: "name",
+            },
+        ]);
+    });
+
+    test("getWithAnyAuth", async () => {
+        const server = mockServerPool.createServer();
+        mockOAuth(server);
+        mockInferredAuth(server);
+
+        const client = new SeedEndpointSecurityAuthClient({
+            maxRetries: 0,
+            bearer: { token: "test" },
+            apiKey: { apiKey: "test" },
+            oauth: { clientId: "client_id", clientSecret: "client_secret" },
+            basic: { username: "test", password: "test" },
+            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
             environment: server.baseUrl,
         });
 
@@ -136,13 +201,15 @@ describe("UserClient", () => {
     test("getWithAllAuth", async () => {
         const server = mockServerPool.createServer();
         mockOAuth(server);
+        mockInferredAuth(server);
 
         const client = new SeedEndpointSecurityAuthClient({
             maxRetries: 0,
-            token: "test",
-            apiKey: "test",
-            clientId: "client_id",
-            clientSecret: "client_secret",
+            bearer: { token: "test" },
+            apiKey: { apiKey: "test" },
+            oauth: { clientId: "client_id", clientSecret: "client_secret" },
+            basic: { username: "test", password: "test" },
+            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
             environment: server.baseUrl,
         });
 

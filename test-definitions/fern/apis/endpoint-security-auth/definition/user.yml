@@ -27,6 +27,18 @@ service:
       response: list<User>
       auth:
         - OAuth: [read-only]
+    getWithBasic:
+      path: /users
+      method: GET
+      response: list<User>
+      auth:
+        - Basic: []
+    getWithInferredAuth:
+      path: /users
+      method: GET
+      response: list<User>
+      auth:
+        - InferredAuth: []
     getWithAnyAuth:
       path: /users
       method: GET
@@ -35,6 +47,8 @@ service:
         - Bearer: []
         - ApiKey: []
         - OAuth: [read-only]
+        - Basic: []
+        - InferredAuth: []
     getWithAllAuth:
       path: /users
       method: GET
@@ -43,3 +57,5 @@ service:
         - Bearer: []
           ApiKey: []
           OAuth: [read-only]
+          Basic: []
+          InferredAuth: []

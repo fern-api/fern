@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { StringValidationSchema } from "./StringValidationSchema";
 import { NumberValidationSchema } from "./NumberValidationSchema";
 
 export const ValidationSchema: core.serialization.Schema<
     serializers.fernDefinition.ValidationSchema.Raw,
-    FernDefinition.fernDefinition.ValidationSchema
+    GeneratorsYml.fernDefinition.ValidationSchema
 > = core.serialization.undiscriminatedUnion([StringValidationSchema, NumberValidationSchema]);
 
 export declare namespace ValidationSchema {

@@ -23,8 +23,7 @@ private func main() async throws {
         clientId: "client_id",
         clientSecret: "client_secret",
         audience: .httpsApiExampleCom,
-        grantType: .clientCredentials,
-        scope: "scope"
+        grantType: .clientCredentials
     ))
 }
 
@@ -163,6 +162,104 @@ try await main()
 </details>
 
 <details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getWithOAuth</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import EndpointSecurityAuth
+
+private func main() async throws {
+    let client = EndpointSecurityAuthClient(token: "<token>")
+
+    _ = try await client.user.getWithBearer()
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getWithBasic</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import EndpointSecurityAuth
+
+private func main() async throws {
+    let client = EndpointSecurityAuthClient(token: "<token>")
+
+    _ = try await client.user.getWithBearer()
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">getWithInferredAuth</a>(requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 

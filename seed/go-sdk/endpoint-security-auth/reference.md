@@ -16,9 +16,6 @@
 request := &fern.GetTokenRequest{
         ClientId: "client_id",
         ClientSecret: "client_secret",
-        Scope: fern.String(
-            "scope",
-        ),
     }
 client.Auth.GetToken(
         context.TODO(),
@@ -64,14 +61,6 @@ client.Auth.GetToken(
 <dd>
 
 **grantType:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `*string` 
     
 </dd>
 </dl>
@@ -141,6 +130,62 @@ client.User.GetWithBearer(
 </details>
 
 <details><summary><code>client.User.GetWithOAuth() -> []*fern.User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.User.GetWithBearer(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.User.GetWithBasic() -> []*fern.User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.User.GetWithBearer(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.User.GetWithInferredAuth() -> []*fern.User</code></summary>
 <dl>
 <dd>
 

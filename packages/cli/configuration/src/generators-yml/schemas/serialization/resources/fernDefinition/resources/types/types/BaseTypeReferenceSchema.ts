@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { EncodingSchema } from "../../encoding/types/EncodingSchema";
 import { ValidationSchema } from "../../validation/types/ValidationSchema";
@@ -12,7 +12,7 @@ import { WithAvailability } from "../../commons/types/WithAvailability";
 
 export const BaseTypeReferenceSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.BaseTypeReferenceSchema.Raw,
-    FernDefinition.fernDefinition.BaseTypeReferenceSchema
+    GeneratorsYml.fernDefinition.BaseTypeReferenceSchema
 > = core.serialization
     .object({
         default: core.serialization.unknown().optional(),
