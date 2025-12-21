@@ -720,7 +720,8 @@ export class DocsDefinitionResolver {
                           tabs: this.parsedDocsConfig.theme.tabs,
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
                           footerNav: this.parsedDocsConfig.theme.footerNav,
-                          "language-switcher": this.parsedDocsConfig.theme.languageSwitcher
+                          "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
+                          "product-switcher": this.parsedDocsConfig.theme.productSwitcher
                       }
                     : undefined,
             // deprecated
@@ -729,7 +730,9 @@ export class DocsDefinitionResolver {
             colors: undefined,
             colorsV2: undefined,
             typography: undefined,
-            backgroundImage: undefined
+            backgroundImage: undefined,
+            header: undefined,
+            footer: undefined
         };
         return config;
     }
