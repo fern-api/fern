@@ -169,7 +169,6 @@ export async function validateWorkspaces({
 function getValidationEventProperties(violations: ValidationViolation[]): Record<string, unknown> {
     let errorCount = 0;
     let warningCount = 0;
-    const violationsByRule: Record<string, number> = {};
     const violationsBySeverity: Record<string, number> = {};
 
     for (const violation of violations) {
@@ -180,7 +179,6 @@ function getValidationEventProperties(violations: ValidationViolation[]): Record
         }
 
         violationsBySeverity[violation.severity] = (violationsBySeverity[violation.severity] ?? 0) + 1;
-        violationsByRule[violation.name] = (violationsByRule[violation.name] ?? 0) + 1;
     }
 
     return {
@@ -188,7 +186,6 @@ function getValidationEventProperties(violations: ValidationViolation[]): Record
         warningCount,
         totalViolationCount: violations.length,
         passed: errorCount === 0,
-        violationsByRule,
         violationsBySeverity
     };
 }
