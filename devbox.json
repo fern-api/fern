@@ -1,0 +1,44 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.6/.schema/devbox.schema.json",
+  "packages": {
+    "nodejs@22": {},
+    "pnpm@9.4.0": {},
+    "go@1.23": {},
+    "python@3.10": {},
+    "poetry@1.8": {},
+    "jdk@11": {},
+    "jdk17": {
+      "version": "latest"
+    },
+    "buf": {
+      "version": "latest"
+    },
+    "git-lfs": {
+      "version": "latest"
+    },
+    "protobuf": {
+      "version": "latest"
+    }
+  },
+  "env": {
+    "JAVA_HOME": "$DEVBOX_PACKAGES_DIR/openjdk-11",
+    "JAVA_17_HOME": "$DEVBOX_PACKAGES_DIR/openjdk-17"
+  },
+  "shell": {
+    "init_hook": [
+      "echo 'Fern development environment loaded!'",
+      "echo 'Node.js:' $(node --version)",
+      "echo 'pnpm:' $(pnpm --version)",
+      "echo 'Go:' $(go version)",
+      "echo 'Python:' $(python --version)",
+      "echo 'Java:' $(java --version | head -1)"
+    ],
+    "scripts": {
+      "bootstrap": "pnpm install",
+      "compile": "pnpm compile",
+      "test": "pnpm test",
+      "lint": "pnpm check",
+      "install-protoc-gen-openapi": "go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest"
+    }
+  }
+}
