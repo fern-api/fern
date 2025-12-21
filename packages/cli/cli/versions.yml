@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.31.0
+  changelogEntry:
+    - summary: |
+        Add fine-grained event logging for `fern check` command. The CLI now tracks validation metrics including error/warning counts, violation types by rule name, validation duration, and workspace information to help improve the validation experience.
+      type: feat
+  createdAt: "2025-12-21"
+  irVersion: 62
+
 - version: 3.30.3
   changelogEntry:
     - summary: |
