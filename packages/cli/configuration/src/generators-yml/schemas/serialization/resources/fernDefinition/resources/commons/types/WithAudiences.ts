@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
 export const WithAudiences: core.serialization.ObjectSchema<
     serializers.fernDefinition.WithAudiences.Raw,
-    FernDefinition.fernDefinition.WithAudiences
+    GeneratorsYml.fernDefinition.WithAudiences
 > = core.serialization.object({
     audiences: core.serialization.list(core.serialization.string()).optional(),
 });

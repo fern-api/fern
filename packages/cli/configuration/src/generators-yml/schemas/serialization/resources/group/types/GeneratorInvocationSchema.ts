@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { GeneratorOutputSchema } from "./GeneratorOutputSchema";
 import { GithubConfigurationSchema } from "./GithubConfigurationSchema";
@@ -13,7 +13,7 @@ import { GeneratorApiSettingsSchema } from "./GeneratorApiSettingsSchema";
 
 export const GeneratorInvocationSchema: core.serialization.ObjectSchema<
     serializers.GeneratorInvocationSchema.Raw,
-    FernDefinition.GeneratorInvocationSchema
+    GeneratorsYml.GeneratorInvocationSchema
 > = core.serialization.object({
     name: core.serialization.string(),
     version: core.serialization.string(),

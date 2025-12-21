@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
 export const EndpointSecuritySchemaDetails: core.serialization.ObjectSchema<
     serializers.fernDefinition.EndpointSecuritySchemaDetails.Raw,
-    FernDefinition.fernDefinition.EndpointSecuritySchemaDetails
+    GeneratorsYml.fernDefinition.EndpointSecuritySchemaDetails
 > = core.serialization.object({});
 
 export declare namespace EndpointSecuritySchemaDetails {

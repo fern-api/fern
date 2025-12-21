@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { AuthSchemeDeclarationSchema } from "../../fernDefinition/resources/auth/types/AuthSchemeDeclarationSchema";
 import { ApiConfigurationSchema } from "./ApiConfigurationSchema";
@@ -18,7 +18,7 @@ import { ApiDefinitionSettingsSchema } from "./ApiDefinitionSettingsSchema";
 
 export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
     serializers.GeneratorsConfigurationSchema.Raw,
-    FernDefinition.GeneratorsConfigurationSchema
+    GeneratorsYml.GeneratorsConfigurationSchema
 > = core.serialization.object({
     "auth-schemes": core.serialization.record(core.serialization.string(), AuthSchemeDeclarationSchema).optional(),
     api: ApiConfigurationSchema.optional(),

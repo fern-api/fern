@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubLicenseSchema } from "../../license/types/GithubLicenseSchema";
 
 export const GeneratorPublishMetadataSchema: core.serialization.ObjectSchema<
     serializers.GeneratorPublishMetadataSchema.Raw,
-    FernDefinition.GeneratorPublishMetadataSchema
+    GeneratorsYml.GeneratorPublishMetadataSchema
 > = core.serialization.object({
     "package-description": core.serialization.string().optional(),
     email: core.serialization.string().optional(),

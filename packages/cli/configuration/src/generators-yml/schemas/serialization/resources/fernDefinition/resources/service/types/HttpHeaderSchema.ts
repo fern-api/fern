@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { TypeReferenceDeclarationWithEnvOverride } from "./TypeReferenceDeclarationWithEnvOverride";
 
 export const HttpHeaderSchema: core.serialization.Schema<
     serializers.fernDefinition.HttpHeaderSchema.Raw,
-    FernDefinition.fernDefinition.HttpHeaderSchema
+    GeneratorsYml.fernDefinition.HttpHeaderSchema
 > = TypeReferenceDeclarationWithEnvOverride;
 
 export declare namespace HttpHeaderSchema {

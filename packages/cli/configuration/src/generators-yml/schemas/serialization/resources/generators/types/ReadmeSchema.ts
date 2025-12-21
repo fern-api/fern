@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { ReadmeEndpointSchema } from "./ReadmeEndpointSchema";
 import { ReadmeCustomSectionSchema } from "./ReadmeCustomSectionSchema";
 import { ExampleStyle } from "./ExampleStyle";
 
-export const ReadmeSchema: core.serialization.ObjectSchema<serializers.ReadmeSchema.Raw, FernDefinition.ReadmeSchema> =
+export const ReadmeSchema: core.serialization.ObjectSchema<serializers.ReadmeSchema.Raw, GeneratorsYml.ReadmeSchema> =
     core.serialization.object({
         bannerLink: core.serialization.string().optional(),
         introduction: core.serialization.string().optional(),

@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { AvailabilityStatusSchema } from "./AvailabilityStatusSchema";
 
 export const AvailabilitySchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.AvailabilitySchema.Raw,
-    FernDefinition.fernDefinition.AvailabilitySchema
+    GeneratorsYml.fernDefinition.AvailabilitySchema
 > = core.serialization.object({
     status: AvailabilityStatusSchema,
     message: core.serialization.string().optional(),

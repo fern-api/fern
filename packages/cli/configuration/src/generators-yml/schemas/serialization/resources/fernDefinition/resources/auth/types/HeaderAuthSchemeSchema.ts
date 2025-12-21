@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { WithEnvironmentVariable } from "./WithEnvironmentVariable";
 import { WithName } from "../../commons/types/WithName";
@@ -11,7 +11,7 @@ import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const HeaderAuthSchemeSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.HeaderAuthSchemeSchema.Raw,
-    FernDefinition.fernDefinition.HeaderAuthSchemeSchema
+    GeneratorsYml.fernDefinition.HeaderAuthSchemeSchema
 > = core.serialization
     .object({
         header: core.serialization.string(),

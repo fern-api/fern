@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const AuthSchemeReferenceSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.AuthSchemeReferenceSchema.Raw,
-    FernDefinition.fernDefinition.AuthSchemeReferenceSchema
+    GeneratorsYml.fernDefinition.AuthSchemeReferenceSchema
 > = core.serialization
     .object({
         scheme: core.serialization.string(),

@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
 export const WithName: core.serialization.ObjectSchema<
     serializers.fernDefinition.WithName.Raw,
-    FernDefinition.fernDefinition.WithName
+    GeneratorsYml.fernDefinition.WithName
 > = core.serialization.object({
     name: core.serialization.string().optional(),
 });

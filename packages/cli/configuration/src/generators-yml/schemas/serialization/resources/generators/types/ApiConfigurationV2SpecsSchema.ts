@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { SpecSchema } from "./SpecSchema";
 import { ConjureSchema } from "./ConjureSchema";
 
 export const ApiConfigurationV2SpecsSchema: core.serialization.Schema<
     serializers.ApiConfigurationV2SpecsSchema.Raw,
-    FernDefinition.ApiConfigurationV2SpecsSchema
+    GeneratorsYml.ApiConfigurationV2SpecsSchema
 > = core.serialization.undiscriminatedUnion([core.serialization.list(SpecSchema), ConjureSchema]);
 
 export declare namespace ApiConfigurationV2SpecsSchema {

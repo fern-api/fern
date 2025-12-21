@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const MavenOutputSignatureSchema: core.serialization.ObjectSchema<
     serializers.MavenOutputSignatureSchema.Raw,
-    FernDefinition.MavenOutputSignatureSchema
+    GeneratorsYml.MavenOutputSignatureSchema
 > = core.serialization.object({
     keyId: core.serialization.string(),
     password: core.serialization.string(),

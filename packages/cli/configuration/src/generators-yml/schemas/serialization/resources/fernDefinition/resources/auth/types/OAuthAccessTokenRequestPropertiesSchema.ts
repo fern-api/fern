@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
 export const OAuthAccessTokenRequestPropertiesSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.OAuthAccessTokenRequestPropertiesSchema.Raw,
-    FernDefinition.fernDefinition.OAuthAccessTokenRequestPropertiesSchema
+    GeneratorsYml.fernDefinition.OAuthAccessTokenRequestPropertiesSchema
 > = core.serialization.object({
     "client-id": core.serialization.string().optional(),
     "client-secret": core.serialization.string().optional(),

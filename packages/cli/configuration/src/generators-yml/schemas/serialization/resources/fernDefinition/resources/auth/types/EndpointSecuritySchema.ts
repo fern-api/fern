@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { EndpointSecuritySchemaDetails } from "./EndpointSecuritySchemaDetails";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const EndpointSecuritySchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.EndpointSecuritySchema.Raw,
-    FernDefinition.fernDefinition.EndpointSecuritySchema
+    GeneratorsYml.fernDefinition.EndpointSecuritySchema
 > = core.serialization
     .object({
         "endpoint-security": EndpointSecuritySchemaDetails,
