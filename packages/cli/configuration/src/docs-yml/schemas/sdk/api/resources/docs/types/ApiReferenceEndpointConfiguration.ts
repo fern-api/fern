@@ -9,7 +9,7 @@ export interface ApiReferenceEndpointConfiguration
     endpoint: string;
     title?: string;
     slug?: string;
-    icon?: string;
+    icon?: FernDocsConfig.IconConfig;
     hidden?: boolean;
     availability?: FernDocsConfig.Availability;
     /** Settings for the api playground that affect this endpoint specifically. */

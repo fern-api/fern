@@ -7,6 +7,6 @@ import * as FernDocsConfig from "../../../index";
 export interface LinkConfiguration {
     link: string;
     href: string;
-    icon?: string;
+    icon?: FernDocsConfig.IconConfig;
     target?: FernDocsConfig.Target;
 }

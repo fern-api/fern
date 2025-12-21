@@ -21,18 +21,20 @@ export interface NavbarLinkConfig extends FernDocsConfig.WithViewers {
      * - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
      * - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
      * - **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `"<svg>...</svg>"`).
+     * You can also provide separate icons for light and dark modes using the object format with `light` and `dark` properties.
      */
-    icon?: string;
+    icon?: FernDocsConfig.IconConfig;
     /**
      * The icon to be used in the button. This icon will appear to the **right** of the text content.
      * Icons can be in three formats:
      * - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
      * - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
      * - **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `"<svg>...</svg>"`).
+     * You can also provide separate icons for light and dark modes using the object format with `light` and `dark` properties.
      *
      * By default, the `rightIcon` for a `filled` button is set to `arrow-right`.
      */
-    rightIcon?: string;
+    rightIcon?: FernDocsConfig.IconConfig;
     /** When `true`, the border radius of the button will be fully rounded. */
     rounded?: boolean;
 }

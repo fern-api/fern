@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.31.0
+  changelogEntry:
+    - summary: |
+        Add light/dark mode support for images and icons in docs.yml. All image and icon fields now accept either a simple string path or an object with separate `light` and `dark` properties for theme-specific assets.
+      type: feat
+  createdAt: "2025-12-21"
+  irVersion: 62
+
 - version: 3.30.0
   changelogEntry:
     - summary: |

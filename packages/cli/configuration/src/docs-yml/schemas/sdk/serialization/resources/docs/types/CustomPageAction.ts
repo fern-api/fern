@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { IconConfig } from "./IconConfig";
 
 export const CustomPageAction: core.serialization.ObjectSchema<
     serializers.CustomPageAction.Raw,
@@ -13,7 +14,7 @@ export const CustomPageAction: core.serialization.ObjectSchema<
     title: core.serialization.string(),
     subtitle: core.serialization.string().optional(),
     url: core.serialization.string(),
-    icon: core.serialization.string().optional(),
+    icon: IconConfig.optional(),
     default: core.serialization.boolean().optional(),
 });
 
@@ -22,7 +23,7 @@ export declare namespace CustomPageAction {
         title: string;
         subtitle?: string | null;
         url: string;
-        icon?: string | null;
+        icon?: IconConfig.Raw | null;
         default?: boolean | null;
     }
 }

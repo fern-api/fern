@@ -8,6 +8,6 @@ export interface ChangelogConfiguration extends FernDocsConfig.WithPermissions, 
     changelog: FernDocsConfig.ChangelogFolderRelativePath;
     title?: string;
     slug?: string;
-    icon?: string;
+    icon?: FernDocsConfig.IconConfig;
     hidden?: boolean;
 }

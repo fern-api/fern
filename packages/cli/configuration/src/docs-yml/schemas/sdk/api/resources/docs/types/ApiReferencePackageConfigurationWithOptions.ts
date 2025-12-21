@@ -12,7 +12,7 @@ export interface ApiReferencePackageConfigurationWithOptions
     contents?: FernDocsConfig.ApiReferenceLayoutItem[];
     availability?: FernDocsConfig.Availability;
     slug?: string;
-    icon?: string;
+    icon?: FernDocsConfig.IconConfig;
     hidden?: boolean;
     skipSlug?: boolean;
     /** Settings for the api playground that is applied only to descendants of this api package. */

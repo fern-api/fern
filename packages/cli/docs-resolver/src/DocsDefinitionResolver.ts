@@ -634,11 +634,11 @@ export class DocsDefinitionResolver {
                         links: navbarLink.links?.map((link) => ({
                             ...link,
                             url: DocsV1Write.Url(link.url),
-                            icon: this.resolveIconFileId(link.icon),
-                            rightIcon: this.resolveIconFileId(link.rightIcon)
+                            icon: this.resolveStringIconFileId(link.icon),
+                            rightIcon: this.resolveStringIconFileId(link.rightIcon)
                         })),
-                        icon: this.resolveIconFileId(navbarLink.icon),
-                        rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
+                        icon: this.resolveStringIconFileId(navbarLink.icon),
+                        rightIcon: this.resolveStringIconFileId(navbarLink.rightIcon)
                     };
                 }
 
@@ -652,8 +652,8 @@ export class DocsDefinitionResolver {
                 return {
                     ...navbarLink,
                     url: DocsV1Write.Url(navbarLink.url),
-                    icon: this.resolveIconFileId(navbarLink.icon),
-                    rightIcon: this.resolveIconFileId(navbarLink.rightIcon)
+                    icon: this.resolveStringIconFileId(navbarLink.icon),
+                    rightIcon: this.resolveStringIconFileId(navbarLink.rightIcon)
                 };
             }),
             typographyV2: this.convertDocsTypographyConfiguration(),
@@ -957,7 +957,7 @@ export class DocsDefinitionResolver {
                 hidden: undefined,
                 authed: undefined,
                 icon: this.resolveIconFileId(product.icon),
-                image: product.image != null ? this.getFileId(product.image) : undefined,
+                image: this.resolveThemedImageFileId(product.image),
                 pointsTo: undefined,
                 viewers: product.viewers,
                 orphaned: product.orphaned,
@@ -977,7 +977,7 @@ export class DocsDefinitionResolver {
                 hidden: undefined,
                 authed: undefined,
                 icon: this.resolveIconFileId(product.icon),
-                image: product.image != null ? this.getFileId(product.image) : undefined,
+                image: this.resolveThemedImageFileId(product.image),
                 viewers: product.viewers,
                 orphaned: product.orphaned
             };
@@ -1563,9 +1563,18 @@ export class DocsDefinitionResolver {
         return DocsV1Write.FileId(fileId);
     }
 
-    private resolveIconFileId(
-        iconPath: string | AbsoluteFilePath | undefined
-    ): DocsV1Write.FileId | string | undefined {
+    /**
+     * Resolves a ThemedIcon to a single icon value for use with FDR SDK types.
+     * If a themed icon is provided, prefers the light icon, then dark.
+     * This is a compatibility layer since FDR SDK types don't support themed icons yet.
+     */
+    private resolveIconFileId(themedIcon: docsYml.ThemedIcon | undefined): DocsV1Write.FileId | string | undefined {
+        if (themedIcon == null) {
+            return undefined;
+        }
+
+        // Prefer light icon, then dark
+        const iconPath = themedIcon.light ?? themedIcon.dark;
         if (iconPath == null) {
             return undefined;
         }
@@ -1575,6 +1584,41 @@ export class DocsDefinitionResolver {
         }
 
         return iconPath as string;
+    }
+
+    /**
+     * Resolves a string icon path to a file ID for use with FDR SDK types.
+     * This is used for navbar links which use FDR SDK types that expect string icons.
+     */
+    private resolveStringIconFileId(iconPath: string | undefined): DocsV1Write.FileId | string | undefined {
+        if (iconPath == null) {
+            return undefined;
+        }
+
+        if (this.collectedFileIds.has(iconPath as AbsoluteFilePath)) {
+            return `file:${this.getFileId(iconPath as AbsoluteFilePath)}`;
+        }
+
+        return iconPath;
+    }
+
+    /**
+     * Resolves a ThemedImage to a single file ID for use with FDR SDK types.
+     * If a themed image is provided, prefers the light image, then dark.
+     * This is a compatibility layer since FDR SDK types don't support themed images yet.
+     */
+    private resolveThemedImageFileId(themedImage: docsYml.ThemedImage | undefined): DocsV1Write.FileId | undefined {
+        if (themedImage == null) {
+            return undefined;
+        }
+
+        // Prefer light image, then dark
+        const imagePath = themedImage.light ?? themedImage.dark;
+        if (imagePath == null) {
+            return undefined;
+        }
+
+        return this.getFileId(imagePath);
     }
 
     private convertPageActions(): DocsV1Write.PageActionsConfig | undefined {

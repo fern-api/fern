@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { IconConfig } from "./IconConfig";
 import { Target } from "./Target";
 
 export const LinkConfiguration: core.serialization.ObjectSchema<
@@ -13,7 +14,7 @@ export const LinkConfiguration: core.serialization.ObjectSchema<
 > = core.serialization.object({
     link: core.serialization.string(),
     href: core.serialization.string(),
-    icon: core.serialization.string().optional(),
+    icon: IconConfig.optional(),
     target: Target.optional(),
 });
 
@@ -21,7 +22,7 @@ export declare namespace LinkConfiguration {
     export interface Raw {
         link: string;
         href: string;
-        icon?: string | null;
+        icon?: IconConfig.Raw | null;
         target?: Target.Raw | null;
     }
 }

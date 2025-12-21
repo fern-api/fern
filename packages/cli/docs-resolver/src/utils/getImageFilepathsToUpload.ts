@@ -2,19 +2,53 @@ import { docsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import path from "path";
 
-async function addIconToFilepaths({
+function addIconPathToFilepaths({
     iconPath,
     filepaths
 }: {
-    iconPath: string | AbsoluteFilePath;
+    iconPath: string | AbsoluteFilePath | undefined;
     filepaths: Set<AbsoluteFilePath>;
-}): Promise<void> {
+}): void {
     if (iconPath == null) {
         return;
     }
 
     if (typeof iconPath === "string" && path.isAbsolute(iconPath)) {
         filepaths.add(iconPath as AbsoluteFilePath);
+    }
+}
+
+async function addThemedIconToFilepaths({
+    themedIcon,
+    filepaths
+}: {
+    themedIcon: docsYml.ThemedIcon | undefined;
+    filepaths: Set<AbsoluteFilePath>;
+}): Promise<void> {
+    if (themedIcon == null) {
+        return;
+    }
+
+    addIconPathToFilepaths({ iconPath: themedIcon.dark, filepaths });
+    addIconPathToFilepaths({ iconPath: themedIcon.light, filepaths });
+}
+
+function addThemedImageToFilepaths({
+    themedImage,
+    filepaths
+}: {
+    themedImage: docsYml.ThemedImage | undefined;
+    filepaths: Set<AbsoluteFilePath>;
+}): void {
+    if (themedImage == null) {
+        return;
+    }
+
+    if (themedImage.dark != null) {
+        filepaths.add(themedImage.dark);
+    }
+    if (themedImage.light != null) {
+        filepaths.add(themedImage.light);
     }
 }
 
@@ -84,9 +118,7 @@ export async function collectFilesFromDocsConfig({
     /* product image files */
     if (parsedDocsConfig.navigation.type === "productgroup") {
         parsedDocsConfig.navigation.products.forEach((product) => {
-            if (product.image != null) {
-                filepaths.add(product.image);
-            }
+            addThemedImageToFilepaths({ themedImage: product.image, filepaths });
         });
     }
 
@@ -105,14 +137,14 @@ export async function collectFilesFromDocsConfig({
                 if (link.type === "dropdown") {
                     link.links.map(async (nestedLink) => {
                         if (nestedLink.icon) {
-                            await addIconToFilepaths({
+                            addIconPathToFilepaths({
                                 iconPath: nestedLink.icon,
                                 filepaths
                             });
                         }
 
                         if (nestedLink.rightIcon) {
-                            await addIconToFilepaths({
+                            addIconPathToFilepaths({
                                 iconPath: nestedLink.rightIcon,
                                 filepaths
                             });
@@ -122,14 +154,14 @@ export async function collectFilesFromDocsConfig({
 
                 if (link.type !== "github") {
                     if (link.icon) {
-                        await addIconToFilepaths({
+                        addIconPathToFilepaths({
                             iconPath: link.icon,
                             filepaths
                         });
                     }
 
                     if (link.rightIcon) {
-                        await addIconToFilepaths({
+                        addIconPathToFilepaths({
                             iconPath: link.rightIcon,
                             filepaths
                         });
@@ -150,12 +182,10 @@ export async function collectFilesFromDocsConfig({
     if (parsedDocsConfig.pageActions?.options?.custom != null) {
         await Promise.all(
             parsedDocsConfig.pageActions.options.custom.map(async (customAction) => {
-                if (customAction.icon != null) {
-                    await addIconToFilepaths({
-                        iconPath: customAction.icon,
-                        filepaths
-                    });
-                }
+                await addThemedIconToFilepaths({
+                    themedIcon: customAction.icon,
+                    filepaths
+                });
             })
         );
     }
@@ -184,12 +214,10 @@ async function collectIconsFromNavigation({
         case "tabbed":
             await Promise.all(
                 navigation.items.map(async (tab) => {
-                    if (tab.icon != null) {
-                        await addIconToFilepaths({
-                            iconPath: tab.icon,
-                            filepaths
-                        });
-                    }
+                    await addThemedIconToFilepaths({
+                        themedIcon: tab.icon,
+                        filepaths
+                    });
                     if (tab.child.type === "layout" && tab.child.layout != null) {
                         await Promise.all(
                             tab.child.layout.map((item) =>
@@ -203,14 +231,12 @@ async function collectIconsFromNavigation({
                         await Promise.all(
                             tab.child.variants.flatMap((variant) => {
                                 const promises: Promise<void>[] = [];
-                                if (variant.icon != null) {
-                                    promises.push(
-                                        addIconToFilepaths({
-                                            iconPath: variant.icon,
-                                            filepaths
-                                        })
-                                    );
-                                }
+                                promises.push(
+                                    addThemedIconToFilepaths({
+                                        themedIcon: variant.icon,
+                                        filepaths
+                                    })
+                                );
                                 promises.push(
                                     ...variant.layout.map((item) =>
                                         collectIconsFromNavigationItem({
@@ -245,12 +271,10 @@ async function collectIconsFromNavigation({
         case "productgroup":
             await Promise.all(
                 navigation.products.map(async (product) => {
-                    if (product.icon != null) {
-                        await addIconToFilepaths({
-                            iconPath: product.icon,
-                            filepaths
-                        });
-                    }
+                    await addThemedIconToFilepaths({
+                        themedIcon: product.icon,
+                        filepaths
+                    });
                     if (product.type === "internal") {
                         if (product.landingPage != null) {
                             await collectIconsFromNavigationItem({
@@ -281,20 +305,16 @@ async function collectIconsFromNavigationItem({
 }): Promise<void> {
     switch (item.type) {
         case "page":
-            if (item.icon != null) {
-                await addIconToFilepaths({
-                    iconPath: item.icon,
-                    filepaths
-                });
-            }
+            await addThemedIconToFilepaths({
+                themedIcon: item.icon,
+                filepaths
+            });
             break;
         case "section":
-            if (item.icon != null) {
-                await addIconToFilepaths({
-                    iconPath: item.icon,
-                    filepaths
-                });
-            }
+            await addThemedIconToFilepaths({
+                themedIcon: item.icon,
+                filepaths
+            });
             await Promise.all(
                 item.contents.map((contentItem) =>
                     collectIconsFromNavigationItem({
@@ -305,28 +325,22 @@ async function collectIconsFromNavigationItem({
             );
             break;
         case "apiSection":
-            if (item.icon != null) {
-                await addIconToFilepaths({
-                    iconPath: item.icon,
-                    filepaths
-                });
-            }
+            await addThemedIconToFilepaths({
+                themedIcon: item.icon,
+                filepaths
+            });
             break;
         case "link":
-            if (item.icon != null) {
-                await addIconToFilepaths({
-                    iconPath: item.icon,
-                    filepaths
-                });
-            }
+            await addThemedIconToFilepaths({
+                themedIcon: item.icon,
+                filepaths
+            });
             break;
         case "changelog":
-            if (item.icon != null) {
-                await addIconToFilepaths({
-                    iconPath: item.icon,
-                    filepaths
-                });
-            }
+            await addThemedIconToFilepaths({
+                themedIcon: item.icon,
+                filepaths
+            });
             break;
     }
 }

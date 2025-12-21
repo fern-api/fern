@@ -7,9 +7,9 @@ import * as FernDocsConfig from "../../../index";
 export interface ProductConfigBase extends FernDocsConfig.WithPermissions, FernDocsConfig.WithFeatureFlags {
     displayName: string;
     subtitle?: string;
-    icon?: string;
+    icon?: FernDocsConfig.IconConfig;
     /** The image to display in the product card. This will override the icon field if both are set. */
-    image?: string;
+    image?: FernDocsConfig.ImageConfig;
     versions?: FernDocsConfig.VersionConfig[];
     audiences?: FernDocsConfig.Audience;
 }

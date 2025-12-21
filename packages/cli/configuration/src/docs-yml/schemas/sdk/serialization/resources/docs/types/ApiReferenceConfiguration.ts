@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { Audience } from "./Audience";
 import { SnippetsConfiguration } from "./SnippetsConfiguration";
+import { IconConfig } from "./IconConfig";
 import { Availability } from "./Availability";
 import { PlaygroundSettings } from "./PlaygroundSettings";
 import { WithPermissions } from "./WithPermissions";
@@ -31,7 +32,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         summary: core.serialization.string().optional(),
         layout: core.serialization.list(core.serialization.lazy(() => serializers.ApiReferenceLayoutItem)).optional(),
         collapsed: core.serialization.boolean().optional(),
-        icon: core.serialization.string().optional(),
+        icon: IconConfig.optional(),
         slug: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
         availability: Availability.optional(),
@@ -57,7 +58,7 @@ export declare namespace ApiReferenceConfiguration {
         summary?: string | null;
         layout?: serializers.ApiReferenceLayoutItem.Raw[] | null;
         collapsed?: boolean | null;
-        icon?: string | null;
+        icon?: IconConfig.Raw | null;
         slug?: string | null;
         hidden?: boolean | null;
         availability?: Availability.Raw | null;

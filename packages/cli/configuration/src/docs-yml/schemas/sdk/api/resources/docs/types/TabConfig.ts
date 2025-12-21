@@ -6,7 +6,7 @@ import * as FernDocsConfig from "../../../index";
 
 export interface TabConfig extends FernDocsConfig.WithPermissions, FernDocsConfig.WithFeatureFlags {
     displayName: string;
-    icon?: string;
+    icon?: FernDocsConfig.IconConfig;
     slug?: string;
     skipSlug?: boolean;
     hidden?: boolean;

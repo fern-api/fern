@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { IconConfig } from "./IconConfig";
 import { Availability } from "./Availability";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
@@ -19,7 +20,7 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
         contents: core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem)),
         collapsed: core.serialization.boolean().optional(),
         slug: core.serialization.string().optional(),
-        icon: core.serialization.string().optional(),
+        icon: IconConfig.optional(),
         hidden: core.serialization.boolean().optional(),
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
         availability: Availability.optional(),
@@ -34,7 +35,7 @@ export declare namespace SectionConfiguration {
         contents: serializers.NavigationItem.Raw[];
         collapsed?: boolean | null;
         slug?: string | null;
-        icon?: string | null;
+        icon?: IconConfig.Raw | null;
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
         availability?: Availability.Raw | null;

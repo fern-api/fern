@@ -8,7 +8,7 @@ export interface PageConfiguration extends FernDocsConfig.WithPermissions, FernD
     page: string;
     path: string;
     slug?: string;
-    icon?: string;
+    icon?: FernDocsConfig.IconConfig;
     hidden?: boolean;
     noindex?: boolean;
     availability?: FernDocsConfig.Availability;

@@ -5,6 +5,8 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { IconConfig } from "./IconConfig";
+import { ImageConfig } from "./ImageConfig";
 import { VersionConfig } from "./VersionConfig";
 import { Audience } from "./Audience";
 import { WithPermissions } from "./WithPermissions";
@@ -17,8 +19,8 @@ export const ProductConfigBase: core.serialization.ObjectSchema<
     .object({
         displayName: core.serialization.property("display-name", core.serialization.string()),
         subtitle: core.serialization.string().optional(),
-        icon: core.serialization.string().optional(),
-        image: core.serialization.string().optional(),
+        icon: IconConfig.optional(),
+        image: ImageConfig.optional(),
         versions: core.serialization.list(VersionConfig).optional(),
         audiences: Audience.optional(),
     })
@@ -29,8 +31,8 @@ export declare namespace ProductConfigBase {
     export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         "display-name": string;
         subtitle?: string | null;
-        icon?: string | null;
-        image?: string | null;
+        icon?: IconConfig.Raw | null;
+        image?: ImageConfig.Raw | null;
         versions?: VersionConfig.Raw[] | null;
         audiences?: Audience.Raw | null;
     }
