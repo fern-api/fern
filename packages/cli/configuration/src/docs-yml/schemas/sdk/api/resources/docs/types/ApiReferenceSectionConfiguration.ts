@@ -14,7 +14,7 @@ export interface ApiReferenceSectionConfiguration
     summary?: string;
     contents?: FernDocsConfig.ApiReferenceLayoutItem[];
     slug?: string;
-    icon?: string;
+    icon?: FernDocsConfig.IconConfig;
     hidden?: boolean;
     skipSlug?: boolean;
     availability?: FernDocsConfig.Availability;

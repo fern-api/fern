@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { Target } from "./Target";
+import { IconConfig } from "./IconConfig";
 import { WithViewers } from "./WithViewers";
 
 export const NavbarLinkConfig: core.serialization.ObjectSchema<
@@ -17,8 +18,8 @@ export const NavbarLinkConfig: core.serialization.ObjectSchema<
         target: Target.optional(),
         url: core.serialization.string().optional(),
         text: core.serialization.string().optional(),
-        icon: core.serialization.string().optional(),
-        rightIcon: core.serialization.string().optional(),
+        icon: IconConfig.optional(),
+        rightIcon: IconConfig.optional(),
         rounded: core.serialization.boolean().optional(),
     })
     .extend(WithViewers);
@@ -29,8 +30,8 @@ export declare namespace NavbarLinkConfig {
         target?: Target.Raw | null;
         url?: string | null;
         text?: string | null;
-        icon?: string | null;
-        rightIcon?: string | null;
+        icon?: IconConfig.Raw | null;
+        rightIcon?: IconConfig.Raw | null;
         rounded?: boolean | null;
     }
 }

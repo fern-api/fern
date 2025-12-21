@@ -291,8 +291,8 @@ types:
         type: string
         docs: The URL to navigate to. Use {slug} as a placeholder for the current page slug, {domain} as a placeholder for the current domain, and {url} as a placeholder for the current full URL.
       icon:
-        type: optional<string>
-        docs: Icon to display for the custom action. Can be a relative filepath, an image URL (starting with http://, https://, or /), or a Font Awesome icon name (e.g., "fa-solid fa-star" or "star").
+        type: optional<IconConfig>
+        docs: Icon to display for the custom action. Can be a relative filepath, an image URL (starting with http://, https://, or /), or a Font Awesome icon name (e.g., "fa-solid fa-star" or "star"). You can also provide separate icons for light and dark modes using the object format with `light` and `dark` properties.
       default:
         type: optional<boolean>
         docs: Whether this custom action should be the default action.
@@ -351,7 +351,7 @@ types:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
       display-name: string
-      icon: optional<string>
+      icon: optional<IconConfig>
       slug: optional<string>
       skip-slug: optional<boolean>
       hidden: optional<boolean>
@@ -512,7 +512,7 @@ types:
     properties:
       title: string
       subtitle: optional<string>
-      icon: optional<string>
+      icon: optional<IconConfig>
       layout: list<NavigationItem>
       slug: optional<string>
       skip-slug: optional<boolean>
@@ -566,6 +566,52 @@ types:
       light:
         type: optional<string>
         docs: Relative filepath to the light-mode background image.
+
+  ImageConfig:
+    docs: |
+      Configuration for an image that can have different versions for light and dark modes.
+      Can be either a simple string path or an object with separate light/dark paths.
+    discriminated: false
+    union:
+      - string
+      - ImageThemedConfig
+
+  ImageThemedConfig:
+    properties:
+      dark:
+        type: optional<string>
+        docs: Relative filepath to the dark-mode image.
+      light:
+        type: optional<string>
+        docs: Relative filepath to the light-mode image.
+
+  IconConfig:
+    docs: |
+      Configuration for an icon that can have different versions for light and dark modes.
+      Can be either a simple string (Font Awesome icon name, relative path, or inline SVG) or an object with separate light/dark values.
+    discriminated: false
+    union:
+      - string
+      - IconThemedConfig
+
+  IconThemedConfig:
+    properties:
+      dark:
+        type: optional<string>
+        docs: |
+          The icon to use in dark mode.
+          Icons can be in three formats:
+          - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
+          - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
+          - **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `"<svg>...</svg>"`).
+      light:
+        type: optional<string>
+        docs: |
+          The icon to use in light mode.
+          Icons can be in three formats:
+          - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
+          - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
+          - **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `"<svg>...</svg>"`).
 
   DocsTypographyConfig:
     properties:
@@ -987,7 +1033,7 @@ types:
       page: string
       path: string
       slug: optional<string>
-      icon: optional<string>
+      icon: optional<IconConfig>
       hidden: optional<boolean>
       noindex: optional<boolean>
       availability: optional<Availability>
@@ -998,7 +1044,7 @@ types:
       changelog: ChangelogFolderRelativePath
       title: optional<string> # defaults to "Changelog"
       slug: optional<string>
-      icon: optional<string>
+      icon: optional<IconConfig>
       hidden: optional<boolean>
       # skip-slug: optional<boolean> # skip-slug is not needed for changelog
 
@@ -1013,7 +1059,7 @@ types:
       contents: list<NavigationItem>
       collapsed: optional<boolean>
       slug: optional<string>
-      icon: optional<string>
+      icon: optional<IconConfig>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       availability: optional<Availability>
@@ -1030,7 +1076,7 @@ types:
         docs: |
           The title to display for this folder section. If not provided, the folder name will be used.
       slug: optional<string>
-      icon: optional<string>
+      icon: optional<IconConfig>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       collapsed: optional<boolean>
@@ -1066,7 +1112,7 @@ types:
         docs: |
           Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
       collapsed: optional<boolean>
-      icon: optional<string>
+      icon: optional<IconConfig>
       slug: optional<string>
       hidden: optional<boolean>
       availability: optional<Availability>
@@ -1119,7 +1165,7 @@ types:
         docs: Relative path to the markdown file.
       contents: optional<list<ApiReferenceLayoutItem>>
       slug: optional<string>
-      icon: optional<string>
+      icon: optional<IconConfig>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       availability: optional<Availability>
@@ -1144,7 +1190,7 @@ types:
       contents: optional<list<ApiReferenceLayoutItem>>
       availability: optional<Availability>
       slug: optional<string>
-      icon: optional<string>
+      icon: optional<IconConfig>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       playground:
@@ -1157,7 +1203,7 @@ types:
       endpoint: string
       title: optional<string>
       slug: optional<string>
-      icon: optional<string>
+      icon: optional<IconConfig>
       hidden: optional<boolean>
       availability: optional<Availability>
       playground:
@@ -1168,7 +1214,7 @@ types:
     properties:
       link: string
       href: string
-      icon: optional<string>
+      icon: optional<IconConfig>
       target: optional<Target>
 
   VersionedSnippetLanguageConfiguration:
@@ -1297,8 +1343,8 @@ types:
     properties:
       links: list<NavbarLinkConfig>
       text: optional<string>
-      icon: optional<string>
-      rightIcon: optional<string>
+      icon: optional<IconConfig>
+      rightIcon: optional<IconConfig>
       rounded: optional<boolean>
 
   NavbarLinkConfig:
@@ -1318,21 +1364,23 @@ types:
         type: optional<string>
         docs: Text inside the button.
       icon:
-        type: optional<string>
+        type: optional<IconConfig>
         docs: |
           The icon to be used in the button. This icon will appear to the **left** of the text content.
           Icons can be in three formats:
           - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
           - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
           - **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `"<svg>...</svg>"`).
+          You can also provide separate icons for light and dark modes using the object format with `light` and `dark` properties.
       rightIcon:
-        type: optional<string>
+        type: optional<IconConfig>
         docs: |
           The icon to be used in the button. This icon will appear to the **right** of the text content.
           Icons can be in three formats:
           - **Font Awesome icons**: Use icon names like `fa-solid fa-rocket`. Pro and Brand Icons from Font Awesome are supported.
           - **Custom image files**: Use relative paths to image files (e.g., `./assets/icons/my-icon.svg` or `../assets/icons/my-icon.png`). Paths are relative to the `docs.yml` file.
           - **Inline SVG**: Provide an SVG string wrapped in quotes (e.g., `"<svg>...</svg>"`).
+          You can also provide separate icons for light and dark modes using the object format with `light` and `dark` properties.
 
           By default, the `rightIcon` for a `filled` button is set to `arrow-right`.
       rounded:
@@ -1665,9 +1713,9 @@ types:
     properties:
       display-name: string
       subtitle: optional<string>
-      icon: optional<string>
+      icon: optional<IconConfig>
       image:
-        type: optional<string>
+        type: optional<ImageConfig>
         docs: The image to display in the product card. This will override the icon field if both are set.
       versions: optional<list<VersionConfig>>
       audiences: optional<Audience>

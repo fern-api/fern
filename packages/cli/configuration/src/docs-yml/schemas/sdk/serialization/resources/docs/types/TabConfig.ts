@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { IconConfig } from "./IconConfig";
 import { Target } from "./Target";
 import { ChangelogFolderRelativePath } from "./ChangelogFolderRelativePath";
 import { WithPermissions } from "./WithPermissions";
@@ -14,7 +15,7 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
     core.serialization
         .object({
             displayName: core.serialization.property("display-name", core.serialization.string()),
-            icon: core.serialization.string().optional(),
+            icon: IconConfig.optional(),
             slug: core.serialization.string().optional(),
             skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
             hidden: core.serialization.boolean().optional(),
@@ -28,7 +29,7 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
 export declare namespace TabConfig {
     export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         "display-name": string;
-        icon?: string | null;
+        icon?: IconConfig.Raw | null;
         slug?: string | null;
         "skip-slug"?: boolean | null;
         hidden?: boolean | null;

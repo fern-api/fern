@@ -19,7 +19,7 @@ export interface ParsedCustomPageAction {
     title: string;
     subtitle: string | undefined;
     url: string;
-    icon: string | AbsoluteFilePath | undefined;
+    icon: ThemedIcon | undefined;
     default: boolean | undefined;
 }
 
@@ -131,6 +131,24 @@ export interface BackgroundImage {
     light: AbsoluteFilePath | undefined;
 }
 
+/**
+ * A themed image configuration that supports different images for light and dark modes.
+ * Used for product images and other image fields that need theme support.
+ */
+export interface ThemedImage {
+    dark: AbsoluteFilePath | undefined;
+    light: AbsoluteFilePath | undefined;
+}
+
+/**
+ * A themed icon configuration that supports different icons for light and dark modes.
+ * Icons can be Font Awesome names (strings), file paths, or inline SVGs.
+ */
+export interface ThemedIcon {
+    dark: string | AbsoluteFilePath | undefined;
+    light: string | AbsoluteFilePath | undefined;
+}
+
 export interface FontConfig {
     name: string | undefined;
     variants: FontVariant[];
@@ -207,8 +225,8 @@ export interface InternalProduct
     product: string;
     navigation: UnversionedNavigationConfiguration | VersionedDocsNavigation;
     slug: string | undefined;
-    icon: string | AbsoluteFilePath;
-    image: AbsoluteFilePath | undefined;
+    icon: ThemedIcon;
+    image: ThemedImage | undefined;
     announcement: AnnouncementConfig | undefined;
 }
 
@@ -219,8 +237,8 @@ export interface ExternalProduct
     subtitle: string | undefined;
     product: string;
     href: string | undefined;
-    icon: string | AbsoluteFilePath;
-    image: AbsoluteFilePath | undefined;
+    icon: ThemedIcon;
+    image: ThemedImage | undefined;
     target: Target | undefined;
 }
 
@@ -237,7 +255,7 @@ export interface TabbedNavigation
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
     // tab: string;
     title: string;
-    icon: string | AbsoluteFilePath | undefined;
+    icon: ThemedIcon | undefined;
     slug: string | undefined;
     skipUrlSlug: boolean | undefined;
     hidden: boolean | undefined;
@@ -278,7 +296,7 @@ export interface TabVariant
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
     title: string;
     subtitle: string | undefined;
-    icon: string | AbsoluteFilePath | undefined;
+    icon: ThemedIcon | undefined;
     layout: DocsNavigationItem[];
     slug: string | undefined;
     skipUrlSlug: boolean | undefined;
@@ -299,7 +317,7 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "page";
         title: string;
-        icon: string | AbsoluteFilePath | undefined;
+        icon: ThemedIcon | undefined;
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
         hidden: boolean | undefined;
@@ -312,7 +330,7 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "section";
         title: string;
-        icon: string | AbsoluteFilePath | undefined;
+        icon: ThemedIcon | undefined;
         contents: DocsNavigationItem[];
         collapsed: boolean | undefined;
         slug: string | undefined;
@@ -327,7 +345,7 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "apiSection";
         title: string;
-        icon: string | AbsoluteFilePath | undefined;
+        icon: ThemedIcon | undefined;
         apiName: string | undefined;
         openrpc: string | undefined;
         audiences: Audiences;
@@ -352,7 +370,7 @@ export declare namespace DocsNavigationItem {
         type: "link";
         text: string;
         url: string;
-        icon: string | AbsoluteFilePath | undefined;
+        icon: ThemedIcon | undefined;
         target: Target | undefined;
     }
 
@@ -362,7 +380,7 @@ export declare namespace DocsNavigationItem {
         type: "changelog";
         changelog: AbsoluteFilePath[];
         title: string;
-        icon: string | AbsoluteFilePath | undefined;
+        icon: ThemedIcon | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
     }
@@ -395,7 +413,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;
-        icon: string | AbsoluteFilePath | undefined;
+        icon: ThemedIcon | undefined;
         skipUrlSlug: boolean | undefined;
         availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
@@ -410,7 +428,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         contents: ParsedApiReferenceLayoutItem[];
         slug: string | undefined;
         hidden: boolean | undefined;
-        icon: string | AbsoluteFilePath | undefined;
+        icon: ThemedIcon | undefined;
         skipUrlSlug: boolean | undefined;
         availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
@@ -422,7 +440,7 @@ export declare namespace ParsedApiReferenceLayoutItem {
         type: "endpoint";
         endpoint: string; // endpoint locator
         title: string | undefined;
-        icon: string | AbsoluteFilePath | undefined;
+        icon: ThemedIcon | undefined;
         slug: string | undefined;
         hidden: boolean | undefined;
         availability: Availability | undefined;

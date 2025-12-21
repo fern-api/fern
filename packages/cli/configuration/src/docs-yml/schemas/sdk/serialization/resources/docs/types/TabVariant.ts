@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { IconConfig } from "./IconConfig";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
 
@@ -13,7 +14,7 @@ export const TabVariant: core.serialization.ObjectSchema<serializers.TabVariant.
         .object({
             title: core.serialization.string(),
             subtitle: core.serialization.string().optional(),
-            icon: core.serialization.string().optional(),
+            icon: IconConfig.optional(),
             layout: core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem)),
             slug: core.serialization.string().optional(),
             skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
@@ -27,7 +28,7 @@ export declare namespace TabVariant {
     export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         title: string;
         subtitle?: string | null;
-        icon?: string | null;
+        icon?: IconConfig.Raw | null;
         layout: serializers.NavigationItem.Raw[];
         slug?: string | null;
         "skip-slug"?: boolean | null;

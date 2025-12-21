@@ -10,7 +10,7 @@ export interface FolderConfiguration extends FernDocsConfig.WithPermissions, Fer
     /** The title to display for this folder section. If not provided, the folder name will be used. */
     title?: string;
     slug?: string;
-    icon?: string;
+    icon?: FernDocsConfig.IconConfig;
     hidden?: boolean;
     skipSlug?: boolean;
     collapsed?: boolean;

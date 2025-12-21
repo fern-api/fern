@@ -38,6 +38,81 @@ function resolveIconPath(
     return iconPath;
 }
 
+/**
+ * Resolves a themed icon configuration from the raw schema format.
+ * Handles both simple string icons and themed icon objects with light/dark variants.
+ */
+function resolveThemedIcon(
+    iconConfig: docsYml.RawSchemas.IconConfig | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): docsYml.ThemedIcon | undefined {
+    if (iconConfig == null) {
+        return undefined;
+    }
+
+    if (typeof iconConfig === "string") {
+        // Simple string icon - use same value for both light and dark
+        const resolvedIcon = resolveIconPath(iconConfig, absoluteFilepathToDocsConfig);
+        return {
+            dark: resolvedIcon,
+            light: resolvedIcon
+        };
+    }
+
+    // Themed icon object with light/dark variants
+    return {
+        dark: resolveIconPath(iconConfig.dark, absoluteFilepathToDocsConfig),
+        light: resolveIconPath(iconConfig.light, absoluteFilepathToDocsConfig)
+    };
+}
+
+/**
+ * Resolves a themed icon configuration with a default fallback value.
+ * Used for required icon fields like product icons.
+ */
+function resolveThemedIconWithDefault(
+    iconConfig: docsYml.RawSchemas.IconConfig | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath,
+    defaultIcon: string
+): docsYml.ThemedIcon {
+    const resolved = resolveThemedIcon(iconConfig, absoluteFilepathToDocsConfig);
+    if (resolved != null) {
+        return resolved;
+    }
+    return {
+        dark: defaultIcon,
+        light: defaultIcon
+    };
+}
+
+/**
+ * Resolves a themed image configuration from the raw schema format.
+ * Handles both simple string paths and themed image objects with light/dark variants.
+ */
+function resolveThemedImage(
+    imageConfig: docsYml.RawSchemas.ImageConfig | undefined,
+    absolutePathToFernFolder: AbsoluteFilePath
+): docsYml.ThemedImage | undefined {
+    if (imageConfig == null) {
+        return undefined;
+    }
+
+    if (typeof imageConfig === "string") {
+        // Simple string path - use same value for both light and dark
+        const resolvedImage = resolve(absolutePathToFernFolder, imageConfig);
+        return {
+            dark: resolvedImage,
+            light: resolvedImage
+        };
+    }
+
+    // Themed image object with light/dark variants
+    return {
+        dark: imageConfig.dark != null ? resolve(absolutePathToFernFolder, imageConfig.dark) : undefined,
+        light: imageConfig.light != null ? resolve(absolutePathToFernFolder, imageConfig.light) : undefined
+    };
+}
+
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
     absolutePathToFernFolder,
@@ -373,7 +448,7 @@ function convertCustomPageAction(
         title: customAction.title,
         subtitle: customAction.subtitle,
         url: customAction.url,
-        icon: resolveIconPath(customAction.icon, absoluteFilepathToDocsConfig),
+        icon: resolveThemedIcon(customAction.icon, absoluteFilepathToDocsConfig),
         default: customAction.default
     };
 }
@@ -558,8 +633,7 @@ async function getNavigationConfiguration({
     } else if (products != null) {
         const productNavbars: docsYml.ProductInfo[] = [];
         for (const product of products) {
-            const productImageFile =
-                product.image != null ? resolve(absolutePathToFernFolder, product.image) : undefined;
+            const productImage = resolveThemedImage(product.image, absolutePathToFernFolder);
 
             if ("path" in product) {
                 let navigation: docsYml.DocsNavigationConfiguration;
@@ -603,8 +677,8 @@ async function getNavigationConfiguration({
                     navigation,
                     slug: product.slug,
                     subtitle: product.subtitle,
-                    icon: resolveIconPath(product.icon, absolutePathToConfig) || "fa-solid fa-code",
-                    image: productImageFile,
+                    icon: resolveThemedIconWithDefault(product.icon, absolutePathToConfig, "fa-solid fa-code"),
+                    image: productImage,
                     viewers: parseRoles(product.viewers),
                     orphaned: product.orphaned,
                     featureFlags: convertFeatureFlag(product.featureFlag),
@@ -617,8 +691,8 @@ async function getNavigationConfiguration({
                     href: product.href,
                     target: product.target,
                     subtitle: product.subtitle,
-                    icon: resolveIconPath(product.icon, absolutePathToConfig) || "fa-solid fa-code",
-                    image: productImageFile,
+                    icon: resolveThemedIconWithDefault(product.icon, absolutePathToConfig, "fa-solid fa-code"),
+                    image: productImage,
                     viewers: parseRoles(product.viewers),
                     orphaned: product.orphaned,
                     featureFlags: convertFeatureFlag(product.featureFlag)
@@ -810,7 +884,7 @@ async function convertNavigationTabConfiguration({
                 return {
                     title: variant.title,
                     subtitle: variant.subtitle,
-                    icon: resolveIconPath(variant.icon, absolutePathToConfig),
+                    icon: resolveThemedIcon(variant.icon, absolutePathToConfig),
                     layout,
                     slug: variant.slug,
                     skipUrlSlug: variant.skipSlug,
@@ -824,7 +898,7 @@ async function convertNavigationTabConfiguration({
         );
         return {
             title: tab.displayName,
-            icon: resolveIconPath(tab.icon, absolutePathToConfig),
+            icon: resolveThemedIcon(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -846,7 +920,7 @@ async function convertNavigationTabConfiguration({
         );
         return {
             title: tab.displayName,
-            icon: resolveIconPath(tab.icon, absolutePathToConfig),
+            icon: resolveThemedIcon(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -863,7 +937,7 @@ async function convertNavigationTabConfiguration({
     if (tab.href != null) {
         return {
             title: tab.displayName,
-            icon: resolveIconPath(tab.icon, absolutePathToConfig),
+            icon: resolveThemedIcon(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -881,7 +955,7 @@ async function convertNavigationTabConfiguration({
     if (tab.changelog != null) {
         return {
             title: tab.displayName,
-            icon: resolveIconPath(tab.icon, absolutePathToConfig),
+            icon: resolveThemedIcon(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
@@ -999,7 +1073,7 @@ async function convertNavigationItem({
         return {
             type: "section",
             title: rawConfig.section,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            icon: resolveThemedIcon(rawConfig.icon, absolutePathToConfig),
             contents: await Promise.all(
                 rawConfig.contents.map((item) =>
                     convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
@@ -1021,7 +1095,7 @@ async function convertNavigationItem({
             type: "apiSection",
             openrpc: rawConfig.openrpc,
             title: rawConfig.api,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            icon: resolveThemedIcon(rawConfig.icon, absolutePathToConfig),
             apiName: rawConfig.apiName ?? undefined,
             audiences:
                 rawConfig.audiences != null
@@ -1056,7 +1130,7 @@ async function convertNavigationItem({
             type: "link",
             text: rawConfig.link,
             url: rawConfig.href,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            icon: resolveThemedIcon(rawConfig.icon, absolutePathToConfig),
             target: rawConfig.target
         };
     }
@@ -1065,7 +1139,7 @@ async function convertNavigationItem({
             type: "changelog",
             changelog: await listFiles(resolveFilepath(rawConfig.changelog, absolutePathToConfig), "{md,mdx}"),
             hidden: rawConfig.hidden ?? false,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            icon: resolveThemedIcon(rawConfig.icon, absolutePathToConfig),
             title: rawConfig.title ?? DEFAULT_CHANGELOG_TITLE,
             slug: rawConfig.slug,
             viewers: parseRoles(rawConfig.viewers),
@@ -1130,7 +1204,7 @@ function parseApiReferenceLayoutItem(
                 type: "link",
                 text: item.link,
                 url: item.href,
-                icon: resolveIconPath(item.icon, absolutePathToConfig),
+                icon: resolveThemedIcon(item.icon, absolutePathToConfig),
                 target: item.target
             }
         ];
@@ -1147,7 +1221,7 @@ function parseApiReferenceLayoutItem(
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
                 availability: item.availability,
-                icon: resolveIconPath(item.icon, absolutePathToConfig),
+                icon: resolveThemedIcon(item.icon, absolutePathToConfig),
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
                 orphaned: item.orphaned,
@@ -1160,7 +1234,7 @@ function parseApiReferenceLayoutItem(
                 type: "endpoint",
                 endpoint: item.endpoint,
                 title: item.title,
-                icon: resolveIconPath(item.icon, absolutePathToConfig),
+                icon: resolveThemedIcon(item.icon, absolutePathToConfig),
                 slug: item.slug,
                 hidden: item.hidden,
                 availability: item.availability,
@@ -1183,7 +1257,7 @@ function parseApiReferenceLayoutItem(
                 slug: value.slug,
                 hidden: value.hidden,
                 skipUrlSlug: value.skipSlug,
-                icon: resolveIconPath(value.icon, absolutePathToConfig),
+                icon: resolveThemedIcon(value.icon, absolutePathToConfig),
                 playground: value.playground,
                 availability: value.availability,
                 viewers: parseRoles(value.viewers),

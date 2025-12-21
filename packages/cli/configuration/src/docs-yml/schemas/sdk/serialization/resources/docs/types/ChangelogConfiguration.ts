@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { ChangelogFolderRelativePath } from "./ChangelogFolderRelativePath";
+import { IconConfig } from "./IconConfig";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
 
@@ -17,7 +18,7 @@ export const ChangelogConfiguration: core.serialization.ObjectSchema<
         changelog: ChangelogFolderRelativePath,
         title: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
-        icon: core.serialization.string().optional(),
+        icon: IconConfig.optional(),
         hidden: core.serialization.boolean().optional(),
     })
     .extend(WithPermissions)
@@ -28,7 +29,7 @@ export declare namespace ChangelogConfiguration {
         changelog: ChangelogFolderRelativePath.Raw;
         title?: string | null;
         slug?: string | null;
-        icon?: string | null;
+        icon?: IconConfig.Raw | null;
         hidden?: boolean | null;
     }
 }

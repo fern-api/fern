@@ -7,7 +7,7 @@ import * as FernDocsConfig from "../../../index";
 export interface NavbarDropdownConfig extends FernDocsConfig.WithViewers {
     links: FernDocsConfig.NavbarLinkConfig[];
     text?: string;
-    icon?: string;
-    rightIcon?: string;
+    icon?: FernDocsConfig.IconConfig;
+    rightIcon?: FernDocsConfig.IconConfig;
     rounded?: boolean;
 }

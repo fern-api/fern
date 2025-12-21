@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { IconConfig } from "./IconConfig";
 import { Availability } from "./Availability";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
@@ -17,7 +18,7 @@ export const FolderConfiguration: core.serialization.ObjectSchema<
         folder: core.serialization.string(),
         title: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
-        icon: core.serialization.string().optional(),
+        icon: IconConfig.optional(),
         hidden: core.serialization.boolean().optional(),
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
         collapsed: core.serialization.boolean().optional(),
@@ -31,7 +32,7 @@ export declare namespace FolderConfiguration {
         folder: string;
         title?: string | null;
         slug?: string | null;
-        icon?: string | null;
+        icon?: IconConfig.Raw | null;
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
         collapsed?: boolean | null;

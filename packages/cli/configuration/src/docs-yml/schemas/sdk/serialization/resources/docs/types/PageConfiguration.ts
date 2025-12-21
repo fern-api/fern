@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { IconConfig } from "./IconConfig";
 import { Availability } from "./Availability";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
@@ -17,7 +18,7 @@ export const PageConfiguration: core.serialization.ObjectSchema<
         page: core.serialization.string(),
         path: core.serialization.string(),
         slug: core.serialization.string().optional(),
-        icon: core.serialization.string().optional(),
+        icon: IconConfig.optional(),
         hidden: core.serialization.boolean().optional(),
         noindex: core.serialization.boolean().optional(),
         availability: Availability.optional(),
@@ -30,7 +31,7 @@ export declare namespace PageConfiguration {
         page: string;
         path: string;
         slug?: string | null;
-        icon?: string | null;
+        icon?: IconConfig.Raw | null;
         hidden?: boolean | null;
         noindex?: boolean | null;
         availability?: Availability.Raw | null;

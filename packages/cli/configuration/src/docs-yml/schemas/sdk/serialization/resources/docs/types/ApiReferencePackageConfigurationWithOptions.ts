@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { Availability } from "./Availability";
+import { IconConfig } from "./IconConfig";
 import { PlaygroundSettings } from "./PlaygroundSettings";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
@@ -20,7 +21,7 @@ export const ApiReferencePackageConfigurationWithOptions: core.serialization.Obj
         contents: core.serialization.list(core.serialization.lazy(() => serializers.ApiReferenceLayoutItem)).optional(),
         availability: Availability.optional(),
         slug: core.serialization.string().optional(),
-        icon: core.serialization.string().optional(),
+        icon: IconConfig.optional(),
         hidden: core.serialization.boolean().optional(),
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
         playground: PlaygroundSettings.optional(),
@@ -35,7 +36,7 @@ export declare namespace ApiReferencePackageConfigurationWithOptions {
         contents?: serializers.ApiReferenceLayoutItem.Raw[] | null;
         availability?: Availability.Raw | null;
         slug?: string | null;
-        icon?: string | null;
+        icon?: IconConfig.Raw | null;
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
         playground?: PlaygroundSettings.Raw | null;

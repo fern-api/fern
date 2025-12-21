@@ -11,7 +11,7 @@ export interface SectionConfiguration extends FernDocsConfig.WithPermissions, Fe
     contents: FernDocsConfig.NavigationItem[];
     collapsed?: boolean;
     slug?: string;
-    icon?: string;
+    icon?: FernDocsConfig.IconConfig;
     hidden?: boolean;
     skipSlug?: boolean;
     availability?: FernDocsConfig.Availability;
