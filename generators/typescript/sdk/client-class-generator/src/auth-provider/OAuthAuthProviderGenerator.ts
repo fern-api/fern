@@ -663,7 +663,19 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                         context.coreUtilities.auth.AuthRequest._getReferenceToType()
                     ])
                 ),
-                statements: `
+                statements: this.neverThrowErrors
+                    ? `
+        ${tokenAccessCode}
+        if (token == null) {
+            return { headers: {} };
+        }
+        return {
+            headers: {
+                Authorization: \`Bearer \${await core.EndpointSupplier.get(token, { endpointMetadata })}\`
+            }
+        };
+        `
+                    : `
         ${tokenAccessCode}
         if (token == null) {
             throw new ${getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression())}({
@@ -727,14 +739,39 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private generateClientIdSupplierStatements(clientIdEnvVar: string | undefined, context: SdkContext): string {
-        const errorConstructor = getTextOfTsNode(
-            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
-        );
-
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
-        if (clientIdEnvVar != null) {
+        if (this.neverThrowErrors) {
+            // When neverThrowErrors is true, return empty string if client ID is missing
+            if (clientIdEnvVar != null) {
+                return `
+        const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_ID_PARAM];
+        if (supplier != null) {
+            return core.EndpointSupplier.get(supplier, { endpointMetadata });
+        }
+        const envClientId = process.env?.[ENV_CLIENT_ID];
+        if (envClientId != null) {
+            return envClientId;
+        }
+        return "";
+                `;
+            }
+
             return `
+        const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_ID_PARAM];
+        if (supplier == null) {
+            return "";
+        }
+        return core.EndpointSupplier.get(supplier, { endpointMetadata });
+            `;
+        } else {
+            // When neverThrowErrors is false, throw an error if client ID is missing
+            const errorConstructor = getTextOfTsNode(
+                context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+            );
+
+            if (clientIdEnvVar != null) {
+                return `
         const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_ID_PARAM];
         if (supplier != null) {
             return core.EndpointSupplier.get(supplier, { endpointMetadata });
@@ -746,10 +783,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         throw new ${errorConstructor}({
             message: CLIENT_ID_REQUIRED_ERROR_MESSAGE,
         });
-            `;
-        }
+                `;
+            }
 
-        return `
+            return `
         const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_ID_PARAM];
         if (supplier == null) {
             throw new ${errorConstructor}({
@@ -757,21 +794,47 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             });
         }
         return core.EndpointSupplier.get(supplier, { endpointMetadata });
-        `;
+            `;
+        }
     }
 
     private generateClientSecretSupplierStatements(
         clientSecretEnvVar: string | undefined,
         context: SdkContext
     ): string {
-        const errorConstructor = getTextOfTsNode(
-            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
-        );
-
         const wrapperAccess = this.keepIfWrapper("[WRAPPER_PROPERTY]?.");
 
-        if (clientSecretEnvVar != null) {
+        if (this.neverThrowErrors) {
+            // When neverThrowErrors is true, return empty string if client secret is missing
+            if (clientSecretEnvVar != null) {
+                return `
+        const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_SECRET_PARAM];
+        if (supplier != null) {
+            return core.EndpointSupplier.get(supplier, { endpointMetadata });
+        }
+        const envClientSecret = process.env?.[ENV_CLIENT_SECRET];
+        if (envClientSecret != null) {
+            return envClientSecret;
+        }
+        return "";
+                `;
+            }
+
             return `
+        const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_SECRET_PARAM];
+        if (supplier == null) {
+            return "";
+        }
+        return core.EndpointSupplier.get(supplier, { endpointMetadata });
+            `;
+        } else {
+            // When neverThrowErrors is false, throw an error if client secret is missing
+            const errorConstructor = getTextOfTsNode(
+                context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+            );
+
+            if (clientSecretEnvVar != null) {
+                return `
         const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_SECRET_PARAM];
         if (supplier != null) {
             return core.EndpointSupplier.get(supplier, { endpointMetadata });
@@ -783,10 +846,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         throw new ${errorConstructor}({
             message: CLIENT_SECRET_REQUIRED_ERROR_MESSAGE,
         });
-            `;
-        }
+                `;
+            }
 
-        return `
+            return `
         const supplier = this.${OPTIONS_FIELD_NAME}${wrapperAccess}[CLIENT_SECRET_PARAM];
         if (supplier == null) {
             throw new ${errorConstructor}({
@@ -794,7 +857,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             });
         }
         return core.EndpointSupplier.get(supplier, { endpointMetadata });
-        `;
+            `;
+        }
     }
 
     private getName(name: FernIr.Name | FernIr.NameAndWireValue): string {

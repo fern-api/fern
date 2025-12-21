@@ -32,6 +32,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.HeaderAuthScheme;
+    private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;
     private readonly shouldUseWrapper: boolean;
     private readonly keepIfWrapper: (str: string) => string;
@@ -39,6 +40,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     constructor(init: HeaderAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
+        this.neverThrowErrors = init.neverThrowErrors;
         this.isAuthMandatory = init.isAuthMandatory;
         this.shouldUseWrapper = init.shouldUseWrapper;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
@@ -234,9 +236,6 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     private generateGetAuthRequestStatements(context: SdkContext): string {
         const headerVar = "headerValue"; // Always use 'headerValue' as the variable name
         const headerEnvVar = this.authScheme.headerEnvVar;
-        const errorConstructor = getTextOfTsNode(
-            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
-        );
 
         // Build property access chain based on keepIfWrapper
         const thisOptionsAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "options");
@@ -272,7 +271,25 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                 ? `\n            (${supplierGetCode}) ??\n            process.env?.[ENV_HEADER_KEY]`
                 : supplierGetCode;
 
-        return `
+        if (this.neverThrowErrors) {
+            // When neverThrowErrors is true, return empty headers if header value is missing
+            return `
+        const ${headerVar} = ${envFallback};
+        if (${headerVar} == null) {
+            return { headers: {} };
+        }
+
+        return {
+            headers: { [HEADER_NAME]: ${headerVar} },
+        };
+        `;
+        } else {
+            // When neverThrowErrors is false, throw an error if header value is missing
+            const errorConstructor = getTextOfTsNode(
+                context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+            );
+
+            return `
         const ${headerVar} = ${envFallback};
         if (${headerVar} == null) {
             throw new ${errorConstructor}({
@@ -284,6 +301,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
             headers: { [HEADER_NAME]: ${headerVar} },
         };
         `;
+        }
     }
 
     private writeOptions(context: SdkContext): void {

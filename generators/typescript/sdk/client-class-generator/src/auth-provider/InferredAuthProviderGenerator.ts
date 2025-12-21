@@ -25,6 +25,7 @@ export declare namespace InferredAuthProviderGenerator {
     export interface Init {
         ir: FernIr.IntermediateRepresentation;
         authScheme: FernIr.InferredAuthScheme;
+        neverThrowErrors: boolean;
         shouldUseWrapper: boolean;
     }
 }
@@ -50,6 +51,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly GET_AUTH_REQUEST_METHOD_NAME = GET_AUTH_REQUEST_METHOD_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.InferredAuthScheme;
+    private readonly neverThrowErrors: boolean;
     private readonly packageId: PackageId;
     private readonly endpoint: FernIr.HttpEndpoint;
     private readonly shouldUseWrapper: boolean;
@@ -58,6 +60,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     constructor(init: InferredAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
+        this.neverThrowErrors = init.neverThrowErrors;
         this.shouldUseWrapper = init.shouldUseWrapper ?? false;
         this.keepIfWrapper = this.shouldUseWrapper ? (str: string) => str : () => "";
         this.packageId = init.authScheme.tokenEndpoint.endpoint.subpackageId
@@ -188,7 +191,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         }
 
         // Add helper function for throwing required auth param errors
-        if (this.shouldUseWrapper) {
+        if (this.shouldUseWrapper && !this.neverThrowErrors) {
             const errorConstructor = getTextOfTsNode(
                 context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
             );
@@ -397,7 +400,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
 
         if (this.shouldUseWrapper) {
             // Generate: const paramName = await core.Supplier.get(this.options[WRAPPER_PROPERTY]?.paramName);
-            // Generate: if(paramName == null) { throwRequiredAuthParamErrorMessage("\${WRAPPER_PROPERTY}.paramName"); }
+            // Generate: if(paramName == null) { throwRequiredAuthParamErrorMessage("\${WRAPPER_PROPERTY}.paramName"); } OR return early
             for (const p of requestProperties) {
                 const varName = p.safeName;
                 parameterStatements.push(
@@ -405,9 +408,15 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                 );
 
                 if (!p.isOptional) {
-                    parameterStatements.push(
-                        `if(${varName} == null) {\n    throwRequiredAuthParamErrorMessage(\`\${WRAPPER_PROPERTY}.${p.safeName}\`);\n}`
-                    );
+                    if (this.neverThrowErrors) {
+                        // When neverThrowErrors is true, return undefined to skip auth
+                        parameterStatements.push(`if(${varName} == null) {\n    return undefined;\n}`);
+                    } else {
+                        // When neverThrowErrors is false, throw an error
+                        parameterStatements.push(
+                            `if(${varName} == null) {\n    throwRequiredAuthParamErrorMessage(\`\${WRAPPER_PROPERTY}.${p.safeName}\`);\n}`
+                        );
+                    }
                 }
             }
         }

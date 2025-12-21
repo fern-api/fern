@@ -8,9 +8,9 @@ import * as errors from "../errors/index.js";
 const CLIENT_ID_PARAM = "clientId" as const;
 const CLIENT_SECRET_PARAM = "clientSecret" as const;
 const TOKEN_PARAM = "token" as const;
-const CLIENT_ID_REQUIRED_ERROR_MESSAGE = `${CLIENT_ID_PARAM} is required` as const;
-const CLIENT_SECRET_REQUIRED_ERROR_MESSAGE = `${CLIENT_SECRET_PARAM} is required` as const;
-const TOKEN_PARAM_REQUIRED_ERROR_MESSAGE = `${TOKEN_PARAM} is required. Please provide it in options.` as const;
+const _CLIENT_ID_REQUIRED_ERROR_MESSAGE = `${CLIENT_ID_PARAM} is required` as const;
+const _CLIENT_SECRET_REQUIRED_ERROR_MESSAGE = `${CLIENT_SECRET_PARAM} is required` as const;
+const _TOKEN_PARAM_REQUIRED_ERROR_MESSAGE = `${TOKEN_PARAM} is required. Please provide it in options.` as const;
 const BUFFER_IN_MINUTES = 2 as const;
 
 export class OAuthAuthProvider implements core.AuthProvider {
@@ -37,9 +37,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
     } = {}): Promise<string> {
         const supplier = this.options[CLIENT_ID_PARAM];
         if (supplier == null) {
-            throw new errors.SeedOauthClientCredentialsError({
-                message: CLIENT_ID_REQUIRED_ERROR_MESSAGE,
-            });
+            return "";
         }
         return core.EndpointSupplier.get(supplier, { endpointMetadata });
     }
@@ -51,9 +49,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
     } = {}): Promise<string> {
         const supplier = this.options[CLIENT_SECRET_PARAM];
         if (supplier == null) {
-            throw new errors.SeedOauthClientCredentialsError({
-                message: CLIENT_SECRET_REQUIRED_ERROR_MESSAGE,
-            });
+            return "";
         }
         return core.EndpointSupplier.get(supplier, { endpointMetadata });
     }
@@ -131,9 +127,7 @@ export class OAuthTokenOverrideAuthProvider implements core.AuthProvider {
     } = {}): Promise<core.AuthRequest> {
         const token = this.options[TOKEN_PARAM];
         if (token == null) {
-            throw new errors.SeedOauthClientCredentialsError({
-                message: TOKEN_PARAM_REQUIRED_ERROR_MESSAGE,
-            });
+            return { headers: {} };
         }
         return {
             headers: {

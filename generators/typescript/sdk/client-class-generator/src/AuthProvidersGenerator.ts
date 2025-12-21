@@ -47,6 +47,7 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
                     return new InferredAuthProviderGenerator({
                         ir,
                         authScheme,
+                        neverThrowErrors,
                         shouldUseWrapper
                     });
                 case "basic":

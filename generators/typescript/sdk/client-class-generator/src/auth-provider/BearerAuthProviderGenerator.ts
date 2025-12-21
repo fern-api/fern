@@ -5,10 +5,10 @@ import {
     type OptionalKind,
     type PropertySignatureStructure,
     Scope,
-    StatementStructures,
+    type StatementStructures,
     StructureKind,
     ts,
-    WriterFunction
+    type WriterFunction
 } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator";
@@ -32,6 +32,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.BearerAuthScheme;
+    private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;
     private readonly shouldUseWrapper: boolean;
     private readonly keepIfWrapper: (str: string) => string;
@@ -39,6 +40,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     constructor(init: BearerAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
+        this.neverThrowErrors = init.neverThrowErrors;
         this.isAuthMandatory = init.isAuthMandatory;
         this.shouldUseWrapper = init.shouldUseWrapper;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
@@ -232,9 +234,6 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     private generateGetAuthRequestStatements(context: SdkContext): string {
         const tokenVar = this.authScheme.token.camelCase.unsafeName;
         const tokenEnvVar = this.authScheme.tokenEnvVar;
-        const errorConstructor = getTextOfTsNode(
-            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
-        );
 
         // Build property access chain based on shouldUseWrapper
         const thisOptionsAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "options");
@@ -270,7 +269,25 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                 ? `\n            (${supplierGetCode}) ??\n            process.env?.[ENV_TOKEN]`
                 : supplierGetCode;
 
-        return `
+        if (this.neverThrowErrors) {
+            // When neverThrowErrors is true, return empty headers if token is missing
+            return `
+        const ${tokenVar} = ${envFallback};
+        if (${tokenVar} == null) {
+            return { headers: {} };
+        }
+
+        return {
+            headers: { Authorization: \`Bearer \${${tokenVar}}\` },
+        };
+        `;
+        } else {
+            // When neverThrowErrors is false, throw an error if token is missing
+            const errorConstructor = getTextOfTsNode(
+                context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+            );
+
+            return `
         const ${tokenVar} = ${envFallback};
         if (${tokenVar} == null) {
             throw new ${errorConstructor}({
@@ -282,6 +299,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
             headers: { Authorization: \`Bearer \${${tokenVar}}\` },
         };
         `;
+        }
     }
 
     private writeOptions(context: SdkContext): void {

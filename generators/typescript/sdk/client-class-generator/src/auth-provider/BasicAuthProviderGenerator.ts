@@ -32,6 +32,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.BasicAuthScheme;
+    private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;
     private readonly shouldUseWrapper: boolean;
     private readonly keepIfWrapper: (str: string) => string;
@@ -39,6 +40,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     constructor(init: BasicAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
+        this.neverThrowErrors = init.neverThrowErrors;
         this.isAuthMandatory = init.isAuthMandatory;
         this.shouldUseWrapper = init.shouldUseWrapper;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
@@ -259,9 +261,6 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const passwordVar = this.authScheme.password.camelCase.unsafeName;
         const usernameEnvVar = this.authScheme.usernameEnvVar;
         const passwordEnvVar = this.authScheme.passwordEnvVar;
-        const errorConstructor = getTextOfTsNode(
-            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
-        );
 
         // Build property access chain based on shouldUseWrapper
         const thisOptionsAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "options");
@@ -319,7 +318,37 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                 ? `\n            (${passwordSupplierGetCode}) ??\n            process.env?.[ENV_PASSWORD]`
                 : passwordSupplierGetCode;
 
-        return `
+        if (this.neverThrowErrors) {
+            // When neverThrowErrors is true, return empty headers if credentials are missing
+            return `
+        const ${usernameVar} = ${usernameEnvFallback};
+        if (${usernameVar} == null) {
+            return { headers: {} };
+        }
+
+        const ${passwordVar} = ${passwordEnvFallback};
+        if (${passwordVar} == null) {
+            return { headers: {} };
+        }
+
+        const authHeader = ${getTextOfTsNode(
+            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                ts.factory.createIdentifier(usernameVar),
+                ts.factory.createIdentifier(passwordVar)
+            )
+        )};
+
+        return {
+            headers: authHeader != null ? { Authorization: authHeader } : {},
+        };
+        `;
+        } else {
+            // When neverThrowErrors is false, throw an error if credentials are missing
+            const errorConstructor = getTextOfTsNode(
+                context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+            );
+
+            return `
         const ${usernameVar} = ${usernameEnvFallback};
         if (${usernameVar} == null) {
             throw new ${errorConstructor}({
@@ -345,6 +374,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
             headers: authHeader != null ? { Authorization: authHeader } : {},
         };
         `;
+        }
     }
 
     private writeOptions(context: SdkContext): void {
