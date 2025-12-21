@@ -733,9 +733,7 @@ export class DocsDefinitionResolver {
             colors: undefined,
             colorsV2: undefined,
             typography: undefined,
-            backgroundImage: undefined,
-            header: undefined,
-            footer: undefined
+            backgroundImage: undefined
         };
         return config;
     }
