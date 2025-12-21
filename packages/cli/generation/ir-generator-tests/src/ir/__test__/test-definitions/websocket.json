@@ -1794,7 +1794,7 @@
                         "docs": null
                     },
                     "displayName": "Send2",
-                    "methodName": null,
+                    "methodName": "custom_send",
                     "availability": null,
                     "docs": null
                 },

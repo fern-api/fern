@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const GithubLicenseType: core.serialization.Schema<
     serializers.GithubLicenseType.Raw,
-    FernDefinition.GithubLicenseType
+    GeneratorsYml.GithubLicenseType
 > = core.serialization.enum_(["MIT", "Apache-2.0"]);
 
 export declare namespace GithubLicenseType {

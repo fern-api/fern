@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ModelProvider: core.serialization.Schema<serializers.ModelProvider.Raw, FernDefinition.ModelProvider> =
+export const ModelProvider: core.serialization.Schema<serializers.ModelProvider.Raw, GeneratorsYml.ModelProvider> =
     core.serialization.enum_(["openai", "anthropic", "bedrock"]);
 
 export declare namespace ModelProvider {

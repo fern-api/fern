@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Language: core.serialization.Schema<serializers.Language.Raw, FernDefinition.Language> =
+export const Language: core.serialization.Schema<serializers.Language.Raw, GeneratorsYml.Language> =
     core.serialization.enum_(["java", "python", "go", "ruby", "csharp", "typescript", "php", "rust", "swift"]);
 
 export declare namespace Language {

@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const ApiDefinitionPathSchema: core.serialization.Schema<
     serializers.ApiDefinitionPathSchema.Raw,
-    FernDefinition.ApiDefinitionPathSchema
+    GeneratorsYml.ApiDefinitionPathSchema
 > = core.serialization.string();
 
 export declare namespace ApiDefinitionPathSchema {

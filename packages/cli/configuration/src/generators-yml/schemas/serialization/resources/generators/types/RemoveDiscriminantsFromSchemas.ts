@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const RemoveDiscriminantsFromSchemas: core.serialization.Schema<
     serializers.RemoveDiscriminantsFromSchemas.Raw,
-    FernDefinition.RemoveDiscriminantsFromSchemas
+    GeneratorsYml.RemoveDiscriminantsFromSchemas
 > = core.serialization.enum_(["always", "never"]);
 
 export declare namespace RemoveDiscriminantsFromSchemas {

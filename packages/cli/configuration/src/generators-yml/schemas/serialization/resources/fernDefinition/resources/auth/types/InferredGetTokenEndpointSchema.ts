@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { InferredGetTokenEndpointSchemaObject } from "./InferredGetTokenEndpointSchemaObject";
 
 export const InferredGetTokenEndpointSchema: core.serialization.Schema<
     serializers.fernDefinition.InferredGetTokenEndpointSchema.Raw,
-    FernDefinition.fernDefinition.InferredGetTokenEndpointSchema
+    GeneratorsYml.fernDefinition.InferredGetTokenEndpointSchema
 > = core.serialization.undiscriminatedUnion([core.serialization.string(), InferredGetTokenEndpointSchemaObject]);
 
 export declare namespace InferredGetTokenEndpointSchema {

@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { UnionSettingsSchema } from "./UnionSettingsSchema";
 import { MessageNamingSettingsSchema } from "./MessageNamingSettingsSchema";
@@ -12,7 +12,7 @@ import { PathParameterOrder } from "./PathParameterOrder";
 
 export const ApiDefinitionSettingsSchema: core.serialization.ObjectSchema<
     serializers.ApiDefinitionSettingsSchema.Raw,
-    FernDefinition.ApiDefinitionSettingsSchema
+    GeneratorsYml.ApiDefinitionSettingsSchema
 > = core.serialization.object({
     "use-title": core.serialization.boolean().optional(),
     unions: UnionSettingsSchema.optional(),

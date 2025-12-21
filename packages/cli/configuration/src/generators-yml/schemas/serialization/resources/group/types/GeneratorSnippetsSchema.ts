@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const GeneratorSnippetsSchema: core.serialization.ObjectSchema<
     serializers.GeneratorSnippetsSchema.Raw,
-    FernDefinition.GeneratorSnippetsSchema
+    GeneratorsYml.GeneratorSnippetsSchema
 > = core.serialization.object({
     path: core.serialization.string(),
 });

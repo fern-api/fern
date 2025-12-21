@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { InferredAuthenticatedRequestHeader } from "./InferredAuthenticatedRequestHeader";
 
 export const InferredGetTokenEndpointSchemaObject: core.serialization.ObjectSchema<
     serializers.fernDefinition.InferredGetTokenEndpointSchemaObject.Raw,
-    FernDefinition.fernDefinition.InferredGetTokenEndpointSchemaObject
+    GeneratorsYml.fernDefinition.InferredGetTokenEndpointSchemaObject
 > = core.serialization.object({
     endpoint: core.serialization.string(),
     "expiry-response-property": core.serialization.string().optional(),

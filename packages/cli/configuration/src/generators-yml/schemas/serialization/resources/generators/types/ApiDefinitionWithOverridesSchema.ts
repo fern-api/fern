@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { ApiDefinitionPathSchema } from "./ApiDefinitionPathSchema";
 import { ApiDefinitionSettingsSchema } from "./ApiDefinitionSettingsSchema";
 
 export const ApiDefinitionWithOverridesSchema: core.serialization.ObjectSchema<
     serializers.ApiDefinitionWithOverridesSchema.Raw,
-    FernDefinition.ApiDefinitionWithOverridesSchema
+    GeneratorsYml.ApiDefinitionWithOverridesSchema
 > = core.serialization.object({
     path: ApiDefinitionPathSchema,
     origin: core.serialization.string().optional(),

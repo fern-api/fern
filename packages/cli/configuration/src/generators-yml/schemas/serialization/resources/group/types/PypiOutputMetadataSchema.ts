@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { OutputMetadataSchema } from "../../generators/types/OutputMetadataSchema";
 
 export const PypiOutputMetadataSchema: core.serialization.ObjectSchema<
     serializers.PypiOutputMetadataSchema.Raw,
-    FernDefinition.PypiOutputMetadataSchema
+    GeneratorsYml.PypiOutputMetadataSchema
 > = core.serialization
     .object({
         keywords: core.serialization.list(core.serialization.string()).optional(),

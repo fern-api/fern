@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
 export const InferredAuthenticatedRequestHeader: core.serialization.ObjectSchema<
     serializers.fernDefinition.InferredAuthenticatedRequestHeader.Raw,
-    FernDefinition.fernDefinition.InferredAuthenticatedRequestHeader
+    GeneratorsYml.fernDefinition.InferredAuthenticatedRequestHeader
 > = core.serialization.object({
     "response-property": core.serialization.string(),
     "header-name": core.serialization.string(),

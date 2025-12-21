@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { OAuthRefreshTokenRequestPropertiesSchema } from "./OAuthRefreshTokenRequestPropertiesSchema";
 import { OAuthRefreshTokenResponsePropertiesSchema } from "./OAuthRefreshTokenResponsePropertiesSchema";
 
 export const OAuthRefreshTokenEndpointSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.OAuthRefreshTokenEndpointSchema.Raw,
-    FernDefinition.fernDefinition.OAuthRefreshTokenEndpointSchema
+    GeneratorsYml.fernDefinition.OAuthRefreshTokenEndpointSchema
 > = core.serialization.object({
     endpoint: core.serialization.string(),
     "request-properties": OAuthRefreshTokenRequestPropertiesSchema.optional(),
