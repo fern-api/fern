@@ -12,7 +12,7 @@ import {
     PlaygroundSettings,
     Target,
     ThemeConfig,
-    VersionAvailability,
+    VersionAvailability
 } from "./schemas";
 
 export interface ParsedCustomPageAction {
@@ -83,7 +83,7 @@ export interface ParsedDocsConfiguration {
     experimental: ExperimentalConfig | undefined;
 
     pageActions: ParsedPageActionsConfig | undefined;
-    
+
     header: undefined;
     footer: undefined;
 }

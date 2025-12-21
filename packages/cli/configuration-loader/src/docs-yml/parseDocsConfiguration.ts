@@ -214,7 +214,7 @@ export async function parseDocsConfiguration({
         aiChatConfig: aiSearch ?? aiChat,
 
         pageActions: convertPageActions(pageActions, absoluteFilepathToDocsConfig),
-        
+
         header: undefined,
         footer: undefined,
 
