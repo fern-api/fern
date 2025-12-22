@@ -88,15 +88,15 @@ export class GeneratedQueryParams {
                                 assignmentExpression = referenceToQueryParameter;
                             }
                         }
-                        // if it's a primitive type, the previous null check already unwrapped the null or undefined
-                        // use the primitive type directly to stringify
+                        // if it's a primitive type, use the original valueType to stringify
+                        // so that null checks are applied correctly for optional/nullable types
                         else if (primitiveType != null) {
                             if (primitiveTypeNeedsStringify(primitiveType.primitive)) {
                                 assignmentExpression = context.type.stringify(
                                     referenceToQueryParameter,
-                                    primitiveType,
+                                    queryParameter.valueType,
                                     {
-                                        includeNullCheckIfOptional: false
+                                        includeNullCheckIfOptional: true
                                     }
                                 );
                             } else {
@@ -107,7 +107,7 @@ export class GeneratedQueryParams {
                                 referenceToQueryParameter,
                                 queryParameter.valueType,
                                 {
-                                    includeNullCheckIfOptional: false
+                                    includeNullCheckIfOptional: true
                                 }
                             );
                         }
