@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.2
+  changelogEntry:
+    - summary: |
+        Simplify optional query parameter handling by removing unnecessary null/undefined checks.
+        Query parameters can now be assigned directly without wrapping in if-statements, as it's
+        safe to pass null or undefined values to query string parameters.
+      type: chore
+  createdAt: "2025-12-22"
+  irVersion: 63
+
 - version: 3.43.1
   changelogEntry:
     - summary: |
