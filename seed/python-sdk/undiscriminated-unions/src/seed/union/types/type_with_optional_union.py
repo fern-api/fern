@@ -10,7 +10,9 @@ from .my_union import MyUnion
 
 
 class TypeWithOptionalUnion(UniversalBaseModel):
-    my_union: typing_extensions.Annotated[typing.Optional[MyUnion], FieldMetadata(alias="myUnion")] = None
+    my_union: typing_extensions.Annotated[typing.Optional[MyUnion], FieldMetadata(alias="myUnion")] = pydantic.Field(
+        alias="myUnion", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -14,8 +14,12 @@ from .test_case_grade import TestCaseGrade
 
 
 class GradedResponseV2(UniversalBaseModel):
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
-    test_cases: typing_extensions.Annotated[typing.Dict[TestCaseId, TestCaseGrade], FieldMetadata(alias="testCases")]
+    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")] = pydantic.Field(
+        alias="submissionId"
+    )
+    test_cases: typing_extensions.Annotated[
+        typing.Dict[TestCaseId, TestCaseGrade], FieldMetadata(alias="testCases")
+    ] = pydantic.Field(alias="testCases")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -13,7 +13,9 @@ class NormalObject(UniversalBaseModel):
     A standard object with no nullable issues.
     """
 
-    normal_field: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="normalField")] = None
+    normal_field: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="normalField")] = (
+        pydantic.Field(alias="normalField", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

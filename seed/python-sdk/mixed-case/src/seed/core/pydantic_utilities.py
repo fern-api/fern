@@ -57,6 +57,8 @@ class UniversalBaseModel(pydantic.BaseModel):
         model_config: ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(  # type: ignore[typeddict-unknown-key]
             # Allow fields beginning with `model_` to be used in the model
             protected_namespaces=(),
+            # Allow population by both the field name and its alias.
+            populate_by_name=True,
         )
 
         @pydantic.model_serializer(mode="plain", when_used="json")  # type: ignore[attr-defined]
@@ -70,6 +72,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         class Config:
             smart_union = True
             json_encoders = {dt.datetime: serialize_datetime}
+            allow_population_by_field_name = True
 
     @classmethod
     def model_construct(cls: Type["Model"], _fields_set: Optional[Set[str]] = None, **values: Any) -> "Model":
