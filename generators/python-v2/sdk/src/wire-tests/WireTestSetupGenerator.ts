@@ -1,4 +1,5 @@
 import { File } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMock } from "@fern-api/mock-utils";
 import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -108,6 +109,7 @@ export class WireTestSetupGenerator {
         const clientClassName = this.getClientClassName();
         const clientImport = this.getClientImport();
         const clientConstructorParams = this.buildClientConstructorParams();
+        const environmentSetup = this.buildEnvironmentSetup();
 
         return `"""
 Pytest configuration for wire tests.
@@ -124,7 +126,7 @@ from typing import Any, Dict, Optional
 import requests
 
 ${clientImport}
-
+${environmentSetup.imports}
 
 def get_client(test_id: str) -> ${clientClassName}:
     """
@@ -137,7 +139,7 @@ def get_client(test_id: str) -> ${clientClassName}:
         A configured client instance with all required auth parameters.
     """
     return ${clientClassName}(
-        base_url="http://localhost:8080",
+        ${environmentSetup.param},
         headers={"X-Test-Id": test_id},
 ${clientConstructorParams}
     )
@@ -353,6 +355,52 @@ def pytest_unconfigure(config: pytest.Config) -> None:
             return `${orgName}.${packagePathDotted}`;
         }
         return orgName;
+    }
+
+    /**
+     * Builds the environment setup for the conftest.py file.
+     * Returns an object with imports and the parameter to use in the client constructor.
+     *
+     * If the IR has environments defined (single or multiple base URLs), we need to
+     * create a custom environment instance that points all URLs to WireMock.
+     * If no environments are defined, we use base_url directly.
+     */
+    private buildEnvironmentSetup(): { imports: string; param: string } {
+        const environments = this.ir.environments;
+
+        if (environments?.environments.type !== "multipleBaseUrls") {
+            // No environments defined - use base_url directly
+            return {
+                imports: "",
+                param: 'base_url="http://localhost:8080"'
+            };
+        }
+
+        // Handle multiple base URLs environment
+        if (environments?.environments.type === "multipleBaseUrls") {
+            const envConfig = environments.environments;
+            const environmentClassName = this.getEnvironmentClassName();
+            const modulePath = this.getModulePath();
+
+            // Build kwargs for all base URLs pointing to WireMock
+            const baseUrlKwargs = envConfig.baseUrls
+                .map((baseUrl) => `${baseUrl.name.snakeCase.safeName}="http://localhost:8080"`)
+                .join(", ");
+
+            return {
+                imports: `from ${modulePath}.environment import ${environmentClassName}`,
+                param: `environment=${environmentClassName}(${baseUrlKwargs})`
+            };
+        }
+
+        assertNever(environments.environments);
+    }
+
+    /**
+     * Gets the environment class name based on the client class name.
+     */
+    private getEnvironmentClassName(): string {
+        return `${this.getClientClassName()}Environment`;
     }
 
     /**
