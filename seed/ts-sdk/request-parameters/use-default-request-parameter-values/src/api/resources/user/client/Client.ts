@@ -46,7 +46,7 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { tags, ..._body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         _queryParams.tags = toJson(tags);
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -108,7 +108,7 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { tags, body: _body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         _queryParams.tags = toJson(tags);
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -272,9 +272,9 @@ export class UserClient {
             longParam = 9223372036854776000,
             bigIntParam = "18446744073709551615",
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (limit != null) {
-            _queryParams.limit = limit.toString();
+            _queryParams.limit = limit;
         }
 
         _queryParams.id = id;
@@ -310,7 +310,7 @@ export class UserClient {
         }
 
         if (longParam != null) {
-            _queryParams.longParam = longParam.toString();
+            _queryParams.longParam = longParam;
         }
 
         if (bigIntParam != null) {

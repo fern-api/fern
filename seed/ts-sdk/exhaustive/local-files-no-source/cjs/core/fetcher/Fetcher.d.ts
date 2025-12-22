@@ -1,14 +1,13 @@
 import { type LogConfig, type Logger } from "../logging/logger.js";
 import type { APIResponse } from "./APIResponse.js";
 import type { EndpointMetadata } from "./EndpointMetadata.js";
-import { EndpointSupplier } from "./EndpointSupplier.js";
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 export declare namespace Fetcher {
     interface Args {
         url: string;
         method: string;
         contentType?: string;
-        headers?: Record<string, string | EndpointSupplier<string | null | undefined> | null | undefined>;
+        headers?: Record<string, unknown>;
         queryParameters?: Record<string, unknown>;
         body?: unknown;
         timeoutMs?: number;

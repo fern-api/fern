@@ -151,7 +151,6 @@ export class SinglePropertySingleUnionTypeGenerator<Context extends ModelContext
             ts.factory.createParameterDeclaration(
                 undefined,
                 undefined,
-                undefined,
                 SinglePropertySingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
                 type.isOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                 type.typeNodeWithoutUndefined

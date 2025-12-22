@@ -228,24 +228,9 @@ export class ExpressImpl extends ExternalDependency implements Express {
                             [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
                             undefined,
                             [
-                                ts.factory.createParameterDeclaration(
-                                    undefined,
-                                    undefined,
-                                    undefined,
-                                    REQUEST_PARAMETER_NAME
-                                ),
-                                ts.factory.createParameterDeclaration(
-                                    undefined,
-                                    undefined,
-                                    undefined,
-                                    RESPONSE_PARAMETER_NAME
-                                ),
-                                ts.factory.createParameterDeclaration(
-                                    undefined,
-                                    undefined,
-                                    undefined,
-                                    NEXT_PARAMETER_NAME
-                                )
+                                ts.factory.createParameterDeclaration(undefined, undefined, REQUEST_PARAMETER_NAME),
+                                ts.factory.createParameterDeclaration(undefined, undefined, RESPONSE_PARAMETER_NAME),
+                                ts.factory.createParameterDeclaration(undefined, undefined, NEXT_PARAMETER_NAME)
                             ],
                             undefined,
                             undefined,

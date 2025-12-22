@@ -31,13 +31,13 @@ export class RealtimeClient {
 
     public async connect(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {
         const { session_id: sessionId, model, temperature, headers, debug, reconnectAttempts } = args;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (model != null) {
             _queryParams.model = model;
         }
 
         if (temperature != null) {
-            _queryParams.temperature = temperature.toString();
+            _queryParams.temperature = temperature;
         }
 
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();

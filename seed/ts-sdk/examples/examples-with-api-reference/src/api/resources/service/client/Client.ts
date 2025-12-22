@@ -166,9 +166,9 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExamples.Metadata>> {
         const { shallow, tag, "X-API-Version": xApiVersion } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (shallow != null) {
-            _queryParams.shallow = shallow.toString();
+            _queryParams.shallow = shallow;
         }
 
         if (tag != null) {

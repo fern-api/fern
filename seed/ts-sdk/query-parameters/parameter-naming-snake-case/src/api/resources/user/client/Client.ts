@@ -94,8 +94,8 @@ export class UserClient {
             exclude_user: excludeUser,
             filter,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.limit = limit.toString();
+        const _queryParams: Record<string, unknown> = {};
+        _queryParams.limit = limit;
         _queryParams.id = id;
         _queryParams.date = date;
         _queryParams.deadline = deadline;
