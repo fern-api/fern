@@ -522,6 +522,7 @@ export class DynamicSnippetsConverter {
         return this.convertObjectProperties({
             declaration,
             properties,
+            extends_: object.extends.map((ext) => ext.typeId),
             additionalProperties: object.extraProperties
         });
     }
@@ -529,15 +530,18 @@ export class DynamicSnippetsConverter {
     private convertObjectProperties({
         declaration,
         properties,
+        extends_,
         additionalProperties
     }: {
         declaration: DynamicSnippets.Declaration;
         properties: ObjectProperty[];
+        extends_?: TypeId[];
         additionalProperties: boolean;
     }): DynamicSnippets.NamedType {
         return DynamicSnippets.NamedType.object({
             declaration,
             properties: this.convertBodyPropertiesToParameters({ properties }),
+            extends: extends_ != null && extends_.length > 0 ? extends_ : undefined,
             additionalProperties
         });
     }

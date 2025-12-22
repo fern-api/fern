@@ -62,8 +62,8 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): string[] {
-        // Get use statements
-        const useStatements = this.getUseStatements();
+        // Get use statements, passing endpoint to collect type imports
+        const useStatements = this.getUseStatements({ endpoint });
 
         // Create the main function body
         const mainBody = rust.CodeBlock.fromStatements([
@@ -111,7 +111,7 @@ export class EndpointSnippetGenerator {
         return components;
     }
 
-    private getUseStatements(): rust.UseStatement[] {
+    private getUseStatements({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): rust.UseStatement[] {
         const useStatements: rust.UseStatement[] = [];
 
         // Use prelude import for all crate types
@@ -122,7 +122,87 @@ export class EndpointSnippetGenerator {
             })
         );
 
+        // Collect additional type imports from the endpoint request
+        const typeImports = new Set<string>();
+        this.collectEndpointTypeImports(endpoint, typeImports);
+
+        // Add specific type imports that may not be in prelude (e.g., union variant types)
+        if (typeImports.size > 0) {
+            useStatements.push(
+                new rust.UseStatement({
+                    path: this.context.getCrateName(),
+                    items: Array.from(typeImports)
+                })
+            );
+        }
+
         return useStatements;
+    }
+
+    /**
+     * Collect all type imports needed for an endpoint's request parameters.
+     */
+    private collectEndpointTypeImports(endpoint: FernIr.dynamic.Endpoint, imports: Set<string>): void {
+        const request = endpoint.request;
+
+        // Collect from path parameters
+        if (request.pathParameters) {
+            for (const param of request.pathParameters) {
+                this.collectTypeReferenceImports(param.typeReference, imports);
+            }
+        }
+
+        // Collect from inlined request
+        if (request.type === "inlined") {
+            // Query parameters
+            if (request.queryParameters) {
+                for (const param of request.queryParameters) {
+                    this.collectTypeReferenceImports(param.typeReference, imports);
+                }
+            }
+
+            // Headers
+            if (request.headers) {
+                for (const header of request.headers) {
+                    this.collectTypeReferenceImports(header.typeReference, imports);
+                }
+            }
+
+            // Body
+            if (request.body) {
+                this.collectRequestBodyTypeImports(request.body, imports);
+            }
+        } else if (request.type === "body") {
+            // Referenced body type
+            if (request.body?.type === "typeReference") {
+                this.collectTypeReferenceImports(request.body.value, imports);
+            }
+        }
+    }
+
+    /**
+     * Collect type imports from a request body.
+     */
+    private collectRequestBodyTypeImports(body: FernIr.dynamic.InlinedRequestBody, imports: Set<string>): void {
+        switch (body.type) {
+            case "properties":
+                for (const prop of body.value) {
+                    this.collectTypeReferenceImports(prop.typeReference, imports);
+                }
+                break;
+            case "referenced":
+                if (body.bodyType.type === "typeReference") {
+                    this.collectTypeReferenceImports(body.bodyType.value, imports);
+                }
+                break;
+            case "fileUpload":
+                for (const prop of body.properties) {
+                    if (prop.type === "bodyProperty") {
+                        this.collectTypeReferenceImports(prop.typeReference, imports);
+                    }
+                }
+                break;
+        }
     }
 
     // Helper to collect type imports from a value by analyzing its structure
@@ -294,6 +374,25 @@ export class EndpointSnippetGenerator {
                 const listElementType = (typeReference as FernIr.dynamic.TypeReference.List).value;
                 if (listElementType) {
                     this.collectTypeReferenceImports(listElementType, imports, visited);
+                }
+                break;
+            }
+            case "set": {
+                // Recursively collect from the set element type
+                const setElementType = (typeReference as FernIr.dynamic.TypeReference.Set).value;
+                if (setElementType) {
+                    this.collectTypeReferenceImports(setElementType, imports, visited);
+                }
+                break;
+            }
+            case "map": {
+                // Recursively collect from map key and value types
+                const mapType = typeReference as FernIr.dynamic.MapType;
+                if (mapType.key) {
+                    this.collectTypeReferenceImports(mapType.key, imports, visited);
+                }
+                if (mapType.value) {
+                    this.collectTypeReferenceImports(mapType.value, imports, visited);
                 }
                 break;
             }
@@ -538,8 +637,25 @@ export class EndpointSnippetGenerator {
         const hasQueryParams = (request.queryParameters ?? []).length > 0;
         const hasBody = request.body != null;
 
-        if (hasQueryParams || hasBody) {
-            // Create request struct only if it has actual parameters (query params or body, not just headers)
+        // SDK generator behavior (from SubClientGenerator.ts):
+        // - Referenced body WITHOUT query params → uses inner type directly
+        // - Referenced body WITH query params → creates wrapper type
+        // - Inlined body (properties) → creates wrapper type
+        const body = request.body;
+        const isReferencedBodyOnly = body != null && !hasQueryParams && body.type === "referenced";
+
+        if (isReferencedBodyOnly && body.type === "referenced") {
+            // Use inner type directly - match SDK generator's behavior for referenced body without query params
+            const bodyExpr = this.getReferencedRequestBodyPropertyExpression({
+                body: body.bodyType,
+                value: snippet.requestBody
+            });
+            args.push(rust.Expression.referenceOf(bodyExpr));
+        } else if (hasQueryParams || hasBody) {
+            // Create request struct for:
+            // - Query params only
+            // - Query params + body (referenced or properties)
+            // - Body with properties type
             args.push(rust.Expression.referenceOf(this.getInlinedRequestArg({ endpoint, request, snippet })));
         }
 
@@ -857,10 +973,39 @@ export class EndpointSnippetGenerator {
             values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {
-            args.push(rust.Expression.referenceOf(this.context.dynamicTypeLiteralMapper.convert(parameter)));
+            const expr = this.context.dynamicTypeLiteralMapper.convert(parameter);
+            // Copy types (numeric primitives and booleans) should be passed by value, not by reference
+            if (this.isCopyPrimitive(parameter.typeReference)) {
+                args.push(expr);
+            } else {
+                args.push(rust.Expression.referenceOf(expr));
+            }
         }
 
         return args;
+    }
+
+    /**
+     * Check if a type reference is a Copy primitive type that should be passed by value.
+     * In Rust, numeric types (i32, i64, u32, u64, f32, f64) and bool are Copy types
+     * that don't need to be borrowed.
+     */
+    private isCopyPrimitive(typeReference: FernIr.dynamic.TypeReference): boolean {
+        if (typeReference.type !== "primitive") {
+            return false;
+        }
+        switch (typeReference.value) {
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+            case "FLOAT":
+            case "DOUBLE":
+            case "BOOLEAN":
+                return true;
+            default:
+                return false;
+        }
     }
 
     private getRequestOptionsWithHeaders({
@@ -882,7 +1027,10 @@ export class EndpointSnippetGenerator {
         for (const header of headers) {
             this.context.scopeError(header.name.wireValue);
             try {
-                const headerValue = this.context.dynamicTypeLiteralMapper.convert(header);
+                // Headers should always be passed as plain strings to additional_header,
+                // regardless of their type reference (e.g., optional, named types like IdempotencyKey).
+                // The additional_header method expects `impl Into<String>`.
+                const headerValue = this.getHeaderValueAsString(header.value);
                 optionsExpr = rust.Expression.methodCall({
                     target: optionsExpr,
                     method: "additional_header",
@@ -894,6 +1042,19 @@ export class EndpointSnippetGenerator {
         }
 
         return optionsExpr;
+    }
+
+    /**
+     * Convert a header value to a plain string expression.
+     * Headers are always strings in HTTP, so we extract the raw string value
+     * regardless of the type reference (e.g., optional, named types).
+     */
+    private getHeaderValueAsString(value: unknown): rust.Expression {
+        if (value == null) {
+            return rust.Expression.stringLiteral("");
+        }
+        const strValue = String(value);
+        return rust.Expression.stringLiteral(strValue);
     }
 
     private buildRequestComponents({
@@ -966,6 +1127,7 @@ export class EndpointSnippetGenerator {
     ): string {
         const hasQueryParams = (request.queryParameters ?? []).length > 0;
         const hasBody = request.body != null;
+        const methodName = endpoint.declaration.name.pascalCase.safeName;
 
         if (hasQueryParams && !hasBody) {
             // Query-only: look up the pre-registered deduplicated name from the context
@@ -974,11 +1136,17 @@ export class EndpointSnippetGenerator {
                 return queryRequestName;
             }
             // Fallback to manual construction if not found (shouldn't happen)
-            const methodName = endpoint.declaration.name.pascalCase.safeName;
             return `${methodName}QueryRequest`;
         }
-        // Default: use regular naming for body requests or mixed requests
-        // Use the request struct's declaration name from the registry
+
+        // For inlined requests with body (with or without query params),
+        // the SDK uses endpoint-based naming: {EndpointName}Request
+        // This matches the SDK generator's convention in SubClientGenerator.ts
+        if (hasBody) {
+            return `${methodName}Request`;
+        }
+
+        // Default fallback: use the request struct's declaration name
         return this.context.getStructNameByDeclaration(request.declaration);
     }
 }

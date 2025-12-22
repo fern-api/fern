@@ -464,14 +464,17 @@ export class DynamicTypeLiteralMapper {
         baseObjectType: FernIr.dynamic.ObjectType;
         baseFieldName: string;
     } | null {
-        // Check if extends information is available in the object
+        // Check if extends information is available in the object (from dynamic IR)
+        // Note: We use a type assertion here because the extends field may not be
+        // in the published @fern-api/dynamic-ir-sdk yet, but will be populated at runtime
+        // by the updated IR generator.
         const extendsProperty = (objectType as { extends?: string[] }).extends;
-        if (extendsProperty && Array.isArray(extendsProperty) && extendsProperty.length > 0) {
+        if (extendsProperty != null && extendsProperty.length > 0) {
             const baseTypeId = extendsProperty[0];
-            if (baseTypeId) {
+            if (baseTypeId != null) {
                 const baseType = this.context.ir.types[baseTypeId];
 
-                if (baseType && baseType.type === "object") {
+                if (baseType != null && baseType.type === "object") {
                     // For Rust, the flattened field is typically named after the base type
                     const baseFieldName = this.getBaseFieldName(baseType.declaration.name);
 
@@ -484,18 +487,18 @@ export class DynamicTypeLiteralMapper {
             }
         }
 
-        // General case: Check if this object has properties that suggest it extends another object
+        // Fallback: Check if this object has properties that suggest it extends another object
         // Look for properties that might be flattened base objects
         const potentialBaseFieldProperty = objectType.properties.find((prop) => {
             const propertyName = prop.name.name.snakeCase.safeName;
             return propertyName.endsWith("_fields") && prop.typeReference.type === "named";
         });
 
-        if (potentialBaseFieldProperty && potentialBaseFieldProperty.typeReference.type === "named") {
+        if (potentialBaseFieldProperty != null && potentialBaseFieldProperty.typeReference.type === "named") {
             const baseTypeId = potentialBaseFieldProperty.typeReference.value;
             const baseType = this.context.ir.types[baseTypeId];
 
-            if (baseType && baseType.type === "object") {
+            if (baseType != null && baseType.type === "object") {
                 return {
                     baseObjectTypeId: baseTypeId,
                     baseObjectType: baseType,

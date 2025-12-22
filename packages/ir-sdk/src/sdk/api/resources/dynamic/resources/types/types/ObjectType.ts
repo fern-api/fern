@@ -7,6 +7,11 @@ import * as FernIr from "../../../../../index";
 export interface ObjectType {
     declaration: FernIr.dynamic.Declaration;
     properties: FernIr.dynamic.NamedParameter[];
+    /**
+     * The types this object extends. Used to generate proper nested struct
+     * initialization for languages like Rust that use composition with serde flatten.
+     */
+    extends: FernIr.dynamic.TypeId[] | undefined;
     /** Whether the type allows additional properties. */
     additionalProperties: boolean | undefined;
 }
