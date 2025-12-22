@@ -89,14 +89,14 @@ export class GeneratedQueryParams {
                             }
                         }
                         // if it's a primitive type, use the original valueType to stringify
-                        // so that null checks are applied correctly for optional/nullable types
+                        // nullSafeCall in the converter handles optional chaining for optional/nullable types
                         else if (primitiveType != null) {
                             if (primitiveTypeNeedsStringify(primitiveType.primitive)) {
                                 assignmentExpression = context.type.stringify(
                                     referenceToQueryParameter,
                                     queryParameter.valueType,
                                     {
-                                        includeNullCheckIfOptional: true
+                                        includeNullCheckIfOptional: false
                                     }
                                 );
                             } else {
