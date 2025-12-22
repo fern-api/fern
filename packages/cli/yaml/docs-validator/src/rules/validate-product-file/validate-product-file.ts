@@ -5,8 +5,12 @@ export const ValidateProductFileRule: Rule = {
     name: "validate-product-file",
     create: () => {
         return {
-            productFile: async ({ path, content }) => {
-                const parseResult = await validateProductConfigFileSchema({ value: content });
+            productFile: async ({ content, absoluteFilepath, sourceMap }) => {
+                const parseResult = await validateProductConfigFileSchema({
+                    value: content,
+                    filePath: absoluteFilepath,
+                    sourceMap
+                });
                 if (parseResult.type === "success") {
                     return [];
                 }

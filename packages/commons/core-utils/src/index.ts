@@ -43,6 +43,10 @@ export { type SetRequired } from "./setRequired";
 export { stripLeadingSlash } from "./stripLeadingSlash";
 export { titleCase } from "./titleCase";
 export type { ContainerRunner, Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
-export { validateAgainstJsonSchema } from "./validateAgainstJsonSchema";
+export {
+    type SourceLocation,
+    validateAgainstJsonSchema,
+    type YamlSourceMap
+} from "./validateAgainstJsonSchema";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";
 export type { WithoutQuestionMarks } from "./withoutQuestionMarks";

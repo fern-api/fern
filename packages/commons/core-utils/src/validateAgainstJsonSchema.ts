@@ -20,6 +20,16 @@ interface ErrorObjectWithParams extends ErrorObject {
     params: Record<string, unknown>;
 }
 
+export interface SourceLocation {
+    line: number;
+    column: number;
+    position: number;
+}
+
+export interface YamlSourceMap {
+    lookup(path: string | string[]): SourceLocation | undefined;
+}
+
 // Type guard functions
 function isSchemaWithUnion(schema: unknown): schema is SchemaWithUnion {
     return typeof schema === "object" && schema !== null && ("oneOf" in schema || "anyOf" in schema);
@@ -344,10 +354,64 @@ function getErrorInformativenessScore(error: ErrorObject): number {
 }
 
 /**
- * Appends file path context to an error message if available.
+ * Converts a JSON Pointer path to an array of path segments for source map lookup.
+ * @param instancePath - JSON Pointer path (e.g., "/navigation/1/variants/0")
+ * @param additionalSegment - Optional additional segment to append
+ * @returns Array of path segments (e.g., ["navigation", "1", "variants", "0"])
  */
-function formatErrorMessageWithFilePath(message: string, filePath?: string): string {
-    if (!filePath) {
+function instancePathToSegments(instancePath: string, additionalSegment?: string): string[] {
+    const segments = instancePath
+        .split("/")
+        .filter((part) => part !== "")
+        .map((segment) => segment.replace(/~1/g, "/").replace(/~0/g, "~"));
+
+    if (additionalSegment) {
+        segments.push(additionalSegment);
+    }
+
+    return segments;
+}
+
+/**
+ * Looks up the line number for a given instance path using the source map.
+ * @param instancePath - JSON Pointer path (e.g., "/navigation/1/variants/0")
+ * @param sourceMap - Optional YAML source map for line number lookup
+ * @param additionalSegment - Optional additional segment to append to the path
+ * @returns Line number if found, undefined otherwise
+ */
+function getLineNumberForPath(
+    instancePath: string,
+    sourceMap?: YamlSourceMap,
+    additionalSegment?: string
+): number | undefined {
+    if (!sourceMap) {
+        return undefined;
+    }
+
+    const segments = instancePathToSegments(instancePath, additionalSegment);
+    if (segments.length === 0) {
+        return undefined;
+    }
+
+    const location = sourceMap.lookup(segments);
+    return location?.line;
+}
+
+/**
+ * Appends file path and line number context to an error message if available.
+ */
+function formatErrorMessageWithFilePath(
+    message: string,
+    instancePath: string,
+    options?: {
+        filePath?: string;
+        sourceMap?: YamlSourceMap;
+        additionalSegment?: string;
+    }
+): string {
+    const lineNumber = getLineNumberForPath(instancePath, options?.sourceMap, options?.additionalSegment);
+
+    if (!options?.filePath && !lineNumber) {
         return message;
     }
 
@@ -358,15 +422,29 @@ function formatErrorMessageWithFilePath(message: string, filePath?: string): str
     if (jsonPath) {
         // Convert JSON path to instance path for file reference
         // e.g., "$.navigation[0].layout[1]" -> "/navigation/0/layout/1"
-        const instancePath = jsonPath
+        const pathForDisplay = jsonPath
             .replace(/^\$/, "")
             .replace(/\[(\d+)\]/g, "/$1")
             .replace(/\.([^[\]]+)/g, "/$1");
 
-        return `${message} at ${instancePath} (in ${filePath})`;
+        if (options?.filePath && lineNumber) {
+            return `${message} at ${pathForDisplay}\n  --> ${options.filePath}:${lineNumber}`;
+        } else if (lineNumber) {
+            return `${message} at ${pathForDisplay} (line ${lineNumber})`;
+        } else if (options?.filePath) {
+            return `${message} at ${pathForDisplay} (in ${options.filePath})`;
+        }
     }
 
-    return `${message} (in ${filePath})`;
+    if (options?.filePath && lineNumber) {
+        return `${message}\n  --> ${options.filePath}:${lineNumber}`;
+    } else if (lineNumber) {
+        return `${message} (line ${lineNumber})`;
+    } else if (options?.filePath) {
+        return `${message} (in ${options.filePath})`;
+    }
+
+    return message;
 }
 
 /**
@@ -433,6 +511,8 @@ export function validateAgainstJsonSchema(
     options?: {
         /** Optional file path to include in error messages for better debugging context */
         filePath?: string;
+        /** Optional YAML source map for line number lookup in error messages */
+        sourceMap?: YamlSourceMap;
     }
 ): validateAgainstJsonSchema.ValidationResult {
     const ajv = new Ajv({ allErrors: true, allowUnionTypes: true });
@@ -637,7 +717,10 @@ export function validateAgainstJsonSchema(
                         success: false,
                         error: {
                             ...mostGranularError,
-                            message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                            message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                                filePath: options?.filePath,
+                                sourceMap: options?.sourceMap
+                            })
                         },
                         allErrors: validate.errors ?? []
                     };
@@ -664,7 +747,11 @@ export function validateAgainstJsonSchema(
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                        message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                            filePath: options?.filePath,
+                            sourceMap: options?.sourceMap,
+                            additionalSegment: additionalProp
+                        })
                     },
                     allErrors: validate.errors ?? []
                 };
@@ -698,7 +785,11 @@ export function validateAgainstJsonSchema(
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                        message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                            filePath: options?.filePath,
+                            sourceMap: options?.sourceMap,
+                            additionalSegment: missingProperty
+                        })
                     },
                     allErrors: validate.errors ?? []
                 };
@@ -714,7 +805,10 @@ export function validateAgainstJsonSchema(
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                        message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                            filePath: options?.filePath,
+                            sourceMap: options?.sourceMap
+                        })
                     },
                     allErrors: validate.errors ?? []
                 };
@@ -725,7 +819,10 @@ export function validateAgainstJsonSchema(
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                        message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                            filePath: options?.filePath,
+                            sourceMap: options?.sourceMap
+                        })
                     },
                     allErrors: validate.errors ?? []
                 };
@@ -736,7 +833,10 @@ export function validateAgainstJsonSchema(
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                        message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                            filePath: options?.filePath,
+                            sourceMap: options?.sourceMap
+                        })
                     },
                     allErrors: validate.errors ?? []
                 };
@@ -747,7 +847,10 @@ export function validateAgainstJsonSchema(
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                        message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                            filePath: options?.filePath,
+                            sourceMap: options?.sourceMap
+                        })
                     },
                     allErrors: validate.errors ?? []
                 };
@@ -806,7 +909,10 @@ export function validateAgainstJsonSchema(
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                        message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                            filePath: options?.filePath,
+                            sourceMap: options?.sourceMap
+                        })
                     },
                     allErrors: validate.errors ?? []
                 };
@@ -817,7 +923,10 @@ export function validateAgainstJsonSchema(
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                        message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                            filePath: options?.filePath,
+                            sourceMap: options?.sourceMap
+                        })
                     },
                     allErrors: validate.errors ?? []
                 };
@@ -828,7 +937,10 @@ export function validateAgainstJsonSchema(
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                        message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                            filePath: options?.filePath,
+                            sourceMap: options?.sourceMap
+                        })
                     },
                     allErrors: validate.errors ?? []
                 };
@@ -839,7 +951,10 @@ export function validateAgainstJsonSchema(
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                        message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                            filePath: options?.filePath,
+                            sourceMap: options?.sourceMap
+                        })
                     },
                     allErrors: validate.errors ?? []
                 };
@@ -850,7 +965,10 @@ export function validateAgainstJsonSchema(
                     success: false,
                     error: {
                         ...mostGranularError,
-                        message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                        message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                            filePath: options?.filePath,
+                            sourceMap: options?.sourceMap
+                        })
                     },
                     allErrors: validate.errors ?? []
                 };
@@ -862,7 +980,10 @@ export function validateAgainstJsonSchema(
                 success: false,
                 error: {
                     ...mostGranularError,
-                    message: formatErrorMessageWithFilePath(errorMessage, options?.filePath)
+                    message: formatErrorMessageWithFilePath(errorMessage, mostGranularError.instancePath, {
+                        filePath: options?.filePath,
+                        sourceMap: options?.sourceMap
+                    })
                 },
                 allErrors: validate.errors ?? []
             };

@@ -6,6 +6,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import SourceMap from "js-yaml-source-map";
 
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { validateProductConfigFileSchema } from "./validateProductConfig";
@@ -196,17 +197,26 @@ export async function visitDocsConfigFileYamlAst({
                             willBeUploaded: false
                         });
                         const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), product.path);
-                        const content = yaml.load((await readFile(absoluteFilepath)).toString());
+                        const productSourceMap = new SourceMap();
+                        const content = yaml.load((await readFile(absoluteFilepath)).toString(), {
+                            listener: productSourceMap.listen()
+                        });
                         if (await doesPathExist(absoluteFilepath)) {
                             await visitor.productFile?.(
                                 {
                                     path: product.path,
-                                    content
+                                    content,
+                                    absoluteFilepath,
+                                    sourceMap: productSourceMap
                                 },
                                 [product.path]
                             );
                         }
-                        const parsedProductFile = await validateProductConfigFileSchema({ value: content });
+                        const parsedProductFile = await validateProductConfigFileSchema({
+                            value: content,
+                            filePath: absoluteFilepath,
+                            sourceMap: productSourceMap
+                        });
                         if (parsedProductFile.type === "success") {
                             await visitNavigationAst({
                                 absolutePathToFernFolder,
@@ -280,17 +290,26 @@ export async function visitDocsConfigFileYamlAst({
                         willBeUploaded: false
                     });
                     const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
-                    const content = yaml.load((await readFile(absoluteFilepath)).toString());
+                    const versionSourceMap = new SourceMap();
+                    const content = yaml.load((await readFile(absoluteFilepath)).toString(), {
+                        listener: versionSourceMap.listen()
+                    });
                     if (await doesPathExist(absoluteFilepath)) {
                         await visitor.versionFile?.(
                             {
                                 path: version.path,
-                                content
+                                content,
+                                absoluteFilepath,
+                                sourceMap: versionSourceMap
                             },
                             [version.path]
                         );
                     }
-                    const parsedVersionFile = await validateVersionConfigFileSchema({ value: content });
+                    const parsedVersionFile = await validateVersionConfigFileSchema({
+                        value: content,
+                        filePath: absoluteFilepath,
+                        sourceMap: versionSourceMap
+                    });
                     if (parsedVersionFile.type === "success") {
                         await visitNavigationAst({
                             absolutePathToFernFolder,

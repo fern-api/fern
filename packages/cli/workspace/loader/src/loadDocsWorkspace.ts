@@ -4,6 +4,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import SourceMap from "js-yaml-source-map";
 
 import * as DocsYmlJsonSchema from "./docs-yml.schema.json";
 import { DocsWorkspace } from "./types/Workspace";
@@ -64,10 +65,12 @@ export async function loadRawDocsConfiguration({
     context: TaskContext;
 }): Promise<docsYml.RawSchemas.DocsConfiguration> {
     const contentsStr = await readFile(absolutePathOfConfiguration);
-    const contentsJson = yaml.load(contentsStr.toString());
+    const sourceMap = new SourceMap();
+    const contentsJson = yaml.load(contentsStr.toString(), { listener: sourceMap.listen() });
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     const result = validateAgainstJsonSchema(contentsJson, DocsYmlJsonSchema as any, {
-        filePath: absolutePathOfConfiguration
+        filePath: absolutePathOfConfiguration,
+        sourceMap
     });
     if (result.success) {
         // Proactively sanitize null/undefined values before parsing
