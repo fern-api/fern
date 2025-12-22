@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
+import { sanitizeNullValues, validateAgainstJsonSchema, type YamlSourceMap } from "@fern-api/core-utils";
 
 import * as DocsYmlJsonSchema from "./products-yml.schema.json";
 
@@ -15,9 +15,20 @@ interface ProductFileFailureParseResult {
     message: string;
 }
 
-export async function validateProductConfigFileSchema({ value }: { value: unknown }): Promise<ProductParseResult> {
+export async function validateProductConfigFileSchema({
+    value,
+    filePath,
+    sourceMap
+}: {
+    value: unknown;
+    filePath?: string;
+    sourceMap?: YamlSourceMap;
+}): Promise<ProductParseResult> {
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    const result = validateAgainstJsonSchema(value, DocsYmlJsonSchema as any);
+    const result = validateAgainstJsonSchema(value, DocsYmlJsonSchema as any, {
+        filePath,
+        sourceMap
+    });
     if (result.success) {
         // Sanitize null/undefined values before parsing
         const removedPaths: string[][] = [];
@@ -29,9 +40,8 @@ export async function validateProductConfigFileSchema({ value }: { value: unknow
         };
     }
 
-    const path = result.error?.instancePath ? ` at ${result?.error.instancePath}` : "";
     return {
         type: "failure",
-        message: `${result.error?.message ?? "Failed to parse because JSON schema validation failed"}${path}`
+        message: result.error?.message ?? "Failed to parse because JSON schema validation failed"
     };
 }

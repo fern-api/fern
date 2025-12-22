@@ -1,4 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
+import { type YamlSourceMap } from "@fern-api/core-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -16,8 +17,8 @@ export interface DocsConfigFileAstNodeTypes {
         willBeUploaded?: boolean;
     };
     markdownPage: { title: string; content: string; absoluteFilepath: AbsoluteFilePath };
-    versionFile: { path: string; content: unknown };
-    productFile: { path: string; content: unknown };
+    versionFile: { path: string; content: unknown; absoluteFilepath: AbsoluteFilePath; sourceMap: YamlSourceMap };
+    productFile: { path: string; content: unknown; absoluteFilepath: AbsoluteFilePath; sourceMap: YamlSourceMap };
     apiSection: {
         config: docsYml.RawSchemas.ApiReferenceConfiguration;
         workspace: AbstractAPIWorkspace<unknown>;
