@@ -849,14 +849,49 @@ export class EndpointSnippetGenerator {
                 return rust.Expression.raw("std::collections::HashMap::new()");
             case "set":
                 return rust.Expression.raw("std::collections::HashSet::new()");
-            case "named":
+            case "named": {
                 // For named types, we need to construct them properly.
-                // Most named types in Rust SDK are newtype wrappers around primitives (e.g., Orgname(String))
-                // or enums/structs that may not derive Default.
-                // Use the type's constructor with a default primitive value.
-                const typeName = this.context.getTypeNameById(typeRef.value);
-                // Assume it's a newtype wrapper around a string (most common case)
-                return rust.Expression.raw(`${typeName}("value".to_string())`);
+                // Named types can be aliases (newtypes), enums, objects, or unions.
+                // For aliases, we recursively generate the default value for the underlying type
+                // and wrap it with the alias type constructor.
+                const typeId = typeRef.value;
+                const namedType = this.context.ir.types[typeId];
+                const typeName = this.context.getTypeNameById(typeId);
+
+                if (!namedType) {
+                    // If we can't find the type, fall back to string wrapper assumption
+                    return rust.Expression.raw(`${typeName}("value".to_string())`);
+                }
+
+                // Handle different kinds of named types
+                switch (namedType.type) {
+                    case "alias":
+                        // For alias types (newtypes), recursively generate the inner value
+                        // and wrap it with the type constructor
+                        const innerValue = this.generateDefaultValueForType(namedType.typeReference);
+                        return rust.Expression.raw(`${typeName}(${innerValue.toString()})`);
+                    case "enum":
+                        // For enums, use the first variant if available
+                        if (namedType.values.length > 0) {
+                            const firstVariant = namedType.values[0];
+                            if (firstVariant) {
+                                const rawVariantName = firstVariant.name.pascalCase.unsafeName;
+                                const variantName = this.context.escapeRustReservedType(rawVariantName);
+                                return rust.Expression.raw(`${typeName}::${variantName}`);
+                            }
+                        }
+                        // Fallback if no variants (shouldn't happen)
+                        return rust.Expression.raw(`${typeName}::default()`);
+                    case "object":
+                    case "discriminatedUnion":
+                    case "undiscriminatedUnion":
+                        // For complex types, try Default::default() or use a placeholder
+                        return rust.Expression.raw(`${typeName}::default()`);
+                    default:
+                        // Unknown named type, fall back to string wrapper assumption
+                        return rust.Expression.raw(`${typeName}("value".to_string())`);
+                }
+            }
             default:
                 // For complex types (unions, etc.), generate a placeholder comment
                 return rust.Expression.raw('todo!("Provide value for complex type")');
