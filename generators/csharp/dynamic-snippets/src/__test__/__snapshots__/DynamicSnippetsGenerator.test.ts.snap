@@ -46,70 +46,110 @@ await client.Service.GetMetadataAsync(
 `;
 
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
-"using Acme;
-using Acme.Types;
-using System.Collections.Generic;
-using Acme.Commons.Types;
-
-var client = new AcmeClient(
-    token: "<YOUR_API_KEY>"
-);
-
-await client.Service.CreateBigEntityAsync(
-    new BigEntity {
-        CastMember = new Actor {
-            ID = "john.doe",
-            Name = "John Doe"
-        },
-        ExtendedMovie = new ExtendedMovie {
-            Cast = new List<string>(){
-                "John Travolta",
-                "Samuel L. Jackson",
-                "Uma Thurman",
-                "Bruce Willis",
-            }
-            ,
-            ID = "movie-sda231x",
-            Title = "Pulp Fiction",
-            From = "Quentin Tarantino",
-            Rating = 8.5,
-            Type = "movie",
-            Tag = "tag-12efs9dv",
-            Metadata = new Dictionary<string, object?>(){
-                ["academyAward"] = true,
-                ["releaseDate"] = "2023-12-08",
-                ["ratings"] = new Dictionary<string, object>()
-                {
-                    ["rottenTomatoes"] = 97,
-                    ["imdb"] = 7.6,
-                }
-                ,
-            }
-            ,
-            Revenue = 1000000L
-        },
-        EventInfo = new EventInfo(
-            new Metadata {
-                ID = "event-12345",
-                Data = new Dictionary<string, string>(){
-                    ["key1"] = "val1",
-                    ["key2"] = "val2",
-                }
-                ,
-                JSONString = "abc"
-            }
-        ),
-        Migration = new Migration {
-            Name = "Migration 31 Aug",
-            Status = MigrationStatus.Running
-        }
-    }
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "entity"
+    ],
+    "message": "\\"entity\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "metadata"
+    ],
+    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "commonMetadata"
+    ],
+    "message": "\\"commonMetadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "data"
+    ],
+    "message": "\\"data\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "exception"
+    ],
+    "message": "\\"exception\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test"
+    ],
+    "message": "\\"test\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "node"
+    ],
+    "message": "\\"node\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "directory"
+    ],
+    "message": "\\"directory\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "moment"
+    ],
+    "message": "\\"moment\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "extendedMovie",
+      "prequel"
+    ],
+    "message": "\\"prequel\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "extendedMovie",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `
 "[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  },
   {
     "severity": "CRITICAL",
     "path": [
@@ -122,44 +162,16 @@ exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`
 `;
 
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
-"using Acme;
-using Acme.Types;
-using System.Collections.Generic;
-
-var client = new AcmeClient(
-    token: "<YOUR_API_KEY>"
-);
-
-await client.Service.CreateMovieAsync(
-    new Movie {
-        ID = "movie-c06a4ad7",
-        Prequel = "movie-cv9b914f",
-        Title = "The Boy and the Heron",
-        From = "Hayao Miyazaki",
-        Rating = 8,
-        Type = "movie",
-        Tag = "development",
-        Metadata = new Dictionary<string, object?>(){
-            ["actors"] = new List<object>()
-            {
-                "Christian Bale",
-                "Florence Pugh",
-                "Willem Dafoe",
-            }
-            ,
-            ["releaseDate"] = "2023-12-08",
-            ["ratings"] = new Dictionary<string, object>()
-            {
-                ["rottenTomatoes"] = 97,
-                ["imdb"] = 7.6,
-            }
-            ,
-        }
-        ,
-        Revenue = 1000000L
-    }
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
@@ -217,9 +229,9 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
     "severity": "CRITICAL",
     "path": [
       "requestBody[1]",
-      "invalid"
+      "string"
     ],
-    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+    "message": "\\"string\\" is not a recognized parameter for this endpoint"
   },
   {
     "severity": "CRITICAL",
@@ -341,8 +353,8 @@ var client = new AcmeClient();
 
 await client.Service.JustFileWithQueryParamsAsync(
     new JustFileWithQueryParamsRequest {
-        Integer = 42,
         MaybeString = "exists",
+        Integer = 42,
         File = new FileParameter(){
             Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
         }
@@ -462,35 +474,48 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 `;
 
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
-"using Acme;
-using Acme.Nullable;
-using System.Collections.Generic;
-using System;
-using System.Globalization;
-
-var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    }
-);
-
-await client.Nullable.CreateUserAsync(
-    new CreateUserRequest {
-        Username = "john.doe",
-        Tags = new List<string>(){
-            "admin",
-        }
-        ,
-        Metadata = new Metadata {
-            CreatedAt = DateTime.Parse("1980-01-01T00:00:00Z", null, DateTimeStyles.AdjustToUniversal),
-            UpdatedAt = DateTime.Parse("1980-01-01T00:00:00Z", null, DateTimeStyles.AdjustToUniversal),
-            Avatar = null,
-            Activated = null
-        },
-        Avatar = null
-    }
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "activated"
+    ],
+    "message": "\\"activated\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "status"
+    ],
+    "message": "\\"status\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "values"
+    ],
+    "message": "\\"values\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
@@ -498,9 +523,34 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
   {
     "severity": "CRITICAL",
     "path": [
-      "requestBody"
+      "requestBody",
+      "username"
     ],
-    "message": "Expected non-null value, but got null"
+    "message": "\\"username\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "tags"
+    ],
+    "message": "\\"tags\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "metadata"
+    ],
+    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
   }
 ]"
 `;
@@ -526,56 +576,64 @@ await client.Nullable.GetUsersAsync(
         Tags = new List<string>(){
             null,
         }
-        ,
-        Extra = null
+
     }
 );
 "
 `;
 
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
-"using Acme;
-
-var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    }
-);
-
-await client.CreateUserAsync(
-    new User {
-        Password = "password",
-        Profile = new UserProfile {
-            Name = "name",
-            Verification = new UserProfileVerification(),
-            Ssn = "ssn"
-        }
-    }
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "id"
+    ],
+    "message": "\\"id\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "email"
+    ],
+    "message": "\\"email\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "profile",
+      "verification",
+      "verified"
+    ],
+    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
-"using Acme;
-
-var client = new AcmeClient(
-    clientOptions: new ClientOptions {
-        BaseUrl = "https://api.example.com"
-    }
-);
-
-await client.CreateUserAsync(
-    new User {
-        ID = "id",
-        Password = "password",
-        Profile = new UserProfile {
-            Name = "name",
-            Verification = new UserProfileVerification(),
-            Ssn = "ssn"
-        }
-    }
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "email"
+    ],
+    "message": "\\"email\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "profile",
+      "verification",
+      "verified"
+    ],
+    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `

@@ -177,8 +177,8 @@ exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 
 client = Acme::Client.new();
 
 client.service.just_file_with_query_params(
-  integer: 42,
-  maybe_string: 'exists'
+  maybe_string: 'exists',
+  integer: 42
 );
 "
 `;
@@ -259,30 +259,46 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 `;
 
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
-"require "acme"
-
-client = Acme::Client.new(base_url: 'https://api.example.com');
-
-client.nullable.create_user(
-  username: 'john.doe',
-  tags: ['admin'],
-  metadata: {
-    created_at: '1980-01-01T00:00:00Z',
-    updated_at: '1980-01-01T00:00:00Z',
-    avatar: nil,
-    activated: nil
-  },
-  avatar: nil
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
 "[
   {
     "severity": "CRITICAL",
-    "path": [],
-    "message": "Expected non-null value, but got null"
+    "path": [
+      "username"
+    ],
+    "message": "\\"username\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "tags"
+    ],
+    "message": "\\"tags\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "metadata"
+    ],
+    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
   }
 ]"
 `;
@@ -294,8 +310,7 @@ client = Acme::Client.new(base_url: 'https://api.example.com');
 
 client.nullable.get_users(
   usernames: ['john.doe', 'jane.doe'],
-  tags: [nil],
-  extra: nil
+  tags: [nil]
 );
 "
 `;

@@ -74,78 +74,110 @@ func do() {
 `;
 
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	commons "github.com/acme/acme-go/commons"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<YOUR_API_KEY>",
-		),
-	)
-	request := &acme.BigEntity{
-		CastMember: &acme.CastMember{
-			Actor: &acme.Actor{
-				ID:   "john.doe",
-				Name: "John Doe",
-			},
-		},
-		ExtendedMovie: &acme.ExtendedMovie{
-			Cast: []string{
-				"John Travolta",
-				"Samuel L. Jackson",
-				"Uma Thurman",
-				"Bruce Willis",
-			},
-			ID:     "movie-sda231x",
-			Title:  "Pulp Fiction",
-			From:   "Quentin Tarantino",
-			Rating: 8.5,
-			Tag:    "tag-12efs9dv",
-			Metadata: map[string]any{
-				"academyAward": true,
-				"releaseDate":  "2023-12-08",
-				"ratings": map[string]any{
-					"rottenTomatoes": 97,
-					"imdb":           7.6,
-				},
-			},
-			Revenue: 1000000,
-		},
-		EventInfo: &commons.EventInfo{
-			Metadata: &commons.Metadata{
-				ID: "event-12345",
-				Data: map[string]string{
-					"key1": "val1",
-					"key2": "val2",
-				},
-				JSONString: acme.String(
-					"abc",
-				),
-			},
-		},
-		Migration: &acme.Migration{
-			Name:   "Migration 31 Aug",
-			Status: acme.MigrationStatusRunning,
-		},
-	}
-	client.Service.CreateBigEntity(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "entity"
+    ],
+    "message": "\\"entity\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "metadata"
+    ],
+    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "commonMetadata"
+    ],
+    "message": "\\"commonMetadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "data"
+    ],
+    "message": "\\"data\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "exception"
+    ],
+    "message": "\\"exception\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test"
+    ],
+    "message": "\\"test\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "node"
+    ],
+    "message": "\\"node\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "directory"
+    ],
+    "message": "\\"directory\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "moment"
+    ],
+    "message": "\\"moment\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "extendedMovie",
+      "prequel"
+    ],
+    "message": "\\"prequel\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "extendedMovie",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `
 "[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  },
   {
     "severity": "CRITICAL",
     "path": [
@@ -158,50 +190,16 @@ exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`
 `;
 
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<YOUR_API_KEY>",
-		),
-	)
-	request := &acme.Movie{
-		ID: "movie-c06a4ad7",
-		Prequel: acme.String(
-			"movie-cv9b914f",
-		),
-		Title:  "The Boy and the Heron",
-		From:   "Hayao Miyazaki",
-		Rating: 8,
-		Tag:    "development",
-		Metadata: map[string]any{
-			"actors": []any{
-				"Christian Bale",
-				"Florence Pugh",
-				"Willem Dafoe",
-			},
-			"releaseDate": "2023-12-08",
-			"ratings": map[string]any{
-				"rottenTomatoes": 97,
-				"imdb":           7.6,
-			},
-		},
-		Revenue: 1000000,
-	}
-	client.Service.CreateMovie(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
@@ -290,9 +288,9 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
     "severity": "CRITICAL",
     "path": [
       "requestBody[1]",
-      "invalid"
+      "string"
     ],
-    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+    "message": "\\"string\\" is not a recognized parameter for this endpoint"
   },
   {
     "severity": "CRITICAL",
@@ -443,10 +441,10 @@ import (
 func do() {
 	client := client.NewClient()
 	request := &acme.JustFileWithQueryParamsRequest{
-		Integer: 42,
 		MaybeString: acme.String(
 			"exists",
 		),
+		Integer: 42,
 		File: strings.NewReader(
 			"Hello, world!",
 		),
@@ -601,41 +599,48 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 `;
 
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	request := &acme.CreateUserRequest{
-		Username: "john.doe",
-		Tags: []string{
-			"admin",
-		},
-		Metadata: &acme.Metadata{
-			CreatedAt: acme.MustParseDateTime(
-				"1980-01-01T00:00:00Z",
-			),
-			UpdatedAt: acme.MustParseDateTime(
-				"1980-01-01T00:00:00Z",
-			),
-		},
-	}
-	client.Nullable.CreateUser(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "activated"
+    ],
+    "message": "\\"activated\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "status"
+    ],
+    "message": "\\"status\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "values"
+    ],
+    "message": "\\"values\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
@@ -643,9 +648,34 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
   {
     "severity": "CRITICAL",
     "path": [
-      "requestBody"
+      "requestBody",
+      "username"
     ],
-    "message": "Expected non-null value, but got null"
+    "message": "\\"username\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "tags"
+    ],
+    "message": "\\"tags\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "metadata"
+    ],
+    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
   }
 ]"
 `;
@@ -686,68 +716,57 @@ func do() {
 `;
 
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	request := &acme.User{
-		Password: "password",
-		Profile: &acme.UserProfile{
-			Name:         "name",
-			Verification: &acme.UserProfileVerification{},
-			Ssn:          "ssn",
-		},
-	}
-	client.CreateUser(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "id"
+    ],
+    "message": "\\"id\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "email"
+    ],
+    "message": "\\"email\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "profile",
+      "verification",
+      "verified"
+    ],
+    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	request := &acme.User{
-		ID:       "id",
-		Password: "password",
-		Profile: &acme.UserProfile{
-			Name:         "name",
-			Verification: &acme.UserProfileVerification{},
-			Ssn:          "ssn",
-		},
-	}
-	client.CreateUser(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "email"
+    ],
+    "message": "\\"email\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "profile",
+      "verification",
+      "verified"
+    ],
+    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
@@ -921,78 +940,110 @@ func do() {
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > examples > 'POST /big-entity (simple)' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	commons "github.com/acme/acme-go/commons"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<YOUR_API_KEY>",
-		),
-	)
-	request := &acme.BigEntity{
-		CastMember: &acme.CastMember{
-			Actor: &acme.Actor{
-				ID:   "john.doe",
-				Name: "John Doe",
-			},
-		},
-		ExtendedMovie: &acme.ExtendedMovie{
-			Cast: []string{
-				"John Travolta",
-				"Samuel L. Jackson",
-				"Uma Thurman",
-				"Bruce Willis",
-			},
-			ID:     "movie-sda231x",
-			Title:  "Pulp Fiction",
-			From:   "Quentin Tarantino",
-			Rating: 8.5,
-			Tag:    "tag-12efs9dv",
-			Metadata: map[string]any{
-				"academyAward": true,
-				"releaseDate":  "2023-12-08",
-				"ratings": map[string]any{
-					"rottenTomatoes": 97,
-					"imdb":           7.6,
-				},
-			},
-			Revenue: 1000000,
-		},
-		EventInfo: &commons.EventInfo{
-			Metadata: &commons.Metadata{
-				ID: "event-12345",
-				Data: map[string]string{
-					"key1": "val1",
-					"key2": "val2",
-				},
-				JSONString: acme.String(
-					"abc",
-				),
-			},
-		},
-		Migration: &acme.Migration{
-			Name:   "Migration 31 Aug",
-			Status: acme.MigrationStatusRunning,
-		},
-	}
-	client.Service.CreateBigEntity(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "entity"
+    ],
+    "message": "\\"entity\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "metadata"
+    ],
+    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "commonMetadata"
+    ],
+    "message": "\\"commonMetadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "data"
+    ],
+    "message": "\\"data\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "exception"
+    ],
+    "message": "\\"exception\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test"
+    ],
+    "message": "\\"test\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "node"
+    ],
+    "message": "\\"node\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "directory"
+    ],
+    "message": "\\"directory\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "moment"
+    ],
+    "message": "\\"moment\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "extendedMovie",
+      "prequel"
+    ],
+    "message": "\\"prequel\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "extendedMovie",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > examples > 'POST /movie (invalid request body)' 1`] = `
 "[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  },
   {
     "severity": "CRITICAL",
     "path": [
@@ -1005,50 +1056,16 @@ exports[`snippets (exportAllRequestsAtRoot) > examples > 'POST /movie (invalid r
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > examples > 'POST /movie (simple)' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithToken(
-			"<YOUR_API_KEY>",
-		),
-	)
-	request := &acme.Movie{
-		ID: "movie-c06a4ad7",
-		Prequel: acme.String(
-			"movie-cv9b914f",
-		),
-		Title:  "The Boy and the Heron",
-		From:   "Hayao Miyazaki",
-		Rating: 8,
-		Tag:    "development",
-		Metadata: map[string]any{
-			"actors": []any{
-				"Christian Bale",
-				"Florence Pugh",
-				"Willem Dafoe",
-			},
-			"releaseDate": "2023-12-08",
-			"ratings": map[string]any{
-				"rottenTomatoes": 97,
-				"imdb":           7.6,
-			},
-		},
-		Revenue: 1000000,
-	}
-	client.Service.CreateMovie(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
@@ -1137,9 +1154,9 @@ exports[`snippets (exportAllRequestsAtRoot) > exhaustive > 'POST /container/list
     "severity": "CRITICAL",
     "path": [
       "requestBody[1]",
-      "invalid"
+      "string"
     ],
-    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+    "message": "\\"string\\" is not a recognized parameter for this endpoint"
   },
   {
     "severity": "CRITICAL",
@@ -1290,10 +1307,10 @@ import (
 func do() {
 	client := client.NewClient()
 	request := &acme.JustFileWithQueryParamsRequest{
-		Integer: 42,
 		MaybeString: acme.String(
 			"exists",
 		),
+		Integer: 42,
 		File: strings.NewReader(
 			"Hello, world!",
 		),
@@ -1448,41 +1465,48 @@ exports[`snippets (exportAllRequestsAtRoot) > multi-url-environment > 'Unrecogni
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > nullable > 'Body properties' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	request := &acme.CreateUserRequest{
-		Username: "john.doe",
-		Tags: []string{
-			"admin",
-		},
-		Metadata: &acme.Metadata{
-			CreatedAt: acme.MustParseDateTime(
-				"1980-01-01T00:00:00Z",
-			),
-			UpdatedAt: acme.MustParseDateTime(
-				"1980-01-01T00:00:00Z",
-			),
-		},
-	}
-	client.Nullable.CreateUser(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "activated"
+    ],
+    "message": "\\"activated\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "status"
+    ],
+    "message": "\\"status\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "values"
+    ],
+    "message": "\\"values\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > nullable > 'Invalid null value' 1`] = `
@@ -1490,9 +1514,34 @@ exports[`snippets (exportAllRequestsAtRoot) > nullable > 'Invalid null value' 1`
   {
     "severity": "CRITICAL",
     "path": [
-      "requestBody"
+      "requestBody",
+      "username"
     ],
-    "message": "Expected non-null value, but got null"
+    "message": "\\"username\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "tags"
+    ],
+    "message": "\\"tags\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "metadata"
+    ],
+    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
   }
 ]"
 `;
@@ -1533,68 +1582,57 @@ func do() {
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > read-write-only > 'Body properties' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	request := &acme.User{
-		Password: "password",
-		Profile: &acme.UserProfile{
-			Name:         "name",
-			Verification: &acme.UserProfileVerification{},
-			Ssn:          "ssn",
-		},
-	}
-	client.CreateUser(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "id"
+    ],
+    "message": "\\"id\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "email"
+    ],
+    "message": "\\"email\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "profile",
+      "verification",
+      "verified"
+    ],
+    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > read-write-only > 'Readonly value in request' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	request := &acme.User{
-		ID:       "id",
-		Password: "password",
-		Profile: &acme.UserProfile{
-			Name:         "name",
-			Verification: &acme.UserProfileVerification{},
-			Ssn:          "ssn",
-		},
-	}
-	client.CreateUser(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "email"
+    ],
+    "message": "\\"email\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "profile",
+      "verification",
+      "verified"
+    ],
+    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (exportAllRequestsAtRoot) > single-url-environment-default > 'Production environment' 1`] = `
@@ -1768,78 +1806,110 @@ func do() {
 `;
 
 exports[`snippets (exportedClientName) > examples > 'POST /big-entity (simple)' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	commons "github.com/acme/acme-go/commons"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewFernClient(
-		option.WithToken(
-			"<YOUR_API_KEY>",
-		),
-	)
-	request := &acme.BigEntity{
-		CastMember: &acme.CastMember{
-			Actor: &acme.Actor{
-				ID:   "john.doe",
-				Name: "John Doe",
-			},
-		},
-		ExtendedMovie: &acme.ExtendedMovie{
-			Cast: []string{
-				"John Travolta",
-				"Samuel L. Jackson",
-				"Uma Thurman",
-				"Bruce Willis",
-			},
-			ID:     "movie-sda231x",
-			Title:  "Pulp Fiction",
-			From:   "Quentin Tarantino",
-			Rating: 8.5,
-			Tag:    "tag-12efs9dv",
-			Metadata: map[string]any{
-				"academyAward": true,
-				"releaseDate":  "2023-12-08",
-				"ratings": map[string]any{
-					"rottenTomatoes": 97,
-					"imdb":           7.6,
-				},
-			},
-			Revenue: 1000000,
-		},
-		EventInfo: &commons.EventInfo{
-			Metadata: &commons.Metadata{
-				ID: "event-12345",
-				Data: map[string]string{
-					"key1": "val1",
-					"key2": "val2",
-				},
-				JSONString: acme.String(
-					"abc",
-				),
-			},
-		},
-		Migration: &acme.Migration{
-			Name:   "Migration 31 Aug",
-			Status: acme.MigrationStatusRunning,
-		},
-	}
-	client.Service.CreateBigEntity(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "entity"
+    ],
+    "message": "\\"entity\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "metadata"
+    ],
+    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "commonMetadata"
+    ],
+    "message": "\\"commonMetadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "data"
+    ],
+    "message": "\\"data\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "exception"
+    ],
+    "message": "\\"exception\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test"
+    ],
+    "message": "\\"test\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "node"
+    ],
+    "message": "\\"node\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "directory"
+    ],
+    "message": "\\"directory\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "moment"
+    ],
+    "message": "\\"moment\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "extendedMovie",
+      "prequel"
+    ],
+    "message": "\\"prequel\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "extendedMovie",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (exportedClientName) > examples > 'POST /movie (invalid request body)' 1`] = `
 "[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  },
   {
     "severity": "CRITICAL",
     "path": [
@@ -1852,50 +1922,16 @@ exports[`snippets (exportedClientName) > examples > 'POST /movie (invalid reques
 `;
 
 exports[`snippets (exportedClientName) > examples > 'POST /movie (simple)' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewFernClient(
-		option.WithToken(
-			"<YOUR_API_KEY>",
-		),
-	)
-	request := &acme.Movie{
-		ID: "movie-c06a4ad7",
-		Prequel: acme.String(
-			"movie-cv9b914f",
-		),
-		Title:  "The Boy and the Heron",
-		From:   "Hayao Miyazaki",
-		Rating: 8,
-		Tag:    "development",
-		Metadata: map[string]any{
-			"actors": []any{
-				"Christian Bale",
-				"Florence Pugh",
-				"Willem Dafoe",
-			},
-			"releaseDate": "2023-12-08",
-			"ratings": map[string]any{
-				"rottenTomatoes": 97,
-				"imdb":           7.6,
-			},
-		},
-		Revenue: 1000000,
-	}
-	client.Service.CreateMovie(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (exportedClientName) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
@@ -1984,9 +2020,9 @@ exports[`snippets (exportedClientName) > exhaustive > 'POST /container/list-of-o
     "severity": "CRITICAL",
     "path": [
       "requestBody[1]",
-      "invalid"
+      "string"
     ],
-    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+    "message": "\\"string\\" is not a recognized parameter for this endpoint"
   },
   {
     "severity": "CRITICAL",
@@ -2137,10 +2173,10 @@ import (
 func do() {
 	client := client.NewFernClient()
 	request := &acme.JustFileWithQueryParamsRequest{
-		Integer: 42,
 		MaybeString: acme.String(
 			"exists",
 		),
+		Integer: 42,
 		File: strings.NewReader(
 			"Hello, world!",
 		),
@@ -2295,41 +2331,48 @@ exports[`snippets (exportedClientName) > multi-url-environment > 'Unrecognized e
 `;
 
 exports[`snippets (exportedClientName) > nullable > 'Body properties' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewFernClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	request := &acme.CreateUserRequest{
-		Username: "john.doe",
-		Tags: []string{
-			"admin",
-		},
-		Metadata: &acme.Metadata{
-			CreatedAt: acme.MustParseDateTime(
-				"1980-01-01T00:00:00Z",
-			),
-			UpdatedAt: acme.MustParseDateTime(
-				"1980-01-01T00:00:00Z",
-			),
-		},
-	}
-	client.Nullable.CreateUser(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "activated"
+    ],
+    "message": "\\"activated\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "status"
+    ],
+    "message": "\\"status\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "values"
+    ],
+    "message": "\\"values\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (exportedClientName) > nullable > 'Invalid null value' 1`] = `
@@ -2337,9 +2380,34 @@ exports[`snippets (exportedClientName) > nullable > 'Invalid null value' 1`] = `
   {
     "severity": "CRITICAL",
     "path": [
-      "requestBody"
+      "requestBody",
+      "username"
     ],
-    "message": "Expected non-null value, but got null"
+    "message": "\\"username\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "tags"
+    ],
+    "message": "\\"tags\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "metadata"
+    ],
+    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
   }
 ]"
 `;
@@ -2380,68 +2448,57 @@ func do() {
 `;
 
 exports[`snippets (exportedClientName) > read-write-only > 'Body properties' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewFernClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	request := &acme.User{
-		Password: "password",
-		Profile: &acme.UserProfile{
-			Name:         "name",
-			Verification: &acme.UserProfileVerification{},
-			Ssn:          "ssn",
-		},
-	}
-	client.CreateUser(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "id"
+    ],
+    "message": "\\"id\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "email"
+    ],
+    "message": "\\"email\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "profile",
+      "verification",
+      "verified"
+    ],
+    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (exportedClientName) > read-write-only > 'Readonly value in request' 1`] = `
-"package example
-
-import (
-	context "context"
-	acme "github.com/acme/acme-go"
-	client "github.com/acme/acme-go/client"
-	option "github.com/acme/acme-go/option"
-)
-
-func do() {
-	client := client.NewFernClient(
-		option.WithBaseURL(
-			"https://api.example.com",
-		),
-	)
-	request := &acme.User{
-		ID:       "id",
-		Password: "password",
-		Profile: &acme.UserProfile{
-			Name:         "name",
-			Verification: &acme.UserProfileVerification{},
-			Ssn:          "ssn",
-		},
-	}
-	client.CreateUser(
-		context.TODO(),
-		request,
-	)
-}
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "email"
+    ],
+    "message": "\\"email\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "profile",
+      "verification",
+      "verified"
+    ],
+    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (exportedClientName) > single-url-environment-default > 'Production environment' 1`] = `

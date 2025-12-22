@@ -51,90 +51,110 @@ client.service().getMetadata(
 `;
 
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
-"package com.example.usage;
-
-import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.commons.types.EventInfo;
-import com.acme.acme.commons.types.Metadata;
-import com.acme.acme.types.Actor;
-import com.acme.acme.types.BigEntity;
-import com.acme.acme.types.CastMember;
-import com.acme.acme.types.ExtendedMovie;
-import com.acme.acme.types.Migration;
-import com.acme.acme.types.MigrationStatus;
-import java.util.Arrays;
-import java.util.HashMap;
-
-AcmeAcmeClient client = AcmeAcmeClient
-    .builder()
-    .token("<YOUR_API_KEY>")
-    .build();
-
-client.service().createBigEntity(
-    BigEntity
-        .builder()
-        .castMember(
-            CastMember.of(
-                Actor
-                    .builder()
-                    .name("John Doe")
-                    .id("john.doe")
-                    .build()
-            )
-        )
-        .extendedMovie(
-            ExtendedMovie
-                .builder()
-                .id("movie-sda231x")
-                .title("Pulp Fiction")
-                .from("Quentin Tarantino")
-                .rating(8.5)
-                .tag("tag-12efs9dv")
-                .revenue(1000000L)
-                .metadata(
-                    new HashMap<String, Object>() {{
-                        put("academyAward", true);
-                        put("releaseDate", "2023-12-08");
-                        put("ratings", new 
-                        HashMap<String, Object>() {{put("rottenTomatoes", 97);
-                            put("imdb", 7.6);
-                        }});
-                    }}
-                )
-                .cast(
-                    Arrays.asList("John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis")
-                )
-                .build()
-        )
-        .eventInfo(
-            EventInfo.metadata(
-                Metadata
-                    .builder()
-                    .id("event-12345")
-                    .data(
-                        new HashMap<String, String>() {{
-                            put("key1", "val1");
-                            put("key2", "val2");
-                        }}
-                    )
-                    .jsonString("abc")
-                    .build()
-            )
-        )
-        .migration(
-            Migration
-                .builder()
-                .name("Migration 31 Aug")
-                .status(MigrationStatus.RUNNING)
-                .build()
-        )
-        .build()
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "entity"
+    ],
+    "message": "\\"entity\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "metadata"
+    ],
+    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "commonMetadata"
+    ],
+    "message": "\\"commonMetadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "data"
+    ],
+    "message": "\\"data\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "exception"
+    ],
+    "message": "\\"exception\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "test"
+    ],
+    "message": "\\"test\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "node"
+    ],
+    "message": "\\"node\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "directory"
+    ],
+    "message": "\\"directory\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "moment"
+    ],
+    "message": "\\"moment\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "extendedMovie",
+      "prequel"
+    ],
+    "message": "\\"prequel\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "extendedMovie",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`] = `
 "[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  },
   {
     "severity": "CRITICAL",
     "path": [
@@ -147,42 +167,16 @@ exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`
 `;
 
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
-"package com.example.usage;
-
-import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.types.Movie;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-
-AcmeAcmeClient client = AcmeAcmeClient
-    .builder()
-    .token("<YOUR_API_KEY>")
-    .build();
-
-client.service().createMovie(
-    Movie
-        .builder()
-        .id("movie-c06a4ad7")
-        .title("The Boy and the Heron")
-        .from("Hayao Miyazaki")
-        .rating(8.0)
-        .tag("development")
-        .revenue(1000000L)
-        .prequel("movie-cv9b914f")
-        .metadata(
-            new HashMap<String, Object>() {{
-                put("actors", new ArrayList<Object>(Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")));
-                put("releaseDate", "2023-12-08");
-                put("ratings", new 
-                HashMap<String, Object>() {{put("rottenTomatoes", 97);
-                    put("imdb", 7.6);
-                }});
-            }}
-        )
-        .build()
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "book"
+    ],
+    "message": "\\"book\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
@@ -250,9 +244,9 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
     "severity": "CRITICAL",
     "path": [
       "requestBody[1]",
-      "invalid"
+      "string"
     ],
-    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+    "message": "\\"string\\" is not a recognized parameter for this endpoint"
   },
   {
     "severity": "CRITICAL",
@@ -518,49 +512,48 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 `;
 
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
-"package com.example.usage;
-
-import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.core.Nullable;
-import com.acme.acme.types.CreateUserRequest;
-import com.acme.acme.types.Metadata;
-import java.time.OffsetDateTime;
-import java.util.Arrays;
-import java.util.Optional;
-
-AcmeAcmeClient client = AcmeAcmeClient
-    .builder()
-    .url("https://api.example.com")
-    .build();
-
-client.nullable().createUser(
-    CreateUserRequest
-        .builder()
-        .username("john.doe")
-        .avatar(
-            Nullable.ofNull()
-        )
-        .tags(
-            Optional.of(
-                Arrays.asList("admin")
-            )
-        )
-        .metadata(
-            Metadata
-                .builder()
-                .createdAt(OffsetDateTime.parse("1980-01-01T00:00:00Z"))
-                .updatedAt(OffsetDateTime.parse("1980-01-01T00:00:00Z"))
-                .avatar(
-                    Nullable.ofNull()
-                )
-                .activated(
-                    Nullable.ofNull()
-                )
-                .build()
-        )
-        .build()
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "activated"
+    ],
+    "message": "\\"activated\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "status"
+    ],
+    "message": "\\"status\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "values"
+    ],
+    "message": "\\"values\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
@@ -568,9 +561,34 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
   {
     "severity": "CRITICAL",
     "path": [
-      "requestBody"
+      "requestBody",
+      "username"
     ],
-    "message": "Expected non-null value, but got null"
+    "message": "\\"username\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "tags"
+    ],
+    "message": "\\"tags\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "metadata"
+    ],
+    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "avatar"
+    ],
+    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
   }
 ]"
 `;
@@ -588,72 +606,57 @@ exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 `;
 
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
-"package com.example.usage;
-
-import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.types.User;
-import com.acme.acme.types.UserProfile;
-import com.acme.acme.types.UserProfileVerification;
-
-AcmeAcmeClient client = AcmeAcmeClient
-    .builder()
-    .url("https://api.example.com")
-    .build();
-
-client.createUser(
-    User
-        .builder()
-        .password("password")
-        .profile(
-            UserProfile
-                .builder()
-                .name("name")
-                .verification(
-                    UserProfileVerification
-                        .builder()
-                        .build()
-                )
-                .ssn("ssn")
-                .build()
-        )
-        .build()
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "id"
+    ],
+    "message": "\\"id\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "email"
+    ],
+    "message": "\\"email\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "profile",
+      "verification",
+      "verified"
+    ],
+    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
-"package com.example.usage;
-
-import com.acme.acme.AcmeAcmeClient;
-import com.acme.acme.types.User;
-import com.acme.acme.types.UserProfile;
-import com.acme.acme.types.UserProfileVerification;
-
-AcmeAcmeClient client = AcmeAcmeClient
-    .builder()
-    .url("https://api.example.com")
-    .build();
-
-client.createUser(
-    User
-        .builder()
-        .id("id")
-        .password("password")
-        .profile(
-            UserProfile
-                .builder()
-                .name("name")
-                .verification(
-                    UserProfileVerification
-                        .builder()
-                        .build()
-                )
-                .ssn("ssn")
-                .build()
-        )
-        .build()
-);
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "email"
+    ],
+    "message": "\\"email\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "profile",
+      "verification",
+      "verified"
+    ],
+    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
