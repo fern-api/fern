@@ -43,7 +43,7 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedAudiences.folderA.Response>> {
         const { ids, tags } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (Array.isArray(ids)) {
             _queryParams.ids = ids.map((item) => item);
         } else {

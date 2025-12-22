@@ -120,14 +120,14 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                 name: getPropertyKey(this.authScheme.username.camelCase.safeName),
                 hasQuestionToken: isUsernameOptional,
                 type: getTextOfTsNode(usernamePropertyType),
-                docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
+                docs: this.authScheme.docs ? [this.authScheme.docs] : undefined
             },
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(this.authScheme.password.camelCase.safeName),
                 hasQuestionToken: isPasswordOptional,
                 type: getTextOfTsNode(passwordPropertyType),
-                docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
+                docs: this.authScheme.docs ? [this.authScheme.docs] : undefined
             }
         ];
     }

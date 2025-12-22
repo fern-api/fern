@@ -112,7 +112,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                 name: getPropertyKey(this.authScheme.token.camelCase.safeName),
                 hasQuestionToken: isTokenOptional,
                 type: getTextOfTsNode(propertyType),
-                docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
+                docs: this.authScheme.docs ? [this.authScheme.docs] : undefined
             }
         ];
     }

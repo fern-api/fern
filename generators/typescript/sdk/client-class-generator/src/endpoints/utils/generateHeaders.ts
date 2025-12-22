@@ -197,6 +197,10 @@ function getValueExpressionForHeader({
     } else if (requestParameter == null) {
         throw new Error(`Cannot reference header ${header.name.wireValue} because request parameter is not defined.`);
     } else {
+        const needsStringify = typeNeedsStringify(header.valueType, context);
+        if (!needsStringify) {
+            return requestParameter.getReferenceToNonLiteralHeader(header, context);
+        }
         return context.type.stringify(
             requestParameter.getReferenceToNonLiteralHeader(header, context),
             header.valueType,
@@ -216,13 +220,20 @@ function getValueExpressionForIdempotencyHeader({
     if (literalValue != null) {
         return ts.factory.createStringLiteral(literalValue.toString());
     } else {
+        const needsStringify = typeNeedsStringify(header.valueType, context);
+        const reference = ts.factory.createPropertyAccessChain(
+            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(header.name.name.camelCase.unsafeName)
+        );
+        if (!needsStringify) {
+            return reference;
+        }
         return context.type.stringify(
-            ts.factory.createPropertyAccessChain(
-                ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                ts.factory.createIdentifier(header.name.name.camelCase.unsafeName)
-            ),
-            header.valueType,
+            reference,
+            // since we know request options is optional, the entire expression is optional
+            // so we wrap the valuetype in an optional container to force null check
+            FernIr.TypeReference.container(FernIr.ContainerType.optional(header.valueType)),
             { includeNullCheckIfOptional: true }
         );
     }
@@ -330,4 +341,52 @@ function isAuthorizationHeader(header: HttpHeader | HeaderAuthScheme): boolean {
 
 function getOptionKeyForHeader(header: HttpHeader): string {
     return header.name.name.camelCase.unsafeName;
+}
+
+function typeNeedsStringify(type: FernIr.TypeReference, context: SdkContext): boolean {
+    return type._visit({
+        container: (containerType) => {
+            return containerType._visit({
+                list: () => true,
+                map: () => true,
+                set: () => true,
+                literal: () => false,
+                optional: (innerType) => typeNeedsStringify(innerType, context),
+                nullable: (innerType) => typeNeedsStringify(innerType, context),
+                _other: () => true
+            });
+        },
+        named: (namedType) => {
+            const declaration = context.type.getTypeDeclaration(namedType);
+            return declaration.shape._visit({
+                alias: (alias) => typeNeedsStringify(alias.aliasOf, context),
+                enum: () => false,
+                object: () => true,
+                union: () => true,
+                undiscriminatedUnion: () => true,
+                _other: () => true
+            });
+        },
+        primitive: (primitiveType) => {
+            switch (primitiveType.v1) {
+                case "INTEGER":
+                case "LONG":
+                case "UINT":
+                case "UINT_64":
+                case "FLOAT":
+                case "DOUBLE":
+                case "BOOLEAN":
+                case "STRING":
+                case "UUID":
+                case "BASE_64":
+                case "BIG_INTEGER":
+                    return false;
+                case "DATE":
+                case "DATE_TIME":
+                    return true;
+            }
+        },
+        unknown: () => true,
+        _other: () => true
+    });
 }

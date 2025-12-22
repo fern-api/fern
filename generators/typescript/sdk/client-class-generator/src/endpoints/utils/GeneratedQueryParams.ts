@@ -1,7 +1,7 @@
+import { FernIr } from "@fern-fern/ir-sdk";
 import { DeclaredTypeName, QueryParameter, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-
 import {
     REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
     REQUEST_OPTIONS_PARAMETER_NAME
@@ -44,17 +44,7 @@ export class GeneratedQueryParams {
                             undefined,
                             ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                ts.factory.createUnionTypeNode([
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                    ts.factory.createArrayTypeNode(
-                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                                    ),
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword),
-                                    ts.factory.createArrayTypeNode(
-                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.ObjectKeyword)
-                                    ),
-                                    ts.factory.createLiteralTypeNode(ts.factory.createNull())
-                                ])
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
                             ]),
                             ts.factory.createObjectLiteralExpression([], false)
                         )
@@ -102,9 +92,17 @@ export class GeneratedQueryParams {
                         // if it's a primitive type, the previous null check already unwrapped the null or undefined
                         // use the primitive type directly to stringify
                         else if (primitiveType != null) {
-                            assignmentExpression = context.type.stringify(referenceToQueryParameter, primitiveType, {
-                                includeNullCheckIfOptional: false
-                            });
+                            if (primitiveTypeNeedsStringify(primitiveType.primitive)) {
+                                assignmentExpression = context.type.stringify(
+                                    referenceToQueryParameter,
+                                    primitiveType,
+                                    {
+                                        includeNullCheckIfOptional: false
+                                    }
+                                );
+                            } else {
+                                assignmentExpression = referenceToQueryParameter;
+                            }
                         } else {
                             assignmentExpression = context.type.stringify(
                                 referenceToQueryParameter,
@@ -235,7 +233,6 @@ export class GeneratedQueryParams {
                 ts.factory.createParameterDeclaration(
                     undefined,
                     undefined,
-                    undefined,
                     ts.factory.createIdentifier("item"),
                     undefined,
                     undefined
@@ -296,6 +293,8 @@ export class GeneratedQueryParams {
                 switch (typeReference.container.type) {
                     case "optional":
                         return this.getPrimitiveType(typeReference.container.optional, context);
+                    case "nullable":
+                        return this.getPrimitiveType(typeReference.container.nullable, context);
                 }
             }
         }
@@ -320,6 +319,8 @@ export class GeneratedQueryParams {
                 switch (typeReference.container.type) {
                     case "optional":
                         return this.getObjectType(typeReference.container.optional, context);
+                    case "nullable":
+                        return this.getObjectType(typeReference.container.nullable, context);
                 }
             }
         }
@@ -387,5 +388,25 @@ export class GeneratedQueryParams {
                 ts.factory.createBlock(statements)
             )
         ];
+    }
+}
+
+function primitiveTypeNeedsStringify(primitiveType: FernIr.PrimitiveType): boolean {
+    switch (primitiveType.v1) {
+        case "INTEGER":
+        case "LONG":
+        case "UINT":
+        case "UINT_64":
+        case "FLOAT":
+        case "DOUBLE":
+        case "BOOLEAN":
+        case "STRING":
+        case "UUID":
+        case "BASE_64":
+        case "BIG_INTEGER":
+            return false;
+        case "DATE":
+        case "DATE_TIME":
+            return true;
     }
 }
