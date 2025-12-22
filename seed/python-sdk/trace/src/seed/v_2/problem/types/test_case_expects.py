@@ -9,7 +9,9 @@ from ....core.serialization import FieldMetadata
 
 
 class TestCaseExpects(UniversalBaseModel):
-    expected_stdout: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="expectedStdout")] = None
+    expected_stdout: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="expectedStdout")] = (
+        pydantic.Field(alias="expectedStdout", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

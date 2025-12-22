@@ -16,8 +16,12 @@ class SendRequest(UniversalBaseModel):
     stream: typing.Literal[False] = False
     ending: typing.Literal["$ending"] = "$ending"
     context: SomeLiteral = "You're super wise"
-    maybe_context: typing_extensions.Annotated[typing.Optional[SomeLiteral], FieldMetadata(alias="maybeContext")] = None
-    container_object: typing_extensions.Annotated[ContainerObject, FieldMetadata(alias="containerObject")]
+    maybe_context: typing_extensions.Annotated[typing.Optional[SomeLiteral], FieldMetadata(alias="maybeContext")] = (
+        pydantic.Field(alias="maybeContext", default=None)
+    )
+    container_object: typing_extensions.Annotated[ContainerObject, FieldMetadata(alias="containerObject")] = (
+        pydantic.Field(alias="containerObject")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

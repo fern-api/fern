@@ -12,8 +12,12 @@ from .actual_result import ActualResult
 
 
 class TestCaseResult(UniversalBaseModel):
-    expected_result: typing_extensions.Annotated["VariableValue", FieldMetadata(alias="expectedResult")]
-    actual_result: typing_extensions.Annotated[ActualResult, FieldMetadata(alias="actualResult")]
+    expected_result: typing_extensions.Annotated["VariableValue", FieldMetadata(alias="expectedResult")] = (
+        pydantic.Field(alias="expectedResult")
+    )
+    actual_result: typing_extensions.Annotated[ActualResult, FieldMetadata(alias="actualResult")] = pydantic.Field(
+        alias="actualResult"
+    )
     passed: bool
 
     if IS_PYDANTIC_V2:

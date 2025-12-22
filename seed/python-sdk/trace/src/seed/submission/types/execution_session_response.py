@@ -11,10 +11,10 @@ from .execution_session_status import ExecutionSessionStatus
 
 
 class ExecutionSessionResponse(UniversalBaseModel):
-    session_id: typing_extensions.Annotated[str, FieldMetadata(alias="sessionId")]
+    session_id: typing_extensions.Annotated[str, FieldMetadata(alias="sessionId")] = pydantic.Field(alias="sessionId")
     execution_session_url: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="executionSessionUrl")
-    ] = None
+    ] = pydantic.Field(alias="executionSessionUrl", default=None)
     language: Language
     status: ExecutionSessionStatus
 

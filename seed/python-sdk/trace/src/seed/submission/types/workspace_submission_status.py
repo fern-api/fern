@@ -55,7 +55,9 @@ class WorkspaceSubmissionStatus_Running(UniversalBaseModel):
 
 class WorkspaceSubmissionStatus_Ran(UniversalBaseModel):
     type: typing.Literal["ran"] = "ran"
-    exception_v_2: typing_extensions.Annotated[typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2")] = None
+    exception_v_2: typing_extensions.Annotated[typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2")] = (
+        pydantic.Field(alias="exceptionV2", default=None)
+    )
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 
@@ -71,7 +73,9 @@ class WorkspaceSubmissionStatus_Ran(UniversalBaseModel):
 
 class WorkspaceSubmissionStatus_Traced(UniversalBaseModel):
     type: typing.Literal["traced"] = "traced"
-    exception_v_2: typing_extensions.Annotated[typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2")] = None
+    exception_v_2: typing_extensions.Annotated[typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2")] = (
+        pydantic.Field(alias="exceptionV2", default=None)
+    )
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 

@@ -16,13 +16,23 @@ from .variable_type_and_name import VariableTypeAndName
 
 
 class CreateProblemRequest(UniversalBaseModel):
-    problem_name: typing_extensions.Annotated[str, FieldMetadata(alias="problemName")]
-    problem_description: typing_extensions.Annotated[ProblemDescription, FieldMetadata(alias="problemDescription")]
+    problem_name: typing_extensions.Annotated[str, FieldMetadata(alias="problemName")] = pydantic.Field(
+        alias="problemName"
+    )
+    problem_description: typing_extensions.Annotated[ProblemDescription, FieldMetadata(alias="problemDescription")] = (
+        pydantic.Field(alias="problemDescription")
+    )
     files: typing.Dict[Language, ProblemFiles]
-    input_params: typing_extensions.Annotated[typing.List[VariableTypeAndName], FieldMetadata(alias="inputParams")]
-    output_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="outputType")]
+    input_params: typing_extensions.Annotated[typing.List[VariableTypeAndName], FieldMetadata(alias="inputParams")] = (
+        pydantic.Field(alias="inputParams")
+    )
+    output_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="outputType")] = pydantic.Field(
+        alias="outputType"
+    )
     testcases: typing.List[TestCaseWithExpectedResult]
-    method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName")]
+    method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName")] = pydantic.Field(
+        alias="methodName"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

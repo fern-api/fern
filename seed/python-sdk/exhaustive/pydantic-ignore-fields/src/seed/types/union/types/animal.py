@@ -13,7 +13,9 @@ from ....core.serialization import FieldMetadata
 class Animal_Dog(UniversalBaseModel):
     animal: typing.Literal["dog"] = "dog"
     name: str
-    likes_to_woof: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")]
+    likes_to_woof: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")] = pydantic.Field(
+        alias="likesToWoof"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
@@ -28,7 +30,9 @@ class Animal_Dog(UniversalBaseModel):
 class Animal_Cat(UniversalBaseModel):
     animal: typing.Literal["cat"] = "cat"
     name: str
-    likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]
+    likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")] = pydantic.Field(
+        alias="likesToMeow"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

@@ -10,7 +10,7 @@ from ...core.serialization import FieldMetadata
 
 class ConvertToken(UniversalBaseModel):
     method: str
-    token_id: typing_extensions.Annotated[str, FieldMetadata(alias="tokenId")]
+    token_id: typing_extensions.Annotated[str, FieldMetadata(alias="tokenId")] = pydantic.Field(alias="tokenId")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

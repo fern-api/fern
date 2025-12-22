@@ -36,7 +36,7 @@ class ExtendedMovie(UniversalBaseModel):
     id: MovieId
     prequel: typing.Optional[MovieId] = None
     title: str
-    from_: typing_extensions.Annotated[str, FieldMetadata(alias="from")]
+    from_: typing_extensions.Annotated[str, FieldMetadata(alias="from")] = pydantic.Field(alias="from")
     rating: float = pydantic.Field()
     """
     The rating scale is one to five stars

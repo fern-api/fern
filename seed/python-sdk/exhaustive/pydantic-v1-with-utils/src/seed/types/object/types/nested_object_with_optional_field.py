@@ -13,7 +13,7 @@ class NestedObjectWithOptionalField(UniversalBaseModel):
     string: typing.Optional[str] = None
     nested_object: typing_extensions.Annotated[
         typing.Optional[ObjectWithOptionalField], FieldMetadata(alias="NestedObject")
-    ] = None
+    ] = pydantic.Field(alias="NestedObject", default=None)
 
     class Config:
         frozen = True

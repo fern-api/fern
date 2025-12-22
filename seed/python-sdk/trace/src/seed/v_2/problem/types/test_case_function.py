@@ -16,10 +16,12 @@ from .parameter import Parameter
 
 class TestCaseFunction_WithActualResult(UniversalBaseModel):
     type: typing.Literal["withActualResult"] = "withActualResult"
-    get_actual_result: typing_extensions.Annotated[NonVoidFunctionDefinition, FieldMetadata(alias="getActualResult")]
+    get_actual_result: typing_extensions.Annotated[
+        NonVoidFunctionDefinition, FieldMetadata(alias="getActualResult")
+    ] = pydantic.Field(alias="getActualResult")
     assert_correctness_check: typing_extensions.Annotated[
         AssertCorrectnessCheck, FieldMetadata(alias="assertCorrectnessCheck")
-    ]
+    ] = pydantic.Field(alias="assertCorrectnessCheck")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

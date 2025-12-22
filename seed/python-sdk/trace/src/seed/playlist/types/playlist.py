@@ -13,7 +13,7 @@ from .playlist_id import PlaylistId
 
 class Playlist(PlaylistCreateRequest):
     playlist_id: PlaylistId
-    owner_id: typing_extensions.Annotated[UserId, FieldMetadata(alias="owner-id")]
+    owner_id: typing_extensions.Annotated[UserId, FieldMetadata(alias="owner-id")] = pydantic.Field(alias="owner-id")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

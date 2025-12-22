@@ -12,7 +12,9 @@ from .non_void_function_signature import NonVoidFunctionSignature
 
 
 class GetBasicSolutionFileRequest(UniversalBaseModel):
-    method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName")]
+    method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName")] = pydantic.Field(
+        alias="methodName"
+    )
     signature: NonVoidFunctionSignature
 
     if IS_PYDANTIC_V2:

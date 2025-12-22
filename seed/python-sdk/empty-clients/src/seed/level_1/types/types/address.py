@@ -9,8 +9,10 @@ from ....core.serialization import FieldMetadata
 
 
 class Address(UniversalBaseModel):
-    line_1: typing_extensions.Annotated[str, FieldMetadata(alias="line1")]
-    line_2: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="line2")] = None
+    line_1: typing_extensions.Annotated[str, FieldMetadata(alias="line1")] = pydantic.Field(alias="line1")
+    line_2: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="line2")] = pydantic.Field(
+        alias="line2", default=None
+    )
     city: str
     state: str
     zip: str

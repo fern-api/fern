@@ -14,7 +14,9 @@ class Admin(User):
     Admin user object
     """
 
-    admin_level: typing_extensions.Annotated[str, FieldMetadata(alias="adminLevel")] = pydantic.Field()
+    admin_level: typing_extensions.Annotated[str, FieldMetadata(alias="adminLevel")] = pydantic.Field(
+        alias="adminLevel"
+    )
     """
     The level of admin privileges.
     """

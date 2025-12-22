@@ -10,7 +10,9 @@ from .a_nested_literal import ANestedLiteral
 
 
 class ATopLevelLiteral(UniversalBaseModel):
-    nested_literal: typing_extensions.Annotated[ANestedLiteral, FieldMetadata(alias="nestedLiteral")]
+    nested_literal: typing_extensions.Annotated[ANestedLiteral, FieldMetadata(alias="nestedLiteral")] = pydantic.Field(
+        alias="nestedLiteral"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

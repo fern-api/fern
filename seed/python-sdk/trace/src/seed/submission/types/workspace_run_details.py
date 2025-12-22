@@ -11,7 +11,9 @@ from .exception_v_2 import ExceptionV2
 
 
 class WorkspaceRunDetails(UniversalBaseModel):
-    exception_v_2: typing_extensions.Annotated[typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2")] = None
+    exception_v_2: typing_extensions.Annotated[typing.Optional[ExceptionV2], FieldMetadata(alias="exceptionV2")] = (
+        pydantic.Field(alias="exceptionV2", default=None)
+    )
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 

@@ -9,9 +9,13 @@ from ...core.serialization import FieldMetadata
 
 
 class EmailNotification(UniversalBaseModel):
-    email_address: typing_extensions.Annotated[str, FieldMetadata(alias="emailAddress")]
+    email_address: typing_extensions.Annotated[str, FieldMetadata(alias="emailAddress")] = pydantic.Field(
+        alias="emailAddress"
+    )
     subject: str
-    html_content: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="htmlContent")] = None
+    html_content: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="htmlContent")] = (
+        pydantic.Field(alias="htmlContent", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

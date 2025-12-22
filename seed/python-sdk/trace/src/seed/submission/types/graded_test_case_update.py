@@ -13,7 +13,9 @@ from .test_case_grade import TestCaseGrade
 
 
 class GradedTestCaseUpdate(UniversalBaseModel):
-    test_case_id: typing_extensions.Annotated[TestCaseId, FieldMetadata(alias="testCaseId")]
+    test_case_id: typing_extensions.Annotated[TestCaseId, FieldMetadata(alias="testCaseId")] = pydantic.Field(
+        alias="testCaseId"
+    )
     grade: TestCaseGrade
 
     if IS_PYDANTIC_V2:

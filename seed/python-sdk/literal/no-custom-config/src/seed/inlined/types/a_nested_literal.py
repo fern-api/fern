@@ -10,7 +10,7 @@ from ...core.serialization import FieldMetadata
 
 class ANestedLiteral(UniversalBaseModel):
     my_literal: typing_extensions.Annotated[typing.Literal["How super cool"], FieldMetadata(alias="myLiteral")] = (
-        "How super cool"
+        pydantic.Field(alias="myLiteral", default="How super cool")
     )
 
     if IS_PYDANTIC_V2:

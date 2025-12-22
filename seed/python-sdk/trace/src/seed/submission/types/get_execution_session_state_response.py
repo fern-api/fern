@@ -13,8 +13,10 @@ class GetExecutionSessionStateResponse(UniversalBaseModel):
     states: typing.Dict[str, ExecutionSessionState]
     num_warming_instances: typing_extensions.Annotated[
         typing.Optional[int], FieldMetadata(alias="numWarmingInstances")
-    ] = None
-    warming_session_ids: typing_extensions.Annotated[typing.List[str], FieldMetadata(alias="warmingSessionIds")]
+    ] = pydantic.Field(alias="numWarmingInstances", default=None)
+    warming_session_ids: typing_extensions.Annotated[typing.List[str], FieldMetadata(alias="warmingSessionIds")] = (
+        pydantic.Field(alias="warmingSessionIds")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

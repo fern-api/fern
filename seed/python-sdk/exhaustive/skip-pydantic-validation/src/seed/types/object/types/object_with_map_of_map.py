@@ -10,7 +10,9 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 
 
 class ObjectWithMapOfMap(UncheckedBaseModel):
-    map_: typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], FieldMetadata(alias="map")]
+    map_: typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], FieldMetadata(alias="map")] = (
+        pydantic.Field(alias="map")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

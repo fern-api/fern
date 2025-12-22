@@ -10,8 +10,12 @@ from ...v_2.problem.types.test_case_id import TestCaseId
 
 
 class RecordedTestCaseUpdate(UniversalBaseModel):
-    test_case_id: typing_extensions.Annotated[TestCaseId, FieldMetadata(alias="testCaseId")]
-    trace_responses_size: typing_extensions.Annotated[int, FieldMetadata(alias="traceResponsesSize")]
+    test_case_id: typing_extensions.Annotated[TestCaseId, FieldMetadata(alias="testCaseId")] = pydantic.Field(
+        alias="testCaseId"
+    )
+    trace_responses_size: typing_extensions.Annotated[int, FieldMetadata(alias="traceResponsesSize")] = pydantic.Field(
+        alias="traceResponsesSize"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
