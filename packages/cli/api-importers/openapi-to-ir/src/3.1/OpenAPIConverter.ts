@@ -1,7 +1,8 @@
 import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
+import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
+import { FernBasePathExtension } from "../extensions/x-fern-base-path";
 import { FernGlobalHeadersExtension } from "../extensions/x-fern-global-headers";
 import { convertGlobalHeadersExtension } from "../utils/convertGlobalHeadersExtension";
 import { OpenAPIConverterContext3_1 } from "./OpenAPIConverterContext3_1";
@@ -34,6 +35,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         this.convertSecuritySchemes();
 
         this.convertGlobalHeaders();
+
+        this.convertBasePath();
 
         this.convertSchemas();
 
@@ -74,6 +77,18 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             });
             this.addGlobalHeadersToIr(globalHeaders);
             this.context.setGlobalHeaders(globalHeaders);
+        }
+    }
+
+    private convertBasePath(): void {
+        const basePathExtension = new FernBasePathExtension({
+            breadcrumbs: ["x-fern-base-path"],
+            document: this.context.spec,
+            context: this.context
+        });
+        const basePath = basePathExtension.convert();
+        if (basePath != null) {
+            this.ir.basePath = constructHttpPath(basePath);
         }
     }
 
