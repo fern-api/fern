@@ -52,11 +52,6 @@ types:
     properties:
       declaration: declaration.Declaration
       properties: list<NamedParameter>
-      extends:
-        docs: |
-          The types this object extends. Used to generate proper nested struct
-          initialization for languages like Rust that use composition with serde flatten.
-        type: optional<list<commons.TypeId>>
       additionalProperties:
         docs: Whether the type allows additional properties.
         type: optional<boolean>

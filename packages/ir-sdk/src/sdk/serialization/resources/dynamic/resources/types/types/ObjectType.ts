@@ -7,7 +7,6 @@ import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { Declaration } from "../../declaration/types/Declaration";
 import { NamedParameter } from "./NamedParameter";
-import { TypeId } from "../../commons/types/TypeId";
 
 export const ObjectType: core.serialization.ObjectSchema<
     serializers.dynamic.ObjectType.Raw,
@@ -15,7 +14,6 @@ export const ObjectType: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     declaration: Declaration,
     properties: core.serialization.list(NamedParameter),
-    extends: core.serialization.list(TypeId).optional(),
     additionalProperties: core.serialization.boolean().optional(),
 });
 
@@ -23,7 +21,6 @@ export declare namespace ObjectType {
     export interface Raw {
         declaration: Declaration.Raw;
         properties: NamedParameter.Raw[];
-        extends?: TypeId.Raw[] | null;
         additionalProperties?: boolean | null;
     }
 }
