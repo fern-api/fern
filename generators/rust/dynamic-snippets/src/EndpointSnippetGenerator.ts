@@ -1179,10 +1179,39 @@ export class EndpointSnippetGenerator {
             return `${methodName}QueryRequest`;
         }
 
-        // For inlined requests with body (with or without query params),
-        // the SDK uses endpoint-based naming: {EndpointName}Request
-        // This matches the SDK generator's convention in SubClientGenerator.ts
-        if (hasBody) {
+        // For inlined requests with body, check if it's a referenced type
+        // If so, use the referenced type name directly instead of creating a wrapper
+        if (hasBody && request.body != null) {
+            // Check if this is a referenced body (even if it has query params)
+            if (request.body.type === "referenced" && request.body.bodyType.type === "typeReference") {
+                const typeRef = request.body.bodyType.value;
+                if (typeRef.type === "named") {
+                    // Use the actual referenced type name from the IR
+                    const typeId = typeRef.value;
+                    const typeName = this.context.getTypeNameById(typeId);
+                    if (typeName) {
+                        // If there are query params, the SDK creates a wrapper type
+                        // Otherwise, use the referenced type directly
+                        if (hasQueryParams) {
+                            // SDK creates {EndpointName}Request wrapper for referenced body + query params
+                            return `${methodName}Request`;
+                        }
+                        // No query params: use the referenced type directly
+                        // But this case is already handled in getMethodArgsForInlinedRequest (lines 645-653)
+                        // so we shouldn't reach here. Fall through to default.
+                    }
+                }
+            }
+            
+            // For inlined requests with properties body, use the declaration name from the IR
+            // This ensures we use the actual type name (e.g., ResponseChargeBack) instead of
+            // a synthetic name (e.g., AddResponseRequest)
+            if (request.body.type === "properties") {
+                // Use the request struct's declaration name from the IR
+                return this.context.getStructNameByDeclaration(request.declaration);
+            }
+            
+            // For other body types (e.g., fileUpload), fall back to endpoint-based naming
             return `${methodName}Request`;
         }
 

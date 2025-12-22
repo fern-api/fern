@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.13.8
+  createdAt: "2025-12-22"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix wire test request type naming to use IR declaration names instead of synthetic endpoint-based names. This ensures generated tests use correct type names like ResponseChargeBack instead of AddResponseRequest.
+  irVersion: 61
+
 - version: 0.13.7
   createdAt: "2025-12-22"
   changelogEntry:
