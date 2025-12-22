@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.30.5
+  changelogEntry:
+    - summary: |
+        Support `x-fern-base-path` extension in the OpenAPI v3 parser.
+      type: fix
+  createdAt: "2025-12-22"
+  irVersion: 62
+
 - version: 3.30.4
   changelogEntry:
     - summary: |
