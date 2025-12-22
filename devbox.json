@@ -6,11 +6,9 @@
     "go@1.23",
     "python@3.10",
     "poetry@1.8",
-    "jdk@11",
     "jdk@17",
-    "buf@latest",
-    "git-lfs@latest",
-    "protobuf@latest"
+    "buf@1.50.0",
+    "git-lfs@latest"
   ],
   "shell": {
     "init_hook": [
@@ -19,7 +17,8 @@
       "echo 'pnpm:' $(pnpm --version)",
       "echo 'Go:' $(go version)",
       "echo 'Python:' $(python --version)",
-      "echo 'Java:' $(java --version 2>&1 | head -1)"
+      "echo 'Java:' $(java --version 2>&1 | head -1)",
+      "echo 'buf:' $(buf --version)"
     ],
     "scripts": {
       "bootstrap": "pnpm install",
