@@ -1,9 +1,9 @@
 # nopycln: file
 import datetime as dt
+import inspect
 from collections import defaultdict
 from typing import Any, Callable, ClassVar, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
 
-import inspect
 import pydantic
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
