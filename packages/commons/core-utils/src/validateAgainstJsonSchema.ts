@@ -399,6 +399,8 @@ function getLineNumberForPath(
 
 /**
  * Appends file path and line number context to an error message if available.
+ * When a line number is available, it becomes the primary locator (file:line format).
+ * The JSON path in the message is kept for context but not duplicated.
  */
 function formatErrorMessageWithFilePath(
     message: string,
@@ -415,33 +417,14 @@ function formatErrorMessageWithFilePath(
         return message;
     }
 
-    // Extract the JSON path from the message to create a cleaner file path reference
-    const jsonPathMatch = message.match(/at path (\$[^\s]+)/);
-    const jsonPath = jsonPathMatch ? jsonPathMatch[1] : "";
-
-    if (jsonPath) {
-        // Convert JSON path to instance path for file reference
-        // e.g., "$.navigation[0].layout[1]" -> "/navigation/0/layout/1"
-        const pathForDisplay = jsonPath
-            .replace(/^\$/, "")
-            .replace(/\[(\d+)\]/g, "/$1")
-            .replace(/\.([^[\]]+)/g, "/$1");
-
-        if (options?.filePath && lineNumber) {
-            return `${message} at ${pathForDisplay}\n  --> ${options.filePath}:${lineNumber}`;
-        } else if (lineNumber) {
-            return `${message} at ${pathForDisplay} (line ${lineNumber})`;
-        } else if (options?.filePath) {
-            return `${message} at ${pathForDisplay} (in ${options.filePath})`;
-        }
-    }
-
+    // When we have a line number, use file:line as the primary locator
+    // This is more user-friendly than JSON paths for users who just want to find the error
     if (options?.filePath && lineNumber) {
-        return `${message}\n  --> ${options.filePath}:${lineNumber}`;
+        return `${options.filePath}:${lineNumber}: ${message}`;
     } else if (lineNumber) {
-        return `${message} (line ${lineNumber})`;
+        return `Line ${lineNumber}: ${message}`;
     } else if (options?.filePath) {
-        return `${message} (in ${options.filePath})`;
+        return `${options.filePath}: ${message}`;
     }
 
     return message;
