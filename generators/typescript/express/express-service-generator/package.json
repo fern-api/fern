@@ -35,7 +35,7 @@
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
-    "ts-morph": "^15.1.0"
+    "ts-morph": "^27.0.2"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

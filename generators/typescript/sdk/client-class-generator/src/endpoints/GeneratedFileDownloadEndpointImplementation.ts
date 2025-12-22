@@ -146,7 +146,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
 
     public getDocs(context: SdkContext): string | undefined {
         const lines: string[] = [];
-        if (this.endpoint.docs != null) {
+        if (this.endpoint.docs) {
             lines.push(this.endpoint.docs);
         }
 

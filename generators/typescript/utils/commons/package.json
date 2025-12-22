@@ -43,7 +43,7 @@
     "immer": "^10.1.1",
     "lodash-es": "^4.17.21",
     "tmp-promise": "^3.0.3",
-    "ts-morph": "^15.1.0",
+    "ts-morph": "^27.0.2",
     "url-join": "^5.0.0"
   },
   "devDependencies": {

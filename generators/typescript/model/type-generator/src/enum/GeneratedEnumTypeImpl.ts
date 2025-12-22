@@ -96,7 +96,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
     }
 
     private printDocs(docs: string | undefined): string {
-        if (docs == null) {
+        if (!docs) {
             return "";
         }
         return getTextOfTsNode(ts.factory.createJSDocComment(docs)) + "\n";
@@ -127,14 +127,11 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                             ts.factory.createParameterDeclaration(
                                 undefined,
                                 undefined,
-                                undefined,
                                 GeneratedEnumTypeImpl.VISIT_VALUE_PARAMETER_NAME,
                                 undefined,
-                                ts.factory.createTypeReferenceNode(this.typeName, undefined),
-                                undefined
+                                ts.factory.createTypeReferenceNode(this.typeName, undefined)
                             ),
                             ts.factory.createParameterDeclaration(
-                                undefined,
                                 undefined,
                                 undefined,
                                 GeneratedEnumTypeImpl.VISITOR_PARAMETER_NAME,
@@ -150,8 +147,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                                             undefined
                                         )
                                     ]
-                                ),
-                                undefined
+                                )
                             )
                         ],
                         undefined,
@@ -222,7 +218,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                     )
                 }
             ],
-            docs: docs != null ? [docs] : undefined
+            docs: docs ? [docs] : undefined
         };
     }
 

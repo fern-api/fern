@@ -46,7 +46,7 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { tags, ..._body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         _queryParams.tags = toJson(tags);
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -106,7 +106,7 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { tags, ..._body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         _queryParams.tags = toJson(tags);
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -270,8 +270,8 @@ export class UserClient {
             longParam,
             bigIntParam,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.limit = limit.toString();
+        const _queryParams: Record<string, unknown> = {};
+        _queryParams.limit = limit;
         _queryParams.id = id;
         _queryParams.date = date;
         _queryParams.deadline = deadline;
@@ -304,7 +304,7 @@ export class UserClient {
             _queryParams.filter = filter;
         }
 
-        _queryParams.longParam = longParam.toString();
+        _queryParams.longParam = longParam;
         _queryParams.bigIntParam = bigIntParam;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({

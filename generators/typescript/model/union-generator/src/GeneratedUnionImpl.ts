@@ -550,7 +550,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             const type = context.type.getReferenceToType(p.valueType);
             const property = {
                 name: getPropertyKey(this._getBasePropertyKey(p)),
-                docs: p.docs != null ? [p.docs] : undefined,
+                docs: p.docs ? [p.docs] : undefined,
                 type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
                 hasQuestionToken: !this.noOptionalProperties && type.isOptional
             };
@@ -641,7 +641,6 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             ],
             [
                 ts.factory.createParameterDeclaration(
-                    undefined,
                     undefined,
                     undefined,
                     ts.factory.createIdentifier(GeneratedUnionImpl.VISITOR_PARAMETER_NAME),
@@ -746,20 +745,16 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                         ts.factory.createParameterDeclaration(
                             undefined,
                             undefined,
-                            undefined,
                             ts.factory.createIdentifier(GeneratedUnionImpl.VISITEE_PARAMETER_NAME),
                             undefined,
-                            referenceToUnion.getTypeNode(),
-                            undefined
+                            referenceToUnion.getTypeNode()
                         ),
                         ts.factory.createParameterDeclaration(
                             undefined,
                             undefined,
-                            undefined,
                             ts.factory.createIdentifier(GeneratedUnionImpl.VISITOR_PARAMETER_NAME),
                             undefined,
-                            this.getReferenceToVisitorInterface(context),
-                            undefined
+                            this.getReferenceToVisitorInterface(context)
                         )
                     ],
                     ts.factory.createTypeReferenceNode(

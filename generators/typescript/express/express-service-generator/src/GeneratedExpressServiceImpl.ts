@@ -257,7 +257,6 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                               ts.factory.createParameterDeclaration(
                                                   undefined,
                                                   undefined,
-                                                  undefined,
                                                   GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME,
                                                   undefined,
                                                   this.getResponseBodyType(endpoint.response.body, context)
@@ -281,7 +280,6 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                         ts.factory.createParameterDeclaration(
                                             undefined,
                                             undefined,
-                                            undefined,
                                             COOKIE_PARAMETER_NAME,
                                             undefined,
                                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
@@ -289,13 +287,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                         ts.factory.createParameterDeclaration(
                                             undefined,
                                             undefined,
-                                            undefined,
                                             COOKIE_VALUE_PARAMETER_NAME,
                                             undefined,
                                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                                         ),
                                         ts.factory.createParameterDeclaration(
-                                            undefined,
                                             undefined,
                                             undefined,
                                             COOKIE_OPTIONS_PARAMETER_NAME,
@@ -513,7 +509,6 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                             ts.factory.createParameterDeclaration(
                                                                 undefined,
                                                                 undefined,
-                                                                undefined,
                                                                 ERROR_VARIABLE_NAME
                                                             )
                                                         ],
@@ -637,7 +632,6 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                             endpoint.response?.body != null
                                                 ? [
                                                       ts.factory.createParameterDeclaration(
-                                                          undefined,
                                                           undefined,
                                                           undefined,
                                                           GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME

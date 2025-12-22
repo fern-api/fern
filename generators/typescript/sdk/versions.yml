@@ -1,4 +1,30 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.1
+  changelogEntry:
+    - summary: |
+        Fix bug where ts-morph would generate incorrect code when `Accept: */*` header would be defined as
+        a parameter in OpenAPI. The old generated code would generate broken JSDoc comments with invalid syntax.
+      type: fix
+    - summary: |
+        Optimize generated SDK code by eliminating unnecessary `.toString()` calls on primitive types in headers
+        and query parameters. The generator now only stringifies types that require it (dates/datetimes) while
+        using primitives like strings, numbers, booleans, and UUIDs directly.
+      type: chore
+    - summary: |
+        Add `createNumericLiteralSafe` utility to properly handle negative numbers in generated code examples,
+        ensuring compatibility with newer TypeScript/ts-morph versions that require prefix unary expressions.
+      type: fix
+    - summary: |
+        Add support for nullable types in query parameter type resolution, properly unwrapping both optional
+        and nullable containers when determining primitive and object types.
+      type: fix
+    - summary: |
+        Simplify header and query parameter types from verbose union types to `Record<string, unknown>` for
+        more flexible and less complex type signatures in generated SDKs.
+      type: chore
+  createdAt: "2025-12-22"
+  irVersion: 63
+
 - version: 3.43.0
   changelogEntry:
     - summary: |
