@@ -3,6 +3,7 @@ import datetime as dt
 from collections import defaultdict
 from typing import Any, Callable, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
 
+import inspect
 import pydantic
 from .datetime_utils import serialize_datetime
 from .serialization import convert_and_respect_annotation_metadata
@@ -23,7 +24,28 @@ PydanticField = Union[ModelField, pydantic.fields.FieldInfo]
 
 
 def parse_obj_as(type_: Type[T], object_: Any) -> T:
-    dealiased_object = convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
+    # convert_and_respect_annotation_metadata is required for TypedDict aliasing.
+    #
+    # For Pydantic models (running under pydantic.v1), whether we should pre-dealias depends on how
+    # the model encodes aliasing:
+    # - If the model uses real Pydantic aliases (Field(alias=...)), pass wire keys through unchanged.
+    # - If the model encodes aliasing only via FieldMetadata, pre-dealias before validation.
+    if inspect.isclass(type_) and issubclass(type_, pydantic.BaseModel):
+        has_pydantic_aliases = False
+        for field in getattr(type_, "__fields__", {}).values():
+            alias = getattr(field, "alias", None)
+            name = getattr(field, "name", None)
+            if alias is not None and name is not None and alias != name:
+                has_pydantic_aliases = True
+                break
+
+        dealiased_object = (
+            object_
+            if has_pydantic_aliases
+            else convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
+        )
+    else:
+        dealiased_object = convert_and_respect_annotation_metadata(object_=object_, annotation=type_, direction="read")
     return pydantic.v1.parse_obj_as(type_, dealiased_object)
 
 
