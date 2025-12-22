@@ -854,7 +854,7 @@ export class EndpointSnippetGenerator {
                 // Most named types in Rust SDK are newtype wrappers around primitives (e.g., Orgname(String))
                 // or enums/structs that may not derive Default.
                 // Use the type's constructor with a default primitive value.
-                const typeName = this.context.getTypeName(typeRef.value);
+                const typeName = this.context.getTypeNameById(typeRef.value);
                 // Assume it's a newtype wrapper around a string (most common case)
                 return rust.Expression.raw(`${typeName}("value".to_string())`);
             default:
