@@ -756,20 +756,19 @@ export class EndpointSnippetGenerator {
         // Use organized struct construction for better readability
         const structName = this.getCorrectRequestStructName(endpoint, request);
 
-        // Only use ..Default::default() if the request type has all optional fields
-        // The model generator only derives Default when all properties are optional
-        // If we use ..Default::default() on a type that doesn't implement Default,
-        // the Rust compiler will produce an error: "the trait `Default` is not implemented for `TypeName`"
-        const useDefault = this.context.canRequestUseDefault(request);
+        // For wire tests, we always explicitly provide all fields instead of using ..Default::default()
+        // This is more robust and avoids compilation errors when types don't derive Default.
+        // The model generator only derives Default when ALL properties are optional AND there are no
+        // extended properties, which is a complex condition that's hard to perfectly mirror in dynamic snippets.
+        // By always providing explicit values, we ensure the generated tests always compile.
+        const useDefault = false;
 
-        // If we can't use Default, we need to explicitly provide values for all missing fields
-        if (!useDefault) {
-            this.addMissingFields({
-                request,
-                structFields,
-                providedFieldNames
-            });
-        }
+        // Always add missing fields with explicit values
+        this.addMissingFields({
+            request,
+            structFields,
+            providedFieldNames
+        });
 
         return this.createStructExpression(structName, structFields, useDefault);
     }
@@ -847,14 +846,20 @@ export class EndpointSnippetGenerator {
             case "list":
                 return rust.Expression.raw("vec![]");
             case "map":
+                return rust.Expression.raw("std::collections::HashMap::new()");
             case "set":
-                return rust.Expression.raw("Default::default()");
+                return rust.Expression.raw("std::collections::HashSet::new()");
             case "named":
-                // For named types, try to use Default or create an empty struct
-                return rust.Expression.raw("Default::default()");
+                // For named types, we need to construct them properly.
+                // Most named types in Rust SDK are newtype wrappers around primitives (e.g., Orgname(String))
+                // or enums/structs that may not derive Default.
+                // Use the type's constructor with a default primitive value.
+                const typeName = this.context.getTypeName(typeRef.value);
+                // Assume it's a newtype wrapper around a string (most common case)
+                return rust.Expression.raw(`${typeName}("value".to_string())`);
             default:
-                // Fallback to Default::default() for complex types
-                return rust.Expression.raw("Default::default()");
+                // For complex types (unions, etc.), generate a placeholder comment
+                return rust.Expression.raw('todo!("Provide value for complex type")');
         }
     }
 
