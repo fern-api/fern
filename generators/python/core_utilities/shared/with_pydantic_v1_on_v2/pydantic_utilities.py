@@ -1,9 +1,9 @@
 # nopycln: file
 import datetime as dt
+import inspect
 from collections import defaultdict
 from typing import Any, Callable, Dict, List, Mapping, Optional, Set, Tuple, Type, TypeVar, Union, cast
 
-import inspect
 import pydantic
 from .datetime_utils import serialize_datetime
 from .serialization import convert_and_respect_annotation_metadata
