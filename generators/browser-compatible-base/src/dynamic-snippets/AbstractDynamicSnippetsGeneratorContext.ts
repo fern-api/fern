@@ -42,13 +42,16 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         values: FernIr.dynamic.Values;
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
-        for (const [key, value] of Object.entries(values)) {
+        // Iterate over parameters (schema order) to preserve argument order
+        for (const parameter of parameters) {
+            const key = parameter.name.wireValue;
+            const value = values[key];
+            if (value == null) {
+                // Skip parameters not provided in values
+                continue;
+            }
             this.errors.scope(key);
             try {
-                const parameter = parameters.find((param) => param.name.wireValue === key);
-                if (parameter == null) {
-                    throw this.newParameterNotRecognizedError(key);
-                }
                 // If this query parameter supports allow-multiple, the user-provided values
                 // must be wrapped in an array.
                 const typeInstanceValue =
@@ -114,14 +117,15 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         ignoreMissingParameters?: boolean;
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
-        for (const [key, value] of Object.entries(values)) {
+        // Iterate over parameters (schema order) to preserve argument order
+        for (const parameter of parameters) {
+            const key = parameter.name.wireValue;
+            const value = values[key];
             this.errors.scope(key);
             try {
-                const parameter = parameters.find((param) => param.name.wireValue === key);
-                if (parameter == null) {
+                if (value == null) {
                     if (ignoreMissingParameters) {
-                        // Required for request payloads that include more information than
-                        // just the target parameters (e.g. union base properties).
+                        // Skip parameters not provided in values
                         continue;
                     }
                     this.errors.add({
