@@ -32,7 +32,8 @@ export async function runRemoteGenerationForGenerator({
     irVersionOverride,
     absolutePathToPreview,
     readme,
-    fernignorePath
+    fernignorePath,
+    dynamicIrOnly
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -48,6 +49,7 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     fernignorePath: string | undefined;
+    dynamicIrOnly: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -161,6 +163,53 @@ export async function runRemoteGenerationForGenerator({
         ir.sourceConfig = sourceConfig;
     }
 
+    // handle dynamic-ir-only mode: skip SDK generation and only upload dynamic IR
+    if (dynamicIrOnly) {
+        interactiveTaskContext.logger.info(
+            "Dynamic IR only mode: skipping SDK generation and uploading dynamic IR only"
+        );
+
+        if (version == null) {
+            interactiveTaskContext.failAndThrow("Version is required for dynamic IR only mode");
+            return undefined;
+        }
+
+        if (generatorInvocation.language == null) {
+            interactiveTaskContext.failAndThrow("Language is required for dynamic IR only mode");
+            return undefined;
+        }
+
+        if (packageName == null) {
+            interactiveTaskContext.failAndThrow("Package name is required for dynamic IR only mode");
+            return undefined;
+        }
+
+        try {
+            await uploadDynamicIRForSdkGeneration({
+                fdr,
+                organization,
+                version,
+                language: generatorInvocation.language,
+                packageName,
+                ir,
+                smartCasing: generatorInvocation.smartCasing,
+                dynamicGeneratorConfig,
+                context: interactiveTaskContext
+            });
+        } catch (error) {
+            interactiveTaskContext.failAndThrow(
+                `Failed to upload dynamic IR: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
+
+        // Return a minimal response since no SDK generation occurred
+        return {
+            createdSnippets: false,
+            snippetsS3PreSignedReadUrl: undefined,
+            actualVersion: version
+        };
+    }
+
     const job = await createAndStartJob({
         projectConfig,
         workspace,
@@ -204,19 +253,21 @@ export async function runRemoteGenerationForGenerator({
         context: interactiveTaskContext
     });
 
-    // Upload dynamic IR for SDK generation (for dynamic snippets) only after successful generation
+    // use the actual version from the generation result, fallback to pre-computed version
+    const actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
+
     if (
         result != null &&
+        actualVersionForUpload != null &&
         generatorInvocation.language != null &&
         packageName != null &&
-        resolvedVersion != null &&
         !isPreview
     ) {
         try {
             await uploadDynamicIRForSdkGeneration({
                 fdr,
                 organization,
-                version: resolvedVersion,
+                version: actualVersionForUpload,
                 language: generatorInvocation.language,
                 packageName,
                 ir,
@@ -224,9 +275,6 @@ export async function runRemoteGenerationForGenerator({
                 dynamicGeneratorConfig,
                 context: interactiveTaskContext
             });
-            interactiveTaskContext.logger.debug(
-                `Uploaded dynamic IR for ${generatorInvocation.language}:${packageName}`
-            );
         } catch (error) {
             interactiveTaskContext.logger.warn(
                 `Failed to upload dynamic IR for SDK generation: ${error instanceof Error ? error.message : String(error)}`
@@ -440,7 +488,9 @@ async function uploadDynamicIRForSdkGeneration({
     });
 
     if (uploadResponse.ok) {
-        context.logger.debug(`Successfully uploaded dynamic IR for ${language}`);
+        context.logger.debug(
+            `Uploaded dynamic IR for ${language}:${packageName} (${version})`
+        );
     } else {
         context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
     }
