@@ -33,7 +33,8 @@ export async function generateWorkspace({
     runner,
     inspect,
     lfsOverride,
-    fernignorePath
+    fernignorePath,
+    dynamicIrOnly
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -51,6 +52,7 @@ export async function generateWorkspace({
     inspect: boolean;
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
+    dynamicIrOnly: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -137,7 +139,8 @@ export async function generateWorkspace({
                     whitelabel: workspace.generatorsConfiguration?.whitelabel,
                     absolutePathToPreview,
                     mode,
-                    fernignorePath
+                    fernignorePath,
+                    dynamicIrOnly
                 });
             }
         })
