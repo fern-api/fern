@@ -13,7 +13,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -34,13 +33,12 @@ packages = [
 Repository = 'https://github.com/exhaustive/fern'
 
 [tool.poetry.dependencies]
-python = "^3.8.1"
+python = "^3.9"
 boto3 = "1.28.57"
 httpx = ">=0.21.2"
 pydantic = ">= 1.9.2"
 pydantic-core = ">=2.18.2"
 typing_extensions = ">= 4.0.0"
-marshmallow = {version = ">=3.26.2", markers = "python_version >= \"3.9\""}
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
