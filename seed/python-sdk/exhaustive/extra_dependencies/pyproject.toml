@@ -47,6 +47,7 @@ langchain = { version = "^0.1.20", optional = true}
 pydantic = ">= 1.9.2"
 pydantic-core = ">=2.18.2"
 typing_extensions = ">= 4.0.0"
+marshmallow = {version = ">=3.26.2", markers = "python_version >= \"3.9\"", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
