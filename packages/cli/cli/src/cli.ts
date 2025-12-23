@@ -1507,7 +1507,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
     cli.command("preview", "Commands for managing preview deployments", (yargs) => {
         addDocsPreviewListCommand(yargs, cliContext);
         addDocsPreviewDeleteCommand(yargs, cliContext);
-        return yargs.command(
+        yargs.command(
             "$0",
             false,
             // biome-ignore lint/suspicious/noEmptyBlockStatements: yargs requires a builder function
@@ -1519,6 +1519,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                 cliContext.failAndThrow();
             }
         );
+        return yargs;
     });
 }
 
