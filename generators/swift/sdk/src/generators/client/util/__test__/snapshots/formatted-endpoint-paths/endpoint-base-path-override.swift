@@ -1,3 +1,3 @@
 // service_service
-"/\(tenant)/\(environment)/\(company)/company"
-"/\(tenant)/\(environment)/companies"
+"/\(tenant)/\(stage)/\(company)/company"
+"/\(tenant)/\(stage)/companies"

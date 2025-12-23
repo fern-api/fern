@@ -1,6 +1,6 @@
 name: endpoint-base-path-override
-base-path: /{tenant}/{environment}/{company}
+base-path: /{tenant}/{stage}/{company}
 path-parameters:
   tenant: string
-  environment: string
+  stage: string
   company: string

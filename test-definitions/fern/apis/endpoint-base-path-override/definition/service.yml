@@ -21,7 +21,7 @@ service:
       examples:
         - path-parameters:
             tenant: "bdf5f739-9e02-4e49-8006-35321e318250"
-            environment: "production"
+            stage: "production"
             company: "CRONUS"
           response:
             body:
@@ -31,17 +31,17 @@ service:
 
     getCompanies:
       display-name: Get all companies
-      base-path: /{tenant}/{environment}
+      base-path: /{tenant}/{stage}
       path: "/companies"
       path-parameters:
         tenant: string
-        environment: string
+        stage: string
       method: GET
       response: Companies
       examples:
         - path-parameters:
             tenant: "bdf5f739-9e02-4e49-8006-35321e318250"
-            environment: "production"
+            stage: "production"
           response:
             body:
               value:
