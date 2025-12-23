@@ -70,13 +70,32 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         context: GeneratorContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
     }): Promise<string> {
+        this.logger.debug("AbstractGeneratorAgent.generateReadme: Building README config...");
+        const remote = this.getRemote(context);
+        this.logger.debug(`AbstractGeneratorAgent.generateReadme: Remote config: ${JSON.stringify(remote)}`);
+
+        const featureConfig = await this.readFeatureConfig();
+        this.logger.debug(
+            `AbstractGeneratorAgent.generateReadme: Feature config loaded with ${featureConfig.features?.length ?? 0} features`
+        );
+
         const readmeConfig = this.getReadmeConfig({
             context,
-            remote: this.getRemote(context),
-            featureConfig: await this.readFeatureConfig(),
+            remote,
+            featureConfig,
             endpointSnippets
         });
-        return this.cli.generateReadme({ readmeConfig });
+        this.logger.debug("AbstractGeneratorAgent.generateReadme: README config built, calling CLI...");
+
+        try {
+            const result = await this.cli.generateReadme({ readmeConfig });
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI returned ${result.length} bytes`);
+            return result;
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI failed with error: ${errorMessage}`);
+            throw error;
+        }
     }
 
     /**
@@ -97,8 +116,21 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
      * Generates the reference.md content using the given builder.
      */
     public async generateReference(builder: ReferenceConfigBuilder): Promise<string> {
+        this.logger.debug("AbstractGeneratorAgent.generateReference: Building reference config...");
         const referenceConfig = builder.build(this.getLanguage());
-        return this.cli.generateReference({ referenceConfig });
+        this.logger.debug(
+            `AbstractGeneratorAgent.generateReference: Reference config built with ${referenceConfig.sections?.length ?? 0} sections, calling CLI...`
+        );
+
+        try {
+            const result = await this.cli.generateReference({ referenceConfig });
+            this.logger.debug(`AbstractGeneratorAgent.generateReference: CLI returned ${result.length} bytes`);
+            return result;
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.debug(`AbstractGeneratorAgent.generateReference: CLI failed with error: ${errorMessage}`);
+            throw error;
+        }
     }
 
     /**
@@ -121,10 +153,22 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     ): RawGithubConfig;
 
     protected async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
-        this.logger.debug("Reading feature configuration ...");
-        const rawYaml = await this.getFeaturesConfig();
-        const loaded = yaml.load(rawYaml) as FernGeneratorCli.FeatureConfig;
-        return loaded;
+        this.logger.debug("AbstractGeneratorAgent.readFeatureConfig: Reading feature configuration...");
+        try {
+            const rawYaml = await this.getFeaturesConfig();
+            this.logger.debug(`AbstractGeneratorAgent.readFeatureConfig: Raw YAML length: ${rawYaml.length} bytes`);
+            const loaded = yaml.load(rawYaml) as FernGeneratorCli.FeatureConfig;
+            this.logger.debug(
+                `AbstractGeneratorAgent.readFeatureConfig: Loaded ${loaded.features?.length ?? 0} features`
+            );
+            return loaded;
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.debug(
+                `AbstractGeneratorAgent.readFeatureConfig: Failed to read feature config: ${errorMessage}`
+            );
+            throw error;
+        }
     }
 
     protected getRemote(context: GeneratorContext): FernGeneratorCli.Remote | undefined {
@@ -167,17 +211,29 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
 
     private async getFeaturesConfig(): Promise<string> {
         // try to find the features.yml file using the well-known paths
+        this.logger.debug(
+            `AbstractGeneratorAgent.getFeaturesConfig: Searching for features.yml in ${FEATURES_CONFIG_PATHS.length} paths...`
+        );
         for (const each of FEATURES_CONFIG_PATHS) {
             try {
+                this.logger.debug(`AbstractGeneratorAgent.getFeaturesConfig: Trying path: ${each}`);
                 const rawContents = await readFile(each, "utf8");
                 if (rawContents.length !== 0) {
+                    this.logger.debug(
+                        `AbstractGeneratorAgent.getFeaturesConfig: Found features.yml at ${each} (${rawContents.length} bytes)`
+                    );
                     return rawContents;
                 }
+                this.logger.debug(`AbstractGeneratorAgent.getFeaturesConfig: File at ${each} is empty, skipping`);
             } catch (error) {
-                // ignore
+                const errorMessage = error instanceof Error ? error.message : String(error);
+                this.logger.debug(
+                    `AbstractGeneratorAgent.getFeaturesConfig: Path ${each} not accessible: ${errorMessage}`
+                );
             }
         }
         // throw an error if we can't find the features.yml file
+        this.logger.debug("AbstractGeneratorAgent.getFeaturesConfig: No features.yml found in any path");
         throw new Error("Internal error; failed to read feature configuration");
     }
 }
