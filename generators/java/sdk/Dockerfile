@@ -91,11 +91,17 @@ RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 # Patch @octokit/request to fix CVE-2025-25290 (ReDoS vulnerability)
 # Use npm pack + tar to replace the package without running npm install (which fails due to workspace: protocol)
+# Also install fast-content-type-parse which is a new dependency in @octokit/request@10.0.7
 RUN cd /usr/local/lib/node_modules/@fern-api/generator-cli/node_modules/@octokit && \
     rm -rf request && \
     npm pack @octokit/request@10.0.7 && \
     tar -xzf octokit-request-10.0.7.tgz && \
     mv package request && \
-    rm octokit-request-10.0.7.tgz
+    rm octokit-request-10.0.7.tgz && \
+    cd /usr/local/lib/node_modules/@fern-api/generator-cli/node_modules && \
+    npm pack fast-content-type-parse@2.0.1 && \
+    tar -xzf fast-content-type-parse-2.0.1.tgz && \
+    mv package fast-content-type-parse && \
+    rm fast-content-type-parse-2.0.1.tgz
 
 ENTRYPOINT ["sh", "/init.sh"]
