@@ -161,27 +161,6 @@ export async function runRemoteGenerationForGenerator({
         ir.sourceConfig = sourceConfig;
     }
 
-    // Upload dynamic IR for SDK generation (for dynamic snippets)
-    if (generatorInvocation.language != null && packageName != null && resolvedVersion != null && !isPreview) {
-        try {
-            await uploadDynamicIRForSdkGeneration({
-                fdr,
-                organization,
-                version: resolvedVersion,
-                language: generatorInvocation.language,
-                packageName,
-                ir,
-                smartCasing: generatorInvocation.smartCasing,
-                dynamicGeneratorConfig,
-                context: interactiveTaskContext
-            });
-        } catch (error) {
-            interactiveTaskContext.logger.warn(
-                `Failed to upload dynamic IR for SDK generation: ${error instanceof Error ? error.message : String(error)}`
-            );
-        }
-    }
-
     const job = await createAndStartJob({
         projectConfig,
         workspace,
@@ -218,12 +197,41 @@ export async function runRemoteGenerationForGenerator({
         absolutePathToPreview
     });
 
-    return await pollJobAndReportStatus({
+    const result = await pollJobAndReportStatus({
         job,
         taskHandler,
         taskId,
         context: interactiveTaskContext
     });
+
+    // Upload dynamic IR for SDK generation (for dynamic snippets) only after successful generation
+    if (
+        result != null &&
+        generatorInvocation.language != null &&
+        packageName != null &&
+        resolvedVersion != null &&
+        !isPreview
+    ) {
+        try {
+            await uploadDynamicIRForSdkGeneration({
+                fdr,
+                organization,
+                version: resolvedVersion,
+                language: generatorInvocation.language,
+                packageName,
+                ir,
+                smartCasing: generatorInvocation.smartCasing,
+                dynamicGeneratorConfig,
+                context: interactiveTaskContext
+            });
+        } catch (error) {
+            interactiveTaskContext.logger.warn(
+                `Failed to upload dynamic IR for SDK generation: ${error instanceof Error ? error.message : String(error)}`
+            );
+        }
+    }
+
+    return result;
 }
 
 function getPublishConfig({
