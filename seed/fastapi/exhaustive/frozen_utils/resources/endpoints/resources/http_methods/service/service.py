@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import fastapi._compat
 from ......core.abstract_fern_service import AbstractFernService
 from ......core.exceptions.fern_http_exception import FernHTTPException
 from ......core.route_args import get_route_args
@@ -60,12 +61,20 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
-                new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_get.__globals__, cls.test_get.__globals__
                 )
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Path()]))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_get.__globals__, cls.test_get.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -85,7 +94,6 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
 
         router.get(
             path="/http-methods/{id}",
-            response_model=str,
             description=AbstractEndpointsHttpMethodsService.test_get.__doc__,
             **get_route_args(cls.test_get, default_tag="endpoints.http_methods"),
         )(wrapper)
@@ -98,12 +106,20 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_post.__globals__, cls.test_post.__globals__
                 )
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_post.__globals__, cls.test_post.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -123,7 +139,6 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
 
         router.post(
             path="/http-methods",
-            response_model=ObjectWithOptionalField,
             description=AbstractEndpointsHttpMethodsService.test_post.__doc__,
             **get_route_args(cls.test_post, default_tag="endpoints.http_methods"),
         )(wrapper)
@@ -136,16 +151,27 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_put.__globals__, cls.test_put.__globals__
                 )
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             elif parameter_name == "id":
-                new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_put.__globals__, cls.test_put.__globals__
                 )
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Path()]))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_put.__globals__, cls.test_put.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -165,7 +191,6 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
 
         router.put(
             path="/http-methods/{id}",
-            response_model=ObjectWithOptionalField,
             description=AbstractEndpointsHttpMethodsService.test_put.__doc__,
             **get_route_args(cls.test_put, default_tag="endpoints.http_methods"),
         )(wrapper)
@@ -178,16 +203,27 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_patch.__globals__, cls.test_patch.__globals__
                 )
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             elif parameter_name == "id":
-                new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_patch.__globals__, cls.test_patch.__globals__
                 )
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Path()]))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_patch.__globals__, cls.test_patch.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -207,7 +243,6 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
 
         router.patch(
             path="/http-methods/{id}",
-            response_model=ObjectWithOptionalField,
             description=AbstractEndpointsHttpMethodsService.test_patch.__doc__,
             **get_route_args(cls.test_patch, default_tag="endpoints.http_methods"),
         )(wrapper)
@@ -220,12 +255,20 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
-                new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_delete.__globals__, cls.test_delete.__globals__
                 )
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Path()]))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.test_delete.__globals__, cls.test_delete.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -245,7 +288,6 @@ class AbstractEndpointsHttpMethodsService(AbstractFernService):
 
         router.delete(
             path="/http-methods/{id}",
-            response_model=bool,
             description=AbstractEndpointsHttpMethodsService.test_delete.__doc__,
             **get_route_args(cls.test_delete, default_tag="endpoints.http_methods"),
         )(wrapper)
