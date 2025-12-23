@@ -1,0 +1,56 @@
+imports:
+  root: __package__.yml
+
+types:
+  Company:
+    properties:
+      id: string
+      name: string
+      displayName: string
+
+  Companies:
+    properties:
+      value: list<Company>
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getCompany:
+      display-name: Get company
+      path: "/company"
+      method: GET
+      response: Company
+      examples:
+        - path-parameters:
+            tenant: "bdf5f739-9e02-4e49-8006-35321e318250"
+            environment: "production"
+            company: "CRONUS"
+          response:
+            body:
+              id: "17ff1351-d07d-4b85-8957-b4b585f47aad"
+              name: "CRONUS International Ltd."
+              displayName: ""
+
+    getCompanies:
+      display-name: Get all companies
+      base-path: /{tenant}/{environment}
+      path: "/companies"
+      path-parameters:
+        tenant: string
+        environment: string
+      method: GET
+      response: Companies
+      examples:
+        - path-parameters:
+            tenant: "bdf5f739-9e02-4e49-8006-35321e318250"
+            environment: "production"
+          response:
+            body:
+              value:
+                - id: "17ff1351-d07d-4b85-8957-b4b585f47aad"
+                  name: "CRONUS International Ltd."
+                  displayName: ""
+                - id: "872336d7-5183-4c0b-9b47-755f3d6d77e7"
+                  name: "TestCompany"
+                  displayName: "TestCompany"

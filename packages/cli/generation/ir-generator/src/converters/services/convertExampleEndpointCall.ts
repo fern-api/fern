@@ -613,7 +613,14 @@ function buildUrl({
     example: RawSchemas.ExampleEndpointCallSchema;
     pathParams: Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters">;
 }): string {
-    let url = urlJoin(file.rootApiFile["base-path"] ?? "", service["base-path"], endpoint.path);
+    // When an endpoint has its own base-path, use it instead of the service/root base-path
+    // This ensures that endpoint-level path parameter overrides are respected
+    let url =
+        endpoint["base-path"] != null
+            ? urlJoin(endpoint["base-path"], endpoint.path)
+            : file.rootApiFile["base-path"] != null
+              ? urlJoin(file.rootApiFile["base-path"], service["base-path"], endpoint.path)
+              : urlJoin(service["base-path"], endpoint.path);
     if (example["path-parameters"] != null) {
         for (const parameter of [
             ...pathParams.endpointPathParameters,
