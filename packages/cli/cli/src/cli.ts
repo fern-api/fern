@@ -1507,7 +1507,18 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
     cli.command("preview", "Commands for managing preview deployments", (yargs) => {
         addDocsPreviewListCommand(yargs, cliContext);
         addDocsPreviewDeleteCommand(yargs, cliContext);
-        return yargs;
+        return yargs.command(
+            "$0",
+            false,
+            // biome-ignore lint/suspicious/noEmptyBlockStatements: yargs requires a builder function
+            () => {},
+            () => {
+                cliContext.logger.error(
+                    "'fern docs preview' is not a valid command. To preview docs, use 'fern generate --docs --preview'."
+                );
+                cliContext.failAndThrow();
+            }
+        );
     });
 }
 
