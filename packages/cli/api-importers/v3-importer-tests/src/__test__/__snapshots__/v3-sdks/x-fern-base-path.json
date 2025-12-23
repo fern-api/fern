@@ -18,6 +18,10 @@
       "safeName": "AcmeApi"
     }
   },
+  "basePath": {
+    "head": "/v1",
+    "parts": []
+  },
   "selfHosted": false,
   "apiDisplayName": "Acme API",
   "auth": {

@@ -158,6 +158,7 @@ export const SPECIAL_TOKENS = [
     "MV",
 
     // finance
+    "ACH",
     "USD",
     "EUR",
     "GBP",

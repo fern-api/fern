@@ -123,7 +123,7 @@ export class ParamsClient {
             const { query, number: number_ } = request;
             const _queryParams = {};
             _queryParams.query = query;
-            _queryParams.number = number_.toString();
+            _queryParams.number = number_;
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
@@ -180,7 +180,7 @@ export class ParamsClient {
                 _queryParams.number = number_.map((item) => item.toString());
             }
             else {
-                _queryParams.number = number_.toString();
+                _queryParams.number = number_;
             }
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);

@@ -44,7 +44,7 @@ export class QueryParamClient {
         requestOptions?: QueryParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         _queryParams.operand = operand;
         if (maybeOperand != null) {
             _queryParams.maybeOperand = maybeOperand;
@@ -111,7 +111,7 @@ export class QueryParamClient {
         requestOptions?: QueryParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (Array.isArray(operand)) {
             _queryParams.operand = operand.map((item) => item);
         } else {

@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { getPropertyKey } from "@fern-typescript/commons";
+import { createNumericLiteralSafe, createNumericLiteralSafeTypeNode, getPropertyKey } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -19,7 +19,7 @@ export abstract class AbstractKnownSingleUnionType<Context extends ModelContext>
             return ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(discriminantValue));
         }
         if (typeof discriminantValue === "number") {
-            return ts.factory.createLiteralTypeNode(ts.factory.createNumericLiteral(discriminantValue));
+            return createNumericLiteralSafeTypeNode(discriminantValue);
         }
         assertNever(discriminantValue);
     }
@@ -46,7 +46,7 @@ export abstract class AbstractKnownSingleUnionType<Context extends ModelContext>
             return ts.factory.createStringLiteral(discriminantValue);
         }
         if (typeof discriminantValue === "number") {
-            return ts.factory.createNumericLiteral(discriminantValue);
+            return createNumericLiteralSafe(discriminantValue);
         }
         assertNever(discriminantValue);
     }

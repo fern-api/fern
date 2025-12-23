@@ -2,9 +2,33 @@
 - version: 3.31.0
   changelogEntry:
     - summary: |
-        Add fine-grained event logging for `fern check` command. The CLI now tracks validation metrics including error/warning counts, violation types by rule name, validation duration, and workspace information to help improve the validation experience.
-      type: feat
-  createdAt: "2025-12-21"
+        Add a `--dynamic-ir-only` flag to SDK generation to enable access to dynamic snippets from SDKs without regenerating the entire SDK.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 62
+
+- version: 3.30.6
+  changelogEntry:
+    - summary: |
+        Only upload dynamic IR for SDK generation after confirmed success and when not in preview mode.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 62
+
+- version: 3.30.5
+  changelogEntry:
+    - summary: |
+        Support `x-fern-base-path` extension in the OpenAPI v3 parser.
+      type: fix
+  createdAt: "2025-12-22"
+  irVersion: 62
+
+- version: 3.30.4
+  changelogEntry:
+    - summary: |
+        Add ACH to special tokens list to preserve capitalization in docs sidebar navigation.
+      type: chore
+  createdAt: "2025-12-22"
   irVersion: 62
 
 - version: 3.30.3

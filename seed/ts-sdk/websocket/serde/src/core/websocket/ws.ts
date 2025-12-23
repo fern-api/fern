@@ -29,7 +29,7 @@ export declare namespace ReconnectingWebSocket {
         protocols?: string | string[];
         options?: ReconnectingWebSocket.Options;
         headers?: Record<string, unknown>;
-        queryParameters?: Record<string, string | string[] | object | object[] | null | undefined>;
+        queryParameters?: Record<string, unknown>;
     }
 
     export type Options = {

@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import fastapi._compat
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -46,9 +47,12 @@ class AbstractNoAuthService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.post_with_no_auth.__globals__, cls.post_with_no_auth.__globals__
                 )
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.post_with_no_auth, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -69,7 +73,6 @@ class AbstractNoAuthService(AbstractFernService):
 
         router.post(
             path="/no-auth",
-            response_model=bool,
             description=AbstractNoAuthService.post_with_no_auth.__doc__,
             **get_route_args(cls.post_with_no_auth, default_tag="no_auth"),
         )(wrapper)

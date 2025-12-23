@@ -149,7 +149,7 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
                     name: getPropertyKey(name),
                     type: getTextOfTsNode(type),
                     hasQuestionToken,
-                    docs: docs != null ? [{ description: docs }] : undefined
+                    docs: docs ? [{ description: docs }] : undefined
                 };
                 return {
                     property,
@@ -448,7 +448,6 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             statements.push(
                 getTextOfTsNode(
                     ts.factory.createTypeAliasDeclaration(
-                        undefined,
                         [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
                         ts.factory.createIdentifier("Request"),
                         undefined,
@@ -502,7 +501,6 @@ export class GeneratedObjectTypeImpl<Context extends BaseContext>
             statements.push(
                 getTextOfTsNode(
                     ts.factory.createTypeAliasDeclaration(
-                        undefined,
                         [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
                         ts.factory.createIdentifier("Response"),
                         undefined,

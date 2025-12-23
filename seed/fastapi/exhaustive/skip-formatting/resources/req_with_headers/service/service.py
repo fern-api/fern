@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import fastapi._compat
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -43,11 +44,20 @@ class AbstractReqWithHeadersService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_with_custom_header.__globals__, cls.get_with_custom_header.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             elif parameter_name == "x_test_endpoint_header":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-TEST-ENDPOINT-HEADER")]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_with_custom_header.__globals__, cls.get_with_custom_header.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Header(alias="X-TEST-ENDPOINT-HEADER")]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.get_with_custom_header.__globals__, cls.get_with_custom_header.__globals__)
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_with_custom_header, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -66,7 +76,6 @@ class AbstractReqWithHeadersService(AbstractFernService):
         
         router.post(
             path="/test-headers/custom-header",
-            response_model=None,
             status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractReqWithHeadersService.get_with_custom_header.__doc__,
             **get_route_args(cls.get_with_custom_header, default_tag="req_with_headers"),

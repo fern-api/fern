@@ -54,7 +54,7 @@ export class PlaylistClient {
         requestOptions?: PlaylistClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.Playlist>> {
         const { datetime, optionalDatetime, body: _body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         _queryParams.datetime = datetime.toISOString();
         if (optionalDatetime != null) {
             _queryParams.optionalDatetime = optionalDatetime.toISOString();
@@ -150,9 +150,9 @@ export class PlaylistClient {
         requestOptions?: PlaylistClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.Playlist[]>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (limit != null) {
-            _queryParams.limit = limit.toString();
+            _queryParams.limit = limit;
         }
 
         _queryParams.otherField = otherField;
