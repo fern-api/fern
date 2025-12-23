@@ -91,7 +91,6 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         return [
             ts.factory.createImportDeclaration(
                 undefined,
-                [],
                 ts.factory.createImportClause(
                     false,
                     undefined,

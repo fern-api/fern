@@ -4819,6 +4819,13 @@
         "minimal"
       ]
     },
+    "docs.ProductSwitcherThemeConfig": {
+      "type": "string",
+      "enum": [
+        "default",
+        "toggle"
+      ]
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
@@ -4876,6 +4883,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.LanguageSwitcherThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "product-switcher": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ProductSwitcherThemeConfig"
             },
             {
               "type": "null"

@@ -211,6 +211,9 @@ public final class ClientOptions {
             builder.environment = clientOptions.environment();
             builder.timeout = Optional.of(clientOptions.timeout(null));
             builder.httpClient = clientOptions.httpClient();
+            builder.headers.putAll(clientOptions.headers);
+            builder.headerSuppliers.putAll(clientOptions.headerSuppliers);
+            builder.maxRetries = clientOptions.maxRetries();
             if (clientOptions.version != null) {
                 builder.version = Optional.ofNullable(clientOptions.version);
             } else {

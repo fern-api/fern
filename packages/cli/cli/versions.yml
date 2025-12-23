@@ -1,10 +1,61 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.29.2
+
+- version: 3.31.0
   changelogEntry:
     - summary: |
-        Add CLI warning when Python SDK generator has `positional_single_property_constructors` enabled. The warning appears in the terminal after generation completes, alerting users to potential backwards compatibility risks.
-      type: chore
+        Add opt-in `pydantic_config.positional_single_property_constructors` to allow `Wrapper("value")`
+        for single-required-field models (excluding discriminator literals). Note: can break if the model
+        later adds required fields; kwargs are more stable.
+      type: feat
   createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.30.5
+  changelogEntry:
+    - summary: |
+        Support `x-fern-base-path` extension in the OpenAPI v3 parser.
+      type: fix
+  createdAt: "2025-12-22"
+  irVersion: 62
+
+- version: 3.30.4
+  changelogEntry:
+    - summary: |
+        Add ACH to special tokens list to preserve capitalization in docs sidebar navigation.
+      type: chore
+  createdAt: "2025-12-22"
+  irVersion: 62
+
+- version: 3.30.3
+  changelogEntry:
+    - summary: |
+        Adds a `product-switcher.toggle` theme option to the docs configuration.
+      type: chore
+  createdAt: "2025-12-21"
+  irVersion: 62
+
+- version: 3.30.2
+  changelogEntry:
+    - summary: |
+        Export all defined auth schemes when using `endpoint-security` auth in _generators.yml_.
+      type: fix
+  createdAt: "2025-12-21"
+  irVersion: 62
+
+- version: 3.30.1
+  changelogEntry:
+    - summary: |
+        Update generators.yml schema SDK update to include api.auth.endpoint-security support.
+      type: fix
+  createdAt: "2025-12-21"
+  irVersion: 62
+
+- version: 3.30.0
+  changelogEntry:
+    - summary: |
+        Support using local icons in `<Card />` and `<Icon />` components.
+      type: feat
+  createdAt: "2025-12-20"
   irVersion: 62
 
 - version: 3.29.1

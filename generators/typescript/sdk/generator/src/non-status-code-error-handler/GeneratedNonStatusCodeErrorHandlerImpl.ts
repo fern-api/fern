@@ -10,14 +10,12 @@ export class GeneratedNonStatusCodeErrorHandlerImpl {
         const errorParameter = ts.factory.createParameterDeclaration(
             undefined,
             undefined,
-            undefined,
             ts.factory.createIdentifier("error"),
             undefined,
             errorType
         );
 
         const rawResponseParameter = ts.factory.createParameterDeclaration(
-            undefined,
             undefined,
             undefined,
             ts.factory.createIdentifier("rawResponse"),
@@ -28,14 +26,12 @@ export class GeneratedNonStatusCodeErrorHandlerImpl {
         const methodParameter = ts.factory.createParameterDeclaration(
             undefined,
             undefined,
-            undefined,
             ts.factory.createIdentifier("method"),
             undefined,
             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
         );
 
         const pathParameter = ts.factory.createParameterDeclaration(
-            undefined,
             undefined,
             undefined,
             ts.factory.createIdentifier("path"),
@@ -148,7 +144,6 @@ export class GeneratedNonStatusCodeErrorHandlerImpl {
         );
 
         const functionDeclaration = ts.factory.createFunctionDeclaration(
-            undefined,
             [ts.factory.createToken(ts.SyntaxKind.ExportKeyword)],
             undefined,
             "handleNonStatusCodeError",

@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { WithAudiences } from "../../commons/types/WithAudiences";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const MultipleBaseUrlsEnvironmentSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.MultipleBaseUrlsEnvironmentSchema.Raw,
-    FernDefinition.fernDefinition.MultipleBaseUrlsEnvironmentSchema
+    GeneratorsYml.fernDefinition.MultipleBaseUrlsEnvironmentSchema
 > = core.serialization
     .object({
         urls: core.serialization.record(core.serialization.string(), core.serialization.string()),

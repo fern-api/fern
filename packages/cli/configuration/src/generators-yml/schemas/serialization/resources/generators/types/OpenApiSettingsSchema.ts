@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { FormParameterEncoding } from "./FormParameterEncoding";
 import { OpenApiFilterSchema } from "./OpenApiFilterSchema";
@@ -14,7 +14,7 @@ import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema";
 
 export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
     serializers.OpenApiSettingsSchema.Raw,
-    FernDefinition.OpenApiSettingsSchema
+    GeneratorsYml.OpenApiSettingsSchema
 > = core.serialization
     .object({
         "only-include-referenced-schemas": core.serialization.boolean().optional(),

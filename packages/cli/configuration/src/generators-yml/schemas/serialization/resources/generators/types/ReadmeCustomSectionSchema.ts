@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { Language } from "./Language";
 
 export const ReadmeCustomSectionSchema: core.serialization.ObjectSchema<
     serializers.ReadmeCustomSectionSchema.Raw,
-    FernDefinition.ReadmeCustomSectionSchema
+    GeneratorsYml.ReadmeCustomSectionSchema
 > = core.serialization.object({
     title: core.serialization.string(),
     language: Language,

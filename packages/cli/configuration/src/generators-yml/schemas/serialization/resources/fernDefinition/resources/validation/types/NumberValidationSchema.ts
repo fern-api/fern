@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
 export const NumberValidationSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.NumberValidationSchema.Raw,
-    FernDefinition.fernDefinition.NumberValidationSchema
+    GeneratorsYml.fernDefinition.NumberValidationSchema
 > = core.serialization.object({
     min: core.serialization.number().optional(),
     max: core.serialization.number().optional(),

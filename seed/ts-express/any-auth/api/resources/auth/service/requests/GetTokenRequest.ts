@@ -5,5 +5,4 @@ export interface GetTokenRequest {
     clientSecret: string;
     audience: "https://api.example.com";
     grantType: "client_credentials";
-    scope?: string;
 }

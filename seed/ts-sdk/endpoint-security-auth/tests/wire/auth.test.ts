@@ -2,19 +2,17 @@
 
 import { SeedEndpointSecurityAuthClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
-import { mockOAuth } from "./mockAuth";
 
 describe("AuthClient", () => {
     test("getToken", async () => {
         const server = mockServerPool.createServer();
-        mockOAuth(server);
-
         const client = new SeedEndpointSecurityAuthClient({
             maxRetries: 0,
-            token: "test",
-            apiKey: "test",
-            clientId: "client_id",
-            clientSecret: "client_secret",
+            bearer: { token: "test" },
+            apiKey: { apiKey: "test" },
+            oauth: { clientId: "client_id", clientSecret: "client_secret" },
+            basic: { username: "test", password: "test" },
+            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
             environment: server.baseUrl,
         });
         const rawRequestBody = {
@@ -22,7 +20,6 @@ describe("AuthClient", () => {
             client_secret: "client_secret",
             audience: "https://api.example.com",
             grant_type: "client_credentials",
-            scope: "scope",
         };
         const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
         server
@@ -37,7 +34,6 @@ describe("AuthClient", () => {
         const response = await client.auth.getToken({
             client_id: "client_id",
             client_secret: "client_secret",
-            scope: "scope",
         });
         expect(response).toEqual({
             access_token: "access_token",

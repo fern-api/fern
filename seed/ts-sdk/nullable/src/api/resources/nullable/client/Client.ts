@@ -46,7 +46,7 @@ export class NullableClient {
         requestOptions?: NullableClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullable.User[]>> {
         const { usernames, avatar, activated, tags, extra } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (usernames != null) {
             if (Array.isArray(usernames)) {
                 _queryParams.usernames = usernames.map((item) => item);
@@ -63,7 +63,7 @@ export class NullableClient {
             if (Array.isArray(activated)) {
                 _queryParams.activated = activated.map((item) => item.toString());
             } else {
-                _queryParams.activated = activated.toString();
+                _queryParams.activated = activated;
             }
         }
 
@@ -76,7 +76,7 @@ export class NullableClient {
         }
 
         if (extra !== undefined) {
-            _queryParams.extra = extra?.toString() ?? null;
+            _queryParams.extra = extra;
         }
 
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

@@ -40,6 +40,24 @@ impl UserClient {
             .await
     }
 
+    pub async fn get_with_basic(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<Vec<User>, ApiError> {
+        self.http_client
+            .execute_request(Method::GET, "users", None, None, options)
+            .await
+    }
+
+    pub async fn get_with_inferred_auth(
+        &self,
+        options: Option<RequestOptions>,
+    ) -> Result<Vec<User>, ApiError> {
+        self.http_client
+            .execute_request(Method::GET, "users", None, None, options)
+            .await
+    }
+
     pub async fn get_with_any_auth(
         &self,
         options: Option<RequestOptions>,

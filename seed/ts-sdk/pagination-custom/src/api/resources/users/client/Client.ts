@@ -35,7 +35,7 @@ export class UsersClient {
         requestOptions?: UsersClient.RequestOptions,
     ): Promise<core.MyPager<string, SeedPagination.UsernameCursor>> {
         const { starting_after: startingAfter } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (startingAfter != null) {
             _queryParams.starting_after = startingAfter;
         }

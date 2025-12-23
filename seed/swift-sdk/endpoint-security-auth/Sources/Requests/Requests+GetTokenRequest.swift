@@ -6,7 +6,6 @@ extension Requests {
         public let clientSecret: String
         public let audience: HttpsApiExampleCom
         public let grantType: ClientCredentials
-        public let scope: String?
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
@@ -15,14 +14,12 @@ extension Requests {
             clientSecret: String,
             audience: HttpsApiExampleCom,
             grantType: ClientCredentials,
-            scope: String? = nil,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.clientId = clientId
             self.clientSecret = clientSecret
             self.audience = audience
             self.grantType = grantType
-            self.scope = scope
             self.additionalProperties = additionalProperties
         }
 
@@ -32,7 +29,6 @@ extension Requests {
             self.clientSecret = try container.decode(String.self, forKey: .clientSecret)
             self.audience = try container.decode(HttpsApiExampleCom.self, forKey: .audience)
             self.grantType = try container.decode(ClientCredentials.self, forKey: .grantType)
-            self.scope = try container.decodeIfPresent(String.self, forKey: .scope)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -43,7 +39,6 @@ extension Requests {
             try container.encode(self.clientSecret, forKey: .clientSecret)
             try container.encode(self.audience, forKey: .audience)
             try container.encode(self.grantType, forKey: .grantType)
-            try container.encodeIfPresent(self.scope, forKey: .scope)
         }
 
         public enum ClientCredentials: String, Codable, Hashable, CaseIterable, Sendable {
@@ -60,7 +55,6 @@ extension Requests {
             case clientSecret = "client_secret"
             case audience
             case grantType = "grant_type"
-            case scope
         }
     }
 }

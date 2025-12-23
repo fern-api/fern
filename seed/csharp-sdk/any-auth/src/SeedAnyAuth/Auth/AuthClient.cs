@@ -20,7 +20,6 @@ public partial class AuthClient
     ///         ClientSecret = "client_secret",
     ///         Audience = "https://api.example.com",
     ///         GrantType = "client_credentials",
-    ///         Scope = "scope",
     ///     }
     /// );
     /// </code></example>

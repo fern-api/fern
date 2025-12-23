@@ -1,4 +1,58 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.1
+  changelogEntry:
+    - summary: |
+        Fix bug where ts-morph would generate incorrect code when `Accept: */*` header would be defined as
+        a parameter in OpenAPI. The old generated code would generate broken JSDoc comments with invalid syntax.
+      type: fix
+    - summary: |
+        Optimize generated SDK code by eliminating unnecessary `.toString()` calls on primitive types in headers
+        and query parameters. The generator now only stringifies types that require it (dates/datetimes) while
+        using primitives like strings, numbers, booleans, and UUIDs directly.
+      type: chore
+    - summary: |
+        Add `createNumericLiteralSafe` utility to properly handle negative numbers in generated code examples,
+        ensuring compatibility with newer TypeScript/ts-morph versions that require prefix unary expressions.
+      type: fix
+    - summary: |
+        Add support for nullable types in query parameter type resolution, properly unwrapping both optional
+        and nullable containers when determining primitive and object types.
+      type: fix
+    - summary: |
+        Simplify header and query parameter types from verbose union types to `Record<string, unknown>` for
+        more flexible and less complex type signatures in generated SDKs.
+      type: chore
+  createdAt: "2025-12-22"
+  irVersion: 63
+
+- version: 3.43.0
+  changelogEntry:
+    - summary: |
+        Add support for endpoint-level security configuration via new `endpoint-security` auth requirement type.
+        This allows APIs to specify different authentication schemes per endpoint, enabling fine-grained control
+        over which endpoints accept which auth methods (e.g., some endpoints use Bearer, others use API Key).
+      type: feat
+    - summary: |
+        Add `RoutingAuthProvider` that dynamically routes authentication requests based on endpoint metadata.
+        When `auth: endpoint-security` is configured, the SDK uses endpoint metadata to determine which auth
+        provider to use for each request. `AnyAuthProvider` remains the default for `auth: any` configurations.
+      type: feat
+    - summary: |
+        Refactor all auth providers to use factory pattern with static `createInstance` methods. This enables
+        type-safe provider instantiation, conditional provider creation based on available credentials, and
+        better error messages with scheme-specific context.
+      type: chore
+    - summary: |
+        Add conditional wrapper properties for auth options to prevent naming conflicts when multiple auth
+        schemes are configured (e.g., `options.bearer.token` vs `options.oauth.token`).
+      type: feat
+    - summary: |
+        Make `endpointMetadata` parameter optional in `EndpointSupplier.get()` to allow auth providers
+        to handle endpoints without metadata gracefully while maintaining backward compatibility.
+      type: chore
+  createdAt: "2025-12-19"
+  irVersion: 63
+
 - version: 3.42.8
   changelogEntry:
     - summary: |

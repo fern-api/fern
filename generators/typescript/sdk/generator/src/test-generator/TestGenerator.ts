@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
     AuthScheme,
+    AuthSchemesRequirement,
     ErrorDeclaration,
     ExampleEndpointCall,
     ExampleEndpointErrorResponse,
@@ -579,17 +580,48 @@ export function ${functionName}(server: MockServer): void {
 
     private getAuthClientOptions(context: SdkContext): Record<string, Code> {
         const authOptions: Record<string, Code> = {};
+
+        // Check if this is ANY or ENDPOINT_SECURITY auth which requires nested options structure
+        const requiresNestedAuth = AuthSchemesRequirement._visit(this.ir.auth.requirement, {
+            any: () => true,
+            all: () => false,
+            endpointSecurity: () => true,
+            _other: () => false
+        });
+
         this.ir.auth.schemes.forEach((schema) => {
             schema._visit({
                 bearer: (schema) => {
-                    authOptions[schema.token.camelCase.unsafeName] = code`"test"`;
+                    const wrapperKey = camelCase(schema.key);
+                    const tokenKey = schema.token.camelCase.unsafeName;
+
+                    if (requiresNestedAuth) {
+                        authOptions[wrapperKey] = code`${literalOf({ [tokenKey]: "test" })}`;
+                    } else {
+                        authOptions[tokenKey] = code`"test"`;
+                    }
                 },
                 header: (schema) => {
-                    authOptions[schema.name.name.camelCase.unsafeName] = code`"test"`;
+                    const wrapperKey = camelCase(schema.key);
+                    const headerKey = schema.name.name.camelCase.unsafeName;
+
+                    if (requiresNestedAuth) {
+                        authOptions[wrapperKey] = code`${literalOf({ [headerKey]: "test" })}`;
+                    } else {
+                        authOptions[headerKey] = code`"test"`;
+                    }
                 },
                 basic: (schema) => {
-                    authOptions[schema.username.camelCase.unsafeName] = code`"test"`;
-                    authOptions[schema.password.camelCase.unsafeName] = code`"test"`;
+                    const wrapperKey = camelCase(schema.key);
+                    const usernameKey = schema.username.camelCase.unsafeName;
+                    const passwordKey = schema.password.camelCase.unsafeName;
+
+                    if (requiresNestedAuth) {
+                        authOptions[wrapperKey] = code`${literalOf({ [usernameKey]: "test", [passwordKey]: "test" })}`;
+                    } else {
+                        authOptions[usernameKey] = code`"test"`;
+                        authOptions[passwordKey] = code`"test"`;
+                    }
                 },
                 oauth: (oauthScheme) => {
                     if (!this.canMockOAuth()) {
@@ -632,18 +664,19 @@ export function ${functionName}(server: MockServer): void {
                     const clientSecretPropertyName =
                         requestProperties.clientSecret.property.name.name.camelCase.safeName;
 
+                    const oauthOptions: Record<string, Code> = {};
                     example.request?._visit({
                         inlinedRequestBody: (value) => {
                             value.properties.forEach((p) => {
                                 const propertyName = p.name.name.camelCase.safeName;
                                 if (propertyName === clientIdPropertyName) {
-                                    authOptions.clientId = this.createRawJsonExample({
+                                    oauthOptions.clientId = this.createRawJsonExample({
                                         example: p.value,
                                         isForRequest: true,
                                         isForResponse: false
                                     });
                                 } else if (propertyName === clientSecretPropertyName) {
-                                    authOptions.clientSecret = this.createRawJsonExample({
+                                    oauthOptions.clientSecret = this.createRawJsonExample({
                                         example: p.value,
                                         isForRequest: true,
                                         isForResponse: false
@@ -656,10 +689,10 @@ export function ${functionName}(server: MockServer): void {
                             const clientIdValue = allProperties[clientIdPropertyName];
                             const clientSecretValue = allProperties[clientSecretPropertyName];
                             if (clientIdValue) {
-                                authOptions.clientId = clientIdValue;
+                                oauthOptions.clientId = clientIdValue;
                             }
                             if (clientSecretValue) {
-                                authOptions.clientSecret = clientSecretValue;
+                                oauthOptions.clientSecret = clientSecretValue;
                             }
                         },
                         _other: () => {
@@ -669,11 +702,22 @@ export function ${functionName}(server: MockServer): void {
 
                     // Provide fallback values if clientId/clientSecret weren't extracted from the example
                     // This is needed for wire tests to work with OAuth client credentials flow
-                    if (authOptions.clientId == null) {
-                        authOptions.clientId = code`"test_client_id"`;
+                    if (oauthOptions.clientId == null) {
+                        oauthOptions.clientId = code`"test_client_id"`;
                     }
-                    if (authOptions.clientSecret == null) {
-                        authOptions.clientSecret = code`"test_client_secret"`;
+                    if (oauthOptions.clientSecret == null) {
+                        oauthOptions.clientSecret = code`"test_client_secret"`;
+                    }
+
+                    if (requiresNestedAuth) {
+                        let wrapperKey = camelCase(oauthScheme.key);
+                        // Special case: "OAuth" should become "oauth" not "oAuth"
+                        if (wrapperKey === "oAuth") {
+                            wrapperKey = "oauth";
+                        }
+                        authOptions[wrapperKey] = code`${literalOf(oauthOptions)}`;
+                    } else {
+                        Object.assign(authOptions, oauthOptions);
                     }
                 },
                 inferred: (auth) => {
@@ -704,7 +748,13 @@ export function ${functionName}(server: MockServer): void {
                         auth: AuthScheme.inferred(auth),
                         context
                     });
-                    Object.assign(authOptions, authRequestParameters);
+
+                    if (requiresNestedAuth) {
+                        const wrapperKey = camelCase(auth.key);
+                        authOptions[wrapperKey] = code`${literalOf(authRequestParameters)}`;
+                    } else {
+                        Object.assign(authOptions, authRequestParameters);
+                    }
                 },
                 _other: () => {
                     // noop
@@ -1158,22 +1208,56 @@ describe("${serviceName}", () => {
 
         let mockAuthSnippet: Code | undefined;
         if (this.shouldBuildMockAuthFile({ context })) {
-            const oauthScheme = this.ir.auth.schemes.find((s) => s.type === "oauth");
-            const inferredAuthScheme = this.ir.auth.schemes.find((s) => s.type === "inferred");
+            const mockFunctionNames: string[] = [];
 
-            let mockFunctionName: string | undefined;
-            if (oauthScheme && this.canMockOAuth()) {
-                mockFunctionName = `mock${upperFirst(camelCase(oauthScheme.key))}`;
-            } else if (inferredAuthScheme) {
-                mockFunctionName = `mock${upperFirst(camelCase(inferredAuthScheme.key))}`;
+            // Determine which auth schemes to mock based on auth requirement
+            const authRequirement = this.ir.auth.requirement;
+
+            if (authRequirement === "ANY" || authRequirement === "ALL") {
+                // For ANY and ALL: include all OAuth and InferredAuth schemes that exist
+                for (const scheme of this.ir.auth.schemes) {
+                    if (scheme.type === "oauth" && this.canMockOAuth()) {
+                        mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                    } else if (scheme.type === "inferred") {
+                        mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                    }
+                }
+            } else if (authRequirement === "ENDPOINT_SECURITY") {
+                // For ENDPOINT_SECURITY: only include schemes required by this endpoint
+                if (endpoint.security != null && endpoint.security.length > 0) {
+                    // Get all auth scheme keys required by this endpoint
+                    // endpoint.security is an array of collections where each collection is a Record<AuthSchemeKey, AuthScope[]>
+                    // We'll collect all unique auth scheme keys from all collections
+                    const requiredSchemeKeys = new Set<string>();
+                    for (const securityItem of endpoint.security) {
+                        for (const schemeKey of Object.keys(securityItem)) {
+                            requiredSchemeKeys.add(schemeKey);
+                        }
+                    }
+
+                    // Add mock calls for OAuth and InferredAuth schemes that are required by this endpoint
+                    for (const scheme of this.ir.auth.schemes) {
+                        if (requiredSchemeKeys.has(scheme.key)) {
+                            if (scheme.type === "oauth" && this.canMockOAuth()) {
+                                mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                            } else if (scheme.type === "inferred") {
+                                mockFunctionNames.push(`mock${upperFirst(camelCase(scheme.key))}`);
+                            }
+                        }
+                    }
+                }
             }
 
-            if (mockFunctionName) {
-                mockAuthSnippet = code`${mockFunctionName}(server);\n`;
+            // Generate mock auth snippet with all required mock calls
+            if (mockFunctionNames.length > 0) {
+                const mockCalls = mockFunctionNames.map((name) => `${name}(server);`).join("\n");
+                mockAuthSnippet = code`${mockCalls}\n`;
+
+                // Add imports for all mock functions
                 context.importsManager.addImportFromRoot(
                     "wire/mockAuth",
                     {
-                        namedImports: [mockFunctionName]
+                        namedImports: mockFunctionNames
                     },
                     this.relativeTestPath
                 );

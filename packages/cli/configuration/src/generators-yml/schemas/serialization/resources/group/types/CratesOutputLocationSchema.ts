@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const CratesOutputLocationSchema: core.serialization.ObjectSchema<
     serializers.CratesOutputLocationSchema.Raw,
-    FernDefinition.CratesOutputLocationSchema
+    GeneratorsYml.CratesOutputLocationSchema
 > = core.serialization.object({
     url: core.serialization.string().optional(),
     "package-name": core.serialization.string(),

@@ -50,7 +50,7 @@ export class HeadersClient {
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 operand: operand,
-                maybeOperand: maybeOperand != null ? maybeOperand : undefined,
+                maybeOperand: maybeOperand,
                 operandOrColor: typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor),
                 maybeOperandOrColor:
                     maybeOperandOrColor != null

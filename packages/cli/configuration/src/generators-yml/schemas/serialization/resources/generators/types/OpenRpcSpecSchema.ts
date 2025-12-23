@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const OpenRpcSpecSchema: core.serialization.ObjectSchema<
     serializers.OpenRpcSpecSchema.Raw,
-    FernDefinition.OpenRpcSpecSchema
+    GeneratorsYml.OpenRpcSpecSchema
 > = core.serialization.object({
     openrpc: core.serialization.string(),
     overrides: core.serialization.string().optional(),

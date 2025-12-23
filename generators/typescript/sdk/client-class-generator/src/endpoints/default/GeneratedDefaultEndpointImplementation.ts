@@ -115,13 +115,13 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
     public getDocs(context: SdkContext): string | undefined {
         const groups: string[] = [];
-        if (this.endpoint.docs != null) {
+        if (this.endpoint.docs) {
             groups.push(this.endpoint.docs);
         }
 
         const params: string[] = [];
         for (const parameter of this.request.getEndpointParameters(context)) {
-            if (parameter.docs == null) {
+            if (!parameter.docs) {
                 params.push(`@param {${parameter.type}} ${parameter.name}`);
                 continue;
             }
@@ -392,7 +392,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     ts.factory.createParameterDeclaration(
                         undefined,
                         undefined,
-                        undefined,
                         ts.factory.createIdentifier("request"),
                         undefined,
                         context.coreUtilities.fetcher.Fetcher.Args._getReferenceToType(),
@@ -515,7 +514,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                 undefined,
                                 [
                                     ts.factory.createParameterDeclaration(
-                                        undefined,
                                         undefined,
                                         undefined,
                                         ts.factory.createIdentifier("request"),
@@ -695,7 +693,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             undefined,
             [
                 ts.factory.createParameterDeclaration(
-                    undefined,
                     undefined,
                     undefined,
                     ts.factory.createIdentifier(responseParameterName),

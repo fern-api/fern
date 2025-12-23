@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const NugetOutputLocationSchema: core.serialization.ObjectSchema<
     serializers.NugetOutputLocationSchema.Raw,
-    FernDefinition.NugetOutputLocationSchema
+    GeneratorsYml.NugetOutputLocationSchema
 > = core.serialization.object({
     url: core.serialization.string().optional(),
     "package-name": core.serialization.string(),

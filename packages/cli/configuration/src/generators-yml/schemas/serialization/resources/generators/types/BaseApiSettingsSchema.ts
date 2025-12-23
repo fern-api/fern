@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { RemoveDiscriminantsFromSchemas } from "./RemoveDiscriminantsFromSchemas";
 import { PathParameterOrder } from "./PathParameterOrder";
 
 export const BaseApiSettingsSchema: core.serialization.ObjectSchema<
     serializers.BaseApiSettingsSchema.Raw,
-    FernDefinition.BaseApiSettingsSchema
+    GeneratorsYml.BaseApiSettingsSchema
 > = core.serialization.object({
     "respect-nullable-schemas": core.serialization.boolean().optional(),
     "title-as-schema-name": core.serialization.boolean().optional(),

@@ -19,7 +19,6 @@ $client->auth->getToken(
         'clientSecret' => 'client_secret',
         'audience' => 'https://api.example.com',
         'grantType' => 'client_credentials',
-        'scope' => 'scope',
     ]),
 );
 ```
@@ -61,14 +60,6 @@ $client->auth->getToken(
 <dd>
 
 **$grantType:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**$scope:** `?string` 
     
 </dd>
 </dl>

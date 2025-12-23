@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { GeneratorInvocationSchema } from "./GeneratorInvocationSchema";
 import { OutputMetadataSchema } from "../../generators/types/OutputMetadataSchema";
@@ -11,7 +11,7 @@ import { ReviewersSchema } from "../../reviewers/types/ReviewersSchema";
 
 export const GeneratorGroupSchema: core.serialization.ObjectSchema<
     serializers.GeneratorGroupSchema.Raw,
-    FernDefinition.GeneratorGroupSchema
+    GeneratorsYml.GeneratorGroupSchema
 > = core.serialization.object({
     audiences: core.serialization.list(core.serialization.string()).optional(),
     generators: core.serialization.list(GeneratorInvocationSchema),

@@ -70,7 +70,6 @@ public class Example {
                 .builder()
                 .clientId("client_id")
                 .clientSecret("client_secret")
-                .scope("scope")
                 .build()
         );
     }

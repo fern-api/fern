@@ -5,33 +5,80 @@ import type { BaseClientOptions } from "../BaseClient.js";
 import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
-export class OAuthAuthProvider implements core.AuthProvider {
-    private readonly BUFFER_IN_MINUTES: number = 2;
-    private readonly _clientId: core.Supplier<string> | undefined;
-    private readonly _clientSecret: core.Supplier<string> | undefined;
-    private readonly _authClient: AuthClient;
-    private _accessToken: string | undefined;
-    private _expiresAt: Date;
-    private _refreshPromise: Promise<string> | undefined;
+const CLIENT_ID_PARAM = "clientId" as const;
+const CLIENT_SECRET_PARAM = "clientSecret" as const;
+const TOKEN_PARAM = "token" as const;
+const ENV_CLIENT_ID = "CLIENT_ID" as const;
+const ENV_CLIENT_SECRET = "CLIENT_SECRET" as const;
+const CLIENT_ID_REQUIRED_ERROR_MESSAGE =
+    `${CLIENT_ID_PARAM} is required; either pass it as an argument or set the ${ENV_CLIENT_ID} environment variable` as const;
+const CLIENT_SECRET_REQUIRED_ERROR_MESSAGE =
+    `${CLIENT_SECRET_PARAM} is required; either pass it as an argument or set the ${ENV_CLIENT_SECRET} environment variable` as const;
+const TOKEN_PARAM_REQUIRED_ERROR_MESSAGE = `${TOKEN_PARAM} is required. Please provide it in options.` as const;
+const BUFFER_IN_MINUTES = 2 as const;
 
-    constructor(options: OAuthAuthProvider.Options & OAuthAuthProvider.AuthOptions.ClientCredentials) {
-        this._clientId = options.clientId;
-        this._clientSecret = options.clientSecret;
-        this._authClient = new AuthClient(options);
-        this._expiresAt = new Date();
+export class OAuthAuthProvider implements core.AuthProvider {
+    private readonly options: BaseClientOptions & OAuthAuthProvider.ClientCredentials;
+    private readonly authClient: AuthClient;
+    private accessToken: string | undefined;
+    private expiresAt: Date;
+    private refreshPromise: Promise<string> | undefined;
+
+    constructor(options: OAuthAuthProvider.Options & OAuthAuthProvider.ClientCredentials) {
+        this.options = options;
+        this.authClient = new AuthClient(options);
+        this.expiresAt = new Date();
     }
 
-    public static canCreate(
-        options: OAuthAuthProvider.Options,
-    ): options is OAuthAuthProvider.Options & OAuthAuthProvider.AuthOptions.ClientCredentials {
+    public static canCreate(options?: Partial<OAuthAuthProvider.ClientCredentials & BaseClientOptions>): boolean {
         return (
-            (("clientId" in options && options.clientId != null) || process.env?.CLIENT_ID != null) &&
-            (("clientSecret" in options && options.clientSecret != null) || process.env?.CLIENT_SECRET != null)
+            (options?.[CLIENT_ID_PARAM] != null || process.env?.[ENV_CLIENT_ID] != null) &&
+            (options?.[CLIENT_SECRET_PARAM] != null || process.env?.[ENV_CLIENT_SECRET] != null)
         );
     }
 
-    public async getAuthRequest(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
-        const token = await this.getToken(arg);
+    private async clientIdSupplier({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<string> {
+        const supplier = this.options[CLIENT_ID_PARAM];
+        if (supplier != null) {
+            return core.EndpointSupplier.get(supplier, { endpointMetadata });
+        }
+        const envClientId = process.env?.[ENV_CLIENT_ID];
+        if (envClientId != null) {
+            return envClientId;
+        }
+        throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
+            message: CLIENT_ID_REQUIRED_ERROR_MESSAGE,
+        });
+    }
+
+    private async clientSecretSupplier({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<string> {
+        const supplier = this.options[CLIENT_SECRET_PARAM];
+        if (supplier != null) {
+            return core.EndpointSupplier.get(supplier, { endpointMetadata });
+        }
+        const envClientSecret = process.env?.[ENV_CLIENT_SECRET];
+        if (envClientSecret != null) {
+            return envClientSecret;
+        }
+        throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
+            message: CLIENT_SECRET_REQUIRED_ERROR_MESSAGE,
+        });
+    }
+
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
+        const token = await this.getToken({ endpointMetadata });
 
         return {
             headers: {
@@ -40,48 +87,35 @@ export class OAuthAuthProvider implements core.AuthProvider {
         };
     }
 
-    private async getToken(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
-        if (this._accessToken && this._expiresAt > new Date()) {
-            return this._accessToken;
+    private async getToken({ endpointMetadata }: { endpointMetadata?: core.EndpointMetadata } = {}): Promise<string> {
+        if (this.accessToken && this.expiresAt > new Date()) {
+            return this.accessToken;
         }
         // If a refresh is already in progress, return the existing promise
-        if (this._refreshPromise != null) {
-            return this._refreshPromise;
+        if (this.refreshPromise != null) {
+            return this.refreshPromise;
         }
-        return this.refresh(arg);
+        return this.refresh({ endpointMetadata });
     }
 
-    private async refresh(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
-        this._refreshPromise = (async () => {
+    private async refresh({ endpointMetadata }: { endpointMetadata?: core.EndpointMetadata } = {}): Promise<string> {
+        this.refreshPromise = (async () => {
             try {
-                const clientId = (await core.Supplier.get(this._clientId)) ?? process.env?.CLIENT_ID;
-                if (clientId == null) {
-                    throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                        message:
-                            "clientId is required; either pass it as an argument or set the CLIENT_ID environment variable",
-                    });
-                }
-
-                const clientSecret = (await core.Supplier.get(this._clientSecret)) ?? process.env?.CLIENT_SECRET;
-                if (clientSecret == null) {
-                    throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                        message:
-                            "clientSecret is required; either pass it as an argument or set the CLIENT_SECRET environment variable",
-                    });
-                }
-                const tokenResponse = await this._authClient.getTokenWithClientCredentials({
+                const clientId = await this.clientIdSupplier({ endpointMetadata });
+                const clientSecret = await this.clientSecretSupplier({ endpointMetadata });
+                const tokenResponse = await this.authClient.getTokenWithClientCredentials({
                     client_id: clientId,
                     client_secret: clientSecret,
                 });
 
-                this._accessToken = tokenResponse.access_token;
-                this._expiresAt = this.getExpiresAt(tokenResponse.expires_in, this.BUFFER_IN_MINUTES);
-                return this._accessToken;
+                this.accessToken = tokenResponse.access_token;
+                this.expiresAt = this.getExpiresAt(tokenResponse.expires_in, BUFFER_IN_MINUTES);
+                return this.accessToken;
             } finally {
-                this._refreshPromise = undefined;
+                this.refreshPromise = undefined;
             }
         })();
-        return this._refreshPromise;
+        return this.refreshPromise;
     }
 
     private getExpiresAt(expiresInSeconds: number, bufferInMinutes: number): Date {
@@ -91,47 +125,50 @@ export class OAuthAuthProvider implements core.AuthProvider {
 }
 
 export class OAuthTokenOverrideAuthProvider implements core.AuthProvider {
-    private readonly _token: core.Supplier<string>;
+    private readonly options: OAuthAuthProvider.TokenOverride;
 
-    constructor(options: OAuthAuthProvider.Options & OAuthAuthProvider.AuthOptions.TokenOverride) {
-        if (options.token == null) {
-            throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                message: "token is required. Please provide it in options.",
-            });
-        }
-        this._token = options.token;
+    constructor(options: OAuthAuthProvider.TokenOverride) {
+        this.options = options;
     }
 
     public static canCreate(
-        options: OAuthAuthProvider.Options,
-    ): options is OAuthAuthProvider.Options & OAuthAuthProvider.AuthOptions.TokenOverride {
-        return "token" in options && options.token != null;
+        options?: Partial<OAuthAuthProvider.TokenOverride & BaseClientOptions>,
+    ): options is OAuthAuthProvider.TokenOverride {
+        return options?.[TOKEN_PARAM] != null;
     }
 
-    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
+        const token = this.options[TOKEN_PARAM];
+        if (token == null) {
+            throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
+                message: TOKEN_PARAM_REQUIRED_ERROR_MESSAGE,
+            });
+        }
         return {
             headers: {
-                Authorization: `Bearer ${await core.Supplier.get(this._token)}`,
+                Authorization: `Bearer ${await core.EndpointSupplier.get(token, { endpointMetadata })}`,
             },
         };
     }
 }
 
 export namespace OAuthAuthProvider {
-    export type AuthOptions = AuthOptions.ClientCredentials | AuthOptions.TokenOverride;
-
-    export namespace AuthOptions {
-        export interface ClientCredentials {
-            clientId: core.Supplier<string> | undefined;
-            clientSecret: core.Supplier<string> | undefined;
-        }
-
-        export interface TokenOverride {
-            token: core.Supplier<string>;
-        }
-    }
-
-    export type Options = BaseClientOptions;
+    export const AUTH_SCHEME = "OAuthScheme" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string =
+        `Insufficient options to create OAuthAuthProvider. Please provide either '${CLIENT_ID_PARAM}' or '${ENV_CLIENT_ID}' env var and '${CLIENT_SECRET_PARAM}' or '${ENV_CLIENT_SECRET}' env var, or ${TOKEN_PARAM}.` as const;
+    export type ClientCredentials = {
+        [CLIENT_ID_PARAM]?: core.Supplier<string> | undefined;
+        [CLIENT_SECRET_PARAM]?: core.Supplier<string> | undefined;
+    };
+    export type TokenOverride = {
+        [TOKEN_PARAM]: core.Supplier<string>;
+    };
+    export type AuthOptions = ClientCredentials | TokenOverride;
+    export type Options = BaseClientOptions & AuthOptions;
 
     export function createInstance(options: Options): core.AuthProvider {
         if (OAuthTokenOverrideAuthProvider.canCreate(options)) {
@@ -140,8 +177,7 @@ export namespace OAuthAuthProvider {
             return new OAuthAuthProvider(options);
         }
         throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-            message:
-                "Insufficient options to create OAuthAuthProvider. Please provide either clientId and clientSecret, or token.",
+            message: AUTH_CONFIG_ERROR_MESSAGE,
         });
     }
 }

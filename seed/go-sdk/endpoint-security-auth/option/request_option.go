@@ -98,3 +98,11 @@ func WithClientCredentials(clientID string, clientSecret string) *core.ClientCre
 		ClientSecret: clientSecret,
 	}
 }
+
+// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.
+func WithBasicAuth(username, password string) *core.BasicAuthOption {
+	return &core.BasicAuthOption{
+		Username: username,
+		Password: password,
+	}
+}

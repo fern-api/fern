@@ -8,7 +8,6 @@ module Seed
         field :client_secret, -> { String }, optional: false, nullable: false
         field :audience, -> { String }, optional: false, nullable: false
         field :grant_type, -> { String }, optional: false, nullable: false
-        field :scope, -> { String }, optional: true, nullable: false
       end
     end
   end

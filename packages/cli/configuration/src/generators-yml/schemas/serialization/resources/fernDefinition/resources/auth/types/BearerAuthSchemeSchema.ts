@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { TokenBearerAuthSchema } from "./TokenBearerAuthSchema";
 import { InferredBearerAuthSchema } from "./InferredBearerAuthSchema";
 
 export const BearerAuthSchemeSchema: core.serialization.Schema<
     serializers.fernDefinition.BearerAuthSchemeSchema.Raw,
-    FernDefinition.fernDefinition.BearerAuthSchemeSchema
+    GeneratorsYml.fernDefinition.BearerAuthSchemeSchema
 > = core.serialization.undiscriminatedUnion([TokenBearerAuthSchema, InferredBearerAuthSchema]);
 
 export declare namespace BearerAuthSchemeSchema {

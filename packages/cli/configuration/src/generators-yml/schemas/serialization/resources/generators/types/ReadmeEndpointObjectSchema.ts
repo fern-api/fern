@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const ReadmeEndpointObjectSchema: core.serialization.ObjectSchema<
     serializers.ReadmeEndpointObjectSchema.Raw,
-    FernDefinition.ReadmeEndpointObjectSchema
+    GeneratorsYml.ReadmeEndpointObjectSchema
 > = core.serialization.object({
     method: core.serialization.string(),
     path: core.serialization.string(),

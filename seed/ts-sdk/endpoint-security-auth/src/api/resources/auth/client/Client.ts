@@ -28,8 +28,7 @@ export class AuthClient {
      * @example
      *     await client.auth.getToken({
      *         client_id: "client_id",
-     *         client_secret: "client_secret",
-     *         scope: "scope"
+     *         client_secret: "client_secret"
      *     })
      */
     public getToken(
@@ -43,6 +42,7 @@ export class AuthClient {
         request: SeedEndpointSecurityAuth.GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedEndpointSecurityAuth.TokenResponse>> {
+        const _metadata: core.EndpointMetadata = { security: undefined };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -59,6 +59,7 @@ export class AuthClient {
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
             fetchFn: this._options?.fetch,
             logging: this._options.logging,
         });

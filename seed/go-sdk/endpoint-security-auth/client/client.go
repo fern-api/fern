@@ -37,6 +37,12 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.ClientSecret == "" {
 		options.ClientSecret = os.Getenv("MY_CLIENT_SECRET")
 	}
+	if options.Username == "" {
+		options.Username = os.Getenv("MY_USERNAME")
+	}
+	if options.Password == "" {
+		options.Password = os.Getenv("MY_PASSWORD")
+	}
 	oauthTokenProvider := core.NewOAuthTokenProvider(
 		options.ClientID,
 		options.ClientSecret,

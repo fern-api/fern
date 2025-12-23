@@ -585,39 +585,6 @@
                             },
                             "propertyAccess": null,
                             "variable": null
-                        },
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "scope",
-                                    "camelCase": {
-                                        "unsafeName": "scope",
-                                        "safeName": "scope"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "scope",
-                                        "safeName": "scope"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SCOPE",
-                                        "safeName": "SCOPE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Scope",
-                                        "safeName": "Scope"
-                                    }
-                                },
-                                "wireValue": "scope"
-                            },
-                            "typeReference": {
-                                "type": "optional",
-                                "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                }
-                            },
-                            "propertyAccess": null,
-                            "variable": null
                         }
                     ]
                 },
@@ -874,6 +841,208 @@
                     "pascalCase": {
                         "unsafeName": "GetWithOAuth",
                         "safeName": "GetWithOAuth"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/users"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_user.getWithBasic": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getWithBasic",
+                    "camelCase": {
+                        "unsafeName": "getWithBasic",
+                        "safeName": "getWithBasic"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_with_basic",
+                        "safeName": "get_with_basic"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_WITH_BASIC",
+                        "safeName": "GET_WITH_BASIC"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetWithBasic",
+                        "safeName": "GetWithBasic"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/users"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_user.getWithInferredAuth": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getWithInferredAuth",
+                    "camelCase": {
+                        "unsafeName": "getWithInferredAuth",
+                        "safeName": "getWithInferredAuth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_with_inferred_auth",
+                        "safeName": "get_with_inferred_auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_WITH_INFERRED_AUTH",
+                        "safeName": "GET_WITH_INFERRED_AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetWithInferredAuth",
+                        "safeName": "GetWithInferredAuth"
                     }
                 },
                 "fernFilepath": {

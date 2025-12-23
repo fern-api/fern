@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { GeneratorsOpenApiObjectSchema } from "./GeneratorsOpenApiObjectSchema";
 
 export const GeneratorsOpenApiSchema: core.serialization.Schema<
     serializers.GeneratorsOpenApiSchema.Raw,
-    FernDefinition.GeneratorsOpenApiSchema
+    GeneratorsYml.GeneratorsOpenApiSchema
 > = core.serialization.undiscriminatedUnion([GeneratorsOpenApiObjectSchema, core.serialization.string()]);
 
 export declare namespace GeneratorsOpenApiSchema {

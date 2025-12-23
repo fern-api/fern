@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubSelfhostedSchema } from "./GithubSelfhostedSchema";
 import { GithubCommitAndReleaseSchema } from "./GithubCommitAndReleaseSchema";
@@ -12,7 +12,7 @@ import { GithubPushSchema } from "./GithubPushSchema";
 
 export const GithubConfigurationSchema: core.serialization.Schema<
     serializers.GithubConfigurationSchema.Raw,
-    FernDefinition.GithubConfigurationSchema
+    GeneratorsYml.GithubConfigurationSchema
 > = core.serialization.undiscriminatedUnion([
     GithubSelfhostedSchema,
     GithubCommitAndReleaseSchema,
