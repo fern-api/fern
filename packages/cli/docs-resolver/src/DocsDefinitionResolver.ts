@@ -9,7 +9,7 @@ import {
     replaceReferencedCode,
     replaceReferencedMarkdown
 } from "@fern-api/docs-markdown-utils";
-import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
+import { APIV1Read, APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -1253,12 +1253,19 @@ export class DocsDefinitionResolver {
             apiName: item.apiName,
             workspace
         });
-        const api = convertIrToApiDefinition({
+        let api = convertIrToApiDefinition({
             ir,
             apiDefinitionId,
             playgroundConfig: { oauth: item.playground?.oauth },
             context: this.taskContext
         });
+
+        // Add empty subpackages for tags that have descriptions but no endpoints
+        // This ensures that when tag-description-pages is enabled, tags with descriptions
+        // are included in the navigation even if they have no endpoints
+        if (openApiTags != null && item.tagDescriptionPages) {
+            api = this.addEmptyTagSubpackages(api, openApiTags);
+        }
 
         const node = new ApiReferenceNodeConverter(
             item,
@@ -1745,6 +1752,55 @@ export class DocsDefinitionResolver {
             url: ({ value }) => ({ type: "url", value: DocsV1Write.Url(value) }),
             _other: () => this.taskContext.failAndThrow("Invalid metadata configuration")
         });
+    }
+
+    private addEmptyTagSubpackages(
+        api: APIV1Read.ApiDefinition,
+        openApiTags: Record<string, { id: string; description: string | undefined }>
+    ): APIV1Read.ApiDefinition {
+        const existingSubpackageIds = new Set<string>([
+            ...api.rootPackage.subpackages,
+            ...Object.keys(api.subpackages)
+        ]);
+
+        const newSubpackages: Record<APIV1Read.SubpackageId, APIV1Read.ApiDefinitionSubpackage> = {
+            ...api.subpackages
+        };
+        const newRootSubpackageIds: APIV1Read.SubpackageId[] = [...api.rootPackage.subpackages];
+
+        for (const [tagId, tag] of Object.entries(openApiTags)) {
+            const subpackageId = APIV1Read.SubpackageId(`subpackage_${kebabCase(tagId)}`);
+
+            if (!existingSubpackageIds.has(subpackageId) && !existingSubpackageIds.has(tagId)) {
+                const emptySubpackage: APIV1Read.ApiDefinitionSubpackage = {
+                    subpackageId,
+                    name: tagId,
+                    displayName: tag.id,
+                    urlSlug: kebabCase(tagId),
+                    description: tag.description,
+                    parent: undefined,
+                    endpoints: [],
+                    websockets: [],
+                    webhooks: [],
+                    types: [],
+                    subpackages: [],
+                    pointsTo: undefined
+                };
+
+                newSubpackages[subpackageId] = emptySubpackage;
+                newRootSubpackageIds.push(subpackageId);
+                existingSubpackageIds.add(subpackageId);
+            }
+        }
+
+        return {
+            ...api,
+            subpackages: newSubpackages,
+            rootPackage: {
+                ...api.rootPackage,
+                subpackages: newRootSubpackageIds
+            }
+        };
     }
 }
 
