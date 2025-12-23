@@ -280,14 +280,31 @@ export class DebugLogger {
     }
 
     /**
-     * Log CLI validation time
+     * Log CLI validation time with detailed metrics
      */
-    async logCliValidation(durationMs: number, success: boolean): Promise<void> {
+    async logCliValidation(
+        durationMs: number,
+        success: boolean,
+        metrics?: {
+            errorCount: number;
+            warningCount: number;
+            totalViolationCount: number;
+            violationsBySeverity: Record<string, number>;
+        }
+    ): Promise<void> {
         const event: CliMetricEvent = {
             type: "cli_validation",
             timestamp: new Date().toISOString(),
             durationMs,
-            metadata: { success }
+            metadata: {
+                success,
+                ...(metrics && {
+                    errorCount: metrics.errorCount,
+                    warningCount: metrics.warningCount,
+                    totalViolationCount: metrics.totalViolationCount,
+                    violationsBySeverity: metrics.violationsBySeverity
+                })
+            }
         };
 
         await this.logCliMetric(event);

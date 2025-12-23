@@ -3,7 +3,7 @@ import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext";
-import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
+import { ValidationMetrics, validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
 
 export async function previewDocsWorkspace({
     loadProject,
@@ -90,16 +90,16 @@ export async function previewDocsWorkspace({
         await runAppPreviewServer({
             initialProject: project,
             reloadProject: loadProject,
-            validateProject: async (project) => {
+            validateProject: async (project): Promise<ValidationMetrics | undefined> => {
                 const docsWorkspace = project.docsWorkspaces;
                 if (docsWorkspace == null) {
-                    return;
+                    return undefined;
                 }
                 const excludeRules = brokenLinks ? [] : ["valid-markdown-links"];
                 const openapiParserV3 = docsWorkspace.config.experimental?.openapiParserV3;
                 const useV3Parser = openapiParserV3 == null || openapiParserV3;
                 if (useV3Parser) {
-                    await validateDocsWorkspaceWithoutExiting({
+                    return await validateDocsWorkspaceWithoutExiting({
                         workspace: docsWorkspace,
                         context,
                         logWarnings: true,
@@ -109,7 +109,7 @@ export async function previewDocsWorkspace({
                         excludeRules
                     });
                 } else {
-                    await validateDocsWorkspaceWithoutExiting({
+                    return await validateDocsWorkspaceWithoutExiting({
                         workspace: docsWorkspace,
                         context,
                         logWarnings: true,

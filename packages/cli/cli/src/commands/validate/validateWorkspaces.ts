@@ -1,6 +1,5 @@
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
-import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
@@ -128,30 +127,7 @@ export async function validateWorkspaces({
         })
     );
 
-    // Collect all violations for event logging
-    const allViolations = [...apiResults.flatMap((r) => r.violations), ...(docsResult?.violations ?? [])];
-    const totalElapsedMillis =
-        apiResults.reduce((sum, r) => sum + r.elapsedMillis, 0) + (docsResult?.elapsedMillis ?? 0);
-
-    // Log fine-grained validation event
-    await cliContext.instrumentPostHogEvent({
-        orgId: project.config.organization,
-        command: "fern check",
-        properties: {
-            ...getValidationEventProperties(allViolations),
-            totalElapsedMs: totalElapsedMillis,
-            apiWorkspaceCount: apiResults.length,
-            hasDocsWorkspace: docsResult != null,
-            options: {
-                logWarnings,
-                brokenLinks,
-                errorOnBrokenLinks,
-                directFromOpenapi: directFromOpenapi ?? false
-            }
-        }
-    });
-
-    // Print the aggregated report (using runTask to get a proper TaskContext)
+    // Print the aggregated report(using runTask to get a proper TaskContext)
     const { hasErrors } = await cliContext.runTask((context) => {
         return printCheckReport({
             apiResults,
@@ -164,28 +140,4 @@ export async function validateWorkspaces({
     if (hasErrors || hasAnyErrors) {
         cliContext.failAndThrow();
     }
-}
-
-function getValidationEventProperties(violations: ValidationViolation[]): Record<string, unknown> {
-    let errorCount = 0;
-    let warningCount = 0;
-    const violationsBySeverity: Record<string, number> = {};
-
-    for (const violation of violations) {
-        if (violation.severity === "fatal" || violation.severity === "error") {
-            errorCount++;
-        } else if (violation.severity === "warning") {
-            warningCount++;
-        }
-
-        violationsBySeverity[violation.severity] = (violationsBySeverity[violation.severity] ?? 0) + 1;
-    }
-
-    return {
-        errorCount,
-        warningCount,
-        totalViolationCount: violations.length,
-        passed: errorCount === 0,
-        violationsBySeverity
-    };
 }

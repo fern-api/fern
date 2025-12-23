@@ -58,6 +58,15 @@ export async function collectDocsWorkspaceViolations({
     };
 }
 
+export interface ValidationMetrics {
+    hasErrors: boolean;
+    errorCount: number;
+    warningCount: number;
+    totalViolationCount: number;
+    violationsBySeverity: Record<string, number>;
+    elapsedMillis: number;
+}
+
 export async function validateDocsWorkspaceWithoutExiting({
     workspace,
     apiWorkspaces,
@@ -76,7 +85,7 @@ export async function validateDocsWorkspaceWithoutExiting({
     errorOnBrokenLinks?: boolean;
     logSummary?: boolean;
     excludeRules?: string[];
-}): Promise<{ hasErrors: boolean }> {
+}): Promise<ValidationMetrics> {
     // Apply env var substitution if settings.substitute-env-vars is enabled
     // This matches the behavior of `fern generate --docs` which throws errors for missing env vars
     // The entire config including instances (with custom domains) goes through substitution
@@ -109,7 +118,28 @@ export async function validateDocsWorkspaceWithoutExiting({
         hasErrors = hasErrors || violations.some((violation) => violation.name === "valid-markdown-links");
     }
 
-    return { hasErrors };
+    // Calculate detailed validation metrics
+    let errorCount = 0;
+    let warningCount = 0;
+    const violationsBySeverity: Record<string, number> = {};
+
+    for (const violation of violations) {
+        if (violation.severity === "fatal" || violation.severity === "error") {
+            errorCount++;
+        } else if (violation.severity === "warning") {
+            warningCount++;
+        }
+        violationsBySeverity[violation.severity] = (violationsBySeverity[violation.severity] ?? 0) + 1;
+    }
+
+    return {
+        hasErrors,
+        errorCount,
+        warningCount,
+        totalViolationCount: violations.length,
+        violationsBySeverity,
+        elapsedMillis
+    };
 }
 
 export async function validateDocsWorkspaceAndLogIssues({
