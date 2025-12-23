@@ -224,6 +224,9 @@ export async function runRemoteGenerationForGenerator({
                 dynamicGeneratorConfig,
                 context: interactiveTaskContext
             });
+            interactiveTaskContext.logger.debug(
+                `Uploaded dynamic IR for ${generatorInvocation.language}:${packageName}`
+            );
         } catch (error) {
             interactiveTaskContext.logger.warn(
                 `Failed to upload dynamic IR for SDK generation: ${error instanceof Error ? error.message : String(error)}`
