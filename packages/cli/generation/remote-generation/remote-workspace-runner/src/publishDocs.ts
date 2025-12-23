@@ -991,12 +991,13 @@ async function uploadDynamicIRs({
             const dynamicIR = dynamicIRs[language]?.dynamicIR;
 
             if (dynamicIR) {
+                const jsonBody = JSON.stringify(dynamicIR);
                 const response = await fetch(source.uploadUrl, {
                     method: "PUT",
-                    body: JSON.stringify(dynamicIR),
+                    body: jsonBody,
                     headers: {
                         "Content-Type": "application/octet-stream",
-                        "Content-Length": JSON.stringify(dynamicIR).length.toString()
+                        "Content-Length": Buffer.byteLength(jsonBody, "utf8").toString()
                     }
                 });
 

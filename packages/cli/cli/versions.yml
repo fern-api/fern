@@ -7,6 +7,14 @@
   createdAt: "2025-12-23"
   irVersion: 62
 
+- version: 3.31.1
+  changelogEntry:
+    - summary: |
+        Fix double JSON.stringify in dynamic IR upload, reducing memory usage and ensuring correct Content-Length header calculation with Buffer.byteLength.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 62
+
 - version: 3.31.0
   changelogEntry:
     - summary: |
