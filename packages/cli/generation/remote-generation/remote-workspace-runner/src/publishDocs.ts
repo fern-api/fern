@@ -59,7 +59,8 @@ export async function publishDocs({
     disableTemplates = false,
     skipUpload = false,
     withAiExamples = true,
-    targetAudiences
+    targetAudiences,
+    apiConcurrency
 }: {
     token: FernToken;
     organization: string;
@@ -76,6 +77,7 @@ export async function publishDocs({
     skipUpload: boolean | undefined;
     withAiExamples?: boolean;
     targetAudiences?: string[];
+    apiConcurrency?: number;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
@@ -93,6 +95,7 @@ export async function publishDocs({
         apiWorkspaces,
         taskContext: context,
         editThisPage,
+        apiConcurrency,
         uploadFiles: async (files) => {
             const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
             const filesWithMimeType: FileWithMimeType[] = files
@@ -988,12 +991,13 @@ async function uploadDynamicIRs({
             const dynamicIR = dynamicIRs[language]?.dynamicIR;
 
             if (dynamicIR) {
+                const jsonBody = JSON.stringify(dynamicIR);
                 const response = await fetch(source.uploadUrl, {
                     method: "PUT",
-                    body: JSON.stringify(dynamicIR),
+                    body: jsonBody,
                     headers: {
                         "Content-Type": "application/octet-stream",
-                        "Content-Length": JSON.stringify(dynamicIR).length.toString()
+                        "Content-Length": Buffer.byteLength(jsonBody, "utf8").toString()
                     }
                 });
 

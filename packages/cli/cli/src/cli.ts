@@ -629,6 +629,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Skip asset upload step and generate fake links for preview",
                     default: false
                 })
+                .option("api-concurrency", {
+                    type: "number",
+                    description:
+                        "Limit the number of APIs processed concurrently during docs generation (helps with memory usage for large sites)"
+                })
                 .option("fernignore", {
                     type: "string",
                     description:
@@ -715,7 +720,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
                     noPrompt: !argv.prompt,
-                    skipUpload: argv.skipUpload
+                    skipUpload: argv.skipUpload,
+                    apiConcurrency: argv.apiConcurrency
                 });
             }
             // default to loading api workspace to preserve legacy behavior
