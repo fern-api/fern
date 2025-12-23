@@ -59,18 +59,32 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             }
 
             try {
+                context.logger.debug("Starting README.md generation...");
                 await this.generateReadme({
                     context,
                     endpointSnippets
                 });
+                context.logger.debug("Successfully generated README.md");
             } catch (e) {
-                context.logger.warn("Failed to generate README.md, this is OK.");
+                const errorMessage = e instanceof Error ? e.message : String(e);
+                const errorStack = e instanceof Error ? e.stack : undefined;
+                context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
+                if (errorStack) {
+                    context.logger.debug(`README.md generation error stack: ${errorStack}`);
+                }
             }
 
             try {
+                context.logger.debug("Starting reference.md generation...");
                 await this.generateReference({ context });
+                context.logger.debug("Successfully generated reference.md");
             } catch (e) {
-                context.logger.warn("Failed to generate reference.md, this is OK.");
+                const errorMessage = e instanceof Error ? e.message : String(e);
+                const errorStack = e instanceof Error ? e.stack : undefined;
+                context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
+                if (errorStack) {
+                    context.logger.debug(`reference.md generation error stack: ${errorStack}`);
+                }
             }
 
             try {

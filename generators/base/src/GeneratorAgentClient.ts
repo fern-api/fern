@@ -20,13 +20,25 @@ export class GeneratorAgentClient {
     }
 
     public async generateReadme<ReadmeConfig>({ readmeConfig }: { readmeConfig: ReadmeConfig }): Promise<string> {
+        this.logger.debug("GeneratorAgentClient.generateReadme: Writing config to temp file...");
         const readmeConfigFilepath = await this.writeConfig({
             config: readmeConfig
         });
+        this.logger.debug(`GeneratorAgentClient.generateReadme: Config written to ${readmeConfigFilepath}`);
+        
         const args = ["generate", "readme", "--config", readmeConfigFilepath];
+        this.logger.debug(`GeneratorAgentClient.generateReadme: Running command: generator-cli ${args.join(" ")}`);
+        
         const cli = await this.getOrInstall({ doNotPipeOutput: true });
-        const content = await cli(args);
-        return content.stdout;
+        try {
+            const content = await cli(args);
+            this.logger.debug(`GeneratorAgentClient.generateReadme: Command succeeded, stdout length: ${content.stdout.length}, stderr: ${content.stderr || "(empty)"}`);
+            return content.stdout;
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.debug(`GeneratorAgentClient.generateReadme: Command failed: ${errorMessage}`);
+            throw error;
+        }
     }
 
     public async pushToGitHub<GitHubConfig>({
@@ -52,13 +64,25 @@ export class GeneratorAgentClient {
     }: {
         referenceConfig: ReferenceConfig;
     }): Promise<string> {
+        this.logger.debug("GeneratorAgentClient.generateReference: Writing config to temp file...");
         const referenceConfigFilepath = await this.writeConfig({
             config: referenceConfig
         });
+        this.logger.debug(`GeneratorAgentClient.generateReference: Config written to ${referenceConfigFilepath}`);
+        
         const args = ["generate-reference", "--config", referenceConfigFilepath];
+        this.logger.debug(`GeneratorAgentClient.generateReference: Running command: generator-cli ${args.join(" ")}`);
+        
         const cli = await this.getOrInstall({ doNotPipeOutput: true });
-        const content = await cli(args);
-        return content.stdout;
+        try {
+            const content = await cli(args);
+            this.logger.debug(`GeneratorAgentClient.generateReference: Command succeeded, stdout length: ${content.stdout.length}, stderr: ${content.stderr || "(empty)"}`);
+            return content.stdout;
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.debug(`GeneratorAgentClient.generateReference: Command failed: ${errorMessage}`);
+            throw error;
+        }
     }
 
     public async writeConfig<T>({ config }: { config: T }): Promise<AbsoluteFilePath> {
@@ -69,12 +93,14 @@ export class GeneratorAgentClient {
 
     private async getOrInstall(options: createLoggingExecutable.Options = {}): Promise<LoggingExecutable> {
         if (this.skipInstall) {
+            this.logger.debug("GeneratorAgentClient.getOrInstall: skipInstall=true, using pre-installed generator-cli");
             return createLoggingExecutable("generator-cli", {
                 cwd: process.cwd(),
                 logger: this.logger,
                 ...options
             });
         }
+        this.logger.debug("GeneratorAgentClient.getOrInstall: skipInstall=false, running install...");
         return this.install(options);
     }
 
