@@ -528,21 +528,34 @@ export class DynamicTypeLiteralMapper {
     }): rust.Expression {
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
-        // Create the base object with all base properties
-        const baseProperties = this.context.associateByWireValue({
-            parameters: extendsInfo.baseObjectType.properties,
-            values: value
-        });
-
-        const baseStructFields = baseProperties.map((property) => {
+        // Create the base object with ALL base properties (not just those with values)
+        // For missing required fields, use Default::default()
+        const baseStructFields = extendsInfo.baseObjectType.properties.map((property) => {
             this.context.scopeError(property.name.wireValue);
             try {
+                const propertyValue = value[property.name.wireValue];
+                let fieldValue: rust.Expression;
+
+                if (propertyValue !== undefined) {
+                    // Value is provided in the example
+                    fieldValue = this.convert({
+                        typeReference: property.typeReference,
+                        value: propertyValue
+                    });
+                } else if (
+                    property.typeReference.type === "optional" ||
+                    property.typeReference.type === "nullable"
+                ) {
+                    // Optional field without value -> None
+                    fieldValue = rust.Expression.raw("None");
+                } else {
+                    // Required field without value -> Default::default()
+                    fieldValue = rust.Expression.raw("Default::default()");
+                }
+
                 return {
                     name: this.context.getPropertyName(property.name.name),
-                    value: this.convert({
-                        typeReference: property.typeReference,
-                        value: property.value
-                    })
+                    value: fieldValue
                 };
             } finally {
                 this.context.unscopeError();

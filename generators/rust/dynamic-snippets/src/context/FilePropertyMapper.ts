@@ -64,8 +64,8 @@ export class FilePropertyMapper {
     }): rust.Expression {
         const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            // Provide a helpful placeholder showing how to read a file
-            return rust.Expression.raw('std::fs::read("path/to/file").expect("Failed to read file")');
+            // Use inline test data instead of reading from a non-existent file
+            return rust.Expression.raw('b"test file content".to_vec()');
         }
         return this.createFileExpression(fileValue);
     }
@@ -79,10 +79,10 @@ export class FilePropertyMapper {
     }): rust.Expression {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
-            // Provide a helpful placeholder showing how to read multiple files
+            // Use inline test data instead of reading from non-existent files
             return rust.Expression.vec([
-                rust.Expression.raw('std::fs::read("path/to/file1").expect("Failed to read file")'),
-                rust.Expression.raw('std::fs::read("path/to/file2").expect("Failed to read file")')
+                rust.Expression.raw('b"test file 1".to_vec()'),
+                rust.Expression.raw('b"test file 2".to_vec()')
             ]);
         }
         return rust.Expression.vec(fileValues.map((value) => this.createFileExpression(value)));
@@ -101,9 +101,8 @@ export class FilePropertyMapper {
             if (property.typeReference.type === "optional" || property.typeReference.type === "nullable") {
                 return rust.Expression.raw("None");
             }
-            // For required fields, provide a descriptive placeholder
-            const fieldName = property.name.wireValue;
-            return rust.Expression.raw(`todo!("Set ${fieldName} value")`);
+            // For required fields, use Default::default() to avoid compilation errors
+            return rust.Expression.raw("Default::default()");
         }
         return this.context.dynamicTypeLiteralMapper.convert({
             typeReference: property.typeReference,

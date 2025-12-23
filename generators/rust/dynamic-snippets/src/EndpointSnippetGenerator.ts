@@ -893,8 +893,8 @@ export class EndpointSnippetGenerator {
                 }
             }
             default:
-                // For complex types (unions, etc.), generate a placeholder comment
-                return rust.Expression.raw('todo!("Provide value for complex type")');
+                // For complex types (unions, etc.), use Default::default() to avoid compilation errors
+                return rust.Expression.raw("Default::default()");
         }
     }
 
