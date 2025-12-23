@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "displayName"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
