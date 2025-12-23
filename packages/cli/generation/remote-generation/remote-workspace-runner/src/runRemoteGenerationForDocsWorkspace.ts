@@ -16,7 +16,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     instanceUrl,
     preview,
     disableTemplates,
-    skipUpload
+    skipUpload,
+    apiConcurrency
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -28,6 +29,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     preview: boolean;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
+    apiConcurrency: number | undefined;
 }): Promise<void> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
@@ -105,7 +107,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                 ? Array.isArray(maybeInstance.audiences)
                     ? maybeInstance.audiences
                     : [maybeInstance.audiences]
-                : undefined
+                : undefined,
+            apiConcurrency
         });
         const publishTime = performance.now() - publishStart;
         context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);

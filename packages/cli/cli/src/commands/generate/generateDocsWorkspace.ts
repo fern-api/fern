@@ -19,7 +19,8 @@ export async function generateDocsWorkspace({
     strictBrokenLinks,
     disableTemplates,
     noPrompt,
-    skipUpload
+    skipUpload,
+    apiConcurrency
 }: {
     project: Project;
     cliContext: CliContext;
@@ -30,6 +31,7 @@ export async function generateDocsWorkspace({
     disableTemplates: boolean | undefined;
     noPrompt?: boolean;
     skipUpload: boolean | undefined;
+    apiConcurrency: number | undefined;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -117,7 +119,8 @@ export async function generateDocsWorkspace({
             instanceUrl: instance,
             preview,
             disableTemplates,
-            skipUpload
+            skipUpload,
+            apiConcurrency
         });
         const generationTime = performance.now() - generationStart;
         context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);
