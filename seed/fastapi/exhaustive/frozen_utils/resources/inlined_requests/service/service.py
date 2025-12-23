@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import fastapi._compat
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -48,9 +49,14 @@ class AbstractInlinedRequestsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.post_with_object_bodyand_response.__globals__,
+                    cls.post_with_object_bodyand_response.__globals__,
                 )
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             else:
                 new_parameters.append(parameter)
         setattr(
@@ -73,7 +79,6 @@ class AbstractInlinedRequestsService(AbstractFernService):
 
         router.post(
             path="/req-bodies/object",
-            response_model=ObjectWithOptionalField,
             description=AbstractInlinedRequestsService.post_with_object_bodyand_response.__doc__,
             **get_route_args(cls.post_with_object_bodyand_response, default_tag="inlined_requests"),
         )(wrapper)

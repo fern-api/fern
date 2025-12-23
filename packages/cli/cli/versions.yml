@@ -1,6 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-
-- version: 3.31.0
+- version: 3.32.0
   changelogEntry:
     - summary: |
         Add opt-in `pydantic_config.positional_single_property_constructors` to allow `Wrapper("value")`
@@ -8,6 +7,22 @@
         later adds required fields; kwargs are more stable.
       type: feat
   createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 3.31.0
+  changelogEntry:
+    - summary: |
+        Add a `--dynamic-ir-only` flag to SDK generation to enable access to dynamic snippets from SDKs without regenerating the entire SDK.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 62
+
+- version: 3.30.6
+  changelogEntry:
+    - summary: |
+        Only upload dynamic IR for SDK generation after confirmed success and when not in preview mode.
+      type: fix
+  createdAt: "2025-12-23"
   irVersion: 62
 
 - version: 3.30.5
