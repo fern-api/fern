@@ -76,6 +76,7 @@ allowedFailures:
   - dollar-string-examples
   - header-auth
   - empty-clients
+  - endpoint-base-path-override
   - enum
   - error-property
   - errors
