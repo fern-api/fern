@@ -127,7 +127,7 @@ export async function validateWorkspaces({
         })
     );
 
-    // Print the aggregated report(using runTask to get a proper TaskContext)
+    // Print the aggregated report (using runTask to get a proper TaskContext)
     const { hasErrors } = await cliContext.runTask((context) => {
         return printCheckReport({
             apiResults,
