@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.27.5-rc1
+  changelogEntry:
+    - summary: Add debug logging to generator agent methods to help diagnose issues with README and reference generation.
+      type: chore
+  createdAt: "2025-12-23"
+  irVersion: 61
+
 - version: 3.27.5-rc0
   changelogEntry:
     - summary: Skip installation of generator-cli in Java V2 generator as it is already installed in the base image.

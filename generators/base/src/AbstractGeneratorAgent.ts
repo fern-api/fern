@@ -70,30 +70,78 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         context: GeneratorContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
     }): Promise<string> {
-        this.logger.debug("AbstractGeneratorAgent.generateReadme: Building README config...");
-        const remote = this.getRemote(context);
-        this.logger.debug(`AbstractGeneratorAgent.generateReadme: Remote config: ${JSON.stringify(remote)}`);
-
-        const featureConfig = await this.readFeatureConfig();
+        this.logger.debug("AbstractGeneratorAgent.generateReadme: Starting README generation...");
         this.logger.debug(
-            `AbstractGeneratorAgent.generateReadme: Feature config loaded with ${featureConfig.features?.length ?? 0} features`
+            `AbstractGeneratorAgent.generateReadme: Received ${endpointSnippets.length} endpoint snippets`
         );
 
-        const readmeConfig = this.getReadmeConfig({
-            context,
-            remote,
-            featureConfig,
-            endpointSnippets
-        });
-        this.logger.debug("AbstractGeneratorAgent.generateReadme: README config built, calling CLI...");
+        // Get remote config
+        this.logger.debug("AbstractGeneratorAgent.generateReadme: Getting remote config...");
+        let remote: FernGeneratorCli.Remote | undefined;
+        try {
+            remote = this.getRemote(context);
+            this.logger.debug(
+                `AbstractGeneratorAgent.generateReadme: Remote config: ${remote ? JSON.stringify(remote) : "(none)"}`
+            );
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to get remote config: ${errorMessage}`);
+            throw error;
+        }
 
+        // Load feature config
+        this.logger.debug("AbstractGeneratorAgent.generateReadme: Loading feature config...");
+        let featureConfig: FernGeneratorCli.FeatureConfig;
+        try {
+            featureConfig = await this.readFeatureConfig();
+            this.logger.debug(
+                `AbstractGeneratorAgent.generateReadme: Feature config loaded with ${featureConfig.features?.length ?? 0} features`
+            );
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to load feature config: ${errorMessage}`);
+            throw error;
+        }
+
+        // Build README config
+        this.logger.debug("AbstractGeneratorAgent.generateReadme: Building README config from getReadmeConfig()...");
+        let readmeConfig: FernGeneratorCli.ReadmeConfig;
+        try {
+            readmeConfig = this.getReadmeConfig({
+                context,
+                remote,
+                featureConfig,
+                endpointSnippets
+            });
+            // Log key fields of the config to help debug
+            this.logger.debug(
+                `AbstractGeneratorAgent.generateReadme: README config built - ` +
+                    `organization: ${readmeConfig.organization ?? "(none)"}, ` +
+                    `language: ${readmeConfig.language?.type ?? "(none)"}, ` +
+                    `features: ${readmeConfig.features?.length ?? 0}, ` +
+                    `apiReferenceLink: ${readmeConfig.apiReferenceLink ?? "(none)"}`
+            );
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            this.logger.debug(
+                `AbstractGeneratorAgent.generateReadme: FAILED to build README config: ${errorMessage}`
+            );
+            if (errorStack) {
+                this.logger.debug(`AbstractGeneratorAgent.generateReadme: Stack trace: ${errorStack}`);
+            }
+            throw error;
+        }
+
+        // Call CLI
+        this.logger.debug("AbstractGeneratorAgent.generateReadme: Calling CLI to generate README...");
         try {
             const result = await this.cli.generateReadme({ readmeConfig });
             this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI returned ${result.length} bytes`);
             return result;
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : String(error);
-            this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI failed with error: ${errorMessage}`);
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: CLI FAILED with error: ${errorMessage}`);
             throw error;
         }
     }
@@ -116,19 +164,56 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
      * Generates the reference.md content using the given builder.
      */
     public async generateReference(builder: ReferenceConfigBuilder): Promise<string> {
-        this.logger.debug("AbstractGeneratorAgent.generateReference: Building reference config...");
-        const referenceConfig = builder.build(this.getLanguage());
-        this.logger.debug(
-            `AbstractGeneratorAgent.generateReference: Reference config built with ${referenceConfig.sections?.length ?? 0} sections, calling CLI...`
-        );
+        this.logger.debug("AbstractGeneratorAgent.generateReference: Starting reference generation...");
 
+        // Get language
+        let language: FernGeneratorCli.Language;
+        try {
+            language = this.getLanguage();
+            this.logger.debug(`AbstractGeneratorAgent.generateReference: Language: ${language}`);
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            this.logger.debug(`AbstractGeneratorAgent.generateReference: FAILED to get language: ${errorMessage}`);
+            throw error;
+        }
+
+        // Build reference config
+        this.logger.debug("AbstractGeneratorAgent.generateReference: Building reference config...");
+        let referenceConfig: ReturnType<ReferenceConfigBuilder["build"]>;
+        try {
+            referenceConfig = builder.build(language);
+            // Log key fields of the config
+            const sectionCount = referenceConfig.sections?.length ?? 0;
+            const hasRootSection = referenceConfig.rootSection != null;
+            const rootEndpointCount = referenceConfig.rootSection?.endpoints?.length ?? 0;
+            this.logger.debug(
+                `AbstractGeneratorAgent.generateReference: Reference config built - ` +
+                    `sections: ${sectionCount}, ` +
+                    `hasRootSection: ${hasRootSection}, ` +
+                    `rootEndpoints: ${rootEndpointCount}, ` +
+                    `language: ${referenceConfig.language ?? "(none)"}`
+            );
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            this.logger.debug(
+                `AbstractGeneratorAgent.generateReference: FAILED to build reference config: ${errorMessage}`
+            );
+            if (errorStack) {
+                this.logger.debug(`AbstractGeneratorAgent.generateReference: Stack trace: ${errorStack}`);
+            }
+            throw error;
+        }
+
+        // Call CLI
+        this.logger.debug("AbstractGeneratorAgent.generateReference: Calling CLI to generate reference...");
         try {
             const result = await this.cli.generateReference({ referenceConfig });
             this.logger.debug(`AbstractGeneratorAgent.generateReference: CLI returned ${result.length} bytes`);
             return result;
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : String(error);
-            this.logger.debug(`AbstractGeneratorAgent.generateReference: CLI failed with error: ${errorMessage}`);
+            this.logger.debug(`AbstractGeneratorAgent.generateReference: CLI FAILED with error: ${errorMessage}`);
             throw error;
         }
     }
