@@ -488,9 +488,7 @@ async function uploadDynamicIRForSdkGeneration({
     });
 
     if (uploadResponse.ok) {
-        context.logger.debug(
-            `Uploaded dynamic IR for ${language}:${packageName} (${version})`
-        );
+        context.logger.debug(`Uploaded dynamic IR for ${language}:${packageName} (${version})`);
     } else {
         context.logger.warn(`Failed to upload dynamic IR for ${language}: ${uploadResponse.status}`);
     }
