@@ -124,9 +124,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : String(error);
             const errorStack = error instanceof Error ? error.stack : undefined;
-            this.logger.debug(
-                `AbstractGeneratorAgent.generateReadme: FAILED to build README config: ${errorMessage}`
-            );
+            this.logger.debug(`AbstractGeneratorAgent.generateReadme: FAILED to build README config: ${errorMessage}`);
             if (errorStack) {
                 this.logger.debug(`AbstractGeneratorAgent.generateReadme: Stack trace: ${errorStack}`);
             }

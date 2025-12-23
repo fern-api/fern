@@ -77,9 +77,7 @@ export class GeneratorAgentClient {
             const exitCode = execaError.exitCode ?? "unknown";
             const stderr = execaError.stderr ?? "(no stderr)";
             const stdout = execaError.stdout ?? "(no stdout)";
-            this.logger.debug(
-                `GeneratorAgentClient.generateReadme: Command FAILED with exit code ${exitCode}`
-            );
+            this.logger.debug(`GeneratorAgentClient.generateReadme: Command FAILED with exit code ${exitCode}`);
             this.logger.debug(`GeneratorAgentClient.generateReadme: stderr: ${stderr}`);
             this.logger.debug(`GeneratorAgentClient.generateReadme: stdout: ${stdout}`);
             this.logger.debug(`GeneratorAgentClient.generateReadme: error message: ${errorMessage}`);
@@ -167,9 +165,7 @@ export class GeneratorAgentClient {
             const exitCode = execaError.exitCode ?? "unknown";
             const stderr = execaError.stderr ?? "(no stderr)";
             const stdout = execaError.stdout ?? "(no stdout)";
-            this.logger.debug(
-                `GeneratorAgentClient.generateReference: Command FAILED with exit code ${exitCode}`
-            );
+            this.logger.debug(`GeneratorAgentClient.generateReference: Command FAILED with exit code ${exitCode}`);
             this.logger.debug(`GeneratorAgentClient.generateReference: stderr: ${stderr}`);
             this.logger.debug(`GeneratorAgentClient.generateReference: stdout: ${stdout}`);
             this.logger.debug(`GeneratorAgentClient.generateReference: error message: ${errorMessage}`);
@@ -193,7 +189,9 @@ export class GeneratorAgentClient {
         let configJson: string;
         try {
             configJson = JSON.stringify(config);
-            this.logger.debug(`GeneratorAgentClient.writeConfig: Serialized config to JSON (${configJson.length} bytes)`);
+            this.logger.debug(
+                `GeneratorAgentClient.writeConfig: Serialized config to JSON (${configJson.length} bytes)`
+            );
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : String(error);
             this.logger.debug(`GeneratorAgentClient.writeConfig: FAILED to serialize config to JSON: ${errorMessage}`);
