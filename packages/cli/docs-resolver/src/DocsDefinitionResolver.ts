@@ -79,6 +79,8 @@ export interface DocsDefinitionResolverArgs {
     uploadFiles?: UploadFilesFn;
     registerApi?: RegisterApiFn;
     targetAudiences?: string[];
+    /** Limit the number of APIs processed concurrently (helps with memory usage for large sites) */
+    apiConcurrency?: number;
 }
 
 export class DocsDefinitionResolver {
@@ -91,6 +93,8 @@ export class DocsDefinitionResolver {
     private uploadFiles: UploadFilesFn;
     private registerApi: RegisterApiFn;
     private targetAudiences?: string[];
+    private apiConcurrency?: number;
+    private apiSemaphore?: { acquire: () => Promise<() => void> };
 
     constructor({
         domain,
@@ -101,7 +105,8 @@ export class DocsDefinitionResolver {
         editThisPage,
         uploadFiles = defaultUploadFiles,
         registerApi = defaultRegisterApi,
-        targetAudiences
+        targetAudiences,
+        apiConcurrency
     }: DocsDefinitionResolverArgs) {
         this.domain = domain;
         this.docsWorkspace = docsWorkspace;
@@ -112,6 +117,43 @@ export class DocsDefinitionResolver {
         this.uploadFiles = uploadFiles;
         this.registerApi = registerApi;
         this.targetAudiences = targetAudiences;
+        this.apiConcurrency = apiConcurrency;
+
+        // Create a semaphore if concurrency limit is specified
+        if (apiConcurrency != null && apiConcurrency > 0) {
+            this.apiSemaphore = this.createSemaphore(apiConcurrency);
+            this.taskContext.logger.debug(`API concurrency limit set to ${apiConcurrency}`);
+        }
+    }
+
+    /**
+     * Creates a simple semaphore for limiting concurrent operations.
+     */
+    private createSemaphore(limit: number): { acquire: () => Promise<() => void> } {
+        let running = 0;
+        const queue: Array<() => void> = [];
+
+        const acquire = (): Promise<() => void> => {
+            return new Promise((resolve) => {
+                const tryAcquire = () => {
+                    if (running < limit) {
+                        running++;
+                        resolve(() => {
+                            running--;
+                            const next = queue.shift();
+                            if (next) {
+                                next();
+                            }
+                        });
+                    } else {
+                        queue.push(tryAcquire);
+                    }
+                };
+                tryAcquire();
+            });
+        };
+
+        return { acquire };
     }
 
     #idgen = NodeIdGenerator.init();
@@ -1167,144 +1209,157 @@ export class DocsDefinitionResolver {
     }): Promise<FernNavigation.V1.ApiReferenceNode> {
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
-        let ir: IntermediateRepresentation | undefined = undefined;
-        const workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
-            { context: this.taskContext },
-            {
-                enableUniqueErrorsPerEndpoint: true,
-                detectGlobalHeaders: false,
-                objectQueryParameters: true,
-                preserveSchemaIds: true
-            }
-        );
-        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
-        const useV3Parser = openapiParserV3 == null || openapiParserV3;
-        // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
-        if (useV3Parser) {
-            try {
-                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
-                ir = await openapiWorkspace.getIntermediateRepresentation({
-                    context: this.taskContext,
-                    audiences: item.audiences,
-                    enableUniqueErrorsPerEndpoint: true,
-                    generateV1Examples: false,
-                    logWarnings: false
-                });
-            } catch (error) {
-                // noop
-            }
-        }
+        // Acquire semaphore if concurrency limit is set (this limits concurrent API processing)
+        const release = this.apiSemaphore ? await this.apiSemaphore.acquire() : undefined;
 
-        // Extract OpenAPI IR tags when tag description pages are enabled
-        let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
-        if (item.tagDescriptionPages && useV3Parser) {
-            try {
-                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
-                const openApiIr = await openapiWorkspace.getOpenAPIIr({ context: this.taskContext });
-                if (openApiIr.tags.tagsById) {
-                    openApiTags = Object.fromEntries(
-                        Object.entries(openApiIr.tags.tagsById)
-                            .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
-                            .map(([tagId, tag]) => [tagId, { id: String(tag.id), description: tag.description }])
+        try {
+            let ir: IntermediateRepresentation | undefined = undefined;
+            const workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
+                { context: this.taskContext },
+                {
+                    enableUniqueErrorsPerEndpoint: true,
+                    detectGlobalHeaders: false,
+                    objectQueryParameters: true,
+                    preserveSchemaIds: true
+                }
+            );
+            const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
+            const useV3Parser = openapiParserV3 == null || openapiParserV3;
+            // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
+            if (useV3Parser) {
+                try {
+                    const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                    ir = await openapiWorkspace.getIntermediateRepresentation({
+                        context: this.taskContext,
+                        audiences: item.audiences,
+                        enableUniqueErrorsPerEndpoint: true,
+                        generateV1Examples: false,
+                        logWarnings: false
+                    });
+                } catch (error) {
+                    // noop
+                }
+            }
+
+            // Extract OpenAPI IR tags when tag description pages are enabled
+            let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
+            if (item.tagDescriptionPages && useV3Parser) {
+                try {
+                    const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                    const openApiIr = await openapiWorkspace.getOpenAPIIr({ context: this.taskContext });
+                    if (openApiIr.tags.tagsById) {
+                        openApiTags = Object.fromEntries(
+                            Object.entries(openApiIr.tags.tagsById)
+                                .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
+                                .map(([tagId, tag]) => [tagId, { id: String(tag.id), description: tag.description }])
+                        );
+                    }
+                } catch (error) {
+                    this.taskContext.logger.warn(
+                        "Failed to extract OpenAPI tags for tag description pages",
+                        String(error)
                     );
                 }
-            } catch (error) {
-                this.taskContext.logger.warn("Failed to extract OpenAPI tags for tag description pages", String(error));
             }
-        }
-        // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
-        if (ir == null) {
-            ir = generateIntermediateRepresentation({
-                workspace,
-                audiences: item.audiences,
-                generationLanguage: undefined,
-                keywords: undefined,
-                smartCasing: false,
-                exampleGeneration: {
-                    disabled: false,
-                    skipAutogenerationIfManualExamplesExist: true,
-                    skipErrorAutogenerationIfManualErrorExamplesExist: true
-                },
-                readme: undefined,
-                version: undefined,
-                packageName: undefined,
-                context: this.taskContext,
-                sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
-            });
-        }
+            // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
+            if (ir == null) {
+                ir = generateIntermediateRepresentation({
+                    workspace,
+                    audiences: item.audiences,
+                    generationLanguage: undefined,
+                    keywords: undefined,
+                    smartCasing: false,
+                    exampleGeneration: {
+                        disabled: false,
+                        skipAutogenerationIfManualExamplesExist: true,
+                        skipErrorAutogenerationIfManualErrorExamplesExist: true
+                    },
+                    readme: undefined,
+                    version: undefined,
+                    packageName: undefined,
+                    context: this.taskContext,
+                    sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
+                });
+            }
 
-        // Apply environment variable substitution to the IR if enabled in docs.yml settings
-        // This allows ${VAR} patterns in OpenAPI specs and Fern definitions to be replaced
-        if (this.docsWorkspace.config.settings?.substituteEnvVars) {
-            ir = replaceEnvVariables(
-                ir,
-                {
-                    onError: (e) =>
-                        this.taskContext.failAndThrow(`Error substituting environment variables in API spec: ${e}`)
-                },
-                { substituteAsEmpty: false }
-            );
-        }
-
-        const apiDefinitionId = await this.registerApi({
-            ir,
-            snippetsConfig,
-            playgroundConfig: { oauth: item.playground?.oauth },
-            apiName: item.apiName,
-            workspace
-        });
-        const api = convertIrToApiDefinition({
-            ir,
-            apiDefinitionId,
-            playgroundConfig: { oauth: item.playground?.oauth },
-            context: this.taskContext
-        });
-
-        const node = new ApiReferenceNodeConverter(
-            item,
-            api,
-            parentSlug,
-            this.docsWorkspace,
-            this.taskContext,
-            this.markdownFilesToFullSlugs,
-            this.markdownFilesToNoIndex,
-            this.markdownFilesToTags,
-            this.#idgen,
-            this.collectedFileIds,
-            workspace,
-            hideChildren,
-            parentAvailability ?? item.availability,
-            openApiTags
-        );
-
-        // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
-        const tagDescriptionContent = node.getTagDescriptionContent();
-        for (const [absolutePath, content] of tagDescriptionContent.entries()) {
-            // Extract just the filename from the absolute path (e.g., "/tag-users.md" -> "tag-users.md")
-            const filename = absolutePath.split("/").pop() || absolutePath;
-            const relativePath = RelativeFilePath.of(filename);
-
-            // Apply environment variable substitution if enabled
-            let processedContent = content;
+            // Apply environment variable substitution to the IR if enabled in docs.yml settings
+            // This allows ${VAR} patterns in OpenAPI specs and Fern definitions to be replaced
             if (this.docsWorkspace.config.settings?.substituteEnvVars) {
-                processedContent = replaceEnvVariables(
-                    content,
+                ir = replaceEnvVariables(
+                    ir,
                     {
                         onError: (e) =>
-                            this.taskContext.logger.error(
-                                `Error in tag description environment variable substitution: ${e}`
-                            )
+                            this.taskContext.failAndThrow(`Error substituting environment variables in API spec: ${e}`)
                     },
                     { substituteAsEmpty: false }
                 );
             }
 
-            // Add to both collections so the file appears in the final pages output
-            this.rawMarkdownFiles[relativePath] = processedContent;
-            this.parsedDocsConfig.pages[relativePath] = processedContent;
-        }
+            const apiDefinitionId = await this.registerApi({
+                ir,
+                snippetsConfig,
+                playgroundConfig: { oauth: item.playground?.oauth },
+                apiName: item.apiName,
+                workspace
+            });
+            const api = convertIrToApiDefinition({
+                ir,
+                apiDefinitionId,
+                playgroundConfig: { oauth: item.playground?.oauth },
+                context: this.taskContext
+            });
 
-        return node.get();
+            const node = new ApiReferenceNodeConverter(
+                item,
+                api,
+                parentSlug,
+                this.docsWorkspace,
+                this.taskContext,
+                this.markdownFilesToFullSlugs,
+                this.markdownFilesToNoIndex,
+                this.markdownFilesToTags,
+                this.#idgen,
+                this.collectedFileIds,
+                workspace,
+                hideChildren,
+                parentAvailability ?? item.availability,
+                openApiTags
+            );
+
+            // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
+            const tagDescriptionContent = node.getTagDescriptionContent();
+            for (const [absolutePath, content] of tagDescriptionContent.entries()) {
+                // Extract just the filename from the absolute path (e.g., "/tag-users.md" -> "tag-users.md")
+                const filename = absolutePath.split("/").pop() || absolutePath;
+                const relativePath = RelativeFilePath.of(filename);
+
+                // Apply environment variable substitution if enabled
+                let processedContent = content;
+                if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+                    processedContent = replaceEnvVariables(
+                        content,
+                        {
+                            onError: (e) =>
+                                this.taskContext.logger.error(
+                                    `Error in tag description environment variable substitution: ${e}`
+                                )
+                        },
+                        { substituteAsEmpty: false }
+                    );
+                }
+
+                // Add to both collections so the file appears in the final pages output
+                this.rawMarkdownFiles[relativePath] = processedContent;
+                this.parsedDocsConfig.pages[relativePath] = processedContent;
+            }
+
+            return node.get();
+        } finally {
+            // Release semaphore if it was acquired
+            if (release) {
+                release();
+            }
+        }
     }
 
     private async toChangelogNode(

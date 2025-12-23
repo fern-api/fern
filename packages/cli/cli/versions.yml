@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.32.0
+  changelogEntry:
+    - summary: |
+        Add `--api-concurrency` flag to `fern generate --docs` to limit the number of APIs processed concurrently during docs generation. This helps prevent heap OOM issues for sites with many APIs and dynamic snippets enabled.
+      type: feat
+  createdAt: "2025-12-23"
+  irVersion: 62
+
 - version: 3.31.0
   changelogEntry:
     - summary: |
