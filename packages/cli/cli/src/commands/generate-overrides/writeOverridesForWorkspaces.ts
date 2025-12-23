@@ -73,8 +73,8 @@ async function writeDefinitionForOpenAPIWorkspace({
             existingOverrides = await readExistingOverrides(spec.absoluteFilepathToOverrides, context);
         }
 
-        const paths: Record<string, Record<string, unknown>> = "path" in existingOverrides
-            ? (existingOverrides.path as Record<string, Record<string, unknown>>)
+        const paths: Record<string, Record<string, unknown>> = "paths" in existingOverrides
+            ? (existingOverrides.paths as Record<string, Record<string, unknown>>)
             : {};
         for (const endpoint of ir.endpoints) {
             const endpointLocation = getEndpointLocation(endpoint);
@@ -98,8 +98,8 @@ async function writeDefinitionForOpenAPIWorkspace({
                 context.logger.warn(`Endpoint ${endpoint.path} ${endpoint.method} is defined multiple times`);
             }
         }
-        const schemas: Record<string, Record<string, unknown>> = "path" in existingOverrides
-            ? (existingOverrides.path as Record<string, Record<string, unknown>>)
+        const schemas: Record<string, Record<string, unknown>> = existingOverrides.components?.schemas != null
+            ? (existingOverrides.components.schemas as Record<string, Record<string, unknown>>)
             : {};
         if (includeModels) {
             writeModels(schemas, ir.groupedSchemas.rootSchemas);
@@ -109,21 +109,26 @@ async function writeDefinitionForOpenAPIWorkspace({
         }
         const components: Record<string, Record<string, unknown>> = { schemas };
 
-        const specFilename = getFilename(spec.absoluteFilepath);
-        let overridesFilename = "openapi-overrides.yml"; // fallback
-        if (specFilename != null) {
-            const lastDotIndex = specFilename.lastIndexOf(".");
-            if (lastDotIndex > 0) {
-                const nameWithoutExt = specFilename.substring(0, lastDotIndex);
-                const extension = specFilename.substring(lastDotIndex);
-                overridesFilename = `${nameWithoutExt}-overrides${extension}`;
+        // If an overrides file is already configured, write back to that same path.
+        // Otherwise, derive a filename from the spec (defaulting to .yml extension).
+        let outputPath: string;
+        if (spec.absoluteFilepathToOverrides !== undefined) {
+            outputPath = spec.absoluteFilepathToOverrides;
+        } else {
+            const specFilename = getFilename(spec.absoluteFilepath);
+            let overridesFilename = "openapi-overrides.yml"; // fallback
+            if (specFilename != null) {
+                const lastDotIndex = specFilename.lastIndexOf(".");
+                if (lastDotIndex > 0) {
+                    const nameWithoutExt = specFilename.substring(0, lastDotIndex);
+                    // Always use .yml extension for new overrides files
+                    overridesFilename = `${nameWithoutExt}-overrides.yml`;
+                }
             }
+            outputPath = join(dirname(spec.absoluteFilepath), RelativeFilePath.of(overridesFilename));
         }
 
-        await writeFile(
-            join(dirname(spec.absoluteFilepath), RelativeFilePath.of(overridesFilename)),
-            yaml.dump({ paths, components })
-        );
+        await writeFile(outputPath, yaml.dump({ paths, components }));
     }
 }
 
