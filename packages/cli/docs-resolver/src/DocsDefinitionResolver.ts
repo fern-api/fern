@@ -20,7 +20,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
-import { kebabCase } from "lodash-es";
+import { camelCase, kebabCase } from "lodash-es";
 import { Target } from "../../configuration/src/docs-yml/schemas";
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
@@ -1769,7 +1769,8 @@ export class DocsDefinitionResolver {
         const newRootSubpackageIds: APIV1Read.SubpackageId[] = [...api.rootPackage.subpackages];
 
         for (const [tagId, tag] of Object.entries(openApiTags)) {
-            const subpackageId = APIV1Read.SubpackageId(`subpackage_${kebabCase(tagId)}`);
+            // Use camelCase to match the format expected by ApiDefinitionHolder.getSubpackageByIdOrLocator
+            const subpackageId = APIV1Read.SubpackageId(`subpackage_${camelCase(tagId)}`);
 
             if (!existingSubpackageIds.has(subpackageId) && !existingSubpackageIds.has(tagId)) {
                 const emptySubpackage: APIV1Read.ApiDefinitionSubpackage = {
