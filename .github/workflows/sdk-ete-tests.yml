@@ -194,7 +194,6 @@ jobs:
           docker build \
             -f generators/php/sdk/Dockerfile \
             -t fernapi/fern-php-sdk:latest \
-            --cache-from fernapi/fern-php-sdk:latest \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             .
 
