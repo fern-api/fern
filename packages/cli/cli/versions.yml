@@ -1,8 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.31.1
+- version: 3.31.2
   changelogEntry:
     - summary: |
         Support overriding `base-path` on an endpoint-level in code examples.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 62
+
+- version: 3.31.1
+  changelogEntry:
+    - summary: |
+        Fix double JSON.stringify in dynamic IR upload, reducing memory usage and ensuring correct Content-Length header calculation with Buffer.byteLength.
       type: fix
   createdAt: "2025-12-23"
   irVersion: 62
