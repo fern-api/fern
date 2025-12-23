@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+groups:
+  csharp-sdk:
+    generators:
+      - name: fernapi/fern-csharp-sdk
+        version: latest
+        ir-version: v61
+        config:
+          experimental-enable-websockets: true
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/csharp-sdk-tests
+          branch: websocket-parameter-name

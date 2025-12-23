@@ -1,0 +1,49 @@
+# yaml-language-server: $schema=./../../../../../fern.schema.json
+
+channel:
+  path: /chat
+  auth: false
+  query-parameters:
+    session_settings:
+      type: optional<string>
+      docs: The session settings for the connection.
+      name: connect_session_settings
+    api_key:
+      type: string
+      docs: The API key for authentication.
+    model_version:
+      type: optional<string>
+      docs: The model version to use.
+      name: version
+  messages:
+    send:
+      display-name: Send
+      origin: client
+      body: SendPayload
+    receive:
+      display-name: Receive
+      origin: server
+      body: ReceivePayload
+  examples:
+    - name: Default example
+      query-parameters:
+        api_key: "test-api-key"
+      messages:
+        - type: send
+          body:
+            text: "Hello"
+        - type: receive
+          body:
+            response: "Hi there"
+
+types:
+  SendPayload:
+    properties:
+      text:
+        type: string
+        docs: The text to send
+  ReceivePayload:
+    properties:
+      response:
+        type: string
+        docs: The response text

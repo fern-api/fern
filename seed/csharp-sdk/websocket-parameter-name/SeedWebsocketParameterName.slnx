@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedWebsocketParameterName.Test/SeedWebsocketParameterName.Test.csproj" />
+  <Project Path="src/SeedWebsocketParameterName/SeedWebsocketParameterName.csproj" />
+</Solution>
