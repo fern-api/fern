@@ -7,6 +7,8 @@ import logging
 import typing
 
 import fastapi
+import fastapi._compat
+import fastapi.temp_pydantic_v1_params
 from ......core.abstract_fern_service import AbstractFernService
 from ......core.exceptions.fern_http_exception import FernHTTPException
 from ......core.route_args import get_route_args
@@ -43,12 +45,22 @@ class AbstractEndpointsEnumService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.get_and_return_enum.__globals__, cls.get_and_return_enum.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
                 )
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.get_and_return_enum.__globals__, cls.get_and_return_enum.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -68,7 +80,6 @@ class AbstractEndpointsEnumService(AbstractFernService):
 
         router.post(
             path="/enum",
-            response_model=WeatherReport,
             description=AbstractEndpointsEnumService.get_and_return_enum.__doc__,
             **get_route_args(cls.get_and_return_enum, default_tag="endpoints.enum"),
         )(wrapper)

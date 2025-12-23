@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import fastapi._compat
 from ......core.abstract_fern_service import AbstractFernService
 from ......core.exceptions.fern_http_exception import FernHTTPException
 from ......core.route_args import get_route_args
@@ -54,8 +55,13 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.with_mixed_case.__globals__, cls.with_mixed_case.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -75,7 +81,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
 
         router.get(
             path="/urls/MixedCase",
-            response_model=str,
             description=AbstractEndpointsUrlsService.with_mixed_case.__doc__,
             **get_route_args(cls.with_mixed_case, default_tag="endpoints.urls"),
         )(wrapper)
@@ -88,8 +93,13 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.no_ending_slash.__globals__, cls.no_ending_slash.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -109,7 +119,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
 
         router.get(
             path="/urls/no-ending-slash",
-            response_model=str,
             description=AbstractEndpointsUrlsService.no_ending_slash.__doc__,
             **get_route_args(cls.no_ending_slash, default_tag="endpoints.urls"),
         )(wrapper)
@@ -122,8 +131,13 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.with_ending_slash.__globals__, cls.with_ending_slash.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -143,7 +157,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
 
         router.get(
             path="/urls/with-ending-slash/",
-            response_model=str,
             description=AbstractEndpointsUrlsService.with_ending_slash.__doc__,
             **get_route_args(cls.with_ending_slash, default_tag="endpoints.urls"),
         )(wrapper)
@@ -156,8 +169,13 @@ class AbstractEndpointsUrlsService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation, cls.with_underscores.__globals__, cls.with_underscores.__globals__
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -177,7 +195,6 @@ class AbstractEndpointsUrlsService(AbstractFernService):
 
         router.get(
             path="/urls/with_underscores",
-            response_model=str,
             description=AbstractEndpointsUrlsService.with_underscores.__doc__,
             **get_route_args(cls.with_underscores, default_tag="endpoints.urls"),
         )(wrapper)

@@ -4,7 +4,6 @@ from ...context import FastApiGeneratorContext
 from .convert_to_singular_type import convert_to_singular_type
 from .endpoint_parameter import EndpointParameter
 from fern_python.codegen import AST
-from fern_python.external_dependencies import FastAPI
 
 import fern.ir.resources as ir_types
 
@@ -23,7 +22,7 @@ class QueryEndpointParameter(EndpointParameter):
         return convert_to_singular_type(self._context, self._query_parameter.value_type)
 
     def get_fastapi_marker(self) -> AST.Expression:
-        return FastAPI.Query(
+        return self._context.fastapi_params.Query(
             variable_name=self.get_name(),
             wire_value=self._query_parameter.name.wire_value,
             docs=self._query_parameter.docs,

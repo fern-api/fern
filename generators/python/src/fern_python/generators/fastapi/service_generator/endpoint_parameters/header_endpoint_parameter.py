@@ -4,7 +4,6 @@ from ...context import FastApiGeneratorContext
 from .convert_to_singular_type import convert_to_singular_type
 from .endpoint_parameter import EndpointParameter
 from fern_python.codegen import AST
-from fern_python.external_dependencies import FastAPI
 
 import fern.ir.resources as ir_types
 
@@ -21,7 +20,7 @@ class HeaderEndpointParameter(EndpointParameter):
         return convert_to_singular_type(self._context, self._header.value_type)
 
     def get_fastapi_marker(self) -> AST.Expression:
-        return FastAPI.Header(wire_value=self._header.name.wire_value)
+        return self._context.fastapi_params.Header(wire_value=self._header.name.wire_value)
 
     def get_python_default(self) -> "typing.Optional[AST.Expression]":
         value_type = self._header.value_type.get_as_union()
