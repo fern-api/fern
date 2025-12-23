@@ -45,6 +45,7 @@ class PydanticModel:
         pydantic_base_model: Optional[AST.ClassReference] = None,
         is_root_model: bool = False,
         coerce_numbers_to_str: bool = False,
+        positional_single_property_constructors: bool = False,
     ):
         self._source_file = source_file
 
@@ -81,6 +82,7 @@ class PydanticModel:
         self._update_forward_ref_function_reference = update_forward_ref_function_reference
         self._field_metadata_getter = field_metadata_getter
         self._use_pydantic_field_aliases = use_pydantic_field_aliases
+        self._positional_single_property_constructors = positional_single_property_constructors
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
@@ -292,7 +294,52 @@ class PydanticModel:
         self._class_declaration.add_class(declaration=inner_class)
 
     def finish(self) -> None:
+        self._maybe_add_positional_init()
         self._maybe_model_config()
+
+    def _maybe_add_positional_init(self) -> None:
+        if not self._positional_single_property_constructors:
+            return
+
+        # Find fields that are required (no default value) and NOT discriminator fields
+        # A discriminator field is a Literal type with a default value
+        required_non_discriminator_fields: List[PydanticField] = []
+        for field in self._fields:
+            has_explicit_default = field.default_value is not None or field.default_factory is not None
+            # Optional fields get a default value of None in add_field, so they're not required
+            is_optional_field = field.type_hint.is_optional and not self._require_optional_fields
+            has_default = has_explicit_default or is_optional_field
+            is_discriminator = field.type_hint.is_literal and has_default
+            # Only count fields that are required (no default) and not discriminators
+            if not has_default and not is_discriminator:
+                required_non_discriminator_fields.append(field)
+
+        # Only generate positional init if there's exactly one required non-discriminator field
+        if len(required_non_discriminator_fields) != 1:
+            return
+
+        single_field = required_non_discriminator_fields[0]
+
+        # Generate the __init__ method body
+        def write_init_body(writer: AST.NodeWriter) -> None:
+            writer.write(f"super().__init__({single_field.name}={single_field.name}, **kwargs)")
+
+        init_declaration = AST.FunctionDeclaration(
+            name="__init__",
+            signature=AST.FunctionSignature(
+                parameters=[
+                    AST.FunctionParameter(
+                        name=single_field.name,
+                        type_hint=single_field.type_hint,
+                    ),
+                ],
+                include_kwargs=True,
+                return_type=AST.TypeHint.none(),
+            ),
+            body=AST.CodeWriter(write_init_body),
+        )
+
+        self._class_declaration.add_method(declaration=init_declaration)
 
     def add_partial_class(self) -> None:
         partial_class = AST.ClassDeclaration(

@@ -1,0 +1,5 @@
+name: python-positional-single-property
+docs: |
+  Test definition for positional single-property constructors in Python SDK.
+  This tests the ability to use positional arguments for types with a single
+  required field (ignoring discriminator/literal type fields with defaults).

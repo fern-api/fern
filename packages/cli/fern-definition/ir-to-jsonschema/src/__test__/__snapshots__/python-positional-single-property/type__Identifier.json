@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "identifier_type": {
+      "type": "string",
+      "enum": [
+        "isin",
+        "cusip"
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "identifier_type": {
+          "const": "isin"
+        },
+        "isin": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "identifier_type",
+        "isin"
+      ]
+    },
+    {
+      "properties": {
+        "identifier_type": {
+          "const": "cusip"
+        },
+        "cusip": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "identifier_type",
+        "cusip"
+      ]
+    }
+  ],
+  "definitions": {}
+}

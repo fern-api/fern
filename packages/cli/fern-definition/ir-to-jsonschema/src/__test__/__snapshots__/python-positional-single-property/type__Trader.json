@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "properties": {
+    "uuid_": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "uuid_"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
