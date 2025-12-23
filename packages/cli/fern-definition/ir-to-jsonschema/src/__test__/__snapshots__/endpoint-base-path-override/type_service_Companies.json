@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/service.Company"
+      }
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "service.Company": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "displayName"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
