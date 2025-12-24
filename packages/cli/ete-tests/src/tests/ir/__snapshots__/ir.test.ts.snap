@@ -1349,6 +1349,9 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": [
+                    "type_commons:Deployment"
+                ],
                 "additionalProperties": false
             },
             "type_commons:AppId": {
@@ -1520,6 +1523,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },
@@ -12615,6 +12619,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_nested:Product": {
@@ -12717,6 +12722,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_nested:StringAlias": {
@@ -14108,6 +14114,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_package/a:A": {
@@ -17032,6 +17039,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_service:Movie": {
@@ -17132,6 +17140,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_service:Response": {
@@ -17261,6 +17270,9 @@ exports[`ir > {"name":"response-property"} 1`] = `
                         "propertyAccess": null,
                         "variable": null
                     }
+                ],
+                "extends": [
+                    "type_service:WithDocs"
                 ],
                 "additionalProperties": false
             }
@@ -19229,6 +19241,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_imdb:UnknownRequest": {
@@ -19328,6 +19341,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },
@@ -23224,6 +23238,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_imdb:MovieId": {
@@ -23428,6 +23443,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },
@@ -38223,6 +38239,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_commons:Type": {
@@ -38323,6 +38340,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_commons:UndiscriminatedUnion": {
@@ -38547,6 +38565,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_director:Age": {
@@ -39139,6 +39158,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_imdb:CreateMovieRequest": {
@@ -39272,6 +39292,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_imdb:DirectorWrapper": {
@@ -39372,6 +39393,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_imdb:EmptyObject": {
@@ -39441,6 +39463,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                     }
                 },
                 "properties": [],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_imdb:Person": {
@@ -39742,6 +39765,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_imdb:RecursiveType": {
@@ -39907,6 +39931,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "propertyAccess": null,
                         "variable": null
                     }
+                ],
+                "extends": [
+                    "type_imdb:CreateMovieRequest"
                 ],
                 "additionalProperties": false
             }
