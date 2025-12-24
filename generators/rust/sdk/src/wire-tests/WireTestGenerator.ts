@@ -1,18 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { RustFile } from "@fern-api/rust-base";
-import {
-    CodeBlock,
-    DocComment,
-    Expression,
-    Module,
-    Reference,
-    StandaloneFunction,
-    Statement,
-    Type,
-    UseStatement,
-    Writer
-} from "@fern-api/rust-codegen";
+import { Module, UseStatement } from "@fern-api/rust-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
@@ -120,13 +109,11 @@ export class WireTestGenerator {
     ): Module {
         const rawDeclarations: string[] = [];
 
-        // Add helper functions using raw strings (complex logic)
-        rawDeclarations.push(this.generateResetWireMockFunction());
-        rawDeclarations.push("");
-        rawDeclarations.push(this.generateVerifyRequestCountFunction());
+        // Add module declaration for centralized wire test utils
+        rawDeclarations.push("mod wire_test_utils;");
         rawDeclarations.push("");
 
-        // Add test functions
+        // Add test functions (no longer need inline helper functions - they're in wire_test_utils)
         for (const { snippet, endpoint } of endpointTestCases.values()) {
             const testFunction = this.generateEndpointTestFunction(endpoint, snippet, serviceName);
             if (testFunction) {
@@ -142,222 +129,8 @@ export class WireTestGenerator {
     }
 
     private generateUseStatements(): UseStatement[] {
-        return [
-            new UseStatement({ path: "reqwest::Client", isPublic: false }),
-            new UseStatement({ path: `${this.context.getCrateName()}::prelude::*`, isPublic: false })
-        ];
-    }
-
-    // =============================================================================
-    // HELPER FUNCTION GENERATION (AST-based)
-    // =============================================================================
-
-    private generateResetWireMockFunction(): string {
-        const func = new StandaloneFunction({
-            name: "reset_wiremock_requests",
-            isAsync: true,
-            parameters: [],
-            returnType: Type.result(
-                Type.unit(),
-                Type.reference(
-                    new Reference({
-                        name: "Box",
-                        genericArgs: [Type.trait("std::error::Error")]
-                    })
-                )
-            ),
-            body: CodeBlock.fromStatements([
-                // let wiremock_admin_url = "http://localhost:8080/__admin";
-                Statement.let({
-                    name: "wiremock_admin_url",
-                    value: Expression.stringLiteral("http://localhost:8080/__admin")
-                }),
-
-                // Client::new().delete(format!("{}/requests", wiremock_admin_url)).send().await?;
-                Statement.expression(
-                    Expression.try(
-                        Expression.await(
-                            Expression.methodCall({
-                                target: Expression.methodCall({
-                                    target: Expression.functionCall("Client::new", []),
-                                    method: "delete",
-                                    args: [
-                                        Expression.macroCall("format", [
-                                            Expression.stringLiteral("{}/requests"),
-                                            Expression.reference("wiremock_admin_url")
-                                        ])
-                                    ]
-                                }),
-                                method: "send",
-                                args: []
-                            })
-                        )
-                    )
-                ),
-
-                // Ok(())
-                Statement.return(Expression.ok(Expression.tuple([])))
-            ])
-        });
-
-        const docComment = new DocComment({
-            summary: "Resets all WireMock request journal"
-        });
-
-        return this.functionToString(docComment, func);
-    }
-
-    private generateVerifyRequestCountFunction(): string {
-        const func = new StandaloneFunction({
-            name: "verify_request_count",
-            isAsync: true,
-            parameters: [
-                { name: "method", parameterType: Type.str() },
-                { name: "url_path", parameterType: Type.str() },
-                {
-                    name: "query_params",
-                    parameterType: Type.option(Type.hashMap(Type.string(), Type.string()))
-                },
-                { name: "expected", parameterType: Type.reference(new Reference({ name: "usize" })) }
-            ],
-            returnType: Type.result(
-                Type.unit(),
-                Type.reference(
-                    new Reference({
-                        name: "Box",
-                        genericArgs: [Type.trait("std::error::Error")]
-                    })
-                )
-            ),
-            body: CodeBlock.fromStatements([
-                // let wiremock_admin_url = "http://localhost:8080/__admin";
-                Statement.let({
-                    name: "wiremock_admin_url",
-                    value: Expression.stringLiteral("http://localhost:8080/__admin")
-                }),
-
-                // let mut request_body = json!({...});
-                Statement.let({
-                    name: "request_body",
-                    mutable: true,
-                    value: Expression.macroCall("json", [
-                        Expression.raw(`{
-        "method": method,
-        "urlPath": url_path,
-    }`)
-                    ])
-                }),
-
-                // if let Some(params) = query_params { ... }
-                Statement.ifLet("Some(params)", Expression.reference("query_params"), [
-                    Statement.let({
-                        name: "query_parameters",
-                        type_: Type.reference(new Reference({ name: "Value" })),
-                        value: Expression.raw(`params
-            .into_iter()
-            .map(|(k, v)| (k, json!({"equalTo": v})))
-            .collect()`)
-                    }),
-                    Statement.assignment(
-                        Expression.raw('request_body["queryParameters"]'),
-                        Expression.reference("query_parameters")
-                    )
-                ]),
-
-                // let response = Client::new()...await?;
-                Statement.let({
-                    name: "response",
-                    value: Expression.try(
-                        Expression.await(
-                            Expression.methodCall({
-                                target: Expression.methodCall({
-                                    target: Expression.methodCall({
-                                        target: Expression.functionCall("Client::new", []),
-                                        method: "post",
-                                        args: [
-                                            Expression.macroCall("format", [
-                                                Expression.stringLiteral("{}/requests/find"),
-                                                Expression.reference("wiremock_admin_url")
-                                            ])
-                                        ]
-                                    }),
-                                    method: "json",
-                                    args: [Expression.referenceOf(Expression.reference("request_body"))]
-                                }),
-                                method: "send",
-                                args: []
-                            })
-                        )
-                    )
-                }),
-
-                // let result: Value = response.json().await?;
-                Statement.let({
-                    name: "result",
-                    type_: Type.reference(new Reference({ name: "Value" })),
-                    value: Expression.try(
-                        Expression.await(
-                            Expression.methodCall({
-                                target: Expression.reference("response"),
-                                method: "json",
-                                args: []
-                            })
-                        )
-                    )
-                }),
-
-                // let requests = result["requests"].as_array().ok_or(...)?;
-                Statement.let({
-                    name: "requests",
-                    value: Expression.try(
-                        Expression.methodCall({
-                            target: Expression.methodCall({
-                                target: Expression.raw('result["requests"]'),
-                                method: "as_array",
-                                args: []
-                            }),
-                            method: "ok_or",
-                            args: [Expression.stringLiteral("Invalid response from WireMock")]
-                        })
-                    )
-                }),
-
-                // assert_eq!(requests.len(), expected, ...);
-                Statement.expression(
-                    Expression.macroCall("assert_eq", [
-                        Expression.methodCall({
-                            target: Expression.reference("requests"),
-                            method: "len",
-                            args: []
-                        }),
-                        Expression.reference("expected"),
-                        Expression.stringLiteral("Expected {} requests, found {}"),
-                        Expression.reference("expected"),
-                        Expression.methodCall({
-                            target: Expression.reference("requests"),
-                            method: "len",
-                            args: []
-                        })
-                    ])
-                ),
-
-                // Ok(())
-                Statement.return(Expression.ok(Expression.tuple([])))
-            ])
-        });
-
-        const docComment = new DocComment({
-            summary: "Verifies the number of requests made to WireMock"
-        });
-
-        return this.functionToString(docComment, func);
-    }
-
-    private functionToString(docComment: DocComment, func: StandaloneFunction): string {
-        const writer = new Writer();
-        docComment.write(writer);
-        func.write(writer);
-        return writer.toString();
+        // Note: reqwest::Client is not needed here - it's used in wire_test_utils.rs
+        return [new UseStatement({ path: `${this.context.getCrateName()}::prelude::*`, isPublic: false })];
     }
 
     // =============================================================================
@@ -378,11 +151,12 @@ export class WireTestGenerator {
 
             // Function attribute and signature
             lines.push(`#[tokio::test]`);
+            lines.push(`#[allow(unused_variables, unreachable_code)]`);
             lines.push(`async fn ${testName}() {`);
 
-            // Test body
-            lines.push(`    reset_wiremock_requests().await.unwrap();`);
-            lines.push(`    let wiremock_base_url = "http://localhost:8080";`);
+            // Test body - use centralized wire_test_utils module
+            lines.push(`    wire_test_utils::reset_wiremock_requests().await.unwrap();`);
+            lines.push(`    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;`);
             lines.push(``);
 
             // Client setup (parsed from snippet)
@@ -403,9 +177,9 @@ export class WireTestGenerator {
             lines.push(`    assert!(result.is_ok(), "Client method call should succeed");`);
             lines.push(``);
 
-            // Verify request count
+            // Verify request count using centralized wire_test_utils module
             lines.push(
-                `    verify_request_count("${endpoint.method}", "${basePath}", ${queryParamsMap}, 1).await.unwrap();`
+                `    wire_test_utils::verify_request_count("${endpoint.method}", "${basePath}", ${queryParamsMap}, 1).await.unwrap();`
             );
 
             lines.push(`}`);

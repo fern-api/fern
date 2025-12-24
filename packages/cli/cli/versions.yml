@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.32.0
+  changelogEntry:
+    - summary: |
+        Add `extends` field to dynamic IR ObjectType to expose inheritance information for generators that need to handle inheritance patterns differently (e.g., Rust uses flattened wrapper fields).
+      type: feat
+  createdAt: "2025-12-24"
+  irVersion: 62
+
 - version: 3.31.2
   changelogEntry:
     - summary: |
@@ -30,6 +38,7 @@
       type: fix
   createdAt: "2025-12-23"
   irVersion: 62
+
 
 - version: 3.30.5
   changelogEntry:

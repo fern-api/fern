@@ -7,6 +7,11 @@ import * as FernIr from "../../../../../index";
 export interface ObjectType {
     declaration: FernIr.dynamic.Declaration;
     properties: FernIr.dynamic.NamedParameter[];
+    /**
+     * List of type IDs that this object extends. Used by generators that need to
+     * handle inheritance patterns differently (e.g., Rust uses flattened wrapper fields).
+     */
+    extends: FernIr.dynamic.TypeId[] | undefined;
     /** Whether the type allows additional properties. */
     additionalProperties: boolean | undefined;
 }

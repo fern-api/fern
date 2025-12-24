@@ -1,5 +1,37 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.13.9
+  createdAt: "2025-12-24"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Preserve parameter order in dynamic snippets to match API schema definition order. Struct fields in generated Rust code now appear in the same order as defined in the API specification.
+  irVersion: 62
+
+- version: 0.13.8
+  createdAt: "2025-12-22"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix wire test request type naming to use IR declaration names instead of synthetic endpoint-based names. This ensures generated tests use correct type names like ResponseChargeBack instead of AddResponseRequest.
+  irVersion: 61
+
+- version: 0.13.7
+  createdAt: "2025-12-22"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix wire test compilation by avoiding Default::default() on non-Default types. Always explicitly provide all fields in generated wire tests instead of relying on Default trait derivation.
+  irVersion: 61
+
+- version: 0.13.6
+  createdAt: "2025-12-21"
+  changelogEntry:
+    - type: fix
+      summary: |
+        dynamic snippets to match struct naming and default handling
+  irVersion: 61
+
 - version: 0.13.5
   changelogEntry:
     - summary: |
