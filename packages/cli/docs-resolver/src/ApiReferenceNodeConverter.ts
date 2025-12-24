@@ -7,7 +7,6 @@ import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { camelCase, kebabCase } from "lodash-es";
 import urlJoin from "url-join";
-
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
@@ -18,6 +17,7 @@ import { isSubpackage } from "./utils/isSubpackage";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs";
 import { stringifyEndpointPathParts, stringifyEndpointPathPartsWithMethod } from "./utils/stringifyEndpointPathParts";
+import { titleToSlug } from "./utils/titleToSlug";
 import { toPageNode } from "./utils/toPageNode";
 import { toRelativeFilepath } from "./utils/toRelativeFilepath";
 
@@ -78,7 +78,7 @@ export class ApiReferenceNodeConverter {
         this.#slug = parentSlug.apply({
             fullSlug: maybeFullSlug?.split("/"),
             skipUrlSlug: this.apiSection.skipUrlSlug,
-            urlSlug: this.apiSection.slug ?? kebabCase(this.apiSection.title)
+            urlSlug: this.apiSection.slug ?? titleToSlug(this.apiSection.title)
         });
 
         const apiSectionAvailability = this.apiSection.availability ?? this.parentAvailability;
@@ -270,7 +270,7 @@ export class ApiReferenceNodeConverter {
                 pkg.slug ??
                 (isSubpackage(subpackage)
                     ? subpackage.urlSlug
-                    : (this.apiSection.slug ?? kebabCase(this.apiSection.title)));
+                    : (this.apiSection.slug ?? titleToSlug(this.apiSection.title)));
             const slug = parentSlug.apply({
                 fullSlug: maybeFullSlug?.split("/"),
                 skipUrlSlug: pkg.skipUrlSlug,
@@ -386,7 +386,7 @@ export class ApiReferenceNodeConverter {
             this.#visitedSubpackages.add(subPackageTuple.subpackageId);
         });
 
-        const urlSlug = section.slug ?? kebabCase(section.title);
+        const urlSlug = section.slug ?? titleToSlug(section.title);
         const slug = parentSlug.apply({
             fullSlug: maybeFullSlug?.split("/"),
             skipUrlSlug: section.skipUrlSlug,

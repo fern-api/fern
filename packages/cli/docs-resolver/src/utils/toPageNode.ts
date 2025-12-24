@@ -2,9 +2,8 @@ import { docsYml } from "@fern-api/configuration-loader";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
-import { kebabCase } from "lodash-es";
-
 import { NodeIdGenerator } from "../NodeIdGenerator";
+import { titleToSlug } from "./titleToSlug";
 import { toRelativeFilepath } from "./toRelativeFilepath";
 
 export function toPageNode({
@@ -31,7 +30,7 @@ export function toPageNode({
     const pageId = FernNavigation.V1.PageId(toRelativeFilepath(docsWorkspace, page.absolutePath));
     const pageSlug = parentSlug.apply({
         fullSlug: markdownFilesToFullSlugs.get(page.absolutePath)?.split("/"),
-        urlSlug: page.slug ?? kebabCase(page.title)
+        urlSlug: page.slug ?? titleToSlug(page.title)
     });
     return {
         id: idgen.get(pageId),

@@ -28,6 +28,7 @@ import { NodeIdGenerator } from "./NodeIdGenerator";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
+import { titleToSlug } from "./utils/titleToSlug";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
 
@@ -826,7 +827,7 @@ export class DocsDefinitionResolver {
     ): FernNavigation.V1.LandingPageNode {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(landingPageConfig.absolutePath));
         const slug = parentSlug.apply({
-            urlSlug: landingPageConfig.slug ?? kebabCase(landingPageConfig.title),
+            urlSlug: landingPageConfig.slug ?? titleToSlug(landingPageConfig.title),
             fullSlug: this.markdownFilesToFullSlugs.get(landingPageConfig.absolutePath)?.split("/")
         });
         return {
@@ -1090,9 +1091,9 @@ export class DocsDefinitionResolver {
         prefix: string,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.VariantNode> {
-        const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
+        const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? titleToSlug(item.title)}`);
         const variantSlug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(item.title),
+            urlSlug: item.slug ?? titleToSlug(item.title),
             skipUrlSlug: item.skipUrlSlug
         });
         const children = await Promise.all(item.layout.map((item) => this.toVariantChild(item, id, variantSlug)));
@@ -1355,7 +1356,7 @@ export class DocsDefinitionResolver {
     }): Promise<FernNavigation.V1.PageNode> {
         const pageId = FernNavigation.PageId(this.toRelativeFilepath(item.absolutePath));
         const slug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(item.title),
+            urlSlug: item.slug ?? titleToSlug(item.title),
             fullSlug: this.markdownFilesToFullSlugs.get(item.absolutePath)?.split("/")
         });
         const id = this.#idgen.get(pageId);
@@ -1393,7 +1394,7 @@ export class DocsDefinitionResolver {
         const pageId = relativeFilePath ? FernNavigation.PageId(relativeFilePath) : undefined;
         const id = this.#idgen.get(pageId ?? `${prefix}/section`);
         const slug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(item.title),
+            urlSlug: item.slug ?? titleToSlug(item.title),
             fullSlug: item.overviewAbsolutePath
                 ? this.markdownFilesToFullSlugs.get(item.overviewAbsolutePath)?.split("/")
                 : undefined,
@@ -1507,7 +1508,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.TabNode> {
         const id = this.#idgen.get(`${prefix}/tab`);
         const slug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(item.title),
+            urlSlug: item.slug ?? titleToSlug(item.title),
             skipUrlSlug: item.skipUrlSlug
         });
         return {
@@ -1534,7 +1535,7 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.TabNode> {
         const id = this.#idgen.get(`${prefix}/tab`);
         const slug = parentSlug.apply({
-            urlSlug: item.slug ?? kebabCase(item.title),
+            urlSlug: item.slug ?? titleToSlug(item.title),
             skipUrlSlug: item.skipUrlSlug
         });
         return {
