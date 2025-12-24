@@ -1,4 +1,5 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { Audiences } from "@fern-api/configuration";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
@@ -206,6 +207,63 @@ export class DocsDefinitionResolver {
         const rawVersions = this.docsWorkspace.config.versions;
         const version = rawVersions?.find((v) => v.displayName === versionName);
         return parseAudiences(version?.audiences);
+    }
+
+    /**
+     * Special audience keyword that triggers inheritance from the instance's target audiences.
+     */
+    private static readonly INSTANCE_AUDIENCE_KEYWORD = "instance";
+
+    /**
+     * Gets the effective audiences for an API section, expanding the special "instance" keyword
+     * with the instance's target audiences.
+     *
+     * If the API section's audiences array contains "instance", that keyword is replaced with
+     * the instance's target audiences and combined with any other specified audiences.
+     * For example: ["instance", "beta"] becomes ["audience1", "audience2", "beta"] if the
+     * instance has audiences ["audience1", "audience2"].
+     */
+    private getEffectiveAudiencesForApiSection(itemAudiences: Audiences): Audiences {
+        // Only process "select" type audiences that have an array
+        if (itemAudiences.type !== "select") {
+            return itemAudiences;
+        }
+
+        // Check if the "instance" keyword is present in the audiences array
+        if (!itemAudiences.audiences.includes(DocsDefinitionResolver.INSTANCE_AUDIENCE_KEYWORD)) {
+            return itemAudiences;
+        }
+
+        // Expand "instance" keyword in-place with instance's target audiences
+        const expandedAudiences: string[] = [];
+        const seen = new Set<string>();
+
+        for (const audience of itemAudiences.audiences) {
+            if (audience === DocsDefinitionResolver.INSTANCE_AUDIENCE_KEYWORD) {
+                // Replace "instance" with the instance's target audiences
+                if (this.targetAudiences && this.targetAudiences.length > 0) {
+                    for (const targetAudience of this.targetAudiences) {
+                        if (!seen.has(targetAudience)) {
+                            seen.add(targetAudience);
+                            expandedAudiences.push(targetAudience);
+                        }
+                    }
+                }
+            } else {
+                // Keep other audiences, deduplicating
+                if (!seen.has(audience)) {
+                    seen.add(audience);
+                    expandedAudiences.push(audience);
+                }
+            }
+        }
+
+        // If expansion results in empty array, treat as "all" (no filtering)
+        if (expandedAudiences.length === 0) {
+            return { type: "all" };
+        }
+
+        return { type: "select", audiences: expandedAudiences };
     }
 
     private _parsedDocsConfig: WithoutQuestionMarks<docsYml.ParsedDocsConfiguration> | undefined;
@@ -1167,6 +1225,9 @@ export class DocsDefinitionResolver {
     }): Promise<FernNavigation.V1.ApiReferenceNode> {
         const snippetsConfig = convertDocsSnippetsConfigToFdr(item.snippetsConfiguration);
 
+        // Get effective audiences, inheriting from instance if not specified on the API section
+        const effectiveAudiences = this.getEffectiveAudiencesForApiSection(item.audiences);
+
         let ir: IntermediateRepresentation | undefined = undefined;
         const workspace = await this.getFernWorkspaceForApiSection(item).toFernWorkspace(
             { context: this.taskContext },
@@ -1185,7 +1246,7 @@ export class DocsDefinitionResolver {
                 const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
                 ir = await openapiWorkspace.getIntermediateRepresentation({
                     context: this.taskContext,
-                    audiences: item.audiences,
+                    audiences: effectiveAudiences,
                     enableUniqueErrorsPerEndpoint: true,
                     generateV1Examples: false,
                     logWarnings: false
@@ -1216,7 +1277,7 @@ export class DocsDefinitionResolver {
         if (ir == null) {
             ir = generateIntermediateRepresentation({
                 workspace,
-                audiences: item.audiences,
+                audiences: effectiveAudiences,
                 generationLanguage: undefined,
                 keywords: undefined,
                 smartCasing: false,
