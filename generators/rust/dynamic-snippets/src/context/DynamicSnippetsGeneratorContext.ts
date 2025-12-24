@@ -2,7 +2,8 @@ import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
     Options,
-    Severity
+    Severity,
+    TypeInstance
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import {
@@ -383,6 +384,43 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     // Enhanced nullable checking
     public isNullable(typeRef: FernIr.dynamic.TypeReference): boolean {
         return typeRef.type === "nullable" || typeRef.type === "optional";
+    }
+
+    /**
+     * Override to preserve parameter order by iterating over schema parameters
+     * instead of Object.entries(values). This ensures generated Rust code
+     * has struct fields in the same order as defined in the API schema.
+     */
+    public override associateByWireValue({
+        parameters,
+        values,
+        ignoreMissingParameters: _ignoreMissingParameters
+    }: {
+        parameters: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
+        ignoreMissingParameters?: boolean;
+    }): TypeInstance[] {
+        const instances: TypeInstance[] = [];
+        // Iterate over parameters (schema order) to preserve argument order
+        for (const parameter of parameters) {
+            const key = parameter.name.wireValue;
+            const value = values[key];
+            // Skip parameters not provided in values
+            if (value == null) {
+                continue;
+            }
+            this.errors.scope(key);
+            try {
+                instances.push({
+                    name: parameter.name,
+                    typeReference: parameter.typeReference,
+                    value
+                });
+            } finally {
+                this.errors.unscope();
+            }
+        }
+        return instances;
     }
 
     /**
