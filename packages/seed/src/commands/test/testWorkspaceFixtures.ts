@@ -14,6 +14,12 @@ export const FIXTURES = readDirectories(
     path.join(__dirname, "../../../test-definitions", FERN_DIRECTORY, APIS_DIRECTORY)
 );
 
+export interface TestGeneratorResult {
+    success: boolean;
+    generator: string;
+    failedFixtures: string[];
+}
+
 export async function testGenerator({
     runner,
     generator,
@@ -26,7 +32,7 @@ export async function testGenerator({
     fixtures: string[];
     outputFolder?: string;
     inspect: boolean;
-}): Promise<boolean> {
+}): Promise<TestGeneratorResult> {
     const testCases: Promise<TestRunner.TestResult>[] = [];
     const allowedFailuresAsSet = new Set(generator.workspaceConfig.allowedFailures);
     for (const fixture of fixtures) {
@@ -99,7 +105,11 @@ export async function testGenerator({
             CONSOLE_LOGGER.info(
                 `❌ THERE WERE UNEXPECTED TEST CASE FAILURES: Of the ${failedFixtures.length} failed fixtures, ${unexpectedlyFailedFixtures.length} were unexpected failures, including: ${unexpectedlyFailedFixtures.join(", ")}.`
             );
-            return false;
+            return {
+                success: false,
+                generator: generator.workspaceName,
+                failedFixtures
+            };
         } else {
             CONSOLE_LOGGER.info("✅ All failed fixtures were expected failures.");
         }
@@ -113,7 +123,11 @@ export async function testGenerator({
         );
     }
 
-    return true;
+    return {
+        success: true,
+        generator: generator.workspaceName,
+        failedFixtures
+    };
 }
 
 function readDirectories(filepath: string): string[] {
