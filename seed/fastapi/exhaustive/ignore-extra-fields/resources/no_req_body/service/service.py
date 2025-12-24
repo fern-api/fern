@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import fastapi._compat
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -47,8 +48,15 @@ class AbstractNoReqBodyService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.get_with_no_request_body.__globals__,
+                    cls.get_with_no_request_body.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -68,7 +76,6 @@ class AbstractNoReqBodyService(AbstractFernService):
 
         router.get(
             path="/no-req-body",
-            response_model=ObjectWithOptionalField,
             description=AbstractNoReqBodyService.get_with_no_request_body.__doc__,
             **get_route_args(cls.get_with_no_request_body, default_tag="no_req_body"),
         )(wrapper)
@@ -81,8 +88,15 @@ class AbstractNoReqBodyService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
+                # Evaluate forward references before using in Annotated
+                # See: https://github.com/fastapi/fastapi/issues/13056
+                evaluated = fastapi._compat.evaluate_forwardref(
+                    parameter.annotation,
+                    cls.post_with_no_request_body.__globals__,
+                    cls.post_with_no_request_body.__globals__,
+                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -102,7 +116,6 @@ class AbstractNoReqBodyService(AbstractFernService):
 
         router.post(
             path="/no-req-body",
-            response_model=str,
             description=AbstractNoReqBodyService.post_with_no_request_body.__doc__,
             **get_route_args(cls.post_with_no_request_body, default_tag="no_req_body"),
         )(wrapper)
