@@ -259,15 +259,21 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 `;
 
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "avatar"
-    ],
-    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+"require "acme"
+
+client = Acme::Client.new(base_url: 'https://api.example.com');
+
+client.nullable.create_user(
+  username: 'john.doe',
+  tags: ['admin'],
+  metadata: {
+    created_at: '1980-01-01T00:00:00Z',
+    updated_at: '1980-01-01T00:00:00Z',
+    avatar: nil,
+    activated: nil
   }
-]"
+);
+"
 `;
 
 exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
@@ -278,27 +284,6 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
       "username"
     ],
     "message": "\\"username\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "tags"
-    ],
-    "message": "\\"tags\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "metadata"
-    ],
-    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "avatar"
-    ],
-    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
   }
 ]"
 `;

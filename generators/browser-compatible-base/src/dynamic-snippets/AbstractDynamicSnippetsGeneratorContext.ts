@@ -124,8 +124,10 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
             this.errors.scope(key);
             try {
                 if (value == null) {
-                    if (ignoreMissingParameters) {
-                        // Skip parameters not provided in values
+                    // Skip parameters not provided in values if:
+                    // 1. ignoreMissingParameters is true, OR
+                    // 2. the parameter is optional/nullable (not required)
+                    if (ignoreMissingParameters || this.isOptional(parameter.typeReference) || this.isNullable(parameter.typeReference)) {
                         continue;
                     }
                     this.errors.add({
