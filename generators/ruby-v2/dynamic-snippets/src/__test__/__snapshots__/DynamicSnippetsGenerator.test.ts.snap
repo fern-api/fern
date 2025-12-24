@@ -177,8 +177,8 @@ exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 
 client = Acme::Client.new();
 
 client.service.just_file_with_query_params(
-  maybe_string: 'exists',
-  integer: 42
+  integer: 42,
+  maybe_string: 'exists'
 );
 "
 `;
@@ -271,7 +271,8 @@ client.nullable.create_user(
     updated_at: '1980-01-01T00:00:00Z',
     avatar: nil,
     activated: nil
-  }
+  },
+  avatar: nil
 );
 "
 `;
@@ -280,10 +281,8 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
 "[
   {
     "severity": "CRITICAL",
-    "path": [
-      "username"
-    ],
-    "message": "\\"username\\" is not a recognized parameter for this endpoint"
+    "path": [],
+    "message": "Expected non-null value, but got null"
   }
 ]"
 `;
@@ -295,7 +294,8 @@ client = Acme::Client.new(base_url: 'https://api.example.com');
 
 client.nullable.get_users(
   usernames: ['john.doe', 'jane.doe'],
-  tags: [nil]
+  tags: [nil],
+  extra: nil
 );
 "
 `;

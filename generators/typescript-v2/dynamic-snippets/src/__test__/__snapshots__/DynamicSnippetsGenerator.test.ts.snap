@@ -40,110 +40,61 @@ main();
 `;
 
 exports[`snippets > examples > 'POST /big-entity (simple)' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "entity"
-    ],
-    "message": "\\"entity\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "metadata"
-    ],
-    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "commonMetadata"
-    ],
-    "message": "\\"commonMetadata\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "data"
-    ],
-    "message": "\\"data\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "exception"
-    ],
-    "message": "\\"exception\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "test"
-    ],
-    "message": "\\"test\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "node"
-    ],
-    "message": "\\"node\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "directory"
-    ],
-    "message": "\\"directory\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "moment"
-    ],
-    "message": "\\"moment\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "extendedMovie",
-      "prequel"
-    ],
-    "message": "\\"prequel\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "extendedMovie",
-      "book"
-    ],
-    "message": "\\"book\\" is not a recognized parameter for this endpoint"
-  }
-]"
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.service.createBigEntity({
+        castMember: {
+            id: "john.doe",
+            name: "John Doe",
+        },
+        extendedMovie: {
+            cast: [
+                "John Travolta",
+                "Samuel L. Jackson",
+                "Uma Thurman",
+                "Bruce Willis",
+            ],
+            id: "movie-sda231x",
+            title: "Pulp Fiction",
+            from: "Quentin Tarantino",
+            rating: 8.5,
+            type: "movie",
+            tag: "tag-12efs9dv",
+            metadata: {
+                "academyAward": true,
+                "releaseDate": "2023-12-08",
+                "ratings": {
+                    rottenTomatoes: 97,
+                    imdb: 7.6,
+                },
+            },
+            revenue: BigInt("1000000"),
+        },
+        eventInfo: {
+            type: "metadata",
+            id: "event-12345",
+            data: {
+                "key1": "val1",
+                "key2": "val2",
+            },
+            jsonString: "abc",
+        },
+        migration: {
+            name: "Migration 31 Aug",
+            status: "RUNNING",
+        },
+    });
+}
+main();
+"
 `;
 
 exports[`snippets > examples > 'POST /movie (invalid request body)' 1`] = `
 "[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "book"
-    ],
-    "message": "\\"book\\" is not a recognized parameter for this endpoint"
-  },
   {
     "severity": "CRITICAL",
     "path": [
@@ -156,16 +107,37 @@ exports[`snippets > examples > 'POST /movie (invalid request body)' 1`] = `
 `;
 
 exports[`snippets > examples > 'POST /movie (simple)' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "book"
-    ],
-    "message": "\\"book\\" is not a recognized parameter for this endpoint"
-  }
-]"
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.service.createMovie({
+        id: "movie-c06a4ad7",
+        prequel: "movie-cv9b914f",
+        title: "The Boy and the Heron",
+        from: "Hayao Miyazaki",
+        rating: 8,
+        type: "movie",
+        tag: "development",
+        metadata: {
+            "actors": [
+                "Christian Bale",
+                "Florence Pugh",
+                "Willem Dafoe",
+            ],
+            "releaseDate": "2023-12-08",
+            "ratings": {
+                rottenTomatoes: 97,
+                imdb: 7.6,
+            },
+        },
+        revenue: BigInt("1000000"),
+    });
+}
+main();
+"
 `;
 
 exports[`snippets > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
@@ -216,9 +188,9 @@ exports[`snippets > exhaustive > 'POST /container/list-of-objects (inva…' 1`] 
     "severity": "CRITICAL",
     "path": [
       "requestBody[1]",
-      "string"
+      "invalid"
     ],
-    "message": "\\"string\\" is not a recognized parameter for this endpoint"
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
   },
   {
     "severity": "CRITICAL",
@@ -307,8 +279,8 @@ exports[`snippets > file-upload > 'POST /just-file-with-query-params' 1`] = `
 async function main() {
     const client = new AcmeClient();
     await client.service.justFileWithQueryParams({
-        maybeString: "exists",
         integer: 42,
+        maybeString: "exists",
         file: new Blob(["Hello, world!"]),
     });
 }
@@ -417,48 +389,28 @@ exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
 `;
 
 exports[`snippets > nullable > 'Body properties' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "avatar"
-    ],
-    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "avatar"
-    ],
-    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "activated"
-    ],
-    "message": "\\"activated\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "status"
-    ],
-    "message": "\\"status\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "values"
-    ],
-    "message": "\\"values\\" is not a recognized parameter for this endpoint"
-  }
-]"
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        environment: "https://api.example.com",
+    });
+    await client.nullable.createUser({
+        username: "john.doe",
+        tags: [
+            "admin",
+        ],
+        metadata: {
+            createdAt: new Date("1980-01-01T00:00:00Z"),
+            updatedAt: new Date("1980-01-01T00:00:00Z"),
+            avatar: null,
+            activated: null,
+        },
+        avatar: null,
+    });
+}
+main();
+"
 `;
 
 exports[`snippets > nullable > 'Invalid null value' 1`] = `
@@ -466,34 +418,9 @@ exports[`snippets > nullable > 'Invalid null value' 1`] = `
   {
     "severity": "CRITICAL",
     "path": [
-      "requestBody",
-      "username"
+      "requestBody"
     ],
-    "message": "\\"username\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "tags"
-    ],
-    "message": "\\"tags\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "metadata"
-    ],
-    "message": "\\"metadata\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "avatar"
-    ],
-    "message": "\\"avatar\\" is not a recognized parameter for this endpoint"
+    "message": "Expected non-null value, but got null"
   }
 ]"
 `;
@@ -513,6 +440,7 @@ async function main() {
         tags: [
             null,
         ],
+        extra: null,
     });
 }
 main();
@@ -540,23 +468,16 @@ main();
 `;
 
 exports[`snippets > read-write-only > 'Readonly value in request' 1`] = `
-"import { AcmeClient } from "acme";
-
-async function main() {
-    const client = new AcmeClient({
-        environment: "https://api.example.com",
-    });
-    await client.createUser({
-        password: "password",
-        profile: {
-            name: "name",
-            verification: {},
-            ssn: "ssn",
-        },
-    });
-}
-main();
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "requestBody",
+      "id"
+    ],
+    "message": "\\"id\\" is not a recognized parameter for this endpoint"
+  }
+]"
 `;
 
 exports[`snippets > single-url-environment-default > 'Production environment' 1`] = `

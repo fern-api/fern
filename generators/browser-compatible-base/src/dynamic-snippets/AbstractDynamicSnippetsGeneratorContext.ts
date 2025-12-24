@@ -42,16 +42,13 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         values: FernIr.dynamic.Values;
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
-        // Iterate over parameters (schema order) to preserve argument order
-        for (const parameter of parameters) {
-            const key = parameter.name.wireValue;
-            const value = values[key];
-            if (value == null) {
-                // Skip parameters not provided in values
-                continue;
-            }
+        for (const [key, value] of Object.entries(values)) {
             this.errors.scope(key);
             try {
+                const parameter = parameters.find((param) => param.name.wireValue === key);
+                if (parameter == null) {
+                    throw this.newParameterNotRecognizedError(key);
+                }
                 // If this query parameter supports allow-multiple, the user-provided values
                 // must be wrapped in an array.
                 const typeInstanceValue =
@@ -117,17 +114,14 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         ignoreMissingParameters?: boolean;
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
-        // Iterate over parameters (schema order) to preserve argument order
-        for (const parameter of parameters) {
-            const key = parameter.name.wireValue;
-            const value = values[key];
+        for (const [key, value] of Object.entries(values)) {
             this.errors.scope(key);
             try {
-                if (value == null) {
-                    // Skip parameters not provided in values if:
-                    // 1. ignoreMissingParameters is true, OR
-                    // 2. the parameter is optional/nullable (not required)
-                    if (ignoreMissingParameters || this.isOptional(parameter.typeReference) || this.isNullable(parameter.typeReference)) {
+                const parameter = parameters.find((param) => param.name.wireValue === key);
+                if (parameter == null) {
+                    if (ignoreMissingParameters) {
+                        // Required for request payloads that include more information than
+                        // just the target parameters (e.g. union base properties).
                         continue;
                     }
                     this.errors.add({

@@ -58,10 +58,17 @@ var client = new AcmeClient(
 await client.Service.CreateBigEntityAsync(
     new BigEntity {
         CastMember = new Actor {
-            Name = "John Doe",
-            ID = "john.doe"
+            ID = "john.doe",
+            Name = "John Doe"
         },
         ExtendedMovie = new ExtendedMovie {
+            Cast = new List<string>(){
+                "John Travolta",
+                "Samuel L. Jackson",
+                "Uma Thurman",
+                "Bruce Willis",
+            }
+            ,
             ID = "movie-sda231x",
             Title = "Pulp Fiction",
             From = "Quentin Tarantino",
@@ -79,14 +86,7 @@ await client.Service.CreateBigEntityAsync(
                 ,
             }
             ,
-            Revenue = 1000000L,
-            Cast = new List<string>(){
-                "John Travolta",
-                "Samuel L. Jackson",
-                "Uma Thurman",
-                "Bruce Willis",
-            }
-
+            Revenue = 1000000L
         },
         EventInfo = new EventInfo(
             new Metadata {
@@ -217,9 +217,9 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
     "severity": "CRITICAL",
     "path": [
       "requestBody[1]",
-      "string"
+      "invalid"
     ],
-    "message": "\\"string\\" is not a recognized parameter for this endpoint"
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
   },
   {
     "severity": "CRITICAL",
@@ -341,8 +341,8 @@ var client = new AcmeClient();
 
 await client.Service.JustFileWithQueryParamsAsync(
     new JustFileWithQueryParamsRequest {
-        MaybeString = "exists",
         Integer = 42,
+        MaybeString = "exists",
         File = new FileParameter(){
             Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
         }
@@ -462,16 +462,35 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 `;
 
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "status"
-    ],
-    "message": "\\"status\\" is not a recognized parameter for this endpoint"
-  }
-]"
+"using Acme;
+using Acme.Nullable;
+using System.Collections.Generic;
+using System;
+using System.Globalization;
+
+var client = new AcmeClient(
+    clientOptions: new ClientOptions {
+        BaseUrl = "https://api.example.com"
+    }
+);
+
+await client.Nullable.CreateUserAsync(
+    new CreateUserRequest {
+        Username = "john.doe",
+        Tags = new List<string>(){
+            "admin",
+        }
+        ,
+        Metadata = new Metadata {
+            CreatedAt = DateTime.Parse("1980-01-01T00:00:00Z", null, DateTimeStyles.AdjustToUniversal),
+            UpdatedAt = DateTime.Parse("1980-01-01T00:00:00Z", null, DateTimeStyles.AdjustToUniversal),
+            Avatar = null,
+            Activated = null
+        },
+        Avatar = null
+    }
+);
+"
 `;
 
 exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
@@ -479,10 +498,9 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
   {
     "severity": "CRITICAL",
     "path": [
-      "requestBody",
-      "username"
+      "requestBody"
     ],
-    "message": "\\"username\\" is not a recognized parameter for this endpoint"
+    "message": "Expected non-null value, but got null"
   }
 ]"
 `;
@@ -508,64 +526,56 @@ await client.Nullable.GetUsersAsync(
         Tags = new List<string>(){
             null,
         }
-
+        ,
+        Extra = null
     }
 );
 "
 `;
 
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "id"
-    ],
-    "message": "\\"id\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "email"
-    ],
-    "message": "\\"email\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "profile",
-      "verification",
-      "verified"
-    ],
-    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
-  }
-]"
+"using Acme;
+
+var client = new AcmeClient(
+    clientOptions: new ClientOptions {
+        BaseUrl = "https://api.example.com"
+    }
+);
+
+await client.CreateUserAsync(
+    new User {
+        Password = "password",
+        Profile = new UserProfile {
+            Name = "name",
+            Verification = new UserProfileVerification(),
+            Ssn = "ssn"
+        }
+    }
+);
+"
 `;
 
 exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "email"
-    ],
-    "message": "\\"email\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "profile",
-      "verification",
-      "verified"
-    ],
-    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
-  }
-]"
+"using Acme;
+
+var client = new AcmeClient(
+    clientOptions: new ClientOptions {
+        BaseUrl = "https://api.example.com"
+    }
+);
+
+await client.CreateUserAsync(
+    new User {
+        ID = "id",
+        Password = "password",
+        Profile = new UserProfile {
+            Name = "name",
+            Verification = new UserProfileVerification(),
+            Ssn = "ssn"
+        }
+    }
+);
+"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `

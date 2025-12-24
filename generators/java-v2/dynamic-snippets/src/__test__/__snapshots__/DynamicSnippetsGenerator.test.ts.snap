@@ -250,9 +250,9 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
     "severity": "CRITICAL",
     "path": [
       "requestBody[1]",
-      "string"
+      "invalid"
     ],
-    "message": "\\"string\\" is not a recognized parameter for this endpoint"
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
   },
   {
     "severity": "CRITICAL",
@@ -518,16 +518,49 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 `;
 
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "status"
-    ],
-    "message": "\\"status\\" is not a recognized parameter for this endpoint"
-  }
-]"
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.core.Nullable;
+import com.acme.acme.types.CreateUserRequest;
+import com.acme.acme.types.Metadata;
+import java.time.OffsetDateTime;
+import java.util.Arrays;
+import java.util.Optional;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .url("https://api.example.com")
+    .build();
+
+client.nullable().createUser(
+    CreateUserRequest
+        .builder()
+        .username("john.doe")
+        .avatar(
+            Nullable.ofNull()
+        )
+        .tags(
+            Optional.of(
+                Arrays.asList("admin")
+            )
+        )
+        .metadata(
+            Metadata
+                .builder()
+                .createdAt(OffsetDateTime.parse("1980-01-01T00:00:00Z"))
+                .updatedAt(OffsetDateTime.parse("1980-01-01T00:00:00Z"))
+                .avatar(
+                    Nullable.ofNull()
+                )
+                .activated(
+                    Nullable.ofNull()
+                )
+                .build()
+        )
+        .build()
+);
+"
 `;
 
 exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
@@ -535,10 +568,9 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
   {
     "severity": "CRITICAL",
     "path": [
-      "requestBody",
-      "username"
+      "requestBody"
     ],
-    "message": "\\"username\\" is not a recognized parameter for this endpoint"
+    "message": "Expected non-null value, but got null"
   }
 ]"
 `;
@@ -556,57 +588,72 @@ exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 `;
 
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "id"
-    ],
-    "message": "\\"id\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "email"
-    ],
-    "message": "\\"email\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "profile",
-      "verification",
-      "verified"
-    ],
-    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
-  }
-]"
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.User;
+import com.acme.acme.types.UserProfile;
+import com.acme.acme.types.UserProfileVerification;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .url("https://api.example.com")
+    .build();
+
+client.createUser(
+    User
+        .builder()
+        .password("password")
+        .profile(
+            UserProfile
+                .builder()
+                .name("name")
+                .verification(
+                    UserProfileVerification
+                        .builder()
+                        .build()
+                )
+                .ssn("ssn")
+                .build()
+        )
+        .build()
+);
+"
 `;
 
 exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "email"
-    ],
-    "message": "\\"email\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "profile",
-      "verification",
-      "verified"
-    ],
-    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
-  }
-]"
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.User;
+import com.acme.acme.types.UserProfile;
+import com.acme.acme.types.UserProfileVerification;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .url("https://api.example.com")
+    .build();
+
+client.createUser(
+    User
+        .builder()
+        .id("id")
+        .password("password")
+        .profile(
+            UserProfile
+                .builder()
+                .name("name")
+                .verification(
+                    UserProfileVerification
+                        .builder()
+                        .build()
+                )
+                .ssn("ssn")
+                .build()
+        )
+        .build()
+);
+"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `

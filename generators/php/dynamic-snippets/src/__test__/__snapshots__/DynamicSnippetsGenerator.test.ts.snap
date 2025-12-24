@@ -67,10 +67,16 @@ $client = new AcmeClient(
 $client->service->createBigEntity(
     new BigEntity([
         'castMember' => new Actor([
-            'name' => 'John Doe',
             'id' => 'john.doe',
+            'name' => 'John Doe',
         ]),
         'extendedMovie' => new ExtendedMovie([
+            'cast' => [
+                'John Travolta',
+                'Samuel L. Jackson',
+                'Uma Thurman',
+                'Bruce Willis',
+            ],
             'id' => 'movie-sda231x',
             'title' => 'Pulp Fiction',
             'from' => 'Quentin Tarantino',
@@ -86,12 +92,6 @@ $client->service->createBigEntity(
                 ],
             ],
             'revenue' => 1000000,
-            'cast' => [
-                'John Travolta',
-                'Samuel L. Jackson',
-                'Uma Thurman',
-                'Bruce Willis',
-            ],
         ]),
         'eventInfo' => EventInfo::metadata(new Metadata([
             'id' => 'event-12345',
@@ -214,9 +214,9 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (inv
     "severity": "CRITICAL",
     "path": [
       "requestBody[1]",
-      "string"
+      "invalid"
     ],
-    "message": "\\"string\\" is not a recognized parameter for this endpoint"
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
   },
   {
     "severity": "CRITICAL",
@@ -328,8 +328,8 @@ use Example\\Utils\\File;
 $client = new AcmeClient();
 $client->service->justFileWithQueryParams(
     new JustFileWithQueryParamsRequest([
-        'maybeString' => 'exists',
         'integer' => 42,
+        'maybeString' => 'exists',
         'file' => File->createFromString("Hello, world!"),
     ]),
 );
@@ -461,16 +461,36 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 `;
 
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "status"
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Nullable\\Requests\\CreateUserRequest;
+use Acme\\Nullable\\Types\\Metadata;
+use DateTime;
+
+$client = new AcmeClient(
+    options: [
+        'baseUrl' => 'https://api.example.com',
     ],
-    "message": "\\"status\\" is not a recognized parameter for this endpoint"
-  }
-]"
+);
+$client->nullable->createUser(
+    new CreateUserRequest([
+        'username' => 'john.doe',
+        'tags' => [
+            'admin',
+        ],
+        'metadata' => new Metadata([
+            'createdAt' => new DateTime('1980-01-01T00:00:00Z'),
+            'updatedAt' => new DateTime('1980-01-01T00:00:00Z'),
+            'avatar' => null,
+            'activated' => null,
+        ]),
+        'avatar' => null,
+    ]),
+);
+"
 `;
 
 exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
@@ -478,10 +498,9 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
   {
     "severity": "CRITICAL",
     "path": [
-      "requestBody",
-      "username"
+      "requestBody"
     ],
-    "message": "\\"username\\" is not a recognized parameter for this endpoint"
+    "message": "Expected non-null value, but got null"
   }
 ]"
 `;
@@ -508,63 +527,67 @@ $client->nullable->getUsers(
         'tags' => [
             null,
         ],
+        'extra' => null,
     ]),
 );
 "
 `;
 
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "id"
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Types\\User;
+use Acme\\Types\\UserProfile;
+use Acme\\Types\\UserProfileVerification;
+
+$client = new AcmeClient(
+    options: [
+        'baseUrl' => 'https://api.example.com',
     ],
-    "message": "\\"id\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "email"
-    ],
-    "message": "\\"email\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "profile",
-      "verification",
-      "verified"
-    ],
-    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
-  }
-]"
+);
+$client->createUser(
+    new User([
+        'password' => 'password',
+        'profile' => new UserProfile([
+            'name' => 'name',
+            'verification' => new UserProfileVerification([]),
+            'ssn' => 'ssn',
+        ]),
+    ]),
+);
+"
 `;
 
 exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
-"[
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "email"
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Types\\User;
+use Acme\\Types\\UserProfile;
+use Acme\\Types\\UserProfileVerification;
+
+$client = new AcmeClient(
+    options: [
+        'baseUrl' => 'https://api.example.com',
     ],
-    "message": "\\"email\\" is not a recognized parameter for this endpoint"
-  },
-  {
-    "severity": "CRITICAL",
-    "path": [
-      "requestBody",
-      "profile",
-      "verification",
-      "verified"
-    ],
-    "message": "\\"verified\\" is not a recognized parameter for this endpoint"
-  }
-]"
+);
+$client->createUser(
+    new User([
+        'id' => 'id',
+        'password' => 'password',
+        'profile' => new UserProfile([
+            'name' => 'name',
+            'verification' => new UserProfileVerification([]),
+            'ssn' => 'ssn',
+        ]),
+    ]),
+);
+"
 `;
 
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
