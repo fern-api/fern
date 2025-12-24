@@ -10,9 +10,19 @@ const BEARER_AUTH_SCHEME = "BearerAuthScheme";
 export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
     if (context.authOverrides != null) {
         for (const [name, declaration] of Object.entries(context.authOverrides["auth-schemes"] ?? {})) {
+            const openApiSecurityScheme = context.ir.securitySchemes[name];
+            const descriptionFromOpenApi = openApiSecurityScheme?.description;
+            const schemaWithDocs: RawSchemas.AuthSchemeDeclarationSchema = {
+                ...declaration,
+                docs: declaration.docs ?? descriptionFromOpenApi
+            };
+            // biome-ignore lint/suspicious/noConsole: Debug logging for auth scheme description
+            console.error(
+                `[FERN_AUTH_DESC_DEBUG] Stage 2 (IR->FernDef): name=${name}, overrideDocs=${declaration.docs ? `"${declaration.docs.substring(0, 80)}..."` : "undefined"}, openApiDesc=${descriptionFromOpenApi ? `"${descriptionFromOpenApi.substring(0, 80)}..."` : "undefined"}, finalDocs=${schemaWithDocs.docs ? `"${schemaWithDocs.docs.substring(0, 80)}..."` : "undefined"}`
+            );
             context.builder.addAuthScheme({
                 name,
-                schema: declaration
+                schema: schemaWithDocs
             });
         }
         if (context.authOverrides.auth != null) {

@@ -3682,10 +3682,12 @@
   "securitySchemes": {
     "bearerAuth": {
       "headerName": "Authorization",
+      "description": "Enter the key with the `Bearer` prefix, e.g. 'Bearer API_KEY'.",
       "type": "header"
     },
     "userAuth": {
       "headerName": "Authorization",
+      "description": "User authorization token",
       "type": "header"
     }
   },

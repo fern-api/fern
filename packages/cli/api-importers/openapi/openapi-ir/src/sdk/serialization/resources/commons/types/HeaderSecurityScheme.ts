@@ -5,19 +5,22 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { WithDescription } from "./WithDescription";
 
 export const HeaderSecurityScheme: core.serialization.ObjectSchema<
     serializers.HeaderSecurityScheme.Raw,
     FernOpenapiIr.HeaderSecurityScheme
-> = core.serialization.objectWithoutOptionalProperties({
-    headerName: core.serialization.string(),
-    prefix: core.serialization.string().optional(),
-    headerVariableName: core.serialization.string().optional(),
-    headerEnvVar: core.serialization.string().optional(),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        headerName: core.serialization.string(),
+        prefix: core.serialization.string().optional(),
+        headerVariableName: core.serialization.string().optional(),
+        headerEnvVar: core.serialization.string().optional(),
+    })
+    .extend(WithDescription);
 
 export declare namespace HeaderSecurityScheme {
-    export interface Raw {
+    export interface Raw extends WithDescription.Raw {
         headerName: string;
         prefix?: string | null;
         headerVariableName?: string | null;

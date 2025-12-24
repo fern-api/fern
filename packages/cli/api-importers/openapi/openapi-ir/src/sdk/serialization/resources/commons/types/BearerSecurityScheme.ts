@@ -5,17 +5,20 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { WithDescription } from "./WithDescription";
 
 export const BearerSecurityScheme: core.serialization.ObjectSchema<
     serializers.BearerSecurityScheme.Raw,
     FernOpenapiIr.BearerSecurityScheme
-> = core.serialization.objectWithoutOptionalProperties({
-    tokenVariableName: core.serialization.string().optional(),
-    tokenEnvVar: core.serialization.string().optional(),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        tokenVariableName: core.serialization.string().optional(),
+        tokenEnvVar: core.serialization.string().optional(),
+    })
+    .extend(WithDescription);
 
 export declare namespace BearerSecurityScheme {
-    export interface Raw {
+    export interface Raw extends WithDescription.Raw {
         tokenVariableName?: string | null;
         tokenEnvVar?: string | null;
     }

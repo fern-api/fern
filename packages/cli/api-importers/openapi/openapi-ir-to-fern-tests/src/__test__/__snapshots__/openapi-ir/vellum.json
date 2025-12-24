@@ -12986,6 +12986,7 @@
   "securitySchemes": {
     "apiKeyAuth": {
       "headerName": "X_API_KEY",
+      "description": "API key based authentication",
       "type": "header"
     }
   },
