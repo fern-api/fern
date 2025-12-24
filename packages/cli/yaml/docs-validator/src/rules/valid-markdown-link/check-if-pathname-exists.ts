@@ -62,13 +62,6 @@ export async function checkIfPathnameExists({
             redirectedPath = nextRedirectPath;
         }
 
-        // If the redirect destination is an external URL, consider it valid
-        // This handles cases where internal paths redirect to external services
-        // (e.g., /ui -> https://auth-platform.example.com)
-        if (isExternalUrl(redirectedPath)) {
-            return true;
-        }
-
         if (markdown && pageSlugs.has(removeLeadingSlash(redirectedPath))) {
             return true;
         }
@@ -111,10 +104,6 @@ export async function checkIfPathnameExists({
     for (const slug of slugs) {
         const url = new URL(`/${slug}`, wrapWithHttps(baseUrl.domain));
         const targetSlug = withRedirects(new URL(pathname, url).pathname, baseUrl, redirects);
-        // If the redirect destination is an external URL, consider it valid
-        if (isExternalUrl(targetSlug)) {
-            continue;
-        }
         if (!pageSlugs.has(removeLeadingSlash(targetSlug))) {
             brokenSlugs.push(slug);
         }
@@ -141,13 +130,4 @@ function withoutAnchors(slug: string): string {
         return slug;
     }
     return slug.substring(0, hashIndex);
-}
-
-/**
- * Checks if a path is an external URL (starts with http:// or https://).
- * This is used to identify when a redirect destination points to an external service,
- * which should be considered valid without checking if it exists in the docs navigation.
- */
-function isExternalUrl(path: string): boolean {
-    return path.startsWith("http://") || path.startsWith("https://");
 }
