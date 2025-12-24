@@ -1,4 +1,5 @@
 export { DocsDefinitionResolver, type UploadedFile } from "./DocsDefinitionResolver";
+export { normalizeInstanceUrl } from "./normalizeInstanceUrl";
 export { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 export { filterOssWorkspaces } from "./utils/filterOssWorkspaces";
 export { generateFdrFromOpenApiWorkspaceV3 } from "./utils/generateFdrFromOpenAPIWorkspaceV3";

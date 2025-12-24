@@ -1,5 +1,5 @@
 import { createOrganizationIfDoesNotExist, FernToken, FernUserToken } from "@fern-api/auth";
-import { filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { filterOssWorkspaces, wrapWithHttps } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -40,7 +40,7 @@ export async function generateDocsWorkspace({
 
     if (!preview && !isCI() && !noPrompt) {
         const productionUrl = instance ?? docsWorkspace.config.instances[0]?.url;
-        const urlDisplay = productionUrl ? ` (${chalk.cyan(`https://${productionUrl}`)})` : "";
+        const urlDisplay = productionUrl ? ` (${chalk.cyan(wrapWithHttps(productionUrl))})` : "";
 
         const shouldContinue = await cliContext.confirmPrompt(
             `This will affect a production site${urlDisplay}. Run with --preview to generate docs for a preview instance.\n${chalk.yellow("?")} Are you sure you want to continue?`,
