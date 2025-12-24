@@ -155,7 +155,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     url: go.codeblock("endpointURL"),
                     request: signature.request?.getRequestReference(),
                     errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined,
-                    streamingResponse
+                    streamingResponse,
+                    namespaceImportPath: this.context.getNamespaceImportPath(subpackage)
                 })
             );
         });
@@ -304,7 +305,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 name: "ErrorDecoder",
                 value: go.TypeInstantiation.reference(
                     this.context.callNewErrorDecoder([
-                        go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference())
+                        go.TypeInstantiation.reference(
+                            this.context.getErrorCodesVariableReference(this.context.getNamespaceImportPath(subpackage))
+                        )
                     ])
                 )
             });
@@ -481,7 +484,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     url: go.codeblock("endpointURL"),
                     request: signature.request?.getRequestReference(),
                     response: this.getResponseParameterReference({ endpoint }),
-                    errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined
+                    errorCodes: errorDecoder != null ? go.codeblock("errorCodes") : undefined,
+                    namespaceImportPath: this.context.getNamespaceImportPath(subpackage)
                 })
             );
             writer.newLine();

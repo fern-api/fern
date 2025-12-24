@@ -474,11 +474,23 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
-    public getErrorCodesVariableReference(): go.TypeReference {
+    public getErrorCodesVariableReference(importPath?: string): go.TypeReference {
         return go.typeReference({
             name: "ErrorCodes",
-            importPath: this.getRootImportPath()
+            importPath: importPath ?? this.getRootImportPath()
         });
+    }
+
+    /**
+     * Gets the import path for the namespace where error_codes.go is generated.
+     * For subpackages, this is the package location based on the fernFilepath.
+     * For the root package (when subpackage is undefined), this is the root import path.
+     */
+    public getNamespaceImportPath(subpackage: Subpackage | undefined): string {
+        if (subpackage == null) {
+            return this.getRootImportPath();
+        }
+        return this.getPackageLocation(subpackage.fernFilepath).importPath;
     }
 
     public isPerEndpointErrorCodes(): boolean {
