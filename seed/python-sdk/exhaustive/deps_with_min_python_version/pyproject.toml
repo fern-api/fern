@@ -52,6 +52,7 @@ langchain = "^0.1.3"
 langchain-openai = "^0.0.3"
 openai = "^1.9.0"
 ruff = "==0.11.5"
+marshmallow = {version = ">=3.26.2", python = ">=3.9"}
 
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
