@@ -1,0 +1,89 @@
+openapi: 3.0.3
+info:
+  title: Accept Header Test API
+  version: 1.0.0
+  description: Test API for Accept header with text/event-stream default
+paths:
+  /events:
+    get:
+      operationId: getEvents
+      summary: Get events stream
+      description: Returns a stream of events
+      parameters:
+        - $ref: '#/components/parameters/AcceptEventStream'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/event-stream:
+              schema:
+                type: string
+  /data:
+    get:
+      operationId: getData
+      summary: Get data as JSON
+      description: Returns data as JSON
+      parameters:
+        - $ref: '#/components/parameters/AcceptJson'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+  /other:
+    get:
+      operationId: getOther
+      summary: Get other data as JSON
+      description: Returns other data as JSON
+      parameters:
+        - $ref: '#/components/parameters/AcceptJson'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+  /more:
+    get:
+      operationId: getMore
+      summary: Get more data as JSON
+      description: Returns more data as JSON
+      parameters:
+        - $ref: '#/components/parameters/AcceptJson'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  value:
+                    type: string
+components:
+  parameters:
+    AcceptEventStream:
+      name: Accept
+      in: header
+      required: true
+      description: The MIME type of the response body.
+      schema:
+        type: string
+        default: 'text/event-stream'
+    AcceptJson:
+      name: Accept
+      in: header
+      required: true
+      description: The MIME type of the response body.
+      schema:
+        type: string
+        const: 'application/json'

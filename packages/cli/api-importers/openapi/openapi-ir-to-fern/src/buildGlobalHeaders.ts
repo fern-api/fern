@@ -12,8 +12,9 @@ import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
 
 class HeaderWithCount {
-    public readonly schema: RawSchemas.HttpHeaderSchema;
+    public schema: RawSchemas.HttpHeaderSchema;
     public count = 0;
+    private hasIncompatibleSchemas = false;
 
     constructor(schema: RawSchemas.HttpHeaderSchema) {
         this.schema = schema;
@@ -21,6 +22,14 @@ class HeaderWithCount {
 
     public increment(): void {
         this.count += 1;
+    }
+
+    public markIncompatible(): void {
+        this.hasIncompatibleSchemas = true;
+    }
+
+    public isIncompatible(): boolean {
+        return this.hasIncompatibleSchemas;
     }
 }
 
@@ -101,6 +110,20 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                     });
                     headerWithCount = new HeaderWithCount(convertedHeader);
                     globalHeaders[header.name] = headerWithCount;
+                } else {
+                    // Check if the current header schema is compatible with the existing one
+                    const currentConvertedHeader = buildHeader({
+                        header,
+                        fileContainingReference: RelativeFilePath.of(ROOT_API_FILENAME),
+                        context,
+                        namespace: undefined
+                    });
+                    const existingType = getTypeFromHttpHeaderSchema(headerWithCount.schema);
+                    const currentType = getTypeFromHttpHeaderSchema(currentConvertedHeader);
+                    if (existingType !== currentType) {
+                        // Schemas are incompatible, widen the type to string
+                        headerWithCount.markIncompatible();
+                    }
                 }
                 headerWithCount.increment();
             }
@@ -115,16 +138,37 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
             if (predefinedHeader != null) {
                 continue; // already added
             } else if (isRequired) {
+                // If schemas are incompatible, widen the type to string
+                const schema = header.isIncompatible() ? widenToString(header.schema) : header.schema;
                 context.builder.addGlobalHeader({
                     name: headerName,
-                    schema: header.schema
+                    schema
                 });
             } else if (isOptional) {
+                // If schemas are incompatible, widen the type to string
+                const schema = header.isIncompatible() ? widenToString(header.schema) : header.schema;
                 context.builder.addGlobalHeader({
                     name: headerName,
-                    schema: wrapTypeReferenceAsOptional(header.schema)
+                    schema: wrapTypeReferenceAsOptional(schema)
                 });
             }
         }
     }
+}
+
+function getTypeFromHttpHeaderSchema(schema: RawSchemas.HttpHeaderSchema): string {
+    if (typeof schema === "string") {
+        return schema;
+    }
+    return schema.type;
+}
+
+function widenToString(schema: RawSchemas.HttpHeaderSchema): RawSchemas.HttpHeaderSchema {
+    if (typeof schema === "string") {
+        return "string";
+    }
+    return {
+        ...schema,
+        type: "string"
+    };
 }
