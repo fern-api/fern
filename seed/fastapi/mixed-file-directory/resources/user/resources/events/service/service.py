@@ -41,15 +41,20 @@ class AbstractUserEventsService(AbstractFernService):
     @classmethod
     def __init_list_events(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_events)
+        type_hints = typing.get_type_hints(cls.list_events)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "limit":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation, fastapi.Query(description="The maximum number of results to return.")
+                            resolved_annotation, fastapi.Query(description="The maximum number of results to return.")
                         ],
                         default=None,
                     )
@@ -72,7 +77,7 @@ class AbstractUserEventsService(AbstractFernService):
 
         router.get(
             path="/users/events/",
-            response_model=typing.Sequence[Event],
+            response_model=None,
             description=AbstractUserEventsService.list_events.__doc__,
             **get_route_args(cls.list_events, default_tag="user.events"),
         )(wrapper)

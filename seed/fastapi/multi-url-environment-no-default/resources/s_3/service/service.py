@@ -38,17 +38,22 @@ class AbstractS3Service(AbstractFernService):
     @classmethod
     def __init_get_presigned_url(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_presigned_url)
+        type_hints = typing.get_type_hints(cls.get_presigned_url)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -68,7 +73,7 @@ class AbstractS3Service(AbstractFernService):
 
         router.post(
             path="/s3/presigned-url",
-            response_model=str,
+            response_model=None,
             description=AbstractS3Service.get_presigned_url.__doc__,
             **get_route_args(cls.get_presigned_url, default_tag="s_3"),
         )(wrapper)

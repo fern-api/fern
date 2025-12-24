@@ -106,24 +106,29 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_update_test_submission_status(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_test_submission_status)
+        type_hints = typing.get_type_hints(cls.update_test_submission_status)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "submission_id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="submissionId")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
                     )
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -156,24 +161,29 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_send_test_submission_update(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_test_submission_update)
+        type_hints = typing.get_type_hints(cls.send_test_submission_update)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "submission_id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="submissionId")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
                     )
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -204,24 +214,29 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_update_workspace_submission_status(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_workspace_submission_status)
+        type_hints = typing.get_type_hints(cls.update_workspace_submission_status)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "submission_id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="submissionId")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
                     )
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -256,24 +271,29 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_send_workspace_submission_update(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_workspace_submission_update)
+        type_hints = typing.get_type_hints(cls.send_workspace_submission_update)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "submission_id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="submissionId")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
                     )
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -306,30 +326,35 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_store_traced_test_case(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_test_case)
+        type_hints = typing.get_type_hints(cls.store_traced_test_case)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "submission_id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="submissionId")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
                     )
                 )
             elif parameter_name == "test_case_id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="testCaseId")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="testCaseId")]
                     )
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -360,30 +385,35 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_store_traced_test_case_v_2(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_test_case_v_2)
+        type_hints = typing.get_type_hints(cls.store_traced_test_case_v_2)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "submission_id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="submissionId")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
                     )
                 )
             elif parameter_name == "test_case_id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="testCaseId")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="testCaseId")]
                     )
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -414,24 +444,29 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_store_traced_workspace(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_workspace)
+        type_hints = typing.get_type_hints(cls.store_traced_workspace)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "submission_id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="submissionId")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
                     )
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -462,24 +497,29 @@ class AbstractAdminService(AbstractFernService):
     @classmethod
     def __init_store_traced_workspace_v_2(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.store_traced_workspace_v_2)
+        type_hints = typing.get_type_hints(cls.store_traced_workspace_v_2)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "submission_id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="submissionId")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="submissionId")]
                     )
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
