@@ -778,6 +778,15 @@
 
 - changelogEntry:
     - summary: |
+        Filter out discriminant property from union base-properties to prevent duplicate fields when the discriminant
+        is also defined as a base property. This ensures the discriminant is modeled only once at the union level.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.14.2
+
+- changelogEntry:
+    - summary: |
         Fix 2.0.0-rc0 CLI migration to properly migrate `coerce-enums-to-literals` setting for AsyncAPI specs. Previously, the migration only handled this setting for OpenAPI specs.
       type: fix
   irVersion: 62
