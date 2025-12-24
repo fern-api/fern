@@ -43,7 +43,7 @@ Repository = 'https://github.com/exhaustive/fern'
 python = "^3.8.1"
 boto3 = "1.28.57"
 httpx = ">=0.21.2"
-langchain = { version = "^0.1.20", optional = true}
+langchain = { version = "^0.3.25", optional = true, python = ">=3.9"}
 pydantic = ">= 1.9.2"
 pydantic-core = ">=2.18.2"
 typing_extensions = ">= 4.0.0"
