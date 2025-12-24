@@ -42,13 +42,18 @@ class AbstractRootService(AbstractFernService):
     @classmethod
     def __init_create(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create)
+        type_hints = typing.get_type_hints(cls.create)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -68,7 +73,7 @@ class AbstractRootService(AbstractFernService):
 
         router.post(
             path="/create",
-            response_model=Type,
+            response_model=None,
             description=AbstractRootService.create.__doc__,
             **get_route_args(cls.create, default_tag=""),
         )(wrapper)
@@ -76,21 +81,26 @@ class AbstractRootService(AbstractFernService):
     @classmethod
     def __init_get(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get)
+        type_hints = typing.get_type_hints(cls.get)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "decimal":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()])
                 )
             elif parameter_name == "even":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()])
                 )
             elif parameter_name == "name":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -110,7 +120,7 @@ class AbstractRootService(AbstractFernService):
 
         router.get(
             path="/",
-            response_model=Type,
+            response_model=None,
             description=AbstractRootService.get.__doc__,
             **get_route_args(cls.get, default_tag=""),
         )(wrapper)

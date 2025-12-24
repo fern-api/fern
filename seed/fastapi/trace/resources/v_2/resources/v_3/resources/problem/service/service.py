@@ -70,14 +70,19 @@ class AbstractV2V3ProblemService(AbstractFernService):
     @classmethod
     def __init_get_lightweight_problems(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_lightweight_problems)
+        type_hints = typing.get_type_hints(cls.get_lightweight_problems)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -99,7 +104,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
 
         router.get(
             path="/problems-v2/lightweight-problem-info",
-            response_model=typing.Sequence[LightweightProblemInfoV2],
+            response_model=None,
             description=AbstractV2V3ProblemService.get_lightweight_problems.__doc__,
             **get_route_args(cls.get_lightweight_problems, default_tag="v_2.v_3.problem"),
         )(wrapper)
@@ -107,14 +112,19 @@ class AbstractV2V3ProblemService(AbstractFernService):
     @classmethod
     def __init_get_problems(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_problems)
+        type_hints = typing.get_type_hints(cls.get_problems)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -136,7 +146,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
 
         router.get(
             path="/problems-v2/problem-info",
-            response_model=typing.Sequence[ProblemInfoV2],
+            response_model=None,
             description=AbstractV2V3ProblemService.get_problems.__doc__,
             **get_route_args(cls.get_problems, default_tag="v_2.v_3.problem"),
         )(wrapper)
@@ -144,20 +154,23 @@ class AbstractV2V3ProblemService(AbstractFernService):
     @classmethod
     def __init_get_latest_problem(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_latest_problem)
+        type_hints = typing.get_type_hints(cls.get_latest_problem)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "problem_id":
                 new_parameters.append(
-                    parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="problemId")]
-                    )
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="problemId")])
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -179,7 +192,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
 
         router.get(
             path="/problems-v2/problem-info/{problem_id}",
-            response_model=ProblemInfoV2,
+            response_model=None,
             description=AbstractV2V3ProblemService.get_latest_problem.__doc__,
             **get_route_args(cls.get_latest_problem, default_tag="v_2.v_3.problem"),
         )(wrapper)
@@ -187,26 +200,29 @@ class AbstractV2V3ProblemService(AbstractFernService):
     @classmethod
     def __init_get_problem_version(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_problem_version)
+        type_hints = typing.get_type_hints(cls.get_problem_version)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "problem_id":
                 new_parameters.append(
-                    parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="problemId")]
-                    )
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="problemId")])
                 )
             elif parameter_name == "problem_version":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="problemVersion")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="problemVersion")]
                     )
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -228,7 +244,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
 
         router.get(
             path="/problems-v2/problem-info/{problem_id}/version/{problem_version}",
-            response_model=ProblemInfoV2,
+            response_model=None,
             description=AbstractV2V3ProblemService.get_problem_version.__doc__,
             **get_route_args(cls.get_problem_version, default_tag="v_2.v_3.problem"),
         )(wrapper)

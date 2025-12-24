@@ -69,18 +69,23 @@ class AbstractSubmissionService(AbstractFernService):
     @classmethod
     def __init_create_execution_session(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_execution_session)
+        type_hints = typing.get_type_hints(cls.create_execution_session)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "language":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -102,7 +107,7 @@ class AbstractSubmissionService(AbstractFernService):
 
         router.post(
             path="/sessions/create-session/{language}",
-            response_model=ExecutionSessionResponse,
+            response_model=None,
             description=AbstractSubmissionService.create_execution_session.__doc__,
             **get_route_args(cls.create_execution_session, default_tag="submission"),
         )(wrapper)
@@ -110,20 +115,23 @@ class AbstractSubmissionService(AbstractFernService):
     @classmethod
     def __init_get_execution_session(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_execution_session)
+        type_hints = typing.get_type_hints(cls.get_execution_session)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "session_id":
                 new_parameters.append(
-                    parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="sessionId")]
-                    )
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="sessionId")])
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -145,7 +153,7 @@ class AbstractSubmissionService(AbstractFernService):
 
         router.get(
             path="/sessions/{session_id}",
-            response_model=typing.Optional[ExecutionSessionResponse],
+            response_model=None,
             description=AbstractSubmissionService.get_execution_session.__doc__,
             **get_route_args(cls.get_execution_session, default_tag="submission"),
         )(wrapper)
@@ -153,20 +161,23 @@ class AbstractSubmissionService(AbstractFernService):
     @classmethod
     def __init_stop_execution_session(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.stop_execution_session)
+        type_hints = typing.get_type_hints(cls.stop_execution_session)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "session_id":
                 new_parameters.append(
-                    parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="sessionId")]
-                    )
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="sessionId")])
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -197,14 +208,19 @@ class AbstractSubmissionService(AbstractFernService):
     @classmethod
     def __init_get_execution_sessions_state(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_execution_sessions_state)
+        type_hints = typing.get_type_hints(cls.get_execution_sessions_state)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -226,7 +242,7 @@ class AbstractSubmissionService(AbstractFernService):
 
         router.get(
             path="/sessions/execution-sessions-state",
-            response_model=GetExecutionSessionStateResponse,
+            response_model=None,
             description=AbstractSubmissionService.get_execution_sessions_state.__doc__,
             **get_route_args(cls.get_execution_sessions_state, default_tag="submission"),
         )(wrapper)

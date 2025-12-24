@@ -7,6 +7,7 @@ import logging
 import typing
 
 import fastapi
+import fastapi.temp_pydantic_v1_params
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -48,13 +49,20 @@ class AbstractImdbService(AbstractFernService):
     @classmethod
     def __init_create_movie(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_movie)
+        type_hints = typing.get_type_hints(cls.create_movie)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
                 )
             else:
                 new_parameters.append(parameter)
@@ -74,7 +82,7 @@ class AbstractImdbService(AbstractFernService):
 
         router.post(
             path="/movies/create-movie",
-            response_model=MovieId,
+            response_model=None,
             description=AbstractImdbService.create_movie.__doc__,
             **get_route_args(cls.create_movie, default_tag="imdb"),
         )(wrapper)
@@ -82,13 +90,22 @@ class AbstractImdbService(AbstractFernService):
     @classmethod
     def __init_get_movie(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_movie)
+        type_hints = typing.get_type_hints(cls.get_movie)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "movie_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="movieId")])
+                    parameter.replace(
+                        annotation=typing.Annotated[
+                            resolved_annotation, fastapi.temp_pydantic_v1_params.Path(alias="movieId")
+                        ]
+                    )
                 )
             else:
                 new_parameters.append(parameter)
@@ -110,7 +127,7 @@ class AbstractImdbService(AbstractFernService):
 
         router.get(
             path="/movies/{movie_id}",
-            response_model=Movie,
+            response_model=None,
             description=AbstractImdbService.get_movie.__doc__,
             **get_route_args(cls.get_movie, default_tag="imdb"),
         )(wrapper)

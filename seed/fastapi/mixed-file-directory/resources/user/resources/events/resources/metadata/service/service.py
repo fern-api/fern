@@ -41,13 +41,18 @@ class AbstractUserEventsMetadataService(AbstractFernService):
     @classmethod
     def __init_get_metadata(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_metadata)
+        type_hints = typing.get_type_hints(cls.get_metadata)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -67,7 +72,7 @@ class AbstractUserEventsMetadataService(AbstractFernService):
 
         router.get(
             path="/users/events/metadata/",
-            response_model=Metadata,
+            response_model=None,
             description=AbstractUserEventsMetadataService.get_metadata.__doc__,
             **get_route_args(cls.get_metadata, default_tag="user.events.metadata"),
         )(wrapper)

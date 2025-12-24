@@ -144,15 +144,20 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_cursor_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_cursor_pagination)
+        type_hints = typing.get_type_hints(cls.list_with_cursor_pagination)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                            resolved_annotation, fastapi.Query(description="Defaults to first page")
                         ],
                         default=None,
                     )
@@ -161,20 +166,20 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation, fastapi.Query(description="Defaults to per page")
+                            resolved_annotation, fastapi.Query(description="Defaults to per page")
                         ],
                         default=None,
                     )
                 )
             elif parameter_name == "order":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation,
+                            resolved_annotation,
                             fastapi.Query(
                                 description="The cursor used for pagination in order to fetch\nthe next page of results."
                             ),
@@ -200,7 +205,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=ListUsersPaginationResponse,
+            response_model=None,
             description=AbstractUsersService.list_with_cursor_pagination.__doc__,
             **get_route_args(cls.list_with_cursor_pagination, default_tag="users"),
         )(wrapper)
@@ -208,13 +213,18 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_mixed_type_cursor_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_mixed_type_cursor_pagination)
+        type_hints = typing.get_type_hints(cls.list_with_mixed_type_cursor_pagination)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "cursor":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -238,7 +248,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.post(
             path="/users",
-            response_model=ListUsersMixedTypePaginationResponse,
+            response_model=None,
             description=AbstractUsersService.list_with_mixed_type_cursor_pagination.__doc__,
             **get_route_args(cls.list_with_mixed_type_cursor_pagination, default_tag="users"),
         )(wrapper)
@@ -246,13 +256,18 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_body_cursor_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_body_cursor_pagination)
+        type_hints = typing.get_type_hints(cls.list_with_body_cursor_pagination)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -274,7 +289,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.post(
             path="/users",
-            response_model=ListUsersPaginationResponse,
+            response_model=None,
             description=AbstractUsersService.list_with_body_cursor_pagination.__doc__,
             **get_route_args(cls.list_with_body_cursor_pagination, default_tag="users"),
         )(wrapper)
@@ -282,15 +297,20 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_offset_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_offset_pagination)
+        type_hints = typing.get_type_hints(cls.list_with_offset_pagination)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                            resolved_annotation, fastapi.Query(description="Defaults to first page")
                         ],
                         default=None,
                     )
@@ -299,20 +319,20 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation, fastapi.Query(description="Defaults to per page")
+                            resolved_annotation, fastapi.Query(description="Defaults to per page")
                         ],
                         default=None,
                     )
                 )
             elif parameter_name == "order":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation,
+                            resolved_annotation,
                             fastapi.Query(
                                 description="The cursor used for pagination in order to fetch\nthe next page of results."
                             ),
@@ -338,7 +358,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=ListUsersPaginationResponse,
+            response_model=None,
             description=AbstractUsersService.list_with_offset_pagination.__doc__,
             **get_route_args(cls.list_with_offset_pagination, default_tag="users"),
         )(wrapper)
@@ -346,15 +366,20 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_double_offset_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_double_offset_pagination)
+        type_hints = typing.get_type_hints(cls.list_with_double_offset_pagination)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                            resolved_annotation, fastapi.Query(description="Defaults to first page")
                         ],
                         default=None,
                     )
@@ -363,20 +388,20 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation, fastapi.Query(description="Defaults to per page")
+                            resolved_annotation, fastapi.Query(description="Defaults to per page")
                         ],
                         default=None,
                     )
                 )
             elif parameter_name == "order":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation,
+                            resolved_annotation,
                             fastapi.Query(
                                 description="The cursor used for pagination in order to fetch\nthe next page of results."
                             ),
@@ -406,7 +431,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=ListUsersPaginationResponse,
+            response_model=None,
             description=AbstractUsersService.list_with_double_offset_pagination.__doc__,
             **get_route_args(cls.list_with_double_offset_pagination, default_tag="users"),
         )(wrapper)
@@ -414,13 +439,18 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_body_offset_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_body_offset_pagination)
+        type_hints = typing.get_type_hints(cls.list_with_body_offset_pagination)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -442,7 +472,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.post(
             path="/users",
-            response_model=ListUsersPaginationResponse,
+            response_model=None,
             description=AbstractUsersService.list_with_body_offset_pagination.__doc__,
             **get_route_args(cls.list_with_body_offset_pagination, default_tag="users"),
         )(wrapper)
@@ -450,15 +480,20 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_offset_step_pagination(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_offset_step_pagination)
+        type_hints = typing.get_type_hints(cls.list_with_offset_step_pagination)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                            resolved_annotation, fastapi.Query(description="Defaults to first page")
                         ],
                         default=None,
                     )
@@ -467,7 +502,7 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation,
+                            resolved_annotation,
                             fastapi.Query(
                                 description="The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
                             ),
@@ -477,7 +512,7 @@ class AbstractUsersService(AbstractFernService):
                 )
             elif parameter_name == "order":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -499,7 +534,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=ListUsersPaginationResponse,
+            response_model=None,
             description=AbstractUsersService.list_with_offset_step_pagination.__doc__,
             **get_route_args(cls.list_with_offset_step_pagination, default_tag="users"),
         )(wrapper)
@@ -507,15 +542,20 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_offset_pagination_has_next_page(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_offset_pagination_has_next_page)
+        type_hints = typing.get_type_hints(cls.list_with_offset_pagination_has_next_page)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                            resolved_annotation, fastapi.Query(description="Defaults to first page")
                         ],
                         default=None,
                     )
@@ -524,7 +564,7 @@ class AbstractUsersService(AbstractFernService):
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation,
+                            resolved_annotation,
                             fastapi.Query(
                                 description="The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
                             ),
@@ -534,7 +574,7 @@ class AbstractUsersService(AbstractFernService):
                 )
             elif parameter_name == "order":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -558,7 +598,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=ListUsersPaginationResponse,
+            response_model=None,
             description=AbstractUsersService.list_with_offset_pagination_has_next_page.__doc__,
             **get_route_args(cls.list_with_offset_pagination_has_next_page, default_tag="users"),
         )(wrapper)
@@ -566,13 +606,18 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_extended_results(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_extended_results)
+        type_hints = typing.get_type_hints(cls.list_with_extended_results)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "cursor":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -592,7 +637,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=ListUsersExtendedResponse,
+            response_model=None,
             description=AbstractUsersService.list_with_extended_results.__doc__,
             **get_route_args(cls.list_with_extended_results, default_tag="users"),
         )(wrapper)
@@ -600,13 +645,18 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_extended_results_and_optional_data(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_extended_results_and_optional_data)
+        type_hints = typing.get_type_hints(cls.list_with_extended_results_and_optional_data)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "cursor":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -630,7 +680,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=ListUsersExtendedOptionalListResponse,
+            response_model=None,
             description=AbstractUsersService.list_with_extended_results_and_optional_data.__doc__,
             **get_route_args(cls.list_with_extended_results_and_optional_data, default_tag="users"),
         )(wrapper)
@@ -638,15 +688,20 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_usernames(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_usernames)
+        type_hints = typing.get_type_hints(cls.list_usernames)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation,
+                            resolved_annotation,
                             fastapi.Query(
                                 description="The cursor used for pagination in order to fetch\nthe next page of results."
                             ),
@@ -672,7 +727,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=UsernameCursor,
+            response_model=None,
             description=AbstractUsersService.list_usernames.__doc__,
             **get_route_args(cls.list_usernames, default_tag="users"),
         )(wrapper)
@@ -680,15 +735,20 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_usernames_with_optional_response(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_usernames_with_optional_response)
+        type_hints = typing.get_type_hints(cls.list_usernames_with_optional_response)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "starting_after":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation,
+                            resolved_annotation,
                             fastapi.Query(
                                 description="The cursor used for pagination in order to fetch\nthe next page of results."
                             ),
@@ -718,7 +778,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=typing.Optional[UsernameCursor],
+            response_model=None,
             description=AbstractUsersService.list_usernames_with_optional_response.__doc__,
             **get_route_args(cls.list_usernames_with_optional_response, default_tag="users"),
         )(wrapper)
@@ -726,13 +786,18 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_global_config(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_global_config)
+        type_hints = typing.get_type_hints(cls.list_with_global_config)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "offset":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -752,7 +817,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=UsernameContainer,
+            response_model=None,
             description=AbstractUsersService.list_with_global_config.__doc__,
             **get_route_args(cls.list_with_global_config, default_tag="users"),
         )(wrapper)
@@ -760,15 +825,20 @@ class AbstractUsersService(AbstractFernService):
     @classmethod
     def __init_list_with_optional_data(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_with_optional_data)
+        type_hints = typing.get_type_hints(cls.list_with_optional_data)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page":
                 new_parameters.append(
                     parameter.replace(
                         annotation=typing.Annotated[
-                            parameter.annotation, fastapi.Query(description="Defaults to first page")
+                            resolved_annotation, fastapi.Query(description="Defaults to first page")
                         ],
                         default=None,
                     )
@@ -791,7 +861,7 @@ class AbstractUsersService(AbstractFernService):
 
         router.get(
             path="/users/optional-data",
-            response_model=ListUsersOptionalDataPaginationResponse,
+            response_model=None,
             description=AbstractUsersService.list_with_optional_data.__doc__,
             **get_route_args(cls.list_with_optional_data, default_tag="users"),
         )(wrapper)
