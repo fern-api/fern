@@ -3,10 +3,11 @@ import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { kebabCase, last } from "lodash-es";
+import { last } from "lodash-es";
 
 import { NodeIdGenerator } from "./NodeIdGenerator";
 import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle";
+import { titleToSlug } from "./utils/titleToSlug";
 
 dayjs.extend(utc);
 
@@ -71,7 +72,7 @@ export class ChangelogNodeConverter {
         const slug = opts.parentSlug.apply({
             fullSlug: overviewPagePath != null ? this.markdownToFullSlug.get(overviewPagePath)?.split("/") : undefined,
             skipUrlSlug: false, // changelog pages should always have a url slug
-            urlSlug: opts.slug ?? kebabCase(title)
+            urlSlug: opts.slug ?? titleToSlug(title)
         });
 
         const noindex = overviewPagePath != null ? this.markdownToNoIndex.get(overviewPagePath) : undefined;
