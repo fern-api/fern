@@ -38,7 +38,7 @@ jobs:
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
-
+{{WIREMOCK_SETUP}}
       - name: Test
-        run: cargo test
-{{PUBLISH_WORKFLOW}}
+        run: {{TEST_COMMAND}}
+{{WIREMOCK_TEARDOWN}}{{PUBLISH_WORKFLOW}}
