@@ -41,7 +41,7 @@ public final class BearerAuthGenerator extends AbstractFileGenerator {
                         .addModifiers(Modifier.PUBLIC)
                         .returns(String.class)
                         .addAnnotation(ClassName.get("", "java.lang.Override"))
-                        .addStatement("return $S + $L()", "Bearer ", GET_TOKEN_METHOD_NAME)
+                        .addStatement("return $S", "BearerAuth{token=[REDACTED]}")
                         .build())
                 .addMethod(MethodSpec.methodBuilder("of")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
