@@ -9,8 +9,10 @@ from ...core.serialization import FieldMetadata
 
 
 class SendEvent2(UniversalBaseModel):
-    send_text_2: typing_extensions.Annotated[str, FieldMetadata(alias="sendText2")]
-    send_param_2: typing_extensions.Annotated[bool, FieldMetadata(alias="sendParam2")]
+    send_text_2: typing_extensions.Annotated[str, FieldMetadata(alias="sendText2")] = pydantic.Field(alias="sendText2")
+    send_param_2: typing_extensions.Annotated[bool, FieldMetadata(alias="sendParam2")] = pydantic.Field(
+        alias="sendParam2"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

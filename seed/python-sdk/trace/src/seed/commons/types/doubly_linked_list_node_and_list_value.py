@@ -11,8 +11,10 @@ from .node_id import NodeId
 
 
 class DoublyLinkedListNodeAndListValue(UniversalBaseModel):
-    node_id: typing_extensions.Annotated[NodeId, FieldMetadata(alias="nodeId")]
-    full_list: typing_extensions.Annotated[DoublyLinkedListValue, FieldMetadata(alias="fullList")]
+    node_id: typing_extensions.Annotated[NodeId, FieldMetadata(alias="nodeId")] = pydantic.Field(alias="nodeId")
+    full_list: typing_extensions.Annotated[DoublyLinkedListValue, FieldMetadata(alias="fullList")] = pydantic.Field(
+        alias="fullList"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

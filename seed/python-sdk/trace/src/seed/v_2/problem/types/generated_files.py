@@ -13,10 +13,10 @@ from .files import Files
 class GeneratedFiles(UniversalBaseModel):
     generated_test_case_files: typing_extensions.Annotated[
         typing.Dict[Language, Files], FieldMetadata(alias="generatedTestCaseFiles")
-    ]
+    ] = pydantic.Field(alias="generatedTestCaseFiles")
     generated_template_files: typing_extensions.Annotated[
         typing.Dict[Language, Files], FieldMetadata(alias="generatedTemplateFiles")
-    ]
+    ] = pydantic.Field(alias="generatedTemplateFiles")
     other: typing.Dict[Language, Files]
 
     if IS_PYDANTIC_V2:

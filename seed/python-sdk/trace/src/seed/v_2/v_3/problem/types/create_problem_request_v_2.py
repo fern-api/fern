@@ -16,15 +16,23 @@ from .test_case_v_2 import TestCaseV2
 
 
 class CreateProblemRequestV2(UniversalBaseModel):
-    problem_name: typing_extensions.Annotated[str, FieldMetadata(alias="problemName")]
-    problem_description: typing_extensions.Annotated[ProblemDescription, FieldMetadata(alias="problemDescription")]
-    custom_files: typing_extensions.Annotated[CustomFiles, FieldMetadata(alias="customFiles")]
+    problem_name: typing_extensions.Annotated[str, FieldMetadata(alias="problemName")] = pydantic.Field(
+        alias="problemName"
+    )
+    problem_description: typing_extensions.Annotated[ProblemDescription, FieldMetadata(alias="problemDescription")] = (
+        pydantic.Field(alias="problemDescription")
+    )
+    custom_files: typing_extensions.Annotated[CustomFiles, FieldMetadata(alias="customFiles")] = pydantic.Field(
+        alias="customFiles"
+    )
     custom_test_case_templates: typing_extensions.Annotated[
         typing.List[TestCaseTemplate], FieldMetadata(alias="customTestCaseTemplates")
-    ]
+    ] = pydantic.Field(alias="customTestCaseTemplates")
     testcases: typing.List[TestCaseV2]
-    supported_languages: typing_extensions.Annotated[typing.Set[Language], FieldMetadata(alias="supportedLanguages")]
-    is_public: typing_extensions.Annotated[bool, FieldMetadata(alias="isPublic")]
+    supported_languages: typing_extensions.Annotated[
+        typing.Set[Language], FieldMetadata(alias="supportedLanguages")
+    ] = pydantic.Field(alias="supportedLanguages")
+    is_public: typing_extensions.Annotated[bool, FieldMetadata(alias="isPublic")] = pydantic.Field(alias="isPublic")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

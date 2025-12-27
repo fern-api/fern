@@ -13,7 +13,7 @@ from ...core.serialization import FieldMetadata
 class DebugMapValue(UniversalBaseModel):
     key_value_pairs: typing_extensions.Annotated[
         typing.List["DebugKeyValuePairs"], FieldMetadata(alias="keyValuePairs")
-    ]
+    ] = pydantic.Field(alias="keyValuePairs")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

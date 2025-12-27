@@ -12,7 +12,7 @@ from .parameter_id import ParameterId
 class DeepEqualityCorrectnessCheck(UniversalBaseModel):
     expected_value_parameter_id: typing_extensions.Annotated[
         ParameterId, FieldMetadata(alias="expectedValueParameterId")
-    ]
+    ] = pydantic.Field(alias="expectedValueParameterId")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

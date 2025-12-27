@@ -16,12 +16,16 @@ from .non_void_function_signature import NonVoidFunctionSignature
 
 class CustomFiles_Basic(UniversalBaseModel):
     type: typing.Literal["basic"] = "basic"
-    method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName")]
+    method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName")] = pydantic.Field(
+        alias="methodName"
+    )
     signature: NonVoidFunctionSignature
-    additional_files: typing_extensions.Annotated[typing.Dict[Language, Files], FieldMetadata(alias="additionalFiles")]
+    additional_files: typing_extensions.Annotated[
+        typing.Dict[Language, Files], FieldMetadata(alias="additionalFiles")
+    ] = pydantic.Field(alias="additionalFiles")
     basic_test_case_template: typing_extensions.Annotated[
         BasicTestCaseTemplate, FieldMetadata(alias="basicTestCaseTemplate")
-    ]
+    ] = pydantic.Field(alias="basicTestCaseTemplate")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

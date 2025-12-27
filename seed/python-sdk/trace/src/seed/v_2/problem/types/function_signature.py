@@ -28,7 +28,9 @@ class FunctionSignature_Void(UniversalBaseModel):
 class FunctionSignature_NonVoid(UniversalBaseModel):
     type: typing.Literal["nonVoid"] = "nonVoid"
     parameters: typing.List[Parameter]
-    return_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="returnType")]
+    return_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="returnType")] = pydantic.Field(
+        alias="returnType"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -43,7 +45,9 @@ class FunctionSignature_NonVoid(UniversalBaseModel):
 class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
     type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
     parameters: typing.List[Parameter]
-    actual_result_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="actualResultType")]
+    actual_result_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="actualResultType")] = (
+        pydantic.Field(alias="actualResultType")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

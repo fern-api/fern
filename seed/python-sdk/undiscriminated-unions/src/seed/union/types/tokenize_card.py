@@ -10,7 +10,9 @@ from ...core.serialization import FieldMetadata
 
 class TokenizeCard(UniversalBaseModel):
     method: str
-    card_number: typing_extensions.Annotated[str, FieldMetadata(alias="cardNumber")]
+    card_number: typing_extensions.Annotated[str, FieldMetadata(alias="cardNumber")] = pydantic.Field(
+        alias="cardNumber"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

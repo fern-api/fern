@@ -18,7 +18,9 @@ class TraceResponsesPage(UniversalBaseModel):
     The offset is the id of the next trace response to load.
     """
 
-    trace_responses: typing_extensions.Annotated[typing.List[TraceResponse], FieldMetadata(alias="traceResponses")]
+    trace_responses: typing_extensions.Annotated[typing.List[TraceResponse], FieldMetadata(alias="traceResponses")] = (
+        pydantic.Field(alias="traceResponses")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

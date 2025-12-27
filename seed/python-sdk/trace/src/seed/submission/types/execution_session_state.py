@@ -12,15 +12,19 @@ from .execution_session_status import ExecutionSessionStatus
 
 class ExecutionSessionState(UniversalBaseModel):
     last_time_contacted: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="lastTimeContacted")] = (
-        None
+        pydantic.Field(alias="lastTimeContacted", default=None)
     )
-    session_id: typing_extensions.Annotated[str, FieldMetadata(alias="sessionId")] = pydantic.Field()
+    session_id: typing_extensions.Annotated[str, FieldMetadata(alias="sessionId")] = pydantic.Field(alias="sessionId")
     """
     The auto-generated session id. Formatted as a uuid.
     """
 
-    is_warm_instance: typing_extensions.Annotated[bool, FieldMetadata(alias="isWarmInstance")]
-    aws_task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="awsTaskId")] = None
+    is_warm_instance: typing_extensions.Annotated[bool, FieldMetadata(alias="isWarmInstance")] = pydantic.Field(
+        alias="isWarmInstance"
+    )
+    aws_task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="awsTaskId")] = pydantic.Field(
+        alias="awsTaskId", default=None
+    )
     language: Language
     status: ExecutionSessionStatus
 

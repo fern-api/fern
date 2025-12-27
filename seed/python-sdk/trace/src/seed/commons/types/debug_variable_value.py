@@ -83,7 +83,7 @@ class DebugVariableValue_MapValue(UniversalBaseModel):
     type: typing.Literal["mapValue"] = "mapValue"
     key_value_pairs: typing_extensions.Annotated[
         typing.List["DebugKeyValuePairs"], FieldMetadata(alias="keyValuePairs")
-    ]
+    ] = pydantic.Field(alias="keyValuePairs")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -110,8 +110,10 @@ class DebugVariableValue_ListValue(UniversalBaseModel):
 
 class DebugVariableValue_BinaryTreeNodeValue(UniversalBaseModel):
     type: typing.Literal["binaryTreeNodeValue"] = "binaryTreeNodeValue"
-    node_id: typing_extensions.Annotated[NodeId, FieldMetadata(alias="nodeId")]
-    full_tree: typing_extensions.Annotated[BinaryTreeValue, FieldMetadata(alias="fullTree")]
+    node_id: typing_extensions.Annotated[NodeId, FieldMetadata(alias="nodeId")] = pydantic.Field(alias="nodeId")
+    full_tree: typing_extensions.Annotated[BinaryTreeValue, FieldMetadata(alias="fullTree")] = pydantic.Field(
+        alias="fullTree"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -125,8 +127,10 @@ class DebugVariableValue_BinaryTreeNodeValue(UniversalBaseModel):
 
 class DebugVariableValue_SinglyLinkedListNodeValue(UniversalBaseModel):
     type: typing.Literal["singlyLinkedListNodeValue"] = "singlyLinkedListNodeValue"
-    node_id: typing_extensions.Annotated[NodeId, FieldMetadata(alias="nodeId")]
-    full_list: typing_extensions.Annotated[SinglyLinkedListValue, FieldMetadata(alias="fullList")]
+    node_id: typing_extensions.Annotated[NodeId, FieldMetadata(alias="nodeId")] = pydantic.Field(alias="nodeId")
+    full_list: typing_extensions.Annotated[SinglyLinkedListValue, FieldMetadata(alias="fullList")] = pydantic.Field(
+        alias="fullList"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -140,8 +144,10 @@ class DebugVariableValue_SinglyLinkedListNodeValue(UniversalBaseModel):
 
 class DebugVariableValue_DoublyLinkedListNodeValue(UniversalBaseModel):
     type: typing.Literal["doublyLinkedListNodeValue"] = "doublyLinkedListNodeValue"
-    node_id: typing_extensions.Annotated[NodeId, FieldMetadata(alias="nodeId")]
-    full_list: typing_extensions.Annotated[DoublyLinkedListValue, FieldMetadata(alias="fullList")]
+    node_id: typing_extensions.Annotated[NodeId, FieldMetadata(alias="nodeId")] = pydantic.Field(alias="nodeId")
+    full_list: typing_extensions.Annotated[DoublyLinkedListValue, FieldMetadata(alias="fullList")] = pydantic.Field(
+        alias="fullList"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -181,8 +187,12 @@ class DebugVariableValue_NullValue(UniversalBaseModel):
 
 class DebugVariableValue_GenericValue(UniversalBaseModel):
     type: typing.Literal["genericValue"] = "genericValue"
-    stringified_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="stringifiedType")] = None
-    stringified_value: typing_extensions.Annotated[str, FieldMetadata(alias="stringifiedValue")]
+    stringified_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="stringifiedType")] = (
+        pydantic.Field(alias="stringifiedType", default=None)
+    )
+    stringified_value: typing_extensions.Annotated[str, FieldMetadata(alias="stringifiedValue")] = pydantic.Field(
+        alias="stringifiedValue"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

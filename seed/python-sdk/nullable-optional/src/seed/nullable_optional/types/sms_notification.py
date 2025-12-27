@@ -9,9 +9,13 @@ from ...core.serialization import FieldMetadata
 
 
 class SmsNotification(UniversalBaseModel):
-    phone_number: typing_extensions.Annotated[str, FieldMetadata(alias="phoneNumber")]
+    phone_number: typing_extensions.Annotated[str, FieldMetadata(alias="phoneNumber")] = pydantic.Field(
+        alias="phoneNumber"
+    )
     message: str
-    short_code: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="shortCode")] = None
+    short_code: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="shortCode")] = pydantic.Field(
+        alias="shortCode", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

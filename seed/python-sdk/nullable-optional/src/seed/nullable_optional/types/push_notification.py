@@ -9,7 +9,9 @@ from ...core.serialization import FieldMetadata
 
 
 class PushNotification(UniversalBaseModel):
-    device_token: typing_extensions.Annotated[str, FieldMetadata(alias="deviceToken")]
+    device_token: typing_extensions.Annotated[str, FieldMetadata(alias="deviceToken")] = pydantic.Field(
+        alias="deviceToken"
+    )
     title: str
     body: str
     badge: typing.Optional[int] = None

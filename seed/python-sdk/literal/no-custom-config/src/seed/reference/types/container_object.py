@@ -12,7 +12,7 @@ from .nested_object_with_literals import NestedObjectWithLiterals
 class ContainerObject(UniversalBaseModel):
     nested_objects: typing_extensions.Annotated[
         typing.List[NestedObjectWithLiterals], FieldMetadata(alias="nestedObjects")
-    ]
+    ] = pydantic.Field(alias="nestedObjects")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

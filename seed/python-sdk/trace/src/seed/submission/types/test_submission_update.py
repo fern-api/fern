@@ -13,8 +13,12 @@ from .test_submission_update_info import TestSubmissionUpdateInfo
 
 
 class TestSubmissionUpdate(UniversalBaseModel):
-    update_time: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updateTime")]
-    update_info: typing_extensions.Annotated[TestSubmissionUpdateInfo, FieldMetadata(alias="updateInfo")]
+    update_time: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="updateTime")] = pydantic.Field(
+        alias="updateTime"
+    )
+    update_info: typing_extensions.Annotated[TestSubmissionUpdateInfo, FieldMetadata(alias="updateInfo")] = (
+        pydantic.Field(alias="updateInfo")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

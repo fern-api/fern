@@ -11,8 +11,12 @@ from .submission_id import SubmissionId
 
 
 class ErroredResponse(UniversalBaseModel):
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
-    error_info: typing_extensions.Annotated[ErrorInfo, FieldMetadata(alias="errorInfo")]
+    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")] = pydantic.Field(
+        alias="submissionId"
+    )
+    error_info: typing_extensions.Annotated[ErrorInfo, FieldMetadata(alias="errorInfo")] = pydantic.Field(
+        alias="errorInfo"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

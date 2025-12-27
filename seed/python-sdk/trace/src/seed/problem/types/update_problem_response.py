@@ -9,7 +9,9 @@ from ...core.serialization import FieldMetadata
 
 
 class UpdateProblemResponse(UniversalBaseModel):
-    problem_version: typing_extensions.Annotated[int, FieldMetadata(alias="problemVersion")]
+    problem_version: typing_extensions.Annotated[int, FieldMetadata(alias="problemVersion")] = pydantic.Field(
+        alias="problemVersion"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

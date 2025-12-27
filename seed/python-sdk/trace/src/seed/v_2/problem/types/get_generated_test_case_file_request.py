@@ -14,7 +14,9 @@ from .test_case_v_2 import TestCaseV2
 
 class GetGeneratedTestCaseFileRequest(UniversalBaseModel):
     template: typing.Optional[TestCaseTemplate] = None
-    test_case: typing_extensions.Annotated[TestCaseV2, FieldMetadata(alias="testCase")]
+    test_case: typing_extensions.Annotated[TestCaseV2, FieldMetadata(alias="testCase")] = pydantic.Field(
+        alias="testCase"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

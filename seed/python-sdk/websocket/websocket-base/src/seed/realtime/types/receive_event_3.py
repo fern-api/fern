@@ -9,7 +9,9 @@ from ...core.serialization import FieldMetadata
 
 
 class ReceiveEvent3(UniversalBaseModel):
-    receive_text_3: typing_extensions.Annotated[str, FieldMetadata(alias="receiveText3")]
+    receive_text_3: typing_extensions.Annotated[str, FieldMetadata(alias="receiveText3")] = pydantic.Field(
+        alias="receiveText3"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

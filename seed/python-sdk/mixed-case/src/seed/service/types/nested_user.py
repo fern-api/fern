@@ -25,8 +25,10 @@ class NestedUser(UniversalBaseModel):
     )
     """
 
-    name: typing_extensions.Annotated[str, FieldMetadata(alias="Name")]
-    nested_user: typing_extensions.Annotated[User, FieldMetadata(alias="NestedUser")]
+    name: typing_extensions.Annotated[str, FieldMetadata(alias="Name")] = pydantic.Field(alias="Name")
+    nested_user: typing_extensions.Annotated[User, FieldMetadata(alias="NestedUser")] = pydantic.Field(
+        alias="NestedUser"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
