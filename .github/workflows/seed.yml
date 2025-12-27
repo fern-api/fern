@@ -449,6 +449,12 @@ jobs:
           sparse-checkout: |
             .github/actions/run-seed-process
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
         with:
@@ -781,6 +787,12 @@ jobs:
           sparse-checkout: |
             .github/actions/run-seed-process
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
         with:
@@ -841,6 +853,12 @@ jobs:
           sparse-checkout: |
             .github/actions/run-seed-process
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
         with:
@@ -900,6 +918,12 @@ jobs:
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
@@ -990,6 +1014,12 @@ jobs:
         with:
           sparse-checkout: |
             .github/actions/run-seed-process
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Run All Seed Tests
         uses: ./.github/actions/run-seed-process
