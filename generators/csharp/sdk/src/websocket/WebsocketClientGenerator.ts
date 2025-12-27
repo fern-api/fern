@@ -568,7 +568,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     writer.pushScope();
                     for (const queryParameter of this.websocketChannel.queryParameters) {
                         writer.write(
-                            `{ "${queryParameter.name.name.originalName}", ${queryParameter.name.name.pascalCase.safeName} },\n`
+                            `{ "${queryParameter.name.wireValue}", ${queryParameter.name.name.pascalCase.safeName} },\n`
                         );
                     }
                     writer.popScope();

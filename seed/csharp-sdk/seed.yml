@@ -252,6 +252,10 @@ fixtures:
         experimental-readonly-constants: true
         experimental-enable-websockets: true
       outputFolder: with-websockets
+  websocket-parameter-name:
+    - customConfig:
+        experimental-enable-websockets: true
+      outputFolder: no-custom-config
   csharp-xml-entities:
     - customConfig: null
       outputFolder: no-custom-config

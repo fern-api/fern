@@ -1,0 +1,2 @@
+# yaml-language-server: $schema=./../../../../../fern.schema.json
+name: websocket-parameter-name
