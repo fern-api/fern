@@ -1,82 +1,6 @@
-types:
-  User:
-    docs: User object
-    properties:
-      id:
-        docs: The unique identifier for the user.
-        type: string
-        access: read-only
-      email:
-        docs: The email address of the user.
-        type: string
-        access: read-only
-      password:
-        docs: The password for the user.
-        type: string
-        access: write-only
-      profile:
-        docs: User profile object
-        type: UserProfile
+imports:
+  root: __package__.yml
 
-  UserProfile:
-    docs: User profile object
-    properties:
-      name:
-        docs: The name of the user.
-        type: string
-      verification:
-        docs: User profile verification object
-        type: UserProfileVerification
-      ssn:
-        docs: The social security number of the user.
-        type: string
-        access: write-only
-
-  UserProfileVerification:
-    docs: User profile verification object
-    properties:
-      verified:
-        docs: User profile verification status
-        type: string
-        access: read-only
-
-  UserOrAdmin:
-    docs: Example of an undiscriminated union
-    discriminated: false
-    union:
-      - User
-      - Admin
-
-  Admin:
-    docs: Admin user object
-    extends: User
-    properties:
-      adminLevel:
-        docs: The level of admin privileges.
-        type: string
-
-  UserOrAdminDiscriminated:
-    # base-properties:
-    #   normal: string
-    #   foo: Foo
-    extends: Foo
-    docs: Example of an discriminated union
-    union:
-      user: User
-      admin:
-        key: admin
-        type: Admin
-      empty: {}
-
-  Foo:
-    properties:
-      normal: string
-      read:
-        type: string
-        access: read-only
-      write:
-        type: string
-        access: write-only
 service:
   auth: false
   base-path: /users
@@ -85,8 +9,8 @@ service:
       docs: Create a new user with password (write-only field)
       method: POST
       path: ""
-      request: User
-      response: User
+      request: root.User
+      response: root.User
       examples:
         - request:
             profile:
@@ -111,7 +35,7 @@ service:
         userId:
           docs: The unique identifier of the user
           type: string
-      response: User
+      response: root.User
       examples:
         - path-parameters:
             userId: "user_123"
@@ -132,8 +56,8 @@ service:
         userId:
           docs: The unique identifier of the user
           type: string
-      request: User
-      response: User
+      request: root.User
+      response: root.User
       examples:
         - path-parameters:
             userId: "user_123"
@@ -160,7 +84,7 @@ service:
         userId:
           docs: The unique identifier
           type: string
-      response: UserOrAdmin
+      response: root.UserOrAdmin
       examples:
         - name: ReturnsUser
           path-parameters:
@@ -194,7 +118,7 @@ service:
         userId:
           docs: The unique identifier
           type: string
-      response: UserOrAdminDiscriminated
+      response: root.UserOrAdminDiscriminated
       examples:
         - name: ReturnsUser
           path-parameters:
@@ -212,7 +136,6 @@ service:
                 name: John Doe
                 verification:
                   verified: "verified"
-              read: "read-value"
         - name: ReturnsAdmin
           path-parameters:
             userId: "admin_456"
@@ -230,7 +153,6 @@ service:
                 name: Admin User
                 verification:
                   verified: "verified"
-              read: "read-value"
         - name: ReturnsEmpty
           path-parameters:
             userId: "empty_789"
@@ -242,8 +164,8 @@ service:
       docs: Create a Foo object with mixed access properties
       method: POST
       path: /foo
-      request: Foo
-      response: Foo
+      request: root.Foo
+      response: root.Foo
       examples:
         - request:
             normal: "normal-value"
@@ -257,8 +179,8 @@ service:
       docs: Create an admin user (tests extension with access modifiers)
       method: POST
       path: /admin
-      request: Admin
-      response: Admin
+      request: root.Admin
+      response: root.Admin
       examples:
         - request:
             adminLevel: "moderator"

@@ -20,7 +20,8 @@ export function validateTypeExample({
     example,
     workspace,
     breadcrumbs,
-    depth
+    depth,
+    isRequest
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
@@ -31,6 +32,7 @@ export function validateTypeExample({
     workspace: FernWorkspace;
     breadcrumbs: string[];
     depth: number;
+    isRequest?: boolean;
 }): ExampleViolation[] {
     return visitRawTypeDeclaration(typeDeclaration, {
         alias: (rawAlias) => {
@@ -42,7 +44,8 @@ export function validateTypeExample({
                 example,
                 workspace,
                 breadcrumbs,
-                depth
+                depth,
+                isRequest
             });
         },
         enum: (rawEnum) => {
@@ -63,7 +66,8 @@ export function validateTypeExample({
                 exampleResolver,
                 workspace,
                 breadcrumbs,
-                depth
+                depth,
+                isRequest
             });
         },
         discriminatedUnion: (rawUnion) => {
@@ -76,7 +80,8 @@ export function validateTypeExample({
                 exampleResolver,
                 workspace,
                 breadcrumbs,
-                depth
+                depth,
+                isRequest
             });
         },
         undiscriminatedUnion: (rawUnion) => {
@@ -88,7 +93,8 @@ export function validateTypeExample({
                 exampleResolver,
                 workspace,
                 breadcrumbs,
-                depth
+                depth,
+                isRequest
             });
         }
     });

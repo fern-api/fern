@@ -46,7 +46,8 @@ export function validateRequest({
                 workspace,
                 example,
                 breadcrumbs: ["request"],
-                depth: 0
+                depth: 0,
+                isRequest: true
             }).map((val): RuleViolation => {
                 return { severity: val.severity ?? "fatal", message: val.message };
             })
@@ -60,8 +61,9 @@ export function validateRequest({
                 workspace,
                 typeResolver,
                 exampleResolver,
-                breadcrumbs: ["response", "body"],
-                depth: 0
+                breadcrumbs: ["request", "body"],
+                depth: 0,
+                isRequest: true
             }).map((val): RuleViolation => {
                 return { severity: val.severity ?? "fatal", message: val.message };
             })

@@ -24,6 +24,7 @@ export interface ObjectPropertyWithPath {
     resolvedPropertyType: ResolvedType;
     isOptional: boolean;
     isNullable: boolean;
+    access?: "read-only" | "write-only";
 }
 
 export type ObjectPropertyPath = ObjectPropertyPathPart[];
@@ -92,6 +93,10 @@ export function getAllPropertiesForObject({
                 typeof propertyDeclaration === "string" ? propertyDeclaration : propertyDeclaration.type;
             const resolvedPropertyType = typeResolver.resolveType({ type: propertyType, file });
             if (resolvedPropertyType != null) {
+                const access =
+                    typeof propertyDeclaration !== "string" && "access" in propertyDeclaration
+                        ? propertyDeclaration.access
+                        : undefined;
                 properties.push({
                     wireKey: propertyKey,
                     name: getPropertyName({ propertyKey, property: propertyDeclaration }).name,
@@ -104,7 +109,8 @@ export function getAllPropertiesForObject({
                         resolvedPropertyType.container._type === "optional",
                     isNullable:
                         resolvedPropertyType._type === "container" &&
-                        resolvedPropertyType.container._type === "nullable"
+                        resolvedPropertyType.container._type === "nullable",
+                    access
                 });
             }
         }
