@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import fastapi._compat
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -38,36 +37,28 @@ class AbstractReqWithHeadersService(AbstractFernService):
     @classmethod
     def __init_get_with_custom_header(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_with_custom_header)
+        type_hints = typing.get_type_hints(cls.get_with_custom_header)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation, cls.get_with_custom_header.__globals__, cls.get_with_custom_header.__globals__
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
             elif parameter_name == "x_test_endpoint_header":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation, cls.get_with_custom_header.__globals__, cls.get_with_custom_header.__globals__
-                )
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[evaluated, fastapi.Header(alias="X-TEST-ENDPOINT-HEADER")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-TEST-ENDPOINT-HEADER")]
                     )
                 )
             elif parameter_name == "auth":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation, cls.get_with_custom_header.__globals__, cls.get_with_custom_header.__globals__
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -87,6 +78,7 @@ class AbstractReqWithHeadersService(AbstractFernService):
 
         router.post(
             path="/test-headers/custom-header",
+            response_model=None,
             status_code=fastapi.status.HTTP_204_NO_CONTENT,
             description=AbstractReqWithHeadersService.get_with_custom_header.__doc__,
             **get_route_args(cls.get_with_custom_header, default_tag="req_with_headers"),

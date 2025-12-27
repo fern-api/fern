@@ -125,69 +125,74 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_post(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post)
+        type_hints = typing.get_type_hints(cls.post)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "maybe_string":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "integer":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "file":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()])
                 )
             elif parameter_name == "file_list":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()])
                 )
             elif parameter_name == "maybe_file":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()], default=None)
                 )
             elif parameter_name == "maybe_file_list":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()], default=None)
                 )
             elif parameter_name == "maybe_integer":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "optional_list_of_strings":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "list_of_objects":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "optional_metadata":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "optional_object_type":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "optional_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "alias_object":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "list_of_alias_object":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "alias_list_of_object":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -216,13 +221,18 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_just_file(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.just_file)
+        type_hints = typing.get_type_hints(cls.just_file)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -251,43 +261,48 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_just_file_with_query_params(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.just_file_with_query_params)
+        type_hints = typing.get_type_hints(cls.just_file_with_query_params)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()])
                 )
             elif parameter_name == "maybe_string":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="maybeString")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(alias="maybeString")],
                         default=None,
                     )
                 )
             elif parameter_name == "integer":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()])
                 )
             elif parameter_name == "maybe_integer":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="maybeInteger")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(alias="maybeInteger")],
                         default=None,
                     )
                 )
             elif parameter_name == "list_of_strings":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="listOfStrings")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(alias="listOfStrings")],
                         default=[],
                     )
                 )
             elif parameter_name == "optional_list_of_strings":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="optionalListOfStrings")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(alias="optionalListOfStrings")],
                         default=None,
                     )
                 )
@@ -318,25 +333,30 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_with_content_type(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.with_content_type)
+        type_hints = typing.get_type_hints(cls.with_content_type)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()])
                 )
             elif parameter_name == "foo":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "bar":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "foo_bar":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -365,21 +385,26 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_with_form_encoding(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.with_form_encoding)
+        type_hints = typing.get_type_hints(cls.with_form_encoding)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()])
                 )
             elif parameter_name == "foo":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "bar":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -408,73 +433,78 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_with_form_encoded_containers(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.with_form_encoded_containers)
+        type_hints = typing.get_type_hints(cls.with_form_encoded_containers)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "maybe_string":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "integer":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "file":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()])
                 )
             elif parameter_name == "file_list":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()])
                 )
             elif parameter_name == "maybe_file":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()], default=None)
                 )
             elif parameter_name == "maybe_file_list":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()], default=None)
                 )
             elif parameter_name == "maybe_integer":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "optional_list_of_strings":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "list_of_objects":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "optional_metadata":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "optional_object_type":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "optional_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "list_of_objects_with_optionals":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "alias_object":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "list_of_alias_object":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "alias_list_of_object":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -503,17 +533,22 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_optional_args(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.optional_args)
+        type_hints = typing.get_type_hints(cls.optional_args)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "image_file":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()], default=None)
                 )
             elif parameter_name == "request":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -533,7 +568,7 @@ class AbstractServiceService(AbstractFernService):
 
         router.post(
             path="/optional-args",
-            response_model=str,
+            response_model=None,
             description=AbstractServiceService.optional_args.__doc__,
             **get_route_args(cls.optional_args, default_tag="service"),
         )(wrapper)
@@ -541,17 +576,22 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_with_inline_type(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.with_inline_type)
+        type_hints = typing.get_type_hints(cls.with_inline_type)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "file":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.File()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()])
                 )
             elif parameter_name == "request":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -571,7 +611,7 @@ class AbstractServiceService(AbstractFernService):
 
         router.post(
             path="/inline-type",
-            response_model=str,
+            response_model=None,
             description=AbstractServiceService.with_inline_type.__doc__,
             **get_route_args(cls.with_inline_type, default_tag="service"),
         )(wrapper)
@@ -579,8 +619,13 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_simple(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.simple)
+        type_hints = typing.get_type_hints(cls.simple)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:

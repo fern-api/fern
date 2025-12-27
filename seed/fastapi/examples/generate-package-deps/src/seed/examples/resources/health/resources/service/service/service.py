@@ -49,19 +49,24 @@ class AbstractHealthServiceService(AbstractFernService):
     @classmethod
     def __init_check(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.check)
+        type_hints = typing.get_type_hints(cls.check)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(description="The id to check")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(description="The id to check")]
                     )
                 )
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -90,13 +95,18 @@ class AbstractHealthServiceService(AbstractFernService):
     @classmethod
     def __init_ping(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.ping)
+        type_hints = typing.get_type_hints(cls.ping)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -116,7 +126,7 @@ class AbstractHealthServiceService(AbstractFernService):
 
         router.get(
             path="/ping",
-            response_model=bool,
+            response_model=None,
             description=AbstractHealthServiceService.ping.__doc__,
             **get_route_args(cls.ping, default_tag="health.service"),
         )(wrapper)

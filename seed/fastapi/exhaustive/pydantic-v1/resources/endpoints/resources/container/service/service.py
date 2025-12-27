@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import fastapi._compat
 import fastapi.temp_pydantic_v1_params
 from ......core.abstract_fern_service import AbstractFernService
 from ......core.exceptions.fern_http_exception import FernHTTPException
@@ -74,31 +73,24 @@ class AbstractEndpointsContainerService(AbstractFernService):
     @classmethod
     def __init_get_and_return_list_of_primitives(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_list_of_primitives)
+        type_hints = typing.get_type_hints(cls.get_and_return_list_of_primitives)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_list_of_primitives.__globals__,
-                    cls.get_and_return_list_of_primitives.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
                 )
             elif parameter_name == "auth":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_list_of_primitives.__globals__,
-                    cls.get_and_return_list_of_primitives.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -120,6 +112,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/list-of-primitives",
+            response_model=None,
             description=AbstractEndpointsContainerService.get_and_return_list_of_primitives.__doc__,
             **get_route_args(cls.get_and_return_list_of_primitives, default_tag="endpoints.container"),
         )(wrapper)
@@ -127,31 +120,24 @@ class AbstractEndpointsContainerService(AbstractFernService):
     @classmethod
     def __init_get_and_return_list_of_objects(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_list_of_objects)
+        type_hints = typing.get_type_hints(cls.get_and_return_list_of_objects)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_list_of_objects.__globals__,
-                    cls.get_and_return_list_of_objects.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
                 )
             elif parameter_name == "auth":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_list_of_objects.__globals__,
-                    cls.get_and_return_list_of_objects.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -173,6 +159,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/list-of-objects",
+            response_model=None,
             description=AbstractEndpointsContainerService.get_and_return_list_of_objects.__doc__,
             **get_route_args(cls.get_and_return_list_of_objects, default_tag="endpoints.container"),
         )(wrapper)
@@ -180,31 +167,24 @@ class AbstractEndpointsContainerService(AbstractFernService):
     @classmethod
     def __init_get_and_return_set_of_primitives(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_set_of_primitives)
+        type_hints = typing.get_type_hints(cls.get_and_return_set_of_primitives)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_set_of_primitives.__globals__,
-                    cls.get_and_return_set_of_primitives.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
                 )
             elif parameter_name == "auth":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_set_of_primitives.__globals__,
-                    cls.get_and_return_set_of_primitives.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -226,6 +206,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/set-of-primitives",
+            response_model=None,
             description=AbstractEndpointsContainerService.get_and_return_set_of_primitives.__doc__,
             **get_route_args(cls.get_and_return_set_of_primitives, default_tag="endpoints.container"),
         )(wrapper)
@@ -233,31 +214,24 @@ class AbstractEndpointsContainerService(AbstractFernService):
     @classmethod
     def __init_get_and_return_set_of_objects(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_set_of_objects)
+        type_hints = typing.get_type_hints(cls.get_and_return_set_of_objects)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_set_of_objects.__globals__,
-                    cls.get_and_return_set_of_objects.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
                 )
             elif parameter_name == "auth":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_set_of_objects.__globals__,
-                    cls.get_and_return_set_of_objects.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -279,6 +253,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/set-of-objects",
+            response_model=None,
             description=AbstractEndpointsContainerService.get_and_return_set_of_objects.__doc__,
             **get_route_args(cls.get_and_return_set_of_objects, default_tag="endpoints.container"),
         )(wrapper)
@@ -286,31 +261,24 @@ class AbstractEndpointsContainerService(AbstractFernService):
     @classmethod
     def __init_get_and_return_map_prim_to_prim(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_map_prim_to_prim)
+        type_hints = typing.get_type_hints(cls.get_and_return_map_prim_to_prim)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_map_prim_to_prim.__globals__,
-                    cls.get_and_return_map_prim_to_prim.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
                 )
             elif parameter_name == "auth":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_map_prim_to_prim.__globals__,
-                    cls.get_and_return_map_prim_to_prim.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -332,6 +300,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/map-prim-to-prim",
+            response_model=None,
             description=AbstractEndpointsContainerService.get_and_return_map_prim_to_prim.__doc__,
             **get_route_args(cls.get_and_return_map_prim_to_prim, default_tag="endpoints.container"),
         )(wrapper)
@@ -339,31 +308,24 @@ class AbstractEndpointsContainerService(AbstractFernService):
     @classmethod
     def __init_get_and_return_map_of_prim_to_object(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_map_of_prim_to_object)
+        type_hints = typing.get_type_hints(cls.get_and_return_map_of_prim_to_object)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_map_of_prim_to_object.__globals__,
-                    cls.get_and_return_map_of_prim_to_object.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
                 )
             elif parameter_name == "auth":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_map_of_prim_to_object.__globals__,
-                    cls.get_and_return_map_of_prim_to_object.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -387,6 +349,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/map-prim-to-object",
+            response_model=None,
             description=AbstractEndpointsContainerService.get_and_return_map_of_prim_to_object.__doc__,
             **get_route_args(cls.get_and_return_map_of_prim_to_object, default_tag="endpoints.container"),
         )(wrapper)
@@ -394,31 +357,24 @@ class AbstractEndpointsContainerService(AbstractFernService):
     @classmethod
     def __init_get_and_return_optional(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_optional)
+        type_hints = typing.get_type_hints(cls.get_and_return_optional)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_optional.__globals__,
-                    cls.get_and_return_optional.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
                 )
             elif parameter_name == "auth":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation,
-                    cls.get_and_return_optional.__globals__,
-                    cls.get_and_return_optional.__globals__,
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -438,6 +394,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
 
         router.post(
             path="/container/opt-objects",
+            response_model=None,
             description=AbstractEndpointsContainerService.get_and_return_optional.__doc__,
             **get_route_args(cls.get_and_return_optional, default_tag="endpoints.container"),
         )(wrapper)

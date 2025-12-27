@@ -41,8 +41,13 @@ class AbstractPropertyBasedErrorService(AbstractFernService):
     @classmethod
     def __init_throw_error(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.throw_error)
+        type_hints = typing.get_type_hints(cls.throw_error)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
@@ -65,7 +70,7 @@ class AbstractPropertyBasedErrorService(AbstractFernService):
 
         router.get(
             path="/property-based-error",
-            response_model=str,
+            response_model=None,
             description=AbstractPropertyBasedErrorService.throw_error.__doc__,
             **get_route_args(cls.throw_error, default_tag="property_based_error"),
         )(wrapper)

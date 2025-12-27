@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import fastapi._compat
 import fastapi.temp_pydantic_v1_params
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
@@ -43,18 +42,20 @@ class AbstractNoAuthService(AbstractFernService):
     @classmethod
     def __init_post_with_no_auth(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post_with_no_auth)
+        type_hints = typing.get_type_hints(cls.post_with_no_auth)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(
-                    parameter.annotation, cls.post_with_no_auth.__globals__, cls.post_with_no_auth.__globals__
-                )
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[evaluated, fastapi.temp_pydantic_v1_params.Body()])
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
                 )
             else:
                 new_parameters.append(parameter)
@@ -76,6 +77,7 @@ class AbstractNoAuthService(AbstractFernService):
 
         router.post(
             path="/no-auth",
+            response_model=None,
             description=AbstractNoAuthService.post_with_no_auth.__doc__,
             **get_route_args(cls.post_with_no_auth, default_tag="no_auth"),
         )(wrapper)

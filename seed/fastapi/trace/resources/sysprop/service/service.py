@@ -43,24 +43,29 @@ class AbstractSyspropService(AbstractFernService):
     @classmethod
     def __init_set_num_warm_instances(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.set_num_warm_instances)
+        type_hints = typing.get_type_hints(cls.set_num_warm_instances)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "language":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             elif parameter_name == "num_warm_instances":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="numWarmInstances")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="numWarmInstances")]
                     )
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -91,14 +96,19 @@ class AbstractSyspropService(AbstractFernService):
     @classmethod
     def __init_get_num_warm_instances(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_num_warm_instances)
+        type_hints = typing.get_type_hints(cls.get_num_warm_instances)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -120,7 +130,7 @@ class AbstractSyspropService(AbstractFernService):
 
         router.get(
             path="/sysprop/num-warm-instances",
-            response_model=typing.Dict[Language, int],
+            response_model=None,
             description=AbstractSyspropService.get_num_warm_instances.__doc__,
             **get_route_args(cls.get_num_warm_instances, default_tag="sysprop"),
         )(wrapper)

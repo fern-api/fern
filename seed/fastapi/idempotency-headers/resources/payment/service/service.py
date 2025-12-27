@@ -43,17 +43,22 @@ class AbstractPaymentService(AbstractFernService):
     @classmethod
     def __init_create(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create)
+        type_hints = typing.get_type_hints(cls.create)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -73,7 +78,7 @@ class AbstractPaymentService(AbstractFernService):
 
         router.post(
             path="/payment",
-            response_model=uuid.UUID,
+            response_model=None,
             description=AbstractPaymentService.create.__doc__,
             **get_route_args(cls.create, default_tag="payment"),
         )(wrapper)
@@ -81,19 +86,22 @@ class AbstractPaymentService(AbstractFernService):
     @classmethod
     def __init_delete(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.delete)
+        type_hints = typing.get_type_hints(cls.delete)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "payment_id":
                 new_parameters.append(
-                    parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="paymentId")]
-                    )
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="paymentId")])
                 )
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)

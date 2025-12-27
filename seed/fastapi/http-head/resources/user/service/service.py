@@ -41,8 +41,13 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_head(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.head)
+        type_hints = typing.get_type_hints(cls.head)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
@@ -72,13 +77,18 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_list_(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_)
+        type_hints = typing.get_type_hints(cls.list_)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "limit":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -98,7 +108,7 @@ class AbstractUserService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=typing.Sequence[User],
+            response_model=None,
             description=AbstractUserService.list_.__doc__,
             **get_route_args(cls.list_, default_tag="user"),
         )(wrapper)
