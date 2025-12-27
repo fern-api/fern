@@ -358,6 +358,15 @@ class SnippetDependencyTracker {
     }
 }
 
+export interface ValidationMetrics {
+    hasErrors: boolean;
+    errorCount: number;
+    warningCount: number;
+    totalViolationCount: number;
+    violationsBySeverity: Record<string, number>;
+    elapsedMillis: number;
+}
+
 export async function runAppPreviewServer({
     initialProject,
     reloadProject,
@@ -370,7 +379,7 @@ export async function runAppPreviewServer({
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
-    validateProject: (project: Project) => Promise<void>;
+    validateProject: (project: Project) => Promise<ValidationMetrics | undefined>;
     context: TaskContext;
     port: number;
     bundlePath?: string;
@@ -591,9 +600,21 @@ export async function runAppPreviewServer({
             // Start validation in background - don't block the reload
             const validationStartTime = Date.now();
             void validateProject(project)
-                .then(() => {
+                .then((metrics) => {
                     const validationTime = Date.now() - validationStartTime;
-                    void debugLogger.logCliValidation(validationTime, true);
+                    const success = metrics ? !metrics.hasErrors : true;
+                    void debugLogger.logCliValidation(
+                        validationTime,
+                        success,
+                        metrics
+                            ? {
+                                  errorCount: metrics.errorCount,
+                                  warningCount: metrics.warningCount,
+                                  totalViolationCount: metrics.totalViolationCount,
+                                  violationsBySeverity: metrics.violationsBySeverity
+                              }
+                            : undefined
+                    );
                 })
                 .catch((err) => {
                     const validationTime = Date.now() - validationStartTime;
