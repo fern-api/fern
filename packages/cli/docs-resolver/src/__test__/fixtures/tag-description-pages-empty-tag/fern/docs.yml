@@ -1,0 +1,9 @@
+instances:
+  - url: https://fern-platform-test.docs.dev.buildwithfern.com
+title: Tag Description Pages Empty Tag Test
+navigation:
+  - api: API Reference
+    tag-description-pages: true
+colors:
+  accentPrimary: "#ffffff"
+  background: "#000000"

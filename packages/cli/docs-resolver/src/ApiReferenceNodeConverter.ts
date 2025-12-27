@@ -798,7 +798,8 @@ export class ApiReferenceNodeConverter {
 
             const slug = isSubpackage(subpackage) ? parentSlug.apply(subpackage) : parentSlug;
             const subpackageChildren = this.#convertApiDefinitionPackageId(subpackageId, slug, parentAvailability);
-            if (subpackageChildren.length > 0) {
+            const tagDescriptionPageId = this.createTagDescriptionPageId(subpackage);
+            if (subpackageChildren.length > 0 || tagDescriptionPageId != null) {
                 additionalChildren.push({
                     id: FernNavigation.V1.NodeId(`${this.apiDefinitionId}:${subpackageId}`),
                     type: "apiPackage",
@@ -809,7 +810,7 @@ export class ApiReferenceNodeConverter {
                     slug: slug.get(),
                     icon: undefined,
                     hidden: this.hideChildren,
-                    overviewPageId: this.createTagDescriptionPageId(subpackage),
+                    overviewPageId: tagDescriptionPageId,
                     availability: parentAvailability,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,
