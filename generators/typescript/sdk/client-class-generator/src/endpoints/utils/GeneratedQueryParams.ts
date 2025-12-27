@@ -61,7 +61,6 @@ export class GeneratedQueryParams {
                         queryParameter.name.wireValue,
                         context
                     ),
-                    context,
                     queryParamSetter: (referenceToQueryParameter) => {
                         let assignmentExpression: ts.Expression;
                         const objectType = this.getObjectType(queryParameter.valueType, context);
@@ -89,13 +88,13 @@ export class GeneratedQueryParams {
                                 assignmentExpression = referenceToQueryParameter;
                             }
                         }
-                        // if it's a primitive type, the previous null check already unwrapped the null or undefined
-                        // use the primitive type directly to stringify
+                        // if it's a primitive type, use the original valueType to stringify
+                        // nullSafeCall in the converter handles optional chaining for optional/nullable types
                         else if (primitiveType != null) {
                             if (primitiveTypeNeedsStringify(primitiveType.primitive)) {
                                 assignmentExpression = context.type.stringify(
                                     referenceToQueryParameter,
-                                    primitiveType,
+                                    queryParameter.valueType,
                                     {
                                         includeNullCheckIfOptional: false
                                     }
@@ -108,7 +107,7 @@ export class GeneratedQueryParams {
                                 referenceToQueryParameter,
                                 queryParameter.valueType,
                                 {
-                                    includeNullCheckIfOptional: false
+                                    includeNullCheckIfOptional: true
                                 }
                             );
                         }
@@ -330,20 +329,16 @@ export class GeneratedQueryParams {
     private withQueryParameter({
         queryParameter,
         referenceToQueryParameterProperty,
-        context,
         queryParamSetter,
         queryParamItemSetter
     }: {
         queryParameter: QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;
-        context: SdkContext;
         queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
         queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
     }): ts.Statement[] {
-        let statements: ts.Statement[];
-
         if (queryParameter.allowMultiple) {
-            statements = [
+            return [
                 ts.factory.createIfStatement(
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
@@ -357,37 +352,8 @@ export class GeneratedQueryParams {
                     ts.factory.createBlock(queryParamSetter(referenceToQueryParameterProperty), true)
                 )
             ];
-        } else {
-            statements = queryParamSetter(referenceToQueryParameterProperty);
         }
-
-        const isQueryParamOptional = context.type.isOptional(queryParameter.valueType);
-        const isQueryParamNullable = context.type.isNullable(queryParameter.valueType);
-        if (!isQueryParamNullable && !isQueryParamOptional) {
-            return statements;
-        }
-        if (isQueryParamNullable) {
-            return [
-                ts.factory.createIfStatement(
-                    ts.factory.createBinaryExpression(
-                        referenceToQueryParameterProperty,
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
-                        ts.factory.createIdentifier("undefined")
-                    ),
-                    ts.factory.createBlock(statements)
-                )
-            ];
-        }
-        return [
-            ts.factory.createIfStatement(
-                ts.factory.createBinaryExpression(
-                    referenceToQueryParameterProperty,
-                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                    ts.factory.createNull()
-                ),
-                ts.factory.createBlock(statements)
-            )
-        ];
+        return queryParamSetter(referenceToQueryParameterProperty);
     }
 }
 

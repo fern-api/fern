@@ -182,7 +182,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         itemType: TypeReference,
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
-        return (reference) => this.convert({ ...params, typeReference: itemType })(reference);
+        return (reference) => this.convert({ ...params, typeReference: itemType, optional: true })(reference);
     }
 
     protected override unknown(): (reference: ts.Expression) => ts.Expression {
@@ -306,7 +306,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         methodName: string,
         params: ConvertTypeReferenceParams
     ): (reference: ts.Expression) => ts.Expression {
-        if (params.nullable) {
+        if (params.nullable || params.optional) {
             return (reference) =>
                 ts.factory.createCallChain(
                     ts.factory.createPropertyAccessChain(

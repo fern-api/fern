@@ -109,15 +109,9 @@ export class UserClient {
             breadcrumbsPrefix: ["request", "user"],
         });
         _queryParams.userList = toJson(userList);
-        if (optionalDeadline != null) {
-            _queryParams.optionalDeadline = optionalDeadline.toISOString();
-        }
-
+        _queryParams.optionalDeadline = optionalDeadline?.toISOString();
         _queryParams.keyValue = toJson(keyValue);
-        if (optionalString != null) {
-            _queryParams.optionalString = optionalString;
-        }
-
+        _queryParams.optionalString = optionalString;
         _queryParams.nestedUser = serializers.NestedUser.jsonOrThrow(nestedUser, {
             unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
@@ -125,16 +119,13 @@ export class UserClient {
             omitUndefined: true,
             breadcrumbsPrefix: ["request", "nestedUser"],
         });
-        if (optionalUser != null) {
-            _queryParams.optionalUser = serializers.User.jsonOrThrow(optionalUser, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                omitUndefined: true,
-                breadcrumbsPrefix: ["request", "optionalUser"],
-            });
-        }
-
+        _queryParams.optionalUser = serializers.User.jsonOrThrow(optionalUser, {
+            unrecognizedObjectKeys: "passthrough",
+            allowUnrecognizedUnionMembers: true,
+            allowUnrecognizedEnumValues: true,
+            omitUndefined: true,
+            breadcrumbsPrefix: ["request", "optionalUser"],
+        });
         if (Array.isArray(excludeUser)) {
             _queryParams.excludeUser = await Promise.all(
                 excludeUser.map(async (item) =>

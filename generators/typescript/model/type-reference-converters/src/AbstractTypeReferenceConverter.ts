@@ -47,25 +47,25 @@ export namespace ConvertTypeReferenceParams {
         return isInlinePropertyParams(params) || isInlineAliasParams(params);
     }
 
-    export interface DefaultParams extends WithTypeReference, WithNullable {
+    export interface DefaultParams extends WithTypeReference, WithNullable, WithOptional {
         type?: undefined;
     }
 
     /**
      * Metadata for converting inline types
      */
-    export interface InlinePropertyTypeParams extends WithGenericIn, WithTypeReference, WithNullable {
+    export interface InlinePropertyTypeParams extends WithGenericIn, WithTypeReference, WithNullable, WithOptional {
         type: "inlinePropertyParams";
         parentTypeName: string;
         propertyName: string;
     }
 
-    export interface InlineAliasTypeParams extends WithGenericIn, WithTypeReference, WithNullable {
+    export interface InlineAliasTypeParams extends WithGenericIn, WithTypeReference, WithNullable, WithOptional {
         type: "inlineAliasParams";
         aliasTypeName: string;
     }
 
-    export interface ForInlineUnionTypeParams extends WithTypeReference, WithNullable {
+    export interface ForInlineUnionTypeParams extends WithTypeReference, WithNullable, WithOptional {
         type: "forInlineUnionParams";
     }
 
@@ -79,6 +79,10 @@ export namespace ConvertTypeReferenceParams {
 
     export interface WithNullable {
         nullable?: boolean;
+    }
+
+    export interface WithOptional {
+        optional?: boolean;
     }
 
     export const GenericIn = {
