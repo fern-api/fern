@@ -1,0 +1,76 @@
+asyncapi: 2.6.0
+defaultContentType: application/json
+id: http://example.com/websocket-parameter-name
+
+info:
+  title: WebSocket Parameter Name Test
+  description: Test for x-fern-parameter-name extension on websocket query parameters
+  version: 1.0.0
+
+servers:
+  API:
+    url: wss://api.example.com/v1/ws
+    protocol: wss
+    description: Example WebSocket API
+
+channels:
+  /chat:
+    bindings:
+      ws:
+        query:
+          type: object
+          properties:
+            session_settings:
+              description: The session settings for the connection.
+              type: string
+              x-fern-parameter-name: connect_session_settings
+            api_key:
+              description: The API key for authentication.
+              type: string
+            model_version:
+              description: The model version to use.
+              type: string
+              x-fern-parameter-name: version
+          required:
+            - api_key
+    publish:
+      description: Send messages to the WebSocket
+      operationId: sendMessage
+      message:
+        $ref: "#/components/messages/SendMessage"
+    subscribe:
+      description: Receive messages from the WebSocket
+      operationId: receiveMessage
+      message:
+        $ref: "#/components/messages/ReceiveMessage"
+
+components:
+  messages:
+    SendMessage:
+      messageId: sendMessage
+      summary: Send a message
+      payload:
+        $ref: "#/components/schemas/SendPayload"
+    ReceiveMessage:
+      messageId: receiveMessage
+      summary: Receive a message
+      payload:
+        $ref: "#/components/schemas/ReceivePayload"
+
+  schemas:
+    SendPayload:
+      type: object
+      required:
+        - text
+      properties:
+        text:
+          description: The text to send
+          type: string
+    ReceivePayload:
+      type: object
+      required:
+        - response
+      properties:
+        response:
+          description: The response text
+          type: string

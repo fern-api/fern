@@ -1,0 +1,130 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "ReceivePayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "response": {
+                "docs": "The response text",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "SendPayload": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "text": {
+                "docs": "The text to send",
+                "type": "string",
+              },
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  SendPayload:
+    properties:
+      text:
+        type: string
+        docs: The text to send
+    source:
+      openapi: ../asyncapi.yml
+  ReceivePayload:
+    properties:
+      response:
+        type: string
+        docs: The response text
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+    "chat.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [],
+            },
+          ],
+          "messages": {},
+          "path": "/chat",
+          "query-parameters": {
+            "api_key": {
+              "docs": "The API key for authentication.",
+              "type": "string",
+            },
+            "model_version": {
+              "docs": "The model version to use.",
+              "name": "version",
+              "type": "optional<string>",
+            },
+            "session_settings": {
+              "docs": "The session settings for the connection.",
+              "name": "connect_session_settings",
+              "type": "optional<string>",
+            },
+          },
+          "url": "API",
+        },
+      },
+      "rawContents": "channel:
+  path: /chat
+  url: API
+  auth: false
+  query-parameters:
+    session_settings:
+      type: optional<string>
+      docs: The session settings for the connection.
+      name: connect_session_settings
+    api_key:
+      type: string
+      docs: The API key for authentication.
+    model_version:
+      type: optional<string>
+      docs: The model version to use.
+      name: version
+  messages: {}
+  examples:
+    - messages: []
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "API",
+      "default-url": "Base",
+      "environments": {
+        "API": "wss://api.example.com/v1/ws",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "Base",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+environments:
+  API: wss://api.example.com/v1/ws
+default-environment: API
+default-url: Base
+",
+  },
+}

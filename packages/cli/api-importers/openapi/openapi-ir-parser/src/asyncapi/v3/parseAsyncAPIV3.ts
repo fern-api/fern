@@ -263,7 +263,7 @@ export function parseAsyncAPIV3({
                 const parameterObject = {
                     name: parameterKey,
                     description: resolvedParameter.description,
-                    parameterNameOverride: undefined,
+                    parameterNameOverride: getExtension<string>(resolvedParameter, FernOpenAPIExtension.PARAMETER_NAME),
                     schema: parameterSchema,
                     variableReference: undefined,
                     availability: convertAvailability(parameter),

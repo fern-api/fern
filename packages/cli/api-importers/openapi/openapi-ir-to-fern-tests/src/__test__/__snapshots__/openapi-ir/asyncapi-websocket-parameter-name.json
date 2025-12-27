@@ -1,0 +1,184 @@
+{
+  "servers": [],
+  "websocketServers": [
+    {
+      "name": "API",
+      "url": "wss://api.example.com/v1/ws"
+    }
+  ],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {
+    "/chat": {
+      "audiences": [],
+      "handshake": {
+        "headers": [],
+        "queryParameters": [
+          {
+            "name": "session_settings",
+            "schema": {
+              "generatedName": "WebsocketSessionSettings",
+              "description": "The session settings for the connection.",
+              "value": {
+                "description": "The session settings for the connection.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "WebsocketSessionSettings",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "description": "The session settings for the connection.",
+            "parameterNameOverride": "connect_session_settings",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "api_key",
+            "schema": {
+              "description": "The API key for authentication.",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "WebsocketApiKey",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "description": "The API key for authentication.",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          },
+          {
+            "name": "model_version",
+            "schema": {
+              "generatedName": "WebsocketModelVersion",
+              "description": "The model version to use.",
+              "value": {
+                "description": "The model version to use.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "WebsocketModelVersion",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "description": "The model version to use.",
+            "parameterNameOverride": "version",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            }
+          }
+        ],
+        "pathParameters": []
+      },
+      "groupName": [
+        "/chat"
+      ],
+      "messages": [],
+      "servers": [
+        {
+          "name": "API",
+          "url": "wss://api.example.com/v1/ws"
+        }
+      ],
+      "path": "/chat",
+      "examples": [
+        {
+          "queryParameters": [],
+          "headers": [],
+          "messages": []
+        }
+      ],
+      "source": {
+        "file": "../asyncapi.yml",
+        "type": "openapi"
+      }
+    }
+  },
+  "groupedSchemas": {
+    "rootSchemas": {
+      "SendPayload": {
+        "properties": [
+          {
+            "key": "text",
+            "schema": {
+              "generatedName": "SendPayloadText",
+              "schema": {
+                "type": "string"
+              },
+              "description": "The text to send",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "sendPayloadText"
+          }
+        ],
+        "generatedName": "SendPayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ReceivePayload": {
+        "properties": [
+          {
+            "key": "response",
+            "schema": {
+              "generatedName": "ReceivePayloadResponse",
+              "schema": {
+                "type": "string"
+              },
+              "description": "The response text",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": [],
+            "conflict": {},
+            "generatedName": "receivePayloadResponse"
+          }
+        ],
+        "generatedName": "ReceivePayload",
+        "allOf": [],
+        "allOfPropertyConflicts": [],
+        "groupName": [],
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../asyncapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

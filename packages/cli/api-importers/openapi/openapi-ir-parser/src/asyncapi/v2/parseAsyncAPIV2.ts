@@ -183,7 +183,10 @@ export function parseAsyncAPIV2({
                                 context.namespace
                             ),
                             description: resolvedSchema.description,
-                            parameterNameOverride: undefined,
+                            parameterNameOverride: getExtension<string>(
+                                resolvedSchema,
+                                FernOpenAPIExtension.PARAMETER_NAME
+                            ),
                             availability: convertAvailability(resolvedSchema),
                             source,
                             explode: undefined
@@ -206,7 +209,7 @@ export function parseAsyncAPIV2({
                             context.namespace
                         ),
                         description: schema.description,
-                        parameterNameOverride: undefined,
+                        parameterNameOverride: getExtension<string>(schema, FernOpenAPIExtension.PARAMETER_NAME),
                         availability: convertAvailability(schema),
                         source,
                         explode: undefined
