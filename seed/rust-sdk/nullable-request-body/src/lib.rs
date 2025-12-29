@@ -22,6 +22,7 @@
 //!                     id: None,
 //!                     name: None,
 //!                 }),
+//!                 ..Default::default()
 //!             },
 //!             None,
 //!         )

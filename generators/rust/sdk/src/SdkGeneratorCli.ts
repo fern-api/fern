@@ -1,7 +1,13 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractRustGeneratorCli, formatRustCode, formatRustSnippet, RustFile } from "@fern-api/rust-base";
+import {
+    AbstractRustGeneratorCli,
+    formatRustCode,
+    formatRustSnippet,
+    RustDependencyType,
+    RustFile
+} from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
 import {
     DynamicSnippetsGenerator,
@@ -781,6 +787,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         try {
             context.logger.debug("Generating WireMock integration tests...");
+
+            // Add ctor crate for lifecycle management (start/stop WireMock container)
+            context.dependencyManager.add("ctor", "0.2", RustDependencyType.DEV);
+
             const wireTestGenerator = new WireTestGenerator(context, context.ir);
             await wireTestGenerator.generate();
             context.logger.debug("WireMock test generation complete");

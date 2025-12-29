@@ -519,9 +519,15 @@ export class DynamicSnippetsConverter {
         const properties = hasSelfInterface
             ? [...object.properties, ...(object.extendedProperties ?? [])]
             : [...(object.extendedProperties ?? []), ...object.properties];
+
+        // Extract extends type IDs for generators that need to handle inheritance patterns
+        // (e.g., Rust uses flattened wrapper fields for extends)
+        const extendsTypeIds = object.extends.length > 0 ? object.extends.map((ext) => ext.typeId) : undefined;
+
         return this.convertObjectProperties({
             declaration,
             properties,
+            extends_: extendsTypeIds,
             additionalProperties: object.extraProperties
         });
     }
@@ -529,15 +535,18 @@ export class DynamicSnippetsConverter {
     private convertObjectProperties({
         declaration,
         properties,
+        extends_,
         additionalProperties
     }: {
         declaration: DynamicSnippets.Declaration;
         properties: ObjectProperty[];
+        extends_?: TypeId[];
         additionalProperties: boolean;
     }): DynamicSnippets.NamedType {
         return DynamicSnippets.NamedType.object({
             declaration,
             properties: this.convertBodyPropertiesToParameters({ properties }),
+            extends: extends_,
             additionalProperties
         });
     }
