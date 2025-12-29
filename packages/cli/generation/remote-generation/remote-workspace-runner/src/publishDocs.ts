@@ -420,7 +420,8 @@ export async function publishDocs({
         const url = wrapWithHttps(urlToOutput);
         await updateAiChatFromDocsDefinition({
             docsDefinition,
-            isPreview: preview
+            isPreview: preview,
+            context
         });
 
         const link = terminalLink(url, url);
@@ -1004,15 +1005,19 @@ async function uploadDynamicIRs({
 
 async function updateAiChatFromDocsDefinition({
     docsDefinition,
-    isPreview
+    isPreview,
+    context
 }: {
     docsDefinition: DocsDefinition;
     isPreview: boolean;
+    context: TaskContext;
 }): Promise<void> {
     if (docsDefinition.config.aiChatConfig == null || isPreview) {
         return;
     }
-    chalk.yellow("Enabling Ask Fern from docs.yml is deprecated. Please enable it from the Fern dashboard instead.");
+    context.logger.warn(
+        chalk.yellow("Enabling Ask Fern from docs.yml is deprecated. Please enable it from the Fern dashboard instead.")
+    );
 }
 
 function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string): AIExampleEnhancerConfig | undefined {
