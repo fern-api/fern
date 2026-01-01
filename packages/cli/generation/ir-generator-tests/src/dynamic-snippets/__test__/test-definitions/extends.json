@@ -91,6 +91,9 @@
                     "variable": null
                 }
             ],
+            "extends": [
+                "type_:Docs"
+            ],
             "additionalProperties": false
         },
         "type_:NestedType": {
@@ -213,6 +216,9 @@
                     "variable": null
                 }
             ],
+            "extends": [
+                "type_:JSON"
+            ],
             "additionalProperties": false
         },
         "type_:Docs": {
@@ -275,6 +281,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_:JSON": {
@@ -366,6 +373,9 @@
                     "propertyAccess": null,
                     "variable": null
                 }
+            ],
+            "extends": [
+                "type_:Docs"
             ],
             "additionalProperties": false
         }
