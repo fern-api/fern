@@ -4709,7 +4709,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_auth:RefreshTokenRequest": {
@@ -4969,7 +4968,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_auth:TokenResponse": {
@@ -5133,7 +5131,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             }
         },

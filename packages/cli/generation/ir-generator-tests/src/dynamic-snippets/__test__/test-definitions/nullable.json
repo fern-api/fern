@@ -581,7 +581,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_nullable:Status": {
@@ -1040,7 +1039,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         }
     },

@@ -160,7 +160,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_:BasicType": {
@@ -425,7 +424,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_commons/types:Tag": {
@@ -748,7 +746,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_commons/types:EventInfo": {
@@ -1692,7 +1689,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:CastMember": {
@@ -1904,7 +1900,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:Actress": {
@@ -2035,7 +2030,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:StuntDouble": {
@@ -2166,7 +2160,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:ExtendedMovie": {
@@ -2585,9 +2578,6 @@
                     "variable": null
                 }
             ],
-            "extends": [
-                "type_types:Movie"
-            ],
             "additionalProperties": false
         },
         "type_types:Moment": {
@@ -2748,7 +2738,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:File": {
@@ -2879,7 +2868,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:Directory": {
@@ -3052,7 +3040,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:Node": {
@@ -3225,7 +3212,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:Tree": {
@@ -3332,7 +3318,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:Metadata": {
@@ -3930,7 +3915,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:MigrationStatus": {
@@ -4196,7 +4180,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:Request": {
@@ -4296,7 +4279,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:Response": {
@@ -4429,7 +4411,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:ResponseType": {
@@ -4530,7 +4511,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:Test": {
@@ -4812,7 +4792,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:BigEntity": {
@@ -5312,7 +5291,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:CronJob": {
@@ -5413,7 +5391,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_types:RefreshTokenRequest": {
@@ -5514,7 +5491,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         }
     },

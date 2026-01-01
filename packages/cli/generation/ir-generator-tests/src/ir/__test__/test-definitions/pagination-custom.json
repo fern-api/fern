@@ -1172,7 +1172,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:UsernamePage": {
@@ -1271,7 +1270,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             }
         },

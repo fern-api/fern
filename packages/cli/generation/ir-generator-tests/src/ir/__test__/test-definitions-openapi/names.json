@@ -3479,7 +3479,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_infra/telemetry:TelemetryData": {
@@ -3688,7 +3687,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             }
         },

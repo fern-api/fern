@@ -132,7 +132,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_user:User": {
@@ -266,7 +265,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         }
     },

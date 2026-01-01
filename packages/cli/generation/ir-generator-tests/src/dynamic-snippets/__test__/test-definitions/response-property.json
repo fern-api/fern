@@ -61,7 +61,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_:OptionalStringResponse": {
@@ -167,7 +166,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_service:WithDocs": {
@@ -268,7 +266,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_service:OptionalWithDocs": {
@@ -473,7 +470,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_service:Response": {
@@ -640,10 +636,6 @@
                     "propertyAccess": null,
                     "variable": null
                 }
-            ],
-            "extends": [
-                "type_:WithMetadata",
-                "type_service:WithDocs"
             ],
             "additionalProperties": false
         }

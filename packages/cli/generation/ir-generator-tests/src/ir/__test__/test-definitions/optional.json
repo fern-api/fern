@@ -2123,7 +2123,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_optional:DeployParams": {
@@ -2227,7 +2226,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_optional:DeployResponse": {
@@ -2328,7 +2326,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             }
         },

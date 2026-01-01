@@ -1936,10 +1936,6 @@
                         "variable": null
                     }
                 ],
-                "extends": [
-                    "type_:NormalObject",
-                    "type_:NullableObject"
-                ],
                 "additionalProperties": false
             },
             "type_:NormalObject": {
@@ -2005,7 +2001,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:NullableObject": {
@@ -2071,7 +2066,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             }
         },

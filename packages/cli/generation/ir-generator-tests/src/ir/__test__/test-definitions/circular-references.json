@@ -2875,7 +2875,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:RootType": {
@@ -2938,7 +2937,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_a:A": {
@@ -3038,9 +3036,6 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ],
-                "extends": [
-                    "type_:RootType"
                 ],
                 "additionalProperties": false
             },
@@ -3219,7 +3214,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_ast:U": {
@@ -3320,7 +3314,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_ast:FieldValue": {
@@ -3838,7 +3831,6 @@
                     }
                 },
                 "properties": [],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_ast:JsonLike": {

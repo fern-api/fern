@@ -165,7 +165,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_:DocumentUploadResult": {
@@ -264,7 +263,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_:UploadDocumentResponse": {

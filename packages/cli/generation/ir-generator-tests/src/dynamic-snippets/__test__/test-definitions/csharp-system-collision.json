@@ -91,7 +91,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_:User": {
@@ -310,7 +309,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         }
     },

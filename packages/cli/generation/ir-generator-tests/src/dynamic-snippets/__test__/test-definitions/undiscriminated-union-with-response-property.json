@@ -61,7 +61,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_:UnionListResponse": {
@@ -127,7 +126,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_:MyUnion": {
@@ -266,7 +264,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_:VariantB": {
@@ -362,7 +359,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_:VariantC": {
@@ -458,7 +454,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         }
     },

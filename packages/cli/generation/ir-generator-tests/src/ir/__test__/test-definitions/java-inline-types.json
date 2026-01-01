@@ -13937,7 +13937,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:RequestTypeInlineType1": {
@@ -14000,7 +13999,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:RootType1": {
@@ -14226,7 +14224,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:RootType1FooMapValue": {
@@ -14319,7 +14316,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:RootType1FooListItem": {
@@ -14412,7 +14408,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:RootType1FooSetItem": {
@@ -14505,7 +14500,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:RootType1InlineType1": {
@@ -14628,7 +14622,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:RootType1InlineType1NestedInlineType1": {
@@ -14781,7 +14774,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:DiscriminatedUnion1": {
@@ -15038,7 +15030,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:DiscriminatedUnion1InlineType1InlineType1": {
@@ -15131,7 +15122,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:DiscriminatedUnion1InlineType2": {
@@ -15224,7 +15214,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:UndiscriminatedUnion1": {
@@ -15427,7 +15416,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:UndiscriminatedUnion1InlineType1InlineType1": {
@@ -15520,7 +15508,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:UndiscriminatedUnion1InlineType2": {
@@ -15613,7 +15600,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:InlineEnum1": {
@@ -15989,7 +15975,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1": {
@@ -16082,7 +16067,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType2": {
@@ -16175,7 +16159,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:UndiscriminatedUnion1InlineEnum1": {
@@ -16420,7 +16403,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:UndiscriminatedUnion1InlineSetItem1": {
@@ -16513,7 +16495,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:UndiscriminatedUnion1InlineMapItem1": {
@@ -16606,7 +16587,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:ReferenceType": {
@@ -16669,7 +16649,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:UnionTypeWithAliasVariant": {
@@ -17413,7 +17392,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:ObjectTypeWithMapAliasTypeValue": {
@@ -17483,7 +17461,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:ObjectTypeWithMapAliasTypeKey": {
@@ -17553,7 +17530,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:ObjectTypeWithMapAliasTypeBoth": {
@@ -17623,7 +17599,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:ObjectTypeWithListAliasType": {
@@ -17689,7 +17664,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:ObjectTypeWithSetAliasType": {
@@ -17755,7 +17729,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:AliasVariant": {
@@ -17950,7 +17923,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:OtherAliasVariantType": {
@@ -18013,7 +17985,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:AliasPropertyType": {
@@ -18076,7 +18047,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:OtherAliasPropertyType": {
@@ -18139,7 +18109,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:NonAliasVariant": {
@@ -18202,7 +18171,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             }
         },

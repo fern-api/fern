@@ -1346,7 +1346,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:Child": {
@@ -1438,9 +1437,6 @@
                         "propertyAccess": null,
                         "variable": null
                     }
-                ],
-                "extends": [
-                    "type_:Parent"
                 ],
                 "additionalProperties": false
             }

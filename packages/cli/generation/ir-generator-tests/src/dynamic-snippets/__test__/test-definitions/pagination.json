@@ -61,7 +61,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_:UsernamePage": {
@@ -160,7 +159,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_complex:SearchRequestQuery": {
@@ -374,7 +372,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_complex:MultipleFilterSearchRequestOperator": {
@@ -740,7 +737,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_complex:SingleFilterSearchRequestOperator": {
@@ -1163,7 +1159,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_complex:PaginatedConversationResponse": {
@@ -1363,7 +1358,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_complex:CursorPages": {
@@ -1599,7 +1593,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_complex:StartingAfterPaging": {
@@ -1733,7 +1726,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_complex:Conversation": {
@@ -1834,7 +1826,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:Order": {
@@ -2129,7 +2120,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:WithCursor": {
@@ -2272,7 +2262,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:UserListContainer": {
@@ -2415,7 +2404,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:UserPage": {
@@ -2588,7 +2576,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:UserOptionalListContainer": {
@@ -2734,7 +2721,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:UserOptionalListPage": {
@@ -2907,7 +2893,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:UsernameContainer": {
@@ -3050,7 +3035,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:ListUsersExtendedResponse": {
@@ -3253,9 +3237,6 @@
                     "variable": null
                 }
             ],
-            "extends": [
-                "type_inline-users/inline-users:UserPage"
-            ],
             "additionalProperties": false
         },
         "type_inline-users/inline-users:ListUsersExtendedOptionalListResponse": {
@@ -3457,9 +3438,6 @@
                     "propertyAccess": null,
                     "variable": null
                 }
-            ],
-            "extends": [
-                "type_inline-users/inline-users:UserOptionalListPage"
             ],
             "additionalProperties": false
         },
@@ -3696,7 +3674,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:ListUsersMixedTypePaginationResponse": {
@@ -3866,7 +3843,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:Page": {
@@ -4099,7 +4075,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:NextPage": {
@@ -4269,7 +4244,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:Users": {
@@ -4412,7 +4386,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_inline-users/inline-users:User": {
@@ -4582,7 +4555,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:Order": {
@@ -4799,7 +4771,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:WithCursor": {
@@ -4903,7 +4874,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:UserListContainer": {
@@ -5007,7 +4977,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:UserPage": {
@@ -5141,7 +5110,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:UserOptionalListContainer": {
@@ -5248,7 +5216,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:UserOptionalListPage": {
@@ -5382,7 +5349,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:UsernameContainer": {
@@ -5486,7 +5452,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:ListUsersExtendedResponse": {
@@ -5650,9 +5615,6 @@
                     "variable": null
                 }
             ],
-            "extends": [
-                "type_users:UserPage"
-            ],
             "additionalProperties": false
         },
         "type_users:ListUsersExtendedOptionalListResponse": {
@@ -5815,9 +5777,6 @@
                     "propertyAccess": null,
                     "variable": null
                 }
-            ],
-            "extends": [
-                "type_users:UserOptionalListPage"
             ],
             "additionalProperties": false
         },
@@ -6018,7 +5977,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:ListUsersOptionalDataPaginationResponse": {
@@ -6221,7 +6179,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:ListUsersMixedTypePaginationResponse": {
@@ -6355,7 +6312,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:Page": {
@@ -6549,7 +6505,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:NextPage": {
@@ -6680,7 +6635,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_users:User": {
@@ -6811,7 +6765,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         }
     },

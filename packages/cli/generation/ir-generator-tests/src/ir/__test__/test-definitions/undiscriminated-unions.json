@@ -9616,7 +9616,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_union:TypeWithOptionalUnion": {
@@ -9720,7 +9719,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_union:MyUnion": {
@@ -10395,7 +10393,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_union:OptionalMetadata": {
@@ -11108,7 +11105,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_union:ConvertToken": {
@@ -11239,7 +11235,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             }
         },

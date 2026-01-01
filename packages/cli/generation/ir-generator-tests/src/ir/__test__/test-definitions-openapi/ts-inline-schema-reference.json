@@ -5873,7 +5873,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:PostRootRequestBar": {
@@ -5972,7 +5971,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:PostRootResponseBarInnerBar": {
@@ -6071,7 +6069,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:PostRootResponseBar": {
@@ -6170,7 +6167,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:PostRootResponse": {
@@ -6269,7 +6265,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:Schema1InlineUnionMapValue": {
@@ -6460,7 +6455,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:Schema2TestEnum": {
@@ -6623,7 +6617,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:Schema2TestDiscriminatedUnionOne": {
@@ -6689,7 +6682,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:Schema2TestDiscriminatedUnion": {
@@ -6794,7 +6786,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:Schema2TestUnionB": {
@@ -6860,7 +6851,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:Schema2TestUnion": {
@@ -7097,7 +7087,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_:RootUnionMapValue": {

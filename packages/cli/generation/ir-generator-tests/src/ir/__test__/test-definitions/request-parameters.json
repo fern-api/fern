@@ -7141,7 +7141,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_user:NestedUser": {
@@ -7272,7 +7271,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_user:CreateUsernameBody": {
@@ -7433,7 +7431,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             },
             "type_user:CreateUsernameBodyOptionalProperties": {
@@ -7603,7 +7600,6 @@
                         "variable": null
                     }
                 ],
-                "extends": null,
                 "additionalProperties": false
             }
         },

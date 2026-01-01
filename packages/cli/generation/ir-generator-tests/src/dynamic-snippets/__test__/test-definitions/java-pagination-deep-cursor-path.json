@@ -102,7 +102,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_deep-cursor-path:C": {
@@ -206,7 +205,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_deep-cursor-path:B": {
@@ -307,7 +305,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_deep-cursor-path:A": {
@@ -411,7 +408,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_deep-cursor-path:Response": {
@@ -548,7 +544,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_deep-cursor-path:IndirectionRequired": {
@@ -685,7 +680,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_deep-cursor-path:MainRequired": {
@@ -786,7 +780,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_deep-cursor-path:InlineD": {
@@ -890,7 +883,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_deep-cursor-path:InlineC": {
@@ -994,7 +986,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_deep-cursor-path:InlineB": {
@@ -1095,7 +1086,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         },
         "type_deep-cursor-path:InlineA": {
@@ -1199,7 +1189,6 @@
                     "variable": null
                 }
             ],
-            "extends": null,
             "additionalProperties": false
         }
     },
