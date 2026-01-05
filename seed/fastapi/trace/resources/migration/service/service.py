@@ -39,20 +39,25 @@ class AbstractMigrationService(AbstractFernService):
     @classmethod
     def __init_get_attempted_migrations(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_attempted_migrations)
+        type_hints = typing.get_type_hints(cls.get_attempted_migrations)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "admin_key_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="admin-key-header")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="admin-key-header")]
                     )
                 )
             elif parameter_name == "x_random_header":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Random-Header")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Random-Header")],
                         default=None,
                     )
                 )
@@ -74,7 +79,7 @@ class AbstractMigrationService(AbstractFernService):
 
         router.get(
             path="/migration-info/all",
-            response_model=typing.Sequence[Migration],
+            response_model=None,
             description=AbstractMigrationService.get_attempted_migrations.__doc__,
             **get_route_args(cls.get_attempted_migrations, default_tag="migration"),
         )(wrapper)

@@ -54,13 +54,18 @@ class AbstractOptionalService(AbstractFernService):
     @classmethod
     def __init_send_optional_body(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_optional_body)
+        type_hints = typing.get_type_hints(cls.send_optional_body)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -80,7 +85,7 @@ class AbstractOptionalService(AbstractFernService):
 
         router.post(
             path="/send-optional-body",
-            response_model=str,
+            response_model=None,
             description=AbstractOptionalService.send_optional_body.__doc__,
             **get_route_args(cls.send_optional_body, default_tag="optional"),
         )(wrapper)
@@ -88,13 +93,18 @@ class AbstractOptionalService(AbstractFernService):
     @classmethod
     def __init_send_optional_typed_body(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_optional_typed_body)
+        type_hints = typing.get_type_hints(cls.send_optional_typed_body)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -114,7 +124,7 @@ class AbstractOptionalService(AbstractFernService):
 
         router.post(
             path="/send-optional-typed-body",
-            response_model=str,
+            response_model=None,
             description=AbstractOptionalService.send_optional_typed_body.__doc__,
             **get_route_args(cls.send_optional_typed_body, default_tag="optional"),
         )(wrapper)
@@ -122,21 +132,26 @@ class AbstractOptionalService(AbstractFernService):
     @classmethod
     def __init_send_optional_nullable_with_all_optional_properties(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.send_optional_nullable_with_all_optional_properties)
+        type_hints = typing.get_type_hints(cls.send_optional_nullable_with_all_optional_properties)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "action_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="actionId")])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="actionId")])
                 )
             elif parameter_name == "id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -160,7 +175,7 @@ class AbstractOptionalService(AbstractFernService):
 
         router.post(
             path="/deploy/{action_id}/versions/{id}",
-            response_model=DeployResponse,
+            response_model=None,
             description=AbstractOptionalService.send_optional_nullable_with_all_optional_properties.__doc__,
             **get_route_args(cls.send_optional_nullable_with_all_optional_properties, default_tag="optional"),
         )(wrapper)

@@ -7,7 +7,6 @@ import logging
 import typing
 
 import fastapi
-import fastapi._compat
 from ....core.abstract_fern_service import AbstractFernService
 from ....core.exceptions.fern_http_exception import FernHTTPException
 from ....core.route_args import get_route_args
@@ -44,15 +43,17 @@ class AbstractInlinedRequestsService(AbstractFernService):
     @classmethod
     def __init_post_with_object_bodyand_response(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post_with_object_bodyand_response)
+        type_hints = typing.get_type_hints(cls.post_with_object_bodyand_response)
+        
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+            
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                # Evaluate forward references before using in Annotated
-                # See: https://github.com/fastapi/fastapi/issues/13056
-                evaluated = fastapi._compat.evaluate_forwardref(parameter.annotation, cls.post_with_object_bodyand_response.__globals__, cls.post_with_object_bodyand_response.__globals__)
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[evaluated, fastapi.Body()]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.post_with_object_bodyand_response, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -73,6 +74,7 @@ class AbstractInlinedRequestsService(AbstractFernService):
         
         router.post(
             path="/req-bodies/object",
+            response_model=None,
             description=AbstractInlinedRequestsService.post_with_object_bodyand_response.__doc__,
             **get_route_args(cls.post_with_object_bodyand_response, default_tag="inlined_requests"),
         )(wrapper)
