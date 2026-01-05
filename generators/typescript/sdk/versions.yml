@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.2
+  changelogEntry:
+    - summary: |
+        Fix null check for nullable query parameters. When a query parameter type is nullable (e.g., `Date | null | undefined`),
+        the generated code now correctly checks for both `null` and `undefined` using `!= null` instead of only checking
+        `!== undefined`. This prevents TypeScript errors when calling methods like `.toISOString()` on nullable Date parameters.
+      type: fix
+  createdAt: "2026-01-05"
+  irVersion: 63
+
 - version: 3.43.1
   changelogEntry:
     - summary: |

@@ -371,8 +371,8 @@ export class GeneratedQueryParams {
                 ts.factory.createIfStatement(
                     ts.factory.createBinaryExpression(
                         referenceToQueryParameterProperty,
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
-                        ts.factory.createIdentifier("undefined")
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
                     ),
                     ts.factory.createBlock(statements)
                 )
