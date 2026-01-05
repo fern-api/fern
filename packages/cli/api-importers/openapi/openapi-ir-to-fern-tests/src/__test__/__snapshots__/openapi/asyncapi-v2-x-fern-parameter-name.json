@@ -1,0 +1,132 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {},
+      "rawContents": "{}
+",
+    },
+    "usersUserIdMessages.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "channel": {
+          "auth": false,
+          "examples": [
+            {
+              "messages": [
+                {
+                  "body": {},
+                  "type": "publish",
+                },
+                {
+                  "body": {},
+                  "type": "subscribe",
+                },
+              ],
+            },
+          ],
+          "messages": {
+            "publish": {
+              "body": "UsersUserIdMessagesPublish",
+              "origin": "client",
+            },
+            "subscribe": {
+              "body": "UsersUserIdMessagesSubscribe",
+              "origin": "server",
+            },
+          },
+          "path": "/users/{userId}/messages",
+          "path-parameters": {
+            "userId": {
+              "docs": "The user ID",
+              "type": "string",
+            },
+          },
+          "url": "production",
+        },
+        "types": {
+          "UsersUserIdMessagesPublish": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "content": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+          "UsersUserIdMessagesSubscribe": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "content": "optional<string>",
+              "timestamp": "optional<string>",
+            },
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "channel:
+  path: /users/{userId}/messages
+  url: production
+  auth: false
+  path-parameters:
+    userId:
+      type: string
+      docs: The user ID
+  messages:
+    publish:
+      origin: client
+      body: UsersUserIdMessagesPublish
+    subscribe:
+      origin: server
+      body: UsersUserIdMessagesSubscribe
+  examples:
+    - messages:
+        - type: publish
+          body: {}
+        - type: subscribe
+          body: {}
+types:
+  UsersUserIdMessagesPublish:
+    properties:
+      content: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+  UsersUserIdMessagesSubscribe:
+    properties:
+      content: optional<string>
+      timestamp: optional<string>
+    source:
+      openapi: ../asyncapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "default-environment": "production",
+      "default-url": "Base",
+      "environments": {
+        "production": "wss://api.example.com",
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": "Base",
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+environments:
+  production: wss://api.example.com
+default-environment: production
+default-url: Base
+",
+  },
+}
