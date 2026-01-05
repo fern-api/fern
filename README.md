@@ -265,9 +265,6 @@ curl -fsSL https://get.jetify.com/devbox | bash
 
 # Enter the development environment
 devbox shell
-
-# Bootstrap the project
-devbox run bootstrap
 ```
 
 DevBox automatically installs all required dependencies including Node.js, pnpm, Go, Python, Poetry, JDK, and buf with pinned versions matching CI.

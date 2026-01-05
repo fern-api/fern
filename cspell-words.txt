@@ -146,6 +146,7 @@ deno
 depcheckrc
 Deque
 descs
+devbox
 devrev
 DEVREV
 Dfile

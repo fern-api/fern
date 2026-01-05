@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.13.6/.schema/devbox.schema.json",
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
   "packages": [
     "nodejs@22",
     "pnpm@9.4.0",
@@ -21,7 +21,7 @@
       "echo 'buf:' $(buf --version)"
     ],
     "scripts": {
-      "bootstrap": "pnpm install",
+      "install": "pnpm install",
       "compile": "pnpm compile",
       "test": "pnpm test",
       "lint": "pnpm check",
