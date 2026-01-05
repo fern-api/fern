@@ -10,9 +10,13 @@
     "buf@1.50.0",
     "git-lfs@latest"
   ],
+  "env": {
+    "GOPATH": "$HOME/go",
+    "PATH": "$PATH:$HOME/go/bin"
+  },
   "shell": {
     "init_hook": [
-      "unset GOROOT",
+      "export \"GOROOT=$(go env GOROOT)\"",
       "echo 'Fern development environment loaded!'",
       "echo 'Node.js:' $(node --version)",
       "echo 'pnpm:' $(pnpm --version)",
