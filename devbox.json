@@ -7,17 +7,24 @@
     "python@3.10",
     "poetry@1.8",
     "jdk@17",
+    "dotnet-sdk_10@latest",
     "buf@1.50.0",
     "git-lfs@latest"
   ],
+  "env": {
+    "GOPATH": "$HOME/go",
+    "PATH": "$PATH:$HOME/go/bin"
+  },
   "shell": {
     "init_hook": [
+      "export \"GOROOT=$(go env GOROOT)\"",
       "echo 'Fern development environment loaded!'",
       "echo 'Node.js:' $(node --version)",
       "echo 'pnpm:' $(pnpm --version)",
-      "echo 'Go:' $(go version)",
+      "echo 'Go:' $(go version 2>/dev/null || echo 'not found')",
       "echo 'Python:' $(python --version)",
       "echo 'Java:' $(java --version 2>&1 | head -1)",
+      "echo '.NET:' $(dotnet --version 2>/dev/null || echo 'not found')",
       "echo 'buf:' $(buf --version)"
     ],
     "scripts": {
