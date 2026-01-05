@@ -4,9 +4,35 @@
 # Results are logged to separate files in a timestamped directory
 #
 # Usage:
-#   ./scripts/test-remote-local.sh                    # Run all generators
-#   ./scripts/test-remote-local.sh ts-sdk             # Run only ts-sdk
-#   ./scripts/test-remote-local.sh ts-sdk java-sdk    # Run ts-sdk and java-sdk
+#   ./scripts/test-remote-local.sh                              # Run all generators (published images)
+#   ./scripts/test-remote-local.sh --build                      # Run all generators (build from source)
+#   ./scripts/test-remote-local.sh ts-sdk                       # Run only ts-sdk (published images)
+#   ./scripts/test-remote-local.sh --build ts-sdk               # Run only ts-sdk (build from source)
+#   ./scripts/test-remote-local.sh --build ts-sdk java-sdk      # Run ts-sdk and java-sdk (build from source)
+
+BUILD_FLAG=""
+GENERATORS=()
+
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --build)
+            BUILD_FLAG="--build-generator"
+            shift
+            ;;
+        *)
+            GENERATORS+=("$1")
+            shift
+            ;;
+    esac
+done
+
+ALL_GENERATORS=("ts-sdk" "python-sdk" "go-sdk" "java-sdk")
+
+# Use all generators if none specified
+if [ ${#GENERATORS[@]} -eq 0 ]; then
+    GENERATORS=("${ALL_GENERATORS[@]}")
+fi
 
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 LOG_DIR="test-remote-local-logs-${TIMESTAMP}"
@@ -15,26 +41,18 @@ mkdir -p "$LOG_DIR"
 
 echo "Starting test-remote-local runs at $(date)"
 echo "Logs will be saved to: $LOG_DIR"
+echo "Build from source: ${BUILD_FLAG:-no}"
 echo ""
 
 echo "Building seed..."
 pnpm seed:build
-
-ALL_GENERATORS=("ts-sdk" "python-sdk" "go-sdk" "java-sdk")
-
-# Use command line arguments if provided, otherwise use all generators
-if [ $# -gt 0 ]; then
-    GENERATORS=("$@")
-else
-    GENERATORS=("${ALL_GENERATORS[@]}")
-fi
 
 echo "Generators to test: ${GENERATORS[*]}"
 echo ""
 
 for generator in "${GENERATORS[@]}"; do
     echo "Running test-remote-local for ${generator}..."
-    pnpm seed test-remote-local --generator "$generator" --build-generator 2>&1 | tee "${LOG_DIR}/${generator}.log"
+    pnpm seed test-remote-local --generator "$generator" $BUILD_FLAG 2>&1 | tee "${LOG_DIR}/${generator}.log"
     EXIT_CODE=$?
     if [ $EXIT_CODE -eq 0 ]; then
         echo "  ✓ ${generator} completed successfully"
