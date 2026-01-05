@@ -18,7 +18,11 @@
       "Bash(git pull:*)",
       "Bash(git checkout:*)",
       "Bash(git branch:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(git push*origin claude/:*)"
+    ],
+    "ask": [
+      "Bash(git push:*)"
     ],
     "deny": [
       "Read(**/.env)",
@@ -33,8 +37,7 @@
       "Edit(**/generated)",
       "Edit(./packages/ir-sdk/src)",
       "Edit(./packages/ir-sdk/src/sdk)",
-      "Edit(./generators/go/internal/fern/ir)",
-      "Bash(git push:*)"
+      "Edit(./generators/go/internal/fern/ir)"
     ]
   },
   "hooks": {
