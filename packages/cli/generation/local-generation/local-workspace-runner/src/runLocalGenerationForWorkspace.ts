@@ -182,7 +182,7 @@ export async function runLocalGenerationForWorkspace({
                             githubRepository: selfhostedGithubConfig.uri,
                             installationToken: selfhostedGithubConfig.token,
                             targetDirectory: absolutePathToLocalOutput,
-                            timeoutMs: 1000 // 10 seconds timeout for credential/network issues
+                            timeoutMs: 30000 // 30 seconds timeout for credential/network issues
                         });
 
                         // For push mode, checkout the target branch while the working tree is clean.
@@ -269,6 +269,12 @@ function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocat
         const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];
         if (packageName != null) {
             return packageName;
+        }
+
+        // Check output.coordinate for Maven (Java)
+        const coordinate = (generatorInvocation.raw.output as { coordinate?: string }).coordinate;
+        if (coordinate != null) {
+            return coordinate;
         }
     }
 

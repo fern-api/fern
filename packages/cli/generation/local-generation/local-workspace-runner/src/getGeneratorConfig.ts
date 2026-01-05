@@ -101,6 +101,204 @@ export declare namespace getGeneratorConfig {
     }
 }
 
+function getGeneratorPublishConfig(
+    generatorInvocation: generatorsYml.GeneratorInvocation,
+    outputVersion: string
+): FernGeneratorExec.GeneratorPublishConfig | undefined {
+    // Extract publish info from the output mode to populate generatorConfig.publish
+    // This is needed for generators (like Java) that check generatorConfig.publish for SDK metadata
+    const publishInfo = generatorInvocation.outputMode._visit<FiddleGithubPublishInfo | undefined>({
+        github: (val) => val.publishInfo,
+        githubV2: (val) => val.publishInfo,
+        publish: () => undefined,
+        publishV2: () => undefined,
+        downloadFiles: () => undefined,
+        _other: () => undefined
+    });
+
+    if (publishInfo == null) {
+        return undefined;
+    }
+
+    // Create empty registry configs with default values for v1 (registries)
+    const emptyMavenV1: FernGeneratorExec.MavenRegistryConfig = {
+        registryUrl: "",
+        username: "",
+        password: "",
+        group: ""
+    };
+    const emptyNpmV1: FernGeneratorExec.NpmRegistryConfig = {
+        registryUrl: "",
+        token: "",
+        scope: ""
+    };
+
+    // Create empty registry configs with default values for v2 (registriesV2)
+    const emptyMavenV2: FernGeneratorExec.MavenRegistryConfigV2 = {
+        registryUrl: "",
+        username: "",
+        password: "",
+        coordinate: ""
+    };
+    const emptyNpmV2: FernGeneratorExec.NpmRegistryConfigV2 = {
+        registryUrl: "",
+        token: "",
+        packageName: ""
+    };
+    const emptyPypi: FernGeneratorExec.PypiRegistryConfig = {
+        registryUrl: "",
+        username: "",
+        password: "",
+        packageName: ""
+    };
+    const emptyRubygems: FernGeneratorExec.RubyGemsRegistryConfig = {
+        registryUrl: "",
+        apiKey: "",
+        packageName: ""
+    };
+    const emptyNuget: FernGeneratorExec.NugetRegistryConfig = {
+        registryUrl: "",
+        apiKey: "",
+        packageName: ""
+    };
+    const emptyCrates: FernGeneratorExec.CratesRegistryConfig = {
+        registryUrl: "",
+        token: "",
+        packageName: ""
+    };
+
+    // Populate the specific registry config based on publish info type
+    return FiddleGithubPublishInfo._visit<FernGeneratorExec.GeneratorPublishConfig | undefined>(publishInfo, {
+        maven: (value) => ({
+            registries: {
+                maven: {
+                    registryUrl: value.registryUrl,
+                    username: value.credentials?.username ?? "",
+                    password: value.credentials?.password ?? "",
+                    group: value.coordinate.split(":")[0] ?? ""
+                },
+                npm: emptyNpmV1
+            },
+            registriesV2: {
+                maven: {
+                    registryUrl: value.registryUrl,
+                    username: value.credentials?.username ?? "",
+                    password: value.credentials?.password ?? "",
+                    coordinate: value.coordinate
+                },
+                npm: emptyNpmV2,
+                pypi: emptyPypi,
+                rubygems: emptyRubygems,
+                nuget: emptyNuget,
+                crates: emptyCrates
+            },
+            version: outputVersion
+        }),
+        npm: (value) => ({
+            registries: {
+                maven: emptyMavenV1,
+                npm: {
+                    registryUrl: value.registryUrl,
+                    token: value.token ?? "",
+                    scope: ""
+                }
+            },
+            registriesV2: {
+                maven: emptyMavenV2,
+                npm: {
+                    registryUrl: value.registryUrl,
+                    token: value.token ?? "",
+                    packageName: value.packageName
+                },
+                pypi: emptyPypi,
+                rubygems: emptyRubygems,
+                nuget: emptyNuget,
+                crates: emptyCrates
+            },
+            version: outputVersion
+        }),
+        pypi: (value) => ({
+            registries: {
+                maven: emptyMavenV1,
+                npm: emptyNpmV1
+            },
+            registriesV2: {
+                maven: emptyMavenV2,
+                npm: emptyNpmV2,
+                pypi: {
+                    registryUrl: value.registryUrl,
+                    username: "",
+                    password: "",
+                    packageName: value.packageName
+                },
+                rubygems: emptyRubygems,
+                nuget: emptyNuget,
+                crates: emptyCrates
+            },
+            version: outputVersion
+        }),
+        rubygems: (value) => ({
+            registries: {
+                maven: emptyMavenV1,
+                npm: emptyNpmV1
+            },
+            registriesV2: {
+                maven: emptyMavenV2,
+                npm: emptyNpmV2,
+                pypi: emptyPypi,
+                rubygems: {
+                    registryUrl: value.registryUrl,
+                    apiKey: value.apiKey ?? "",
+                    packageName: value.packageName
+                },
+                nuget: emptyNuget,
+                crates: emptyCrates
+            },
+            version: outputVersion
+        }),
+        nuget: (value) => ({
+            registries: {
+                maven: emptyMavenV1,
+                npm: emptyNpmV1
+            },
+            registriesV2: {
+                maven: emptyMavenV2,
+                npm: emptyNpmV2,
+                pypi: emptyPypi,
+                rubygems: emptyRubygems,
+                nuget: {
+                    registryUrl: value.registryUrl,
+                    apiKey: value.apiKey ?? "",
+                    packageName: value.packageName
+                },
+                crates: emptyCrates
+            },
+            version: outputVersion
+        }),
+        crates: (value) => ({
+            registries: {
+                maven: emptyMavenV1,
+                npm: emptyNpmV1
+            },
+            registriesV2: {
+                maven: emptyMavenV2,
+                npm: emptyNpmV2,
+                pypi: emptyPypi,
+                rubygems: emptyRubygems,
+                nuget: emptyNuget,
+                crates: {
+                    registryUrl: value.registryUrl,
+                    token: value.token ?? "",
+                    packageName: value.packageName
+                }
+            },
+            version: outputVersion
+        }),
+        postman: () => undefined,
+        _other: () => undefined
+    });
+}
+
 function getGithubPublishConfig(
     githubPublishInfo: FiddleGithubPublishInfo | undefined
 ): FernGeneratorExec.GithubPublishInfo | undefined {
@@ -118,7 +316,8 @@ function getGithubPublishConfig(
                               : token.startsWith("${") && token.endsWith("}")
                                 ? token.slice(2, -1).trim()
                                 : ""
-                      )
+                      ),
+                      shouldGeneratePublishWorkflow: false
                   });
               },
               maven: (value) =>
@@ -134,7 +333,8 @@ function getGithubPublishConfig(
                                     passwordEnvironmentVariable: EnvironmentVariable(value.signature.password ?? ""),
                                     secretKeyEnvironmentVariable: EnvironmentVariable(value.signature.secretKey ?? "")
                                 }
-                              : undefined
+                              : undefined,
+                      shouldGeneratePublishWorkflow: false
                   }),
               pypi: (value) =>
                   FernGeneratorExec.GithubPublishInfo.pypi({
@@ -142,13 +342,15 @@ function getGithubPublishConfig(
                       packageName: value.packageName,
                       usernameEnvironmentVariable: EnvironmentVariable("PYPI_USERNAME"),
                       passwordEnvironmentVariable: EnvironmentVariable("PYPI_PASSWORD"),
-                      pypiMetadata: value.pypiMetadata
+                      pypiMetadata: value.pypiMetadata,
+                      shouldGeneratePublishWorkflow: false
                   }),
               rubygems: (value) =>
                   FernGeneratorExec.GithubPublishInfo.rubygems({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
-                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? "")
+                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? ""),
+                      shouldGeneratePublishWorkflow: false
                   }),
               postman: (value) =>
                   FernGeneratorExec.GithubPublishInfo.postman({
@@ -159,13 +361,15 @@ function getGithubPublishConfig(
                   FernGeneratorExec.GithubPublishInfo.nuget({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
-                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? "")
+                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? ""),
+                      shouldGeneratePublishWorkflow: false
                   }),
               crates: (value) =>
                   FernGeneratorExec.GithubPublishInfo.crates({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
-                      tokenEnvironmentVariable: EnvironmentVariable(value.token ?? "")
+                      tokenEnvironmentVariable: EnvironmentVariable(value.token ?? ""),
+                      shouldGeneratePublishWorkflow: false
                   }),
               _other: () => undefined
           })
@@ -265,7 +469,7 @@ export function getGeneratorConfig({
     return {
         irFilepath: irPath,
         output,
-        publish: undefined,
+        publish: getGeneratorPublishConfig(generatorInvocation, outputVersion),
         customConfig: customConfig,
         workspaceName,
         organization,

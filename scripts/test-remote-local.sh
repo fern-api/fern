@@ -6,11 +6,14 @@
 # Usage:
 #   ./scripts/test-remote-local.sh                              # Run all generators (published images)
 #   ./scripts/test-remote-local.sh --build                      # Run all generators (build from source)
+#   ./scripts/test-remote-local.sh --both                       # Run all generators with AND without --build-generator
 #   ./scripts/test-remote-local.sh ts-sdk                       # Run only ts-sdk (published images)
 #   ./scripts/test-remote-local.sh --build ts-sdk               # Run only ts-sdk (build from source)
-#   ./scripts/test-remote-local.sh --build ts-sdk java-sdk      # Run ts-sdk and java-sdk (build from source)
+#   ./scripts/test-remote-local.sh --both ts-sdk                # Run ts-sdk with AND without --build-generator
+#   ./scripts/test-remote-local.sh --both ts-sdk java-sdk       # Run ts-sdk and java-sdk both ways
 
 BUILD_FLAG=""
+RUN_BOTH=false
 GENERATORS=()
 
 # Parse arguments
@@ -18,6 +21,10 @@ while [[ $# -gt 0 ]]; do
     case $1 in
         --build)
             BUILD_FLAG="--build-generator"
+            shift
+            ;;
+        --both)
+            RUN_BOTH=true
             shift
             ;;
         *)
@@ -41,7 +48,11 @@ mkdir -p "$LOG_DIR"
 
 echo "Starting test-remote-local runs at $(date)"
 echo "Logs will be saved to: $LOG_DIR"
-echo "Build from source: ${BUILD_FLAG:-no}"
+if [ "$RUN_BOTH" = true ]; then
+    echo "Mode: Running both with and without --build-generator"
+else
+    echo "Build from source: ${BUILD_FLAG:-no}"
+fi
 echo ""
 
 echo "Building seed..."
@@ -50,14 +61,30 @@ pnpm seed:build
 echo "Generators to test: ${GENERATORS[*]}"
 echo ""
 
-for generator in "${GENERATORS[@]}"; do
-    echo "Running test-remote-local for ${generator}..."
-    pnpm seed test-remote-local --generator "$generator" $BUILD_FLAG 2>&1 | tee "${LOG_DIR}/${generator}.log"
+run_test() {
+    local generator=$1
+    local build_flag=$2
+    local suffix=$3
+
+    echo "Running test-remote-local for ${generator} ${suffix}..."
+    pnpm seed test-remote-local --generator "$generator" $build_flag 2>&1 | tee "${LOG_DIR}/${generator}${suffix}.log"
     EXIT_CODE=$?
     if [ $EXIT_CODE -eq 0 ]; then
-        echo "  ✓ ${generator} completed successfully"
+        echo "  ✓ ${generator} ${suffix} completed successfully"
     else
-        echo "  ✗ ${generator} failed with exit code ${EXIT_CODE}"
+        echo "  ✗ ${generator} ${suffix} failed with exit code ${EXIT_CODE}"
+    fi
+}
+
+for generator in "${GENERATORS[@]}"; do
+    if [ "$RUN_BOTH" = true ]; then
+        # Run without --build-generator first
+        run_test "$generator" "" "(published)"
+        # Then run with --build-generator
+        run_test "$generator" "--build-generator" "(built)"
+    else
+        # Run with the specified flag (or no flag)
+        run_test "$generator" "$BUILD_FLAG" ""
     fi
 done
 
