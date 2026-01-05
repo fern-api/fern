@@ -3244,6 +3244,9 @@
             }
           }
         ],
+        "extends": [
+          "type_:TreeCreate"
+        ],
         "additionalProperties": false,
         "type": "object"
       }

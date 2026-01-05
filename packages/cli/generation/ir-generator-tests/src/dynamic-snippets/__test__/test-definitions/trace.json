@@ -849,6 +849,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:MapType": {
@@ -979,6 +980,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:VariableValue": {
@@ -1981,6 +1983,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:MapValue": {
@@ -2084,6 +2087,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:KeyValuePair": {
@@ -2214,6 +2218,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:BinaryTreeValue": {
@@ -2354,6 +2359,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:BinaryTreeNodeValue": {
@@ -2550,6 +2556,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:BinaryTreeNodeAndTreeValue": {
@@ -2680,6 +2687,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:SinglyLinkedListValue": {
@@ -2820,6 +2828,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:SinglyLinkedListNodeValue": {
@@ -2983,6 +2992,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:SinglyLinkedListNodeAndListValue": {
@@ -3113,6 +3123,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:DoublyLinkedListValue": {
@@ -3253,6 +3264,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:DoublyLinkedListNodeValue": {
@@ -3449,6 +3461,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:DoublyLinkedListNodeAndListValue": {
@@ -3579,6 +3592,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:DebugMapValue": {
@@ -3682,6 +3696,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:DebugKeyValuePairs": {
@@ -3812,6 +3827,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:TestCase": {
@@ -3945,6 +3961,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:TestCaseWithExpectedResult": {
@@ -4075,6 +4092,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:FileInfo": {
@@ -4205,6 +4223,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_commons:Language": {
@@ -4439,6 +4458,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_lang-server:LangServerResponse": {
@@ -4538,6 +4558,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_migration:MigrationStatus": {
@@ -4803,6 +4824,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_playlist:PlaylistId": {
@@ -5067,6 +5089,9 @@
                     "variable": null
                 }
             ],
+            "extends": [
+                "type_playlist:PlaylistCreateRequest"
+            ],
             "additionalProperties": false
         },
         "type_playlist:PlaylistCreateRequest": {
@@ -5200,6 +5225,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_playlist:UpdatePlaylistRequest": {
@@ -5333,6 +5359,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_playlist:PlaylistIdNotFoundErrorBody": {
@@ -5950,6 +5977,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_problem:ProblemDescription": {
@@ -6053,6 +6081,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_problem:ProblemDescriptionBoard": {
@@ -6367,6 +6396,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_problem:VariableTypeAndName": {
@@ -6497,6 +6527,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_problem:CreateProblemRequest": {
@@ -6790,6 +6821,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_problem:CreateProblemResponse": {
@@ -7041,6 +7073,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_problem:CreateProblemError": {
@@ -7319,6 +7352,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_problem:GetDefaultStarterFilesResponse": {
@@ -7426,6 +7460,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:SubmissionId": {
@@ -7926,6 +7961,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:SubmitRequestV2": {
@@ -8185,6 +8221,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:WorkspaceSubmitRequest": {
@@ -8381,6 +8418,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:SubmissionFileInfo": {
@@ -8541,6 +8579,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:SubmissionTypeEnum": {
@@ -8732,6 +8771,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:SubmissionResponse": {
@@ -9507,6 +9547,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:RunningResponse": {
@@ -9637,6 +9678,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:RunningSubmissionState": {
@@ -9946,6 +9988,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:ErrorInfo": {
@@ -10218,6 +10261,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:RuntimeError": {
@@ -10318,6 +10362,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:InternalError": {
@@ -10418,6 +10463,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:StoppedResponse": {
@@ -10518,6 +10564,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:WorkspaceRanResponse": {
@@ -10648,6 +10695,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:WorkspaceRunDetails": {
@@ -10814,6 +10862,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:GradedResponse": {
@@ -10951,6 +11000,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:GradedResponseV2": {
@@ -11088,6 +11138,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TestCaseGrade": {
@@ -11333,6 +11384,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TestCaseNonHiddenGrade": {
@@ -11529,6 +11581,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:RecordedResponseNotification": {
@@ -11692,6 +11745,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:RecordingResponseNotification": {
@@ -11918,6 +11972,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:LightweightStackframeInformation": {
@@ -12048,6 +12103,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TestCaseResultWithStdout": {
@@ -12178,6 +12234,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TestCaseResult": {
@@ -12338,6 +12395,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:ActualResult": {
@@ -12820,6 +12878,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:InvalidRequestResponse": {
@@ -12950,6 +13009,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:InvalidRequestCause": {
@@ -13222,6 +13282,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:SubmissionIdNotFound": {
@@ -13322,6 +13383,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:CustomTestCasesUnsupported": {
@@ -13452,6 +13514,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:UnexpectedLanguageError": {
@@ -13582,6 +13645,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TerminatedResponse": {
@@ -13651,6 +13715,7 @@
                 }
             },
             "properties": [],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:FinishedResponse": {
@@ -13751,6 +13816,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:StdoutResponse": {
@@ -13881,6 +13947,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:StderrResponse": {
@@ -14011,6 +14078,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TraceResponse": {
@@ -14270,6 +14338,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TraceResponseV2": {
@@ -14559,6 +14628,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TracedFile": {
@@ -14689,6 +14759,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:ExpressionLocation": {
@@ -14819,6 +14890,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:StackInformation": {
@@ -14952,6 +15024,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:StackFrame": {
@@ -15115,6 +15188,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:Scope": {
@@ -15222,6 +15296,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:ExecutionSessionResponse": {
@@ -15415,6 +15490,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:ExecutionSessionStatus": {
@@ -15954,6 +16030,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:WorkspaceSubmissionStatusV2": {
@@ -16057,6 +16134,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TestSubmissionUpdate": {
@@ -16187,6 +16265,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TestSubmissionUpdateInfo": {
@@ -16574,6 +16653,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:WorkspaceSubmissionUpdateInfo": {
@@ -16987,6 +17067,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:RecordedTestCaseUpdate": {
@@ -17117,6 +17198,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:WorkspaceTracedUpdate": {
@@ -17217,6 +17299,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:SubmissionTypeState": {
@@ -17462,6 +17545,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:WorkspaceSubmissionStatus": {
@@ -17889,6 +17973,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TestSubmissionStatus": {
@@ -18408,6 +18493,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TraceResponsesPage": {
@@ -18544,6 +18630,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:TraceResponsesPageV2": {
@@ -18680,6 +18767,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:GetTraceResponsesPageRequest": {
@@ -18783,6 +18871,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:WorkspaceStarterFilesResponse": {
@@ -18890,6 +18979,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:WorkspaceStarterFilesResponseV2": {
@@ -18997,6 +19087,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:WorkspaceFiles": {
@@ -19130,6 +19221,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:ExecutionSessionState": {
@@ -19386,6 +19478,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:GetExecutionSessionStateResponse": {
@@ -19559,6 +19652,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_submission:GetSubmissionStateResponse": {
@@ -19752,6 +19846,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:TestCaseTemplateId": {
@@ -20500,6 +20595,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:LightweightProblemInfoV2": {
@@ -20732,6 +20828,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:CreateProblemRequestV2": {
@@ -21060,6 +21157,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:TestCaseV2": {
@@ -21299,6 +21397,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:TestCaseExpects": {
@@ -21441,6 +21540,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:TestCaseImplementationReference": {
@@ -21857,6 +21957,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:TestCaseTemplate": {
@@ -22056,6 +22157,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:TestCaseImplementation": {
@@ -22225,6 +22327,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:TestCaseFunction": {
@@ -22578,6 +22681,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:VoidFunctionDefinition": {
@@ -22750,6 +22854,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:Parameter": {
@@ -22949,6 +23054,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:NonVoidFunctionDefinition": {
@@ -23118,6 +23224,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:VoidFunctionSignature": {
@@ -23260,6 +23367,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:NonVoidFunctionSignature": {
@@ -23432,6 +23540,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:VoidFunctionSignatureThatTakesActualResult": {
@@ -23604,6 +23713,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:AssertCorrectnessCheck": {
@@ -23927,6 +24037,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:VoidFunctionDefinitionThatTakesActualResult": {
@@ -24099,6 +24210,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:TestCaseImplementationDescription": {
@@ -24241,6 +24353,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:TestCaseImplementationDescriptionBoard": {
@@ -24630,6 +24743,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:FunctionImplementationForMultipleLanguages": {
@@ -24776,6 +24890,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:FunctionImplementation": {
@@ -24948,6 +25063,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:GeneratedFiles": {
@@ -25168,6 +25284,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:CustomFiles": {
@@ -25598,6 +25715,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:Files": {
@@ -25740,6 +25858,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:FileInfoV2": {
@@ -25969,6 +26088,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:DefaultProvidedFile": {
@@ -26141,6 +26261,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:FunctionSignature": {
@@ -26491,6 +26612,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:GetFunctionSignatureResponse": {
@@ -26637,6 +26759,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:GetBasicSolutionFileRequest": {
@@ -26806,6 +26929,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:GetBasicSolutionFileResponse": {
@@ -26952,6 +27076,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:GetGeneratedTestCaseFileRequest": {
@@ -27124,6 +27249,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/problem:GetGeneratedTestCaseTemplateFileRequest": {
@@ -27263,6 +27389,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseTemplateId": {
@@ -28163,6 +28290,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:LightweightProblemInfoV2": {
@@ -28433,6 +28561,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:CreateProblemRequestV2": {
@@ -28799,6 +28928,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseV2": {
@@ -29076,6 +29206,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseExpects": {
@@ -29256,6 +29387,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseImplementationReference": {
@@ -29748,6 +29880,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseTemplate": {
@@ -29985,6 +30118,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseImplementation": {
@@ -30192,6 +30326,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseFunction": {
@@ -30621,6 +30756,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:VoidFunctionDefinition": {
@@ -30831,6 +30967,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:Parameter": {
@@ -31068,6 +31205,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:NonVoidFunctionDefinition": {
@@ -31275,6 +31413,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:VoidFunctionSignature": {
@@ -31455,6 +31594,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:NonVoidFunctionSignature": {
@@ -31665,6 +31805,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:VoidFunctionSignatureThatTakesActualResult": {
@@ -31875,6 +32016,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:AssertCorrectnessCheck": {
@@ -32274,6 +32416,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:VoidFunctionDefinitionThatTakesActualResult": {
@@ -32484,6 +32627,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseImplementationDescription": {
@@ -32664,6 +32808,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:TestCaseImplementationDescriptionBoard": {
@@ -33129,6 +33274,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:FunctionImplementationForMultipleLanguages": {
@@ -33313,6 +33459,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:FunctionImplementation": {
@@ -33523,6 +33670,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:GeneratedFiles": {
@@ -33781,6 +33929,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:CustomFiles": {
@@ -34287,6 +34436,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:Files": {
@@ -34467,6 +34617,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:FileInfoV2": {
@@ -34734,6 +34885,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:DefaultProvidedFile": {
@@ -34944,6 +35096,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:FunctionSignature": {
@@ -35370,6 +35523,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:GetFunctionSignatureResponse": {
@@ -35554,6 +35708,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:GetBasicSolutionFileRequest": {
@@ -35761,6 +35916,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:GetBasicSolutionFileResponse": {
@@ -35945,6 +36101,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:GetGeneratedTestCaseFileRequest": {
@@ -36155,6 +36312,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_v2/v3/problem:GetGeneratedTestCaseTemplateFileRequest": {
@@ -36332,6 +36490,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         }
     },
