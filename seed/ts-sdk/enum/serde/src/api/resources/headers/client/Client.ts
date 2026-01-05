@@ -50,17 +50,8 @@ export class HeadersClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                operand: serializers.Operand.jsonOrThrow(operand, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-                maybeOperand:
-                    maybeOperand != null
-                        ? serializers.Operand.jsonOrThrow(maybeOperand, {
-                              unrecognizedObjectKeys: "strip",
-                              omitUndefined: true,
-                          })
-                        : undefined,
+                operand: operand,
+                maybeOperand: maybeOperand,
                 operandOrColor: (() => {
                     const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
                         unrecognizedObjectKeys: "strip",

@@ -127,6 +127,7 @@
             },
           },
         },
+        "extends": undefined,
         "properties": [
           {
             "name": {
@@ -388,6 +389,7 @@
             },
           },
         },
+        "extends": undefined,
         "properties": [
           {
             "name": {

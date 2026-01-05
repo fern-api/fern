@@ -209,7 +209,6 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                                 ts.factory.createParameterDeclaration(
                                     undefined,
                                     undefined,
-                                    undefined,
                                     ts.factory.createIdentifier(
                                         GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME
                                     ),
@@ -234,7 +233,6 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                                 ts.factory.createParameterDeclaration(
                                     undefined,
                                     undefined,
-                                    undefined,
                                     ts.factory.createIdentifier("event"),
                                     undefined,
                                     context.coreUtilities.websocket.CloseEvent._getReferenceToType(),
@@ -252,7 +250,6 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
                             undefined,
                             [
                                 ts.factory.createParameterDeclaration(
-                                    undefined,
                                     undefined,
                                     undefined,
                                     ts.factory.createIdentifier("error"),

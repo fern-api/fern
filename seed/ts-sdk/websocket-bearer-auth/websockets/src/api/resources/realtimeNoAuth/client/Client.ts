@@ -29,7 +29,7 @@ export class RealtimeNoAuthClient {
 
     public async connect(args: RealtimeNoAuthClient.ConnectArgs): Promise<RealtimeNoAuthSocket> {
         const { session_id: sessionId, model, headers, debug, reconnectAttempts } = args;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (model != null) {
             _queryParams.model = model;
         }

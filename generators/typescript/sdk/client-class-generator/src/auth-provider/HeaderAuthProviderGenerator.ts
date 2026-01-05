@@ -112,7 +112,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                 name: getPropertyKey(this.authScheme.name.name.camelCase.safeName),
                 hasQuestionToken: isHeaderOptional,
                 type: getTextOfTsNode(propertyType),
-                docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
+                docs: this.authScheme.docs ? [this.authScheme.docs] : undefined
             }
         ];
     }

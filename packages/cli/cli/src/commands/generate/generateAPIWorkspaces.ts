@@ -30,7 +30,8 @@ export async function generateAPIWorkspaces({
     runner,
     inspect,
     lfsOverride,
-    fernignorePath
+    fernignorePath,
+    dynamicIrOnly
 }: {
     project: Project;
     cliContext: CliContext;
@@ -46,6 +47,7 @@ export async function generateAPIWorkspaces({
     inspect: boolean;
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
+    dynamicIrOnly: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -134,7 +136,8 @@ export async function generateAPIWorkspaces({
                     runner,
                     inspect,
                     lfsOverride,
-                    fernignorePath
+                    fernignorePath,
+                    dynamicIrOnly
                 });
             });
         })

@@ -633,6 +633,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     description:
                         "Path to a custom .fernignore file to use instead of the one on the main branch (remote generation only)"
+                })
+                .option("dynamic-ir-only", {
+                    boolean: true,
+                    description:
+                        "Only upload dynamic IR for specified version, skip SDK generation (remote generation only)",
+                    default: false
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -647,6 +653,21 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
                     "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                );
+            }
+            if (argv["dynamic-ir-only"] && (argv.local || argv.runner != null)) {
+                return cliContext.failWithoutThrowing(
+                    "The --dynamic-ir-only flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                );
+            }
+            if (argv["dynamic-ir-only"] && argv.version == null) {
+                return cliContext.failWithoutThrowing(
+                    "The --dynamic-ir-only flag requires a version to be specified with --version."
+                );
+            }
+            if (argv["dynamic-ir-only"] && argv.docs != null) {
+                return cliContext.failWithoutThrowing(
+                    "The --dynamic-ir-only flag can only be used for API generation, not docs generation."
                 );
             }
             if (argv.api != null) {
@@ -667,7 +688,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     runner: argv.runner as ContainerRunner,
                     inspect: false,
                     lfsOverride: argv.lfsOverride,
-                    fernignorePath: argv.fernignore
+                    fernignorePath: argv.fernignore,
+                    dynamicIrOnly: argv["dynamic-ir-only"]
                 });
             }
             if (argv.docs != null) {
@@ -714,7 +736,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 runner: argv.runner as ContainerRunner,
                 inspect: false,
                 lfsOverride: argv.lfsOverride,
-                fernignorePath: argv.fernignore
+                fernignorePath: argv.fernignore,
+                dynamicIrOnly: argv["dynamic-ir-only"]
             });
         }
     );

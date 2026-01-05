@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.46.7-rc0
+  changelogEntry:
+    - summary: Skip installation of generator-cli in Python SDK generator as it is already installed in the base image.
+      type: chore
+  createdAt: "2025-12-23"
+  irVersion: 62
+
 - version: 4.46.6
   changelogEntry:
     - summary: |

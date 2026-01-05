@@ -726,7 +726,6 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                                   ts.factory.createParameterDeclaration(
                                                       undefined,
                                                       undefined,
-                                                      undefined,
                                                       GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
                                                   )
                                               ],
@@ -756,7 +755,6 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                               undefined,
                                               [
                                                   ts.factory.createParameterDeclaration(
-                                                      undefined,
                                                       undefined,
                                                       undefined,
                                                       GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME

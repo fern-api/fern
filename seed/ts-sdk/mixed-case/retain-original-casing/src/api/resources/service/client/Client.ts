@@ -92,8 +92,8 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedMixedCase.Resource[]>> {
         const { page_limit: pageLimit, beforeDate } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.page_limit = pageLimit.toString();
+        const _queryParams: Record<string, unknown> = {};
+        _queryParams.page_limit = pageLimit;
         _queryParams.beforeDate = beforeDate;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({

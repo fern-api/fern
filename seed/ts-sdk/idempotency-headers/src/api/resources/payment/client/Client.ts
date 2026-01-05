@@ -50,7 +50,7 @@ export class PaymentClient {
             this._options?.headers,
             mergeOnlyDefinedHeaders({
                 "Idempotency-Key": requestOptions?.idempotencyKey,
-                "Idempotency-Expiration": requestOptions?.idempotencyExpiration.toString(),
+                "Idempotency-Expiration": requestOptions?.idempotencyExpiration,
             }),
             requestOptions?.headers,
         );

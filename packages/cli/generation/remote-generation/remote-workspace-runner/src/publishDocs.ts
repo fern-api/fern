@@ -25,7 +25,6 @@ import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
-import { getFaiClient } from "./getFaiClient";
 import { measureImageSizes } from "./measureImageSizes";
 import { asyncPool } from "./utils/asyncPool";
 
@@ -421,14 +420,8 @@ export async function publishDocs({
         const url = wrapWithHttps(urlToOutput);
         await updateAiChatFromDocsDefinition({
             docsDefinition,
-            organization,
-            token,
-            url: url.replace("https://", ""),
-            context,
-            fdr,
             isPreview: preview,
-            domain,
-            customDomains
+            context
         });
 
         const link = terminalLink(url, url);
@@ -988,12 +981,13 @@ async function uploadDynamicIRs({
             const dynamicIR = dynamicIRs[language]?.dynamicIR;
 
             if (dynamicIR) {
+                const jsonBody = JSON.stringify(dynamicIR);
                 const response = await fetch(source.uploadUrl, {
                     method: "PUT",
-                    body: JSON.stringify(dynamicIR),
+                    body: jsonBody,
                     headers: {
                         "Content-Type": "application/octet-stream",
-                        "Content-Length": JSON.stringify(dynamicIR).length.toString()
+                        "Content-Length": Buffer.byteLength(jsonBody, "utf8").toString()
                     }
                 });
 
@@ -1011,74 +1005,19 @@ async function uploadDynamicIRs({
 
 async function updateAiChatFromDocsDefinition({
     docsDefinition,
-    organization,
-    token,
-    url,
-    context,
-    fdr,
     isPreview,
-    domain,
-    customDomains
+    context
 }: {
     docsDefinition: DocsDefinition;
-    organization: string;
-    token: FernToken;
-    url: string;
-    context: TaskContext;
-    fdr: FdrClient;
     isPreview: boolean;
-    domain: string;
-    customDomains: string[];
+    context: TaskContext;
 }): Promise<void> {
     if (docsDefinition.config.aiChatConfig == null || isPreview) {
         return;
     }
-    context.logger.debug("Processing AI Chat configuration from docs.yml");
-
-    if (docsDefinition.config.aiChatConfig.location != null) {
-        const faiClient = getFaiClient({ token: token.value });
-
-        const domainsToEnable = isPreview
-            ? [wrapWithHttps(url).replace("https://", "")]
-            : [
-                  wrapWithHttps(domain).replace("https://", ""),
-                  ...customDomains.map((cd) => wrapWithHttps(cd).replace("https://", ""))
-              ];
-
-        context.logger.debug(
-            `Enabling Ask AI for domain${domainsToEnable.length > 1 ? "s" : ""}: ${domainsToEnable.join(", ")}`
-        );
-
-        if (docsDefinition.config.aiChatConfig.location.includes("docs")) {
-            for (const domainToEnable of domainsToEnable) {
-                const domainHostname = new URL(wrapWithHttps(domainToEnable)).hostname;
-                context.logger.debug(`Adding domain ${domainHostname} to Algolia whitelist`);
-                const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
-                    domain: domainHostname
-                });
-                if (!addResult.ok) {
-                    context.logger.warn(
-                        `Failed to add domain ${domainHostname} to Algolia whitelist${isPreview ? ". Please try regenerating to test AI chat in preview." : "."}`
-                    );
-                }
-            }
-        }
-
-        const indexingResult = await faiClient.settings.enableAskAi({
-            domains: domainsToEnable,
-            org_name: organization,
-            locations: docsDefinition.config.aiChatConfig.location,
-            preview: isPreview
-        });
-
-        if (indexingResult.success) {
-            context.logger.info(
-                chalk.green(
-                    `${isPreview ? "" : `Ask Fern enabled for ${domainsToEnable.join(", ")}. `}\nNote: it may take a few minutes after publishing for Ask Fern settings to reflect expected state.`
-                )
-            );
-        }
-    }
+    context.logger.warn(
+        chalk.yellow("Enabling Ask Fern from docs.yml is deprecated. Please enable it from the Fern dashboard instead.")
+    );
 }
 
 function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string): AIExampleEnhancerConfig | undefined {

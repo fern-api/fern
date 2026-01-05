@@ -4,7 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { toJson } from "../../../../core/json.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as SeedApi from "../../../index.js";
@@ -53,13 +52,13 @@ export class TestGroupClient {
             query_param_integer: queryParamInteger,
             body: _body,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (queryParamObject !== undefined) {
-            _queryParams.query_param_object = toJson(queryParamObject);
+            _queryParams.query_param_object = queryParamObject;
         }
 
         if (queryParamInteger !== undefined) {
-            _queryParams.query_param_integer = queryParamInteger?.toString() ?? null;
+            _queryParams.query_param_integer = queryParamInteger;
         }
 
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

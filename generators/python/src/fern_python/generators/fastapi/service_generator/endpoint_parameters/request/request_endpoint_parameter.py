@@ -1,7 +1,6 @@
 from ....context import FastApiGeneratorContext
 from ..endpoint_parameter import EndpointParameter
 from fern_python.codegen import AST
-from fern_python.external_dependencies import FastAPI
 
 
 class RequestEndpointParameter(EndpointParameter):
@@ -15,4 +14,4 @@ class RequestEndpointParameter(EndpointParameter):
         return self._get_request_param_name()
 
     def get_fastapi_marker(self) -> AST.Expression:
-        return FastAPI.Body()
+        return self._context.fastapi_params.Body()

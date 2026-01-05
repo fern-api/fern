@@ -26,6 +26,7 @@ export declare namespace RemoteTaskHandler {
     export interface Response {
         createdSnippets: boolean;
         snippetsS3PreSignedReadUrl: string | undefined;
+        actualVersion: string | undefined;
     }
 }
 
@@ -60,6 +61,19 @@ export class RemoteTaskHandler {
             });
         });
 
+        // extract actual version from the first package for dynamic IR upload
+        if (remoteTask.packages.length > 0 && this.#actualVersion == null) {
+            this.#actualVersion = remoteTask.packages[0]?.coordinate._visit({
+                npm: (npmPackage) => npmPackage.version,
+                maven: (mavenPackage) => mavenPackage.version,
+                pypi: (pypiPackage) => pypiPackage.version,
+                ruby: (rubyGem) => rubyGem.version,
+                nuget: (nugetPackage) => nugetPackage.version,
+                crates: (cratesPackage) => cratesPackage.version,
+                _other: () => undefined
+            });
+        }
+
         if (this.absolutePathToPreview == null) {
             this.context.setSubtitle(
                 coordinates.length > 0
@@ -74,6 +88,14 @@ export class RemoteTaskHandler {
 
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
             this.context.logger.log(convertLogLevel(newLog.level), newLog.message);
+
+            // extract version from log messages as fallback (e.g., "Tagging release 0.0.9")
+            if (this.#actualVersion == null) {
+                const tagMatch = newLog.message.match(/Tagging release (\d+\.\d+\.\d+)/);
+                if (tagMatch) {
+                    this.#actualVersion = tagMatch[1];
+                }
+            }
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
 
@@ -123,7 +145,8 @@ export class RemoteTaskHandler {
         return this.#isFinished
             ? {
                   createdSnippets: this.#createdSnippets,
-                  snippetsS3PreSignedReadUrl: this.#snippetsS3PreSignedReadUrl
+                  snippetsS3PreSignedReadUrl: this.#snippetsS3PreSignedReadUrl,
+                  actualVersion: this.#actualVersion
               }
             : undefined;
     }
@@ -147,6 +170,11 @@ export class RemoteTaskHandler {
     #snippetsS3PreSignedReadUrl: string | undefined = undefined;
     public get snippetsS3PreSignedReadUrl(): string | undefined {
         return this.#snippetsS3PreSignedReadUrl;
+    }
+
+    #actualVersion: string | undefined = undefined;
+    public get actualVersion(): string | undefined {
+        return this.#actualVersion;
     }
 }
 

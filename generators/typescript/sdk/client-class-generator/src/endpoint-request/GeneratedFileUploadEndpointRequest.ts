@@ -116,7 +116,6 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return [
             ts.factory.createImportDeclaration(
                 undefined,
-                [],
                 ts.factory.createImportClause(
                     false,
                     undefined,

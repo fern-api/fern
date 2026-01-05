@@ -60,7 +60,7 @@ export class QueryClient {
             alias_stream: aliasStream,
             alias_optional_stream: aliasOptionalStream,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         _queryParams.prompt = prompt;
         if (optionalPrompt != null) {
             _queryParams.optional_prompt = optionalPrompt;

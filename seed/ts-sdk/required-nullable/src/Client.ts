@@ -48,7 +48,7 @@ export class SeedApiClient {
             required_baz: requiredBaz,
             required_nullable_baz: requiredNullableBaz,
         } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (optionalBaz != null) {
             _queryParams.optional_baz = optionalBaz;
         }

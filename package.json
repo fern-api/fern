@@ -49,7 +49,7 @@
     "generator-cli:generate": "pnpm fern:build && pnpm fern generate --api generator-cli --local && turbo run dist:cli --filter=@fern-api/generator-cli",
     "seed:build": "turbo run dist:cli --filter=@fern-api/seed-cli && echo 'Run node --enable-source-maps packages/seed/dist/cli.cjs'",
     "publish": "pnpm -r publish --access public --no-git-checks --loglevel=verbose",
-    "jsonschema": "pnpm definition-yml:jsonschema && pnpm api-yml:jsonschema && pnpm package-yml:jsonschema && pnpm docs-yml:jsonschema && pnpm generators-yml:jsonschema && pnpm versions-yml:jsonschema && pnpm products-yml:jsonschema",
+    "jsonschema": "pnpm definition-yml:jsonschema && pnpm api-yml:jsonschema && pnpm package-yml:jsonschema && pnpm docs-yml:jsonschema && pnpm generators-yml:jsonschema && pnpm versions-yml:jsonschema && pnpm products-yml:jsonschema && pnpm product-yml:jsonschema && pnpm version-yml:jsonschema",
     "definition-yml:jsonschema": "pnpm fern jsonschema fern.schema.json --api fern-definition --type file.DefinitionFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/fern.schema.json --api fern-definition --type file.DefinitionFileSchema",
     "api-yml:jsonschema": "pnpm fern jsonschema api-yml.schema.json --api fern-definition --type file.RootApiFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/api-yml.schema.json --api fern-definition --type file.RootApiFileSchema",
     "package-yml:jsonschema": "pnpm fern jsonschema package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema",
@@ -57,6 +57,8 @@
     "versions-yml:jsonschema": "pnpm fern jsonschema packages/cli/yaml/docs-validator/src/docsAst/versions-yml.schema.json --api docs-yml --type docs.VersionFileConfig",
     "products-yml:jsonschema": "pnpm fern jsonschema packages/cli/yaml/docs-validator/src/docsAst/products-yml.schema.json --api docs-yml --type docs.ProductFileConfig",
     "generators-yml:jsonschema": "pnpm fern jsonschema generators-yml.schema.json --api generators-yml --type generators.GeneratorsConfigurationSchema",
+    "product-yml:jsonschema": "pnpm fern jsonschema product-yml.schema.json --api docs-yml --type docs.ProductFileConfig",
+    "version-yml:jsonschema": "pnpm fern jsonschema version-yml.schema.json --api docs-yml --type docs.VersionFileConfig",
     "check-cli-release-blockers": "pnpm fern-script check-cli-release-blockers",
     "check-docs-release-blockers": "pnpm fern-script check-docs-release-blockers",
     "validate-cli-dependencies": "node scripts/validate-cli-dependencies.js",
@@ -135,7 +137,7 @@
   "pnpm": {
     "overrides": {
       "node-fetch@2.x>whatwg-url": "^14.0.0",
-      "qs": "6.13.0",
+      "qs": "6.14.1",
       "url-join": "^4.0.1",
       "@fern-api/fdr-sdk": "0.142.22-c021dd849",
       "es-toolkit": "^1.39.10",
@@ -145,7 +147,7 @@
   },
   "catalog": {
     "es-toolkit": "^1.39.10",
-    "qs": "^6.13.0",
+    "qs": "^6.14.1",
     "ts-essentials": "^10.1.1",
     "url-join": "^4.0.1"
   },

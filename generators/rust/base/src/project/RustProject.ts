@@ -105,6 +105,11 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
 
         content = content.replace(/\{\{PUBLISH_WORKFLOW\}\}/g, this.generatePublishWorkflow());
 
+        // Conditionally include wiremock setup/teardown and test command for wire tests
+        content = content.replace(/\{\{WIREMOCK_SETUP\}\}/g, this.generateWiremockSetup());
+        content = content.replace(/\{\{WIREMOCK_TEARDOWN\}\}/g, this.generateWiremockTeardown());
+        content = content.replace(/\{\{TEST_COMMAND\}\}/g, this.generateTestCommand());
+
         // Conditionally include chrono exports in prelude
         if (this.context.usesDateTime()) {
             content = content.replace(
@@ -177,6 +182,55 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         env:
           CARGO_REGISTRY_TOKEN: \${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: cargo publish`;
+    }
+
+    /**
+     * Generates the WireMock setup step for CI workflow when wire tests are enabled.
+     * This starts the WireMock container before running tests.
+     */
+    private generateWiremockSetup(): string {
+        if (!this.context.customConfig.enableWireTests) {
+            return "";
+        }
+
+        return `
+      - name: Setup WireMock server
+        run: |
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -f wiremock/docker-compose.test.yml down 2>/dev/null || true
+            docker compose -f wiremock/docker-compose.test.yml up -d --wait
+          fi
+`;
+    }
+
+    /**
+     * Generates the WireMock teardown step for CI workflow when wire tests are enabled.
+     * This stops the WireMock container after running tests.
+     */
+    private generateWiremockTeardown(): string {
+        if (!this.context.customConfig.enableWireTests) {
+            return "";
+        }
+
+        return `
+      - name: Teardown WireMock server
+        if: always()
+        run: |
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -f wiremock/docker-compose.test.yml down
+          fi
+`;
+    }
+
+    /**
+     * Generates the appropriate test command based on whether wire tests are enabled.
+     * When wire tests are enabled, uses RUN_WIRE_TESTS=true and --test-threads=1.
+     */
+    private generateTestCommand(): string {
+        if (this.context.customConfig.enableWireTests) {
+            return "RUN_WIRE_TESTS=true cargo test -- --test-threads=1";
+        }
+        return "cargo test";
     }
 
     private objectToToml(obj: unknown): string {

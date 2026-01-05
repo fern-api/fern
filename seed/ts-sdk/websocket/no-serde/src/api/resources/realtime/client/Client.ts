@@ -39,13 +39,13 @@ export class RealtimeClient {
             debug,
             reconnectAttempts,
         } = args;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (model != null) {
             _queryParams.model = model;
         }
 
         if (temperature != null) {
-            _queryParams.temperature = temperature.toString();
+            _queryParams.temperature = temperature;
         }
 
         if (languageCode != null) {

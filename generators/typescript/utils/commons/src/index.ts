@@ -1,5 +1,6 @@
 export * from "@fern-api/typescript-base";
 export { AsIsManager } from "./asIs/AsIsManager";
+export { createNumericLiteralSafe, createNumericLiteralSafeTypeNode } from "./codegen-utils/createNumericLiteralSafe";
 export { generateInlineAliasModule, generateInlinePropertiesModule } from "./codegen-utils/generateInlineModule";
 export { getExampleEndpointCalls, getExampleEndpointCallsForTests } from "./codegen-utils/getExampleEndpointCalls";
 export {

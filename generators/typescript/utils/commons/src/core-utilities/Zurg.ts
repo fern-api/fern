@@ -300,7 +300,6 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                                                   ts.factory.createParameterDeclaration(
                                                       undefined,
                                                       undefined,
-                                                      undefined,
                                                       parsedIdentifier
                                                   )
                                               ],
