@@ -15,6 +15,7 @@
     "init_hook": [
       "printf '\\033]0;%s\\007' 'fern (devbox)'",
       "unset GOROOT # Unset GOROOT from parent shell to avoid conflicts with devbox's Go",
+      "go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@dc6f6fa 2>/dev/null || true",
       "echo 'Fern development environment loaded!'",
       "echo 'Node.js:' $(node --version)",
       "echo 'pnpm:' $(pnpm --version)",
@@ -22,14 +23,14 @@
       "echo 'Python:' $(python --version)",
       "echo 'Java:' $(java --version 2>&1 | head -1)",
       "echo '.NET:' $(dotnet --version)",
-      "echo 'buf:' $(buf --version)"
+      "echo 'buf:' $(buf --version)",
+      "echo 'protoc-gen-openapi:' $(ls -l ~/go/bin/protoc-gen-openapi 2>/dev/null | awk '{print $6,$7,$8}' || echo 'not installed')"
     ],
     "scripts": {
       "install": "pnpm install",
       "compile": "pnpm compile",
       "test": "pnpm test",
-      "lint": "pnpm check",
-      "install-protoc-gen-openapi": "go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest"
+      "lint": "pnpm check"
     }
   }
 }

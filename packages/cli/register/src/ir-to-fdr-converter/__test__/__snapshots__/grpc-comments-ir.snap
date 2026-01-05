@@ -185,7 +185,7 @@
           "availability": undefined,
           "basePath": undefined,
           "baseUrl": undefined,
-          "displayName": undefined,
+          "displayName": "Add a Comment",
           "docs": "buf:lint:ignore RPC_REQUEST_STANDARD_NAME
  Create a comment on a resource",
           "errors": [],
@@ -312,9 +312,9 @@
                     "commentsServiceCreatecommentExample": {
                       "comment": {
                         "author": "string",
-                        "createdAt": 1,
+                        "created_at": 1,
                         "id": "string",
-                        "resourceId": "string",
+                        "resource_id": "string",
                         "text": "string",
                       },
                     },
@@ -367,9 +367,9 @@
                     "value": {
                       "comment": {
                         "author": "string",
-                        "createdAt": 1,
+                        "created_at": 1,
                         "id": "string",
-                        "resourceId": "string",
+                        "resource_id": "string",
                         "text": "string",
                       },
                     },
@@ -476,9 +476,9 @@
                         "commentsServiceCreatecommentExample": {
                           "comment": {
                             "author": "string",
-                            "createdAt": 1,
+                            "created_at": 1,
                             "id": "string",
-                            "resourceId": "string",
+                            "resource_id": "string",
                             "text": "string",
                           },
                         },
@@ -732,7 +732,7 @@
                   "safeName": "resourceId",
                   "unsafeName": "resourceId",
                 },
-                "originalName": "resourceId",
+                "originalName": "resource_id",
                 "pascalCase": {
                   "safeName": "ResourceId",
                   "unsafeName": "ResourceId",
@@ -746,7 +746,7 @@
                   "unsafeName": "resource_id",
                 },
               },
-              "wireValue": "resourceId",
+              "wireValue": "resource_id",
             },
             "propertyAccess": undefined,
             "v2Examples": {
@@ -909,7 +909,7 @@
                   "safeName": "createdAt",
                   "unsafeName": "createdAt",
                 },
-                "originalName": "createdAt",
+                "originalName": "created_at",
                 "pascalCase": {
                   "safeName": "CreatedAt",
                   "unsafeName": "CreatedAt",
@@ -923,7 +923,7 @@
                   "unsafeName": "created_at",
                 },
               },
-              "wireValue": "createdAt",
+              "wireValue": "created_at",
             },
             "propertyAccess": undefined,
             "v2Examples": {
@@ -1015,7 +1015,7 @@
                   "safeName": "resourceId",
                   "unsafeName": "resourceId",
                 },
-                "originalName": "resourceId",
+                "originalName": "resource_id",
                 "pascalCase": {
                   "safeName": "ResourceId",
                   "unsafeName": "ResourceId",
@@ -1029,7 +1029,7 @@
                   "unsafeName": "resource_id",
                 },
               },
-              "wireValue": "resourceId",
+              "wireValue": "resource_id",
             },
             "propertyAccess": undefined,
             "v2Examples": {
