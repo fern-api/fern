@@ -20,6 +20,9 @@ from typing_extensions import TypeAlias
 T = TypeVar("T")
 Model = TypeVar("Model", bound=pydantic.BaseModel)
 
+_PYDANTIC_V1 = getattr(pydantic, "v1", pydantic)
+_PYDANTIC_V1_BASE_MODEL = getattr(_PYDANTIC_V1, "BaseModel", pydantic.BaseModel)
+
 PydanticField = Union[ModelField, pydantic.fields.FieldInfo]
 
 
@@ -30,7 +33,7 @@ def parse_obj_as(type_: Type[T], object_: Any) -> T:
     # the model encodes aliasing:
     # - If the model uses real Pydantic aliases (Field(alias=...)), pass wire keys through unchanged.
     # - If the model encodes aliasing only via FieldMetadata, pre-dealias before validation.
-    if inspect.isclass(type_) and issubclass(type_, pydantic.BaseModel):
+    if inspect.isclass(type_) and issubclass(type_, _PYDANTIC_V1_BASE_MODEL):
         has_pydantic_aliases = False
         for field in getattr(type_, "__fields__", {}).values():
             alias = getattr(field, "alias", None)
