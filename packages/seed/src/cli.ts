@@ -13,6 +13,7 @@ import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml";
+import { addMigrateVersionsCommand } from "./commands/migrate-versions/migrateVersionsCommand";
 import { publishCli } from "./commands/publish/publishCli";
 import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
@@ -55,6 +56,7 @@ export async function tryRunCli(): Promise<void> {
     addValidateCommands(cli);
     addLatestCommands(cli);
     addGenerateCommands(cli);
+    addMigrateVersionsCommand(cli);
 
     await cli.parse();
 }

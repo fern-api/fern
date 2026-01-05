@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=./fern-versions-yml.schema.json
+# Test file for automatic version computation
+- changelogEntry:
+    - summary: |
+        Add support for automatic version computation from changelog entry types. This eliminates the need for manual version specification and reduces merge conflicts.
+      type: feat
+    - summary: |
+        Fix validation issues when processing empty changelog entries.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 62
+
+- version: 1.2.0
+  changelogEntry:
+    - summary: |
+        Add new API endpoints for user management functionality.
+      type: feat
+  createdAt: "2025-12-22"
+  irVersion: 61
+
+- changelogEntry:
+    - summary: |
+        Fix memory leak in connection pooling.
+      type: fix
+    - summary: |
+        Update documentation with latest examples.
+      type: chore
+  createdAt: "2025-12-21"
+  irVersion: 61
+
+- version: 1.1.0
+  changelogEntry:
+    - summary: |
+        Breaking change: Update API response format for better consistency.
+      type: break
+  createdAt: "2025-12-20"
+  irVersion: 60

@@ -6,6 +6,11 @@ import chalk from "chalk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
+import {
+    computeMissingVersions,
+    type MinimalVersionEntry,
+    validateComputedVersionProgression
+} from "../../utils/automaticVersionComputation";
 import { type ChangelogEntry, validateAngleBracketEscaping } from "./angleBracketValidator";
 import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
 
@@ -139,16 +144,51 @@ export async function validateVersionsYml({
 
     context.logger.debug(chalk.green("JSON Schema validation passed"));
     // After successful validation, parsedYaml is guaranteed to be ChangelogEntry[]
-    const typedChangelogs = parsedYaml as ChangelogEntry[];
+    let typedChangelogs = parsedYaml as ChangelogEntry[];
+
+    // Compute missing versions automatically
+    context.logger.debug("Computing missing versions from changelog entries...");
+
+    // Convert to our minimal format for computation
+    const minimalEntries: MinimalVersionEntry[] = typedChangelogs.map((entry) => ({
+        version: entry.version || undefined,
+        changelogEntry: (entry.changelogEntry || []).map((ce) => ({
+            type: ce.type as any,
+            summary: ce.summary || ""
+        })),
+        irVersion: (entry as any).irVersion || 0,
+        createdAt: (entry as any).createdAt || new Date().toISOString().split("T")[0]
+    }));
+
+    const entriesWithComputedVersions = computeMissingVersions(minimalEntries, "0.0.0");
+
+    // Update the original entries with computed versions
+    for (let i = 0; i < typedChangelogs.length; i++) {
+        const computedEntry = entriesWithComputedVersions[i];
+        if (computedEntry && computedEntry.version) {
+            typedChangelogs[i]!.version = computedEntry.version;
+        }
+    }
+
+    // Validate computed version progression
+    const progressionErrors = validateComputedVersionProgression(entriesWithComputedVersions);
+    if (progressionErrors.length > 0) {
+        context.logger.error(chalk.red("Version progression validation failed:"));
+        for (const error of progressionErrors) {
+            context.logger.error(chalk.red(`  ${error}`));
+        }
+        context.failAndThrow();
+        return;
+    }
 
     let hasErrors = false;
 
     // Validate each entry
     for (const entry of typedChangelogs) {
-        // Schema validation should have ensured version exists
+        // At this point, all entries should have versions (either explicit or computed)
         if (!entry.version) {
             hasErrors = true;
-            context.logger.error("Entry missing version field");
+            context.logger.error("Entry missing version field after computation");
             continue;
         }
 

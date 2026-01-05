@@ -10,7 +10,8 @@
             "additionalProperties": false,
             "properties": {
                 "version": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Semantic version string. If omitted, will be computed automatically based on changelogEntry types."
                 },
                 "changelogEntry": {
                     "type": "array",
@@ -28,8 +29,7 @@
             },
             "required": [
                 "changelogEntry",
-                "irVersion",
-                "version"
+                "irVersion"
             ],
             "title": "Version"
         },
