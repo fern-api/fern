@@ -93,7 +93,7 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "recursion_limit" in generator_config.custom_config:
             recursion_limit = generator_config.custom_config.get("recursion_limit")
 
-        enable_wire_tests = False
+        enable_wire_tests = True
         if generator_config.custom_config is not None and "enable_wire_tests" in generator_config.custom_config:
             enable_wire_tests = generator_config.custom_config.get("enable_wire_tests")
 

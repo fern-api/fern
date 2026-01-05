@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.46.7
+  changelogEntry:
+    - summary: Enable wire tests by default. The `enable_wire_tests` config option now defaults to `true`.
+      type: fix
+  createdAt: "2026-01-05"
+  irVersion: 62
+
 - version: 4.46.7-rc0
   changelogEntry:
     - summary: Skip installation of generator-cli in Python SDK generator as it is already installed in the base image.
