@@ -87,6 +87,42 @@ class UniversalBaseModel(pydantic.BaseModel):
             protected_namespaces=(),
         )
 
+        @pydantic.model_validator(mode="before")  # type: ignore[attr-defined]
+        @classmethod
+        def _coerce_field_names_to_aliases(cls, data: Any) -> Any:
+            """
+            Accept Python field names in input by rewriting them to their Pydantic aliases,
+            while avoiding silent collisions when a key could refer to multiple fields.
+            """
+            if not isinstance(data, Mapping):
+                return data
+
+            fields = getattr(cls, "model_fields", {})  # type: ignore[attr-defined]
+            name_to_alias: Dict[str, str] = {}
+            alias_to_name: Dict[str, str] = {}
+
+            for name, field_info in fields.items():
+                alias = getattr(field_info, "alias", None) or name
+                name_to_alias[name] = alias
+                if alias != name:
+                    alias_to_name[alias] = name
+
+            # Detect ambiguous keys: a key that is an alias for one field and a name for another.
+            ambiguous_keys = set(alias_to_name.keys()).intersection(set(name_to_alias.keys()))
+            for key in ambiguous_keys:
+                if key in data and name_to_alias[key] not in data:
+                    raise ValueError(
+                        f"Ambiguous input key '{key}': it is both a field name and an alias. "
+                        "Provide the explicit alias key to disambiguate."
+                    )
+
+            rewritten: Dict[str, Any] = dict(data)
+            for name, alias in name_to_alias.items():
+                if alias != name and name in rewritten and alias not in rewritten:
+                    rewritten[alias] = rewritten.pop(name)
+
+            return rewritten
+
         @pydantic.model_serializer(mode="plain", when_used="json")  # type: ignore[attr-defined]
         def serialize_model(self) -> Any:  # type: ignore[name-defined]
             serialized = self.dict()  # type: ignore[attr-defined]
@@ -98,6 +134,39 @@ class UniversalBaseModel(pydantic.BaseModel):
         class Config:
             smart_union = True
             json_encoders = {dt.datetime: serialize_datetime}
+
+        @pydantic.root_validator(pre=True)
+        def _coerce_field_names_to_aliases(cls, values: Any) -> Any:
+            """
+            Pydantic v1 equivalent of _coerce_field_names_to_aliases.
+            """
+            if not isinstance(values, Mapping):
+                return values
+
+            fields = getattr(cls, "__fields__", {})
+            name_to_alias: Dict[str, str] = {}
+            alias_to_name: Dict[str, str] = {}
+
+            for name, field in fields.items():
+                alias = getattr(field, "alias", None) or name
+                name_to_alias[name] = alias
+                if alias != name:
+                    alias_to_name[alias] = name
+
+            ambiguous_keys = set(alias_to_name.keys()).intersection(set(name_to_alias.keys()))
+            for key in ambiguous_keys:
+                if key in values and name_to_alias[key] not in values:
+                    raise ValueError(
+                        f"Ambiguous input key '{key}': it is both a field name and an alias. "
+                        "Provide the explicit alias key to disambiguate."
+                    )
+
+            rewritten: Dict[str, Any] = dict(values)
+            for name, alias in name_to_alias.items():
+                if alias != name and name in rewritten and alias not in rewritten:
+                    rewritten[alias] = rewritten.pop(name)
+
+            return rewritten
 
     @classmethod
     def model_construct(cls: Type["Model"], _fields_set: Optional[Set[str]] = None, **values: Any) -> "Model":
