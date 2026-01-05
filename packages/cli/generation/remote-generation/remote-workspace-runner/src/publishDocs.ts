@@ -82,7 +82,8 @@ export async function publishDocs({
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
     const basePath = parseBasePath(domain);
-    const disableDynamicSnippets = docsWorkspace.config.experimental && !docsWorkspace.config.experimental.dynamicSnippets;
+    const disableDynamicSnippets =
+        docsWorkspace.config.experimental && !docsWorkspace.config.experimental.dynamicSnippets;
 
     const resolver = new DocsDefinitionResolver({
         domain,
