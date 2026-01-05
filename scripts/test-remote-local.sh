@@ -16,7 +16,7 @@ GENERATORS=("ts-sdk" "python-sdk" "go-sdk" "java-sdk")
 
 for generator in "${GENERATORS[@]}"; do
     echo "Running test-remote-local for ${generator}..."
-    pnpm seed:local test-remote-local --generator "$generator" 2>&1 | tee "${LOG_DIR}/${generator}.log"
+    pnpm seed:local test-remote-local --generator "$generator" --build-generator 2>&1 | tee "${LOG_DIR}/${generator}.log"
     EXIT_CODE=$?
     if [ $EXIT_CODE -eq 0 ]; then
         echo "  ✓ ${generator} completed successfully"
