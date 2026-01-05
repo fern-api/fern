@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.32.1
+  changelogEntry:
+    - summary: |
+        Fix local generation to populate fallback registry configs for GitHub output mode matching Fiddle's behavior. This ensures generators like Java receive consistent publish metadata between local and remote generation.
+      type: fix
+  createdAt: "2026-01-05"
+  irVersion: 62
+
 - version: 3.32.0
   changelogEntry:
     - summary: |

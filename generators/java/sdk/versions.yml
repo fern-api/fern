@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.27.5-rc4
+  changelogEntry:
+    - summary: Make @octokit/request CVE patch conditional to handle different package structures in newer versions of generator-cli.
+      type: chore
+  createdAt: "2026-01-05"
+  irVersion: 61
+
 - version: 3.27.5-rc3
   changelogEntry:
     - summary: Retry Publishing of rc2
