@@ -11,7 +11,6 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "bootstrap": "./scripts/bootstrap.sh",
     "sparse-checkout": "./scripts/sparse-checkout.sh",
     "clean": "turbo run clean",
     "compile": "turbo run compile",
