@@ -12,10 +12,11 @@
   ],
   "shell": {
     "init_hook": [
+      "unset GOROOT",
       "echo 'Fern development environment loaded!'",
       "echo 'Node.js:' $(node --version)",
       "echo 'pnpm:' $(pnpm --version)",
-      "echo 'Go:' $(go version)",
+      "echo 'Go:' $(go version 2>/dev/null || echo 'not found')",
       "echo 'Python:' $(python --version)",
       "echo 'Java:' $(java --version 2>&1 | head -1)",
       "echo 'buf:' $(buf --version)"
