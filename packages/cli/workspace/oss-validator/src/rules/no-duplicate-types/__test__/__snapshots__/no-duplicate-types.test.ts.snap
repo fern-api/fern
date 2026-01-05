@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-duplicate-types > collision without namespace - should fail 1`] = `
+[
+  {
+    "message": "Type "Team" is defined in multiple specs (openapi/tasks.yml, openapi/entities.yml). Add "namespace" to your specs in generators.yml to resolve this conflict.",
+    "nodePath": [
+      "components",
+      "schemas",
+      "Team",
+    ],
+    "relativeFilepath": "openapi/entities.yml",
+    "severity": "fatal",
+  },
+]
+`;

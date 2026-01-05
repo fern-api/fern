@@ -178,15 +178,16 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
     private convertSchemas(): void {
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
+            const qualifiedId = this.context.qualifyTypeId(id);
             const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
                 context: this.context,
-                id,
+                id: qualifiedId,
                 breadcrumbs: ["components", "schemas", id],
                 schema
             });
             const convertedSchema = schemaConverter.convert();
             if (convertedSchema != null) {
-                this.addSchemaOutputToIr(id, convertedSchema);
+                this.addSchemaOutputToIr(qualifiedId, convertedSchema);
             }
         }
     }

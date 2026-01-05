@@ -1,0 +1,40 @@
+openapi: 3.0.0
+info:
+  title: Entities API
+  version: 1.0.0
+paths:
+  /entities:
+    get:
+      operationId: getEntities
+      x-fern-sdk-group-name: entities
+      x-fern-sdk-method-name: list
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Entity"
+components:
+  schemas:
+    Team:
+      type: object
+      description: A team group type in the entities context
+      properties:
+        groupId:
+          type: string
+          description: Group ID of the team
+        capacity:
+          type: integer
+          description: Maximum capacity of the team
+    Entity:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        team:
+          $ref: "#/components/schemas/Team"

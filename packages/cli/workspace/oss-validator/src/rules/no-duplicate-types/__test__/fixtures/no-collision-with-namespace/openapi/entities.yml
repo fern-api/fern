@@ -1,0 +1,23 @@
+openapi: 3.0.0
+info:
+  title: Entities API
+  version: 1.0.0
+paths:
+  /entities:
+    get:
+      operationId: getEntities
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Team"
+components:
+  schemas:
+    Team:
+      type: object
+      properties: {}
+      description: A team group type

@@ -127,15 +127,16 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         breadcrumbs: string[];
         schema: OpenAPIV3.SchemaObject;
     }): void {
+        const qualifiedId = this.context.qualifyTypeId(id);
         const schemaConverter = new Converters.SchemaConverters.SchemaConverter({
             context: this.context,
-            id,
+            id: qualifiedId,
             breadcrumbs,
             schema
         });
         const convertedSchema = schemaConverter.convert();
         if (convertedSchema != null) {
-            this.addSchemaOutputToIr(id, convertedSchema);
+            this.addSchemaOutputToIr(qualifiedId, convertedSchema);
         }
     }
 

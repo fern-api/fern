@@ -638,7 +638,20 @@ export abstract class AbstractConverterContext<Spec extends object> {
         if (!schemaMatch || !schemaMatch[1]) {
             return undefined;
         }
-        return schemaMatch[1];
+        return this.qualifyTypeId(schemaMatch[1]);
+    }
+
+    /**
+     * Qualifies a type ID with the namespace prefix if a namespace is set.
+     * This ensures types from different specs with the same name don't collide.
+     * @param baseTypeId The base type ID (e.g., "Team")
+     * @returns The qualified type ID (e.g., "tasks.Team" if namespace is "tasks")
+     */
+    public qualifyTypeId(baseTypeId: string): string {
+        if (this.namespace != null) {
+            return `${this.namespace}.${baseTypeId}`;
+        }
+        return baseTypeId;
     }
 
     public createNamedTypeReference(id: string, displayName?: string | undefined): TypeReference {

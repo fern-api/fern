@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.33.0
+  changelogEntry:
+    - summary: |
+        Add `no-duplicate-types` validation rule to detect type name collisions across multiple OpenAPI specs. When specs define the same type name without namespaces, `fern check` now emits a clear error with guidance to add `namespace` to specs in `generators.yml`. Type IDs are automatically prefixed with the namespace when set, preventing collisions during IR merge.
+      type: feat
+  createdAt: "2026-01-05"
+  irVersion: 62
+
 - version: 3.32.0
   changelogEntry:
     - summary: |
