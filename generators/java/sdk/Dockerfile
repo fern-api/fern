@@ -92,16 +92,24 @@ RUN npm install -f -g @fern-api/generator-cli@latest
 # Patch @octokit/request to fix CVE-2025-25290 (ReDoS vulnerability)
 # Use npm pack + tar to replace the package without running npm install (which fails due to workspace: protocol)
 # Also install fast-content-type-parse which is a new dependency in @octokit/request@10.0.7
-RUN cd /usr/local/lib/node_modules/@fern-api/generator-cli/node_modules/@octokit && \
-    rm -rf request && \
-    npm pack @octokit/request@10.0.7 && \
-    tar -xzf octokit-request-10.0.7.tgz && \
-    mv package request && \
-    rm octokit-request-10.0.7.tgz && \
-    cd /usr/local/lib/node_modules/@fern-api/generator-cli/node_modules && \
-    npm pack fast-content-type-parse@2.0.1 && \
-    tar -xzf fast-content-type-parse-2.0.1.tgz && \
-    mv package fast-content-type-parse && \
-    rm fast-content-type-parse-2.0.1.tgz
+# Note: Skip patching if @octokit directory doesn't exist (may be different in newer versions)
+RUN OCTOKIT_DIR="/usr/local/lib/node_modules/@fern-api/generator-cli/node_modules/@octokit" && \
+    if [ -d "$OCTOKIT_DIR" ]; then \
+        cd "$OCTOKIT_DIR" && \
+        rm -rf request && \
+        npm pack @octokit/request@10.0.7 && \
+        tar -xzf octokit-request-10.0.7.tgz && \
+        mv package request && \
+        rm octokit-request-10.0.7.tgz && \
+        cd /usr/local/lib/node_modules/@fern-api/generator-cli/node_modules && \
+        if [ ! -d "fast-content-type-parse" ]; then \
+            npm pack fast-content-type-parse@2.0.1 && \
+            tar -xzf fast-content-type-parse-2.0.1.tgz && \
+            mv package fast-content-type-parse && \
+            rm fast-content-type-parse-2.0.1.tgz; \
+        fi; \
+    else \
+        echo "Skipping @octokit/request patch - directory does not exist (may be patched in newer version)"; \
+    fi
 
 ENTRYPOINT ["sh", "/init.sh"]

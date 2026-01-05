@@ -19,6 +19,33 @@ import * as path from "path";
 
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
 
+/**
+ * Generates a fallback maven coordinate matching Fiddle's behavior.
+ * Fiddle uses: `com.<orgName>.fern:<apiName>-sdk` when no explicit maven config is provided.
+ * @see RegistryConfigFactory.getMavenRegistryConfigV2 in fiddle-coordinator
+ */
+function getFallbackMavenCoordinate(organization: string, workspaceName: string): string {
+    return `com.${organization}.fern:${workspaceName}-sdk`;
+}
+
+/**
+ * Generates a fallback npm package name matching Fiddle's behavior.
+ * Fiddle uses: `@<orgName>-fern/<apiName>-sdk` when no explicit npm config is provided.
+ * @see RegistryConfigFactory.getNpmRegistryConfigV2 in fiddle-coordinator
+ */
+function getFallbackNpmPackageName(organization: string, workspaceName: string): string {
+    return `@${organization}-fern/${workspaceName}-sdk`;
+}
+
+/**
+ * Generates a fallback pypi package name matching Fiddle's behavior.
+ * Fiddle uses: `<orgName>-fern-<apiName>-sdk` when no explicit pypi config is provided.
+ * @see RegistryConfigFactory.getPyPiRegistryConfig in fiddle-coordinator
+ */
+function getFallbackPypiPackageName(organization: string, workspaceName: string): string {
+    return `${organization}-fern-${workspaceName}-sdk`;
+}
+
 export function getLicensePathFromConfig(
     generatorInvocation: GeneratorInvocation
 ): { type: "basic"; value: string } | { type: "custom"; value: string } | undefined {
@@ -103,7 +130,9 @@ export declare namespace getGeneratorConfig {
 
 function getGeneratorPublishConfig(
     generatorInvocation: generatorsYml.GeneratorInvocation,
-    outputVersion: string
+    outputVersion: string,
+    organization: string,
+    workspaceName: string
 ): FernGeneratorExec.GeneratorPublishConfig | undefined {
     // Extract publish info from the output mode to populate generatorConfig.publish
     // This is needed for generators (like Java) that check generatorConfig.publish for SDK metadata
@@ -116,56 +145,87 @@ function getGeneratorPublishConfig(
         _other: () => undefined
     });
 
-    if (publishInfo == null) {
+    // Check if this is a GitHub output mode (where Fiddle provides fallback registry configs)
+    const isGithubOutputMode = generatorInvocation.outputMode._visit<boolean>({
+        github: () => true,
+        githubV2: () => true,
+        publish: () => false,
+        publishV2: () => false,
+        downloadFiles: () => false,
+        _other: () => false
+    });
+
+    // For non-GitHub output modes with no publish info, return undefined
+    if (publishInfo == null && !isGithubOutputMode) {
         return undefined;
     }
 
-    // Create empty registry configs with default values for v1 (registries)
-    const emptyMavenV1: FernGeneratorExec.MavenRegistryConfig = {
+    // Create fallback registry configs matching Fiddle's behavior
+    // Fiddle always populates registriesV2 with these values for GitHub output mode
+    const fallbackMavenV1: FernGeneratorExec.MavenRegistryConfig = {
         registryUrl: "",
         username: "",
         password: "",
-        group: ""
+        group: `com.${organization}.fern`
     };
-    const emptyNpmV1: FernGeneratorExec.NpmRegistryConfig = {
+    const fallbackNpmV1: FernGeneratorExec.NpmRegistryConfig = {
         registryUrl: "",
         token: "",
-        scope: ""
+        scope: `${organization}-fern`
     };
 
-    // Create empty registry configs with default values for v2 (registriesV2)
-    const emptyMavenV2: FernGeneratorExec.MavenRegistryConfigV2 = {
+    // Create fallback registry configs with default values for v2 (registriesV2)
+    const fallbackMavenV2: FernGeneratorExec.MavenRegistryConfigV2 = {
         registryUrl: "",
         username: "",
         password: "",
-        coordinate: ""
+        coordinate: getFallbackMavenCoordinate(organization, workspaceName)
     };
-    const emptyNpmV2: FernGeneratorExec.NpmRegistryConfigV2 = {
+    const fallbackNpmV2: FernGeneratorExec.NpmRegistryConfigV2 = {
         registryUrl: "",
         token: "",
-        packageName: ""
+        packageName: getFallbackNpmPackageName(organization, workspaceName)
     };
-    const emptyPypi: FernGeneratorExec.PypiRegistryConfig = {
+    const fallbackPypi: FernGeneratorExec.PypiRegistryConfig = {
         registryUrl: "",
         username: "",
         password: "",
-        packageName: ""
+        packageName: getFallbackPypiPackageName(organization, workspaceName)
     };
-    const emptyRubygems: FernGeneratorExec.RubyGemsRegistryConfig = {
+    const fallbackRubygems: FernGeneratorExec.RubyGemsRegistryConfig = {
         registryUrl: "",
         apiKey: "",
-        packageName: ""
+        packageName: `${organization}_fern_${workspaceName}_sdk`
     };
-    const emptyNuget: FernGeneratorExec.NugetRegistryConfig = {
+    const fallbackNuget: FernGeneratorExec.NugetRegistryConfig = {
         registryUrl: "",
         apiKey: "",
-        packageName: ""
+        packageName: `${organization}_fern_${workspaceName}_sdk`
     };
-    const emptyCrates: FernGeneratorExec.CratesRegistryConfig = {
+    const fallbackCrates: FernGeneratorExec.CratesRegistryConfig = {
         registryUrl: "",
         token: "",
-        packageName: ""
+        packageName: `${organization}_fern_${workspaceName}_sdk`
     };
+
+    // If no explicit publish info but GitHub output mode, return fallback config
+    if (publishInfo == null) {
+        return {
+            registries: {
+                maven: fallbackMavenV1,
+                npm: fallbackNpmV1
+            },
+            registriesV2: {
+                maven: fallbackMavenV2,
+                npm: fallbackNpmV2,
+                pypi: fallbackPypi,
+                rubygems: fallbackRubygems,
+                nuget: fallbackNuget,
+                crates: fallbackCrates
+            },
+            version: outputVersion
+        };
+    }
 
     // Populate the specific registry config based on publish info type
     return FiddleGithubPublishInfo._visit<FernGeneratorExec.GeneratorPublishConfig | undefined>(publishInfo, {
@@ -177,7 +237,7 @@ function getGeneratorPublishConfig(
                     password: value.credentials?.password ?? "",
                     group: value.coordinate.split(":")[0] ?? ""
                 },
-                npm: emptyNpmV1
+                npm: fallbackNpmV1
             },
             registriesV2: {
                 maven: {
@@ -186,17 +246,17 @@ function getGeneratorPublishConfig(
                     password: value.credentials?.password ?? "",
                     coordinate: value.coordinate
                 },
-                npm: emptyNpmV2,
-                pypi: emptyPypi,
-                rubygems: emptyRubygems,
-                nuget: emptyNuget,
-                crates: emptyCrates
+                npm: fallbackNpmV2,
+                pypi: fallbackPypi,
+                rubygems: fallbackRubygems,
+                nuget: fallbackNuget,
+                crates: fallbackCrates
             },
             version: outputVersion
         }),
         npm: (value) => ({
             registries: {
-                maven: emptyMavenV1,
+                maven: fallbackMavenV1,
                 npm: {
                     registryUrl: value.registryUrl,
                     token: value.token ?? "",
@@ -204,88 +264,88 @@ function getGeneratorPublishConfig(
                 }
             },
             registriesV2: {
-                maven: emptyMavenV2,
+                maven: fallbackMavenV2,
                 npm: {
                     registryUrl: value.registryUrl,
                     token: value.token ?? "",
                     packageName: value.packageName
                 },
-                pypi: emptyPypi,
-                rubygems: emptyRubygems,
-                nuget: emptyNuget,
-                crates: emptyCrates
+                pypi: fallbackPypi,
+                rubygems: fallbackRubygems,
+                nuget: fallbackNuget,
+                crates: fallbackCrates
             },
             version: outputVersion
         }),
         pypi: (value) => ({
             registries: {
-                maven: emptyMavenV1,
-                npm: emptyNpmV1
+                maven: fallbackMavenV1,
+                npm: fallbackNpmV1
             },
             registriesV2: {
-                maven: emptyMavenV2,
-                npm: emptyNpmV2,
+                maven: fallbackMavenV2,
+                npm: fallbackNpmV2,
                 pypi: {
                     registryUrl: value.registryUrl,
                     username: "",
                     password: "",
                     packageName: value.packageName
                 },
-                rubygems: emptyRubygems,
-                nuget: emptyNuget,
-                crates: emptyCrates
+                rubygems: fallbackRubygems,
+                nuget: fallbackNuget,
+                crates: fallbackCrates
             },
             version: outputVersion
         }),
         rubygems: (value) => ({
             registries: {
-                maven: emptyMavenV1,
-                npm: emptyNpmV1
+                maven: fallbackMavenV1,
+                npm: fallbackNpmV1
             },
             registriesV2: {
-                maven: emptyMavenV2,
-                npm: emptyNpmV2,
-                pypi: emptyPypi,
+                maven: fallbackMavenV2,
+                npm: fallbackNpmV2,
+                pypi: fallbackPypi,
                 rubygems: {
                     registryUrl: value.registryUrl,
                     apiKey: value.apiKey ?? "",
                     packageName: value.packageName
                 },
-                nuget: emptyNuget,
-                crates: emptyCrates
+                nuget: fallbackNuget,
+                crates: fallbackCrates
             },
             version: outputVersion
         }),
         nuget: (value) => ({
             registries: {
-                maven: emptyMavenV1,
-                npm: emptyNpmV1
+                maven: fallbackMavenV1,
+                npm: fallbackNpmV1
             },
             registriesV2: {
-                maven: emptyMavenV2,
-                npm: emptyNpmV2,
-                pypi: emptyPypi,
-                rubygems: emptyRubygems,
+                maven: fallbackMavenV2,
+                npm: fallbackNpmV2,
+                pypi: fallbackPypi,
+                rubygems: fallbackRubygems,
                 nuget: {
                     registryUrl: value.registryUrl,
                     apiKey: value.apiKey ?? "",
                     packageName: value.packageName
                 },
-                crates: emptyCrates
+                crates: fallbackCrates
             },
             version: outputVersion
         }),
         crates: (value) => ({
             registries: {
-                maven: emptyMavenV1,
-                npm: emptyNpmV1
+                maven: fallbackMavenV1,
+                npm: fallbackNpmV1
             },
             registriesV2: {
-                maven: emptyMavenV2,
-                npm: emptyNpmV2,
-                pypi: emptyPypi,
-                rubygems: emptyRubygems,
-                nuget: emptyNuget,
+                maven: fallbackMavenV2,
+                npm: fallbackNpmV2,
+                pypi: fallbackPypi,
+                rubygems: fallbackRubygems,
+                nuget: fallbackNuget,
                 crates: {
                     registryUrl: value.registryUrl,
                     token: value.token ?? "",
@@ -317,7 +377,7 @@ function getGithubPublishConfig(
                                 ? token.slice(2, -1).trim()
                                 : ""
                       ),
-                      shouldGeneratePublishWorkflow: false
+                      shouldGeneratePublishWorkflow: true
                   });
               },
               maven: (value) =>
@@ -334,7 +394,7 @@ function getGithubPublishConfig(
                                     secretKeyEnvironmentVariable: EnvironmentVariable(value.signature.secretKey ?? "")
                                 }
                               : undefined,
-                      shouldGeneratePublishWorkflow: false
+                      shouldGeneratePublishWorkflow: true
                   }),
               pypi: (value) =>
                   FernGeneratorExec.GithubPublishInfo.pypi({
@@ -343,14 +403,14 @@ function getGithubPublishConfig(
                       usernameEnvironmentVariable: EnvironmentVariable("PYPI_USERNAME"),
                       passwordEnvironmentVariable: EnvironmentVariable("PYPI_PASSWORD"),
                       pypiMetadata: value.pypiMetadata,
-                      shouldGeneratePublishWorkflow: false
+                      shouldGeneratePublishWorkflow: true
                   }),
               rubygems: (value) =>
                   FernGeneratorExec.GithubPublishInfo.rubygems({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
                       apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? ""),
-                      shouldGeneratePublishWorkflow: false
+                      shouldGeneratePublishWorkflow: true
                   }),
               postman: (value) =>
                   FernGeneratorExec.GithubPublishInfo.postman({
@@ -362,14 +422,14 @@ function getGithubPublishConfig(
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
                       apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? ""),
-                      shouldGeneratePublishWorkflow: false
+                      shouldGeneratePublishWorkflow: true
                   }),
               crates: (value) =>
                   FernGeneratorExec.GithubPublishInfo.crates({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
                       tokenEnvironmentVariable: EnvironmentVariable(value.token ?? ""),
-                      shouldGeneratePublishWorkflow: false
+                      shouldGeneratePublishWorkflow: true
                   }),
               _other: () => undefined
           })
@@ -469,7 +529,7 @@ export function getGeneratorConfig({
     return {
         irFilepath: irPath,
         output,
-        publish: getGeneratorPublishConfig(generatorInvocation, outputVersion),
+        publish: getGeneratorPublishConfig(generatorInvocation, outputVersion, organization, workspaceName),
         customConfig: customConfig,
         workspaceName,
         organization,
@@ -528,7 +588,8 @@ function newDummyPublishOutputConfig(
     let repoUrl = "";
     if (generatorInvocation.raw?.github != null) {
         if (isGithubSelfhosted(generatorInvocation.raw.github)) {
-            repoUrl = generatorInvocation.raw.github.uri;
+            // Convert shorthand uri (owner/repo) to full URL format
+            repoUrl = `https://github.com/${generatorInvocation.raw.github.uri}`;
         } else {
             repoUrl = generatorInvocation.raw?.github.repository;
         }
