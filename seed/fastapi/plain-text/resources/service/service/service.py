@@ -36,8 +36,13 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_get_text(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_text)
+        type_hints = typing.get_type_hints(cls.get_text)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             else:
@@ -58,7 +63,7 @@ class AbstractServiceService(AbstractFernService):
 
         router.post(
             path="/text",
-            response_model=str,
+            response_model=None,
             description=AbstractServiceService.get_text.__doc__,
             **get_route_args(cls.get_text, default_tag="service"),
         )(wrapper)
