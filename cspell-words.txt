@@ -248,6 +248,7 @@ gofmt
 gograph
 goog
 gopkg
+GOROOT
 gospec
 gowiremock
 gradlew
