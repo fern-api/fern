@@ -116,9 +116,10 @@ class UniversalBaseModel(pydantic.BaseModel):
                         "Provide the explicit alias key to disambiguate."
                     )
 
+            original_keys = set(data.keys())
             rewritten: Dict[str, Any] = dict(data)
             for name, alias in name_to_alias.items():
-                if alias != name and name in rewritten and alias not in rewritten:
+                if alias != name and name in original_keys and alias not in rewritten:
                     rewritten[alias] = rewritten.pop(name)
 
             return rewritten
@@ -161,9 +162,10 @@ class UniversalBaseModel(pydantic.BaseModel):
                         "Provide the explicit alias key to disambiguate."
                     )
 
+            original_keys = set(values.keys())
             rewritten: Dict[str, Any] = dict(values)
             for name, alias in name_to_alias.items():
-                if alias != name and name in rewritten and alias not in rewritten:
+                if alias != name and name in original_keys and alias not in rewritten:
                     rewritten[alias] = rewritten.pop(name)
 
             return rewritten
