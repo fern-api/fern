@@ -106,3 +106,6 @@ seed/**/*.egg-info/
 # Seed remote-local test outputs, except for seed.yml files
 seed-remote-local/*
 !seed-remote-local/**/seed.yml
+
+# Test logs from test-remote-local.sh
+test-remote-local-logs-*/
