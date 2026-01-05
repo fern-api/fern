@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "include-exception-handler": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

@@ -22,5 +22,4 @@ service:
             client_secret: string
             audience: literal<"https://api.example.com">
             grant_type: literal<"client_credentials">
-            scope: optional<string>
       response: TokenResponse

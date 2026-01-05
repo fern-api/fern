@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { InferredGetTokenEndpointSchema } from "./InferredGetTokenEndpointSchema";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const InferredBearerAuthSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.InferredBearerAuthSchema.Raw,
-    FernDefinition.fernDefinition.InferredBearerAuthSchema
+    GeneratorsYml.fernDefinition.InferredBearerAuthSchema
 > = core.serialization
     .object({
         scheme: core.serialization.stringLiteral("bearer"),

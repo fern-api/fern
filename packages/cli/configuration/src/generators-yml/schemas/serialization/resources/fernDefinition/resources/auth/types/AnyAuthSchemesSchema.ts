@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { AnyAuthItem } from "./AnyAuthItem";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const AnyAuthSchemesSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.AnyAuthSchemesSchema.Raw,
-    FernDefinition.fernDefinition.AnyAuthSchemesSchema
+    GeneratorsYml.fernDefinition.AnyAuthSchemesSchema
 > = core.serialization
     .object({
         any: core.serialization.list(AnyAuthItem),

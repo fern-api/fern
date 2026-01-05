@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { ApiAuthSchema } from "../../fernDefinition/resources/auth/types/ApiAuthSchema";
 import { AuthSchemeDeclarationSchema } from "../../fernDefinition/resources/auth/types/AuthSchemeDeclarationSchema";
@@ -14,7 +14,7 @@ import { WithEnvironmentsSchema } from "../../fernDefinition/resources/environme
 
 export const ApiConfigurationV2Schema: core.serialization.ObjectSchema<
     serializers.ApiConfigurationV2Schema.Raw,
-    FernDefinition.ApiConfigurationV2Schema
+    GeneratorsYml.ApiConfigurationV2Schema
 > = core.serialization
     .object({
         auth: ApiAuthSchema.optional(),

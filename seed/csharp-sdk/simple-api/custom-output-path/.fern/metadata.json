@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "output-path": "custom-src"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

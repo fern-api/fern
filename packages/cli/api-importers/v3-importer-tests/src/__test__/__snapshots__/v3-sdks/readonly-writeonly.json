@@ -4571,6 +4571,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Readonly and Writeonly Properties API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -4609,22 +4610,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Readonly and Writeonly Properties API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "readonlyAndWriteonlyPropertiesApi",
+      "safeName": "readonlyAndWriteonlyPropertiesApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "readonly_and_writeonly_properties_api",
+      "safeName": "readonly_and_writeonly_properties_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "READONLY_AND_WRITEONLY_PROPERTIES_API",
+      "safeName": "READONLY_AND_WRITEONLY_PROPERTIES_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "ReadonlyAndWriteonlyPropertiesApi",
+      "safeName": "ReadonlyAndWriteonlyPropertiesApi"
     }
   },
   "constants": {

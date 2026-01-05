@@ -3,11 +3,6 @@ import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
-import { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator";
-import { BearerAuthProviderGenerator } from "./BearerAuthProviderGenerator";
-import { HeaderAuthProviderGenerator } from "./HeaderAuthProviderGenerator";
-import { InferredAuthProviderGenerator } from "./InferredAuthProviderGenerator";
-import { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator";
 
 export declare namespace AnyAuthProviderGenerator {
     export interface Init {
@@ -51,39 +46,9 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public getAuthOptionsProperties(_context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
-        // AnyAuthProvider's AuthOptions extends all child auth providers' AuthOptions,
+        // AnyAuthProvider's AuthOptions is generic and parameterized by the providers array,
         // so we don't need to return individual properties here
         return undefined;
-    }
-
-    /**
-     * Gets the list of auth provider class names that this AnyAuthProvider combines.
-     * Used to generate the AuthOptions interface that extends all child auth providers' AuthOptions.
-     */
-    private getChildAuthProviderClassNames(context: SdkContext): string[] {
-        const classNames: string[] = [];
-        for (const authScheme of this.ir.auth.schemes) {
-            switch (authScheme.type) {
-                case "bearer":
-                    classNames.push(BearerAuthProviderGenerator.CLASS_NAME);
-                    break;
-                case "basic":
-                    classNames.push(BasicAuthProviderGenerator.CLASS_NAME);
-                    break;
-                case "header":
-                    classNames.push(HeaderAuthProviderGenerator.CLASS_NAME);
-                    break;
-                case "oauth":
-                    if (context.generateOAuthClients) {
-                        classNames.push(OAuthAuthProviderGenerator.CLASS_NAME);
-                    }
-                    break;
-                case "inferred":
-                    classNames.push(InferredAuthProviderGenerator.CLASS_NAME);
-                    break;
-            }
-        }
-        return classNames;
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
@@ -91,41 +56,61 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
-        this.writeOptions(context);
+        this.addImports(context);
         this.writeClass(context);
+        this.writeOptions(context);
+    }
+
+    private addImports(context: SdkContext): void {
+        // Import NormalizedClientOptions type
+        context.sourceFile.addImportDeclaration({
+            moduleSpecifier: "../BaseClient",
+            namedImports: ["NormalizedClientOptions"],
+            isTypeOnly: true
+        });
     }
 
     private writeOptions(context: SdkContext): void {
-        const childClassNames = this.getChildAuthProviderClassNames(context);
+        const normalizedClientOptionsType = "NormalizedClientOptions";
 
-        for (const className of childClassNames) {
-            context.sourceFile.addImportDeclaration({
-                moduleSpecifier: `./${className}.js`,
-                namedImports: [className],
-                isTypeOnly: true
-            });
-        }
-
-        const authOptionsTypes = childClassNames.map((className) => `${className}.AuthOptions`);
-        const tupleStr = authOptionsTypes.join(",\n        ");
-
-        const typeCode = `
-    type UnionToIntersection<U> =
-        (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;
-
-    type AtLeastOneOf<T extends any[]> = {
-        [K in keyof T]: T[K] & Partial<UnionToIntersection<Exclude<T[number], T[K]>>>;
-    }[number];
-
-    export type ${AUTH_OPTIONS_TYPE_NAME} = AtLeastOneOf<[
-        ${tupleStr}
-    ]>;`;
-
+        // Create namespace with types and createInstance function
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
             kind: StructureKind.Module,
-            statements: typeCode
+            statements: [
+                // Helper type to convert union to intersection
+                `type UnionToIntersection<U> = (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;`,
+                "",
+                `type AtLeastOneOf<T extends readonly any[]> = {`,
+                `    [K in keyof T]: T[K] & Partial<UnionToIntersection<Exclude<T[number], T[K]>>>;`,
+                `}[number];`,
+                "",
+                `export type ${AUTH_OPTIONS_TYPE_NAME}<TAuthProviders extends readonly any[]> = AtLeastOneOf<TAuthProviders>;`,
+                `export type Options<TOptions extends readonly any[]> = Partial<UnionToIntersection<TOptions[number]>>;`,
+                "",
+                `type InstantiatableAuthProvider = {`,
+                `    canCreate: (opts: ${normalizedClientOptionsType}) => boolean;`,
+                `    createInstance: (opts: ${normalizedClientOptionsType}) => core.AuthProvider;`,
+                `};`,
+                "",
+                {
+                    kind: StructureKind.Function,
+                    name: "createInstance",
+                    isExported: true,
+                    parameters: [
+                        { name: "options", type: normalizedClientOptionsType },
+                        { name: "authProviderClasses", type: "InstantiatableAuthProvider[]" }
+                    ],
+                    returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
+                    statements: `
+        const authProviders: core.AuthProvider[] = authProviderClasses
+            .filter((providerClass) => providerClass.canCreate(options))
+            .map((providerClass) => providerClass.createInstance(options));
+
+        return new ${CLASS_NAME}(authProviders);`
+                }
+            ]
         });
     }
 

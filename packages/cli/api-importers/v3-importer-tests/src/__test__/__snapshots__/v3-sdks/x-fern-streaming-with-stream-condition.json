@@ -1917,6 +1917,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Vectara REST API v2",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1985,22 +1986,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Vectara REST API v2",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "vectaraRestApiV2",
+      "safeName": "vectaraRestApiV2"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "vectara_rest_api_v_2",
+      "safeName": "vectara_rest_api_v_2"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "VECTARA_REST_API_V_2",
+      "safeName": "VECTARA_REST_API_V_2"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "VectaraRestApiV2",
+      "safeName": "VectaraRestApiV2"
     }
   },
   "constants": {

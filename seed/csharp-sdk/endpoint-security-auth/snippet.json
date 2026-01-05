@@ -1,0 +1,101 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.Auth.GetTokenAsync(\n    new GetTokenRequest\n    {\n        ClientId = \"client_id\",\n        ClientSecret = \"client_secret\",\n        Audience = \"https://api.example.com\",\n        GrantType = \"client_credentials\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithBearer"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithBearerAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithApiKey"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithApiKeyAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithOAuth"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithOAuthAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithBasic"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithBasicAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithInferredAuth"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithInferredAuthAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithAnyAuth"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithAnyAuthAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithAllAuth"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedEndpointSecurityAuth;\n\nvar client = new SeedEndpointSecurityAuthClient(\"TOKEN\", \"client_id\", \"client_secret\");\nawait client.User.GetWithAllAuthAsync();\n"
+            }
+        }
+    ]
+}

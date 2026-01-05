@@ -4,5 +4,6 @@
     "generatorVersion": "latest",
     "generatorConfig": {
         "retainOriginalCasing": true
-    }
+    },
+    "sdkVersion": "0.0.1"
 }

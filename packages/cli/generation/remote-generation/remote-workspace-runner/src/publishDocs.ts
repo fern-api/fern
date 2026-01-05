@@ -1,6 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { docsYml } from "@fern-api/configuration";
+import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
@@ -25,7 +25,6 @@ import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
-import { getFaiClient } from "./getFaiClient";
 import { measureImageSizes } from "./measureImageSizes";
 import { asyncPool } from "./utils/asyncPool";
 
@@ -281,13 +280,40 @@ export async function publishDocs({
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
+            let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
             if (useDynamicSnippets) {
-                dynamicIRsByLanguage = await generateLanguageSpecificDynamicIRs({
+                // Check for existing SDK dynamic IRs before generating
+                const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
+                    fdr,
                     workspace,
                     organization,
                     context,
                     snippetsConfig
                 });
+
+                if (existingSdkDynamicIrs && Object.keys(existingSdkDynamicIrs).length > 0) {
+                    dynamicIRsByLanguage = existingSdkDynamicIrs;
+                    languagesWithExistingSdkDynamicIr = new Set(Object.keys(existingSdkDynamicIrs));
+                    context.logger.debug(
+                        `Using existing SDK dynamic IRs for: ${Object.keys(existingSdkDynamicIrs).join(", ")}`
+                    );
+                }
+
+                // Generate dynamic IRs for languages that don't have existing SDK dynamic IRs
+                const generatedDynamicIRs = await generateLanguageSpecificDynamicIRs({
+                    workspace,
+                    organization,
+                    context,
+                    snippetsConfig,
+                    skipLanguages: languagesWithExistingSdkDynamicIr
+                });
+
+                if (generatedDynamicIRs) {
+                    dynamicIRsByLanguage = {
+                        ...dynamicIRsByLanguage,
+                        ...generatedDynamicIRs
+                    };
+                }
             }
 
             const response = await fdr.api.v1.register.registerApiDefinition({
@@ -394,14 +420,8 @@ export async function publishDocs({
         const url = wrapWithHttps(urlToOutput);
         await updateAiChatFromDocsDefinition({
             docsDefinition,
-            organization,
-            token,
-            url: url.replace("https://", ""),
-            context,
-            fdr,
             isPreview: preview,
-            domain,
-            customDomains
+            context
         });
 
         const link = terminalLink(url, url);
@@ -520,16 +540,279 @@ function parseBasePath(domain: string): string | undefined {
     }
 }
 
-async function generateLanguageSpecificDynamicIRs({
+async function checkAndDownloadExistingSdkDynamicIRs({
+    fdr,
     workspace,
     organization,
     context,
     snippetsConfig
 }: {
+    fdr: FdrClient;
     workspace: FernWorkspace | undefined;
     organization: string;
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
+}): Promise<Record<string, DynamicIr> | undefined> {
+    if (!workspace) {
+        return undefined;
+    }
+
+    const snippetConfigWithVersions = await buildSnippetConfigurationWithVersions({
+        fdr,
+        workspace,
+        snippetsConfig,
+        context
+    });
+
+    if (Object.keys(snippetConfigWithVersions).length === 0) {
+        context.logger.debug(`[SDK Dynamic IR] No snippet configs found, skipping S3 check`);
+        return undefined;
+    }
+
+    try {
+        const response = await fdr.api.v1.register.checkSdkDynamicIrExists({
+            orgId: CjsFdrSdk.OrgId(organization),
+            snippetConfiguration: snippetConfigWithVersions
+        });
+
+        if (!response.ok || !response.body) {
+            context.logger.debug(`[SDK Dynamic IR] API call failed or returned empty body`);
+            return undefined;
+        }
+
+        const existingDynamicIrs = response.body.existingDynamicIrs;
+
+        if (Object.keys(existingDynamicIrs).length === 0) {
+            context.logger.debug("[SDK Dynamic IR] No existing SDK dynamic IRs found in S3");
+            return undefined;
+        }
+
+        const result: Record<string, DynamicIr> = {};
+        for (const [language, sdkDynamicIrDownload] of Object.entries(existingDynamicIrs)) {
+            try {
+                context.logger.debug(`Downloading existing SDK dynamic IR for ${language}...`);
+                const downloadResponse = await fetch(sdkDynamicIrDownload.downloadUrl);
+                if (downloadResponse.ok) {
+                    const dynamicIR = (await downloadResponse.json()) as unknown;
+                    result[language] = { dynamicIR };
+                    context.logger.debug(`Successfully downloaded SDK dynamic IR for ${language}`);
+                } else {
+                    context.logger.warn(
+                        `Failed to download SDK dynamic IR for ${language}: ${downloadResponse.status}`
+                    );
+                }
+            } catch (error) {
+                context.logger.warn(`Error downloading SDK dynamic IR for ${language}: ${error}`);
+            }
+        }
+
+        return Object.keys(result).length > 0 ? result : undefined;
+    } catch (error) {
+        context.logger.debug(`Error checking for existing SDK dynamic IRs: ${error}`);
+        return undefined;
+    }
+}
+
+async function buildSnippetConfigurationWithVersions({
+    fdr,
+    workspace,
+    snippetsConfig,
+    context
+}: {
+    fdr: FdrClient;
+    workspace: FernWorkspace;
+    snippetsConfig: SnippetsConfig;
+    context: TaskContext;
+}): Promise<Record<string, { packageName: string; version: string | undefined }>> {
+    const result: Record<string, { packageName: string; version: string | undefined }> = {};
+
+    const snippetConfigs: Array<{
+        language: string;
+        snippetName: string | undefined;
+        explicitVersion: string | undefined;
+    }> = [
+        {
+            language: "typescript",
+            snippetName: snippetsConfig.typescriptSdk?.package,
+            explicitVersion: snippetsConfig.typescriptSdk?.version
+        },
+        {
+            language: "python",
+            snippetName: snippetsConfig.pythonSdk?.package,
+            explicitVersion: snippetsConfig.pythonSdk?.version
+        },
+        {
+            language: "java",
+            snippetName: snippetsConfig.javaSdk?.coordinate,
+            explicitVersion: snippetsConfig.javaSdk?.version
+        },
+        {
+            language: "go",
+            snippetName: snippetsConfig.goSdk?.githubRepo,
+            explicitVersion: snippetsConfig.goSdk?.version
+        },
+        {
+            language: "csharp",
+            snippetName: snippetsConfig.csharpSdk?.package,
+            explicitVersion: snippetsConfig.csharpSdk?.version
+        },
+        {
+            language: "ruby",
+            snippetName: snippetsConfig.rubySdk?.gem,
+            explicitVersion: snippetsConfig.rubySdk?.version
+        },
+        {
+            language: "php",
+            snippetName: snippetsConfig.phpSdk?.package,
+            explicitVersion: snippetsConfig.phpSdk?.version
+        },
+        {
+            language: "swift",
+            snippetName: snippetsConfig.swiftSdk?.package,
+            explicitVersion: snippetsConfig.swiftSdk?.version
+        },
+        {
+            language: "rust",
+            snippetName: snippetsConfig.rustSdk?.package,
+            explicitVersion: snippetsConfig.rustSdk?.version
+        }
+    ];
+
+    for (const config of snippetConfigs) {
+        if (!config.snippetName) {
+            continue;
+        }
+
+        let version: string | undefined = config.explicitVersion;
+        if (!version) {
+            const versionResult = await computeSemanticVersionForLanguage({
+                fdr,
+                workspace,
+                language: config.language,
+                snippetName: config.snippetName,
+                context
+            });
+            version = versionResult?.version;
+        }
+
+        // Include the entry even if no version is available - the API will use the latest version
+        result[config.language] = { packageName: config.snippetName, version };
+        if (!version) {
+            context.logger.debug(`[SDK Dynamic IR] ${config.language}: no version specified, will use latest`);
+        }
+    }
+
+    return result;
+}
+
+async function computeSemanticVersionForLanguage({
+    fdr,
+    workspace,
+    language,
+    snippetName,
+    context
+}: {
+    fdr: FdrClient;
+    workspace: FernWorkspace;
+    language: string;
+    snippetName: string;
+    context: TaskContext;
+}): Promise<{ version: string; generatorPackage: string } | undefined> {
+    let fdrLanguage: CjsFdrSdk.sdks.Language;
+    switch (language) {
+        case "csharp":
+            fdrLanguage = "Csharp";
+            break;
+        case "go":
+            fdrLanguage = "Go";
+            break;
+        case "java":
+            fdrLanguage = "Java";
+            break;
+        case "python":
+            fdrLanguage = "Python";
+            break;
+        case "ruby":
+            fdrLanguage = "Ruby";
+            break;
+        case "typescript":
+            fdrLanguage = "TypeScript";
+            break;
+        case "php":
+            fdrLanguage = "Php";
+            break;
+        case "swift":
+            fdrLanguage = "Swift";
+            break;
+        default:
+            return undefined;
+    }
+
+    let githubRepository: string | undefined;
+    let generatorPackage: string | undefined;
+    let matchedGeneratorName: string | undefined;
+
+    if (workspace.generatorsConfiguration?.groups) {
+        const candidatePackages: string[] = [];
+        for (const group of workspace.generatorsConfiguration.groups) {
+            for (const generatorInvocation of group.generators) {
+                if (generatorInvocation.language === language) {
+                    const pkgName = generatorsYml.getPackageName({ generatorInvocation });
+                    if (pkgName) {
+                        candidatePackages.push(pkgName);
+                    }
+                    if (!generatorPackage && pkgName) {
+                        generatorPackage = pkgName;
+                        matchedGeneratorName = generatorInvocation.name;
+                        if (generatorInvocation.outputMode.type === "githubV2") {
+                            githubRepository = `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (!generatorPackage) {
+        context.logger.debug(`[SDK Dynamic IR] ${language}: no generator found with a package name`);
+        return undefined;
+    }
+
+    try {
+        const response = await fdr.sdks.versions.computeSemanticVersion({
+            githubRepository,
+            language: fdrLanguage,
+            package: generatorPackage
+        });
+
+        if (!response.ok) {
+            context.logger.debug(
+                `[SDK Dynamic IR] ${language}: version computation failed for package "${generatorPackage}"`
+            );
+            return undefined;
+        }
+        context.logger.debug(
+            `[SDK Dynamic IR] ${language}: computed version ${response.body.version} for package "${generatorPackage}"`
+        );
+        return { version: response.body.version, generatorPackage };
+    } catch (error) {
+        context.logger.debug(`[SDK Dynamic IR] ${language}: error computing version: ${error}`);
+        return undefined;
+    }
+}
+
+async function generateLanguageSpecificDynamicIRs({
+    workspace,
+    organization,
+    context,
+    snippetsConfig,
+    skipLanguages = new Set()
+}: {
+    workspace: FernWorkspace | undefined;
+    organization: string;
+    context: TaskContext;
+    snippetsConfig: SnippetsConfig;
+    skipLanguages?: Set<string>;
 }): Promise<Record<string, DynamicIr> | undefined> {
     let languageSpecificIRs: Record<string, DynamicIr> = {};
 
@@ -602,6 +885,14 @@ async function generateLanguageSpecificDynamicIRs({
                     continue;
                 }
 
+                // Skip languages that already have SDK dynamic IRs
+                if (skipLanguages.has(generatorInvocation.language)) {
+                    context.logger.debug(
+                        `Skipping dynamic IR generation for ${generatorInvocation.language} (using existing SDK dynamic IR)`
+                    );
+                    continue;
+                }
+
                 // generate a dynamic IR for configuration that matches the requested api snippet
                 if (
                     generatorInvocation.language &&
@@ -650,7 +941,12 @@ async function generateLanguageSpecificDynamicIRs({
     }
 
     for (const [language, packageName] of Object.entries(snippetConfiguration)) {
-        if (language && packageName && !Object.keys(languageSpecificIRs).includes(language)) {
+        if (
+            language &&
+            packageName &&
+            !Object.keys(languageSpecificIRs).includes(language) &&
+            !skipLanguages.has(language)
+        ) {
             context.logger.warn();
             context.logger.warn(
                 `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`
@@ -685,12 +981,13 @@ async function uploadDynamicIRs({
             const dynamicIR = dynamicIRs[language]?.dynamicIR;
 
             if (dynamicIR) {
+                const jsonBody = JSON.stringify(dynamicIR);
                 const response = await fetch(source.uploadUrl, {
                     method: "PUT",
-                    body: JSON.stringify(dynamicIR),
+                    body: jsonBody,
                     headers: {
                         "Content-Type": "application/octet-stream",
-                        "Content-Length": JSON.stringify(dynamicIR).length.toString()
+                        "Content-Length": Buffer.byteLength(jsonBody, "utf8").toString()
                     }
                 });
 
@@ -708,74 +1005,19 @@ async function uploadDynamicIRs({
 
 async function updateAiChatFromDocsDefinition({
     docsDefinition,
-    organization,
-    token,
-    url,
-    context,
-    fdr,
     isPreview,
-    domain,
-    customDomains
+    context
 }: {
     docsDefinition: DocsDefinition;
-    organization: string;
-    token: FernToken;
-    url: string;
-    context: TaskContext;
-    fdr: FdrClient;
     isPreview: boolean;
-    domain: string;
-    customDomains: string[];
+    context: TaskContext;
 }): Promise<void> {
     if (docsDefinition.config.aiChatConfig == null || isPreview) {
         return;
     }
-    context.logger.debug("Processing AI Chat configuration from docs.yml");
-
-    if (docsDefinition.config.aiChatConfig.location != null) {
-        const faiClient = getFaiClient({ token: token.value });
-
-        const domainsToEnable = isPreview
-            ? [wrapWithHttps(url).replace("https://", "")]
-            : [
-                  wrapWithHttps(domain).replace("https://", ""),
-                  ...customDomains.map((cd) => wrapWithHttps(cd).replace("https://", ""))
-              ];
-
-        context.logger.debug(
-            `Enabling Ask AI for domain${domainsToEnable.length > 1 ? "s" : ""}: ${domainsToEnable.join(", ")}`
-        );
-
-        if (docsDefinition.config.aiChatConfig.location.includes("docs")) {
-            for (const domainToEnable of domainsToEnable) {
-                const domainHostname = new URL(wrapWithHttps(domainToEnable)).hostname;
-                context.logger.debug(`Adding domain ${domainHostname} to Algolia whitelist`);
-                const addResult = await fdr.docs.v2.write.addAlgoliaPreviewWhitelistEntry({
-                    domain: domainHostname
-                });
-                if (!addResult.ok) {
-                    context.logger.warn(
-                        `Failed to add domain ${domainHostname} to Algolia whitelist${isPreview ? ". Please try regenerating to test AI chat in preview." : "."}`
-                    );
-                }
-            }
-        }
-
-        const indexingResult = await faiClient.settings.enableAskAi({
-            domains: domainsToEnable,
-            org_name: organization,
-            locations: docsDefinition.config.aiChatConfig.location,
-            preview: isPreview
-        });
-
-        if (indexingResult.success) {
-            context.logger.info(
-                chalk.green(
-                    `${isPreview ? "" : `Ask Fern enabled for ${domainsToEnable.join(", ")}. `}\nNote: it may take a few minutes after publishing for Ask Fern settings to reflect expected state.`
-                )
-            );
-        }
-    }
+    context.logger.warn(
+        chalk.yellow("Enabling Ask Fern from docs.yml is deprecated. Please enable it from the Fern dashboard instead.")
+    );
 }
 
 function getAIEnhancerConfig(withAiExamples: boolean, styleInstructions?: string): AIExampleEnhancerConfig | undefined {

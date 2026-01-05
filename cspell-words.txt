@@ -119,6 +119,7 @@ Crequest
 Crestor
 csharp
 csharpier
+csrf
 Csrf
 customizer
 cyclomaticcomplexity
@@ -145,6 +146,7 @@ deno
 depcheckrc
 Deque
 descs
+devbox
 devrev
 DEVREV
 Dfile
@@ -246,6 +248,7 @@ gofmt
 gograph
 goog
 gopkg
+GOROOT
 gospec
 gowiremock
 gradlew
@@ -712,6 +715,7 @@ Xdock
 Xdoclint
 xlink
 XMPP
+xsrf
 yale
 yardoc
 Yardoc

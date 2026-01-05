@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { EnvironmentSchema } from "./EnvironmentSchema";
 
 export const WithEnvironmentsSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.WithEnvironmentsSchema.Raw,
-    FernDefinition.fernDefinition.WithEnvironmentsSchema
+    GeneratorsYml.fernDefinition.WithEnvironmentsSchema
 > = core.serialization.object({
     "default-url": core.serialization.string().optional(),
     "default-environment": core.serialization.string().optional(),

@@ -32,11 +32,11 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-sdk": "^61.7.0",
+    "@fern-fern/ir-sdk": "^63.0.0",
     "@fern-typescript/abstract-schema-generator": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
-    "ts-morph": "^15.1.0"
+    "ts-morph": "^27.0.2"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

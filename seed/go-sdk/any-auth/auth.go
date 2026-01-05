@@ -12,13 +12,11 @@ import (
 var (
 	getTokenRequestFieldClientId     = big.NewInt(1 << 0)
 	getTokenRequestFieldClientSecret = big.NewInt(1 << 1)
-	getTokenRequestFieldScope        = big.NewInt(1 << 2)
 )
 
 type GetTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"-"`
-	ClientSecret string  `json:"client_secret" url:"-"`
-	Scope        *string `json:"scope,omitempty" url:"-"`
+	ClientId     string `json:"client_id" url:"-"`
+	ClientSecret string `json:"client_secret" url:"-"`
 	audience     string
 	grantType    string
 
@@ -53,13 +51,6 @@ func (g *GetTokenRequest) SetClientId(clientId string) {
 func (g *GetTokenRequest) SetClientSecret(clientSecret string) {
 	g.ClientSecret = clientSecret
 	g.require(getTokenRequestFieldClientSecret)
-}
-
-// SetScope sets the Scope field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetTokenRequest) SetScope(scope *string) {
-	g.Scope = scope
-	g.require(getTokenRequestFieldScope)
 }
 
 func (g *GetTokenRequest) UnmarshalJSON(data []byte) error {

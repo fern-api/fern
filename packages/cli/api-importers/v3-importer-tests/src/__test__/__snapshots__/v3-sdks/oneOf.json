@@ -3115,6 +3115,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "OneOfService API",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -3157,22 +3158,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "OneOfService API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "oneOfServiceApi",
+      "safeName": "oneOfServiceApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "one_of_service_api",
+      "safeName": "one_of_service_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "ONE_OF_SERVICE_API",
+      "safeName": "ONE_OF_SERVICE_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "OneOfServiceApi",
+      "safeName": "OneOfServiceApi"
     }
   },
   "constants": {

@@ -37,7 +37,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                     ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                     this.convert(params)(reference),
                     ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                    ts.factory.createIdentifier("undefined")
+                    ts.factory.createIdentifier("null")
                 );
         }
         return (reference) =>
@@ -308,14 +308,15 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     ): (reference: ts.Expression) => ts.Expression {
         if (params.nullable) {
             return (reference) =>
-                ts.factory.createBinaryExpression(
+                ts.factory.createCallChain(
                     ts.factory.createPropertyAccessChain(
                         reference,
                         ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                        ts.factory.createIdentifier(`${methodName}()`)
+                        ts.factory.createIdentifier(methodName)
                     ),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                    ts.factory.createNull()
+                    undefined,
+                    undefined,
+                    undefined
                 );
         }
         return (reference) =>

@@ -12,3 +12,5 @@ export { InferredAuthProviderGenerator } from "./InferredAuthProviderGenerator";
 export { InferredAuthProviderInstance } from "./InferredAuthProviderInstance";
 export { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator";
 export { OAuthAuthProviderInstance } from "./OAuthAuthProviderInstance";
+export { RoutingAuthProviderGenerator } from "./RoutingAuthProviderGenerator";
+export { RoutingAuthProviderInstance } from "./RoutingAuthProviderInstance";

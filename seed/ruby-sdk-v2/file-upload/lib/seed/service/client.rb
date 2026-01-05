@@ -20,6 +20,7 @@ module Seed
       #
       # @return [untyped]
       def post(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         if params[:maybe_string]
@@ -122,6 +123,7 @@ module Seed
       #
       # @return [untyped]
       def just_file(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -160,6 +162,7 @@ module Seed
       #
       # @return [untyped]
       def just_file_with_query_params(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -193,6 +196,7 @@ module Seed
       #
       # @return [untyped]
       def with_content_type(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -246,6 +250,7 @@ module Seed
       #
       # @return [untyped]
       def with_form_encoding(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -291,6 +296,7 @@ module Seed
       #
       # @return [untyped]
       def with_form_encoded_containers(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         if params[:maybe_string]
@@ -399,6 +405,7 @@ module Seed
       #
       # @return [String]
       def optional_args(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:image_file].to_form_data_part(name: "image_file")) if params[:image_file]
@@ -439,6 +446,7 @@ module Seed
       #
       # @return [String]
       def with_inline_type(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body = Internal::Multipart::FormData.new
 
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
@@ -477,7 +485,8 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
-      def simple(request_options: {}, **_params)
+      def simple(request_options: {}, **params)
+        Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",

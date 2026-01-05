@@ -15,7 +15,7 @@ export function getWriterForMultiLineUnionType(nodes: readonly TsNodeMaybeWithDo
         } else {
             for (const { node, docs } of nodes) {
                 writer.newLine();
-                if (docs != null) {
+                if (docs) {
                     writer.write(getTextOfTsNode(ts.factory.createJSDocComment(docs)));
                     writer.newLineIfLastNot();
                 }

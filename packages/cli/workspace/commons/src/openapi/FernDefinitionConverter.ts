@@ -13,7 +13,10 @@ import { BaseOpenAPIWorkspace } from "./BaseOpenAPIWorkspace";
 /**
  * Extracts the auth scheme names referenced by an auth configuration.
  */
-function getReferencedAuthSchemeNames(auth: RawSchemas.ApiAuthSchema): string[] {
+function getReferencedAuthSchemeNames(
+    auth: RawSchemas.ApiAuthSchema,
+    authSchemes: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined
+): string[] {
     return visitRawApiAuth(auth, {
         single: (scheme) => {
             const schemeName = typeof scheme === "string" ? scheme : scheme.scheme;
@@ -21,6 +24,10 @@ function getReferencedAuthSchemeNames(auth: RawSchemas.ApiAuthSchema): string[] 
         },
         any: (anySchemes) => {
             return anySchemes.any.map((scheme) => (typeof scheme === "string" ? scheme : scheme.scheme));
+        },
+        endpointSecurity: () => {
+            // For endpoint-security auth, all auth schemes are available for use at the endpoint level
+            return authSchemes != null ? Object.keys(authSchemes) : [];
         }
     });
 }
@@ -36,7 +43,7 @@ function filterAuthSchemes(
     if (authSchemes == null) {
         return undefined;
     }
-    const referencedNames = getReferencedAuthSchemeNames(auth);
+    const referencedNames = getReferencedAuthSchemeNames(auth, authSchemes);
     const filtered: Record<string, RawSchemas.AuthSchemeDeclarationSchema> = {};
     for (const name of referencedNames) {
         if (authSchemes[name] != null) {

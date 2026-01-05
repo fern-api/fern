@@ -3278,6 +3278,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_:UserProfile": {
@@ -3400,6 +3401,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_:UserProfileVerification": {
@@ -3462,6 +3464,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_:UserOrAdmin": {
@@ -3682,6 +3685,9 @@
                         "propertyAccess": null,
                         "variable": null
                     }
+                ],
+                "extends": [
+                    "type_:User"
                 ],
                 "additionalProperties": false
             },
@@ -4394,6 +4400,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },

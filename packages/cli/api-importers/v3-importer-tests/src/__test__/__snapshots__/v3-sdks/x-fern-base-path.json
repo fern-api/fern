@@ -1,24 +1,29 @@
 {
   "apiName": {
-    "originalName": "",
+    "originalName": "Acme API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "acmeApi",
+      "safeName": "acmeApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "acme_api",
+      "safeName": "acme_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "ACME_API",
+      "safeName": "ACME_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "AcmeApi",
+      "safeName": "AcmeApi"
     }
   },
+  "basePath": {
+    "head": "/v1",
+    "parts": []
+  },
   "selfHosted": false,
+  "apiDisplayName": "Acme API",
   "auth": {
     "requirement": "ALL",
     "schemes": []

@@ -44,7 +44,7 @@ export class FooClient {
         requestOptions?: FooClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.ImportingType>> {
         const { optionalString, ..._body } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (optionalString != null) {
             _queryParams.optionalString = optionalString;
         }

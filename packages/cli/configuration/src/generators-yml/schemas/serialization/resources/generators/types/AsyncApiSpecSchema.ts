@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { AsyncApiSettingsSchema } from "./AsyncApiSettingsSchema";
 
 export const AsyncApiSpecSchema: core.serialization.ObjectSchema<
     serializers.AsyncApiSpecSchema.Raw,
-    FernDefinition.AsyncApiSpecSchema
+    GeneratorsYml.AsyncApiSpecSchema
 > = core.serialization.object({
     asyncapi: core.serialization.string(),
     origin: core.serialization.string().optional(),

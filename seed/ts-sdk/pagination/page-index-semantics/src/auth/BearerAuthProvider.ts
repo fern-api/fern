@@ -3,35 +3,45 @@
 import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
-export namespace BearerAuthProvider {
-    export interface AuthOptions {
-        token?: core.Supplier<core.BearerToken>;
-    }
-
-    export interface Options extends AuthOptions {}
-}
+const TOKEN_PARAM = "token" as const;
 
 export class BearerAuthProvider implements core.AuthProvider {
-    private readonly token: core.Supplier<core.BearerToken> | undefined;
+    private readonly options: BearerAuthProvider.Options;
 
     constructor(options: BearerAuthProvider.Options) {
-        this.token = options.token;
+        this.options = options;
     }
 
-    public static canCreate(options: BearerAuthProvider.Options): boolean {
-        return options.token != null;
+    public static canCreate(options: Partial<BearerAuthProvider.Options>): boolean {
+        return options?.[TOKEN_PARAM] != null;
     }
 
-    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
-        const token = await core.Supplier.get(this.token);
+    public async getAuthRequest({
+        endpointMetadata,
+    }: {
+        endpointMetadata?: core.EndpointMetadata;
+    } = {}): Promise<core.AuthRequest> {
+        const token = await core.Supplier.get(this.options[TOKEN_PARAM]);
         if (token == null) {
             throw new errors.SeedPaginationError({
-                message: "Please specify a token by passing it in to the constructor",
+                message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
             });
         }
 
         return {
             headers: { Authorization: `Bearer ${token}` },
         };
+    }
+}
+
+export namespace BearerAuthProvider {
+    export const AUTH_SCHEME = "bearer" as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string =
+        `Please provide '${TOKEN_PARAM}' when initializing the client` as const;
+    export type Options = AuthOptions;
+    export type AuthOptions = { [TOKEN_PARAM]?: core.Supplier<core.BearerToken> };
+
+    export function createInstance(options: Options): core.AuthProvider {
+        return new BearerAuthProvider(options);
     }
 }

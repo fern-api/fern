@@ -7,10 +7,14 @@ public partial class SeedAnyAuthClient
     private readonly RawClient _client;
 
     public SeedAnyAuthClient(
+        string clientId,
+        string clientSecret,
         string? token = null,
         string? apiKey = null,
         string? clientId = null,
         string? clientSecret = null,
+        string? username = null,
+        string? password = null,
         ClientOptions? clientOptions = null
     )
     {
@@ -29,6 +33,14 @@ public partial class SeedAnyAuthClient
         clientSecret ??= GetFromEnvironmentOrThrow(
             "MY_CLIENT_SECRET",
             "Please pass in clientSecret or set the environment variable MY_CLIENT_SECRET."
+        );
+        username ??= GetFromEnvironmentOrThrow(
+            "MY_USERNAME",
+            "Please pass in username or set the environment variable MY_USERNAME."
+        );
+        password ??= GetFromEnvironmentOrThrow(
+            "MY_PASSWORD",
+            "Please pass in password or set the environment variable MY_PASSWORD."
         );
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()
@@ -49,6 +61,17 @@ public partial class SeedAnyAuthClient
                 clientOptions.Headers[header.Key] = header.Value;
             }
         }
+        var inferredAuthProvider = new InferredAuthTokenProvider(
+            clientId,
+            clientSecret,
+            new AuthClient(new RawClient(clientOptions.Clone()))
+        );
+        clientOptions.Headers["Authorization"] =
+            new Func<global::System.Threading.Tasks.ValueTask<string>>(async () =>
+                (await inferredAuthProvider.GetAuthHeadersAsync().ConfigureAwait(false))
+                    .First()
+                    .Value
+            );
         _client = new RawClient(clientOptions);
         Auth = new AuthClient(_client);
         User = new UserClient(_client);

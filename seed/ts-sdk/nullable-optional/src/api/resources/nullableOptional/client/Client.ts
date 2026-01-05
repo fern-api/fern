@@ -235,17 +235,17 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { limit, offset, includeDeleted, sortBy } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (limit != null) {
-            _queryParams.limit = limit.toString();
+            _queryParams.limit = limit;
         }
 
         if (offset != null) {
-            _queryParams.offset = offset.toString();
+            _queryParams.offset = offset;
         }
 
         if (includeDeleted != null) {
-            _queryParams.includeDeleted = includeDeleted.toString();
+            _queryParams.includeDeleted = includeDeleted;
         }
 
         if (sortBy !== undefined) {
@@ -309,7 +309,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { query, department, role, isActive } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         _queryParams.query = query;
         if (department !== undefined) {
             _queryParams.department = department;
@@ -320,7 +320,7 @@ export class NullableOptionalClient {
         }
 
         if (isActive !== undefined) {
-            _queryParams.isActive = isActive?.toString() ?? null;
+            _queryParams.isActive = isActive;
         }
 
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -777,7 +777,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { role, status, secondaryRole } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (role !== undefined) {
             _queryParams.role = role;
         }

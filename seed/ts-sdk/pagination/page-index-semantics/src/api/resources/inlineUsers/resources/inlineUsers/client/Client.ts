@@ -47,12 +47,12 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                const _queryParams: Record<string, unknown> = {};
                 if (page != null) {
-                    _queryParams.page = page.toString();
+                    _queryParams.page = page;
                 }
                 if (perPage != null) {
-                    _queryParams.per_page = perPage.toString();
+                    _queryParams.per_page = perPage;
                 }
                 if (order != null) {
                     _queryParams.order = order;
@@ -138,7 +138,7 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersMixedTypeCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse>> => {
                 const { cursor } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                const _queryParams: Record<string, unknown> = {};
                 if (cursor != null) {
                     _queryParams.cursor = cursor;
                 }
@@ -301,12 +301,12 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                const _queryParams: Record<string, unknown> = {};
                 if (page != null) {
-                    _queryParams.page = page.toString();
+                    _queryParams.page = page;
                 }
                 if (perPage != null) {
-                    _queryParams.per_page = perPage.toString();
+                    _queryParams.per_page = perPage;
                 }
                 if (order != null) {
                     _queryParams.order = order;
@@ -392,12 +392,12 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersDoubleOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                const _queryParams: Record<string, unknown> = {};
                 if (page != null) {
-                    _queryParams.page = page.toString();
+                    _queryParams.page = page;
                 }
                 if (perPage != null) {
-                    _queryParams.per_page = perPage.toString();
+                    _queryParams.per_page = perPage;
                 }
                 if (order != null) {
                     _queryParams.order = order;
@@ -561,12 +561,12 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersOffsetStepPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const { page, limit, order } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                const _queryParams: Record<string, unknown> = {};
                 if (page != null) {
-                    _queryParams.page = page.toString();
+                    _queryParams.page = page;
                 }
                 if (limit != null) {
-                    _queryParams.limit = limit.toString();
+                    _queryParams.limit = limit;
                 }
                 if (order != null) {
                     _queryParams.order = order;
@@ -648,12 +648,12 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListWithOffsetPaginationHasNextPageRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const { page, limit, order } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                const _queryParams: Record<string, unknown> = {};
                 if (page != null) {
-                    _queryParams.page = page.toString();
+                    _queryParams.page = page;
                 }
                 if (limit != null) {
-                    _queryParams.limit = limit.toString();
+                    _queryParams.limit = limit;
                 }
                 if (order != null) {
                     _queryParams.order = order;
@@ -734,7 +734,7 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersExtendedRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersExtendedResponse>> => {
                 const { cursor } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                const _queryParams: Record<string, unknown> = {};
                 if (cursor != null) {
                     _queryParams.cursor = cursor;
                 }
@@ -812,7 +812,7 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersExtendedRequestForOptionalData,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse>> => {
                 const { cursor } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                const _queryParams: Record<string, unknown> = {};
                 if (cursor != null) {
                     _queryParams.cursor = cursor;
                 }
@@ -885,7 +885,7 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsernamesRequest,
             ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> => {
                 const { starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                const _queryParams: Record<string, unknown> = {};
                 if (startingAfter != null) {
                     _queryParams.starting_after = startingAfter;
                 }
@@ -956,9 +956,9 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListWithGlobalConfigRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.UsernameContainer>> => {
                 const { offset } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                const _queryParams: Record<string, unknown> = {};
                 if (offset != null) {
-                    _queryParams.offset = offset.toString();
+                    _queryParams.offset = offset;
                 }
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,

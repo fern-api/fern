@@ -5,21 +5,6 @@
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Reference](#reference)
-- [Usage](#usage)
-- [Base Url](#base-url)
-- [Exception Handling](#exception-handling)
-- [Advanced](#advanced)
-  - [Custom Client](#custom-client)
-  - [Retries](#retries)
-  - [Timeouts](#timeouts)
-  - [Custom Headers](#custom-headers)
-  - [Access Raw Response Data](#access-raw-response-data)
-- [Contributing](#contributing)
-
 ## Installation
 
 ### Gradle
@@ -60,11 +45,9 @@ import com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.reques
 
 public class Example {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient
-            .builder()
-            .clientId("<clientId>")
-            .clientSecret("<clientSecret>")
-            .build();
+        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient.withCredentials("<clientId>", "<clientSecret>")
+            .build()
+        ;
 
         client.auth().getTokenWithClientCredentials(
             GetTokenRequest

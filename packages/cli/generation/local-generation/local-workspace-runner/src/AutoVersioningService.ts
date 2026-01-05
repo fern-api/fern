@@ -1,6 +1,5 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import * as os from "os";
 
 /**
  * Exception thrown when automatic semantic versioning fails due to inability
@@ -402,14 +401,27 @@ export class AutoVersioningService {
         this.logger.debug(`Replacing placeholder version ${mappedMagicVersion} with final version: ${finalVersion}`);
 
         const sedCommand = `s/${this.escapeForSed(mappedMagicVersion)}/${this.escapeForSed(finalVersion)}/g`;
-        const osName = os.platform().toLowerCase();
-        const isMac = osName.includes("darwin");
+
+        // Detect sed version by attempting to get version info
+        // GNU sed supports --version, BSD sed does not
+        let isGNUSed = false;
+        try {
+            await loggingExeca(this.logger, "sed", ["--version"], {
+                doNotPipeOutput: true
+            });
+            isGNUSed = true;
+        } catch {
+            // BSD sed will fail with --version
+            isGNUSed = false;
+        }
 
         let command: string;
-        if (isMac) {
-            command = `find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '' '${sedCommand}' {} +`;
-        } else {
+        if (isGNUSed) {
+            // GNU sed (Linux, DevBox on Mac)
             command = `find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '${sedCommand}' {} +`;
+        } else {
+            // BSD sed (native macOS)
+            command = `find "${workingDirectory}" -type f -not -path "*/.git/*" -exec sed -i '' '${sedCommand}' {} +`;
         }
 
         await loggingExeca(this.logger, "bash", ["-c", command], {

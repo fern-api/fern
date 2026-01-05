@@ -765,6 +765,12 @@ types:
       page-actions: optional<PageActionsThemeConfig>
       footer-nav: optional<FooterNavThemeConfig>
       language-switcher: optional<LanguageSwitcherThemeConfig>
+      product-switcher: optional<ProductSwitcherThemeConfig>
+
+  ProductSwitcherThemeConfig:
+    enum:
+      - default
+      - toggle
 
   LanguageSwitcherThemeConfig:
     enum:

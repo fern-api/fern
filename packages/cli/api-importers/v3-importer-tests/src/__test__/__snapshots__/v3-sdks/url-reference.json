@@ -1,24 +1,25 @@
 {
   "apiName": {
-    "originalName": "",
+    "originalName": "URL Reference API",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "urlReferenceApi",
+      "safeName": "urlReferenceApi"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "url_reference_api",
+      "safeName": "url_reference_api"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "URL_REFERENCE_API",
+      "safeName": "URL_REFERENCE_API"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "UrlReferenceApi",
+      "safeName": "UrlReferenceApi"
     }
   },
   "selfHosted": false,
+  "apiDisplayName": "URL Reference API",
   "auth": {
     "requirement": "ALL",
     "schemes": []

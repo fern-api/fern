@@ -8,12 +8,18 @@ const GENERATION_METADATA_FILEPATH = ".fern";
 
 export async function writeGenerationMetadata({
     generationMetadata,
-    pathToProject
+    pathToProject,
+    sdkVersion
 }: {
     generationMetadata: FernIr.GenerationMetadata;
     pathToProject: AbsoluteFilePath;
+    sdkVersion: string | undefined;
 }): Promise<void> {
-    const content = JSON.stringify(generationMetadata, null, 2);
+    const metadata = {
+        ...generationMetadata,
+        sdkVersion
+    };
+    const content = JSON.stringify(metadata, null, 2);
     const generationMetadataDir = path.join(pathToProject, GENERATION_METADATA_FILEPATH);
     await mkdir(generationMetadataDir, { recursive: true });
     await writeFile(`${generationMetadataDir}/${GENERATION_METADATA_FILENAME}`, content);

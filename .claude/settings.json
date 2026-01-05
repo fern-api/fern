@@ -11,6 +11,7 @@
       "Bash(pnpm install)",
       "Bash(pnpm compile)",
       "Bash(pnpm seed:build)",
+      "Bash(pnpm seed:local:*)",
       "Bash(pnpm seed test:*)",
       "Bash(pnpm seed run:*)",
       "Bash(git diff:*)",

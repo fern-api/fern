@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const PostmanOutputLocationSchema: core.serialization.ObjectSchema<
     serializers.PostmanOutputLocationSchema.Raw,
-    FernDefinition.PostmanOutputLocationSchema
+    GeneratorsYml.PostmanOutputLocationSchema
 > = core.serialization.object({
     "api-key": core.serialization.string(),
     "workspace-id": core.serialization.string(),

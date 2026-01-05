@@ -21,7 +21,7 @@ module Seed
       #
       # @return [Seed::Types::UsernameCursor]
       def list_usernames_custom(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[starting_after]
         query_params = {}
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)

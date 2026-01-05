@@ -80,7 +80,6 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
             ts.factory.createParameterDeclaration(
                 undefined,
                 undefined,
-                undefined,
                 UnknownSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
                 undefined,
                 ts.factory.createTypeLiteralNode([

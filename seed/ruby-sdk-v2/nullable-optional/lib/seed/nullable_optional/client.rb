@@ -23,6 +23,7 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def get_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -55,6 +56,7 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def create_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -89,6 +91,7 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def update_user(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
@@ -126,7 +129,7 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def list_users(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[limit offset include_deleted sort_by]
         query_params = {}
         query_params["limit"] = params[:limit] if params.key?(:limit)
@@ -170,7 +173,7 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def search_users(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[query department role is_active]
         query_params = {}
         query_params["query"] = params[:query] if params.key?(:query)
@@ -210,6 +213,7 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def create_complex_profile(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -244,6 +248,7 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def get_complex_profile(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -277,6 +282,7 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def update_complex_profile(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[profile_id]
         body_params = params.except(*path_param_names)
         body_prop_names = %i[nullable_role nullable_status nullable_notification nullable_search_result nullable_array]
@@ -315,6 +321,7 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::DeserializationTestResponse]
       def test_deserialization(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
@@ -351,7 +358,7 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def filter_by_role(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         query_param_names = %i[role status secondary_role]
         query_params = {}
         query_params["role"] = params[:role] if params.key?(:role)
@@ -391,6 +398,7 @@ module Seed
       #
       # @return [Seed::NullableOptional::Types::NotificationMethod, nil]
       def get_notification_settings(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
@@ -422,6 +430,7 @@ module Seed
       #
       # @return [Array[String]]
       def update_tags(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         path_param_names = %i[user_id]
         body_params = params.except(*path_param_names)
         body_prop_names = %i[tags categories labels]
@@ -458,6 +467,7 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::SearchResult], nil]
       def get_search_results(request_options: {}, **params)
+        params = Seed::Internal::Types::Utils.normalize_keys(params)
         body_prop_names = %i[query filters include_types]
         body_bag = params.slice(*body_prop_names)
 

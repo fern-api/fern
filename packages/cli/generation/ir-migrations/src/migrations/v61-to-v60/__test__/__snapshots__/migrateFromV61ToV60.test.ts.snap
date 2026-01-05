@@ -563,6 +563,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
             },
           },
         },
+        "extends": undefined,
         "properties": [
           {
             "name": {

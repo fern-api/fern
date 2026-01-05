@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "simplify-object-dictionaries": true
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

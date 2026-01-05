@@ -1773,6 +1773,7 @@
                         "docs": null
                     },
                     "displayName": "Send",
+                    "methodName": null,
                     "availability": null,
                     "docs": null
                 },
@@ -1853,6 +1854,7 @@
                         "docs": null
                     },
                     "displayName": "Receive",
+                    "methodName": null,
                     "availability": null,
                     "docs": null
                 }
@@ -2537,6 +2539,7 @@
                         "docs": null
                     },
                     "displayName": "Send",
+                    "methodName": null,
                     "availability": null,
                     "docs": null
                 },
@@ -2617,6 +2620,7 @@
                         "docs": null
                     },
                     "displayName": "send_snake",
+                    "methodName": null,
                     "availability": null,
                     "docs": null
                 },
@@ -2697,6 +2701,7 @@
                         "docs": null
                     },
                     "displayName": "Send2",
+                    "methodName": null,
                     "availability": null,
                     "docs": null
                 },
@@ -2777,6 +2782,7 @@
                         "docs": null
                     },
                     "displayName": "Receive",
+                    "methodName": null,
                     "availability": null,
                     "docs": null
                 },
@@ -2857,6 +2863,7 @@
                         "docs": null
                     },
                     "displayName": "Receive",
+                    "methodName": null,
                     "availability": null,
                     "docs": null
                 },
@@ -2937,6 +2944,7 @@
                         "docs": null
                     },
                     "displayName": "Receive2",
+                    "methodName": null,
                     "availability": null,
                     "docs": null
                 },
@@ -3017,6 +3025,7 @@
                         "docs": null
                     },
                     "displayName": "Receive3",
+                    "methodName": null,
                     "availability": null,
                     "docs": null
                 }
@@ -5077,6 +5086,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_realtime-no-auth:NoAuthReceiveEvent": {
@@ -5177,6 +5187,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_realtime:SendEvent": {
@@ -5307,6 +5318,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_realtime:send_snake_case": {
@@ -5437,6 +5449,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_realtime:ReceiveEvent": {
@@ -5567,6 +5580,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_realtime:receive_snake_case": {
@@ -5697,6 +5711,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_realtime:SendEvent2": {
@@ -5827,6 +5842,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_realtime:ReceiveEvent2": {
@@ -5987,6 +6003,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_realtime:ReceiveEvent3": {
@@ -6087,6 +6104,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },

@@ -216,38 +216,6 @@
               "description": null,
               "body": "",
               "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "Success",
-              "status": "OK",
-              "code": 200,
-              "originalRequest": {
-                "description": null,
-                "url": {
-                  "raw": "{{baseUrl}}/get-something",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "get-something"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "auth": null,
-                "body": null
-              },
-              "description": null,
-              "body": "",
-              "_postman_previewlanguage": "json"
             }
           ]
         }

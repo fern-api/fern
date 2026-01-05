@@ -4,6 +4,7 @@ language: ruby
 generatorType: SDK
 defaultOutputMode: github
 image: fernapi/fern-ruby-sdk-v2
+imageAliases: [fernapi/fern-ruby-sdk]
 changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
 
 buildScripts:
@@ -53,6 +54,11 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+    - outputFolder: require-paths
+      customConfig:
+        requirePaths:
+          - custom_integration
+          - sentry_integration
     - outputFolder: readme-config
       customConfig:
         customReadmeSections:

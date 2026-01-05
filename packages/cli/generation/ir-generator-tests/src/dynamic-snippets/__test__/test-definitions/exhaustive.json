@@ -234,6 +234,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_endpoints/put:ErrorCategory": {
@@ -903,6 +904,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_general-errors:BadObjectRequestInfo": {
@@ -1003,6 +1005,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types/docs:ObjectWithDocs": {
@@ -1142,6 +1145,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types/enum:WeatherReport": {
@@ -1889,6 +1893,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types/object:ObjectWithRequiredField": {
@@ -2028,6 +2033,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types/object:ObjectWithMapOfMap": {
@@ -2181,6 +2187,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types/object:NestedObjectWithOptionalField": {
@@ -2356,6 +2363,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types/object:NestedObjectWithRequiredField": {
@@ -2525,6 +2533,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types/object:DoubleOptional": {
@@ -2667,6 +2676,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types/object:OptionalAlias": {
@@ -3133,6 +3143,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types/union:Cat": {
@@ -3302,6 +3313,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         }
     },

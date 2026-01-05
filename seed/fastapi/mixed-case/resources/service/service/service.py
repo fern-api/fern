@@ -42,14 +42,19 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_get_resource(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_resource)
+        type_hints = typing.get_type_hints(cls.get_resource)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "resource_id":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Path(alias="ResourceID")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Path(alias="ResourceID")]
                     )
                 )
             else:
@@ -70,7 +75,7 @@ class AbstractServiceService(AbstractFernService):
 
         router.get(
             path="/resource/{resource_id}",
-            response_model=Resource,
+            response_model=None,
             description=AbstractServiceService.get_resource.__doc__,
             **get_route_args(cls.get_resource, default_tag="service"),
         )(wrapper)
@@ -78,18 +83,23 @@ class AbstractServiceService(AbstractFernService):
     @classmethod
     def __init_list_resources(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.list_resources)
+        type_hints = typing.get_type_hints(cls.list_resources)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "page_limit":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()])
                 )
             elif parameter_name == "before_date":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(alias="beforeDate")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(alias="beforeDate")]
                     )
                 )
             else:
@@ -110,7 +120,7 @@ class AbstractServiceService(AbstractFernService):
 
         router.get(
             path="/resource",
-            response_model=typing.Sequence[Resource],
+            response_model=None,
             description=AbstractServiceService.list_resources.__doc__,
             **get_route_args(cls.list_resources, default_tag="service"),
         )(wrapper)

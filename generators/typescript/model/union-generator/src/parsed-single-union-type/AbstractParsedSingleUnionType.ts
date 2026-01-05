@@ -95,14 +95,11 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                                                   ts.factory.createParameterDeclaration(
                                                       undefined,
                                                       undefined,
-                                                      undefined,
                                                       "this",
                                                       undefined,
-                                                      referenceToBuiltType,
-                                                      undefined
+                                                      referenceToBuiltType
                                                   ),
                                                   ts.factory.createParameterDeclaration(
-                                                      undefined,
                                                       undefined,
                                                       undefined,
                                                       AbstractParsedSingleUnionType.VISITOR_PARAMETER_NAME,
@@ -158,14 +155,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
         return ts.factory.createArrowFunction(
             undefined,
             [],
-            [
-                ts.factory.createParameterDeclaration(
-                    undefined,
-                    undefined,
-                    undefined,
-                    GeneratedUnionImpl.VISITOR_PARAMETER_NAME
-                )
-            ],
+            [ts.factory.createParameterDeclaration(undefined, undefined, GeneratedUnionImpl.VISITOR_PARAMETER_NAME)],
             undefined,
             undefined,
             ts.factory.createCallExpression(
@@ -188,7 +178,6 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
             parameterType != null
                 ? [
                       ts.factory.createParameterDeclaration(
-                          undefined,
                           undefined,
                           undefined,
                           GeneratedUnionImpl.VISITEE_PARAMETER_NAME,

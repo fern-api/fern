@@ -23,7 +23,7 @@ module Seed
         #
         # @return [Seed::FolderA::Service::Types::Response]
         def get_direct_thread(request_options: {}, **params)
-          params = Seed::Internal::Types::Utils.symbolize_keys(params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
           query_param_names = %i[ids tags]
           query_params = {}
           query_params["ids"] = params[:ids] if params.key?(:ids)

@@ -1131,6 +1131,7 @@
   "webhookGroups": {},
   "headers": [],
   "idempotencyHeaders": [],
+  "apiDisplayName": "Request Body Reference Test",
   "pathParameters": [],
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -1169,22 +1170,22 @@
     }
   },
   "apiName": {
-    "originalName": "",
+    "originalName": "Request Body Reference Test",
     "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "requestBodyReferenceTest",
+      "safeName": "requestBodyReferenceTest"
     },
     "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "request_body_reference_test",
+      "safeName": "request_body_reference_test"
     },
     "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "REQUEST_BODY_REFERENCE_TEST",
+      "safeName": "REQUEST_BODY_REFERENCE_TEST"
     },
     "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
+      "unsafeName": "RequestBodyReferenceTest",
+      "safeName": "RequestBodyReferenceTest"
     }
   },
   "constants": {

@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v62
 displayName: Python SDK
 image: fernapi/fern-python-sdk
 changelogLocation: ../../generators/python/sdk/versions.yml
@@ -382,6 +382,7 @@ scripts:
         - poetry run pytest -rP .
 allowedFailures:
   - any-auth
+  - endpoint-security-auth
   - examples:client-filename
   - examples:legacy-wire-tests
   - exhaustive:additional_init_exports

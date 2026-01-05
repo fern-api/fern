@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { OpenApiSpecSchema } from "./OpenApiSpecSchema";
 import { AsyncApiSpecSchema } from "./AsyncApiSpecSchema";
 import { ProtobufSpecSchema } from "./ProtobufSpecSchema";
 import { OpenRpcSpecSchema } from "./OpenRpcSpecSchema";
 
-export const SpecSchema: core.serialization.Schema<serializers.SpecSchema.Raw, FernDefinition.SpecSchema> =
+export const SpecSchema: core.serialization.Schema<serializers.SpecSchema.Raw, GeneratorsYml.SpecSchema> =
     core.serialization.undiscriminatedUnion([
         OpenApiSpecSchema,
         AsyncApiSpecSchema,

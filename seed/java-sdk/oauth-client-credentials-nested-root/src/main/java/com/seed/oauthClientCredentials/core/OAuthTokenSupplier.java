@@ -35,9 +35,9 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     public TokenResponse fetchToken() {
         GetTokenRequest getTokenRequest = GetTokenRequest.builder()
-                .scope(scope)
                 .clientId(clientId)
                 .clientSecret(clientSecret)
+                .scope(scope)
                 .build();
         return authClient.getToken(getTokenRequest);
     }

@@ -249,14 +249,14 @@ export class ServiceClient {
         request: SeedFileUpload.JustFileWithQueryParamsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        const _queryParams: Record<string, unknown> = {};
         if (request.maybeString != null) {
             _queryParams.maybeString = request.maybeString;
         }
 
-        _queryParams.integer = request.integer.toString();
+        _queryParams.integer = request.integer;
         if (request.maybeInteger != null) {
-            _queryParams.maybeInteger = request.maybeInteger.toString();
+            _queryParams.maybeInteger = request.maybeInteger;
         }
 
         if (Array.isArray(request.listOfStrings)) {

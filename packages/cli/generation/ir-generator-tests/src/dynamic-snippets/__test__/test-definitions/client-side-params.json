@@ -261,6 +261,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types:SearchResponse": {
@@ -430,6 +431,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types:User": {
@@ -1196,6 +1198,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types:Identity": {
@@ -1452,6 +1455,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types:PaginatedUserResponse": {
@@ -1678,6 +1682,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types:CreateUserRequest": {
@@ -2051,6 +2056,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types:UpdateUserRequest": {
@@ -2430,6 +2436,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types:Connection": {
@@ -2806,6 +2813,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types:Client": {
@@ -3911,6 +3919,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         },
         "type_types:PaginatedClientResponse": {
@@ -4137,6 +4146,7 @@
                     "variable": null
                 }
             ],
+            "extends": null,
             "additionalProperties": false
         }
     },

@@ -31,6 +31,17 @@ test:
   podman:
     image: fernapi/fern-go-sdk:latest
     command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+  local:
+    workingDirectory: generators/go
+    buildCommand:
+      # Build TypeScript v2 CLI first
+      - pnpm turbo run dist:cli --filter @fern-api/go-sdk
+      # Build Go v1 CLI
+      - go build -ldflags "-s -w" -trimpath -buildvcs=false -o fern-go-sdk ./cmd/fern-go-sdk
+    runCommand: ./fern-go-sdk {CONFIG_PATH}
+    env:
+      # Set path to the go-v2 CLI built from TypeScript (absolute path)
+      GO_V2_PATH: "/Users/jsklan/git/fern-2/generators/go-v2/sdk/dist/cli.cjs"
 language: go
 generatorType: SDK
 defaultOutputMode: github

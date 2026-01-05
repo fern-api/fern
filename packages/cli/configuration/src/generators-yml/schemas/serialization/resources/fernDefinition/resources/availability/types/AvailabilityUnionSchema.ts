@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { AvailabilityStatusSchema } from "./AvailabilityStatusSchema";
 import { AvailabilitySchema } from "./AvailabilitySchema";
 
 export const AvailabilityUnionSchema: core.serialization.Schema<
     serializers.fernDefinition.AvailabilityUnionSchema.Raw,
-    FernDefinition.fernDefinition.AvailabilityUnionSchema
+    GeneratorsYml.fernDefinition.AvailabilityUnionSchema
 > = core.serialization.undiscriminatedUnion([AvailabilityStatusSchema, AvailabilitySchema]);
 
 export declare namespace AvailabilityUnionSchema {
