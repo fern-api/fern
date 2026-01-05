@@ -1,8 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - version: 3.27.5-rc4
   changelogEntry:
-    - summary: Make @octokit/request CVE patch conditional to handle different package structures in newer versions of generator-cli.
-      type: chore
+    - summary: |
+        Add fallback SDK name generation for X-Fern-SDK-Name header when no explicit maven config is provided.
+        This ensures local generation matches remote generation for GitHub output mode.
+      type: fix
   createdAt: "2026-01-05"
   irVersion: 61
 
