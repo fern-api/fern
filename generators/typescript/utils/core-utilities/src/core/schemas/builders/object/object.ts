@@ -279,12 +279,14 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         if (!transformed.ok) {
                             return transformed;
                         }
+                        const rawKeys = new Set(schema._getRawProperties().map(String));
+                        const unknownKeys = keys(raw as object).filter((key) => !rawKeys.has(key as string));
                         return {
                             ok: true,
                             value: {
-                                ...(raw as any),
+                                ...filterObject(raw as object, unknownKeys),
                                 ...transformed.value,
-                            },
+                            } as Parsed & { [key: string]: unknown },
                         };
                     },
                     json: (parsed, opts) => {
@@ -292,12 +294,14 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         if (!transformed.ok) {
                             return transformed;
                         }
+                        const parsedKeys = new Set(schema._getParsedProperties().map(String));
+                        const unknownKeys = keys(parsed as object).filter((key) => !parsedKeys.has(key as string));
                         return {
                             ok: true,
                             value: {
-                                ...(parsed as any),
+                                ...filterObject(parsed as object, unknownKeys),
                                 ...transformed.value,
-                            },
+                            } as Raw & { [key: string]: unknown },
                         };
                     },
                     getType: () => SchemaType.OBJECT,

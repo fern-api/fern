@@ -6,6 +6,12 @@
         the generated code now correctly checks for both `null` and `undefined` using `!= null` instead of only checking
         `!== undefined`. This prevents TypeScript errors when calling methods like `.toISOString()` on nullable Date parameters.
       type: fix
+    - summary: |
+        Fix passthrough serialization to only preserve truly unknown keys. Previously, the passthrough() function would
+        spread both raw and transformed objects, causing duplicate keys with different casing (e.g., both `version_number`
+        and `versionNumber` would appear in the parsed result). The fix now filters out known raw keys before spreading,
+        ensuring only genuinely unknown keys are preserved in the passthrough result.
+      type: fix
   createdAt: "2026-01-05"
   irVersion: 63
 
