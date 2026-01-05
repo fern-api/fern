@@ -37,9 +37,9 @@
               "origin": "server",
             },
           },
-          "path": "/users/{userId}/messages",
+          "path": "/users/{id}/messages",
           "path-parameters": {
-            "userId": {
+            "id": {
               "docs": "The user ID",
               "type": "string",
             },
@@ -71,11 +71,11 @@
         },
       },
       "rawContents": "channel:
-  path: /users/{userId}/messages
+  path: /users/{id}/messages
   url: production
   auth: false
   path-parameters:
-    userId:
+    id:
       type: string
       docs: The user ID
   messages:
