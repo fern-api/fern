@@ -307,12 +307,12 @@ public abstract class AbstractEndpointWriter {
         MethodSpec endpointWithoutRequestWithRequestOptions = null;
         if (variables.sdkRequest().isPresent()
                 && variables.sdkRequest().get().getShape().visit(new SdkRequestIsOptional())) {
-            MethodSpec.Builder endpointWithoutRequestWithRequestOptionsBuilder =
-                    MethodSpec.methodBuilder(endpointWithRequestOptions.name)
-                            .addJavadoc(endpointWithRequestOptions.javadoc)
-                            .addModifiers(Modifier.PUBLIC)
-                            .addParameters(variables.pathParameters)
-                            .returns(endpointWithRequestOptions.returnType);
+            MethodSpec.Builder endpointWithoutRequestWithRequestOptionsBuilder = MethodSpec.methodBuilder(
+                            endpointWithRequestOptions.name)
+                    .addJavadoc(endpointWithRequestOptions.javadoc)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameters(variables.pathParameters)
+                    .returns(endpointWithRequestOptions.returnType);
             List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
                     .filter(parameterSpec -> !parameterSpec.name.equals(variables
                             .sdkRequest()
@@ -351,7 +351,8 @@ public abstract class AbstractEndpointWriter {
             } else {
                 paramNamesWoBodyWithRequestOptions.add("$T.builder().build()");
             }
-            paramNamesWoBodyWithRequestOptions.add(AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            paramNamesWoBodyWithRequestOptions.add(
+                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
             responseParserGenerator.addEndpointWithoutRequestWithRequestOptionsReturnStatement(
                     endpointWithoutRequestWithRequestOptionsBuilder,
                     endpointWithRequestOptions,
