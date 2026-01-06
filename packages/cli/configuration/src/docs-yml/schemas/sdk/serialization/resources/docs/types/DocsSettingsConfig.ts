@@ -15,6 +15,7 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
     searchText: core.serialization.property("search-text", core.serialization.string().optional()),
     disableSearch: core.serialization.property("disable-search", core.serialization.boolean().optional()),
     darkModeCode: core.serialization.property("dark-mode-code", core.serialization.boolean().optional()),
+    lightModeCode: core.serialization.property("light-mode-code", core.serialization.boolean().optional()),
     defaultSearchFilters: core.serialization.property(
         "default-search-filters",
         core.serialization.boolean().optional(),
@@ -39,6 +40,7 @@ export declare namespace DocsSettingsConfig {
         "search-text"?: string | null;
         "disable-search"?: boolean | null;
         "dark-mode-code"?: boolean | null;
+        "light-mode-code"?: boolean | null;
         "default-search-filters"?: boolean | null;
         "http-snippets"?: HttpSnippetsConfig.Raw | null;
         "hide-404-page"?: boolean | null;

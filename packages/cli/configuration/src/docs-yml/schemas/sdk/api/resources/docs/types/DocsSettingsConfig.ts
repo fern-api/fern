@@ -24,6 +24,12 @@ export interface DocsSettingsConfig {
      */
     darkModeCode?: boolean;
     /**
+     * If set to true, the code blocks will be displayed in light mode, regardless of the selected theme.
+     *
+     * @default: false
+     */
+    lightModeCode?: boolean;
+    /**
      * By default (`false`), search will display results for pages across all products and versions.
      * If set to true, search will display results for pages within the current product and version.
      *
