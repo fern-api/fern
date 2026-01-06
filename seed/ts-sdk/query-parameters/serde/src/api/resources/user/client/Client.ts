@@ -119,13 +119,16 @@ export class UserClient {
             omitUndefined: true,
             breadcrumbsPrefix: ["request", "nestedUser"],
         });
-        _queryParams.optionalUser = serializers.User.jsonOrThrow(optionalUser, {
-            unrecognizedObjectKeys: "passthrough",
-            allowUnrecognizedUnionMembers: true,
-            allowUnrecognizedEnumValues: true,
-            omitUndefined: true,
-            breadcrumbsPrefix: ["request", "optionalUser"],
-        });
+        _queryParams.optionalUser =
+            optionalUser != null
+                ? serializers.User.jsonOrThrow(optionalUser, {
+                      unrecognizedObjectKeys: "passthrough",
+                      allowUnrecognizedUnionMembers: true,
+                      allowUnrecognizedEnumValues: true,
+                      omitUndefined: true,
+                      breadcrumbsPrefix: ["request", "optionalUser"],
+                  })
+                : optionalUser;
         if (Array.isArray(excludeUser)) {
             _queryParams.excludeUser = await Promise.all(
                 excludeUser.map(async (item) =>

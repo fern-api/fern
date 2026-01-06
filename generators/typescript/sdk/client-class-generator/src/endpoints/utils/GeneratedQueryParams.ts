@@ -72,7 +72,7 @@ export class GeneratedQueryParams {
                             : queryParameter.name.name.camelCase.unsafeName;
                         if (objectType != null) {
                             if (context.includeSerdeLayer) {
-                                assignmentExpression = context.typeSchema
+                                const serializerCall = context.typeSchema
                                     .getSchemaOfNamedType(objectType, {
                                         isGeneratingSchema: false
                                     })
@@ -84,6 +84,22 @@ export class GeneratedQueryParams {
                                         breadcrumbsPrefix: ["request", paramName],
                                         omitUndefined: context.omitUndefined
                                     });
+                                // Wrap in null check if the query parameter type is optional
+                                if (this.isOptional(queryParameter.valueType)) {
+                                    assignmentExpression = ts.factory.createConditionalExpression(
+                                        ts.factory.createBinaryExpression(
+                                            referenceToQueryParameter,
+                                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                            ts.factory.createNull()
+                                        ),
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        serializerCall,
+                                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                                        referenceToQueryParameter
+                                    );
+                                } else {
+                                    assignmentExpression = serializerCall;
+                                }
                             } else {
                                 assignmentExpression = referenceToQueryParameter;
                             }
@@ -324,6 +340,16 @@ export class GeneratedQueryParams {
             }
         }
         return undefined;
+    }
+
+    /**
+     * Check if a type reference is optional (wrapped in optional container).
+     */
+    private isOptional(typeReference: TypeReference): boolean {
+        if (typeReference.type === "container" && typeReference.container.type === "optional") {
+            return true;
+        }
+        return false;
     }
 
     private withQueryParameter({
