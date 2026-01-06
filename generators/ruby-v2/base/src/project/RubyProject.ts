@@ -138,6 +138,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 await this.createAsIsFile({
                     filename,
                     gemNamespace: this.rubyContext.getRootModuleName(),
+                    rootFolderName: this.rubyContext.getRootFolderName(),
                     customPagerClassName: this.rubyContext.customConfig.customPagerName
                 })
             );
@@ -147,10 +148,12 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     private async createAsIsFile({
         filename,
         gemNamespace,
+        rootFolderName,
         customPagerClassName
     }: {
         filename: string;
         gemNamespace: string;
+        rootFolderName: string;
         customPagerClassName?: string;
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
@@ -161,6 +164,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 contents,
                 variables: getTemplateVariables({
                     gemNamespace,
+                    rootFolderName,
                     customPagerClassName
                 })
             })
@@ -211,14 +215,19 @@ function replaceTemplate({ contents, variables }: { contents: string; variables:
 
 function getTemplateVariables({
     gemNamespace,
+    rootFolderName,
     customPagerClassName
 }: {
     gemNamespace: string;
+    rootFolderName: string;
     customPagerClassName?: string;
 }): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
+        // sdkName is used for SDK branding (e.g., X-Fern-SDK-Name header)
         sdkName: gemNamespace.toLowerCase(),
+        // rootFolderName is used for require paths (matches actual file/folder names)
+        rootFolderName,
         custom_pager_class_name: customPagerClassName ?? "CustomPager"
     };
 }

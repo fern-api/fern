@@ -9,6 +9,8 @@
         Previously, internal types used `module Auth0` while public types used `module Auth_0` due to
         lodash's snakeCase inserting underscores before digits. Now all code paths use upperFirst
         directly on the organization name, producing consistent module names like `Auth0`.
+        Also fixes test_helper.rb require path to use the correct folder name (e.g., `auth_0`)
+        instead of the module name (e.g., `auth0`), preventing LoadError when running tests.
   irVersion: 61
 
 - version: 1.0.0-rc74
