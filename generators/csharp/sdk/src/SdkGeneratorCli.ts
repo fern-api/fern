@@ -30,8 +30,10 @@ import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
 import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator";
 import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
+import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceGenerator";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
+import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPackageClientInterfaceGenerator";
 import { WebSocketClientGenerator } from "./websocket/WebsocketClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
@@ -131,6 +133,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             const service = subpackage.service != null ? context.getHttpService(subpackage.service) : undefined;
             // skip subpackages that have no endpoints (recursively)
             if (context.subPackageHasEndpointsRecursively(subpackage)) {
+                const subClientInterface = new SubPackageClientInterfaceGenerator({
+                    context,
+                    subpackage,
+                    serviceId: subpackage.service,
+                    service
+                });
+                context.project.addSourceFiles(subClientInterface.generate());
+
                 const subClient = new SubPackageClientGenerator({
                     context,
                     subpackage,
@@ -196,6 +206,9 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             const customExceptionInterceptor = new CustomExceptionInterceptorGenerator(context);
             context.project.addSourceFiles(customExceptionInterceptor.generate());
         }
+
+        const rootClientInterface = new RootClientInterfaceGenerator(context);
+        context.project.addSourceFiles(rootClientInterface.generate());
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());

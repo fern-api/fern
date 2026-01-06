@@ -6,6 +6,7 @@ import { AbstractEndpointGenerator } from "./AbstractEndpointGenerator";
 import { GrpcEndpointGenerator } from "./grpc/GrpcEndpointGenerator";
 import { HttpEndpointGenerator } from "./http/HttpEndpointGenerator";
 import { RawClient } from "./http/RawClient";
+import { getEndpointReturnType } from "./utils/getEndpointReturnType";
 
 export class EndpointGenerator extends AbstractEndpointGenerator {
     private http: HttpEndpointGenerator;
@@ -15,6 +16,114 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         super({ context });
         this.http = new HttpEndpointGenerator({ context });
         this.grpc = new GrpcEndpointGenerator({ context });
+    }
+
+    public generateInterfaceSignature(
+        interface_: ast.Interface,
+        {
+            serviceId,
+            endpoint
+        }: {
+            serviceId: ServiceId;
+            endpoint: HttpEndpoint;
+        }
+    ): void {
+        if (this.hasPagination(endpoint)) {
+            this.generatePagerInterfaceSignature(interface_, { serviceId, endpoint });
+            if (endpoint.pagination.type !== "custom") {
+                this.generateUnpagedInterfaceSignature(interface_, { serviceId, endpoint, isPrivate: true });
+            }
+        } else {
+            this.generateUnpagedInterfaceSignature(interface_, { serviceId, endpoint, isPrivate: false });
+        }
+    }
+
+    private generateUnpagedInterfaceSignature(
+        interface_: ast.Interface,
+        {
+            serviceId,
+            endpoint,
+            isPrivate
+        }: {
+            serviceId: ServiceId;
+            endpoint: HttpEndpoint;
+            isPrivate: boolean;
+        }
+    ): void {
+        if (isPrivate) {
+            return;
+        }
+        const endpointSignatureInfo = this.getUnpagedEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
+        const parameters = [...endpointSignatureInfo.baseParameters];
+        parameters.push(this.getRequestOptionsParameter({ endpoint }));
+        parameters.push(
+            this.csharp.parameter({
+                type: this.System.Threading.CancellationToken,
+                name: this.names.parameters.cancellationToken,
+                initializer: "default"
+            })
+        );
+        const return_ = getEndpointReturnType({ context: this.context, endpoint });
+
+        interface_.addMethod({
+            name: this.context.getEndpointMethodName(endpoint),
+            isAsync: true,
+            parameters,
+            summary: endpoint.docs,
+            return_,
+            noBody: true
+        });
+    }
+
+    private generatePagerInterfaceSignature(
+        interface_: ast.Interface,
+        {
+            serviceId,
+            endpoint
+        }: {
+            serviceId: ServiceId;
+            endpoint: HttpEndpoint;
+        }
+    ): void {
+        const endpointSignatureInfo = this.getEndpointSignatureInfo({
+            serviceId,
+            endpoint
+        });
+        const parameters = [...endpointSignatureInfo.baseParameters];
+        parameters.push(this.getRequestOptionsParameter({ endpoint }));
+        parameters.push(
+            this.csharp.parameter({
+                type: this.System.Threading.CancellationToken,
+                name: this.names.parameters.cancellationToken,
+                initializer: "default"
+            })
+        );
+        const return_ = this.getPagerReturnType(endpoint);
+
+        interface_.addMethod({
+            name: this.context.getEndpointMethodName(endpoint),
+            isAsync: true,
+            parameters,
+            summary: endpoint.docs,
+            return_,
+            noBody: true
+        });
+    }
+
+    private getRequestOptionsParameter({ endpoint }: { endpoint: HttpEndpoint }): ast.Parameter {
+        const isIdempotent = endpoint.idempotent;
+        const requestOptionsType = isIdempotent
+            ? this.Types.IdempotentRequestOptionsInterface
+            : this.Types.RequestOptionsInterface;
+        const name = isIdempotent ? this.names.parameters.idempotentOptions : this.names.parameters.requestOptions;
+        return this.csharp.parameter({
+            type: requestOptionsType.asOptional(),
+            name,
+            initializer: "null"
+        });
     }
 
     public generate(
