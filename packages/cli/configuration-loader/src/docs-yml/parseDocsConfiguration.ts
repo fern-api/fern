@@ -408,6 +408,7 @@ function convertSettingsConfig(
 
     return {
         darkModeCode: settings.darkModeCode ?? false,
+        lightModeCode: settings.lightModeCode ?? false,
         defaultSearchFilters: settings.defaultSearchFilters ?? false,
         language: settings.language ?? "en",
         disableSearch: settings.disableSearch ?? false,

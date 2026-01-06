@@ -710,6 +710,12 @@ types:
           If set to true, the code blocks will be displayed in dark mode, regardless of the selected theme.
 
           @default: false
+      light-mode-code:
+        type: optional<boolean>
+        docs: |
+          If set to true, the code blocks will be displayed in light mode, regardless of the selected theme.
+
+          @default: false
       default-search-filters:
         type: optional<boolean>
         docs: |
