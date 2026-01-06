@@ -14,8 +14,7 @@ async fn main() {
         .get_file(
             &"filename".to_string(),
             Some(
-                RequestOptions::new()
-                    .additional_header("X-File-API-Version", "X-File-API-Version".to_string()),
+                RequestOptions::new().additional_header("X-File-API-Version", "X-File-API-Version"),
             ),
         )
         .await;

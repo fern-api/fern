@@ -11,7 +11,7 @@ async fn main() {
         .file_upload_example
         .upload_file(
             &UploadFileRequest {
-                file: std::fs::read("path/to/file").expect("Failed to read file"),
+                file: b"test file content".to_vec(),
                 name: "name".to_string(),
             },
             None,

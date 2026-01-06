@@ -13,7 +13,6 @@ async fn main() {
             &PatchProxyRequest {
                 application: Some("application".to_string()),
                 require_auth: Some(true),
-                ..Default::default()
             },
             None,
         )

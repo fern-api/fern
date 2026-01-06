@@ -1,4 +1,5 @@
 use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::{MetadataUnion, NamedMetadata, OptionalMetadata, Request};
 
 #[tokio::main]
 async fn main() {

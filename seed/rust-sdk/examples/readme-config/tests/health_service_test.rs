@@ -1,58 +1,12 @@
-use reqwest::Client;
 use seed_examples::prelude::*;
 
-/// Resets all WireMock request journal
-async fn reset_wiremock_requests() -> Result<(), Box<dyn std::error::Error>> {
-    let wiremock_admin_url = "http://localhost:8080/__admin";
-    Client::new()
-        .delete(format!("{}/requests", wiremock_admin_url))
-        .send()
-        .await?;
-    return Ok(());
-}
-
-/// Verifies the number of requests made to WireMock
-async fn verify_request_count(
-    method: &str,
-    url_path: &str,
-    query_params: Option<HashMap<String, String>>,
-    expected: usize,
-) -> Result<(), Box<dyn std::error::Error>> {
-    let wiremock_admin_url = "http://localhost:8080/__admin";
-    let mut request_body = json!({
-        "method": method,
-        "urlPath": url_path,
-    });
-    if let Some(params) = query_params {
-        let query_parameters: Value = params
-            .into_iter()
-            .map(|(k, v)| (k, json!({"equalTo": v})))
-            .collect();
-        request_body["queryParameters"] = query_parameters;
-    }
-    let response = Client::new()
-        .post(format!("{}/requests/find", wiremock_admin_url))
-        .json(&request_body)
-        .send()
-        .await?;
-    let result: Value = response.json().await?;
-    let requests = result["requests"]
-        .as_array()
-        .ok_or("Invalid response from WireMock")?;
-    assert_eq!(
-        requests.len(),
-        expected,
-        "Expected {} requests, found {}",
-        expected,
-        requests.len()
-    );
-    return Ok(());
-}
+mod wire_test_utils;
 
 #[tokio::test]
+#[allow(unused_variables, unreachable_code)]
 async fn test_health_service_check_with_wiremock() {
-    reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = "http://localhost:8080";
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -69,15 +23,16 @@ async fn test_health_service_check_with_wiremock() {
 
     assert!(result.is_ok(), "Client method call should succeed");
 
-    verify_request_count("GET", "/check/id-2sdx82h", None, 1)
+    wire_test_utils::verify_request_count("GET", "/check/id-2sdx82h", None, 1)
         .await
         .unwrap();
 }
 
 #[tokio::test]
+#[allow(unused_variables, unreachable_code)]
 async fn test_health_service_ping_with_wiremock() {
-    reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = "http://localhost:8080";
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -90,5 +45,7 @@ async fn test_health_service_ping_with_wiremock() {
 
     assert!(result.is_ok(), "Client method call should succeed");
 
-    verify_request_count("GET", "/ping", None, 1).await.unwrap();
+    wire_test_utils::verify_request_count("GET", "/ping", None, 1)
+        .await
+        .unwrap();
 }

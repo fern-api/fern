@@ -11,7 +11,7 @@ async fn main() {
     client
         .playlist
         .get_playlists(
-            &1,
+            1,
             &GetPlaylistsQueryRequest {
                 limit: Some(1),
                 other_field: "otherField".to_string(),

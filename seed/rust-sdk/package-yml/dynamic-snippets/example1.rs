@@ -1,4 +1,5 @@
 use seed_package_yml::prelude::*;
+use seed_package_yml::EchoRequest;
 
 #[tokio::main]
 async fn main() {
