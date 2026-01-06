@@ -17,8 +17,9 @@ import (
 
 const (
 	// contentType specifies the JSON Content-Type header value.
-	contentType       = "application/json"
-	contentTypeHeader = "Content-Type"
+	contentType            = "application/json"
+	contentTypeHeader      = "Content-Type"
+	contentTypeFormURLEncoded = "application/x-www-form-urlencoded"
 )
 
 // Caller calls APIs and deserializes their response, if any.
@@ -180,7 +181,14 @@ func newRequest(
 	request interface{},
 	bodyProperties map[string]interface{},
 ) (*http.Request, error) {
-	requestBody, err := newRequestBody(request, bodyProperties)
+	// Determine the content type from headers, defaulting to JSON.
+	reqContentType := contentType
+	if endpointHeaders != nil {
+		if ct := endpointHeaders.Get(contentTypeHeader); ct != "" {
+			reqContentType = ct
+		}
+	}
+	requestBody, err := newRequestBody(request, bodyProperties, reqContentType)
 	if err != nil {
 		return nil, err
 	}
@@ -189,7 +197,7 @@ func newRequest(
 		return nil, err
 	}
 	req = req.WithContext(ctx)
-	req.Header.Set(contentTypeHeader, contentType)
+	req.Header.Set(contentTypeHeader, reqContentType)
 	for name, values := range endpointHeaders {
 		req.Header[name] = values
 	}
@@ -197,10 +205,13 @@ func newRequest(
 }
 
 // newRequestBody returns a new io.Reader that represents the HTTP request body.
-func newRequestBody(request interface{}, bodyProperties map[string]interface{}) (io.Reader, error) {
+func newRequestBody(request interface{}, bodyProperties map[string]interface{}, reqContentType string) (io.Reader, error) {
 	if isNil(request) {
 		if len(bodyProperties) == 0 {
 			return nil, nil
+		}
+		if reqContentType == contentTypeFormURLEncoded {
+			return newFormURLEncodedBody(bodyProperties), nil
 		}
 		requestBytes, err := json.Marshal(bodyProperties)
 		if err != nil {
@@ -211,11 +222,80 @@ func newRequestBody(request interface{}, bodyProperties map[string]interface{}) 
 	if body, ok := request.(io.Reader); ok {
 		return body, nil
 	}
+	// Handle form URL encoded content type.
+	if reqContentType == contentTypeFormURLEncoded {
+		return newFormURLEncodedRequestBody(request, bodyProperties)
+	}
 	requestBytes, err := MarshalJSONWithExtraProperties(request, bodyProperties)
 	if err != nil {
 		return nil, err
 	}
 	return bytes.NewReader(requestBytes), nil
+}
+
+// newFormURLEncodedBody returns a new io.Reader that represents a form URL encoded body
+// from the given body properties map.
+func newFormURLEncodedBody(bodyProperties map[string]interface{}) io.Reader {
+	values := url.Values{}
+	for key, val := range bodyProperties {
+		values.Set(key, fmt.Sprintf("%v", val))
+	}
+	return strings.NewReader(values.Encode())
+}
+
+// newFormURLEncodedRequestBody returns a new io.Reader that represents a form URL encoded body
+// from the given request struct and body properties.
+func newFormURLEncodedRequestBody(request interface{}, bodyProperties map[string]interface{}) (io.Reader, error) {
+	values := url.Values{}
+	// Use reflection to extract fields from the request struct.
+	val := reflect.ValueOf(request)
+	if val.Kind() == reflect.Ptr {
+		val = val.Elem()
+	}
+	if val.Kind() == reflect.Struct {
+		typ := val.Type()
+		for i := 0; i < val.NumField(); i++ {
+			field := typ.Field(i)
+			fieldVal := val.Field(i)
+			// Get the json tag to use as the key.
+			jsonTag := field.Tag.Get("json")
+			if jsonTag == "" || jsonTag == "-" {
+				continue
+			}
+			// Parse the json tag to get the field name (handles "name,omitempty").
+			tagName := strings.Split(jsonTag, ",")[0]
+			if tagName == "" {
+				continue
+			}
+			// Skip zero values for optional fields (those with omitempty).
+			if strings.Contains(jsonTag, "omitempty") && isZeroValue(fieldVal) {
+				continue
+			}
+			// Handle pointer types by dereferencing.
+			if fieldVal.Kind() == reflect.Ptr {
+				if fieldVal.IsNil() {
+					continue
+				}
+				fieldVal = fieldVal.Elem()
+			}
+			values.Set(tagName, fmt.Sprintf("%v", fieldVal.Interface()))
+		}
+	}
+	// Add any extra body properties.
+	for key, val := range bodyProperties {
+		values.Set(key, fmt.Sprintf("%v", val))
+	}
+	return strings.NewReader(values.Encode()), nil
+}
+
+// isZeroValue checks if the given reflect.Value is the zero value for its type.
+func isZeroValue(v reflect.Value) bool {
+	switch v.Kind() {
+	case reflect.Ptr, reflect.Interface, reflect.Slice, reflect.Map, reflect.Chan, reflect.Func:
+		return v.IsNil()
+	default:
+		return v.IsZero()
+	}
 }
 
 // decodeError decodes the error from the given HTTP response. Note that
