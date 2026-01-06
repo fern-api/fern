@@ -59,6 +59,7 @@ export class Method extends AstNode {
     public readonly keywordSplatParameter: KeywordSplatParameter | undefined;
     public readonly yieldParameter: YieldParameter | undefined;
     private readonly visibility: MethodVisibility;
+    private readonly hasAnyParameters: Boolean;
     private readonly statements: AstNode[];
     public readonly returnType: Type;
     private readonly splatOptionDocs: string[];
@@ -87,6 +88,9 @@ export class Method extends AstNode {
         this.returnType = returnType ?? Type.untyped();
         this.statements = statements ?? [];
         this.splatOptionDocs = splatOptionDocs ?? [];
+        this.hasAnyParameters = this.positionalParameters.length > 0 ||
+            this.keywordParameters.length > 0 ||
+            this.keywordSplatParameter != null;
     }
 
     public addStatement(statement: AstNode): void {
@@ -98,12 +102,8 @@ export class Method extends AstNode {
             new Comment({ docs: this.docstring }).write(writer);
         }
 
-        const hasAnyParameters =
-            this.positionalParameters.length > 0 ||
-            this.keywordParameters.length > 0 ||
-            this.keywordSplatParameter != null;
 
-        if (this.docstring && hasAnyParameters) {
+        if (this.docstring && this.hasAnyParameters) {
             writer.writeLine("#");
         }
 
@@ -145,7 +145,7 @@ export class Method extends AstNode {
         }
 
         if (this.returnType != null) {
-            if (hasAnyParameters || this.docstring) {
+            if (this.hasAnyParameters || this.docstring) {
                 writer.writeLine("#");
             }
             writer.write(`# @return [`);
