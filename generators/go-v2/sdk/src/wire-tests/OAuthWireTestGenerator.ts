@@ -1,0 +1,223 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { go } from "@fern-api/go-ast";
+import { GoFile } from "@fern-api/go-base";
+import { OAuthScheme } from "@fern-fern/ir-sdk/api";
+import { SdkGeneratorContext } from "../SdkGeneratorContext";
+
+/**
+ * Generates custom OAuth wire tests that validate:
+ * 1. Form URL encoded body format for OAuth token requests
+ * 2. Custom headers being passed through to GetToken requests
+ */
+export class OAuthWireTestGenerator {
+    private readonly context: SdkGeneratorContext;
+
+    constructor(context: SdkGeneratorContext) {
+        this.context = context;
+    }
+
+    public generate(): GoFile | undefined {
+        const oauthScheme = this.getOAuthClientCredentialsScheme();
+        if (oauthScheme == null) {
+            return undefined;
+        }
+
+        const testFileContent = this.generateOAuthTestFile();
+
+        // Place the OAuth wire tests in auth/oauth_wire_test directory
+        // This follows the same pattern as other wire tests (service_test directories)
+        return new GoFile({
+            node: testFileContent,
+            directory: RelativeFilePath.of("./auth/oauth_wire_test"),
+            filename: "oauth_wire_test.go",
+            packageName: "oauth_wire_test",
+            rootImportPath: this.context.getRootImportPath(),
+            importPath: "",
+            customConfig: this.context.customConfig ?? {},
+            formatter: undefined
+        });
+    }
+
+    private generateOAuthTestFile(): go.CodeBlock {
+        const rootImportPath = this.context.getRootImportPath();
+
+        return go.codeblock((writer) => {
+            // Add imports
+            writer.addImport("bytes");
+            writer.addImport("context");
+            writer.addImport("io");
+            writer.addImport("net/http");
+            writer.addImport("net/url");
+            writer.addImport("strings");
+            writer.addImport("testing");
+            writer.addImport("github.com/stretchr/testify/assert");
+            writer.addImport("github.com/stretchr/testify/require");
+            writer.addImport(`${rootImportPath}/client`);
+            writer.addImport(`${rootImportPath}/option`);
+            writer.addImport(rootImportPath);
+
+            writer.newLine();
+
+            // Write the request capturing transport
+            this.writeRequestCapturingTransport(writer);
+            writer.newLine();
+            writer.newLine();
+
+            // Write the form URL encoded body test
+            this.writeFormEncodedBodyTest(writer, rootImportPath);
+            writer.newLine();
+            writer.newLine();
+
+            // Write the custom headers test
+            this.writeCustomHeadersTest(writer, rootImportPath);
+        });
+    }
+
+    private writeRequestCapturingTransport(writer: go.Writer): void {
+        writer.writeLine("// requestCapturingTransport captures HTTP requests for inspection in tests.");
+        writer.writeLine("type requestCapturingTransport struct {");
+        writer.writeLine("\tcapturedBody    []byte");
+        writer.writeLine("\tcapturedHeaders http.Header");
+        writer.writeLine("\tcapturedURL     string");
+        writer.writeLine("\tcapturedMethod  string");
+        writer.writeLine("}");
+        writer.newLine();
+        writer.writeLine("func (t *requestCapturingTransport) RoundTrip(req *http.Request) (*http.Response, error) {");
+        writer.writeLine("\tt.capturedURL = req.URL.String()");
+        writer.writeLine("\tt.capturedHeaders = req.Header.Clone()");
+        writer.writeLine("\tt.capturedMethod = req.Method");
+        writer.newLine();
+        writer.writeLine("\tif req.Body != nil {");
+        writer.writeLine("\t\tbody, err := io.ReadAll(req.Body)");
+        writer.writeLine("\t\tif err != nil {");
+        writer.writeLine("\t\t\treturn nil, err");
+        writer.writeLine("\t\t}");
+        writer.writeLine("\t\tt.capturedBody = body");
+        writer.writeLine("\t\treq.Body = io.NopCloser(bytes.NewReader(body))");
+        writer.writeLine("\t}");
+        writer.newLine();
+        writer.writeLine("\tresponseBody := `{");
+        writer.writeLine('\t\t"access_token": "test_access_token",');
+        writer.writeLine('\t\t"token_type": "Bearer",');
+        writer.writeLine('\t\t"expires_in": 3600');
+        writer.writeLine("\t}`");
+        writer.newLine();
+        writer.writeLine("\treturn &http.Response{");
+        writer.writeLine("\t\tStatusCode: 200,");
+        writer.writeLine("\t\tBody:       io.NopCloser(strings.NewReader(responseBody)),");
+        writer.writeLine("\t\tHeader: http.Header{");
+        writer.writeLine('\t\t\t"Content-Type": []string{"application/json"},');
+        writer.writeLine("\t\t},");
+        writer.writeLine("\t}, nil");
+        writer.writeLine("}");
+    }
+
+    private writeFormEncodedBodyTest(writer: go.Writer, rootImportPath: string): void {
+        const packageName = this.getPackageAlias(rootImportPath);
+
+        writer.writeLine("// TestOAuthGetTokenFormEncodedBody verifies that the OAuth token request body");
+        writer.writeLine(
+            "// is form URL encoded (not JSON) when the Content-Type is application/x-www-form-urlencoded."
+        );
+        writer.writeLine("func TestOAuthGetTokenFormEncodedBody(t *testing.T) {");
+        writer.writeLine("\ttransport := &requestCapturingTransport{}");
+        writer.writeLine("\thttpClient := &http.Client{Transport: transport}");
+        writer.newLine();
+        writer.writeLine("\tc := client.NewClient(");
+        writer.writeLine('\t\toption.WithBaseURL("http://localhost:8080"),');
+        writer.writeLine("\t\toption.WithHTTPClient(httpClient),");
+        writer.writeLine('\t\toption.WithClientCredentials("test_client_id", "test_client_secret"),');
+        writer.writeLine("\t)");
+        writer.newLine();
+        writer.writeLine(`\trequest := &${packageName}.GetTokenRequest{`);
+        writer.writeLine(`\t\tClientId:     "test_client_id",`);
+        writer.writeLine(`\t\tClientSecret: "test_client_secret",`);
+        writer.writeLine("\t}");
+        writer.newLine();
+        writer.writeLine("\t_, err := c.Auth.GetTokenWithClientCredentials(context.Background(), request)");
+        writer.writeLine("\tif err != nil {");
+        writer.writeLine('\t\tt.Logf("GetToken returned error (may be expected in test): %v", err)');
+        writer.writeLine("\t}");
+        writer.newLine();
+        writer.writeLine("\t// Verify Content-Type header is form-urlencoded");
+        writer.writeLine('\tcontentType := transport.capturedHeaders.Get("Content-Type")');
+        writer.writeLine('\tassert.Equal(t, "application/x-www-form-urlencoded", contentType,');
+        writer.writeLine('\t\t"Content-Type should be application/x-www-form-urlencoded")');
+        writer.newLine();
+        writer.writeLine("\t// Verify body is form-encoded (not JSON)");
+        writer.writeLine("\tbodyStr := string(transport.capturedBody)");
+        writer.newLine();
+        writer.writeLine("\t// Body should NOT start with { (JSON)");
+        writer.writeLine('\tassert.False(t, strings.HasPrefix(strings.TrimSpace(bodyStr), "{"),');
+        writer.writeLine('\t\t"Request body should not be JSON, got: %s", bodyStr)');
+        writer.newLine();
+        writer.writeLine("\t// Body should be parseable as form-urlencoded");
+        writer.writeLine("\tvalues, err := url.ParseQuery(bodyStr)");
+        writer.writeLine('\trequire.NoError(t, err, "Body should be valid form-urlencoded")');
+        writer.newLine();
+        writer.writeLine("\t// Verify required OAuth parameters are present");
+        writer.writeLine('\tassert.NotEmpty(t, values.Get("client_id"), "client_id should be present")');
+        writer.writeLine('\tassert.NotEmpty(t, values.Get("client_secret"), "client_secret should be present")');
+        writer.writeLine("}");
+    }
+
+    private writeCustomHeadersTest(writer: go.Writer, rootImportPath: string): void {
+        const packageName = this.getPackageAlias(rootImportPath);
+
+        writer.writeLine("// TestOAuthGetTokenCustomHeaders verifies that custom headers set on the client");
+        writer.writeLine("// are included in the OAuth GetToken request.");
+        writer.writeLine("func TestOAuthGetTokenCustomHeaders(t *testing.T) {");
+        writer.writeLine("\ttransport := &requestCapturingTransport{}");
+        writer.writeLine("\thttpClient := &http.Client{Transport: transport}");
+        writer.newLine();
+        writer.writeLine("\t// Create custom headers");
+        writer.writeLine("\tcustomHeaders := http.Header{}");
+        writer.writeLine('\tcustomHeaders.Set("X-Custom-Header", "custom-value")');
+        writer.writeLine('\tcustomHeaders.Set("X-Sandbox-Auth", "sandbox-token-123")');
+        writer.newLine();
+        writer.writeLine("\tc := client.NewClient(");
+        writer.writeLine('\t\toption.WithBaseURL("http://localhost:8080"),');
+        writer.writeLine("\t\toption.WithHTTPClient(httpClient),");
+        writer.writeLine('\t\toption.WithClientCredentials("test_client_id", "test_client_secret"),');
+        writer.writeLine("\t\toption.WithHTTPHeader(customHeaders),");
+        writer.writeLine("\t)");
+        writer.newLine();
+        writer.writeLine(`\trequest := &${packageName}.GetTokenRequest{`);
+        writer.writeLine(`\t\tClientId:     "test_client_id",`);
+        writer.writeLine(`\t\tClientSecret: "test_client_secret",`);
+        writer.writeLine("\t}");
+        writer.newLine();
+        writer.writeLine("\t_, err := c.Auth.GetTokenWithClientCredentials(context.Background(), request)");
+        writer.writeLine("\tif err != nil {");
+        writer.writeLine('\t\tt.Logf("GetToken returned error (may be expected in test): %v", err)');
+        writer.writeLine("\t}");
+        writer.newLine();
+        writer.writeLine("\t// Verify custom headers are present in the captured request");
+        writer.writeLine('\tcustomHeader := transport.capturedHeaders.Get("X-Custom-Header")');
+        writer.writeLine('\tassert.Equal(t, "custom-value", customHeader,');
+        writer.writeLine('\t\t"X-Custom-Header should be included in GetToken request")');
+        writer.newLine();
+        writer.writeLine('\tsandboxHeader := transport.capturedHeaders.Get("X-Sandbox-Auth")');
+        writer.writeLine('\tassert.Equal(t, "sandbox-token-123", sandboxHeader,');
+        writer.writeLine('\t\t"X-Sandbox-Auth should be included in GetToken request")');
+        writer.writeLine("}");
+    }
+
+    private getPackageAlias(rootImportPath: string): string {
+        // Extract the last part of the import path as the package alias
+        const parts = rootImportPath.split("/");
+        return parts[parts.length - 1] ?? "fern";
+    }
+
+    private getOAuthClientCredentialsScheme(): OAuthScheme | undefined {
+        if (this.context.ir.auth == null) {
+            return undefined;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth" && scheme.configuration?.type === "clientCredentials") {
+                return scheme;
+            }
+        }
+        return undefined;
+    }
+}
