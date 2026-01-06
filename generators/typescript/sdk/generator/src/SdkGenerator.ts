@@ -947,8 +947,7 @@ export class SdkGenerator {
                             context.requestWrapper
                                 .getGeneratedRequestWrapper(packageId, endpoint.name)
                                 .writeToFile(context);
-                        },
-                        addExportTypeModifier: true
+                        }
                     });
                 }
             }
@@ -975,8 +974,7 @@ export class SdkGenerator {
                 for (const { packageId, endpoint } of requestWrappers) {
                     context.requestWrapper.getGeneratedRequestWrapper(packageId, endpoint.name).writeToFile(context);
                 }
-            },
-            addExportTypeModifier: true
+            }
         });
     }
 
