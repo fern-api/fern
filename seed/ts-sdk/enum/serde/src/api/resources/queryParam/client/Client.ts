@@ -50,13 +50,13 @@ export class QueryParamClient {
             unrecognizedObjectKeys: "strip",
             omitUndefined: true,
         });
-        if (maybeOperand != null) {
-            _queryParams.maybeOperand = serializers.Operand.jsonOrThrow(maybeOperand, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            });
-        }
-
+        _queryParams.maybeOperand =
+            maybeOperand != null
+                ? serializers.Operand.jsonOrThrow(maybeOperand, {
+                      unrecognizedObjectKeys: "strip",
+                      omitUndefined: true,
+                  })
+                : undefined;
         _queryParams.operandOrColor = (() => {
             const mapped = serializers.ColorOrOperand.jsonOrThrow(operandOrColor, {
                 unrecognizedObjectKeys: "strip",
@@ -64,16 +64,16 @@ export class QueryParamClient {
             });
             return typeof mapped === "string" ? mapped : toJson(mapped);
         })();
-        if (maybeOperandOrColor != null) {
-            _queryParams.maybeOperandOrColor = (() => {
-                const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                });
-                return typeof mapped === "string" ? mapped : toJson(mapped);
-            })();
-        }
-
+        _queryParams.maybeOperandOrColor =
+            maybeOperandOrColor != null
+                ? (() => {
+                      const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+                          unrecognizedObjectKeys: "strip",
+                          omitUndefined: true,
+                      });
+                      return typeof mapped === "string" ? mapped : toJson(mapped);
+                  })()
+                : undefined;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -141,17 +141,18 @@ export class QueryParamClient {
             });
         }
 
-        if (maybeOperand != null) {
-            if (Array.isArray(maybeOperand)) {
-                _queryParams.maybeOperand = maybeOperand.map((item) =>
-                    serializers.Operand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-                );
-            } else {
-                _queryParams.maybeOperand = serializers.Operand.jsonOrThrow(maybeOperand, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                });
-            }
+        if (Array.isArray(maybeOperand)) {
+            _queryParams.maybeOperand = maybeOperand.map((item) =>
+                serializers.Operand.jsonOrThrow(item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            );
+        } else {
+            _queryParams.maybeOperand =
+                maybeOperand != null
+                    ? serializers.Operand.jsonOrThrow(maybeOperand, {
+                          unrecognizedObjectKeys: "strip",
+                          omitUndefined: true,
+                      })
+                    : undefined;
         }
 
         if (Array.isArray(operandOrColor)) {
@@ -174,26 +175,27 @@ export class QueryParamClient {
             })();
         }
 
-        if (maybeOperandOrColor != null) {
-            if (Array.isArray(maybeOperandOrColor)) {
-                _queryParams.maybeOperandOrColor = maybeOperandOrColor.map((item) =>
-                    (() => {
-                        const mapped = serializers.ColorOrOperand.jsonOrThrow(item, {
-                            unrecognizedObjectKeys: "strip",
-                            omitUndefined: true,
-                        });
-                        return typeof mapped === "string" ? mapped : toJson(mapped);
-                    })(),
-                );
-            } else {
-                _queryParams.maybeOperandOrColor = (() => {
-                    const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+        if (Array.isArray(maybeOperandOrColor)) {
+            _queryParams.maybeOperandOrColor = maybeOperandOrColor.map((item) =>
+                (() => {
+                    const mapped = serializers.ColorOrOperand.jsonOrThrow(item, {
                         unrecognizedObjectKeys: "strip",
                         omitUndefined: true,
                     });
                     return typeof mapped === "string" ? mapped : toJson(mapped);
-                })();
-            }
+                })(),
+            );
+        } else {
+            _queryParams.maybeOperandOrColor =
+                maybeOperandOrColor != null
+                    ? (() => {
+                          const mapped = serializers.ColorOrOperand.jsonOrThrow(maybeOperandOrColor, {
+                              unrecognizedObjectKeys: "strip",
+                              omitUndefined: true,
+                          });
+                          return typeof mapped === "string" ? mapped : toJson(mapped);
+                      })()
+                    : undefined;
         }
 
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

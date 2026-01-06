@@ -51,10 +51,7 @@ export class UserClient {
     ): Promise<core.WithRawResponse<SeedMixedFileDirectory.User[]>> {
         const { limit } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (limit != null) {
-            _queryParams.limit = limit;
-        }
-
+        _queryParams.limit = limit;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

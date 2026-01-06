@@ -46,16 +46,14 @@ export class QueryParamClient {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, unknown> = {};
         _queryParams.operand = operand;
-        if (maybeOperand != null) {
-            _queryParams.maybeOperand = maybeOperand;
-        }
-
+        _queryParams.maybeOperand = maybeOperand != null ? maybeOperand : undefined;
         _queryParams.operandOrColor = typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor);
-        if (maybeOperandOrColor != null) {
-            _queryParams.maybeOperandOrColor =
-                typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : toJson(maybeOperandOrColor);
-        }
-
+        _queryParams.maybeOperandOrColor =
+            maybeOperandOrColor != null
+                ? typeof maybeOperandOrColor === "string"
+                    ? maybeOperandOrColor
+                    : toJson(maybeOperandOrColor)
+                : undefined;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -118,12 +116,10 @@ export class QueryParamClient {
             _queryParams.operand = operand;
         }
 
-        if (maybeOperand != null) {
-            if (Array.isArray(maybeOperand)) {
-                _queryParams.maybeOperand = maybeOperand.map((item) => item);
-            } else {
-                _queryParams.maybeOperand = maybeOperand;
-            }
+        if (Array.isArray(maybeOperand)) {
+            _queryParams.maybeOperand = maybeOperand.map((item) => item);
+        } else {
+            _queryParams.maybeOperand = maybeOperand != null ? maybeOperand : undefined;
         }
 
         if (Array.isArray(operandOrColor)) {
@@ -134,15 +130,17 @@ export class QueryParamClient {
             _queryParams.operandOrColor = typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor);
         }
 
-        if (maybeOperandOrColor != null) {
-            if (Array.isArray(maybeOperandOrColor)) {
-                _queryParams.maybeOperandOrColor = maybeOperandOrColor.map((item) =>
-                    typeof item === "string" ? item : toJson(item),
-                );
-            } else {
-                _queryParams.maybeOperandOrColor =
-                    typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : toJson(maybeOperandOrColor);
-            }
+        if (Array.isArray(maybeOperandOrColor)) {
+            _queryParams.maybeOperandOrColor = maybeOperandOrColor.map((item) =>
+                typeof item === "string" ? item : toJson(item),
+            );
+        } else {
+            _queryParams.maybeOperandOrColor =
+                maybeOperandOrColor != null
+                    ? typeof maybeOperandOrColor === "string"
+                        ? maybeOperandOrColor
+                        : toJson(maybeOperandOrColor)
+                    : undefined;
         }
 
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

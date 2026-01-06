@@ -167,16 +167,11 @@ export class ServiceClient {
     ): Promise<core.WithRawResponse<SeedExamples.Metadata>> {
         const { shallow, tag, "X-API-Version": xApiVersion } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (shallow != null) {
-            _queryParams.shallow = shallow;
-        }
-
-        if (tag != null) {
-            if (Array.isArray(tag)) {
-                _queryParams.tag = tag.map((item) => item);
-            } else {
-                _queryParams.tag = tag;
-            }
+        _queryParams.shallow = shallow;
+        if (Array.isArray(tag)) {
+            _queryParams.tag = tag.map((item) => item);
+        } else {
+            _queryParams.tag = tag;
         }
 
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

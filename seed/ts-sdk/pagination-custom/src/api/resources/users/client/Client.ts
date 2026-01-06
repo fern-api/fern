@@ -36,10 +36,7 @@ export class UsersClient {
     ): Promise<core.MyPager<string, SeedPagination.UsernameCursor>> {
         const { starting_after: startingAfter } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (startingAfter != null) {
-            _queryParams.starting_after = startingAfter;
-        }
-
+        _queryParams.starting_after = startingAfter;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _request = {
             url: core.url.join(

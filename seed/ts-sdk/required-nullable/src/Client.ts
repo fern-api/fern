@@ -49,19 +49,10 @@ export class SeedApiClient {
             required_nullable_baz: requiredNullableBaz,
         } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (optionalBaz != null) {
-            _queryParams.optional_baz = optionalBaz;
-        }
-
-        if (optionalNullableBaz !== undefined) {
-            _queryParams.optional_nullable_baz = optionalNullableBaz;
-        }
-
+        _queryParams.optional_baz = optionalBaz;
+        _queryParams.optional_nullable_baz = optionalNullableBaz;
         _queryParams.required_baz = requiredBaz;
-        if (requiredNullableBaz !== undefined) {
-            _queryParams.required_nullable_baz = requiredNullableBaz;
-        }
-
+        _queryParams.required_nullable_baz = requiredNullableBaz;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

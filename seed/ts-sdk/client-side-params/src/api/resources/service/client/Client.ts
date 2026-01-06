@@ -57,14 +57,8 @@ export class ServiceClient {
         _queryParams.sort = sort;
         _queryParams.order = order;
         _queryParams.include_totals = includeTotals;
-        if (fields != null) {
-            _queryParams.fields = fields;
-        }
-
-        if (search != null) {
-            _queryParams.search = search;
-        }
-
+        _queryParams.fields = fields;
+        _queryParams.search = search;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -264,38 +258,14 @@ export class ServiceClient {
             fields,
         } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (page != null) {
-            _queryParams.page = page;
-        }
-
-        if (perPage != null) {
-            _queryParams.per_page = perPage;
-        }
-
-        if (includeTotals != null) {
-            _queryParams.include_totals = includeTotals;
-        }
-
-        if (sort != null) {
-            _queryParams.sort = sort;
-        }
-
-        if (connection != null) {
-            _queryParams.connection = connection;
-        }
-
-        if (q != null) {
-            _queryParams.q = q;
-        }
-
-        if (searchEngine != null) {
-            _queryParams.search_engine = searchEngine;
-        }
-
-        if (fields != null) {
-            _queryParams.fields = fields;
-        }
-
+        _queryParams.page = page;
+        _queryParams.per_page = perPage;
+        _queryParams.include_totals = includeTotals;
+        _queryParams.sort = sort;
+        _queryParams.connection = connection;
+        _queryParams.q = q;
+        _queryParams.search_engine = searchEngine;
+        _queryParams.fields = fields;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -358,14 +328,8 @@ export class ServiceClient {
     ): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
         const { fields, include_fields: includeFields } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (fields != null) {
-            _queryParams.fields = fields;
-        }
-
-        if (includeFields != null) {
-            _queryParams.include_fields = includeFields;
-        }
-
+        _queryParams.fields = fields;
+        _queryParams.include_fields = includeFields;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -618,18 +582,9 @@ export class ServiceClient {
     ): Promise<core.WithRawResponse<SeedClientSideParams.Connection[]>> {
         const { strategy, name, fields } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (strategy != null) {
-            _queryParams.strategy = strategy;
-        }
-
-        if (name != null) {
-            _queryParams.name = name;
-        }
-
-        if (fields != null) {
-            _queryParams.fields = fields;
-        }
-
+        _queryParams.strategy = strategy;
+        _queryParams.name = name;
+        _queryParams.fields = fields;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -688,10 +643,7 @@ export class ServiceClient {
     ): Promise<core.WithRawResponse<SeedClientSideParams.Connection>> {
         const { fields } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (fields != null) {
-            _queryParams.fields = fields;
-        }
-
+        _queryParams.fields = fields;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -768,38 +720,14 @@ export class ServiceClient {
             app_type: appType,
         } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (fields != null) {
-            _queryParams.fields = fields;
-        }
-
-        if (includeFields != null) {
-            _queryParams.include_fields = includeFields;
-        }
-
-        if (page != null) {
-            _queryParams.page = page;
-        }
-
-        if (perPage != null) {
-            _queryParams.per_page = perPage;
-        }
-
-        if (includeTotals != null) {
-            _queryParams.include_totals = includeTotals;
-        }
-
-        if (isGlobal != null) {
-            _queryParams.is_global = isGlobal;
-        }
-
-        if (isFirstParty != null) {
-            _queryParams.is_first_party = isFirstParty;
-        }
-
-        if (appType != null) {
-            _queryParams.app_type = toJson(appType);
-        }
-
+        _queryParams.fields = fields;
+        _queryParams.include_fields = includeFields;
+        _queryParams.page = page;
+        _queryParams.per_page = perPage;
+        _queryParams.include_totals = includeTotals;
+        _queryParams.is_global = isGlobal;
+        _queryParams.is_first_party = isFirstParty;
+        _queryParams.app_type = appType != null ? toJson(appType) : undefined;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -862,14 +790,8 @@ export class ServiceClient {
     ): Promise<core.WithRawResponse<SeedClientSideParams.Client>> {
         const { fields, include_fields: includeFields } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (fields != null) {
-            _queryParams.fields = fields;
-        }
-
-        if (includeFields != null) {
-            _queryParams.include_fields = includeFields;
-        }
-
+        _queryParams.fields = fields;
+        _queryParams.include_fields = includeFields;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

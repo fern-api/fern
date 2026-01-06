@@ -60,7 +60,7 @@ export class ServiceClient {
         }
 
         if (request.maybeInteger != null) {
-            _request.append("maybe_integer", request.maybeInteger.toString());
+            _request.append("maybe_integer", request.maybeInteger?.toString());
         }
 
         if (request.optionalListOfStrings != null) {
@@ -250,27 +250,19 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _queryParams: Record<string, unknown> = {};
-        if (request.maybeString != null) {
-            _queryParams.maybeString = request.maybeString;
-        }
-
+        _queryParams.maybeString = request.maybeString;
         _queryParams.integer = request.integer;
-        if (request.maybeInteger != null) {
-            _queryParams.maybeInteger = request.maybeInteger;
-        }
-
+        _queryParams.maybeInteger = request.maybeInteger;
         if (Array.isArray(request.listOfStrings)) {
             _queryParams.listOfStrings = request.listOfStrings.map((item) => item);
         } else {
             _queryParams.listOfStrings = request.listOfStrings;
         }
 
-        if (request.optionalListOfStrings != null) {
-            if (Array.isArray(request.optionalListOfStrings)) {
-                _queryParams.optionalListOfStrings = request.optionalListOfStrings.map((item) => item);
-            } else {
-                _queryParams.optionalListOfStrings = request.optionalListOfStrings;
-            }
+        if (Array.isArray(request.optionalListOfStrings)) {
+            _queryParams.optionalListOfStrings = request.optionalListOfStrings.map((item) => item);
+        } else {
+            _queryParams.optionalListOfStrings = request.optionalListOfStrings;
         }
 
         const _request = await core.newFormData();

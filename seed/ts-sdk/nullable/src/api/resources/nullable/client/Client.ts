@@ -47,38 +47,26 @@ export class NullableClient {
     ): Promise<core.WithRawResponse<SeedNullable.User[]>> {
         const { usernames, avatar, activated, tags, extra } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (usernames != null) {
-            if (Array.isArray(usernames)) {
-                _queryParams.usernames = usernames.map((item) => item);
-            } else {
-                _queryParams.usernames = usernames;
-            }
+        if (Array.isArray(usernames)) {
+            _queryParams.usernames = usernames.map((item) => item);
+        } else {
+            _queryParams.usernames = usernames;
         }
 
-        if (avatar != null) {
-            _queryParams.avatar = avatar;
+        _queryParams.avatar = avatar;
+        if (Array.isArray(activated)) {
+            _queryParams.activated = activated.map((item) => item?.toString());
+        } else {
+            _queryParams.activated = activated;
         }
 
-        if (activated != null) {
-            if (Array.isArray(activated)) {
-                _queryParams.activated = activated.map((item) => item.toString());
-            } else {
-                _queryParams.activated = activated;
-            }
+        if (Array.isArray(tags)) {
+            _queryParams.tags = tags.map((item) => item);
+        } else {
+            _queryParams.tags = tags;
         }
 
-        if (tags !== undefined) {
-            if (Array.isArray(tags)) {
-                _queryParams.tags = tags.map((item) => item);
-            } else {
-                _queryParams.tags = tags;
-            }
-        }
-
-        if (extra !== undefined) {
-            _queryParams.extra = extra;
-        }
-
+        _queryParams.extra = extra;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

@@ -108,54 +108,31 @@ export class SeedApiClient {
         _queryParams.deadline = deadline;
         _queryParams.bytes = bytes;
         _queryParams.user = user;
-        if (userList != null) {
-            if (Array.isArray(userList)) {
-                _queryParams.userList = userList.map((item) => item);
-            } else {
-                _queryParams.userList = userList;
-            }
+        if (Array.isArray(userList)) {
+            _queryParams.userList = userList.map((item) => item);
+        } else {
+            _queryParams.userList = userList;
         }
 
-        if (optionalDeadline != null) {
-            _queryParams.optionalDeadline = optionalDeadline;
+        _queryParams.optionalDeadline = optionalDeadline;
+        _queryParams.keyValue = keyValue != null ? toJson(keyValue) : undefined;
+        _queryParams.optionalString = optionalString;
+        _queryParams.nestedUser = nestedUser;
+        _queryParams.optionalUser = optionalUser;
+        if (Array.isArray(excludeUser)) {
+            _queryParams.excludeUser = excludeUser.map((item) => item);
+        } else {
+            _queryParams.excludeUser = excludeUser;
         }
 
-        if (keyValue != null) {
-            _queryParams.keyValue = toJson(keyValue);
+        if (Array.isArray(filter)) {
+            _queryParams.filter = filter.map((item) => item);
+        } else {
+            _queryParams.filter = filter;
         }
 
-        if (optionalString != null) {
-            _queryParams.optionalString = optionalString;
-        }
-
-        if (nestedUser != null) {
-            _queryParams.nestedUser = nestedUser;
-        }
-
-        if (optionalUser != null) {
-            _queryParams.optionalUser = optionalUser;
-        }
-
-        if (excludeUser != null) {
-            if (Array.isArray(excludeUser)) {
-                _queryParams.excludeUser = excludeUser.map((item) => item);
-            } else {
-                _queryParams.excludeUser = excludeUser;
-            }
-        }
-
-        if (filter != null) {
-            if (Array.isArray(filter)) {
-                _queryParams.filter = filter.map((item) => item);
-            } else {
-                _queryParams.filter = filter;
-            }
-        }
-
-        if (neighbor != null) {
-            _queryParams.neighbor = typeof neighbor === "string" ? neighbor : toJson(neighbor);
-        }
-
+        _queryParams.neighbor =
+            neighbor != null ? (typeof neighbor === "string" ? neighbor : toJson(neighbor)) : undefined;
         _queryParams.neighborRequired =
             typeof neighborRequired === "string" ? neighborRequired : toJson(neighborRequired);
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

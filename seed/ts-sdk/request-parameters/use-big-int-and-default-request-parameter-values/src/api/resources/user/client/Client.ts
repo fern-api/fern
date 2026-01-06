@@ -273,30 +273,18 @@ export class UserClient {
             bigIntParam = BigInt("18446744073709551615"),
         } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (limit != null) {
-            _queryParams.limit = limit;
-        }
-
+        _queryParams.limit = limit;
         _queryParams.id = id;
         _queryParams.date = date;
         _queryParams.deadline = deadline;
         _queryParams.bytes = bytes;
         _queryParams.user = user;
         _queryParams.userList = toJson(userList);
-        if (optionalDeadline != null) {
-            _queryParams.optionalDeadline = optionalDeadline;
-        }
-
+        _queryParams.optionalDeadline = optionalDeadline;
         _queryParams.keyValue = toJson(keyValue);
-        if (optionalString != null) {
-            _queryParams.optionalString = optionalString;
-        }
-
+        _queryParams.optionalString = optionalString;
         _queryParams.nestedUser = nestedUser;
-        if (optionalUser != null) {
-            _queryParams.optionalUser = optionalUser;
-        }
-
+        _queryParams.optionalUser = optionalUser;
         if (Array.isArray(excludeUser)) {
             _queryParams.excludeUser = excludeUser.map((item) => item);
         } else {
@@ -309,14 +297,8 @@ export class UserClient {
             _queryParams.filter = filter;
         }
 
-        if (longParam != null) {
-            _queryParams.longParam = longParam;
-        }
-
-        if (bigIntParam != null) {
-            _queryParams.bigIntParam = bigIntParam;
-        }
-
+        _queryParams.longParam = longParam;
+        _queryParams.bigIntParam = bigIntParam;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

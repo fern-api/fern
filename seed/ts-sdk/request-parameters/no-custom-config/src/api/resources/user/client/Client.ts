@@ -280,20 +280,11 @@ export class UserClient {
         _queryParams.bytes = bytes;
         _queryParams.user = user;
         _queryParams.userList = toJson(userList);
-        if (optionalDeadline != null) {
-            _queryParams.optionalDeadline = optionalDeadline;
-        }
-
+        _queryParams.optionalDeadline = optionalDeadline;
         _queryParams.keyValue = toJson(keyValue);
-        if (optionalString != null) {
-            _queryParams.optionalString = optionalString;
-        }
-
+        _queryParams.optionalString = optionalString;
         _queryParams.nestedUser = nestedUser;
-        if (optionalUser != null) {
-            _queryParams.optionalUser = optionalUser;
-        }
-
+        _queryParams.optionalUser = optionalUser;
         if (Array.isArray(excludeUser)) {
             _queryParams.excludeUser = excludeUser.map((item) => item);
         } else {
