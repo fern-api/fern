@@ -137,7 +137,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
             this.coreFiles.push(
                 await this.createAsIsFile({
                     filename,
-                    gemNamespace: firstCharUpperCase(this.context.config.organization || "fern"),
+                    gemNamespace: this.rubyContext.getRootModuleName(),
                     customPagerClassName: this.rubyContext.customConfig.customPagerName
                 })
             );
@@ -203,10 +203,6 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     private filePathFromRubyFile(file: File): AbsoluteFilePath {
         return join(this.absolutePathToOutputDirectory, file.directory, RelativeFilePath.of(file.filename));
     }
-}
-
-function firstCharUpperCase(st: string): string {
-    return st.length < 1 ? st : st.charAt(0).toUpperCase() + st.substring(1);
 }
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
