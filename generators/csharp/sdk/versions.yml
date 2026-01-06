@@ -16,6 +16,13 @@
   createdAt: "2026-01-06"
   irVersion: 62
 
+- version: 2.12.2
+  changelogEntry:
+    - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.
+      type: chore
+  createdAt: "2026-01-05"
+  irVersion: 62
+
 - version: 2.12.1
   changelogEntry:
     - summary: |
