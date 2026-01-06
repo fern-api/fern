@@ -97,12 +97,7 @@ export class Method extends AstNode {
         this.statements.push(statement);
     }
 
-    public write(writer: Writer): void {
-        if (this.docstring) {
-            new Comment({ docs: this.docstring }).write(writer);
-        }
-
-
+    private writeTypeHints(writer: Writer): void {
         if (this.docstring && this.hasAnyParameters) {
             writer.writeLine("#");
         }
@@ -155,7 +150,8 @@ export class Method extends AstNode {
             writer.write("]");
             writer.newLine();
         }
-
+    }
+    private writeVisibility(writer: Writer): void {
         if (this.visibility !== MethodVisibility.Public) {
             writer.write(this.visibility);
 
@@ -165,6 +161,14 @@ export class Method extends AstNode {
 
             writer.write(" ");
         }
+    }
+
+    public write(writer: Writer): void {
+        if (this.docstring) {
+            new Comment({ docs: this.docstring }).write(writer);
+        }
+        this.writeTypeHints(writer);
+        this.writeVisibility(writer);
 
         switch (this.kind) {
             case MethodKind.Instance:
