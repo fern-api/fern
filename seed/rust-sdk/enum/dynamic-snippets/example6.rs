@@ -1,4 +1,5 @@
 use seed_enum::prelude::*;
+use seed_enum::{Color, ColorOrOperand, Operand};
 
 #[tokio::main]
 async fn main() {

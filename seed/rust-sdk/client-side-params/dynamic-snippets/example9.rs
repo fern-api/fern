@@ -14,7 +14,6 @@ async fn main() {
             &"connectionId".to_string(),
             &GetConnectionQueryRequest {
                 fields: Some("fields".to_string()),
-                ..Default::default()
             },
             None,
         )

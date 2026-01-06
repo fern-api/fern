@@ -1,4 +1,5 @@
 use seed_examples::prelude::*;
+use seed_examples::MovieId;
 
 #[tokio::main]
 async fn main() {

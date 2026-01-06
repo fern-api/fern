@@ -1,4 +1,5 @@
 use seed_trace::prelude::*;
+use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -11,6 +12,6 @@ async fn main() {
     client
         .v_2
         .problem
-        .get_problem_version(&ProblemId("problemId".to_string()), &1, None)
+        .get_problem_version(&ProblemId("problemId".to_string()), 1, None)
         .await;
 }

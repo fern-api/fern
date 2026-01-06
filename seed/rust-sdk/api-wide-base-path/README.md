@@ -55,7 +55,7 @@ async fn main() {
         .post(
             &"pathParam".to_string(),
             &"serviceParam".to_string(),
-            &1,
+            1,
             &"resourceParam".to_string(),
             None,
         )

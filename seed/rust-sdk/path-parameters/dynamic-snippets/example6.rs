@@ -12,10 +12,7 @@ async fn main() {
         .search_users(
             &"tenant_id".to_string(),
             &"user_id".to_string(),
-            &SearchUsersQueryRequest {
-                limit: Some(1),
-                ..Default::default()
-            },
+            &SearchUsersQueryRequest { limit: Some(1) },
             None,
         )
         .await;

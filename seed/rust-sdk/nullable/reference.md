@@ -107,6 +107,7 @@ async fn main() {
 
 ```rust
 use seed_nullable::prelude::*;
+use seed_nullable::{Metadata, Status};
 
 #[tokio::main]
 async fn main() {
@@ -217,7 +218,6 @@ async fn main() {
         .delete_user(
             &DeleteUserRequest {
                 username: Some(Some("xy".to_string())),
-                ..Default::default()
             },
             None,
         )
