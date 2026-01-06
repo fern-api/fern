@@ -145,7 +145,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     platformHeaders.getSdkVersion(),
                     generatorConfig.getPublish().get().getVersion());
         }
-        // Fallback to IR publishConfig (local generation)
+        // Fallback to IR publishConfig (local generation with explicit maven config)
         else if (ir.getPublishConfig().isPresent()) {
             Optional<MavenPublishTarget> mavenTarget =
                     extractMavenTarget(ir.getPublishConfig().get());
@@ -156,6 +156,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .getVersion()
                         .ifPresent(version -> entries.put(platformHeaders.getSdkVersion(), version));
             }
+        }
+        // Final fallback: generate default coordinate matching Fiddle's RegistryConfigFactory behavior
+        // This ensures local generation matches remote generation for GitHub output mode without explicit maven config
+        else {
+            String fallbackCoordinate = String.format(
+                    "com.%s.fern:%s-sdk", generatorConfig.getOrganization(), generatorConfig.getWorkspaceName());
+            entries.put(platformHeaders.getSdkName(), fallbackCoordinate);
         }
 
         if (platformHeaders.getUserAgent().isPresent()) {

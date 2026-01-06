@@ -31,6 +31,13 @@
         instead of the module name (e.g., `auth0`), preventing LoadError when running tests.
   irVersion: 61
 
+- version: 1.0.0-rc75
+  changelogEntry:
+    - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.
+      type: chore
+  createdAt: "2026-01-05"
+  irVersion: 61
+
 - version: 1.0.0-rc74
   createdAt: "2025-12-19"
   changelogEntry:

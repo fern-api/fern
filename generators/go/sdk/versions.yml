@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 1.22.1
+- version: 1.22.2
   changelogEntry:
     - summary: |
         Make OAuth wire tests dynamic to support different SDK structures. The OAuth test generator
@@ -9,6 +9,14 @@
         hardcoded assumptions.
       type: fix
   createdAt: "2026-01-06"
+  irVersion: 60
+
+- version: 1.22.1
+  changelogEntry:
+    - summary: |
+        Add 'v' prefix to sdkVersion in metadata.json to follow Go module versioning conventions.
+      type: fix
+  createdAt: "2026-01-05"
   irVersion: 60
 
 - version: 1.22.0

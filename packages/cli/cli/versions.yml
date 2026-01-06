@@ -5,6 +5,10 @@
         Respect the `path-parameter-order` setting from `generators.yml` when importing OpenAPI specs, which is different from the `path-parameter-order` on the `api.settings` level.
         By setting both levels to `spec-order`, you can preserve the old behavior of using the order defined in the OpenAPI spec.
       type: fix
+    - summary: |
+        Fix local generation to convert self-hosted GitHub URI (owner/repo) to full URL format,
+        matching Fiddle's remote generation behavior.
+      type: fix
   createdAt: "2026-01-06"
   irVersion: 62
 
