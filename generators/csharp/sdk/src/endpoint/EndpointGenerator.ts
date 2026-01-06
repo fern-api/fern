@@ -66,11 +66,13 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
                 initializer: "default"
             })
         );
-        const return_ = getEndpointReturnType({ context: this.context, endpoint });
+        const rawReturn = getEndpointReturnType({ context: this.context, endpoint });
+        // Wrap return type in Task<T> for interface methods (can't use isAsync since interfaces don't support async keyword)
+        const return_ =
+            rawReturn != null ? this.System.Threading.Tasks.Task(rawReturn) : this.System.Threading.Tasks.Task();
 
         interface_.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
-            isAsync: true,
             parameters,
             summary: endpoint.docs,
             return_,
@@ -101,11 +103,11 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
                 initializer: "default"
             })
         );
+        // Pager return type is already not wrapped in Task (it's a Pager<T>), so no wrapping needed
         const return_ = this.getPagerReturnType(endpoint);
 
         interface_.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
-            isAsync: true,
             parameters,
             summary: endpoint.docs,
             return_,
@@ -115,9 +117,9 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
 
     private getRequestOptionsParameter({ endpoint }: { endpoint: HttpEndpoint }): ast.Parameter {
         const isIdempotent = endpoint.idempotent;
-        const requestOptionsType = isIdempotent
-            ? this.Types.IdempotentRequestOptionsInterface
-            : this.Types.RequestOptionsInterface;
+        // Use concrete RequestOptions/IdempotentRequestOptions classes (public) instead of interfaces (internal)
+        // to ensure interface methods have consistent accessibility
+        const requestOptionsType = isIdempotent ? this.Types.IdempotentRequestOptions : this.Types.RequestOptions;
         const name = isIdempotent ? this.names.parameters.idempotentOptions : this.names.parameters.requestOptions;
         return this.csharp.parameter({
             type: requestOptionsType.asOptional(),
