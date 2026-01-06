@@ -146,6 +146,7 @@ deno
 depcheckrc
 Deque
 descs
+devbox
 devrev
 DEVREV
 Dfile
@@ -247,6 +248,7 @@ gofmt
 gograph
 goog
 gopkg
+GOROOT
 gospec
 gowiremock
 gradlew

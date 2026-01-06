@@ -253,4 +253,20 @@ Fern is inspired by internal tooling built to enhance the developer experience. 
 
 We welcome community contributions. For guidelines, refer to our [CONTRIBUTING.md](/CONTRIBUTING.md). To contribute to our documentation, refer to our [docs](https://github.com/fern-api/docs) repo.
 
+### Development Environment
+
+This repository uses [DevBox](https://www.jetify.com/devbox) for reproducible development environments. DevBox provides cross-platform support (Mac, Linux, Windows via WSL) with exact version pinning based on Nix.
+
+To get started:
+
+```bash
+# Install DevBox (https://www.jetify.com/devbox/docs/installing_devbox/)
+curl -fsSL https://get.jetify.com/devbox | bash
+
+# Enter the development environment
+devbox shell
+```
+
+DevBox automatically installs all required dependencies including Node.js, pnpm, Go, Python, Poetry, JDK, and buf with pinned versions matching CI.
+
 ![Fern Contributors](https://contrib.rocks/image?repo=fern-api/fern)

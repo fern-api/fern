@@ -2,6 +2,29 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Development Environment Setup
+
+This repository uses [DevBox](https://www.jetify.com/devbox) for reproducible development environments with exact version pinning. DevBox is based on Nix and provides cross-platform support (Mac, Linux, Windows via WSL).
+
+**Quick Start with DevBox**:
+```bash
+# Install DevBox (if not already installed)
+curl -fsSL https://get.jetify.com/devbox | bash
+
+# Enter the development environment (installs all dependencies automatically)
+devbox shell
+```
+
+DevBox automatically provides: Node.js 22, pnpm 9.4.0, Go 1.23, Python 3.10, Poetry 1.8, JDK 17, buf 1.50.0, and git-lfs. All versions are pinned in `devbox.json` to match CI.
+
+**Available DevBox Scripts**:
+```bash
+devbox run install                # Run pnpm install
+devbox run compile                # Compile all packages
+devbox run test                   # Run tests
+devbox run lint                   # Run linting
+```
+
 ## Development Commands
 
 **Package Manager**: This project uses `pnpm` (version 9.4.0+) exclusively. Node.js 18+ required.
@@ -11,10 +34,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Common Commands** (from root):
 ```bash
 # Initial setup
-pnpm bootstrap                    # Bootstrap the development environment
+pnpm install                    # Install dependencies
 
 # Building
-pnpm compile                      # Compile all packages (production build)
+pnpm compile                     # Compile all packages (production build)
 pnpm compile:debug               # Compile with debug info
 pnpm clean                       # Clean all build outputs
 

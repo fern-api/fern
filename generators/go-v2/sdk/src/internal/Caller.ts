@@ -13,6 +13,8 @@ export declare namespace Caller {
         request?: go.AstNode;
         response?: go.AstNode;
         errorCodes?: go.AstNode;
+        /** The import path of the namespace where the endpoint is defined. Used to reference namespace-specific ErrorCodes. */
+        namespaceImportPath?: string;
     }
 }
 
@@ -170,10 +172,10 @@ export class Caller {
         }
         if (args.errorCodes != null) {
             // In per-endpoint mode, use the locally generated error codes variable.
-            // In global mode, use the global ErrorCodes variable from the root package.
+            // In global mode, use the ErrorCodes variable from the namespace where the endpoint is defined.
             const errorCodesReference = this.context.isPerEndpointErrorCodes()
                 ? args.errorCodes
-                : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference());
+                : go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference(args.namespaceImportPath));
             arguments_.push({
                 name: "ErrorDecoder",
                 value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([errorCodesReference]))
