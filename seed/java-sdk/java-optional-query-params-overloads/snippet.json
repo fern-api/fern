@@ -1,0 +1,44 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "9de38da5",
+            "id": {
+                "method": "GET",
+                "path": "/api/users/{userId}/insurance",
+                "identifier_override": "endpoint_.getLatestInsurance"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOptionalQueryParamsOverloads.SeedJavaOptionalQueryParamsOverloadsClient;\nimport com.seed.javaOptionalQueryParamsOverloads.requests.UserGetLatestInsuranceRequest;\nimport com.seed.javaOptionalQueryParamsOverloads.types.PolicyType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalQueryParamsOverloadsClient client = SeedJavaOptionalQueryParamsOverloadsClient\n            .builder()\n            .build();\n\n        client.getLatestInsurance(\n            \"userId\",\n            UserGetLatestInsuranceRequest\n                .builder()\n                .includeExpired(true)\n                .policyType(PolicyType.HEALTH)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOptionalQueryParamsOverloads.SeedJavaOptionalQueryParamsOverloadsClient;\nimport com.seed.javaOptionalQueryParamsOverloads.requests.UserGetLatestInsuranceRequest;\nimport com.seed.javaOptionalQueryParamsOverloads.types.PolicyType;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalQueryParamsOverloadsClient client = SeedJavaOptionalQueryParamsOverloadsClient\n            .builder()\n            .build();\n\n        client.getLatestInsurance(\n            \"userId\",\n            UserGetLatestInsuranceRequest\n                .builder()\n                .includeExpired(true)\n                .policyType(PolicyType.HEALTH)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "f88b4331",
+            "id": {
+                "method": "GET",
+                "path": "/api/policies/search",
+                "identifier_override": "endpoint_.searchPolicies"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOptionalQueryParamsOverloads.SeedJavaOptionalQueryParamsOverloadsClient;\nimport com.seed.javaOptionalQueryParamsOverloads.requests.SearchPoliciesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalQueryParamsOverloadsClient client = SeedJavaOptionalQueryParamsOverloadsClient\n            .builder()\n            .build();\n\n        client.searchPolicies(\n            SearchPoliciesRequest\n                .builder()\n                .query(\"query\")\n                .limit(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOptionalQueryParamsOverloads.SeedJavaOptionalQueryParamsOverloadsClient;\nimport com.seed.javaOptionalQueryParamsOverloads.requests.SearchPoliciesRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalQueryParamsOverloadsClient client = SeedJavaOptionalQueryParamsOverloadsClient\n            .builder()\n            .build();\n\n        client.searchPolicies(\n            SearchPoliciesRequest\n                .builder()\n                .query(\"query\")\n                .limit(1)\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "bf80a887",
+            "id": {
+                "method": "GET",
+                "path": "/api/policies",
+                "identifier_override": "endpoint_.listAllPolicies"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOptionalQueryParamsOverloads.SeedJavaOptionalQueryParamsOverloadsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalQueryParamsOverloadsClient client = SeedJavaOptionalQueryParamsOverloadsClient\n            .builder()\n            .build();\n\n        client.listAllPolicies();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOptionalQueryParamsOverloads.SeedJavaOptionalQueryParamsOverloadsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOptionalQueryParamsOverloadsClient client = SeedJavaOptionalQueryParamsOverloadsClient\n            .builder()\n            .build();\n\n        client.listAllPolicies();\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

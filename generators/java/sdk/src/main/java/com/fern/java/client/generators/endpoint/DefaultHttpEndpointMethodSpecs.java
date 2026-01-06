@@ -24,6 +24,7 @@ public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodS
     private final MethodSpec nonRequestOptionsMethodSpec;
     private final MethodSpec requestOptionsMethodSpec;
     private final MethodSpec noRequestBodyMethodSpec;
+    private final MethodSpec noRequestBodyWithRequestOptionsMethodSpec;
     private final MethodSpec byteArrayMethodSpec;
     private final MethodSpec nonRequestOptionsByteArrayMethodSpec;
     private final MethodSpec inputStreamMethodSpec;
@@ -35,6 +36,7 @@ public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodS
             MethodSpec requestOptionsMethodSpec,
             MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec,
+            MethodSpec noRequestBodyWithRequestOptionsMethodSpec,
             MethodSpec byteArrayMethodSpec,
             MethodSpec nonRequestOptionsByteArrayMethodSpec,
             MethodSpec inputStreamMethodSpec,
@@ -44,6 +46,7 @@ public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodS
         this.nonRequestOptionsMethodSpec = nonRequestOptionsMethodSpec;
         this.requestOptionsMethodSpec = requestOptionsMethodSpec;
         this.noRequestBodyMethodSpec = noRequestBodyMethodSpec;
+        this.noRequestBodyWithRequestOptionsMethodSpec = noRequestBodyWithRequestOptionsMethodSpec;
         this.byteArrayMethodSpec = byteArrayMethodSpec;
         this.nonRequestOptionsByteArrayMethodSpec = nonRequestOptionsByteArrayMethodSpec;
         this.inputStreamMethodSpec = inputStreamMethodSpec;
@@ -65,6 +68,11 @@ public final class DefaultHttpEndpointMethodSpecs implements HttpEndpointMethodS
     @Override
     public Optional<MethodSpec> getNoRequestBodyMethodSpec() {
         return Optional.ofNullable(noRequestBodyMethodSpec);
+    }
+
+    @Override
+    public Optional<MethodSpec> getNoRequestBodyWithRequestOptionsMethodSpec() {
+        return Optional.ofNullable(noRequestBodyWithRequestOptionsMethodSpec);
     }
 
     @Override
