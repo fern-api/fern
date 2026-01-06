@@ -10,6 +10,15 @@
   createdAt: "2026-01-06"
   irVersion: 61
 
+- version: 3.27.5-rc4
+  changelogEntry:
+    - summary: |
+        Add fallback SDK name generation for X-Fern-SDK-Name header when no explicit maven config is provided.
+        This ensures local generation matches remote generation for GitHub output mode.
+      type: fix
+  createdAt: "2026-01-05"
+  irVersion: 61
+
 - version: 3.27.5-rc3
   changelogEntry:
     - summary: Retry Publishing of rc2
