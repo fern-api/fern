@@ -20,7 +20,6 @@ async fn main() {
                 is_global: Some(true),
                 is_first_party: Some(true),
                 app_type: Some(vec!["app_type".to_string(), "app_type".to_string()]),
-                ..Default::default()
             },
             None,
         )

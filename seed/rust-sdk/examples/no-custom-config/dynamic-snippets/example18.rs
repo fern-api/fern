@@ -15,10 +15,7 @@ async fn main() {
                 shallow: Some(true),
                 tag: vec![Some("tag".to_string())],
             },
-            Some(
-                RequestOptions::new()
-                    .additional_header("X-API-Version", "X-API-Version".to_string()),
-            ),
+            Some(RequestOptions::new().additional_header("X-API-Version", "X-API-Version")),
         )
         .await;
 }

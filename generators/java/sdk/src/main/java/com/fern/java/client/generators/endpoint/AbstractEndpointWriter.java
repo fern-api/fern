@@ -302,6 +302,65 @@ public abstract class AbstractEndpointWriter {
                     endpointWithoutRequestBuilder, endpointWithRequestOptions, paramNamesWoBody, bodyParameterSpec);
             endpointWithoutRequest = endpointWithoutRequestBuilder.build();
         }
+
+        // Generate overload without request body but WITH RequestOptions when all properties are optional
+        MethodSpec endpointWithoutRequestWithRequestOptions = null;
+        if (variables.sdkRequest().isPresent()
+                && variables.sdkRequest().get().getShape().visit(new SdkRequestIsOptional())) {
+            MethodSpec.Builder endpointWithoutRequestWithRequestOptionsBuilder = MethodSpec.methodBuilder(
+                            endpointWithRequestOptions.name)
+                    .addJavadoc(endpointWithRequestOptions.javadoc)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameters(variables.pathParameters)
+                    .returns(endpointWithRequestOptions.returnType);
+            List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
+                    .filter(parameterSpec -> !parameterSpec.name.equals(variables
+                            .sdkRequest()
+                            .get()
+                            .getRequestParameterName()
+                            .getCamelCase()
+                            .getUnsafeName()))
+                    .collect(Collectors.toList());
+            endpointWithoutRequestWithRequestOptionsBuilder.addParameters(additionalParamsWithoutBody);
+            // Add RequestOptions parameter
+            if (httpEndpoint.getIdempotent()) {
+                endpointWithoutRequestWithRequestOptionsBuilder.addParameter(ParameterSpec.builder(
+                                clientGeneratorContext.getPoetClassNameFactory().getIdempotentRequestOptionsClassName(),
+                                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME)
+                        .build());
+            } else {
+                endpointWithoutRequestWithRequestOptionsBuilder.addParameter(requestOptionsParameterSpec());
+            }
+            List<String> paramNamesWoBodyWithRequestOptions = Stream.concat(
+                            variables.pathParameters.stream(), additionalParamsWithoutBody.stream())
+                    .map(parameterSpec -> parameterSpec.name)
+                    .collect(Collectors.toList());
+            ParameterSpec bodyParameterSpec = additionalParameters.stream()
+                    .filter(parameterSpec -> parameterSpec.name.equals(variables
+                            .sdkRequest()
+                            .get()
+                            .getRequestParameterName()
+                            .getCamelCase()
+                            .getUnsafeName()))
+                    .collect(Collectors.toList())
+                    .get(0);
+            if (typeNameIsOptional(bodyParameterSpec.type)) {
+                paramNamesWoBodyWithRequestOptions.add("Optional.empty()");
+            } else if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
+                paramNamesWoBodyWithRequestOptions.add("$1T.<$2T>absent()");
+            } else {
+                paramNamesWoBodyWithRequestOptions.add("$T.builder().build()");
+            }
+            paramNamesWoBodyWithRequestOptions.add(
+                    AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            responseParserGenerator.addEndpointWithoutRequestWithRequestOptionsReturnStatement(
+                    endpointWithoutRequestWithRequestOptionsBuilder,
+                    endpointWithRequestOptions,
+                    paramNamesWoBodyWithRequestOptions,
+                    bodyParameterSpec);
+            endpointWithoutRequestWithRequestOptions = endpointWithoutRequestWithRequestOptionsBuilder.build();
+        }
+
         Optional<BytesRequest> maybeBytes = httpEndpoint
                 .getSdkRequest()
                 .flatMap(
@@ -745,6 +804,7 @@ public abstract class AbstractEndpointWriter {
                 endpointWithRequestOptions,
                 endpointWithoutRequestOptions,
                 endpointWithoutRequest,
+                endpointWithoutRequestWithRequestOptions,
                 byteArrayMethodSpec,
                 nonRequestOptionsByteArrayMethodSpec,
                 inputStreamMethodSpec,

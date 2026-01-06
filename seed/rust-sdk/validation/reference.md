@@ -13,6 +13,7 @@
 
 ```rust
 use seed_validation::prelude::*;
+use seed_validation::Shape;
 
 #[tokio::main]
 async fn main() {

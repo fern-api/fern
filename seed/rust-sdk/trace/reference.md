@@ -50,6 +50,14 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{
+    ActualResult, BinaryTreeNodeValue, BinaryTreeValue, CompileError, DoublyLinkedListNodeValue,
+    DoublyLinkedListValue, ErrorInfo, ExceptionInfo, ExceptionV2, InternalError, KeyValuePair,
+    MapValue, NodeId, RunningSubmissionState, RuntimeError, SinglyLinkedListNodeValue,
+    SinglyLinkedListValue, SubmissionId, SubmissionStatusForTestCase, TestCaseGrade,
+    TestCaseHiddenGrade, TestCaseNonHiddenGrade, TestCaseResult, TestCaseResultWithStdout,
+    TestSubmissionStatus, TracedTestCase, VariableValue,
+};
 
 #[tokio::main]
 async fn main() {
@@ -107,6 +115,14 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{
+    BinaryTreeNodeValue, BinaryTreeValue, CompileError, DoublyLinkedListNodeValue,
+    DoublyLinkedListValue, ErrorInfo, ExceptionInfo, ExceptionV2, GradedTestCaseUpdate,
+    InternalError, KeyValuePair, MapValue, NodeId, RecordedTestCaseUpdate, RunningSubmissionState,
+    RuntimeError, SinglyLinkedListNodeValue, SinglyLinkedListValue, SubmissionId, TestCaseGrade,
+    TestCaseHiddenGrade, TestCaseId, TestCaseNonHiddenGrade, TestSubmissionUpdate,
+    TestSubmissionUpdateInfo, VariableValue,
+};
 
 #[tokio::main]
 async fn main() {
@@ -171,6 +187,10 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{
+    CompileError, ErrorInfo, ExceptionInfo, ExceptionV2, InternalError, RunningSubmissionState,
+    RuntimeError, SubmissionId, WorkspaceRunDetails, WorkspaceSubmissionStatus,
+};
 
 #[tokio::main]
 async fn main() {
@@ -228,6 +248,11 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{
+    CompileError, ErrorInfo, ExceptionInfo, ExceptionV2, InternalError, RunningSubmissionState,
+    RuntimeError, SubmissionId, WorkspaceRunDetails, WorkspaceSubmissionUpdate,
+    WorkspaceSubmissionUpdateInfo, WorkspaceTracedUpdate,
+};
 
 #[tokio::main]
 async fn main() {
@@ -292,6 +317,15 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{
+    ActualResult, BinaryTreeNodeAndTreeValue, BinaryTreeNodeValue, BinaryTreeValue,
+    DebugKeyValuePairs, DebugMapValue, DebugVariableValue, DoublyLinkedListNodeAndListValue,
+    DoublyLinkedListNodeValue, DoublyLinkedListValue, ExceptionInfo, ExceptionV2,
+    ExpressionLocation, GenericValue, KeyValuePair, MapValue, NodeId, Scope,
+    SinglyLinkedListNodeAndListValue, SinglyLinkedListNodeValue, SinglyLinkedListValue, StackFrame,
+    StackInformation, SubmissionId, TestCaseResult, TestCaseResultWithStdout, TraceResponse,
+    VariableValue,
+};
 
 #[tokio::main]
 async fn main() {
@@ -453,6 +487,13 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{
+    BinaryTreeNodeAndTreeValue, BinaryTreeNodeValue, BinaryTreeValue, DebugKeyValuePairs,
+    DebugMapValue, DebugVariableValue, DoublyLinkedListNodeAndListValue, DoublyLinkedListNodeValue,
+    DoublyLinkedListValue, ExpressionLocation, GenericValue, NodeId, Scope,
+    SinglyLinkedListNodeAndListValue, SinglyLinkedListNodeValue, SinglyLinkedListValue, StackFrame,
+    StackInformation, SubmissionId, TestCaseId, TraceResponseV2, TracedFile,
+};
 
 #[tokio::main]
 async fn main() {
@@ -594,6 +635,13 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{
+    BinaryTreeNodeAndTreeValue, BinaryTreeNodeValue, BinaryTreeValue, DebugKeyValuePairs,
+    DebugMapValue, DebugVariableValue, DoublyLinkedListNodeAndListValue, DoublyLinkedListNodeValue,
+    DoublyLinkedListValue, ExceptionInfo, ExceptionV2, ExpressionLocation, GenericValue, NodeId,
+    Scope, SinglyLinkedListNodeAndListValue, SinglyLinkedListNodeValue, SinglyLinkedListValue,
+    StackFrame, StackInformation, SubmissionId, TraceResponse, WorkspaceRunDetails,
+};
 
 #[tokio::main]
 async fn main() {
@@ -751,6 +799,13 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{
+    BinaryTreeNodeAndTreeValue, BinaryTreeNodeValue, BinaryTreeValue, DebugKeyValuePairs,
+    DebugMapValue, DebugVariableValue, DoublyLinkedListNodeAndListValue, DoublyLinkedListNodeValue,
+    DoublyLinkedListValue, ExpressionLocation, GenericValue, NodeId, Scope,
+    SinglyLinkedListNodeAndListValue, SinglyLinkedListNodeValue, SinglyLinkedListValue, StackFrame,
+    StackInformation, SubmissionId, TraceResponseV2, TracedFile,
+};
 
 #[tokio::main]
 async fn main() {
@@ -919,6 +974,7 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -975,8 +1031,7 @@ async fn main() {
     client
         .migration
         .get_attempted_migrations(Some(
-            RequestOptions::new()
-                .additional_header("admin-key-header", "admin-key-header".to_string()),
+            RequestOptions::new().additional_header("admin-key-header", "admin-key-header"),
         ))
         .await;
 }
@@ -1020,6 +1075,7 @@ Create a new playlist
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{PlaylistCreateRequest, ProblemId};
 
 #[tokio::main]
 async fn main() {
@@ -1031,7 +1087,7 @@ async fn main() {
     client
         .playlist
         .create_playlist(
-            &1,
+            1,
             &CreatePlaylistRequest {
                 datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
                     .unwrap()
@@ -1134,7 +1190,7 @@ async fn main() {
     client
         .playlist
         .get_playlists(
-            &1,
+            1,
             &GetPlaylistsQueryRequest {
                 limit: Some(1),
                 other_field: "otherField".to_string(),
@@ -1243,6 +1299,7 @@ Returns a playlist
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::PlaylistId;
 
 #[tokio::main]
 async fn main() {
@@ -1253,7 +1310,7 @@ async fn main() {
     let client = TraceClient::new(config).expect("Failed to build client");
     client
         .playlist
-        .get_playlist(&1, &PlaylistId("playlistId".to_string()), None)
+        .get_playlist(1, &PlaylistId("playlistId".to_string()), None)
         .await;
 }
 ```
@@ -1318,6 +1375,7 @@ Updates a playlist
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{PlaylistId, ProblemId, UpdatePlaylistRequest};
 
 #[tokio::main]
 async fn main() {
@@ -1329,7 +1387,7 @@ async fn main() {
     client
         .playlist
         .update_playlist(
-            &1,
+            1,
             &PlaylistId("playlistId".to_string()),
             &Some(UpdatePlaylistRequest {
                 name: "name".to_string(),
@@ -1404,6 +1462,7 @@ Deletes a playlist
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::PlaylistId;
 
 #[tokio::main]
 async fn main() {
@@ -1414,7 +1473,7 @@ async fn main() {
     let client = TraceClient::new(config).expect("Failed to build client");
     client
         .playlist
-        .delete_playlist(&1, &PlaylistId("playlist_id".to_string()), None)
+        .delete_playlist(1, &PlaylistId("playlist_id".to_string()), None)
         .await;
 }
 ```
@@ -1480,6 +1539,13 @@ Creates a problem
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{
+    BinaryTreeNodeValue, BinaryTreeValue, CreateProblemRequest, DoublyLinkedListNodeValue,
+    DoublyLinkedListValue, FileInfo, KeyValuePair, Language, ListType, MapType, MapValue, NodeId,
+    ProblemDescription, ProblemDescriptionBoard, ProblemFiles, SinglyLinkedListNodeValue,
+    SinglyLinkedListValue, TestCase, TestCaseWithExpectedResult, VariableType, VariableTypeAndName,
+    VariableValue,
+};
 
 #[tokio::main]
 async fn main() {
@@ -1600,6 +1666,13 @@ Updates a problem
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{
+    BinaryTreeNodeValue, BinaryTreeValue, CreateProblemRequest, DoublyLinkedListNodeValue,
+    DoublyLinkedListValue, FileInfo, KeyValuePair, Language, ListType, MapType, MapValue, NodeId,
+    ProblemDescription, ProblemDescriptionBoard, ProblemFiles, ProblemId,
+    SinglyLinkedListNodeValue, SinglyLinkedListValue, TestCase, TestCaseWithExpectedResult,
+    VariableType, VariableTypeAndName, VariableValue,
+};
 
 #[tokio::main]
 async fn main() {
@@ -1736,6 +1809,7 @@ Soft deletes a problem
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -1803,6 +1877,7 @@ Returns default starter files for problem
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::{ListType, MapType, VariableType, VariableTypeAndName};
 
 #[tokio::main]
 async fn main() {
@@ -1910,6 +1985,7 @@ Returns sessionId and execution server URL for session. Spins up server.
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::Language;
 
 #[tokio::main]
 async fn main() {
@@ -2133,6 +2209,7 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::Language;
 
 #[tokio::main]
 async fn main() {
@@ -2143,7 +2220,7 @@ async fn main() {
     let client = TraceClient::new(config).expect("Failed to build client");
     client
         .sysprop
-        .set_num_warm_instances(&Language::Java, &1, None)
+        .set_num_warm_instances(&Language::Java, 1, None)
         .await;
 }
 ```
@@ -2342,6 +2419,7 @@ Returns latest version of a problem
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -2410,6 +2488,7 @@ Returns requested version of a problem
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -2421,7 +2500,7 @@ async fn main() {
     client
         .v_2
         .problem
-        .get_problem_version(&ProblemId("problemId".to_string()), &1, None)
+        .get_problem_version(&ProblemId("problemId".to_string()), 1, None)
         .await;
 }
 ```
@@ -2585,6 +2664,7 @@ Returns latest version of a problem
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -2653,6 +2733,7 @@ Returns requested version of a problem
 
 ```rust
 use seed_trace::prelude::*;
+use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -2664,7 +2745,7 @@ async fn main() {
     client
         .v_2
         .problem
-        .get_problem_version(&ProblemId("problemId".to_string()), &1, None)
+        .get_problem_version(&ProblemId("problemId".to_string()), 1, None)
         .await;
 }
 ```

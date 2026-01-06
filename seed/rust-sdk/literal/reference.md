@@ -29,8 +29,8 @@ async fn main() {
             },
             Some(
                 RequestOptions::new()
-                    .additional_header("X-Endpoint-Version", "02-12-2024".to_string())
-                    .additional_header("X-Async", true),
+                    .additional_header("X-Endpoint-Version", "02-12-2024")
+                    .additional_header("X-Async", "true"),
             ),
         )
         .await;
@@ -76,6 +76,7 @@ async fn main() {
 
 ```rust
 use seed_literal::prelude::*;
+use seed_literal::{ANestedLiteral, ATopLevelLiteral, SomeAliasedLiteral};
 
 #[tokio::main]
 async fn main() {
@@ -87,9 +88,11 @@ async fn main() {
         .inlined
         .send(
             &SendLiteralsInlinedRequest {
-                temperature: Some(10.1),
                 prompt: "You are a helpful assistant".to_string(),
                 context: Some("You're super wise".to_string()),
+                query: "What is the weather today".to_string(),
+                temperature: Some(10.1),
+                stream: false,
                 aliased_context: SomeAliasedLiteral("You're super wise".to_string()),
                 maybe_context: Some(SomeAliasedLiteral("You're super wise".to_string())),
                 object_with_literal: ATopLevelLiteral {
@@ -97,8 +100,6 @@ async fn main() {
                         my_literal: "How super cool".to_string(),
                     },
                 },
-                stream: false,
-                query: "What is the weather today".to_string(),
             },
             None,
         )
@@ -251,6 +252,7 @@ async fn main() {
 
 ```rust
 use seed_literal::prelude::*;
+use seed_literal::{AliasToPrompt, AliasToStream};
 
 #[tokio::main]
 async fn main() {
@@ -383,6 +385,7 @@ async fn main() {
 
 ```rust
 use seed_literal::prelude::*;
+use seed_literal::{ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral};
 
 #[tokio::main]
 async fn main() {

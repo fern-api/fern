@@ -57,7 +57,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             resolveAliases: spec.settings?.resolveAliases,
             groupEnvironmentsByHost: spec.settings?.groupEnvironmentsByHost,
             removeDiscriminantsFromSchemas: spec.settings?.removeDiscriminantsFromSchemas,
-            defaultIntegerFormat: spec.settings?.defaultIntegerFormat
+            defaultIntegerFormat: spec.settings?.defaultIntegerFormat,
+            pathParameterOrder: spec.settings?.pathParameterOrder
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();
@@ -70,7 +71,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             respectForwardCompatibleEnums: this.respectForwardCompatibleEnums,
             resolveAliases: this.resolveAliases,
             groupEnvironmentsByHost: this.groupEnvironmentsByHost,
-            defaultIntegerFormat: this.defaultIntegerFormat
+            defaultIntegerFormat: this.defaultIntegerFormat,
+            pathParameterOrder: this.pathParameterOrder
         };
     }
 

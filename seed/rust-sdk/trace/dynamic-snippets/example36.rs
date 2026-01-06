@@ -1,4 +1,5 @@
 use seed_trace::prelude::*;
+use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {

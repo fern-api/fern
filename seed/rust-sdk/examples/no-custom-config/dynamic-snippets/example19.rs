@@ -1,4 +1,9 @@
 use seed_examples::prelude::*;
+use seed_examples::{
+    Actor, Actress, BasicType, BigEntity, CastMember, ComplexType, Data, Directory, Entity,
+    EventInfo, Exception, ExceptionInfo, ExtendedMovie, File, Metadata, Migration, MigrationStatus,
+    Moment, MovieId, Node, StuntDouble, Tag, Test, Tree, Type,
+};
 
 #[tokio::main]
 async fn main() {
@@ -17,19 +22,21 @@ async fn main() {
                     id: "id".to_string(),
                 })),
                 extended_movie: Some(ExtendedMovie {
-                    id: MovieId("id".to_string()),
-                    prequel: Some(MovieId("prequel".to_string())),
-                    title: "title".to_string(),
-                    from: "from".to_string(),
-                    rating: 1.1,
-                    r#type: "movie".to_string(),
-                    tag: Tag("tag".to_string()),
-                    book: Some("book".to_string()),
-                    metadata: HashMap::from([(
-                        "metadata".to_string(),
-                        serde_json::json!({"key":"value"}),
-                    )]),
-                    revenue: 1000000,
+                    movie_fields: Movie {
+                        id: MovieId("id".to_string()),
+                        prequel: Some(MovieId("prequel".to_string())),
+                        title: "title".to_string(),
+                        from: "from".to_string(),
+                        rating: 1.1,
+                        r#type: "movie".to_string(),
+                        tag: Tag("tag".to_string()),
+                        book: Some("book".to_string()),
+                        metadata: HashMap::from([(
+                            "metadata".to_string(),
+                            serde_json::json!({"key":"value"}),
+                        )]),
+                        revenue: 1000000,
+                    },
                     cast: vec!["cast".to_string(), "cast".to_string()],
                 }),
                 entity: Some(Entity {

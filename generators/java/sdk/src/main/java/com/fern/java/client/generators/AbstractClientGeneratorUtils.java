@@ -172,6 +172,17 @@ public abstract class AbstractClientGeneratorUtils {
                             .get());
                 }
 
+                if (httpEndpointMethodSpecs
+                        .getNoRequestBodyWithRequestOptionsMethodSpec()
+                        .isPresent()) {
+                    rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs
+                            .getNoRequestBodyWithRequestOptionsMethodSpec()
+                            .get());
+                    implBuilder.addMethod(delegatingHttpEndpointMethodSpecs
+                            .getNoRequestBodyWithRequestOptionsMethodSpec()
+                            .get());
+                }
+
                 rawClientImplBuilder.addMethod(rawHttpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
                 implBuilder.addMethod(delegatingHttpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
 

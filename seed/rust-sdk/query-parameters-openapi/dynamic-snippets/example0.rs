@@ -1,4 +1,5 @@
 use seed_api::prelude::*;
+use seed_api::{NestedUser, SearchRequestNeighbor, SearchRequestNeighborRequired, User};
 
 #[tokio::main]
 async fn main() {
