@@ -1123,6 +1123,36 @@ export function convertSchemaObject(
             });
         }
 
+        // handle discriminator.mapping without oneOf/anyOf
+        // Some OpenAPI specs define discriminated unions using discriminator.mapping
+        // without explicit oneOf/anyOf. The convertDiscriminatedOneOf function will
+        // use the discriminator.mapping to build the union subtypes.
+        if (
+            schema.discriminator?.mapping != null &&
+            Object.keys(schema.discriminator.mapping).length > 0 &&
+            schema.oneOf == null &&
+            schema.anyOf == null
+        ) {
+            return convertDiscriminatedOneOf({
+                nameOverride,
+                generatedName,
+                title,
+                breadcrumbs,
+                description,
+                availability,
+                discriminator: schema.discriminator,
+                properties: schema.properties ?? {},
+                required: schema.required,
+                wrapAsOptional,
+                wrapAsNullable,
+                context,
+                namespace,
+                groupName,
+                encoding,
+                source
+            });
+        }
+
         // handle objects
         if (schema.allOf != null || schema.properties != null) {
             const filteredAllOfs: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];

@@ -14,6 +14,7 @@ async fn main() {
                 author: Some("author".to_string()),
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 title: Some("title".to_string()),
+                ..Default::default()
             },
             None,
         )

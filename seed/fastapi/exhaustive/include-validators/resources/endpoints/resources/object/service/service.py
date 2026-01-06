@@ -72,17 +72,22 @@ class AbstractEndpointsObjectService(AbstractFernService):
     @classmethod
     def __init_get_and_return_with_optional_field(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_with_optional_field)
+        type_hints = typing.get_type_hints(cls.get_and_return_with_optional_field)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -106,7 +111,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
 
         router.post(
             path="/object/get-and-return-with-optional-field",
-            response_model=ObjectWithOptionalField,
+            response_model=None,
             description=AbstractEndpointsObjectService.get_and_return_with_optional_field.__doc__,
             **get_route_args(cls.get_and_return_with_optional_field, default_tag="endpoints.object"),
         )(wrapper)
@@ -114,17 +119,22 @@ class AbstractEndpointsObjectService(AbstractFernService):
     @classmethod
     def __init_get_and_return_with_required_field(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_with_required_field)
+        type_hints = typing.get_type_hints(cls.get_and_return_with_required_field)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -148,7 +158,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
 
         router.post(
             path="/object/get-and-return-with-required-field",
-            response_model=ObjectWithRequiredField,
+            response_model=None,
             description=AbstractEndpointsObjectService.get_and_return_with_required_field.__doc__,
             **get_route_args(cls.get_and_return_with_required_field, default_tag="endpoints.object"),
         )(wrapper)
@@ -156,17 +166,22 @@ class AbstractEndpointsObjectService(AbstractFernService):
     @classmethod
     def __init_get_and_return_with_map_of_map(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_with_map_of_map)
+        type_hints = typing.get_type_hints(cls.get_and_return_with_map_of_map)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -188,7 +203,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
 
         router.post(
             path="/object/get-and-return-with-map-of-map",
-            response_model=ObjectWithMapOfMap,
+            response_model=None,
             description=AbstractEndpointsObjectService.get_and_return_with_map_of_map.__doc__,
             **get_route_args(cls.get_and_return_with_map_of_map, default_tag="endpoints.object"),
         )(wrapper)
@@ -196,17 +211,22 @@ class AbstractEndpointsObjectService(AbstractFernService):
     @classmethod
     def __init_get_and_return_nested_with_optional_field(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_nested_with_optional_field)
+        type_hints = typing.get_type_hints(cls.get_and_return_nested_with_optional_field)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -230,7 +250,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
 
         router.post(
             path="/object/get-and-return-nested-with-optional-field",
-            response_model=NestedObjectWithOptionalField,
+            response_model=None,
             description=AbstractEndpointsObjectService.get_and_return_nested_with_optional_field.__doc__,
             **get_route_args(cls.get_and_return_nested_with_optional_field, default_tag="endpoints.object"),
         )(wrapper)
@@ -238,21 +258,26 @@ class AbstractEndpointsObjectService(AbstractFernService):
     @classmethod
     def __init_get_and_return_nested_with_required_field(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_nested_with_required_field)
+        type_hints = typing.get_type_hints(cls.get_and_return_nested_with_required_field)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "string":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -276,7 +301,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
 
         router.post(
             path="/object/get-and-return-nested-with-required-field/{string}",
-            response_model=NestedObjectWithRequiredField,
+            response_model=None,
             description=AbstractEndpointsObjectService.get_and_return_nested_with_required_field.__doc__,
             **get_route_args(cls.get_and_return_nested_with_required_field, default_tag="endpoints.object"),
         )(wrapper)
@@ -284,17 +309,22 @@ class AbstractEndpointsObjectService(AbstractFernService):
     @classmethod
     def __init_get_and_return_nested_with_required_field_as_list(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_nested_with_required_field_as_list)
+        type_hints = typing.get_type_hints(cls.get_and_return_nested_with_required_field_as_list)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -318,7 +348,7 @@ class AbstractEndpointsObjectService(AbstractFernService):
 
         router.post(
             path="/object/get-and-return-nested-with-required-field-list",
-            response_model=NestedObjectWithRequiredField,
+            response_model=None,
             description=AbstractEndpointsObjectService.get_and_return_nested_with_required_field_as_list.__doc__,
             **get_route_args(cls.get_and_return_nested_with_required_field_as_list, default_tag="endpoints.object"),
         )(wrapper)

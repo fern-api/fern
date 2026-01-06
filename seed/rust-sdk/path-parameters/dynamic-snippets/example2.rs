@@ -12,7 +12,10 @@ async fn main() {
         .search_organizations(
             &"tenant_id".to_string(),
             &"organization_id".to_string(),
-            &SearchOrganizationsQueryRequest { limit: Some(1) },
+            &SearchOrganizationsQueryRequest {
+                limit: Some(1),
+                ..Default::default()
+            },
             None,
         )
         .await;

@@ -14,6 +14,7 @@ async fn main() {
                 role: Some(UserRole::Admin),
                 status: Some(UserStatus::Active),
                 secondary_role: Some(Some(UserRole::Admin)),
+                ..Default::default()
             },
             None,
         )
