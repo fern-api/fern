@@ -33,22 +33,31 @@ export class GeneratedQueryParams {
         const properties: ts.ObjectLiteralElementLike[] = [];
 
         for (const queryParameter of this.queryParameters) {
-            const referenceToQueryParameter = this.referenceToQueryParameterProperty(
-                queryParameter.name.wireValue,
-                context
-            );
+            const wireValue = queryParameter.name.wireValue;
+            const referenceToQueryParameter = this.referenceToQueryParameterProperty(wireValue, context);
             const valueExpression = this.getQueryParameterValueExpression({
                 queryParameter,
                 referenceToQueryParameter,
                 context
             });
 
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    ts.factory.createStringLiteral(queryParameter.name.wireValue),
-                    valueExpression
-                )
-            );
+            const isValidIdentifier = isValidJsIdentifier(wireValue);
+            const canUseShorthand =
+                isValidIdentifier &&
+                ts.isIdentifier(valueExpression) &&
+                valueExpression.text === wireValue;
+
+            if (canUseShorthand) {
+                properties.push(ts.factory.createShorthandPropertyAssignment(ts.factory.createIdentifier(wireValue)));
+            } else if (isValidIdentifier) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(ts.factory.createIdentifier(wireValue), valueExpression)
+                );
+            } else {
+                properties.push(
+                    ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(wireValue), valueExpression)
+                );
+            }
         }
 
         return [
@@ -385,4 +394,36 @@ function primitiveTypeNeedsStringify(primitiveType: FernIr.PrimitiveType): boole
         case "DATE_TIME":
             return true;
     }
+}
+
+function isValidJsIdentifier(name: string): boolean {
+    if (name.length === 0) {
+        return false;
+    }
+    const firstChar = name.charCodeAt(0);
+    if (
+        !(
+            (firstChar >= 65 && firstChar <= 90) ||
+            (firstChar >= 97 && firstChar <= 122) ||
+            firstChar === 95 ||
+            firstChar === 36
+        )
+    ) {
+        return false;
+    }
+    for (let i = 1; i < name.length; i++) {
+        const char = name.charCodeAt(i);
+        if (
+            !(
+                (char >= 65 && char <= 90) ||
+                (char >= 97 && char <= 122) ||
+                (char >= 48 && char <= 57) ||
+                char === 95 ||
+                char === 36
+            )
+        ) {
+            return false;
+        }
+    }
+    return true;
 }
