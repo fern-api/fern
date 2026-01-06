@@ -59,9 +59,7 @@ def validate_type_match(
             try:
                 uuid.UUID(actual_value)
             except ValueError:
-                raise AssertionError(
-                    f"Field '{field_path}': Expected valid UUID string, got '{actual_value}'"
-                )
+                raise AssertionError(f"Field '{field_path}': Expected valid UUID string, got '{actual_value}'")
     elif expected_type == "date":
         assert isinstance(actual_value, (str, datetime.date)), (
             f"Field '{field_path}': Expected date, got {get_type_name(actual_value)}"
@@ -158,8 +156,7 @@ def validate_structure(
 
         # Check field exists
         assert key in response_dict, (
-            f"Field '{current_path}' not found in response. "
-            f"Available fields: {list(response_dict.keys())}"
+            f"Field '{current_path}' not found in response. Available fields: {list(response_dict.keys())}"
         )
 
         actual_value = response_dict[key]

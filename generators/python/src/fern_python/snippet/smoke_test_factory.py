@@ -1,5 +1,5 @@
 import os
-from typing import Dict, List, Optional, Set, Tuple, Union
+from typing import Dict, Optional, Set, Tuple, Union
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.reference_node.reference_node import ReferenceNode
@@ -552,7 +552,9 @@ class SmokeTestFactory:
             # Generate a test for each included example
             for example_idx, example in enumerate(filtered_examples):
                 example_name = example.name.original_name if example.name else None
-                test_suffix = f"_{example_name}" if example_name else (f"_{example_idx}" if len(filtered_examples) > 1 else "")
+                test_suffix = (
+                    f"_{example_name}" if example_name else (f"_{example_idx}" if len(filtered_examples) > 1 else "")
+                )
 
                 _path_parameter_names = dict()
                 for path_parameter in endpoint.all_path_parameters:
@@ -671,7 +673,9 @@ class SmokeTestFactory:
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=(),
                     import_=AST.ReferenceImport(
-                        module=AST.Module.local(self._test_base_path.module_name, self._smoke_test_path.module_name, "utilities"),
+                        module=AST.Module.local(
+                            self._test_base_path.module_name, self._smoke_test_path.module_name, "utilities"
+                        ),
                         named_import="validate_smoke_test_response",
                     ),
                 ),
