@@ -307,10 +307,29 @@ export class WireTestGenerator {
             const snippetCode = await (snippetAst as ruby.AstNode).toStringAsync({
                 customConfig: this.context.customConfig ?? {}
             });
-            const snippetLines = snippetCode.split("\n");
-            for (const line of snippetLines) {
-                if (line.trim()) {
-                    lines.push(`    ${line}`);
+
+            // Check if endpoint uses lazy pagination (cursor or offset)
+            // These return iterators that don't make HTTP requests until iterated
+            const isLazyPagination = endpoint.pagination?.type === "cursor" || endpoint.pagination?.type === "offset";
+
+            if (isLazyPagination) {
+                // For lazy paginated endpoints, we need to trigger the first HTTP request
+                // by calling .pages.next_page on the returned iterator
+                lines.push(`    result = begin`);
+                const snippetLines = snippetCode.split("\n");
+                for (const line of snippetLines) {
+                    if (line.trim()) {
+                        lines.push(`      ${line}`);
+                    }
+                }
+                lines.push(`    end`);
+                lines.push(`    result.pages.next_page`);
+            } else {
+                const snippetLines = snippetCode.split("\n");
+                for (const line of snippetLines) {
+                    if (line.trim()) {
+                        lines.push(`    ${line}`);
+                    }
                 }
             }
             lines.push("");

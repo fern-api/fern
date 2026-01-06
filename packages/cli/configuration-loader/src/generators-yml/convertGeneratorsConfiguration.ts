@@ -103,7 +103,8 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
         removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
             settings?.["remove-discriminants-from-schemas"]
-        )
+        ),
+        pathParameterOrder: settings?.["path-parameter-order"]
     };
 }
 
@@ -129,7 +130,8 @@ function parseOpenApiDefinitionSettingsSchema(
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
-        defaultIntegerFormat: settings?.["default-integer-format"]
+        defaultIntegerFormat: settings?.["default-integer-format"],
+        pathParameterOrder: settings?.["path-parameter-order"]
     };
 }
 

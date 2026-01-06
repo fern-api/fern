@@ -825,4 +825,132 @@ describe("replaceReferencedCode", () => {
 
         `);
     });
+
+    it("should handle unquoted numeric values like startLine=40", async () => {
+        const markdown = `
+            <Code src="../snippets/test.go" startLine=40 maxLines=25 />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.go")) {
+                    return 'package main\n\nfunc main() {\n    fmt.Println("Hello")\n}';
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        // Note: empty lines in the code get indented with spaces
+        expect(result).toBe(
+            '\n            ```go title={"test.go"} startLine={40} maxLines={25}\n            package main\n            \n            func main() {\n                fmt.Println("Hello")\n            }\n            ```\n\n        '
+        );
+    });
+
+    it("should handle unquoted numeric values appearing before src", async () => {
+        const markdown = `
+            <Code startLine=40 src="../snippets/test.go" maxLines=25 />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.go")) {
+                    return "package main";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`go title={"test.go"} startLine={40} maxLines={25}
+            package main
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle mixed prop formats including unquoted numbers", async () => {
+        const markdown = `
+            <Code src="../snippets/test.go" startLine=40 highlight={40-60} maxLines=25 title={"Go"} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.go")) {
+                    return "package main";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`go title={"Go"} startLine={40} highlight={40-60} maxLines={25}
+            package main
+            \`\`\`
+
+        `);
+    });
+
+    it('should handle quoted numeric values like startLine="40"', async () => {
+        const markdown = `
+            <Code src="../snippets/test.go" startLine="40" maxLines="25" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.go")) {
+                    return "package main";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`go title={"test.go"} startLine={40} maxLines={25}
+            package main
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle curly brace numeric values like startLine={40}", async () => {
+        const markdown = `
+            <Code src="../snippets/test.go" startLine={40} maxLines={25} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.go")) {
+                    return "package main";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`go title={"test.go"} startLine={40} maxLines={25}
+            package main
+            \`\`\`
+
+        `);
+    });
 });

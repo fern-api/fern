@@ -44,6 +44,7 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_idempotency_headers::prelude::*;
+use seed_idempotency_headers::Currency;
 
 #[tokio::main]
 async fn main() {

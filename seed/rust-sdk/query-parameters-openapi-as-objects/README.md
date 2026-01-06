@@ -43,6 +43,7 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_api::prelude::*;
+use seed_api::{NestedUser, SearchRequestNeighbor, SearchRequestNeighborRequired, User};
 
 #[tokio::main]
 async fn main() {

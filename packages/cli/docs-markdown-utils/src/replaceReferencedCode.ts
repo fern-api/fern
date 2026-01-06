@@ -153,14 +153,16 @@ export async function replaceReferencedCode({
 
             // Parse all properties from the Code component
             const allProps = new Map<string, { value: string; fromCurlyBraces: boolean }>();
-            const propsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)")/g;
+            // Match props in formats: prop={value}, prop="value", or prop=number (unquoted numbers)
+            const propsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)"|(\d+)(?=\s|\/|>|$))/g;
 
             // Extract props before src
             const beforeSrcProps = matchString?.split("src=")[0]?.trim() ?? "";
             let propMatch;
             while ((propMatch = propsRegex.exec(beforeSrcProps)) !== null) {
                 const propName = propMatch[1];
-                const propValue = propMatch[2] || propMatch[3];
+                // propMatch[2] = curly braces value, propMatch[3] = quoted value, propMatch[4] = unquoted number
+                const propValue = propMatch[2] || propMatch[3] || propMatch[4];
                 const fromCurlyBraces = propMatch[2] !== undefined;
                 if (propName && propValue) {
                     allProps.set(propName, { value: propValue, fromCurlyBraces });
@@ -172,7 +174,8 @@ export async function replaceReferencedCode({
             propsRegex.lastIndex = 0; // Reset regex
             while ((propMatch = propsRegex.exec(afterSrcProps)) !== null) {
                 const propName = propMatch[1];
-                const propValue = propMatch[2] || propMatch[3];
+                // propMatch[2] = curly braces value, propMatch[3] = quoted value, propMatch[4] = unquoted number
+                const propValue = propMatch[2] || propMatch[3] || propMatch[4];
                 const fromCurlyBraces = propMatch[2] !== undefined;
                 if (propName && propValue) {
                     allProps.set(propName, { value: propValue, fromCurlyBraces });

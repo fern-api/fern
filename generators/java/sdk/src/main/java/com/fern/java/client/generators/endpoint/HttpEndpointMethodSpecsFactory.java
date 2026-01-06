@@ -7,6 +7,7 @@ public interface HttpEndpointMethodSpecsFactory {
             MethodSpec requestOptionsMethodSpec,
             MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec,
+            MethodSpec noRequestBodyWithRequestOptionsMethodSpec,
             MethodSpec byteArrayMethodSpec,
             MethodSpec nonRequestOptionsByteArrayMethodSpec,
             MethodSpec inputStreamMethodSpec,

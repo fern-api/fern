@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.35.1
+  changelogEntry:
+    - summary: |
+        Respect the `path-parameter-order` setting from `generators.yml` when importing OpenAPI specs, which is different from the `path-parameter-order` on the `api.settings` level.
+        By setting both levels to `spec-order`, you can preserve the old behavior of using the order defined in the OpenAPI spec.
+      type: fix
+  createdAt: "2026-01-06"
+  irVersion: 62
+
 - version: 3.35.0
   changelogEntry:
     - summary: |

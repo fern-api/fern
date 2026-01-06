@@ -14,6 +14,7 @@
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::MyUnion;
 
 #[tokio::main]
 async fn main() {
@@ -85,6 +86,7 @@ async fn main() {
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::{MetadataUnion, NamedMetadata, OptionalMetadata};
 
 #[tokio::main]
 async fn main() {
@@ -128,6 +130,7 @@ async fn main() {
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::{MetadataUnion, NamedMetadata, OptionalMetadata, Request};
 
 #[tokio::main]
 async fn main() {
@@ -172,6 +175,7 @@ async fn main() {
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::UnionWithDuplicateTypes;
 
 #[tokio::main]
 async fn main() {
@@ -209,6 +213,7 @@ async fn main() {
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::{NestedUnionL1, NestedUnionL2, NestedUnionRoot};
 
 #[tokio::main]
 async fn main() {
@@ -246,6 +251,7 @@ async fn main() {
 
 ```rust
 use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::{ConvertToken, PaymentMethodUnion, TokenizeCard};
 
 #[tokio::main]
 async fn main() {

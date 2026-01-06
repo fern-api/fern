@@ -15,7 +15,6 @@ async fn main() {
             &GetUserByIdQueryRequest {
                 fields: Some("fields".to_string()),
                 include_fields: Some(true),
-                ..Default::default()
             },
             None,
         )

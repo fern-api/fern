@@ -1,4 +1,5 @@
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -14,6 +15,9 @@ async fn main() {
         .list_with_cursor_pagination(
             &ListWithCursorPaginationQueryRequest {
                 starting_after: Some("starting_after".to_string()),
+                page: None,
+                per_page: None,
+                order: None,
             },
             None,
         )

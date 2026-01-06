@@ -108,7 +108,8 @@ export class HttpEndpointGenerator {
             switch (endpoint.pagination.type) {
                 case "custom": {
                     const customPagerClassName = this.context.customConfig.customPagerName ?? "CustomPager";
-                    const itemField = endpoint.pagination.results.property.name.wireValue;
+                    // Use snakeCase.safeName for Ruby method calls
+                    const itemField = endpoint.pagination.results.property.name.name.snakeCase.safeName;
                     requestStatements = [
                         ...requestStatements,
                         ruby.invokeMethod({
@@ -144,14 +145,21 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "cursor_field",
-                                    value: ruby.codeblock(`:${endpoint.pagination.next.property.name.wireValue}`)
+                                    // Use snakeCase.safeName for Ruby method calls (e.g., "next" -> "next_")
+                                    value: ruby.codeblock(
+                                        `:${endpoint.pagination.next.property.name.name.snakeCase.safeName}`
+                                    )
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
-                                    value: ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
+                                    // Use snakeCase.safeName for Ruby method calls
+                                    value: ruby.codeblock(
+                                        `:${endpoint.pagination.results.property.name.name.snakeCase.safeName}`
+                                    )
                                 }),
                                 ruby.keywordArgument({
                                     name: "initial_cursor",
+                                    // Keep wireValue for query params (sent over HTTP)
                                     value: ruby.codeblock(
                                         `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
                                     )
@@ -161,6 +169,7 @@ export class HttpEndpointGenerator {
                                 ["next_cursor"],
                                 [
                                     ruby.codeblock(
+                                        // Keep wireValue for query params (sent over HTTP)
                                         `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_cursor`
                                     ),
                                     ...requestStatements
@@ -181,18 +190,25 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "initial_page",
+                                    // Keep wireValue for query params (sent over HTTP)
                                     value: ruby.codeblock(
                                         `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}]`
                                     )
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
-                                    value: ruby.codeblock(`:${endpoint.pagination.results.property.name.wireValue}`)
+                                    // Use snakeCase.safeName for Ruby method calls
+                                    value: ruby.codeblock(
+                                        `:${endpoint.pagination.results.property.name.name.snakeCase.safeName}`
+                                    )
                                 }),
                                 ruby.keywordArgument({
                                     name: "has_next_field",
+                                    // Use snakeCase.safeName for Ruby method calls
                                     value: endpoint.pagination.hasNextPage
-                                        ? ruby.codeblock(`:${endpoint.pagination.hasNextPage.property.name.wireValue}`)
+                                        ? ruby.codeblock(
+                                              `:${endpoint.pagination.hasNextPage.property.name.name.snakeCase.safeName}`
+                                          )
                                         : ruby.nilValue()
                                 }),
                                 ruby.keywordArgument({
@@ -204,6 +220,7 @@ export class HttpEndpointGenerator {
                                 ["next_page"],
                                 [
                                     ruby.codeblock(
+                                        // Keep wireValue for query params (sent over HTTP)
                                         `${QUERY_PARAMETER_BAG_NAME}[:${endpoint.pagination.page.property.name.wireValue}] = next_page`
                                     ),
                                     ...requestStatements

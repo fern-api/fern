@@ -1,4 +1,5 @@
 use seed_inferred_auth_implicit::prelude::*;
+use seed_inferred_auth_implicit::GetTokenRequest;
 
 #[tokio::main]
 async fn main() {

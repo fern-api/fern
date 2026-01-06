@@ -1,4 +1,5 @@
 use seed_client_side_params::prelude::*;
+use seed_client_side_params::UpdateUserRequest;
 
 #[tokio::main]
 async fn main() {

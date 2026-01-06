@@ -12,7 +12,7 @@ async fn main() {
         .get_user_specifics(
             &"tenant_id".to_string(),
             &"user_id".to_string(),
-            &1,
+            1,
             &"thought".to_string(),
             None,
         )

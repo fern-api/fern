@@ -1,58 +1,12 @@
-use reqwest::Client;
 use seed_examples::prelude::*;
 
-/// Resets all WireMock request journal
-async fn reset_wiremock_requests() -> Result<(), Box<dyn std::error::Error>> {
-    let wiremock_admin_url = "http://localhost:8080/__admin";
-    Client::new()
-        .delete(format!("{}/requests", wiremock_admin_url))
-        .send()
-        .await?;
-    return Ok(());
-}
-
-/// Verifies the number of requests made to WireMock
-async fn verify_request_count(
-    method: &str,
-    url_path: &str,
-    query_params: Option<HashMap<String, String>>,
-    expected: usize,
-) -> Result<(), Box<dyn std::error::Error>> {
-    let wiremock_admin_url = "http://localhost:8080/__admin";
-    let mut request_body = json!({
-        "method": method,
-        "urlPath": url_path,
-    });
-    if let Some(params) = query_params {
-        let query_parameters: Value = params
-            .into_iter()
-            .map(|(k, v)| (k, json!({"equalTo": v})))
-            .collect();
-        request_body["queryParameters"] = query_parameters;
-    }
-    let response = Client::new()
-        .post(format!("{}/requests/find", wiremock_admin_url))
-        .json(&request_body)
-        .send()
-        .await?;
-    let result: Value = response.json().await?;
-    let requests = result["requests"]
-        .as_array()
-        .ok_or("Invalid response from WireMock")?;
-    assert_eq!(
-        requests.len(),
-        expected,
-        "Expected {} requests, found {}",
-        expected,
-        requests.len()
-    );
-    return Ok(());
-}
+mod wire_test_utils;
 
 #[tokio::test]
+#[allow(unused_variables, unreachable_code)]
 async fn test_service_get_movie_with_wiremock() {
-    reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = "http://localhost:8080";
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -68,15 +22,16 @@ async fn test_service_get_movie_with_wiremock() {
 
     assert!(result.is_ok(), "Client method call should succeed");
 
-    verify_request_count("GET", "/movie/movie-c06a4ad7", None, 1)
+    wire_test_utils::verify_request_count("GET", "/movie/movie-c06a4ad7", None, 1)
         .await
         .unwrap();
 }
 
 #[tokio::test]
+#[allow(unused_variables, unreachable_code)]
 async fn test_service_create_movie_with_wiremock() {
-    reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = "http://localhost:8080";
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -116,15 +71,16 @@ async fn test_service_create_movie_with_wiremock() {
 
     assert!(result.is_ok(), "Client method call should succeed");
 
-    verify_request_count("POST", "/movie", None, 1)
+    wire_test_utils::verify_request_count("POST", "/movie", None, 1)
         .await
         .unwrap();
 }
 
 #[tokio::test]
+#[allow(unused_variables, unreachable_code)]
 async fn test_service_get_metadata_with_wiremock() {
-    reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = "http://localhost:8080";
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -140,13 +96,13 @@ async fn test_service_get_metadata_with_wiremock() {
                 shallow: Some(false),
                 tag: vec![Some("development".to_string())],
             },
-            Some(RequestOptions::new().additional_header("X-API-Version", "0.0.1".to_string())),
+            Some(RequestOptions::new().additional_header("X-API-Version", "0.0.1")),
         )
         .await;
 
     assert!(result.is_ok(), "Client method call should succeed");
 
-    verify_request_count(
+    wire_test_utils::verify_request_count(
         "GET",
         "/metadata",
         Some(HashMap::from([
@@ -160,9 +116,10 @@ async fn test_service_get_metadata_with_wiremock() {
 }
 
 #[tokio::test]
+#[allow(unused_variables, unreachable_code)]
 async fn test_service_create_big_entity_with_wiremock() {
-    reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = "http://localhost:8080";
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -180,19 +137,21 @@ async fn test_service_create_big_entity_with_wiremock() {
                     id: "id".to_string(),
                 })),
                 extended_movie: Some(ExtendedMovie {
-                    id: MovieId("id".to_string()),
-                    prequel: Some(MovieId("prequel".to_string())),
-                    title: "title".to_string(),
-                    from: "from".to_string(),
-                    rating: 1.1,
-                    r#type: "movie".to_string(),
-                    tag: Tag("tag".to_string()),
-                    book: Some("book".to_string()),
-                    metadata: HashMap::from([(
-                        "metadata".to_string(),
-                        serde_json::json!({"key":"value"}),
-                    )]),
-                    revenue: 1000000,
+                    movie_fields: Movie {
+                        id: MovieId("id".to_string()),
+                        prequel: Some(MovieId("prequel".to_string())),
+                        title: "title".to_string(),
+                        from: "from".to_string(),
+                        rating: 1.1,
+                        r#type: "movie".to_string(),
+                        tag: Tag("tag".to_string()),
+                        book: Some("book".to_string()),
+                        metadata: HashMap::from([(
+                            "metadata".to_string(),
+                            serde_json::json!({"key":"value"}),
+                        )]),
+                        revenue: 1000000,
+                    },
                     cast: vec!["cast".to_string(), "cast".to_string()],
                 }),
                 entity: Some(Entity {
@@ -391,15 +350,16 @@ async fn test_service_create_big_entity_with_wiremock() {
 
     assert!(result.is_ok(), "Client method call should succeed");
 
-    verify_request_count("POST", "/big-entity", None, 1)
+    wire_test_utils::verify_request_count("POST", "/big-entity", None, 1)
         .await
         .unwrap();
 }
 
 #[tokio::test]
+#[allow(unused_variables, unreachable_code)]
 async fn test_service_refresh_token_with_wiremock() {
-    reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = "http://localhost:8080";
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -412,7 +372,7 @@ async fn test_service_refresh_token_with_wiremock() {
 
     assert!(result.is_ok(), "Client method call should succeed");
 
-    verify_request_count("POST", "/refresh-token", None, 1)
+    wire_test_utils::verify_request_count("POST", "/refresh-token", None, 1)
         .await
         .unwrap();
 }

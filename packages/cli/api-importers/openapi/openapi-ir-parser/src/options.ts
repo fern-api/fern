@@ -97,6 +97,11 @@ export interface ParseOpenAPIOptions {
      * Defaults to 'int32' for backward compatibility.
      */
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat;
+
+    /**
+     * The order to use for path parameters in generated code.
+     */
+    pathParameterOrder: generatorsYml.PathParameterOrder;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -130,7 +135,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     wrapReferencesToNullableInOptional: false,
     coerceOptionalSchemasToNullable: false,
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
-    defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32
+    defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32,
+    pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder
 };
 
 function mergeOptions<T extends object>(params: {
