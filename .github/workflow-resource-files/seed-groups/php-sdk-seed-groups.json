@@ -2,16 +2,15 @@
   "totalTestTimeSeconds": 8014,
   "groups": [
     {
-      "fixtures": [
-        "query-parameters-openapi-as-objects",
-        "oauth-client-credentials-nested-root",
-        "pagination:no-custom-config",
-        "property-access",
-        "mixed-case",
-        "inferred-auth-implicit-no-expiry",
-        "simple-fhir",
-        "oauth-client-credentials",
-        "websocket-bearer-auth",
+            "fixtures": [
+              "query-parameters-openapi-as-objects",
+              "oauth-client-credentials-nested-root",
+              "pagination:no-custom-config",
+              "property-access",
+              "mixed-case",
+              "inferred-auth-implicit-no-expiry",
+              "simple-fhir",
+              "websocket-bearer-auth",
         "cross-package-type-names",
         "examples:readme-config"
       ],
