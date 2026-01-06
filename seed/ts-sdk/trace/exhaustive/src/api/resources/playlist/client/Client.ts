@@ -144,18 +144,8 @@ export class PlaylistClient {
         _queryParams.limit = limit;
         _queryParams.otherField = otherField;
         _queryParams.multiLineDocs = multiLineDocs;
-        if (Array.isArray(optionalMultipleField)) {
-            _queryParams.optionalMultipleField = optionalMultipleField;
-        } else {
-            _queryParams.optionalMultipleField = optionalMultipleField;
-        }
-
-        if (Array.isArray(multipleField)) {
-            _queryParams.multipleField = multipleField;
-        } else {
-            _queryParams.multipleField = multipleField;
-        }
-
+        _queryParams.optionalMultipleField = optionalMultipleField;
+        _queryParams.multipleField = multipleField;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,

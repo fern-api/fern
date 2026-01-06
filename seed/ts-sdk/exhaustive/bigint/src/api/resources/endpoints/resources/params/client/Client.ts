@@ -221,18 +221,8 @@ export class ParamsClient {
     ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, unknown> = {};
-        if (Array.isArray(query)) {
-            _queryParams.query = query;
-        } else {
-            _queryParams.query = query;
-        }
-
-        if (Array.isArray(number_)) {
-            _queryParams.number = number_;
-        } else {
-            _queryParams.number = number_;
-        }
-
+        _queryParams.query = query;
+        _queryParams.number = number_;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,

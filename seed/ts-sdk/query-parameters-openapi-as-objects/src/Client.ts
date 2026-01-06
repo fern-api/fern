@@ -108,29 +108,14 @@ export class SeedApiClient {
         _queryParams.deadline = deadline;
         _queryParams.bytes = bytes;
         _queryParams.user = user;
-        if (Array.isArray(userList)) {
-            _queryParams.userList = userList;
-        } else {
-            _queryParams.userList = userList;
-        }
-
+        _queryParams.userList = userList;
         _queryParams.optionalDeadline = optionalDeadline;
         _queryParams.keyValue = keyValue != null ? toJson(keyValue) : undefined;
         _queryParams.optionalString = optionalString;
         _queryParams.nestedUser = nestedUser;
         _queryParams.optionalUser = optionalUser;
-        if (Array.isArray(excludeUser)) {
-            _queryParams.excludeUser = excludeUser;
-        } else {
-            _queryParams.excludeUser = excludeUser;
-        }
-
-        if (Array.isArray(filter)) {
-            _queryParams.filter = filter;
-        } else {
-            _queryParams.filter = filter;
-        }
-
+        _queryParams.excludeUser = excludeUser;
+        _queryParams.filter = filter;
         _queryParams.neighbor =
             neighbor != null ? (typeof neighbor === "string" ? neighbor : toJson(neighbor)) : undefined;
         _queryParams.neighborRequired =

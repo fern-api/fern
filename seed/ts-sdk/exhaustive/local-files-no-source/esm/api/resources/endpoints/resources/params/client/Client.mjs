@@ -170,18 +170,8 @@ export class ParamsClient {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             const { query, number: number_ } = request;
             const _queryParams = {};
-            if (Array.isArray(query)) {
-                _queryParams.query = query;
-            }
-            else {
-                _queryParams.query = query;
-            }
-            if (Array.isArray(number_)) {
-                _queryParams.number = number_;
-            }
-            else {
-                _queryParams.number = number_;
-            }
+            _queryParams.query = query;
+            _queryParams.number = number_;
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({

@@ -253,18 +253,8 @@ export class ServiceClient {
         _queryParams.maybeString = request.maybeString;
         _queryParams.integer = request.integer;
         _queryParams.maybeInteger = request.maybeInteger;
-        if (Array.isArray(request.listOfStrings)) {
-            _queryParams.listOfStrings = request.listOfStrings;
-        } else {
-            _queryParams.listOfStrings = request.listOfStrings;
-        }
-
-        if (Array.isArray(request.optionalListOfStrings)) {
-            _queryParams.optionalListOfStrings = request.optionalListOfStrings;
-        } else {
-            _queryParams.optionalListOfStrings = request.optionalListOfStrings;
-        }
-
+        _queryParams.listOfStrings = request.listOfStrings;
+        _queryParams.optionalListOfStrings = request.optionalListOfStrings;
         const _body = await core.newFormData();
         await _body.appendFile("file", request.file);
         const _maybeEncodedRequest = await _body.getRequest();
