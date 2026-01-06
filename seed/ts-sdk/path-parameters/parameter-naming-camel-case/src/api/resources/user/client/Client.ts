@@ -210,7 +210,7 @@ export class UserClient {
     ): Promise<core.WithRawResponse<SeedPathParameters.User[]>> {
         const { userId, limit } = request;
         const _queryParams: Record<string, unknown> = {
-            limit: limit,
+            limit,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({

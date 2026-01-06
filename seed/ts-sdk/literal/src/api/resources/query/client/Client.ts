@@ -61,11 +61,11 @@ export class QueryClient {
             alias_optional_stream: aliasOptionalStream,
         } = request;
         const _queryParams: Record<string, unknown> = {
-            prompt: prompt,
+            prompt,
             optional_prompt: optionalPrompt != null ? optionalPrompt : undefined,
             alias_prompt: aliasPrompt,
             alias_optional_prompt: aliasOptionalPrompt != null ? aliasOptionalPrompt : undefined,
-            query: query,
+            query,
             stream: stream.toString(),
             optional_stream: optionalStream != null ? optionalStream?.toString() : undefined,
             alias_stream: aliasStream.toString(),

@@ -94,7 +94,7 @@ export class ServiceClient {
         const { page_limit: pageLimit, beforeDate } = request;
         const _queryParams: Record<string, unknown> = {
             page_limit: pageLimit,
-            beforeDate: beforeDate,
+            beforeDate,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({

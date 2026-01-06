@@ -146,11 +146,11 @@ export class PlaylistClient {
     ): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error>>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
         const _queryParams: Record<string, unknown> = {
-            limit: limit,
-            otherField: otherField,
-            multiLineDocs: multiLineDocs,
-            optionalMultipleField: optionalMultipleField,
-            multipleField: multipleField,
+            limit,
+            otherField,
+            multiLineDocs,
+            optionalMultipleField,
+            multipleField,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

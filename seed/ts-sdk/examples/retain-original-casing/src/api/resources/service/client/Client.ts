@@ -167,8 +167,8 @@ export class ServiceClient {
     ): Promise<core.WithRawResponse<SeedExamples.Metadata>> {
         const { shallow, tag, "X-API-Version": xApiVersion } = request;
         const _queryParams: Record<string, unknown> = {
-            shallow: shallow,
-            tag: tag,
+            shallow,
+            tag,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,

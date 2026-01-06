@@ -175,7 +175,7 @@ export class ParamsClient {
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithQuery.Error>>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, unknown> = {
-            query: query,
+            query,
             number: number_,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -250,7 +250,7 @@ export class ParamsClient {
     > {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, unknown> = {
-            query: query,
+            query,
             number: number_,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -325,7 +325,7 @@ export class ParamsClient {
     > {
         const { query } = request;
         const _queryParams: Record<string, unknown> = {
-            query: query,
+            query,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -399,7 +399,7 @@ export class ParamsClient {
     > {
         const { param, query } = request;
         const _queryParams: Record<string, unknown> = {
-            query: query,
+            query,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

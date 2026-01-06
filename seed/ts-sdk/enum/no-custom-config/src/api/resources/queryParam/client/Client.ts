@@ -45,7 +45,7 @@ export class QueryParamClient {
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, unknown> = {
-            operand: operand,
+            operand,
             maybeOperand: maybeOperand != null ? maybeOperand : undefined,
             operandOrColor: typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor),
             maybeOperandOrColor:

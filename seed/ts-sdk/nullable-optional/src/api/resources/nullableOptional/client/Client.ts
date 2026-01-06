@@ -236,10 +236,10 @@ export class NullableOptionalClient {
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { limit, offset, includeDeleted, sortBy } = request;
         const _queryParams: Record<string, unknown> = {
-            limit: limit,
-            offset: offset,
-            includeDeleted: includeDeleted,
-            sortBy: sortBy,
+            limit,
+            offset,
+            includeDeleted,
+            sortBy,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -299,10 +299,10 @@ export class NullableOptionalClient {
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { query, department, role, isActive } = request;
         const _queryParams: Record<string, unknown> = {
-            query: query,
-            department: department,
-            role: role,
-            isActive: isActive,
+            query,
+            department,
+            role,
+            isActive,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({

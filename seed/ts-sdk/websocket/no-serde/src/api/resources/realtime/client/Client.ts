@@ -40,8 +40,8 @@ export class RealtimeClient {
             reconnectAttempts,
         } = args;
         const _queryParams: Record<string, unknown> = {
-            model: model,
-            temperature: temperature,
+            model,
+            temperature,
             "language-code": languageCode,
         };
         const _headers: Record<string, unknown> = { ...headers };

@@ -43,7 +43,7 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
                 const _queryParams: Record<string, unknown> = {
-                    page: page,
+                    page,
                     per_page: perPage,
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
@@ -119,7 +119,7 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersMixedTypePaginationResponse>> => {
                 const { cursor } = request;
                 const _queryParams: Record<string, unknown> = {
-                    cursor: cursor,
+                    cursor,
                 };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
@@ -265,7 +265,7 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
                 const _queryParams: Record<string, unknown> = {
-                    page: page,
+                    page,
                     per_page: perPage,
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
@@ -341,7 +341,7 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
                 const _queryParams: Record<string, unknown> = {
-                    page: page,
+                    page,
                     per_page: perPage,
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
@@ -487,8 +487,8 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const { page, limit, order } = request;
                 const _queryParams: Record<string, unknown> = {
-                    page: page,
-                    limit: limit,
+                    page,
+                    limit,
                     order: order != null ? order : undefined,
                 };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -561,8 +561,8 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const { page, limit, order } = request;
                 const _queryParams: Record<string, unknown> = {
-                    page: page,
-                    limit: limit,
+                    page,
+                    limit,
                     order: order != null ? order : undefined,
                 };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -634,7 +634,7 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersExtendedResponse>> => {
                 const { cursor } = request;
                 const _queryParams: Record<string, unknown> = {
-                    cursor: cursor,
+                    cursor,
                 };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
@@ -703,7 +703,7 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersExtendedOptionalListResponse>> => {
                 const { cursor } = request;
                 const _queryParams: Record<string, unknown> = {
-                    cursor: cursor,
+                    cursor,
                 };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
@@ -912,7 +912,7 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.UsernameContainer>> => {
                 const { offset } = request;
                 const _queryParams: Record<string, unknown> = {
-                    offset: offset,
+                    offset,
                 };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
@@ -982,7 +982,7 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersOptionalDataPaginationResponse>> => {
                 const { page } = request;
                 const _queryParams: Record<string, unknown> = {
-                    page: page,
+                    page,
                 };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
