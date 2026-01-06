@@ -18,6 +18,10 @@ export declare namespace RubyFile {
 }
 
 export class RubyFile extends File {
+    public readonly node: ruby.AstNode;
+    public readonly customConfig: BaseRubyCustomConfigSchema;
+    public readonly formatter?: AbstractFormatter;
+
     constructor({ node, directory, filename, customConfig, formatter }: RubyFile.Args) {
         super(
             filename,
@@ -27,5 +31,8 @@ export class RubyFile extends File {
                 formatter
             })
         );
+        this.node = node;
+        this.customConfig = customConfig;
+        this.formatter = formatter;
     }
 }

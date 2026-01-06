@@ -9,6 +9,7 @@ import { join as pathJoin } from "path";
 import { AsIsFiles, topologicalCompareAsIsFiles } from "../AsIs";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 import { RubocopFile } from "./RubocopFile";
+import { RubyFile } from "./RubyFile";
 
 const GEMFILE_FILENAME = "Gemfile";
 const CUSTOM_GEMFILE_FILENAME = "Gemfile.custom";
@@ -212,10 +213,19 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         const rbiDirectory = RelativeFilePath.of(`rbi/${rubyFile.directory}`);
         const rbiFilename = rubyFile.filename.replace(".rb", ".rbi");
 
-        // Create empty RBI file
-        const rbiContent = "";
+        // All Ruby files should be RubyFiles with AST content for proper RBI generation
+        if (!(rubyFile instanceof RubyFile)) {
+            throw new Error(`Expected RubyFile for RBI generation, but got File for ${rubyFile.filename}`);
+        }
 
-        return new File(rbiFilename, rbiDirectory, rbiContent);
+        // Create RBI file with the same AST content as the Ruby file
+        return new RubyFile({
+            node: rubyFile.node,
+            directory: rbiDirectory,
+            filename: rbiFilename,
+            customConfig: rubyFile.customConfig,
+            formatter: rubyFile.formatter
+        });
     }
 
     public async writeRbiFiles(): Promise<void> {
