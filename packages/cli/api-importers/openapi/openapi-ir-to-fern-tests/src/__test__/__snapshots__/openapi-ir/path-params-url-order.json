@@ -1,0 +1,102 @@
+{
+  "title": "Foo Bar API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "fooBar",
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "foo_id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "FooBarRequestFooId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "bar_id",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "FooBarRequestBarId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "FooBarRequest",
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/foo/{foo_id}/bar/{bar_id}/",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "foo_id",
+              "value": {
+                "value": {
+                  "value": "foo_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "bar_id",
+              "value": {
+                "value": {
+                  "value": "bar_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

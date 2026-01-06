@@ -1,0 +1,23 @@
+openapi: 3.1.0
+info:
+  title: Foo Bar API
+  version: 1.0.0
+
+paths:
+  /foo/{foo_id}/bar/{bar_id}/:
+    post:
+      operationId: fooBar
+      parameters:
+        - name: bar_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: foo_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
