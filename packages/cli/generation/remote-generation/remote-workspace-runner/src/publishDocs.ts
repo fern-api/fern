@@ -82,8 +82,8 @@ export async function publishDocs({
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
     const basePath = parseBasePath(domain);
-    const useDynamicSnippets = docsWorkspace.config.experimental?.dynamicSnippets;
-    const disableSnippetGen = preview || useDynamicSnippets;
+    const disableDynamicSnippets =
+        docsWorkspace.config.experimental && !docsWorkspace.config.experimental.dynamicSnippets;
 
     const resolver = new DocsDefinitionResolver({
         domain,
@@ -281,7 +281,7 @@ export async function publishDocs({
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
             let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
-            if (useDynamicSnippets) {
+            if (!disableDynamicSnippets) {
                 // Check for existing SDK dynamic IRs before generating
                 const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
                     fdr,

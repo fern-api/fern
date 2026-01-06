@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.34.0
+  changelogEntry:
+    - summary: |
+        Updates the SDK snippet generation to use dynamic snippets by default. To disable, set `experimental.dynamicSnippets` to `false` in your `docs.yml` file.
+      type: feat
+  createdAt: "2026-01-05"
+  irVersion: 62
+
 - version: 3.33.0
   changelogEntry:
     - summary: |
