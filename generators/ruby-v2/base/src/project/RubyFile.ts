@@ -24,9 +24,11 @@ export class RubyFile extends File {
 
     constructor({ node, directory, filename, customConfig, formatter }: RubyFile.Args) {
         // Use toStringRbi() for RBI files, regular toString() for Ruby files
-        const content = filename.endsWith(".rbi")
-            ? node.toStringRbi({ customConfig, formatter })
-            : node.toString({ customConfig, formatter });
+        // Check if toStringRbi exists to handle test mocks and legacy nodes
+        const content =
+            filename.endsWith(".rbi") && typeof node.toStringRbi === "function"
+                ? node.toStringRbi({ customConfig, formatter })
+                : node.toString({ customConfig, formatter });
 
         super(filename, directory, content);
         this.node = node;
