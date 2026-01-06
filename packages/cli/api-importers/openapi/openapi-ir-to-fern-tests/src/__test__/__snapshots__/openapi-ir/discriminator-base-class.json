@@ -1,0 +1,316 @@
+{
+  "title": "Discriminator Base Class Test",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createForm",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateFormRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "createFormRequestFormFields",
+              "key": "form_fields",
+              "schema": {
+                "generatedName": "CreateFormRequestFormFields",
+                "description": "Array of form fields with different types",
+                "value": {
+                  "description": "Array of form fields with different types",
+                  "value": {
+                    "generatedName": "CreateFormRequestFormFieldsItem",
+                    "schema": "FormFieldBase",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "CreateFormRequestFormFields",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "CreateFormRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/form",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "FormFieldBase": {
+        "value": {
+          "commonProperties": [
+            {
+              "key": "name",
+              "schema": {
+                "description": "Display name for the field",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "FormFieldBaseName",
+                "groupName": [],
+                "type": "primitive"
+              }
+            },
+            {
+              "key": "x",
+              "schema": {
+                "description": "X coordinate",
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "FormFieldBaseX",
+                "groupName": [],
+                "type": "primitive"
+              }
+            },
+            {
+              "key": "y",
+              "schema": {
+                "description": "Y coordinate",
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "FormFieldBaseY",
+                "groupName": [],
+                "type": "primitive"
+              }
+            }
+          ],
+          "description": "Base form field with discriminator",
+          "discriminantProperty": "type",
+          "generatedName": "FormFieldBase",
+          "schemas": {
+            "text": {
+              "generatedName": "ComponentsSchemasFormFieldText",
+              "schema": "FormFieldText",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "checkbox": {
+              "generatedName": "ComponentsSchemasFormFieldCheckbox",
+              "schema": "FormFieldCheckbox",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "signature": {
+              "generatedName": "ComponentsSchemasFormFieldSignature",
+              "schema": "FormFieldSignature",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      },
+      "FormFieldText": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "formFieldTextPlaceholder",
+            "key": "placeholder",
+            "schema": {
+              "generatedName": "FormFieldTextPlaceholder",
+              "description": "Placeholder text",
+              "value": {
+                "description": "Placeholder text",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "FormFieldTextPlaceholder",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "formFieldTextMaxLength",
+            "key": "maxLength",
+            "schema": {
+              "generatedName": "FormFieldTextMaxLength",
+              "description": "Maximum length",
+              "value": {
+                "description": "Maximum length",
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "FormFieldTextMaxLength",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Text input field",
+        "generatedName": "FormFieldText",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "FormFieldCheckbox": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "formFieldCheckboxChecked",
+            "key": "checked",
+            "schema": {
+              "generatedName": "FormFieldCheckboxChecked",
+              "description": "Default checked state",
+              "value": {
+                "description": "Default checked state",
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "FormFieldCheckboxChecked",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Checkbox field",
+        "generatedName": "FormFieldCheckbox",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "FormFieldSignature": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "formFieldSignatureRequired",
+            "key": "required",
+            "schema": {
+              "generatedName": "FormFieldSignatureRequired",
+              "description": "Whether signature is required",
+              "value": {
+                "description": "Whether signature is required",
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "FormFieldSignatureRequired",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Signature field",
+        "generatedName": "FormFieldSignature",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

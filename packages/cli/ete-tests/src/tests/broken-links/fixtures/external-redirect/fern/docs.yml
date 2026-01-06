@@ -15,4 +15,3 @@ redirects:
   - source: /console
     destination: https://console.example.com/dashboard
     permanent: true
-
