@@ -43,6 +43,27 @@ class CustomReadmeSection(pydantic.BaseModel):
     content: str
 
 
+class SmokeTestConfig(pydantic.BaseModel):
+    """Configuration for smoke test generation."""
+
+    # List of example names to include in smoke tests.
+    # If specified, only these examples will be tested.
+    # Format: "ServiceName.methodName" or "ServiceName.methodName:exampleName"
+    include_examples: Optional[List[str]] = None
+
+    # List of example names to exclude from smoke tests.
+    # Format: "ServiceName.methodName" or "ServiceName.methodName:exampleName"
+    exclude_examples: Optional[List[str]] = None
+
+    # Whether to use structural validation (validates types/structure but not exact values)
+    # instead of strict validation (validates exact values).
+    # Default is True for smoke tests since production data differs from examples.
+    use_structural_validation: bool = True
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
     extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
@@ -126,6 +147,13 @@ class SDKCustomConfig(pydantic.BaseModel):
     enable_wire_tests: bool = False
 
     custom_pager_name: Optional[str] = None
+
+    # Whether to generate smoke tests that can be run against a production environment.
+    # When enabled, generates tests in tests/smoke/ that validate examples work against real APIs.
+    generate_smoke_tests: bool = False
+
+    # Configuration for smoke test generation. Only used when generate_smoke_tests is True.
+    smoke_test_config: SmokeTestConfig = SmokeTestConfig()
 
     class Config:
         extra = pydantic.Extra.forbid

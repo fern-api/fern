@@ -39,6 +39,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+from fern_python.snippet.smoke_test_factory import SmokeTestFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import build_snippet_writer
 
@@ -362,6 +363,18 @@ class SdkGenerator(AbstractGenerator):
                 ir=ir,
             )
 
+        # Generate smoke tests if enabled
+        if context.custom_config.generate_smoke_tests:
+            self._write_smoke_tests(
+                context=context,
+                project=project,
+                generator_exec_wrapper=generator_exec_wrapper,
+                generated_root_client=generated_root_client,
+                base_environment=base_environment,
+                snippet_writer=snippet_writer,
+                ir=ir,
+            )
+
     def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:
         # Finally, run the python-v2 generator.
         pythonv2 = PythonV2Generator(
@@ -659,6 +672,26 @@ __version__ = metadata.version("{project._project_config.package_name}")
         ir: ir_types.IntermediateRepresentation,
     ) -> None:
         snippet_test_factory.tests(ir, snippet_writer)
+
+    def _write_smoke_tests(
+        self,
+        context: SdkGeneratorContext,
+        project: Project,
+        generator_exec_wrapper: GeneratorExecWrapper,
+        generated_root_client: GeneratedRootClient,
+        base_environment: Optional[Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]],
+        snippet_writer: SnippetWriter,
+        ir: ir_types.IntermediateRepresentation,
+    ) -> None:
+        smoke_test_factory = SmokeTestFactory(
+            project=project,
+            context=context,
+            generator_exec_wrapper=generator_exec_wrapper,
+            generated_root_client=generated_root_client,
+            generated_environment=base_environment,
+            smoke_test_config=context.custom_config.smoke_test_config,
+        )
+        smoke_test_factory.generate(ir, snippet_writer)
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)

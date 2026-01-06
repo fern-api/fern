@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.47.0-rc0
+  changelogEntry:
+    - summary: |
+        Add smoke test generation feature. When `generate_smoke_tests: true` is configured, the SDK
+        generates tests in `tests/smoke/` that can be run against a production environment. Features include:
+        - Structural validation that checks response types/structure without requiring exact value matches
+        - Include/exclude patterns to filter which examples are tested (e.g., `ServiceName.methodName`)
+        - Environment variable configuration via `SMOKE_TEST_BASE_URL` and `SMOKE_TEST_<PARAM>`
+      type: feat
+  createdAt: "2025-01-06"
+  irVersion: 62
+
 - version: 4.46.7-rc0
   changelogEntry:
     - summary: Skip installation of generator-cli in Python SDK generator as it is already installed in the base image.
