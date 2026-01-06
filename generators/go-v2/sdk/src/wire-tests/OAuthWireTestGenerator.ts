@@ -1,13 +1,36 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { go } from "@fern-api/go-ast";
+import { go, goExportedFieldName } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
-import { OAuthScheme } from "@fern-fern/ir-sdk/api";
+import { HttpService, Name, OAuthScheme, RequestProperty } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+
+/**
+ * Information about the OAuth service structure extracted from the IR.
+ */
+interface OAuthServiceInfo {
+    /** The client accessor path (e.g., "OAuth2" or "Auth") */
+    clientAccessPath: string;
+    /** The method name on the service client (e.g., "GetToken" or "GetTokenWithClientCredentials") */
+    methodName: string;
+    /** The Go field name for client_id (e.g., "ClientID" or "ClientId") */
+    clientIdFieldName: string;
+    /** The Go field name for client_secret (e.g., "ClientSecret") */
+    clientSecretFieldName: string;
+    /** Whether client_id is optional (pointer type) */
+    clientIdIsOptional: boolean;
+    /** Whether client_secret is optional (pointer type) */
+    clientSecretIsOptional: boolean;
+    /** The package directory for the OAuth service (e.g., "oauth2" or "auth") */
+    packageDir: string;
+}
 
 /**
  * Generates custom OAuth wire tests that validate:
  * 1. Form URL encoded body format for OAuth token requests
  * 2. Custom headers being passed through to GetToken requests
+ *
+ * The generator dynamically extracts service structure from the IR to support
+ * different OAuth configurations (different service names, field names, etc.).
  */
 export class OAuthWireTestGenerator {
     private readonly context: SdkGeneratorContext;
@@ -22,13 +45,18 @@ export class OAuthWireTestGenerator {
             return undefined;
         }
 
-        const testFileContent = this.generateOAuthTestFile();
+        // Extract service info from the IR
+        const serviceInfo = this.extractOAuthServiceInfo(oauthScheme);
+        if (serviceInfo == null) {
+            return undefined;
+        }
 
-        // Place the OAuth wire tests in auth/oauth_wire_test directory
-        // This follows the same pattern as other wire tests (service_test directories)
+        const testFileContent = this.generateOAuthTestFile(serviceInfo);
+
+        // Place the OAuth wire tests in the appropriate directory based on the service package
         return new GoFile({
             node: testFileContent,
-            directory: RelativeFilePath.of("./auth/oauth_wire_test"),
+            directory: RelativeFilePath.of(`./${serviceInfo.packageDir}/oauth_wire_test`),
             filename: "oauth_wire_test.go",
             packageName: "oauth_wire_test",
             rootImportPath: this.context.getRootImportPath(),
@@ -38,7 +66,106 @@ export class OAuthWireTestGenerator {
         });
     }
 
-    private generateOAuthTestFile(): go.CodeBlock {
+    /**
+     * Extracts OAuth service information from the IR scheme.
+     */
+    private extractOAuthServiceInfo(oauthScheme: OAuthScheme): OAuthServiceInfo | undefined {
+        if (oauthScheme.configuration?.type !== "clientCredentials") {
+            return undefined;
+        }
+
+        const tokenEndpoint = oauthScheme.configuration.tokenEndpoint;
+        const serviceId = tokenEndpoint.endpointReference.serviceId;
+        const service = this.context.ir.services[serviceId];
+
+        if (service == null) {
+            return undefined;
+        }
+
+        // Get the endpoint
+        const endpointId = tokenEndpoint.endpointReference.endpointId;
+        const endpoint = service.endpoints.find((e) => e.id === endpointId);
+        if (endpoint == null) {
+            return undefined;
+        }
+
+        // Extract client accessor path from fernFilepath (e.g., "OAuth2" or "Auth")
+        const clientAccessPath = this.getClientAccessPath(service);
+
+        // Extract method name from endpoint
+        const methodName = endpoint.name.pascalCase.unsafeName;
+
+        // Extract field information
+        const requestProperties = tokenEndpoint.requestProperties;
+        if (requestProperties.clientId == null || requestProperties.clientSecret == null) {
+            return undefined;
+        }
+
+        const clientIdInfo = this.extractFieldInfo(requestProperties.clientId);
+        const clientSecretInfo = this.extractFieldInfo(requestProperties.clientSecret);
+
+        if (clientIdInfo == null || clientSecretInfo == null) {
+            return undefined;
+        }
+
+        // Get package directory (lowercase version of the service path)
+        const packageDir = this.getPackageDir(service);
+
+        return {
+            clientAccessPath,
+            methodName,
+            clientIdFieldName: clientIdInfo.fieldName,
+            clientSecretFieldName: clientSecretInfo.fieldName,
+            clientIdIsOptional: clientIdInfo.isOptional,
+            clientSecretIsOptional: clientSecretInfo.isOptional,
+            packageDir
+        };
+    }
+
+    /**
+     * Gets the client accessor path for a service (e.g., "OAuth2" from fernFilepath).
+     */
+    private getClientAccessPath(service: HttpService): string {
+        const parts = service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName);
+        return parts.join(".");
+    }
+
+    /**
+     * Gets the package directory for a service (e.g., "oauth2" from fernFilepath).
+     */
+    private getPackageDir(service: HttpService): string {
+        const parts = service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName.toLowerCase());
+        return parts.join("/");
+    }
+
+    /**
+     * Extracts field name and optionality from a request property.
+     */
+    private extractFieldInfo(requestProperty: RequestProperty): { fieldName: string; isOptional: boolean } | undefined {
+        // We need to get the property name from the request property
+        // The property is accessed via the property field
+        const property = requestProperty.property;
+        if (property == null) {
+            return undefined;
+        }
+
+        const fieldName = this.getGoFieldName(property.name.name);
+
+        // Check if the type is optional by looking at the type reference
+        const typeReference = property.valueType;
+        const isOptional = typeReference.type === "container" && typeReference.container.type === "optional";
+
+        return { fieldName, isOptional };
+    }
+
+    /**
+     * Converts an IR Name to a Go exported field name.
+     */
+    private getGoFieldName(name: Name): string {
+        return goExportedFieldName(name.pascalCase.unsafeName);
+    }
+
+    private generateOAuthTestFile(serviceInfo: OAuthServiceInfo): go.CodeBlock {
         const rootImportPath = this.context.getRootImportPath();
 
         return go.codeblock((writer) => {
@@ -54,7 +181,8 @@ export class OAuthWireTestGenerator {
             writer.addImport("github.com/stretchr/testify/require");
             writer.addImport(`${rootImportPath}/client`);
             writer.addImport(`${rootImportPath}/option`);
-            writer.addImport(rootImportPath);
+            // Get the alias for the root package - this handles import paths with hyphens
+            const rootPackageAlias = writer.addImport(rootImportPath);
 
             writer.newLine();
 
@@ -64,12 +192,12 @@ export class OAuthWireTestGenerator {
             writer.newLine();
 
             // Write the form URL encoded body test
-            this.writeFormEncodedBodyTest(writer, rootImportPath);
+            this.writeFormEncodedBodyTest(writer, rootPackageAlias, serviceInfo);
             writer.newLine();
             writer.newLine();
 
             // Write the custom headers test
-            this.writeCustomHeadersTest(writer, rootImportPath);
+            this.writeCustomHeadersTest(writer, rootPackageAlias, serviceInfo);
         });
     }
 
@@ -112,9 +240,7 @@ export class OAuthWireTestGenerator {
         writer.writeLine("}");
     }
 
-    private writeFormEncodedBodyTest(writer: go.Writer, rootImportPath: string): void {
-        const packageName = this.getPackageAlias(rootImportPath);
-
+    private writeFormEncodedBodyTest(writer: go.Writer, rootPackageAlias: string, serviceInfo: OAuthServiceInfo): void {
         writer.writeLine("// TestOAuthGetTokenFormEncodedBody verifies that the OAuth token request body");
         writer.writeLine(
             "// is form URL encoded (not JSON) when the Content-Type is application/x-www-form-urlencoded."
@@ -129,12 +255,28 @@ export class OAuthWireTestGenerator {
         writer.writeLine('\t\toption.WithClientCredentials("test_client_id", "test_client_secret"),');
         writer.writeLine("\t)");
         writer.newLine();
-        writer.writeLine(`\trequest := &${packageName}.GetTokenRequest{`);
-        writer.writeLine(`\t\tClientId:     "test_client_id",`);
-        writer.writeLine(`\t\tClientSecret: "test_client_secret",`);
+
+        // Generate request struct initialization based on field optionality
+        writer.writeLine(`\trequest := &${rootPackageAlias}.GetTokenRequest{`);
+        if (serviceInfo.clientIdIsOptional) {
+            writer.writeLine(`\t\t${serviceInfo.clientIdFieldName}: ${rootPackageAlias}.String("test_client_id"),`);
+        } else {
+            writer.writeLine(`\t\t${serviceInfo.clientIdFieldName}: "test_client_id",`);
+        }
+        if (serviceInfo.clientSecretIsOptional) {
+            writer.writeLine(
+                `\t\t${serviceInfo.clientSecretFieldName}: ${rootPackageAlias}.String("test_client_secret"),`
+            );
+        } else {
+            writer.writeLine(`\t\t${serviceInfo.clientSecretFieldName}: "test_client_secret",`);
+        }
         writer.writeLine("\t}");
         writer.newLine();
-        writer.writeLine("\t_, err := c.Auth.GetTokenWithClientCredentials(context.Background(), request)");
+
+        // Use dynamic service accessor and method name
+        writer.writeLine(
+            `\t_, err := c.${serviceInfo.clientAccessPath}.${serviceInfo.methodName}(context.Background(), request)`
+        );
         writer.writeLine("\tif err != nil {");
         writer.writeLine('\t\tt.Logf("GetToken returned error (may be expected in test): %v", err)');
         writer.writeLine("\t}");
@@ -161,9 +303,7 @@ export class OAuthWireTestGenerator {
         writer.writeLine("}");
     }
 
-    private writeCustomHeadersTest(writer: go.Writer, rootImportPath: string): void {
-        const packageName = this.getPackageAlias(rootImportPath);
-
+    private writeCustomHeadersTest(writer: go.Writer, rootPackageAlias: string, serviceInfo: OAuthServiceInfo): void {
         writer.writeLine("// TestOAuthGetTokenCustomHeaders verifies that custom headers set on the client");
         writer.writeLine("// are included in the OAuth GetToken request.");
         writer.writeLine("func TestOAuthGetTokenCustomHeaders(t *testing.T) {");
@@ -182,12 +322,28 @@ export class OAuthWireTestGenerator {
         writer.writeLine("\t\toption.WithHTTPHeader(customHeaders),");
         writer.writeLine("\t)");
         writer.newLine();
-        writer.writeLine(`\trequest := &${packageName}.GetTokenRequest{`);
-        writer.writeLine(`\t\tClientId:     "test_client_id",`);
-        writer.writeLine(`\t\tClientSecret: "test_client_secret",`);
+
+        // Generate request struct initialization based on field optionality
+        writer.writeLine(`\trequest := &${rootPackageAlias}.GetTokenRequest{`);
+        if (serviceInfo.clientIdIsOptional) {
+            writer.writeLine(`\t\t${serviceInfo.clientIdFieldName}: ${rootPackageAlias}.String("test_client_id"),`);
+        } else {
+            writer.writeLine(`\t\t${serviceInfo.clientIdFieldName}: "test_client_id",`);
+        }
+        if (serviceInfo.clientSecretIsOptional) {
+            writer.writeLine(
+                `\t\t${serviceInfo.clientSecretFieldName}: ${rootPackageAlias}.String("test_client_secret"),`
+            );
+        } else {
+            writer.writeLine(`\t\t${serviceInfo.clientSecretFieldName}: "test_client_secret",`);
+        }
         writer.writeLine("\t}");
         writer.newLine();
-        writer.writeLine("\t_, err := c.Auth.GetTokenWithClientCredentials(context.Background(), request)");
+
+        // Use dynamic service accessor and method name
+        writer.writeLine(
+            `\t_, err := c.${serviceInfo.clientAccessPath}.${serviceInfo.methodName}(context.Background(), request)`
+        );
         writer.writeLine("\tif err != nil {");
         writer.writeLine('\t\tt.Logf("GetToken returned error (may be expected in test): %v", err)');
         writer.writeLine("\t}");
@@ -201,12 +357,6 @@ export class OAuthWireTestGenerator {
         writer.writeLine('\tassert.Equal(t, "sandbox-token-123", sandboxHeader,');
         writer.writeLine('\t\t"X-Sandbox-Auth should be included in GetToken request")');
         writer.writeLine("}");
-    }
-
-    private getPackageAlias(rootImportPath: string): string {
-        // Extract the last part of the import path as the package alias
-        const parts = rootImportPath.split("/");
-        return parts[parts.length - 1] ?? "fern";
     }
 
     private getOAuthClientCredentialsScheme(): OAuthScheme | undefined {
