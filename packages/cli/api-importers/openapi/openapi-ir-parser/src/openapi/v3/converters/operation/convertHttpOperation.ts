@@ -1,3 +1,5 @@
+import { generatorsYml } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
 import {
     EndpointSdkName,
     EndpointSecurity,
@@ -62,59 +64,108 @@ export function convertHttpOperation({
     const paramNamesInUrlOrder = [...path.matchAll(PATH_PARAM_REGEX)]
         .map((match) => match[1])
         .filter((paramName): paramName is string => paramName !== undefined);
+    const pathParams = [...path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
 
-    // Reorder path parameters to match URL order
-    if (paramNamesInUrlOrder.length > 0) {
-        const urlParams = new Map(convertedParameters.pathParameters.map((param) => [param.name, param]));
+    switch (context.options.pathParameterOrder) {
+        case generatorsYml.PathParameterOrder.SpecOrder:
+            {
+                // Check if any path parameters are missing from convertedParameters
+                const missingPathParams = pathParams.filter(
+                    (param) => !convertedParameters.pathParameters.some((p) => p.name === param)
+                );
 
-        // If there's a path parameter listed only in the URL, add it to the list
-        const reorderedPathParameters: PathParameterWithExample[] = [];
-        const usedParams = new Set<string>();
-
-        for (const paramName of paramNamesInUrlOrder) {
-            const urlParam = urlParams.get(paramName);
-            usedParams.add(paramName);
-
-            if (urlParam) {
-                reorderedPathParameters.push(urlParam);
-            } else {
-                reorderedPathParameters.push({
-                    name: paramName,
-                    variableReference: undefined,
-                    parameterNameOverride: undefined,
-                    availability: undefined,
-                    source,
-                    schema: SchemaWithExample.primitive({
-                        schema: PrimitiveSchemaValueWithExample.string({
-                            default: undefined,
-                            example: undefined,
-                            format: undefined,
-                            maxLength: undefined,
-                            minLength: undefined,
-                            pattern: undefined
-                        }),
-                        description: undefined,
-                        generatedName: "",
-                        nameOverride: undefined,
-                        namespace: undefined,
-                        groupName: undefined,
-                        availability: undefined,
-                        title: undefined
-                    }),
-                    description: undefined,
-                    explode: undefined
-                });
+                // Add missing path parameters
+                if (missingPathParams.length > 0) {
+                    for (const param of missingPathParams) {
+                        convertedParameters.pathParameters.push({
+                            name: param ?? "",
+                            variableReference: undefined,
+                            parameterNameOverride: undefined,
+                            availability: undefined,
+                            source,
+                            schema: SchemaWithExample.primitive({
+                                schema: PrimitiveSchemaValueWithExample.string({
+                                    default: undefined,
+                                    example: undefined,
+                                    format: undefined,
+                                    maxLength: undefined,
+                                    minLength: undefined,
+                                    pattern: undefined
+                                }),
+                                description: undefined,
+                                generatedName: "",
+                                nameOverride: undefined,
+                                namespace: undefined,
+                                groupName: undefined,
+                                availability: undefined,
+                                title: undefined
+                            }),
+                            description: undefined,
+                            explode: undefined
+                        });
+                    }
+                }
             }
-        }
+            break;
+        case generatorsYml.PathParameterOrder.UrlOrder:
+            {
+                // Reorder path parameters to match URL order
+                if (paramNamesInUrlOrder.length > 0) {
+                    const urlParams = new Map(convertedParameters.pathParameters.map((param) => [param.name, param]));
 
-        // Add any remaining path parameters that don't appear in the URL at the end
-        for (const param of convertedParameters.pathParameters) {
-            if (!usedParams.has(param.name)) {
-                reorderedPathParameters.push(param);
+                    // If there's a path parameter listed only in the URL, add it to the list
+                    const reorderedPathParameters: PathParameterWithExample[] = [];
+                    const usedParams = new Set<string>();
+
+                    for (const paramName of paramNamesInUrlOrder) {
+                        const urlParam = urlParams.get(paramName);
+                        usedParams.add(paramName);
+
+                        if (urlParam) {
+                            reorderedPathParameters.push(urlParam);
+                        } else {
+                            reorderedPathParameters.push({
+                                name: paramName,
+                                variableReference: undefined,
+                                parameterNameOverride: undefined,
+                                availability: undefined,
+                                source,
+                                schema: SchemaWithExample.primitive({
+                                    schema: PrimitiveSchemaValueWithExample.string({
+                                        default: undefined,
+                                        example: undefined,
+                                        format: undefined,
+                                        maxLength: undefined,
+                                        minLength: undefined,
+                                        pattern: undefined
+                                    }),
+                                    description: undefined,
+                                    generatedName: "",
+                                    nameOverride: undefined,
+                                    namespace: undefined,
+                                    groupName: undefined,
+                                    availability: undefined,
+                                    title: undefined
+                                }),
+                                description: undefined,
+                                explode: undefined
+                            });
+                        }
+                    }
+
+                    // Add any remaining path parameters that don't appear in the URL at the end
+                    for (const param of convertedParameters.pathParameters) {
+                        if (!usedParams.has(param.name)) {
+                            reorderedPathParameters.push(param);
+                        }
+                    }
+
+                    convertedParameters.pathParameters = reorderedPathParameters;
+                }
             }
-        }
-
-        convertedParameters.pathParameters = reorderedPathParameters;
+            break;
+        default:
+            assertNever(context.options.pathParameterOrder);
     }
 
     let convertedRequests = (() => {
