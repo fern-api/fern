@@ -151,12 +151,7 @@ export class UserClient {
             });
         }
 
-        if (Array.isArray(filter)) {
-            _queryParams.filter = filter;
-        } else {
-            _queryParams.filter = filter;
-        }
-
+        _queryParams.filter = filter;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

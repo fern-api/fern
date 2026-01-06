@@ -107,18 +107,8 @@ export class UserClient {
         _queryParams.optionalString = optionalString;
         _queryParams.nestedUser = nestedUser;
         _queryParams.optionalUser = optionalUser;
-        if (Array.isArray(excludeUser)) {
-            _queryParams.excludeUser = excludeUser;
-        } else {
-            _queryParams.excludeUser = excludeUser;
-        }
-
-        if (Array.isArray(filter)) {
-            _queryParams.filter = filter;
-        } else {
-            _queryParams.filter = filter;
-        }
-
+        _queryParams.excludeUser = excludeUser;
+        _queryParams.filter = filter;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
