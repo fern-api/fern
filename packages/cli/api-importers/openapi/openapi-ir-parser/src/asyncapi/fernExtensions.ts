@@ -104,7 +104,20 @@ export const FernAsyncAPIExtension = {
      *   /my-channel:
      *     x-fern-ignore: true
      */
-    IGNORE: "x-fern-ignore"
+    IGNORE: "x-fern-ignore",
+
+    /**
+     * Used to customize the name of a channel parameter in generated SDKs.
+     * The original parameter name is preserved as the wire value.
+     *
+     * channels:
+     *   /my-channel/{userId}:
+     *     parameters:
+     *       userId:
+     *         description: The user ID
+     *         x-fern-parameter-name: id
+     */
+    FERN_PARAMETER_NAME: "x-fern-parameter-name"
 } as const;
 
 export type FernAsyncAPIExtension = Values<typeof FernAsyncAPIExtension>;

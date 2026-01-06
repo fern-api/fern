@@ -17,7 +17,7 @@ paths:
                   description: Array of form fields with different types
                   type: array
                   items:
-                    $ref: '#/components/schemas/FormFieldBase'
+                    $ref: "#/components/schemas/FormFieldBase"
       responses:
         "200":
           description: Success
@@ -47,14 +47,14 @@ components:
       discriminator:
         propertyName: type
         mapping:
-          text: '#/components/schemas/FormFieldText'
-          checkbox: '#/components/schemas/FormFieldCheckbox'
-          signature: '#/components/schemas/FormFieldSignature'
+          text: "#/components/schemas/FormFieldText"
+          checkbox: "#/components/schemas/FormFieldCheckbox"
+          signature: "#/components/schemas/FormFieldSignature"
 
     FormFieldText:
       description: Text input field
       allOf:
-        - $ref: '#/components/schemas/FormFieldBase'
+        - $ref: "#/components/schemas/FormFieldBase"
         - type: object
           required:
             - type
@@ -73,7 +73,7 @@ components:
     FormFieldCheckbox:
       description: Checkbox field
       allOf:
-        - $ref: '#/components/schemas/FormFieldBase'
+        - $ref: "#/components/schemas/FormFieldBase"
         - type: object
           required:
             - type
@@ -89,7 +89,7 @@ components:
     FormFieldSignature:
       description: Signature field
       allOf:
-        - $ref: '#/components/schemas/FormFieldBase'
+        - $ref: "#/components/schemas/FormFieldBase"
         - type: object
           required:
             - type
