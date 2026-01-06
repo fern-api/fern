@@ -48,6 +48,6 @@ COPY ./generators/python/src ./src
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
-RUN npm install -f -g @fern-api/generator-cli@latest
+RUN npm install -f -g @fern-api/generator-cli@0.5.0
 
 ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]
