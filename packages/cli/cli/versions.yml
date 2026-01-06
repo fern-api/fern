@@ -1,11 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.32.1
+- version: 3.35.1
   changelogEntry:
     - summary: |
         Fix local generation to convert self-hosted GitHub URI (owner/repo) to full URL format,
         matching Fiddle's remote generation behavior.
       type: fix
   createdAt: "2026-01-05"
+  irVersion: 62
+
+- version: 3.35.0
+  changelogEntry:
+    - summary: |
+        Add `x-fern-parameter-name` extension support for AsyncAPI parameters. This allows customizing parameter names in generated SDKs for AsyncAPI specs, similar to existing OpenAPI support.
+      type: feat
+  createdAt: "2026-01-05"
+  irVersion: 62
+
+- version: 3.34.0
+  changelogEntry:
+    - summary: |
+        Updates the SDK snippet generation to use dynamic snippets by default. To disable, set `experimental.dynamicSnippets` to `false` in your `docs.yml` file.
+      type: feat
+  createdAt: "2026-01-05"
+  irVersion: 62
+
+- version: 3.33.0
+  changelogEntry:
+    - summary: |
+        Fix handling of OpenAPI schemas that use `discriminator.mapping` without explicit `oneOf`/`anyOf`. These schemas are now correctly converted as discriminated unions instead of plain objects. This pattern is used by APIs like Dropbox Sign where a base schema defines a discriminator with mapping to variant schemas.
+      type: fix
+  createdAt: "2026-01-06"
   irVersion: 62
 
 - version: 3.32.0

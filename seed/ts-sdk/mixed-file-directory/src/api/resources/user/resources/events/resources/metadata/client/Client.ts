@@ -44,8 +44,9 @@ export class MetadataClient {
         requestOptions?: MetadataClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.events.Metadata>> {
         const { id } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.id = id;
+        const _queryParams: Record<string, unknown> = {
+            id,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

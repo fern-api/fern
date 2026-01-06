@@ -37,13 +37,13 @@ export class MultipartFormClient {
         request: SeedEnum.MultipartFormRequest,
         requestOptions?: MultipartFormClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _request = await core.newFormData();
-        _request.append(
+        const _body = await core.newFormData();
+        _body.append(
             "color",
             serializers.Color.jsonOrThrow(request.color, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
         );
         if (request.maybeColor != null) {
-            _request.append(
+            _body.append(
                 "maybeColor",
                 serializers.Color.jsonOrThrow(request.maybeColor, {
                     unrecognizedObjectKeys: "strip",
@@ -53,7 +53,7 @@ export class MultipartFormClient {
         }
 
         for (const _item of request.colorList) {
-            _request.append(
+            _body.append(
                 "colorList",
                 serializers.Color.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             );
@@ -61,14 +61,14 @@ export class MultipartFormClient {
 
         if (request.maybeColorList != null) {
             for (const _item of request.maybeColorList) {
-                _request.append(
+                _body.append(
                     "maybeColorList",
                     serializers.Color.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
                 );
             }
         }
 
-        const _maybeEncodedRequest = await _request.getRequest();
+        const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),

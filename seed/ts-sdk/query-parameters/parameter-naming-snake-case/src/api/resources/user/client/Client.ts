@@ -94,40 +94,22 @@ export class UserClient {
             exclude_user: excludeUser,
             filter,
         } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.limit = limit;
-        _queryParams.id = id;
-        _queryParams.date = date;
-        _queryParams.deadline = deadline;
-        _queryParams.bytes = bytes;
-        _queryParams.user = user;
-        _queryParams.userList = toJson(userList);
-        if (optionalDeadline != null) {
-            _queryParams.optionalDeadline = optionalDeadline;
-        }
-
-        _queryParams.keyValue = toJson(keyValue);
-        if (optionalString != null) {
-            _queryParams.optionalString = optionalString;
-        }
-
-        _queryParams.nestedUser = nestedUser;
-        if (optionalUser != null) {
-            _queryParams.optionalUser = optionalUser;
-        }
-
-        if (Array.isArray(excludeUser)) {
-            _queryParams.excludeUser = excludeUser.map((item) => item);
-        } else {
-            _queryParams.excludeUser = excludeUser;
-        }
-
-        if (Array.isArray(filter)) {
-            _queryParams.filter = filter.map((item) => item);
-        } else {
-            _queryParams.filter = filter;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            limit,
+            id,
+            date,
+            deadline,
+            bytes,
+            user,
+            userList: toJson(userList),
+            optionalDeadline,
+            keyValue: toJson(keyValue),
+            optionalString,
+            nestedUser,
+            optionalUser,
+            excludeUser,
+            filter,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

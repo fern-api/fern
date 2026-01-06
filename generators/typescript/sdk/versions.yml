@@ -1,11 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.43.2
+- version: 3.43.3
   changelogEntry:
     - summary: |
         Fix repository URL format in package.json for self-hosted GitHub configurations to use full https URL
         format matching Fiddle's output.
       type: fix
   createdAt: "2026-01-05"
+  irVersion: 63
+
+- version: 3.43.2
+  changelogEntry:
+    - summary: |
+        Simplify optional query parameter handling by removing unnecessary null/undefined checks.
+        Query parameters can now be assigned directly without wrapping in if-statements, as it's
+        safe to pass null or undefined values to query string parameters.
+      type: chore
+    - summary: |
+        Use optional chaining (?.) for optional query parameters that require method calls like
+        toISOString() for dates, instead of ternary expressions.
+      type: chore
+    - summary: |
+        Skip unnecessary .map() calls for list query parameters when the item type doesn't need
+        transformation (e.g., string arrays). Also skip the Array.isArray check entirely when
+        both scalar and array branches would produce identical code.
+      type: chore
+    - summary: |
+        Refactor query parameter generation to use object initializers instead of sequential
+        property assignments. This produces cleaner, more idiomatic TypeScript code where all
+        query parameters are defined in a single object literal.
+      type: chore
+  createdAt: "2025-12-22"
   irVersion: 63
 
 - version: 3.43.1
