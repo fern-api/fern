@@ -54,6 +54,15 @@ export class GeneratedQueryParams {
             )
         );
         for (const queryParameter of this.queryParameters) {
+            const listItemType =
+                queryParameter.valueType.type === "container" &&
+                queryParameter.valueType.container.type === "list"
+                    ? queryParameter.valueType.container.list
+                    : queryParameter.valueType;
+            const scalarNeedsTransform = this.scalarValueNeedsTransform(queryParameter.valueType, context);
+            const itemNeedsTransform = this.listItemNeedsTransform(listItemType, context);
+            const needsArrayCheck = scalarNeedsTransform || itemNeedsTransform;
+
             statements.push(
                 ...this.withQueryParameter({
                     queryParameter,
@@ -61,6 +70,7 @@ export class GeneratedQueryParams {
                         queryParameter.name.wireValue,
                         context
                     ),
+                    needsArrayCheck,
                     queryParamSetter: (referenceToQueryParameter) => {
                         let assignmentExpression: ts.Expression;
                         const objectType = this.getObjectType(queryParameter.valueType, context);
@@ -370,18 +380,32 @@ export class GeneratedQueryParams {
         return true;
     }
 
+    private scalarValueNeedsTransform(typeReference: TypeReference, context: SdkContext): boolean {
+        const objectType = this.getObjectType(typeReference, context);
+        if (objectType != null) {
+            return context.includeSerdeLayer;
+        }
+        const primitiveType = this.getPrimitiveType(typeReference, context);
+        if (primitiveType != null) {
+            return primitiveTypeNeedsStringify(primitiveType.primitive);
+        }
+        return true;
+    }
+
     private withQueryParameter({
         queryParameter,
         referenceToQueryParameterProperty,
         queryParamSetter,
-        queryParamItemSetter
+        queryParamItemSetter,
+        needsArrayCheck
     }: {
         queryParameter: QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;
         queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
         queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
+        needsArrayCheck: boolean;
     }): ts.Statement[] {
-        if (queryParameter.allowMultiple) {
+        if (queryParameter.allowMultiple && needsArrayCheck) {
             return [
                 ts.factory.createIfStatement(
                     ts.factory.createCallExpression(
