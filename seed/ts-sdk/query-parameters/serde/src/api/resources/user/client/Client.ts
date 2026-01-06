@@ -96,11 +96,11 @@ export class UserClient {
             filter,
         } = request;
         const _queryParams: Record<string, unknown> = {
-            limit: limit,
-            id: id,
-            date: date,
+            limit,
+            id,
+            date,
             deadline: deadline.toISOString(),
-            bytes: bytes,
+            bytes,
             user: serializers.User.jsonOrThrow(user, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
@@ -111,7 +111,7 @@ export class UserClient {
             userList: toJson(userList),
             optionalDeadline: optionalDeadline?.toISOString(),
             keyValue: toJson(keyValue),
-            optionalString: optionalString,
+            optionalString,
             nestedUser: serializers.NestedUser.jsonOrThrow(nestedUser, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
@@ -148,7 +148,7 @@ export class UserClient {
                       omitUndefined: true,
                       breadcrumbsPrefix: ["request", "excludeUser"],
                   }),
-            filter: filter,
+            filter,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({

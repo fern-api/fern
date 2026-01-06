@@ -95,20 +95,20 @@ export class UserClient {
             filter,
         } = request;
         const _queryParams: Record<string, unknown> = {
-            limit: limit,
-            id: id,
-            date: date,
-            deadline: deadline,
-            bytes: bytes,
-            user: user,
+            limit,
+            id,
+            date,
+            deadline,
+            bytes,
+            user,
             userList: toJson(userList),
-            optionalDeadline: optionalDeadline,
+            optionalDeadline,
             keyValue: toJson(keyValue),
-            optionalString: optionalString,
-            nestedUser: nestedUser,
-            optionalUser: optionalUser,
-            excludeUser: excludeUser,
-            filter: filter,
+            optionalString,
+            nestedUser,
+            optionalUser,
+            excludeUser,
+            filter,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
