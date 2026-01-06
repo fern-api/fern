@@ -101,25 +101,24 @@ export class SeedApiClient {
             neighbor,
             neighborRequired,
         } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.limit = limit;
-        _queryParams.id = id;
-        _queryParams.date = date;
-        _queryParams.deadline = deadline;
-        _queryParams.bytes = bytes;
-        _queryParams.user = user;
-        _queryParams.userList = userList;
-        _queryParams.optionalDeadline = optionalDeadline;
-        _queryParams.keyValue = keyValue != null ? toJson(keyValue) : undefined;
-        _queryParams.optionalString = optionalString;
-        _queryParams.nestedUser = nestedUser;
-        _queryParams.optionalUser = optionalUser;
-        _queryParams.excludeUser = excludeUser;
-        _queryParams.filter = filter;
-        _queryParams.neighbor =
-            neighbor != null ? (typeof neighbor === "string" ? neighbor : toJson(neighbor)) : undefined;
-        _queryParams.neighborRequired =
-            typeof neighborRequired === "string" ? neighborRequired : toJson(neighborRequired);
+        const _queryParams: Record<string, unknown> = {
+            limit: limit,
+            id: id,
+            date: date,
+            deadline: deadline,
+            bytes: bytes,
+            user: user,
+            userList: userList,
+            optionalDeadline: optionalDeadline,
+            keyValue: keyValue != null ? toJson(keyValue) : undefined,
+            optionalString: optionalString,
+            nestedUser: nestedUser,
+            optionalUser: optionalUser,
+            excludeUser: excludeUser,
+            filter: filter,
+            neighbor: neighbor != null ? (typeof neighbor === "string" ? neighbor : toJson(neighbor)) : undefined,
+            neighborRequired: typeof neighborRequired === "string" ? neighborRequired : toJson(neighborRequired),
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

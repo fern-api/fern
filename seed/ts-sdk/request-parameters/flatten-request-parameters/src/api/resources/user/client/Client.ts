@@ -46,8 +46,9 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { tags, ..._body } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.tags = toJson(tags);
+        const _queryParams: Record<string, unknown> = {
+            tags: toJson(tags),
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -106,8 +107,9 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { tags, ..._body } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.tags = toJson(tags);
+        const _queryParams: Record<string, unknown> = {
+            tags: toJson(tags),
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -270,23 +272,24 @@ export class UserClient {
             longParam,
             bigIntParam,
         } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.limit = limit;
-        _queryParams.id = id;
-        _queryParams.date = date;
-        _queryParams.deadline = deadline;
-        _queryParams.bytes = bytes;
-        _queryParams.user = user;
-        _queryParams.userList = toJson(userList);
-        _queryParams.optionalDeadline = optionalDeadline;
-        _queryParams.keyValue = toJson(keyValue);
-        _queryParams.optionalString = optionalString;
-        _queryParams.nestedUser = nestedUser;
-        _queryParams.optionalUser = optionalUser;
-        _queryParams.excludeUser = excludeUser;
-        _queryParams.filter = filter;
-        _queryParams.longParam = longParam;
-        _queryParams.bigIntParam = bigIntParam;
+        const _queryParams: Record<string, unknown> = {
+            limit: limit,
+            id: id,
+            date: date,
+            deadline: deadline,
+            bytes: bytes,
+            user: user,
+            userList: toJson(userList),
+            optionalDeadline: optionalDeadline,
+            keyValue: toJson(keyValue),
+            optionalString: optionalString,
+            nestedUser: nestedUser,
+            optionalUser: optionalUser,
+            excludeUser: excludeUser,
+            filter: filter,
+            longParam: longParam,
+            bigIntParam: bigIntParam,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

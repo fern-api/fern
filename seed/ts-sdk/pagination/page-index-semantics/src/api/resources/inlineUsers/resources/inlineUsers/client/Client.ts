@@ -47,11 +47,12 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, unknown> = {};
-                _queryParams.page = page;
-                _queryParams.per_page = perPage;
-                _queryParams.order = order != null ? order : undefined;
-                _queryParams.starting_after = startingAfter;
+                const _queryParams: Record<string, unknown> = {
+                    page: page,
+                    per_page: perPage,
+                    order: order != null ? order : undefined,
+                    starting_after: startingAfter,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -130,8 +131,9 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersMixedTypeCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse>> => {
                 const { cursor } = request;
-                const _queryParams: Record<string, unknown> = {};
-                _queryParams.cursor = cursor;
+                const _queryParams: Record<string, unknown> = {
+                    cursor: cursor,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -291,11 +293,12 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, unknown> = {};
-                _queryParams.page = page;
-                _queryParams.per_page = perPage;
-                _queryParams.order = order != null ? order : undefined;
-                _queryParams.starting_after = startingAfter;
+                const _queryParams: Record<string, unknown> = {
+                    page: page,
+                    per_page: perPage,
+                    order: order != null ? order : undefined,
+                    starting_after: startingAfter,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -374,11 +377,12 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersDoubleOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, unknown> = {};
-                _queryParams.page = page;
-                _queryParams.per_page = perPage;
-                _queryParams.order = order != null ? order : undefined;
-                _queryParams.starting_after = startingAfter;
+                const _queryParams: Record<string, unknown> = {
+                    page: page,
+                    per_page: perPage,
+                    order: order != null ? order : undefined,
+                    starting_after: startingAfter,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -535,10 +539,11 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersOffsetStepPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const { page, limit, order } = request;
-                const _queryParams: Record<string, unknown> = {};
-                _queryParams.page = page;
-                _queryParams.limit = limit;
-                _queryParams.order = order != null ? order : undefined;
+                const _queryParams: Record<string, unknown> = {
+                    page: page,
+                    limit: limit,
+                    order: order != null ? order : undefined,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -616,10 +621,11 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListWithOffsetPaginationHasNextPageRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const { page, limit, order } = request;
-                const _queryParams: Record<string, unknown> = {};
-                _queryParams.page = page;
-                _queryParams.limit = limit;
-                _queryParams.order = order != null ? order : undefined;
+                const _queryParams: Record<string, unknown> = {
+                    page: page,
+                    limit: limit,
+                    order: order != null ? order : undefined,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -696,8 +702,9 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersExtendedRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersExtendedResponse>> => {
                 const { cursor } = request;
-                const _queryParams: Record<string, unknown> = {};
-                _queryParams.cursor = cursor;
+                const _queryParams: Record<string, unknown> = {
+                    cursor: cursor,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -772,8 +779,9 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersExtendedRequestForOptionalData,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse>> => {
                 const { cursor } = request;
-                const _queryParams: Record<string, unknown> = {};
-                _queryParams.cursor = cursor;
+                const _queryParams: Record<string, unknown> = {
+                    cursor: cursor,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -843,8 +851,9 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsernamesRequest,
             ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> => {
                 const { starting_after: startingAfter } = request;
-                const _queryParams: Record<string, unknown> = {};
-                _queryParams.starting_after = startingAfter;
+                const _queryParams: Record<string, unknown> = {
+                    starting_after: startingAfter,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -912,8 +921,9 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListWithGlobalConfigRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.UsernameContainer>> => {
                 const { offset } = request;
-                const _queryParams: Record<string, unknown> = {};
-                _queryParams.offset = offset;
+                const _queryParams: Record<string, unknown> = {
+                    offset: offset,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,

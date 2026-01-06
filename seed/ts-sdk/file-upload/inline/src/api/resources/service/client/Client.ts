@@ -210,12 +210,13 @@ export class ServiceClient {
         request: SeedFileUpload.JustFileWithQueryParamsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.maybeString = request.maybeString;
-        _queryParams.integer = request.integer;
-        _queryParams.maybeInteger = request.maybeInteger;
-        _queryParams.listOfStrings = request.listOfStrings;
-        _queryParams.optionalListOfStrings = request.optionalListOfStrings;
+        const _queryParams: Record<string, unknown> = {
+            maybeString: request.maybeString,
+            integer: request.integer,
+            maybeInteger: request.maybeInteger,
+            listOfStrings: request.listOfStrings,
+            optionalListOfStrings: request.optionalListOfStrings,
+        };
         const _body = await core.newFormData();
         await _body.appendFile("file", request.file);
         const _maybeEncodedRequest = await _body.getRequest();

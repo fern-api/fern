@@ -46,12 +46,13 @@ export class NullableClient {
         requestOptions?: NullableClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullable.User[]>> {
         const { usernames, avatar, activated, tags, extra } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.usernames = usernames;
-        _queryParams.avatar = avatar;
-        _queryParams.activated = activated;
-        _queryParams.tags = tags;
-        _queryParams.extra = extra;
+        const _queryParams: Record<string, unknown> = {
+            usernames: usernames,
+            avatar: avatar,
+            activated: activated,
+            tags: tags,
+            extra: extra,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

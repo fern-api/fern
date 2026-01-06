@@ -43,9 +43,10 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedAudiences.folderA.Response>> {
         const { ids, tags } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.ids = ids;
-        _queryParams.tags = tags;
+        const _queryParams: Record<string, unknown> = {
+            ids: ids,
+            tags: tags,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:

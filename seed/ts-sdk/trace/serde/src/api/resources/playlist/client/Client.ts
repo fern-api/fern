@@ -54,9 +54,10 @@ export class PlaylistClient {
         requestOptions?: PlaylistClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.Playlist>> {
         const { datetime, optionalDatetime, body: _body } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.datetime = datetime.toISOString();
-        _queryParams.optionalDatetime = optionalDatetime?.toISOString();
+        const _queryParams: Record<string, unknown> = {
+            datetime: datetime.toISOString(),
+            optionalDatetime: optionalDatetime?.toISOString(),
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -147,12 +148,13 @@ export class PlaylistClient {
         requestOptions?: PlaylistClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.Playlist[]>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.limit = limit;
-        _queryParams.otherField = otherField;
-        _queryParams.multiLineDocs = multiLineDocs;
-        _queryParams.optionalMultipleField = optionalMultipleField;
-        _queryParams.multipleField = multipleField;
+        const _queryParams: Record<string, unknown> = {
+            limit: limit,
+            otherField: otherField,
+            multiLineDocs: multiLineDocs,
+            optionalMultipleField: optionalMultipleField,
+            multipleField: multipleField,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,

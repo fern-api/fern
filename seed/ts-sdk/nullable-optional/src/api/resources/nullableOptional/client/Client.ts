@@ -235,11 +235,12 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { limit, offset, includeDeleted, sortBy } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.limit = limit;
-        _queryParams.offset = offset;
-        _queryParams.includeDeleted = includeDeleted;
-        _queryParams.sortBy = sortBy;
+        const _queryParams: Record<string, unknown> = {
+            limit: limit,
+            offset: offset,
+            includeDeleted: includeDeleted,
+            sortBy: sortBy,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -297,11 +298,12 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { query, department, role, isActive } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.query = query;
-        _queryParams.department = department;
-        _queryParams.role = role;
-        _queryParams.isActive = isActive;
+        const _queryParams: Record<string, unknown> = {
+            query: query,
+            department: department,
+            role: role,
+            isActive: isActive,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -756,10 +758,11 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedNullableOptional.UserResponse[]>> {
         const { role, status, secondaryRole } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.role = role !== undefined ? role : null;
-        _queryParams.status = status != null ? status : undefined;
-        _queryParams.secondaryRole = secondaryRole !== undefined ? secondaryRole : null;
+        const _queryParams: Record<string, unknown> = {
+            role: role !== undefined ? role : null,
+            status: status != null ? status : undefined,
+            secondaryRole: secondaryRole !== undefined ? secondaryRole : null,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

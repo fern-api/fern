@@ -44,16 +44,17 @@ export class QueryParamClient {
         requestOptions?: QueryParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.operand = operand;
-        _queryParams.maybeOperand = maybeOperand != null ? maybeOperand : undefined;
-        _queryParams.operandOrColor = typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor);
-        _queryParams.maybeOperandOrColor =
-            maybeOperandOrColor != null
-                ? typeof maybeOperandOrColor === "string"
-                    ? maybeOperandOrColor
-                    : toJson(maybeOperandOrColor)
-                : undefined;
+        const _queryParams: Record<string, unknown> = {
+            operand: operand,
+            maybeOperand: maybeOperand != null ? maybeOperand : undefined,
+            operandOrColor: typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor),
+            maybeOperandOrColor:
+                maybeOperandOrColor != null
+                    ? typeof maybeOperandOrColor === "string"
+                        ? maybeOperandOrColor
+                        : toJson(maybeOperandOrColor)
+                    : undefined,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -109,40 +110,26 @@ export class QueryParamClient {
         requestOptions?: QueryParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
-        const _queryParams: Record<string, unknown> = {};
-        if (Array.isArray(operand)) {
-            _queryParams.operand = operand.map((item) => item);
-        } else {
-            _queryParams.operand = operand;
-        }
-
-        if (Array.isArray(maybeOperand)) {
-            _queryParams.maybeOperand = maybeOperand.map((item) => item);
-        } else {
-            _queryParams.maybeOperand = maybeOperand != null ? maybeOperand : undefined;
-        }
-
-        if (Array.isArray(operandOrColor)) {
-            _queryParams.operandOrColor = operandOrColor.map((item) =>
-                typeof item === "string" ? item : toJson(item),
-            );
-        } else {
-            _queryParams.operandOrColor = typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor);
-        }
-
-        if (Array.isArray(maybeOperandOrColor)) {
-            _queryParams.maybeOperandOrColor = maybeOperandOrColor.map((item) =>
-                typeof item === "string" ? item : toJson(item),
-            );
-        } else {
-            _queryParams.maybeOperandOrColor =
-                maybeOperandOrColor != null
-                    ? typeof maybeOperandOrColor === "string"
-                        ? maybeOperandOrColor
-                        : toJson(maybeOperandOrColor)
-                    : undefined;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            operand: Array.isArray(operand) ? operand.map((item) => item) : operand,
+            maybeOperand: Array.isArray(maybeOperand)
+                ? maybeOperand.map((item) => item)
+                : maybeOperand != null
+                  ? maybeOperand
+                  : undefined,
+            operandOrColor: Array.isArray(operandOrColor)
+                ? operandOrColor.map((item) => (typeof item === "string" ? item : toJson(item)))
+                : typeof operandOrColor === "string"
+                  ? operandOrColor
+                  : toJson(operandOrColor),
+            maybeOperandOrColor: Array.isArray(maybeOperandOrColor)
+                ? maybeOperandOrColor.map((item) => (typeof item === "string" ? item : toJson(item)))
+                : maybeOperandOrColor != null
+                  ? typeof maybeOperandOrColor === "string"
+                      ? maybeOperandOrColor
+                      : toJson(maybeOperandOrColor)
+                  : undefined,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

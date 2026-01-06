@@ -174,9 +174,10 @@ export class ParamsClient {
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithQuery.Error>>> {
         const { query, number: number_ } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.query = query;
-        _queryParams.number = number_;
+        const _queryParams: Record<string, unknown> = {
+            query: query,
+            number: number_,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -248,9 +249,10 @@ export class ParamsClient {
         core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithAllowMultipleQuery.Error>>
     > {
         const { query, number: number_ } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.query = query;
-        _queryParams.number = number_;
+        const _queryParams: Record<string, unknown> = {
+            query: query,
+            number: number_,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -322,8 +324,9 @@ export class ParamsClient {
         core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithPathAndQuery.Error>>
     > {
         const { query } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.query = query;
+        const _queryParams: Record<string, unknown> = {
+            query: query,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -395,8 +398,9 @@ export class ParamsClient {
         core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithInlinePathAndQuery.Error>>
     > {
         const { param, query } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.query = query;
+        const _queryParams: Record<string, unknown> = {
+            query: query,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,

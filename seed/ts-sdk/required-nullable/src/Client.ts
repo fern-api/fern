@@ -48,11 +48,12 @@ export class SeedApiClient {
             required_baz: requiredBaz,
             required_nullable_baz: requiredNullableBaz,
         } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.optional_baz = optionalBaz;
-        _queryParams.optional_nullable_baz = optionalNullableBaz;
-        _queryParams.required_baz = requiredBaz;
-        _queryParams.required_nullable_baz = requiredNullableBaz;
+        const _queryParams: Record<string, unknown> = {
+            optional_baz: optionalBaz,
+            optional_nullable_baz: optionalNullableBaz,
+            required_baz: requiredBaz,
+            required_nullable_baz: requiredNullableBaz,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

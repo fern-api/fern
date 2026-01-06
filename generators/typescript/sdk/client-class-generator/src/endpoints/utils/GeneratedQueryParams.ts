@@ -26,15 +26,32 @@ export class GeneratedQueryParams {
     }
 
     public getBuildStatements(context: SdkContext): ts.Statement[] {
-        const statements: ts.Statement[] = [];
+        if (this.queryParameters == null || this.queryParameters.length === 0) {
+            return [];
+        }
 
-        if (this.queryParameters == null) {
-            return statements;
+        const properties: ts.ObjectLiteralElementLike[] = [];
+
+        for (const queryParameter of this.queryParameters) {
+            const referenceToQueryParameter = this.referenceToQueryParameterProperty(
+                queryParameter.name.wireValue,
+                context
+            );
+            const valueExpression = this.getQueryParameterValueExpression({
+                queryParameter,
+                referenceToQueryParameter,
+                context
+            });
+
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createStringLiteral(queryParameter.name.wireValue),
+                    valueExpression
+                )
+            );
         }
-        if (this.queryParameters.length === 0) {
-            return statements;
-        }
-        statements.push(
+
+        return [
             ts.factory.createVariableStatement(
                 undefined,
                 ts.factory.createVariableDeclarationList(
@@ -46,157 +63,203 @@ export class GeneratedQueryParams {
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
                             ]),
-                            ts.factory.createObjectLiteralExpression([], false)
+                            ts.factory.createObjectLiteralExpression(properties, true)
                         )
                     ],
                     ts.NodeFlags.Const
                 )
             )
+        ];
+    }
+
+    private getQueryParameterValueExpression({
+        queryParameter,
+        referenceToQueryParameter,
+        context
+    }: {
+        queryParameter: QueryParameter;
+        referenceToQueryParameter: ts.Expression;
+        context: SdkContext;
+    }): ts.Expression {
+        const listItemType =
+            queryParameter.valueType.type === "container" && queryParameter.valueType.container.type === "list"
+                ? queryParameter.valueType.container.list
+                : queryParameter.valueType;
+        const scalarNeedsTransform = this.scalarValueNeedsTransform(queryParameter.valueType, context);
+        const itemNeedsTransform = this.listItemNeedsTransform(listItemType, context);
+        const needsArrayCheck = scalarNeedsTransform || itemNeedsTransform;
+
+        const scalarExpression = this.getScalarValueExpression({
+            queryParameter,
+            referenceToQueryParameter,
+            context
+        });
+
+        if (!queryParameter.allowMultiple) {
+            return scalarExpression;
+        }
+
+        const arrayExpression = this.getArrayValueExpression({
+            queryParameter,
+            referenceToQueryParameter,
+            listItemType,
+            context
+        });
+
+        if (!needsArrayCheck) {
+            return scalarExpression;
+        }
+
+        return ts.factory.createConditionalExpression(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createIdentifier("Array"),
+                    ts.factory.createIdentifier("isArray")
+                ),
+                undefined,
+                [referenceToQueryParameter]
+            ),
+            ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+            arrayExpression,
+            ts.factory.createToken(ts.SyntaxKind.ColonToken),
+            scalarExpression
         );
-        for (const queryParameter of this.queryParameters) {
-            const listItemType =
-                queryParameter.valueType.type === "container" && queryParameter.valueType.container.type === "list"
-                    ? queryParameter.valueType.container.list
-                    : queryParameter.valueType;
-            const scalarNeedsTransform = this.scalarValueNeedsTransform(queryParameter.valueType, context);
-            const itemNeedsTransform = this.listItemNeedsTransform(listItemType, context);
-            const needsArrayCheck = scalarNeedsTransform || itemNeedsTransform;
+    }
 
-            statements.push(
-                ...this.withQueryParameter({
-                    queryParameter,
-                    referenceToQueryParameterProperty: this.referenceToQueryParameterProperty(
-                        queryParameter.name.wireValue,
-                        context
+    private getScalarValueExpression({
+        queryParameter,
+        referenceToQueryParameter,
+        context
+    }: {
+        queryParameter: QueryParameter;
+        referenceToQueryParameter: ts.Expression;
+        context: SdkContext;
+    }): ts.Expression {
+        const objectType = this.getObjectType(queryParameter.valueType, context);
+        const primitiveType = objectType ? undefined : this.getPrimitiveType(queryParameter.valueType, context);
+        const paramName = context.retainOriginalCasing
+            ? queryParameter.name.name.originalName
+            : queryParameter.name.name.camelCase.unsafeName;
+
+        if (objectType != null) {
+            if (context.includeSerdeLayer) {
+                const serializerCall = context.typeSchema
+                    .getSchemaOfNamedType(objectType, { isGeneratingSchema: false })
+                    .jsonOrThrow(referenceToQueryParameter, {
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        unrecognizedObjectKeys: "passthrough",
+                        skipValidation: false,
+                        breadcrumbsPrefix: ["request", paramName],
+                        omitUndefined: context.omitUndefined
+                    });
+                if (this.isOptional(queryParameter.valueType)) {
+                    return ts.factory.createConditionalExpression(
+                        ts.factory.createBinaryExpression(
+                            referenceToQueryParameter,
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                            ts.factory.createNull()
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                        serializerCall,
+                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                        referenceToQueryParameter
+                    );
+                }
+                return serializerCall;
+            }
+            return referenceToQueryParameter;
+        }
+
+        if (primitiveType != null) {
+            if (primitiveTypeNeedsStringify(primitiveType.primitive)) {
+                return context.type.stringify(referenceToQueryParameter, queryParameter.valueType, {
+                    includeNullCheckIfOptional: false
+                });
+            }
+            return referenceToQueryParameter;
+        }
+
+        return context.type.stringify(referenceToQueryParameter, queryParameter.valueType, {
+            includeNullCheckIfOptional: true
+        });
+    }
+
+    private getArrayValueExpression({
+        queryParameter,
+        referenceToQueryParameter,
+        listItemType,
+        context
+    }: {
+        queryParameter: QueryParameter;
+        referenceToQueryParameter: ts.Expression;
+        listItemType: TypeReference;
+        context: SdkContext;
+    }): ts.Expression {
+        const objectType = this.getObjectType(listItemType, context);
+        const needsItemTransform = this.listItemNeedsTransform(listItemType, context);
+
+        if (!needsItemTransform) {
+            return referenceToQueryParameter;
+        }
+
+        let getItemExpression: (itemReference: ts.Expression) => ts.Expression;
+        let isAsync = false;
+
+        if (objectType != null && context.includeSerdeLayer) {
+            isAsync = true;
+            getItemExpression = (itemReference) =>
+                context.typeSchema
+                    .getSchemaOfNamedType(objectType, { isGeneratingSchema: false })
+                    .jsonOrThrow(itemReference, {
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        unrecognizedObjectKeys: "passthrough",
+                        skipValidation: false,
+                        breadcrumbsPrefix: [
+                            "request",
+                            context.retainOriginalCasing
+                                ? queryParameter.name.name.originalName
+                                : queryParameter.name.name.camelCase.unsafeName
+                        ],
+                        omitUndefined: context.omitUndefined
+                    });
+        } else if (objectType != null) {
+            getItemExpression = (itemReference) => itemReference;
+        } else {
+            getItemExpression = (itemReference) =>
+                context.type.stringify(itemReference, listItemType, { includeNullCheckIfOptional: false });
+        }
+
+        const mapFunction = ts.factory.createArrowFunction(
+            isAsync ? [ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)] : undefined,
+            undefined,
+            [ts.factory.createParameterDeclaration(undefined, undefined, ts.factory.createIdentifier("item"))],
+            undefined,
+            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+            getItemExpression(ts.factory.createIdentifier("item"))
+        );
+
+        let mapExpression: ts.Expression = ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(referenceToQueryParameter, ts.factory.createIdentifier("map")),
+            undefined,
+            [mapFunction]
+        );
+
+        if (isAsync) {
+            mapExpression = ts.factory.createAwaitExpression(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier("Promise"),
+                        ts.factory.createIdentifier("all")
                     ),
-                    needsArrayCheck,
-                    queryParamSetter: (referenceToQueryParameter) => {
-                        let assignmentExpression: ts.Expression;
-                        const objectType = this.getObjectType(queryParameter.valueType, context);
-                        const primitiveType = objectType
-                            ? undefined
-                            : this.getPrimitiveType(queryParameter.valueType, context);
-                        const paramName = context.retainOriginalCasing
-                            ? queryParameter.name.name.originalName
-                            : queryParameter.name.name.camelCase.unsafeName;
-                        if (objectType != null) {
-                            if (context.includeSerdeLayer) {
-                                const serializerCall = context.typeSchema
-                                    .getSchemaOfNamedType(objectType, {
-                                        isGeneratingSchema: false
-                                    })
-                                    .jsonOrThrow(referenceToQueryParameter, {
-                                        allowUnrecognizedEnumValues: true,
-                                        allowUnrecognizedUnionMembers: true,
-                                        unrecognizedObjectKeys: "passthrough",
-                                        skipValidation: false,
-                                        breadcrumbsPrefix: ["request", paramName],
-                                        omitUndefined: context.omitUndefined
-                                    });
-                                // Wrap in null check if the query parameter type is optional
-                                if (this.isOptional(queryParameter.valueType)) {
-                                    assignmentExpression = ts.factory.createConditionalExpression(
-                                        ts.factory.createBinaryExpression(
-                                            referenceToQueryParameter,
-                                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                                            ts.factory.createNull()
-                                        ),
-                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                        serializerCall,
-                                        ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                                        referenceToQueryParameter
-                                    );
-                                } else {
-                                    assignmentExpression = serializerCall;
-                                }
-                            } else {
-                                assignmentExpression = referenceToQueryParameter;
-                            }
-                        }
-                        // if it's a primitive type, use the original valueType to stringify
-                        // nullSafeCall in the converter handles optional chaining for optional/nullable types
-                        else if (primitiveType != null) {
-                            if (primitiveTypeNeedsStringify(primitiveType.primitive)) {
-                                assignmentExpression = context.type.stringify(
-                                    referenceToQueryParameter,
-                                    queryParameter.valueType,
-                                    {
-                                        includeNullCheckIfOptional: false
-                                    }
-                                );
-                            } else {
-                                assignmentExpression = referenceToQueryParameter;
-                            }
-                        } else {
-                            assignmentExpression = context.type.stringify(
-                                referenceToQueryParameter,
-                                queryParameter.valueType,
-                                {
-                                    includeNullCheckIfOptional: true
-                                }
-                            );
-                        }
-
-                        return [
-                            this.getQueryParameterAssignExpression({
-                                queryParameter,
-                                assignmentExpression
-                            })
-                        ];
-                    },
-                    queryParamItemSetter: (referenceToQueryParameter) => {
-                        let getAssignmentExpression: (itemReference: ts.Expression) => ts.Expression;
-                        let isAssignmentExpressionAsync = false;
-                        const listItemType =
-                            queryParameter.valueType.type === "container" &&
-                            queryParameter.valueType.container.type === "list"
-                                ? queryParameter.valueType.container.list
-                                : queryParameter.valueType;
-                        const objectType = this.getObjectType(listItemType, context);
-                        const needsItemTransform = this.listItemNeedsTransform(listItemType, context);
-                        if (objectType != null && context.includeSerdeLayer) {
-                            isAssignmentExpressionAsync = true;
-                            getAssignmentExpression = (itemReference) =>
-                                context.typeSchema
-                                    .getSchemaOfNamedType(objectType, {
-                                        isGeneratingSchema: false
-                                    })
-                                    .jsonOrThrow(itemReference, {
-                                        allowUnrecognizedEnumValues: true,
-                                        allowUnrecognizedUnionMembers: true,
-                                        unrecognizedObjectKeys: "passthrough",
-                                        skipValidation: false,
-                                        breadcrumbsPrefix: [
-                                            "request",
-                                            context.retainOriginalCasing
-                                                ? queryParameter.name.name.originalName
-                                                : queryParameter.name.name.camelCase.unsafeName
-                                        ],
-                                        omitUndefined: context.omitUndefined
-                                    });
-                        } else if (objectType != null) {
-                            getAssignmentExpression = (itemReference) => itemReference;
-                        } else {
-                            getAssignmentExpression = (itemReference) =>
-                                context.type.stringify(itemReference, listItemType, {
-                                    includeNullCheckIfOptional: false
-                                });
-                        }
-                        return [
-                            this.getQueryParameterArrayAssignExpression({
-                                queryParameter,
-                                referenceToQueryParameter,
-                                getAssignmentExpression,
-                                isAssignmentExpressionAsync,
-                                needsItemTransform
-                            })
-                        ];
-                    }
-                })
+                    undefined,
+                    [mapExpression]
+                )
             );
         }
 
-        return statements;
+        return mapExpression;
     }
 
     public getReferenceTo(): ts.Expression | undefined {
@@ -218,94 +281,6 @@ export class GeneratedQueryParams {
         } else {
             return getRequestOptionsAdditionalQueryParameters;
         }
-    }
-
-    private getQueryParameterAssignExpression({
-        queryParameter,
-        assignmentExpression
-    }: {
-        queryParameter: QueryParameter;
-        assignmentExpression: ts.Expression;
-    }): ts.Statement {
-        return ts.factory.createExpressionStatement(
-            ts.factory.createBinaryExpression(
-                ts.factory.createElementAccessExpression(
-                    ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME),
-                    ts.factory.createStringLiteral(queryParameter.name.wireValue)
-                ),
-                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                assignmentExpression
-            )
-        );
-    }
-
-    private getQueryParameterArrayAssignExpression({
-        queryParameter,
-        referenceToQueryParameter,
-        getAssignmentExpression,
-        isAssignmentExpressionAsync,
-        needsItemTransform
-    }: {
-        queryParameter: QueryParameter;
-        referenceToQueryParameter: ts.Expression;
-        getAssignmentExpression: (itemReference: ts.Expression) => ts.Expression;
-        isAssignmentExpressionAsync?: boolean;
-        needsItemTransform: boolean;
-    }): ts.Statement {
-        let assignmentExpression: ts.Expression;
-
-        if (needsItemTransform) {
-            const mapFunction = ts.factory.createArrowFunction(
-                isAssignmentExpressionAsync ? [ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)] : undefined,
-                undefined,
-                [
-                    ts.factory.createParameterDeclaration(
-                        undefined,
-                        undefined,
-                        ts.factory.createIdentifier("item"),
-                        undefined,
-                        undefined
-                    )
-                ],
-                undefined,
-                ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                getAssignmentExpression(ts.factory.createIdentifier("item"))
-            );
-            let mapExpression: ts.Expression = ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(
-                    referenceToQueryParameter,
-                    ts.factory.createIdentifier("map")
-                ),
-                undefined,
-                [mapFunction]
-            );
-            if (isAssignmentExpressionAsync) {
-                mapExpression = ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("Promise"),
-                            ts.factory.createIdentifier("all")
-                        ),
-                        undefined,
-                        [mapExpression]
-                    )
-                );
-            }
-            assignmentExpression = mapExpression;
-        } else {
-            assignmentExpression = referenceToQueryParameter;
-        }
-
-        return ts.factory.createExpressionStatement(
-            ts.factory.createBinaryExpression(
-                ts.factory.createElementAccessExpression(
-                    ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME),
-                    ts.factory.createStringLiteral(queryParameter.name.wireValue)
-                ),
-                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                assignmentExpression
-            )
-        );
     }
 
     private getPrimitiveType(typeReference: TypeReference, context: SdkContext): TypeReference.Primitive | undefined {
@@ -389,38 +364,6 @@ export class GeneratedQueryParams {
             return primitiveTypeNeedsStringify(primitiveType.primitive);
         }
         return true;
-    }
-
-    private withQueryParameter({
-        queryParameter,
-        referenceToQueryParameterProperty,
-        queryParamSetter,
-        queryParamItemSetter,
-        needsArrayCheck
-    }: {
-        queryParameter: QueryParameter;
-        referenceToQueryParameterProperty: ts.Expression;
-        queryParamSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
-        queryParamItemSetter: (referenceToQueryParameter: ts.Expression) => ts.Statement[];
-        needsArrayCheck: boolean;
-    }): ts.Statement[] {
-        if (queryParameter.allowMultiple && needsArrayCheck) {
-            return [
-                ts.factory.createIfStatement(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("Array"),
-                            ts.factory.createIdentifier("isArray")
-                        ),
-                        undefined,
-                        [referenceToQueryParameterProperty]
-                    ),
-                    ts.factory.createBlock(queryParamItemSetter(referenceToQueryParameterProperty), true),
-                    ts.factory.createBlock(queryParamSetter(referenceToQueryParameterProperty), true)
-                )
-            ];
-        }
-        return queryParamSetter(referenceToQueryParameterProperty);
     }
 }
 

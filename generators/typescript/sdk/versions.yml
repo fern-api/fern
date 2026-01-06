@@ -15,6 +15,11 @@
         transformation (e.g., string arrays). Also skip the Array.isArray check entirely when
         both scalar and array branches would produce identical code.
       type: chore
+    - summary: |
+        Refactor query parameter generation to use object initializers instead of sequential
+        property assignments. This produces cleaner, more idiomatic TypeScript code where all
+        query parameters are defined in a single object literal.
+      type: chore
   createdAt: "2025-12-22"
   irVersion: 63
 

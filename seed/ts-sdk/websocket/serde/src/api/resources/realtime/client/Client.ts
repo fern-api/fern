@@ -31,10 +31,11 @@ export class RealtimeClient {
 
     public async connect(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {
         const { sessionId, model, temperature, languageCode, headers, debug, reconnectAttempts } = args;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.model = model;
-        _queryParams.temperature = temperature;
-        _queryParams["language-code"] = languageCode;
+        const _queryParams: Record<string, unknown> = {
+            model: model,
+            temperature: temperature,
+            "language-code": languageCode,
+        };
         const _headers: Record<string, unknown> = { ...headers };
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(

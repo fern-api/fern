@@ -95,63 +95,61 @@ export class UserClient {
             excludeUser,
             filter,
         } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.limit = limit;
-        _queryParams.id = id;
-        _queryParams.date = date;
-        _queryParams.deadline = deadline.toISOString();
-        _queryParams.bytes = bytes;
-        _queryParams.user = serializers.User.jsonOrThrow(user, {
-            unrecognizedObjectKeys: "passthrough",
-            allowUnrecognizedUnionMembers: true,
-            allowUnrecognizedEnumValues: true,
-            omitUndefined: true,
-            breadcrumbsPrefix: ["request", "user"],
-        });
-        _queryParams.userList = toJson(userList);
-        _queryParams.optionalDeadline = optionalDeadline?.toISOString();
-        _queryParams.keyValue = toJson(keyValue);
-        _queryParams.optionalString = optionalString;
-        _queryParams.nestedUser = serializers.NestedUser.jsonOrThrow(nestedUser, {
-            unrecognizedObjectKeys: "passthrough",
-            allowUnrecognizedUnionMembers: true,
-            allowUnrecognizedEnumValues: true,
-            omitUndefined: true,
-            breadcrumbsPrefix: ["request", "nestedUser"],
-        });
-        _queryParams.optionalUser =
-            optionalUser != null
-                ? serializers.User.jsonOrThrow(optionalUser, {
-                      unrecognizedObjectKeys: "passthrough",
-                      allowUnrecognizedUnionMembers: true,
-                      allowUnrecognizedEnumValues: true,
-                      omitUndefined: true,
-                      breadcrumbsPrefix: ["request", "optionalUser"],
-                  })
-                : optionalUser;
-        if (Array.isArray(excludeUser)) {
-            _queryParams.excludeUser = await Promise.all(
-                excludeUser.map(async (item) =>
-                    serializers.User.jsonOrThrow(item, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        omitUndefined: true,
-                        breadcrumbsPrefix: ["request", "excludeUser"],
-                    }),
-                ),
-            );
-        } else {
-            _queryParams.excludeUser = serializers.User.jsonOrThrow(excludeUser, {
+        const _queryParams: Record<string, unknown> = {
+            limit: limit,
+            id: id,
+            date: date,
+            deadline: deadline.toISOString(),
+            bytes: bytes,
+            user: serializers.User.jsonOrThrow(user, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
                 omitUndefined: true,
-                breadcrumbsPrefix: ["request", "excludeUser"],
-            });
-        }
-
-        _queryParams.filter = filter;
+                breadcrumbsPrefix: ["request", "user"],
+            }),
+            userList: toJson(userList),
+            optionalDeadline: optionalDeadline?.toISOString(),
+            keyValue: toJson(keyValue),
+            optionalString: optionalString,
+            nestedUser: serializers.NestedUser.jsonOrThrow(nestedUser, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                omitUndefined: true,
+                breadcrumbsPrefix: ["request", "nestedUser"],
+            }),
+            optionalUser:
+                optionalUser != null
+                    ? serializers.User.jsonOrThrow(optionalUser, {
+                          unrecognizedObjectKeys: "passthrough",
+                          allowUnrecognizedUnionMembers: true,
+                          allowUnrecognizedEnumValues: true,
+                          omitUndefined: true,
+                          breadcrumbsPrefix: ["request", "optionalUser"],
+                      })
+                    : optionalUser,
+            excludeUser: Array.isArray(excludeUser)
+                ? await Promise.all(
+                      excludeUser.map(async (item) =>
+                          serializers.User.jsonOrThrow(item, {
+                              unrecognizedObjectKeys: "passthrough",
+                              allowUnrecognizedUnionMembers: true,
+                              allowUnrecognizedEnumValues: true,
+                              omitUndefined: true,
+                              breadcrumbsPrefix: ["request", "excludeUser"],
+                          }),
+                      ),
+                  )
+                : serializers.User.jsonOrThrow(excludeUser, {
+                      unrecognizedObjectKeys: "passthrough",
+                      allowUnrecognizedUnionMembers: true,
+                      allowUnrecognizedEnumValues: true,
+                      omitUndefined: true,
+                      breadcrumbsPrefix: ["request", "excludeUser"],
+                  }),
+            filter: filter,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

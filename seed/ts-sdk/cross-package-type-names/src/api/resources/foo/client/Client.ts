@@ -44,8 +44,9 @@ export class FooClient {
         requestOptions?: FooClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.ImportingType>> {
         const { optionalString, ..._body } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.optionalString = optionalString;
+        const _queryParams: Record<string, unknown> = {
+            optionalString: optionalString,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
