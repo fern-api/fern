@@ -162,14 +162,7 @@ export class Method extends AstNode {
             writer.write(" ");
         }
     }
-
-    public write(writer: Writer): void {
-        if (this.docstring) {
-            new Comment({ docs: this.docstring }).write(writer);
-        }
-        this.writeTypeHints(writer);
-        this.writeVisibility(writer);
-
+    private writeMethodDefinition(writer: Writer, includeStatements: Boolean) {
         switch (this.kind) {
             case MethodKind.Instance:
                 writer.write(`def ${this.name}`);
@@ -212,6 +205,15 @@ export class Method extends AstNode {
         }
 
         writer.newLine();
+    }
+
+    public write(writer: Writer): void {
+        if (this.docstring) {
+            new Comment({ docs: this.docstring }).write(writer);
+        }
+        this.writeTypeHints(writer);
+        this.writeVisibility(writer);
+        this.writeMethodDefinition(writer, true);
     }
 
     public writeTypeDefinition(writer: Writer): void {
