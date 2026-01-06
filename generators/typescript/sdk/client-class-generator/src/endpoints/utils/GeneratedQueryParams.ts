@@ -263,7 +263,10 @@ export class GeneratedQueryParams {
                 getAssignmentExpression(ts.factory.createIdentifier("item"))
             );
             let mapExpression: ts.Expression = ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(referenceToQueryParameter, ts.factory.createIdentifier("map")),
+                ts.factory.createPropertyAccessExpression(
+                    referenceToQueryParameter,
+                    ts.factory.createIdentifier("map")
+                ),
                 undefined,
                 [mapFunction]
             );
