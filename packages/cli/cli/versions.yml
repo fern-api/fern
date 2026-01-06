@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.35.0
+  changelogEntry:
+    - summary: |
+        Add `x-fern-parameter-name` extension support for AsyncAPI parameters. This allows customizing parameter names in generated SDKs for AsyncAPI specs, similar to existing OpenAPI support.
+      type: feat
+  createdAt: "2026-01-05"
+  irVersion: 62
+
 - version: 3.34.0
   changelogEntry:
     - summary: |
