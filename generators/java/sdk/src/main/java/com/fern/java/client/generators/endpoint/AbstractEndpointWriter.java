@@ -39,6 +39,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -258,70 +259,67 @@ public abstract class AbstractEndpointWriter {
                 .returns(endpointWithRequestOptions.returnType)
                 .build();
 
+        // Generate overloads without request body when all properties are optional
+        // We generate a pair: one without RequestOptions and one with RequestOptions
         MethodSpec endpointWithoutRequest = null;
+        MethodSpec endpointWithoutRequestWithRequestOptions = null;
         if (variables.sdkRequest().isPresent()
                 && variables.sdkRequest().get().getShape().visit(new SdkRequestIsOptional())) {
-            MethodSpec.Builder endpointWithoutRequestBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
-                    .addJavadoc(endpointWithRequestOptions.javadoc)
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameters(variables.pathParameters)
-                    .returns(endpointWithoutRequestOptions.returnType);
+            // Compute shared values once
+            String requestParamName = variables
+                    .sdkRequest()
+                    .get()
+                    .getRequestParameterName()
+                    .getCamelCase()
+                    .getUnsafeName();
             List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
-                    .filter(parameterSpec -> !parameterSpec.name.equals(variables
-                            .sdkRequest()
-                            .get()
-                            .getRequestParameterName()
-                            .getCamelCase()
-                            .getUnsafeName()))
-                    .collect(Collectors.toList());
-            endpointWithoutRequestBuilder.addParameters(additionalParamsWithoutBody);
-            List<String> paramNamesWoBody = Stream.concat(
-                            variables.pathParameters.stream(), additionalParamsWithoutBody.stream())
-                    .map(parameterSpec -> parameterSpec.name)
+                    .filter(parameterSpec -> !parameterSpec.name.equals(requestParamName))
                     .collect(Collectors.toList());
             ParameterSpec bodyParameterSpec = additionalParameters.stream()
-                    .filter(parameterSpec -> parameterSpec.name.equals(variables
-                            .sdkRequest()
-                            .get()
-                            .getRequestParameterName()
-                            .getCamelCase()
-                            .getUnsafeName()))
+                    .filter(parameterSpec -> parameterSpec.name.equals(requestParamName))
                     .collect(Collectors.toList())
                     .get(0);
+
+            // Compute the default body argument string based on type
+            String defaultBodyArg;
             if (typeNameIsOptional(bodyParameterSpec.type)) {
-                paramNamesWoBody.add("Optional.empty()");
+                defaultBodyArg = "Optional.empty()";
             } else if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
                 // Handle parameterized types with type witness syntax
                 // E.g., OptionalNullable<SomeType> becomes OptionalNullable.<SomeType>absent()
                 // We use $1T to refer to rawType and $2T to refer to the type argument
-                paramNamesWoBody.add("$1T.<$2T>absent()");
+                defaultBodyArg = "$1T.<$2T>absent()";
             } else {
-                paramNamesWoBody.add("$T.builder().build()");
+                defaultBodyArg = "$T.builder().build()";
             }
+
+            // Build base param names list (path params + additional params without body)
+            List<String> baseParamNames = Stream.concat(
+                            variables.pathParameters.stream(), additionalParamsWithoutBody.stream())
+                    .map(parameterSpec -> parameterSpec.name)
+                    .collect(Collectors.toList());
+
+            // 1. Build overload WITHOUT RequestOptions
+            MethodSpec.Builder endpointWithoutRequestBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                    .addJavadoc(endpointWithRequestOptions.javadoc)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameters(variables.pathParameters)
+                    .addParameters(additionalParamsWithoutBody)
+                    .returns(endpointWithoutRequestOptions.returnType);
+            List<String> paramNamesWoBody = new ArrayList<>(baseParamNames);
+            paramNamesWoBody.add(defaultBodyArg);
             responseParserGenerator.addEndpointWithoutRequestReturnStatement(
                     endpointWithoutRequestBuilder, endpointWithRequestOptions, paramNamesWoBody, bodyParameterSpec);
             endpointWithoutRequest = endpointWithoutRequestBuilder.build();
-        }
 
-        // Generate overload without request body but WITH RequestOptions when all properties are optional
-        MethodSpec endpointWithoutRequestWithRequestOptions = null;
-        if (variables.sdkRequest().isPresent()
-                && variables.sdkRequest().get().getShape().visit(new SdkRequestIsOptional())) {
+            // 2. Build overload WITH RequestOptions
             MethodSpec.Builder endpointWithoutRequestWithRequestOptionsBuilder = MethodSpec.methodBuilder(
                             endpointWithRequestOptions.name)
                     .addJavadoc(endpointWithRequestOptions.javadoc)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameters(variables.pathParameters)
+                    .addParameters(additionalParamsWithoutBody)
                     .returns(endpointWithRequestOptions.returnType);
-            List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
-                    .filter(parameterSpec -> !parameterSpec.name.equals(variables
-                            .sdkRequest()
-                            .get()
-                            .getRequestParameterName()
-                            .getCamelCase()
-                            .getUnsafeName()))
-                    .collect(Collectors.toList());
-            endpointWithoutRequestWithRequestOptionsBuilder.addParameters(additionalParamsWithoutBody);
             // Add RequestOptions parameter
             if (httpEndpoint.getIdempotent()) {
                 endpointWithoutRequestWithRequestOptionsBuilder.addParameter(ParameterSpec.builder(
@@ -331,26 +329,8 @@ public abstract class AbstractEndpointWriter {
             } else {
                 endpointWithoutRequestWithRequestOptionsBuilder.addParameter(requestOptionsParameterSpec());
             }
-            List<String> paramNamesWoBodyWithRequestOptions = Stream.concat(
-                            variables.pathParameters.stream(), additionalParamsWithoutBody.stream())
-                    .map(parameterSpec -> parameterSpec.name)
-                    .collect(Collectors.toList());
-            ParameterSpec bodyParameterSpec = additionalParameters.stream()
-                    .filter(parameterSpec -> parameterSpec.name.equals(variables
-                            .sdkRequest()
-                            .get()
-                            .getRequestParameterName()
-                            .getCamelCase()
-                            .getUnsafeName()))
-                    .collect(Collectors.toList())
-                    .get(0);
-            if (typeNameIsOptional(bodyParameterSpec.type)) {
-                paramNamesWoBodyWithRequestOptions.add("Optional.empty()");
-            } else if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
-                paramNamesWoBodyWithRequestOptions.add("$1T.<$2T>absent()");
-            } else {
-                paramNamesWoBodyWithRequestOptions.add("$T.builder().build()");
-            }
+            List<String> paramNamesWoBodyWithRequestOptions = new ArrayList<>(baseParamNames);
+            paramNamesWoBodyWithRequestOptions.add(defaultBodyArg);
             paramNamesWoBodyWithRequestOptions.add(
                     AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
             responseParserGenerator.addEndpointWithoutRequestWithRequestOptionsReturnStatement(
