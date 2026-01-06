@@ -23,14 +23,12 @@ export class RubyFile extends File {
     public readonly formatter?: AbstractFormatter;
 
     constructor({ node, directory, filename, customConfig, formatter }: RubyFile.Args) {
-        super(
-            filename,
-            directory,
-            node.toString({
-                customConfig,
-                formatter
-            })
-        );
+        // Use toStringRbi() for RBI files, regular toString() for Ruby files
+        const content = filename.endsWith(".rbi")
+            ? node.toStringRbi({ customConfig, formatter })
+            : node.toString({ customConfig, formatter });
+
+        super(filename, directory, content);
         this.node = node;
         this.customConfig = customConfig;
         this.formatter = formatter;

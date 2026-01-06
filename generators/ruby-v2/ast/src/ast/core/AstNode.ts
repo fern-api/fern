@@ -59,9 +59,34 @@ export abstract class AstNode extends AbstractAstNode {
     }
 
     /**
+     * Writes the node to an RBI string for Sorbet type checking.
+     */
+    public toStringRbi({
+        customConfig,
+        formatter
+    }: {
+        customConfig?: BaseRubyCustomConfigSchema;
+        formatter?: AbstractFormatter;
+    } = {}): string {
+        const file = new RubyFile({
+            customConfig: customConfig ?? {},
+            formatter
+        });
+        this.writeRbi(file);
+        return file.toString();
+    }
+
+    /**
      * Writes type definition. No-op by default, but will be overridden by implementing classes.
      */
     public writeTypeDefinition(writer: AbstractWriter): void {
         return;
+    }
+
+    /**
+     * Writes RBI content for Sorbet type checking. Delegates to write by default.
+     */
+    public writeRbi(writer: AbstractWriter): void {
+        this.write(writer);
     }
 }
