@@ -182,11 +182,9 @@ export class OrganizationsClient {
         requestOptions?: OrganizationsClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.Organization[]>> {
         const { limit } = request;
-        const _queryParams: Record<string, unknown> = {};
-        if (limit != null) {
-            _queryParams.limit = limit;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            limit,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

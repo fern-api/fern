@@ -43,7 +43,7 @@ export declare namespace GeneratedFileUploadEndpointRequest {
 }
 
 export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequest {
-    private static readonly FORM_DATA_VARIABLE_NAME = "_request";
+    private static readonly FORM_DATA_VARIABLE_NAME = "_body";
     private static readonly FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME = "_maybeEncodedRequest";
 
     private readonly ir: IntermediateRepresentation;

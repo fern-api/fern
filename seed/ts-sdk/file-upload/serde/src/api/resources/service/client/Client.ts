@@ -38,39 +38,39 @@ export class ServiceClient {
         request: SeedFileUpload.MyRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _request = await core.newFormData();
+        const _body = await core.newFormData();
         if (request.maybeString != null) {
-            _request.append("maybe_string", request.maybeString);
+            _body.append("maybe_string", request.maybeString);
         }
 
-        _request.append("integer", request.integer.toString());
-        await _request.appendFile("file", request.file);
+        _body.append("integer", request.integer.toString());
+        await _body.appendFile("file", request.file);
         for (const _file of request.fileList) {
-            await _request.appendFile("file_list", _file);
+            await _body.appendFile("file_list", _file);
         }
 
         if (request.maybeFile != null) {
-            await _request.appendFile("maybe_file", request.maybeFile);
+            await _body.appendFile("maybe_file", request.maybeFile);
         }
 
         if (request.maybeFileList != null) {
             for (const _file of request.maybeFileList) {
-                await _request.appendFile("maybe_file_list", _file);
+                await _body.appendFile("maybe_file_list", _file);
             }
         }
 
         if (request.maybeInteger != null) {
-            _request.append("maybe_integer", request.maybeInteger.toString());
+            _body.append("maybe_integer", request.maybeInteger?.toString());
         }
 
         if (request.optionalListOfStrings != null) {
             for (const _item of request.optionalListOfStrings) {
-                _request.append("optional_list_of_strings", _item);
+                _body.append("optional_list_of_strings", _item);
             }
         }
 
         for (const _item of request.listOfObjects) {
-            _request.append(
+            _body.append(
                 "list_of_objects",
                 toJson(
                     serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
@@ -81,12 +81,12 @@ export class ServiceClient {
         if (request.optionalMetadata != null) {
             if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
                 for (const _item of request.optionalMetadata) {
-                    _request.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
+                    _body.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
                 }
         }
 
         if (request.optionalObjectType != null) {
-            _request.append(
+            _body.append(
                 "optional_object_type",
                 serializers.ObjectType.jsonOrThrow(request.optionalObjectType, {
                     unrecognizedObjectKeys: "strip",
@@ -96,7 +96,7 @@ export class ServiceClient {
         }
 
         if (request.optionalId != null) {
-            _request.append(
+            _body.append(
                 "optional_id",
                 serializers.Id.jsonOrThrow(request.optionalId, {
                     unrecognizedObjectKeys: "strip",
@@ -105,7 +105,7 @@ export class ServiceClient {
             );
         }
 
-        _request.append(
+        _body.append(
             "alias_object",
             toJson(
                 serializers.MyAliasObject.jsonOrThrow(request.aliasObject, {
@@ -115,7 +115,7 @@ export class ServiceClient {
             ),
         );
         for (const _item of request.listOfAliasObject) {
-            _request.append(
+            _body.append(
                 "list_of_alias_object",
                 toJson(
                     serializers.MyAliasObject.jsonOrThrow(_item, {
@@ -127,7 +127,7 @@ export class ServiceClient {
         }
 
         for (const _item of request.aliasListOfObject) {
-            _request.append(
+            _body.append(
                 "alias_list_of_object",
                 toJson(
                     serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
@@ -135,7 +135,7 @@ export class ServiceClient {
             );
         }
 
-        const _maybeEncodedRequest = await _request.getRequest();
+        const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
@@ -193,9 +193,9 @@ export class ServiceClient {
         request: SeedFileUpload.JustFileRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _request = await core.newFormData();
-        await _request.appendFile("file", request.file);
-        const _maybeEncodedRequest = await _request.getRequest();
+        const _body = await core.newFormData();
+        await _body.appendFile("file", request.file);
+        const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
@@ -249,33 +249,16 @@ export class ServiceClient {
         request: SeedFileUpload.JustFileWithQueryParamsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _queryParams: Record<string, unknown> = {};
-        if (request.maybeString != null) {
-            _queryParams.maybeString = request.maybeString;
-        }
-
-        _queryParams.integer = request.integer;
-        if (request.maybeInteger != null) {
-            _queryParams.maybeInteger = request.maybeInteger;
-        }
-
-        if (Array.isArray(request.listOfStrings)) {
-            _queryParams.listOfStrings = request.listOfStrings.map((item) => item);
-        } else {
-            _queryParams.listOfStrings = request.listOfStrings;
-        }
-
-        if (request.optionalListOfStrings != null) {
-            if (Array.isArray(request.optionalListOfStrings)) {
-                _queryParams.optionalListOfStrings = request.optionalListOfStrings.map((item) => item);
-            } else {
-                _queryParams.optionalListOfStrings = request.optionalListOfStrings;
-            }
-        }
-
-        const _request = await core.newFormData();
-        await _request.appendFile("file", request.file);
-        const _maybeEncodedRequest = await _request.getRequest();
+        const _queryParams: Record<string, unknown> = {
+            maybeString: request.maybeString,
+            integer: request.integer,
+            maybeInteger: request.maybeInteger,
+            listOfStrings: request.listOfStrings,
+            optionalListOfStrings: request.optionalListOfStrings,
+        };
+        const _body = await core.newFormData();
+        await _body.appendFile("file", request.file);
+        const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
@@ -329,15 +312,15 @@ export class ServiceClient {
         request: SeedFileUpload.WithContentTypeRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _request = await core.newFormData();
-        await _request.appendFile("file", request.file);
-        _request.append("foo", request.foo);
-        _request.append("bar", toJson(request.bar));
+        const _body = await core.newFormData();
+        await _body.appendFile("file", request.file);
+        _body.append("foo", request.foo);
+        _body.append("bar", toJson(request.bar));
         if (request.fooBar != null) {
-            _request.append("foo_bar", toJson(request.fooBar));
+            _body.append("foo_bar", toJson(request.fooBar));
         }
 
-        const _maybeEncodedRequest = await _request.getRequest();
+        const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
@@ -391,17 +374,17 @@ export class ServiceClient {
         request: SeedFileUpload.WithFormEncodingRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _request = await core.newFormData();
-        await _request.appendFile("file", request.file);
+        const _body = await core.newFormData();
+        await _body.appendFile("file", request.file);
         for (const [key, value] of Object.entries(core.encodeAsFormParameter({ foo: request.foo }))) {
-            _request.append(key, value);
+            _body.append(key, value);
         }
 
         for (const [key, value] of Object.entries(core.encodeAsFormParameter({ bar: request.bar }))) {
-            _request.append(key, value);
+            _body.append(key, value);
         }
 
-        const _maybeEncodedRequest = await _request.getRequest();
+        const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
@@ -455,31 +438,31 @@ export class ServiceClient {
         request: SeedFileUpload.MyOtherRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _request = await core.newFormData();
+        const _body = await core.newFormData();
         if (request.maybeString != null) {
             for (const [key, value] of Object.entries(
                 core.encodeAsFormParameter({ maybe_string: request.maybeString }),
             )) {
-                _request.append(key, value);
+                _body.append(key, value);
             }
         }
 
         for (const [key, value] of Object.entries(core.encodeAsFormParameter({ integer: request.integer }))) {
-            _request.append(key, value);
+            _body.append(key, value);
         }
 
-        await _request.appendFile("file", request.file);
+        await _body.appendFile("file", request.file);
         for (const _file of request.fileList) {
-            await _request.appendFile("file_list", _file);
+            await _body.appendFile("file_list", _file);
         }
 
         if (request.maybeFile != null) {
-            await _request.appendFile("maybe_file", request.maybeFile);
+            await _body.appendFile("maybe_file", request.maybeFile);
         }
 
         if (request.maybeFileList != null) {
             for (const _file of request.maybeFileList) {
-                await _request.appendFile("maybe_file_list", _file);
+                await _body.appendFile("maybe_file_list", _file);
             }
         }
 
@@ -487,7 +470,7 @@ export class ServiceClient {
             for (const [key, value] of Object.entries(
                 core.encodeAsFormParameter({ maybe_integer: request.maybeInteger }),
             )) {
-                _request.append(key, value);
+                _body.append(key, value);
             }
         }
 
@@ -495,21 +478,21 @@ export class ServiceClient {
             for (const [key, value] of Object.entries(
                 core.encodeAsFormParameter({ optional_list_of_strings: request.optionalListOfStrings }),
             )) {
-                _request.append(key, value);
+                _body.append(key, value);
             }
         }
 
         for (const [key, value] of Object.entries(
             core.encodeAsFormParameter({ list_of_objects: request.listOfObjects }),
         )) {
-            _request.append(key, value);
+            _body.append(key, value);
         }
 
         if (request.optionalMetadata != null) {
             for (const [key, value] of Object.entries(
                 core.encodeAsFormParameter({ optional_metadata: request.optionalMetadata }),
             )) {
-                _request.append(key, value);
+                _body.append(key, value);
             }
         }
 
@@ -517,7 +500,7 @@ export class ServiceClient {
             for (const [key, value] of Object.entries(
                 core.encodeAsFormParameter({ optional_object_type: request.optionalObjectType }),
             )) {
-                _request.append(key, value);
+                _body.append(key, value);
             }
         }
 
@@ -525,33 +508,33 @@ export class ServiceClient {
             for (const [key, value] of Object.entries(
                 core.encodeAsFormParameter({ optional_id: request.optionalId }),
             )) {
-                _request.append(key, value);
+                _body.append(key, value);
             }
         }
 
         for (const [key, value] of Object.entries(
             core.encodeAsFormParameter({ list_of_objects_with_optionals: request.listOfObjectsWithOptionals }),
         )) {
-            _request.append(key, value);
+            _body.append(key, value);
         }
 
         for (const [key, value] of Object.entries(core.encodeAsFormParameter({ alias_object: request.aliasObject }))) {
-            _request.append(key, value);
+            _body.append(key, value);
         }
 
         for (const [key, value] of Object.entries(
             core.encodeAsFormParameter({ list_of_alias_object: request.listOfAliasObject }),
         )) {
-            _request.append(key, value);
+            _body.append(key, value);
         }
 
         for (const [key, value] of Object.entries(
             core.encodeAsFormParameter({ alias_list_of_object: request.aliasListOfObject }),
         )) {
-            _request.append(key, value);
+            _body.append(key, value);
         }
 
-        const _maybeEncodedRequest = await _request.getRequest();
+        const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
@@ -607,16 +590,16 @@ export class ServiceClient {
         request: SeedFileUpload.OptionalArgsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        const _request = await core.newFormData();
+        const _body = await core.newFormData();
         if (request.imageFile != null) {
-            await _request.appendFile("image_file", request.imageFile);
+            await _body.appendFile("image_file", request.imageFile);
         }
 
         if (request.request != null) {
-            _request.append("request", toJson(request.request));
+            _body.append("request", toJson(request.request));
         }
 
-        const _maybeEncodedRequest = await _request.getRequest();
+        const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
@@ -679,9 +662,9 @@ export class ServiceClient {
         request: SeedFileUpload.InlineTypeRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        const _request = await core.newFormData();
-        await _request.appendFile("file", request.file);
-        _request.append(
+        const _body = await core.newFormData();
+        await _body.appendFile("file", request.file);
+        _body.append(
             "request",
             toJson(
                 serializers.MyInlineType.jsonOrThrow(request.request, {
@@ -690,7 +673,7 @@ export class ServiceClient {
                 }),
             ),
         );
-        const _maybeEncodedRequest = await _request.getRequest();
+        const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),

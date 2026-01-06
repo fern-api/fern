@@ -60,28 +60,17 @@ export class QueryClient {
             alias_stream: aliasStream,
             alias_optional_stream: aliasOptionalStream,
         } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.prompt = prompt;
-        if (optionalPrompt != null) {
-            _queryParams.optional_prompt = optionalPrompt;
-        }
-
-        _queryParams.alias_prompt = aliasPrompt;
-        if (aliasOptionalPrompt != null) {
-            _queryParams.alias_optional_prompt = aliasOptionalPrompt;
-        }
-
-        _queryParams.query = query;
-        _queryParams.stream = stream.toString();
-        if (optionalStream != null) {
-            _queryParams.optional_stream = optionalStream.toString();
-        }
-
-        _queryParams.alias_stream = aliasStream.toString();
-        if (aliasOptionalStream != null) {
-            _queryParams.alias_optional_stream = aliasOptionalStream.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            prompt,
+            optional_prompt: optionalPrompt != null ? optionalPrompt : undefined,
+            alias_prompt: aliasPrompt,
+            alias_optional_prompt: aliasOptionalPrompt != null ? aliasOptionalPrompt : undefined,
+            query,
+            stream: stream.toString(),
+            optional_stream: optionalStream != null ? optionalStream?.toString() : undefined,
+            alias_stream: aliasStream.toString(),
+            alias_optional_stream: aliasOptionalStream != null ? aliasOptionalStream?.toString() : undefined,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({

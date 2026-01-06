@@ -29,11 +29,9 @@ export class RealtimeNoAuthClient {
 
     public async connect(args: RealtimeNoAuthClient.ConnectArgs): Promise<RealtimeNoAuthSocket> {
         const { session_id: sessionId, model, headers, debug, reconnectAttempts } = args;
-        const _queryParams: Record<string, unknown> = {};
-        if (model != null) {
-            _queryParams.model = model;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            model,
+        };
         const _headers: Record<string, unknown> = { ...headers };
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
