@@ -3,13 +3,12 @@
 - version: 1.0.0-rc77
   createdAt: "2026-01-06"
   changelogEntry:
-    - type: fix
+    - type: feat
       summary: |
-        Fix RuboCop Naming/VariableNumber style in generated .rubocop.yml.
-        Changed from `snake_case` to `normalcase` style to allow field names like
-        `recaptcha_v2`, `office365`, `thumbprint_sha256`, etc. without triggering
-        lint errors. The `snake_case` style incorrectly required underscores before
-        numbers (e.g., `recaptcha_v_2`), which doesn't match the SDK's naming convention.
+        Add `rubocopVariableNumberStyle` config option to control RuboCop Naming/VariableNumber style.
+        Supported values: `snake_case` (default, requires underscores before numbers like `recaptcha_v_2`),
+        `normalcase` (allows numbers without underscores like `recaptcha_v2`, `office365`), or `disabled`.
+        This allows APIs with field names containing embedded digits to configure the appropriate style.
   irVersion: 61
 
 - version: 1.0.0-rc76

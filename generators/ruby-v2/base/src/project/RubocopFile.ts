@@ -1,16 +1,30 @@
+import { BaseRubyCustomConfigSchema, RubocopVariableNumberStyle } from "@fern-api/ruby-ast";
+
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 
 export declare namespace RubocopFile {
     interface Args {
-        context: AbstractRubyGeneratorContext<object>;
+        context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
     }
 }
 
 export class RubocopFile {
-    private context: AbstractRubyGeneratorContext<object>;
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
 
     constructor({ context }: RubocopFile.Args) {
         this.context = context;
+    }
+
+    private getVariableNumberConfig(): string {
+        const style: RubocopVariableNumberStyle = this.context.customConfig.rubocopVariableNumberStyle ?? "snake_case";
+
+        if (style === "disabled") {
+            return `Naming/VariableNumber:
+  Enabled: false`;
+        }
+
+        return `Naming/VariableNumber:
+  EnforcedStyle: ${style}`;
     }
 
     public async toString(): Promise<string> {
@@ -60,8 +74,7 @@ Metrics/ModuleLength:
 Layout/LineLength:
   Enabled: false
 
-Naming/VariableNumber:
-  EnforcedStyle: normalcase
+${this.getVariableNumberConfig()}
 
 Style/Documentation:
   Enabled: false
