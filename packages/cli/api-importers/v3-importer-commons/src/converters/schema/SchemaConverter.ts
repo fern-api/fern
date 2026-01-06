@@ -106,6 +106,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             return maybeConvertedMapSchema;
         }
 
+        const maybeConvertedDiscriminatorMappingSchema = this.tryConvertDiscriminatorMappingSchema();
+        if (maybeConvertedDiscriminatorMappingSchema != null) {
+            return maybeConvertedDiscriminatorMappingSchema;
+        }
+
         const maybeConvertedObjectAllOfSchema = this.tryConvertObjectAllOfSchema();
         if (maybeConvertedObjectAllOfSchema != null) {
             return maybeConvertedObjectAllOfSchema;
@@ -342,6 +347,44 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                         propertiesByAudience: {}
                     },
                     inlinedTypes: additionalPropertiesType.inlinedTypes
+                };
+            }
+        }
+        return undefined;
+    }
+
+    private tryConvertDiscriminatorMappingSchema(): SchemaConverter.Output | undefined {
+        if (
+            this.schema.discriminator?.mapping != null &&
+            Object.keys(this.schema.discriminator.mapping).length > 0 &&
+            this.schema.oneOf == null &&
+            this.schema.anyOf == null
+        ) {
+            const schemaWithOneOf: OpenAPIV3_1.SchemaObject = {
+                ...this.schema,
+                oneOf: Object.values(this.schema.discriminator.mapping).map((ref) => ({
+                    $ref: ref
+                }))
+            };
+            const oneOfConverter = new OneOfSchemaConverter({
+                id: this.id,
+                context: this.context,
+                breadcrumbs: this.breadcrumbs,
+                schema: schemaWithOneOf,
+                inlinedTypes: {}
+            });
+            const oneOfType = oneOfConverter.convert();
+            if (oneOfType != null) {
+                return {
+                    convertedSchema: {
+                        typeDeclaration: this.createTypeDeclaration({
+                            shape: oneOfType.type,
+                            referencedTypes: oneOfType.referencedTypes
+                        }),
+                        audiences: this.audiences,
+                        propertiesByAudience: {}
+                    },
+                    inlinedTypes: oneOfType.inlinedTypes
                 };
             }
         }
