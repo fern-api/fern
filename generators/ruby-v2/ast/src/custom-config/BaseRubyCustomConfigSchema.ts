@@ -1,9 +1,6 @@
 import { z } from "zod";
 import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 
-export const RubocopVariableNumberStyleSchema = z.enum(["snake_case", "normalcase", "disabled"]);
-export type RubocopVariableNumberStyle = z.infer<typeof RubocopVariableNumberStyleSchema>;
-
 export const BaseRubyCustomConfigSchema = z.object({
     module: z.optional(z.string()),
     clientModuleName: z.optional(z.string()),
@@ -23,7 +20,7 @@ export const BaseRubyCustomConfigSchema = z.object({
     // - "snake_case": requires underscores before numbers (e.g., recaptcha_v_2) - default
     // - "normalcase": allows numbers without underscores (e.g., recaptcha_v2, office365)
     // - "disabled": disables the cop entirely
-    rubocopVariableNumberStyle: z.optional(RubocopVariableNumberStyleSchema)
+    rubocopVariableNumberStyle: z.enum(["snake_case", "normalcase", "disabled"]).optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

@@ -1,4 +1,4 @@
-import { BaseRubyCustomConfigSchema, RubocopVariableNumberStyle } from "@fern-api/ruby-ast";
+import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
 
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 
@@ -16,7 +16,7 @@ export class RubocopFile {
     }
 
     private getVariableNumberConfig(): string {
-        const style: RubocopVariableNumberStyle = this.context.customConfig.rubocopVariableNumberStyle ?? "snake_case";
+        const style = this.context.customConfig.rubocopVariableNumberStyle ?? "snake_case";
 
         if (style === "disabled") {
             return `Naming/VariableNumber:
