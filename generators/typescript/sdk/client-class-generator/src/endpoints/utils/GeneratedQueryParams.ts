@@ -43,9 +43,7 @@ export class GeneratedQueryParams {
 
             const isValidIdentifier = isValidJsIdentifier(wireValue);
             const canUseShorthand =
-                isValidIdentifier &&
-                ts.isIdentifier(valueExpression) &&
-                valueExpression.text === wireValue;
+                isValidIdentifier && ts.isIdentifier(valueExpression) && valueExpression.text === wireValue;
 
             if (canUseShorthand) {
                 properties.push(ts.factory.createShorthandPropertyAssignment(ts.factory.createIdentifier(wireValue)));
