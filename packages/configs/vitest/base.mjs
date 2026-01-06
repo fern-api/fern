@@ -1,6 +1,8 @@
 import { defineConfig } from "vitest/config";
 
-export default defineConfig({
+export { defineConfig, mergeConfig } from "vitest/config";
+
+export const defaultConfig = {
     test: {
         globals: true,
         include: ["**/*.{test,spec}.ts"],
@@ -13,4 +15,6 @@ export default defineConfig({
         maxConcurrency: 10,
         passWithNoTests: true
     }
-});
+};
+
+export default defineConfig(defaultConfig);
