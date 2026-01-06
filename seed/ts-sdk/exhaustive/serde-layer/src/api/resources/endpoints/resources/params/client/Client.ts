@@ -241,13 +241,13 @@ export class ParamsClient {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, unknown> = {};
         if (Array.isArray(query)) {
-            _queryParams.query = query.map((item) => item);
+            _queryParams.query = query;
         } else {
             _queryParams.query = query;
         }
 
         if (Array.isArray(number_)) {
-            _queryParams.number = number_.map((item) => item.toString());
+            _queryParams.number = number_;
         } else {
             _queryParams.number = number_;
         }

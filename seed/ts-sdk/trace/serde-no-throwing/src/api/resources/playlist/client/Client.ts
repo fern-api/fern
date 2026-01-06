@@ -149,13 +149,13 @@ export class PlaylistClient {
         _queryParams.otherField = otherField;
         _queryParams.multiLineDocs = multiLineDocs;
         if (Array.isArray(optionalMultipleField)) {
-            _queryParams.optionalMultipleField = optionalMultipleField.map((item) => item);
+            _queryParams.optionalMultipleField = optionalMultipleField;
         } else {
             _queryParams.optionalMultipleField = optionalMultipleField;
         }
 
         if (Array.isArray(multipleField)) {
-            _queryParams.multipleField = multipleField.map((item) => item);
+            _queryParams.multipleField = multipleField;
         } else {
             _queryParams.multipleField = multipleField;
         }

@@ -109,7 +109,7 @@ export class SeedApiClient {
         _queryParams.bytes = bytes;
         _queryParams.user = user;
         if (Array.isArray(userList)) {
-            _queryParams.userList = userList.map((item) => item);
+            _queryParams.userList = userList;
         } else {
             _queryParams.userList = userList;
         }
@@ -120,13 +120,13 @@ export class SeedApiClient {
         _queryParams.nestedUser = nestedUser;
         _queryParams.optionalUser = optionalUser;
         if (Array.isArray(excludeUser)) {
-            _queryParams.excludeUser = excludeUser.map((item) => item);
+            _queryParams.excludeUser = excludeUser;
         } else {
             _queryParams.excludeUser = excludeUser;
         }
 
         if (Array.isArray(filter)) {
-            _queryParams.filter = filter.map((item) => item);
+            _queryParams.filter = filter;
         } else {
             _queryParams.filter = filter;
         }

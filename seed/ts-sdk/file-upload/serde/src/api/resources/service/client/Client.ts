@@ -254,13 +254,13 @@ export class ServiceClient {
         _queryParams.integer = request.integer;
         _queryParams.maybeInteger = request.maybeInteger;
         if (Array.isArray(request.listOfStrings)) {
-            _queryParams.listOfStrings = request.listOfStrings.map((item) => item);
+            _queryParams.listOfStrings = request.listOfStrings;
         } else {
             _queryParams.listOfStrings = request.listOfStrings;
         }
 
         if (Array.isArray(request.optionalListOfStrings)) {
-            _queryParams.optionalListOfStrings = request.optionalListOfStrings.map((item) => item);
+            _queryParams.optionalListOfStrings = request.optionalListOfStrings;
         } else {
             _queryParams.optionalListOfStrings = request.optionalListOfStrings;
         }

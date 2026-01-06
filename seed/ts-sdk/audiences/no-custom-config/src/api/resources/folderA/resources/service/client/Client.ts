@@ -45,13 +45,13 @@ export class ServiceClient {
         const { ids, tags } = request;
         const _queryParams: Record<string, unknown> = {};
         if (Array.isArray(ids)) {
-            _queryParams.ids = ids.map((item) => item);
+            _queryParams.ids = ids;
         } else {
             _queryParams.ids = ids;
         }
 
         if (Array.isArray(tags)) {
-            _queryParams.tags = tags.map((item) => item);
+            _queryParams.tags = tags;
         } else {
             _queryParams.tags = tags;
         }

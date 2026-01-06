@@ -48,20 +48,20 @@ export class NullableClient {
         const { usernames, avatar, activated, tags, extra } = request;
         const _queryParams: Record<string, unknown> = {};
         if (Array.isArray(usernames)) {
-            _queryParams.usernames = usernames.map((item) => item);
+            _queryParams.usernames = usernames;
         } else {
             _queryParams.usernames = usernames;
         }
 
         _queryParams.avatar = avatar;
         if (Array.isArray(activated)) {
-            _queryParams.activated = activated.map((item) => item?.toString());
+            _queryParams.activated = activated;
         } else {
             _queryParams.activated = activated;
         }
 
         if (Array.isArray(tags)) {
-            _queryParams.tags = tags.map((item) => item);
+            _queryParams.tags = tags;
         } else {
             _queryParams.tags = tags;
         }
