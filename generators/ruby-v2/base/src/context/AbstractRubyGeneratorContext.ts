@@ -90,7 +90,6 @@ export abstract class AbstractRubyGeneratorContext<
 
     public getRootModuleName(): string {
         // Use upperFirst on the organization name directly to avoid snakeCase
-        // inserting underscores before digits (e.g., "auth0" -> "Auth0" not "Auth_0")
         return upperFirst(this.customConfig.module ?? this.config.organization);
     }
 
