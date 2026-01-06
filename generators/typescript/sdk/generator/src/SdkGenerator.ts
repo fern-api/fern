@@ -52,7 +52,7 @@ import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-e
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { writeFile } from "fs/promises";
-import { Directory, Project, SourceFile, ts } from "ts-morph";
+import { Directory, ModuleDeclaration, Project, SourceFile, SyntaxKind, ts } from "ts-morph";
 import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
 import { ContributingGenerator } from "./contributing/ContributingGenerator";
@@ -947,7 +947,8 @@ export class SdkGenerator {
                             context.requestWrapper
                                 .getGeneratedRequestWrapper(packageId, endpoint.name)
                                 .writeToFile(context);
-                        }
+                        },
+                        dynamicExportTypeModifier: true
                     });
                 }
             }
@@ -974,7 +975,8 @@ export class SdkGenerator {
                 for (const { packageId, endpoint } of requestWrappers) {
                     context.requestWrapper.getGeneratedRequestWrapper(packageId, endpoint.name).writeToFile(context);
                 }
-            }
+            },
+            dynamicExportTypeModifier: true
         });
     }
 
@@ -1561,12 +1563,14 @@ export class SdkGenerator {
         run,
         filepath,
         addExportTypeModifier,
+        dynamicExportTypeModifier,
         overwrite,
         packagePath = this.relativePackagePath
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
         addExportTypeModifier?: boolean;
+        dynamicExportTypeModifier?: boolean;
         overwrite?: boolean;
         packagePath?: string;
     }) {
@@ -1586,7 +1590,17 @@ export class SdkGenerator {
             this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
         } else {
             importsManager.writeImportsToSourceFile(sourceFile);
-            this.exportsManager.addExportsForFilepath(filepath, addExportTypeModifier);
+
+            // Determine export type modifier dynamically if requested
+            let effectiveAddExportTypeModifier = addExportTypeModifier;
+            if (dynamicExportTypeModifier) {
+                // Check if the source file has any value exports (namespaces with const/variable declarations)
+                // If it does, we should NOT use type-only exports
+                const hasValueExports = this.sourceFileHasValueExports(sourceFile);
+                effectiveAddExportTypeModifier = !hasValueExports;
+            }
+
+            this.exportsManager.addExportsForFilepath(filepath, effectiveAddExportTypeModifier);
 
             // this needs to be last.
             // https://github.com/dsherret/ts-morph/issues/189#issuecomment-414174283
@@ -1600,6 +1614,88 @@ export class SdkGenerator {
 
             this.context.logger.debug(`Generated ${filepathStr}`);
         }
+    }
+
+    /**
+     * Checks if a source file has any value exports (runtime values like const, function, class, enum).
+     * This is used to determine whether to use `export type { ... }` or `export { ... }` in index files.
+     * A namespace with const/variable declarations is considered a value export.
+     */
+    private sourceFileHasValueExports(sourceFile: SourceFile): boolean {
+        // Check for exported namespaces that contain value declarations (const, variable, function, etc.)
+        const modules = sourceFile.getModules();
+        for (const module of modules) {
+            if (module.isExported() && this.moduleHasValueDeclarations(module)) {
+                return true;
+            }
+        }
+
+        // Check for other value exports (const, function, class, enum at the top level)
+        const variableStatements = sourceFile.getVariableStatements();
+        for (const statement of variableStatements) {
+            if (statement.isExported()) {
+                return true;
+            }
+        }
+
+        const functions = sourceFile.getFunctions();
+        for (const func of functions) {
+            if (func.isExported()) {
+                return true;
+            }
+        }
+
+        const classes = sourceFile.getClasses();
+        for (const cls of classes) {
+            if (cls.isExported()) {
+                return true;
+            }
+        }
+
+        const enums = sourceFile.getEnums();
+        for (const enumDecl of enums) {
+            if (enumDecl.isExported()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if a module (namespace) contains any value declarations (const, variable, function, etc.)
+     */
+    private moduleHasValueDeclarations(module: ModuleDeclaration): boolean {
+        const body = module.getBody();
+        if (body == null) {
+            return false;
+        }
+
+        // Check for variable statements (const, let, var)
+        const variableStatements = body.getDescendantsOfKind(SyntaxKind.VariableStatement);
+        if (variableStatements.length > 0) {
+            return true;
+        }
+
+        // Check for function declarations
+        const functions = body.getDescendantsOfKind(SyntaxKind.FunctionDeclaration);
+        if (functions.length > 0) {
+            return true;
+        }
+
+        // Check for class declarations
+        const classes = body.getDescendantsOfKind(SyntaxKind.ClassDeclaration);
+        if (classes.length > 0) {
+            return true;
+        }
+
+        // Check for enum declarations
+        const enums = body.getDescendantsOfKind(SyntaxKind.EnumDeclaration);
+        if (enums.length > 0) {
+            return true;
+        }
+
+        return false;
     }
 
     private async withRawFile({
