@@ -6,6 +6,15 @@
         Query parameters can now be assigned directly without wrapping in if-statements, as it's
         safe to pass null or undefined values to query string parameters.
       type: chore
+    - summary: |
+        Use optional chaining (?.) for optional query parameters that require method calls like
+        toISOString() for dates, instead of ternary expressions.
+      type: chore
+    - summary: |
+        Skip unnecessary .map() calls for list query parameters when the item type doesn't need
+        transformation (e.g., string arrays). Also skip the Array.isArray check entirely when
+        both scalar and array branches would produce identical code.
+      type: chore
   createdAt: "2025-12-22"
   irVersion: 63
 
