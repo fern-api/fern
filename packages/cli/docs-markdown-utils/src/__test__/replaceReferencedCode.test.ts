@@ -901,4 +901,56 @@ describe("replaceReferencedCode", () => {
 
         `);
     });
+
+    it('should handle quoted numeric values like startLine="40"', async () => {
+        const markdown = `
+            <Code src="../snippets/test.go" startLine="40" maxLines="25" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.go")) {
+                    return "package main";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`go title={"test.go"} startLine={40} maxLines={25}
+            package main
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle curly brace numeric values like startLine={40}", async () => {
+        const markdown = `
+            <Code src="../snippets/test.go" startLine={40} maxLines={25} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.go")) {
+                    return "package main";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`go title={"test.go"} startLine={40} maxLines={25}
+            package main
+            \`\`\`
+
+        `);
+    });
 });
