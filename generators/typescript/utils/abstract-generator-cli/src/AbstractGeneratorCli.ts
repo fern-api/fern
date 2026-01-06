@@ -17,7 +17,6 @@ import {
     constructNpmPackage,
     constructNpmPackageArgs,
     constructNpmPackageFromArgs,
-    getRepoUrlFromUrl,
     NpmPackage,
     PersistedTypescriptProject
 } from "@fern-typescript/commons";
@@ -365,10 +364,6 @@ function npmPackageInfoFromPublishConfig(
                 }
                 break;
         }
-    }
-
-    if (args.repoUrl) {
-        args.repoUrl = getRepoUrlFromUrl(args.repoUrl);
     }
 
     return {

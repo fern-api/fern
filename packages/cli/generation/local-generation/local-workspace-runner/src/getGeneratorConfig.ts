@@ -107,8 +107,9 @@ function getGithubPublishConfig(
     return githubPublishInfo != null
         ? FiddleGithubPublishInfo._visit<FernGeneratorExec.GithubPublishInfo | undefined>(githubPublishInfo, {
               npm: (value) => {
-                  const token = (value.token || "${NPM_TOKEN}").trim();
+                  const token = (value.token ?? "").trim();
                   const useOidc = token === "<USE_OIDC>" || token === "OIDC";
+                  const hasToken = token !== "";
                   return FernGeneratorExec.GithubPublishInfo.npm({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
@@ -118,7 +119,8 @@ function getGithubPublishConfig(
                               : token.startsWith("${") && token.endsWith("}")
                                 ? token.slice(2, -1).trim()
                                 : ""
-                      )
+                      ),
+                      shouldGeneratePublishWorkflow: useOidc || hasToken
                   });
               },
               maven: (value) =>

@@ -84,7 +84,9 @@ export const PACKAGE_LOCATION_LOCAL_FILE_SYSTEM = "local-file-system";
 // Package Names (per generator)
 // ============================================================================
 export const TS_SDK_PACKAGE_NAME = "@fern-fern/test-remote-local-sdk";
-export const JAVA_SDK_MAVEN_COORDINATE = "com.fern-api:test-remote-local-sdk";
+// Format matches Fiddle's RegistryConfigFactory: com.<org>.fern:<api>-sdk
+// With organization=fern and api-name=api, this becomes com.fern.fern:api-sdk
+export const JAVA_SDK_MAVEN_COORDINATE = "com.fern.fern:api-sdk";
 export const PYTHON_SDK_PACKAGE_NAME = "test-remote-local-sdk";
 export const GO_SDK_MODULE_PATH = `github.com/${FERN_TEST_REPO_NAME}`;
 
