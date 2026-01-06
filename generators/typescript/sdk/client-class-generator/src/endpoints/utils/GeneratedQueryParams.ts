@@ -55,8 +55,7 @@ export class GeneratedQueryParams {
         );
         for (const queryParameter of this.queryParameters) {
             const listItemType =
-                queryParameter.valueType.type === "container" &&
-                queryParameter.valueType.container.type === "list"
+                queryParameter.valueType.type === "container" && queryParameter.valueType.container.type === "list"
                     ? queryParameter.valueType.container.list
                     : queryParameter.valueType;
             const scalarNeedsTransform = this.scalarValueNeedsTransform(queryParameter.valueType, context);
