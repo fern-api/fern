@@ -152,7 +152,7 @@ export class UserClient {
         }
 
         if (Array.isArray(filter)) {
-            _queryParams.filter = filter.map((item) => item);
+            _queryParams.filter = filter;
         } else {
             _queryParams.filter = filter;
         }
