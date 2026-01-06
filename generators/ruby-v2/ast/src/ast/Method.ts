@@ -97,6 +97,20 @@ export class Method extends AstNode {
         this.statements.push(statement);
     }
 
+    public writeRbi(writer: Writer): void {
+        this.writeVisibility(writer);
+        this.writeMethodDefinition(writer, false);
+    }
+
+    public write(writer: Writer): void {
+        if (this.docstring) {
+            new Comment({ docs: this.docstring }).write(writer);
+        }
+        this.writeTypeHints(writer);
+        this.writeVisibility(writer);
+        this.writeMethodDefinition(writer, true);
+    }
+
     private writeTypeHints(writer: Writer): void {
         if (this.docstring && this.hasAnyParameters) {
             writer.writeLine("#");
@@ -207,14 +221,6 @@ export class Method extends AstNode {
         writer.newLine();
     }
 
-    public write(writer: Writer): void {
-        if (this.docstring) {
-            new Comment({ docs: this.docstring }).write(writer);
-        }
-        this.writeTypeHints(writer);
-        this.writeVisibility(writer);
-        this.writeMethodDefinition(writer, true);
-    }
 
     public writeTypeDefinition(writer: Writer): void {
         writer.write(`def ${this.name}: (`);
