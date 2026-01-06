@@ -22,6 +22,7 @@ const CUSTOM_GEMSPEC_FILENAME = "custom.gemspec.rb";
  */
 export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>> {
     private coreFiles: File[] = [];
+    private rbiFiles: File[] = [];
     private rubyContext: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
 
     public constructor({ context }: { context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema> }) {
@@ -36,6 +37,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createCustomGemfile();
         await this.createRakefile();
         await this.writeRawFiles();
+        await this.writeRbiFiles();
         await this.createAsIsFiles();
         await this.writeAsIsFiles();
         await this.createTestFiles();
@@ -187,6 +189,42 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         for (const file of this.coreFiles) {
             await file.write(this.absolutePathToOutputDirectory);
         }
+    }
+
+    public override addRawFiles(file: File): void {
+        super.addRawFiles(file);
+
+        // Check if RBI is enabled and file is a Ruby file
+        if (this.rubyContext.customConfig.enableRbi && file.filename.endsWith(".rb")) {
+            const rbiFile = this.createRbiFileForRubyFile(file);
+            this.addRbiFile(rbiFile);
+        }
+    }
+
+    public addRbiFile(file: File): void {
+        const logPath = file.directory.toString() === "" ? file.filename : `${file.directory}/${file.filename}`;
+        this.context.logger.debug(`Adding RBI file: ${logPath}`);
+        this.rbiFiles.push(file);
+    }
+
+    private createRbiFileForRubyFile(rubyFile: File): File {
+        // Transform the path: lib/my_gem/types/user.rb -> rbi/lib/my_gem/types/user.rbi
+        const rbiDirectory = RelativeFilePath.of(`rbi/${rubyFile.directory}`);
+        const rbiFilename = rubyFile.filename.replace(".rb", ".rbi");
+
+        // Create empty RBI file
+        const rbiContent = "";
+
+        return new File(rbiFilename, rbiDirectory, rbiContent);
+    }
+
+    public async writeRbiFiles(): Promise<void> {
+        if (this.rbiFiles.length === 0) {
+            return;
+        }
+
+        this.context.logger.debug(`Writing ${this.rbiFiles.length} RBI file(s)`);
+        await Promise.all(this.rbiFiles.map(async (file) => await file.write(this.absolutePathToOutputDirectory)));
     }
 
     private async mkdir(absolutePathToDirectory: AbsoluteFilePath): Promise<void> {

@@ -8,6 +8,8 @@ export const BaseRubyCustomConfigSchema = z.object({
     customPagerName: z.optional(z.string()),
     // Generate wire tests for serialization/deserialization
     enableWireTests: z.boolean().optional(),
+    // Generate empty RBI files for every Ruby file (for Sorbet type checking)
+    enableRbi: z.boolean().optional(),
     // Extra dependencies to add to the gemspec (e.g., { "my-gem": "~> 6.0" })
     extraDependencies: z.optional(z.record(z.string())),
     // Extra dev dependencies to add to the Gemfile (e.g., { "my-gem": "~> 6.0" })
