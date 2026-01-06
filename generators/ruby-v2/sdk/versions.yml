@@ -9,6 +9,13 @@
         Cursor and offset pagination endpoints return lazy iterators that don't make HTTP requests
         until iterated. Wire tests now call `.pages.next_page` on the returned iterator to trigger
         the first HTTP request, ensuring WireMock receives the expected request for verification.
+    - type: fix
+      summary: |
+        Fix pagination field names to use Ruby-safe method names instead of wire values.
+        Fields like `cursor_field`, `item_field`, and `has_next_field` are used to call Ruby
+        methods on response objects via `send()`. Previously these used `wireValue` which doesn't
+        account for Ruby reserved word escaping (e.g., "next" -> "next_"). Now uses
+        `snakeCase.safeName` which matches the actual Ruby accessor names.
   irVersion: 61
 
 - version: 1.0.0-rc75
