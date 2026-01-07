@@ -9,8 +9,12 @@ from ...core.serialization import FieldMetadata
 
 
 class GenericValue(UniversalBaseModel):
-    stringified_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="stringifiedType")] = None
-    stringified_value: typing_extensions.Annotated[str, FieldMetadata(alias="stringifiedValue")]
+    stringified_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="stringifiedType")] = (
+        pydantic.Field(alias="stringifiedType", default=None)
+    )
+    stringified_value: typing_extensions.Annotated[str, FieldMetadata(alias="stringifiedValue")] = pydantic.Field(
+        alias="stringifiedValue"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

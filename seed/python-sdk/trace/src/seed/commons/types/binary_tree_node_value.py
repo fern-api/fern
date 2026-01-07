@@ -10,7 +10,7 @@ from .node_id import NodeId
 
 
 class BinaryTreeNodeValue(UniversalBaseModel):
-    node_id: typing_extensions.Annotated[NodeId, FieldMetadata(alias="nodeId")]
+    node_id: typing_extensions.Annotated[NodeId, FieldMetadata(alias="nodeId")] = pydantic.Field(alias="nodeId")
     val: float
     right: typing.Optional[NodeId] = None
     left: typing.Optional[NodeId] = None

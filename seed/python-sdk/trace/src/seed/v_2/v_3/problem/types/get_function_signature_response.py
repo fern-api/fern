@@ -12,7 +12,7 @@ from .....core.serialization import FieldMetadata
 class GetFunctionSignatureResponse(UniversalBaseModel):
     function_by_language: typing_extensions.Annotated[
         typing.Dict[Language, str], FieldMetadata(alias="functionByLanguage")
-    ]
+    ] = pydantic.Field(alias="functionByLanguage")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

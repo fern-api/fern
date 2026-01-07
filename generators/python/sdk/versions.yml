@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 4.46.7-rc2
+  changelogEntry:
+    - summary: Fixed Python SDK generation to use native Pydantic field aliases and improved core parsing so wire-key and nested/union validation works correctly across Pydantic v1/v2.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
 - version: 4.46.7-rc1
   changelogEntry:
     - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.

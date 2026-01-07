@@ -22,8 +22,12 @@ class SearchResult_User(UniversalBaseModel):
     username: str
     email: typing.Optional[str] = None
     phone: typing.Optional[str] = None
-    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")]
-    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = None
+    created_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="createdAt")] = pydantic.Field(
+        alias="createdAt"
+    )
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updatedAt")] = (
+        pydantic.Field(alias="updatedAt", default=None)
+    )
     address: typing.Optional[Address] = None
 
     if IS_PYDANTIC_V2:
@@ -45,7 +49,9 @@ class SearchResult_Organization(UniversalBaseModel):
     id: str
     name: str
     domain: typing.Optional[str] = None
-    employee_count: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="employeeCount")] = None
+    employee_count: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="employeeCount")] = (
+        pydantic.Field(alias="employeeCount", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

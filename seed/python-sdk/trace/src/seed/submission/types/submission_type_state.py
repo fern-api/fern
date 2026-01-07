@@ -16,9 +16,15 @@ from .workspace_submission_status import WorkspaceSubmissionStatus
 
 class SubmissionTypeState_Test(UniversalBaseModel):
     type: typing.Literal["test"] = "test"
-    problem_id: typing_extensions.Annotated[ProblemId, FieldMetadata(alias="problemId")]
-    default_test_cases: typing_extensions.Annotated[typing.List[TestCase], FieldMetadata(alias="defaultTestCases")]
-    custom_test_cases: typing_extensions.Annotated[typing.List[TestCase], FieldMetadata(alias="customTestCases")]
+    problem_id: typing_extensions.Annotated[ProblemId, FieldMetadata(alias="problemId")] = pydantic.Field(
+        alias="problemId"
+    )
+    default_test_cases: typing_extensions.Annotated[typing.List[TestCase], FieldMetadata(alias="defaultTestCases")] = (
+        pydantic.Field(alias="defaultTestCases")
+    )
+    custom_test_cases: typing_extensions.Annotated[typing.List[TestCase], FieldMetadata(alias="customTestCases")] = (
+        pydantic.Field(alias="customTestCases")
+    )
     status: TestSubmissionStatus
 
     if IS_PYDANTIC_V2:
