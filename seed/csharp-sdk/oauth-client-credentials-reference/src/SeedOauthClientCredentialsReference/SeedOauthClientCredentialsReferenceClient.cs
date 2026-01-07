@@ -3,6 +3,7 @@ using SeedOauthClientCredentialsReference.Core;
 namespace SeedOauthClientCredentialsReference;
 
 public partial class SeedOauthClientCredentialsReferenceClient
+    : ISeedOauthClientCredentialsReferenceClient
 {
     private readonly RawClient _client;
 

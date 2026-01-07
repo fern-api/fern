@@ -2,7 +2,7 @@ using SeedQueryParameters.Core;
 
 namespace SeedQueryParameters;
 
-public partial class SeedQueryParametersClient
+public partial class SeedQueryParametersClient : ISeedQueryParametersClient
 {
     private readonly RawClient _client;
 

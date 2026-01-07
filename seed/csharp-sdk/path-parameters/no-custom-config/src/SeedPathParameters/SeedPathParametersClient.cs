@@ -2,7 +2,7 @@ using SeedPathParameters.Core;
 
 namespace SeedPathParameters;
 
-public partial class SeedPathParametersClient
+public partial class SeedPathParametersClient : ISeedPathParametersClient
 {
     private readonly RawClient _client;
 

@@ -3,7 +3,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public partial class PlaylistClient
+public partial class PlaylistClient : IPlaylistClient
 {
     private RawClient _client;
 

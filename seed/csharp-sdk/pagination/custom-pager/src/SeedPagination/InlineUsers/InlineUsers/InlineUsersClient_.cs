@@ -4,7 +4,7 @@ using SeedPagination.Core;
 
 namespace SeedPagination.InlineUsers;
 
-public partial class InlineUsersClient_
+public partial class InlineUsersClient_ : IInlineUsersClient_
 {
     private RawClient _client;
 

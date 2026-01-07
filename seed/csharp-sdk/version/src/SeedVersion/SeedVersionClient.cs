@@ -2,7 +2,7 @@ using SeedVersion.Core;
 
 namespace SeedVersion;
 
-public partial class SeedVersionClient
+public partial class SeedVersionClient : ISeedVersionClient
 {
     private readonly RawClient _client;
 

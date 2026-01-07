@@ -103,10 +103,15 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     }
 
     public doGenerate(): CSharpFile {
+        const interfaceReference = this.csharp.classReference({
+            name: `I${this.names.classes.rootClient}`,
+            namespace: this.namespaces.root
+        });
         const class_ = this.csharp.class_({
             reference: this.Types.RootClient,
             partial: true,
-            access: this.settings.rootClientAccess
+            access: this.settings.rootClientAccess,
+            interfaceReferences: [interfaceReference]
         });
 
         class_.addField({

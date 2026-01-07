@@ -3,7 +3,7 @@ using SeedSimpleApi.Core;
 
 namespace SeedSimpleApi;
 
-public partial class UserClient
+public partial class UserClient : IUserClient
 {
     private RawClient _client;
 

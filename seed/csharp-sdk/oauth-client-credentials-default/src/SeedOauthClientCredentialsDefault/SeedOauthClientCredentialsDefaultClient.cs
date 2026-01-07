@@ -5,6 +5,7 @@ using SeedOauthClientCredentialsDefault.NestedNoAuth;
 namespace SeedOauthClientCredentialsDefault;
 
 public partial class SeedOauthClientCredentialsDefaultClient
+    : ISeedOauthClientCredentialsDefaultClient
 {
     private readonly RawClient _client;
 
