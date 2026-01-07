@@ -2,7 +2,7 @@
 - version: 3.36.0
   changelogEntry:
     - summary: |
-        The `fern init` command now automatically appends `fern/**/.preview` and `fern/**/.definition` entries to the project's `.gitignore` file.
+        The `fern init` command now automatically creates a `.gitignore` file inside the `fern/` folder with entries to ignore `.preview` and `.definition` directories.
       type: feat
   createdAt: "2026-01-07"
   irVersion: 62
