@@ -2,7 +2,7 @@ using SeedNullable.Core;
 
 namespace SeedNullable;
 
-public partial class SeedNullableClient
+public partial class SeedNullableClient : ISeedNullableClient
 {
     private readonly RawClient _client;
 

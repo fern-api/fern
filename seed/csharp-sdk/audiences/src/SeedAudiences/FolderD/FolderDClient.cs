@@ -2,7 +2,7 @@ using SeedAudiences.Core;
 
 namespace SeedAudiences.FolderD;
 
-public partial class FolderDClient
+public partial class FolderDClient : IFolderDClient
 {
     private RawClient _client;
 

@@ -5,7 +5,7 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class ObjectClient
+public partial class ObjectClient : IObjectClient
 {
     private RawClient _client;
 

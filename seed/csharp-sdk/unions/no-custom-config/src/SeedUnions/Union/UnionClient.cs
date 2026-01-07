@@ -3,7 +3,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-public partial class UnionClient
+public partial class UnionClient : IUnionClient
 {
     private RawClient _client;
 

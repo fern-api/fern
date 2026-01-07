@@ -2,7 +2,7 @@ using SeedMultiLineDocs.Core;
 
 namespace SeedMultiLineDocs;
 
-public partial class SeedMultiLineDocsClient
+public partial class SeedMultiLineDocsClient : ISeedMultiLineDocsClient
 {
     private readonly RawClient _client;
 

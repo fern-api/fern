@@ -3,7 +3,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive;
 
-public partial class NoAuthClient
+public partial class NoAuthClient : INoAuthClient
 {
     private RawClient _client;
 

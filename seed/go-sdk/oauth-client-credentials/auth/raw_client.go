@@ -46,6 +46,7 @@ func (r *RawClient) GetTokenWithClientCredentials(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/x-www-form-urlencoded")
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,
@@ -87,6 +88,7 @@ func (r *RawClient) RefreshToken(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
+	headers.Add("Content-Type", "application/x-www-form-urlencoded")
 	var response *fern.TokenResponse
 	raw, err := r.caller.Call(
 		ctx,

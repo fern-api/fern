@@ -5,7 +5,7 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.NoReqBody;
 
-public partial class NoReqBodyClient
+public partial class NoReqBodyClient : INoReqBodyClient
 {
     private RawClient _client;
 

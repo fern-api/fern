@@ -2,7 +2,7 @@ using SeedMultiUrlEnvironment.Core;
 
 namespace SeedMultiUrlEnvironment;
 
-public partial class SeedMultiUrlEnvironmentClient
+public partial class SeedMultiUrlEnvironmentClient : ISeedMultiUrlEnvironmentClient
 {
     private readonly RawClient _client;
 

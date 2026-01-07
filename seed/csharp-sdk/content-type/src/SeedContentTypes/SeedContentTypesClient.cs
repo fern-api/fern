@@ -2,7 +2,7 @@ using SeedContentTypes.Core;
 
 namespace SeedContentTypes;
 
-public partial class SeedContentTypesClient
+public partial class SeedContentTypesClient : ISeedContentTypesClient
 {
     private readonly RawClient _client;
 

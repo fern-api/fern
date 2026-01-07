@@ -3,7 +3,7 @@ using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
 
-public partial class CompletionsClient
+public partial class CompletionsClient : ICompletionsClient
 {
     private RawClient _client;
 

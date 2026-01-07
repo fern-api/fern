@@ -3,7 +3,7 @@ using SeedExtraProperties.Core;
 
 namespace SeedExtraProperties;
 
-public partial class UserClient
+public partial class UserClient : IUserClient
 {
     private RawClient _client;
 

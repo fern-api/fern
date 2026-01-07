@@ -3,7 +3,7 @@ using SeedInferredAuthImplicit.Core;
 
 namespace SeedInferredAuthImplicit.NestedNoAuth;
 
-public partial class ApiClient
+public partial class ApiClient : IApiClient
 {
     private RawClient _client;
 

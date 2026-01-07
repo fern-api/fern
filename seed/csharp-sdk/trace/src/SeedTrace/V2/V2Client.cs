@@ -4,7 +4,7 @@ using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2;
 
-public partial class V2Client
+public partial class V2Client : IV2Client
 {
     private RawClient _client;
 

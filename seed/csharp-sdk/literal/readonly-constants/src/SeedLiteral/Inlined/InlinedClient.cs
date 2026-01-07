@@ -3,7 +3,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public partial class InlinedClient
+public partial class InlinedClient : IInlinedClient
 {
     private RawClient _client;
 

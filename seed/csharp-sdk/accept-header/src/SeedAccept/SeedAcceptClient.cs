@@ -2,7 +2,7 @@ using SeedAccept.Core;
 
 namespace SeedAccept;
 
-public partial class SeedAcceptClient
+public partial class SeedAcceptClient : ISeedAcceptClient
 {
     private readonly RawClient _client;
 

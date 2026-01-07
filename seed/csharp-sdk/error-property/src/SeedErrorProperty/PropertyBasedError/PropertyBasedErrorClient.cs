@@ -3,7 +3,7 @@ using SeedErrorProperty.Core;
 
 namespace SeedErrorProperty;
 
-public partial class PropertyBasedErrorClient
+public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
 {
     private RawClient _client;
 

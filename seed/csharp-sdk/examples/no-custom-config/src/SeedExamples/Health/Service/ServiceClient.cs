@@ -4,7 +4,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples.Health;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
     private RawClient _client;
 

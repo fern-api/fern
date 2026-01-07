@@ -3,7 +3,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class TestGroupClient
+public partial class TestGroupClient : ITestGroupClient
 {
     private RawClient _client;
 

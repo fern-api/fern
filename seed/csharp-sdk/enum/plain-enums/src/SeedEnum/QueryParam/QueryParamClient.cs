@@ -2,7 +2,7 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class QueryParamClient
+public partial class QueryParamClient : IQueryParamClient
 {
     private RawClient _client;
 

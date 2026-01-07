@@ -2,7 +2,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive;
 
-public partial class ReqWithHeadersClient
+public partial class ReqWithHeadersClient : IReqWithHeadersClient
 {
     private RawClient _client;
 
