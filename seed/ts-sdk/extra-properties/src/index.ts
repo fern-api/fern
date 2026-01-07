@@ -3,3 +3,4 @@ export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 export { SeedExtraPropertiesClient } from "./Client.js";
 export { SeedExtraPropertiesError, SeedExtraPropertiesTimeoutError } from "./errors/index.js";
 export * from "./exports.js";
+export * as serialization from "./serialization/index.js";

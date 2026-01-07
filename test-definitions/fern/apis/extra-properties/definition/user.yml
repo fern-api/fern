@@ -3,10 +3,12 @@ types:
     extra-properties: true
     properties:
       name: string
+      created_at: datetime
     examples:
       - name: BasicUser
         value:
           name: "Alice"
+          created_at: "2024-01-01T00:00:00Z"
           age: 30
           location: "Wonderland"
 

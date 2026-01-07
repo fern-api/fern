@@ -14,7 +14,7 @@ describe("UserClient", () => {
             _type: "CreateUserRequest",
             _version: "v1",
         };
-        const rawResponseBody = { age: 30, location: "Wonderland", name: "Alice" };
+        const rawResponseBody = { age: 30, location: "Wonderland", name: "Alice", created_at: "2024-01-01T00:00:00Z" };
         server
             .mockEndpoint()
             .post("/user")
@@ -31,6 +31,7 @@ describe("UserClient", () => {
         });
         expect(response).toEqual({
             name: "Alice",
+            createdAt: new Date("2024-01-01T00:00:00.000Z"),
             age: 30,
             location: "Wonderland",
         });

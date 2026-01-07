@@ -129,6 +129,10 @@ fixtures:
     - outputFolder: multiple-exports
       customConfig:
         generateSubpackageExports: true
+  extra-properties:
+    - outputFolder: .
+      customConfig:
+        noSerdeLayer: false
   error-property:
     - outputFolder: no-custom-config
       customConfig: null

@@ -4,12 +4,14 @@
  * @example
  *     {
  *         name: "Alice",
+ *         createdAt: new Date("2024-01-01T00:00:00.000Z"),
  *         age: 30,
  *         location: "Wonderland"
  *     }
  */
 export interface User {
     name: string;
+    createdAt: Date;
     /** Accepts any additional properties */
     [key: string]: any;
 }
