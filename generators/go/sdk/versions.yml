@@ -1,5 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.22.1
+  changelogEntry:
+    - summary: |
+        Add 'v' prefix to sdkVersion in metadata.json to follow Go module versioning conventions.
+      type: fix
+  createdAt: "2026-01-05"
+  irVersion: 60
+
+- version: 1.22.0
+  changelogEntry:
+    - summary: |
+        Generate error_codes.go per-namespace for multi-namespace Go SDKs. Each namespace now has its
+        own error_codes.go file containing only the error codes and error types from that namespace,
+        rather than a single global file with all errors.
+      type: feat
+  createdAt: "2026-01-05"
+  irVersion: 60
+
 - version: 1.21.8
   changelogEntry:
     - summary: |

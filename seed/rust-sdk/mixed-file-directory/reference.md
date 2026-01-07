@@ -28,6 +28,7 @@ Create a new organization.
 
 ```rust
 use seed_mixed_file_directory::prelude::*;
+use seed_mixed_file_directory::CreateOrganizationRequest;
 
 #[tokio::main]
 async fn main() {
@@ -220,6 +221,7 @@ Get event metadata.
 
 ```rust
 use seed_mixed_file_directory::prelude::*;
+use seed_mixed_file_directory::Id;
 
 #[tokio::main]
 async fn main() {

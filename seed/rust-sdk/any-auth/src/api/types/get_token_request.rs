@@ -7,6 +7,4 @@ pub struct GetTokenRequest {
     pub client_secret: String,
     pub audience: String,
     pub grant_type: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub scope: Option<String>,
 }

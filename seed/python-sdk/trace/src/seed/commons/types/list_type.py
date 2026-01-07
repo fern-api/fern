@@ -11,9 +11,11 @@ from ...core.serialization import FieldMetadata
 
 
 class ListType(UniversalBaseModel):
-    value_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="valueType")]
+    value_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="valueType")] = pydantic.Field(
+        alias="valueType"
+    )
     is_fixed_length: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isFixedLength")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="isFixedLength", default=None)
     )
     """
     Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.

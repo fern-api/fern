@@ -104,7 +104,6 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
             ts.factory.createParameterDeclaration(
                 undefined,
                 undefined,
-                undefined,
                 UnknownErrorSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
                 undefined,
                 context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()

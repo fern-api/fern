@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 2.1.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Use FastAPI's temp_pydantic_v1_params module for parameter markers (Path, Query, Header, Body, File)
+        when in pydantic v1 or v1_on_v2 mode. This ensures proper compatibility with pydantic v1 models
+        by using evaluate_forwardref to resolve forward references before applying parameter annotations.
+  createdAt: "2025-12-18"
+  irVersion: 61
 
 - version: 2.0.1
   changelogEntry:

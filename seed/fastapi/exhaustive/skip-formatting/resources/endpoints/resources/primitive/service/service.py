@@ -80,14 +80,19 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     @classmethod
     def __init_get_and_return_string(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_string)
+        type_hints = typing.get_type_hints(cls.get_and_return_string)
+        
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+            
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_string, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -106,7 +111,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/string",
-            response_model=str,
+            response_model=None,
             description=AbstractEndpointsPrimitiveService.get_and_return_string.__doc__,
             **get_route_args(cls.get_and_return_string, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -114,14 +119,19 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     @classmethod
     def __init_get_and_return_int(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_int)
+        type_hints = typing.get_type_hints(cls.get_and_return_int)
+        
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+            
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_int, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -140,7 +150,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/integer",
-            response_model=int,
+            response_model=None,
             description=AbstractEndpointsPrimitiveService.get_and_return_int.__doc__,
             **get_route_args(cls.get_and_return_int, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -148,14 +158,19 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     @classmethod
     def __init_get_and_return_long(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_long)
+        type_hints = typing.get_type_hints(cls.get_and_return_long)
+        
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+            
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_long, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -174,7 +189,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/long",
-            response_model=int,
+            response_model=None,
             description=AbstractEndpointsPrimitiveService.get_and_return_long.__doc__,
             **get_route_args(cls.get_and_return_long, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -182,14 +197,19 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     @classmethod
     def __init_get_and_return_double(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_double)
+        type_hints = typing.get_type_hints(cls.get_and_return_double)
+        
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+            
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_double, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -208,7 +228,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/double",
-            response_model=float,
+            response_model=None,
             description=AbstractEndpointsPrimitiveService.get_and_return_double.__doc__,
             **get_route_args(cls.get_and_return_double, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -216,14 +236,19 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     @classmethod
     def __init_get_and_return_bool(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_bool)
+        type_hints = typing.get_type_hints(cls.get_and_return_bool)
+        
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+            
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_bool, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -242,7 +267,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/boolean",
-            response_model=bool,
+            response_model=None,
             description=AbstractEndpointsPrimitiveService.get_and_return_bool.__doc__,
             **get_route_args(cls.get_and_return_bool, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -250,14 +275,19 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     @classmethod
     def __init_get_and_return_datetime(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_datetime)
+        type_hints = typing.get_type_hints(cls.get_and_return_datetime)
+        
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+            
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_datetime, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -276,7 +306,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/datetime",
-            response_model=dt.datetime,
+            response_model=None,
             description=AbstractEndpointsPrimitiveService.get_and_return_datetime.__doc__,
             **get_route_args(cls.get_and_return_datetime, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -284,14 +314,19 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     @classmethod
     def __init_get_and_return_date(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_date)
+        type_hints = typing.get_type_hints(cls.get_and_return_date)
+        
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+            
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_date, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -310,7 +345,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/date",
-            response_model=dt.date,
+            response_model=None,
             description=AbstractEndpointsPrimitiveService.get_and_return_date.__doc__,
             **get_route_args(cls.get_and_return_date, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -318,14 +353,19 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     @classmethod
     def __init_get_and_return_uuid(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_uuid)
+        type_hints = typing.get_type_hints(cls.get_and_return_uuid)
+        
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+            
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_uuid, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -344,7 +384,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/uuid",
-            response_model=uuid.UUID,
+            response_model=None,
             description=AbstractEndpointsPrimitiveService.get_and_return_uuid.__doc__,
             **get_route_args(cls.get_and_return_uuid, default_tag="endpoints.primitive"),
         )(wrapper)
@@ -352,14 +392,19 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
     @classmethod
     def __init_get_and_return_base_64(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_and_return_base_64)
+        type_hints = typing.get_type_hints(cls.get_and_return_base_64)
+        
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+            
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()]))
             elif parameter_name == "auth":
-                new_parameters.append(parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)]))
+                new_parameters.append(parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)]))
             else:
                 new_parameters.append(parameter)
         setattr(cls.get_and_return_base_64, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -378,7 +423,7 @@ class AbstractEndpointsPrimitiveService(AbstractFernService):
         
         router.post(
             path="/primitive/base64",
-            response_model=str,
+            response_model=None,
             description=AbstractEndpointsPrimitiveService.get_and_return_base_64.__doc__,
             **get_route_args(cls.get_and_return_base_64, default_tag="endpoints.primitive"),
         )(wrapper)

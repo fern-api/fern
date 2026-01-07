@@ -101,10 +101,11 @@ export class SeedValidationClient {
         requestOptions?: SeedValidationClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedValidation.Type>> {
         const { decimal, even, name } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.decimal = decimal.toString();
-        _queryParams.even = even.toString();
-        _queryParams.name = name;
+        const _queryParams: Record<string, unknown> = {
+            decimal,
+            even,
+            name,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:

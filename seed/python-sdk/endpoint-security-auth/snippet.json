@@ -1,0 +1,109 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEndpointSecurityAuth\n\nclient = SeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.get_token(\n    client_id=\"client_id\",\n    client_secret=\"client_secret\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEndpointSecurityAuth\n\nclient = AsyncSeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.auth.get_token(\n        client_id=\"client_id\",\n        client_secret=\"client_secret\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithBearer"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEndpointSecurityAuth\n\nclient = SeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.user.get_with_bearer()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEndpointSecurityAuth\n\nclient = AsyncSeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_with_bearer()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithApiKey"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEndpointSecurityAuth\n\nclient = SeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.user.get_with_api_key()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEndpointSecurityAuth\n\nclient = AsyncSeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_with_api_key()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithOAuth"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEndpointSecurityAuth\n\nclient = SeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.user.get_with_o_auth()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEndpointSecurityAuth\n\nclient = AsyncSeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_with_o_auth()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithBasic"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEndpointSecurityAuth\n\nclient = SeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.user.get_with_basic()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEndpointSecurityAuth\n\nclient = AsyncSeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_with_basic()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithInferredAuth"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEndpointSecurityAuth\n\nclient = SeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.user.get_with_inferred_auth()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEndpointSecurityAuth\n\nclient = AsyncSeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_with_inferred_auth()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithAnyAuth"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEndpointSecurityAuth\n\nclient = SeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.user.get_with_any_auth()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEndpointSecurityAuth\n\nclient = AsyncSeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_with_any_auth()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getWithAllAuth"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEndpointSecurityAuth\n\nclient = SeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.user.get_with_all_auth()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEndpointSecurityAuth\n\nclient = AsyncSeedEndpointSecurityAuth(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_with_all_auth()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

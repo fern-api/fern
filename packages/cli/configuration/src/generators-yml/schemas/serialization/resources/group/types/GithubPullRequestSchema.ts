@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubLicenseSchema } from "../../license/types/GithubLicenseSchema";
 import { ReviewersSchema } from "../../reviewers/types/ReviewersSchema";
 
 export const GithubPullRequestSchema: core.serialization.ObjectSchema<
     serializers.GithubPullRequestSchema.Raw,
-    FernDefinition.GithubPullRequestSchema
+    GeneratorsYml.GithubPullRequestSchema
 > = core.serialization.object({
     repository: core.serialization.string(),
     branch: core.serialization.string().optional(),

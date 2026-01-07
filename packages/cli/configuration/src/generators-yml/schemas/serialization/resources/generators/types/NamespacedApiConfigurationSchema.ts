@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { ApiConfigurationSchemaInternal } from "./ApiConfigurationSchemaInternal";
 
 export const NamespacedApiConfigurationSchema: core.serialization.ObjectSchema<
     serializers.NamespacedApiConfigurationSchema.Raw,
-    FernDefinition.NamespacedApiConfigurationSchema
+    GeneratorsYml.NamespacedApiConfigurationSchema
 > = core.serialization.object({
     namespaces: core.serialization.record(core.serialization.string(), ApiConfigurationSchemaInternal),
 });

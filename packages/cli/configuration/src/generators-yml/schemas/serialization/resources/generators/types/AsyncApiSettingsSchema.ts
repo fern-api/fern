@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { MessageNamingSettingsSchema } from "./MessageNamingSettingsSchema";
 import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema";
 
 export const AsyncApiSettingsSchema: core.serialization.ObjectSchema<
     serializers.AsyncApiSettingsSchema.Raw,
-    FernDefinition.AsyncApiSettingsSchema
+    GeneratorsYml.AsyncApiSettingsSchema
 > = core.serialization
     .object({
         "message-naming": MessageNamingSettingsSchema.optional(),

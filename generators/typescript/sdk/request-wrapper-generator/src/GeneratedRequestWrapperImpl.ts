@@ -131,7 +131,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             kind: StructureKind.Interface,
             name: this.wrapperName,
             isExported: true,
-            docs: docs != null ? [docs] : [],
+            docs: docs ? [docs] : [],
             properties: [],
             extends: []
         };
@@ -205,7 +205,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 safeName: getPropertyKey(propertyName.safeName),
                 type: type.typeNodeWithoutUndefined,
                 isOptional: type.isOptional || hasDefaultValue,
-                docs: pathParameter.docs != null ? [pathParameter.docs] : undefined
+                docs: pathParameter.docs ? [pathParameter.docs] : undefined
             });
         }
 
@@ -223,7 +223,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                       ])
                     : type.typeNodeWithoutUndefined,
                 isOptional: type.isOptional || hasDefaultValue,
-                docs: queryParameter.docs != null ? [queryParameter.docs] : undefined
+                docs: queryParameter.docs ? [queryParameter.docs] : undefined
             });
         }
 
@@ -236,7 +236,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 safeName: getPropertyKey(headerName.safeName),
                 type: type.typeNodeWithoutUndefined,
                 isOptional: type.isOptional || hasDefaultValue,
-                docs: header.docs != null ? [header.docs] : undefined
+                docs: header.docs ? [header.docs] : undefined
             });
         }
 
@@ -275,7 +275,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             safeName: name,
                             type: type.typeNodeWithoutUndefined,
                             isOptional: type.isOptional,
-                            docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
+                            docs: referenceToRequestBody.docs ? [referenceToRequestBody.docs] : undefined
                         };
                         properties.push(requestProperty);
                     }
@@ -293,7 +293,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                     safeName: getPropertyKey(propertyName.safeName),
                                     type: this.getFileParameterType(fileProperty, context),
                                     isOptional: fileProperty.isOptional,
-                                    docs: fileProperty.docs != null ? [fileProperty.docs] : undefined
+                                    docs: fileProperty.docs ? [fileProperty.docs] : undefined
                                 });
                             },
                             bodyProperty: (inlinedProperty) => {
@@ -358,7 +358,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             safeName: getPropertyKey(name.safeName),
             type: type.typeNodeWithoutUndefined,
             isOptional: type.isOptional,
-            docs: property.docs != null ? [property.docs] : undefined
+            docs: property.docs ? [property.docs] : undefined
         };
     }
 
@@ -916,7 +916,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             safeName: name,
             type: type.typeNodeWithoutUndefined,
             isOptional: type.isOptional,
-            docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
+            docs: referenceToRequestBody.docs ? [referenceToRequestBody.docs] : undefined
         });
         return properties;
     }
@@ -955,7 +955,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 safeName: getPropertyKey(propertyName.safeName),
                 type: typeNode,
                 isOptional: propertyType.isOptional || hasDefaultValue,
-                docs: property.docs != null ? [property.docs] : undefined
+                docs: property.docs ? [property.docs] : undefined
             });
         }
 

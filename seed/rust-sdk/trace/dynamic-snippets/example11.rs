@@ -11,8 +11,7 @@ async fn main() {
     client
         .migration
         .get_attempted_migrations(Some(
-            RequestOptions::new()
-                .additional_header("admin-key-header", "admin-key-header".to_string()),
+            RequestOptions::new().additional_header("admin-key-header", "admin-key-header"),
         ))
         .await;
 }

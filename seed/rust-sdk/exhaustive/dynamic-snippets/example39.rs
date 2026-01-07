@@ -1,4 +1,5 @@
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::{Animal, Cat, Dog};
 
 #[tokio::main]
 async fn main() {

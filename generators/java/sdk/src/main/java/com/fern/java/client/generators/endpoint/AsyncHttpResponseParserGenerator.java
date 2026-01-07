@@ -85,6 +85,28 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
     }
 
     @Override
+    public void addEndpointWithoutRequestWithRequestOptionsReturnStatement(
+            MethodSpec.Builder endpointWithoutRequestWithRequestOptionsBuilder,
+            MethodSpec endpointWithRequestOptions,
+            List<String> paramNamesWoBodyWithRequestOptions,
+            ParameterSpec bodyParameterSpec) {
+        // Handle parameterized types (e.g., OptionalNullable<T>) which need type witness syntax
+        if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
+            ParameterizedTypeName paramType = (ParameterizedTypeName) bodyParameterSpec.type;
+            endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
+                    "return " + endpointWithRequestOptions.name + "("
+                            + String.join(",", paramNamesWoBodyWithRequestOptions) + ")",
+                    paramType.rawType,
+                    paramType.typeArguments.get(0));
+        } else {
+            endpointWithoutRequestWithRequestOptionsBuilder.addStatement(
+                    "return " + endpointWithRequestOptions.name + "("
+                            + String.join(",", paramNamesWoBodyWithRequestOptions) + ")",
+                    bodyParameterSpec.type);
+        }
+    }
+
+    @Override
     public CodeBlock getByteArrayEndpointBaseMethodBody(
             CodeBlock.Builder methodBodyBuilder,
             MethodSpec byteArrayBaseMethodSpec,

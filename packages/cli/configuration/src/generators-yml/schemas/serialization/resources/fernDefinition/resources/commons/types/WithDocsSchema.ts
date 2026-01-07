@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 
 export const WithDocsSchema: core.serialization.ObjectSchema<
     serializers.fernDefinition.WithDocsSchema.Raw,
-    FernDefinition.fernDefinition.WithDocsSchema
+    GeneratorsYml.fernDefinition.WithDocsSchema
 > = core.serialization.object({
     docs: core.serialization.string().optional(),
 });

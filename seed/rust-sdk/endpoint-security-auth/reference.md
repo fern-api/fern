@@ -30,7 +30,6 @@ async fn main() {
                 client_secret: "client_secret".to_string(),
                 audience: "https://api.example.com".to_string(),
                 grant_type: "client_credentials".to_string(),
-                scope: Some("scope".to_string()),
             },
             None,
         )
@@ -75,14 +74,6 @@ async fn main() {
 <dd>
 
 **grant_type:** `String` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `Option<String>` 
     
 </dd>
 </dl>
@@ -166,6 +157,76 @@ async fn main() {
 </details>
 
 <details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_with_o_auth</a>() -> Result<Vec<User>, ApiError></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_endpoint_security_auth::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
+    client.user.get_with_bearer(None).await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_with_basic</a>() -> Result<Vec<User>, ApiError></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_endpoint_security_auth::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = EndpointSecurityAuthClient::new(config).expect("Failed to build client");
+    client.user.get_with_bearer(None).await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_with_inferred_auth</a>() -> Result<Vec<User>, ApiError></code></summary>
 <dl>
 <dd>
 

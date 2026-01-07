@@ -43,6 +43,7 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_oauth_client_credentials_reference::prelude::*;
+use seed_oauth_client_credentials_reference::GetTokenRequest;
 
 #[tokio::main]
 async fn main() {

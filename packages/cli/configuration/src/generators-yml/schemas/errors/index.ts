@@ -1,2 +1,2 @@
-export { FernDefinitionError } from "./FernDefinitionError";
-export { FernDefinitionTimeoutError } from "./FernDefinitionTimeoutError";
+export { GeneratorsYmlError } from "./GeneratorsYmlError";
+export { GeneratorsYmlTimeoutError } from "./GeneratorsYmlTimeoutError";

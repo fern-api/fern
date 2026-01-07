@@ -24,6 +24,7 @@ export declare namespace BaseOpenAPIWorkspace {
         groupEnvironmentsByHost: boolean | undefined;
         removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
         defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
+        pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;
@@ -46,6 +47,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly groupEnvironmentsByHost: boolean | undefined;
     public readonly removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas | undefined;
     public readonly defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
+    public readonly pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     private readonly converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -66,6 +68,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
         this.removeDiscriminantsFromSchemas = args.removeDiscriminantsFromSchemas;
         this.defaultIntegerFormat = args.defaultIntegerFormat;
+        this.pathParameterOrder = args.pathParameterOrder;
         this.converter = new FernDefinitionConverter(args);
     }
 
@@ -132,6 +135,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public resolveAliases: generatorsYml.ResolveAliases | undefined;
     public groupEnvironmentsByHost: boolean | undefined;
     public defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
+    public pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     public coerceEnumsToLiterals: boolean | undefined;
     private converter: FernDefinitionConverter;
 
@@ -147,6 +151,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
         this.defaultIntegerFormat = args.defaultIntegerFormat;
         this.coerceEnumsToLiterals = args.coerceEnumsToLiterals;
+        this.pathParameterOrder = args.pathParameterOrder;
         this.converter = new FernDefinitionConverter(args);
     }
 

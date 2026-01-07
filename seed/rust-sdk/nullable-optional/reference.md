@@ -94,6 +94,7 @@ Create a new user
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{Address, CreateUserRequest, NullableUserId, OptionalUserId};
 
 #[tokio::main]
 async fn main() {
@@ -161,6 +162,7 @@ Update a user (partial update)
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{Address, NullableUserId, OptionalUserId, UpdateUserRequest};
 
 #[tokio::main]
 async fn main() {
@@ -440,6 +442,11 @@ Create a complex profile to test nullable enums and unions
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{
+    Address, ComplexProfile, Document, EmailNotification, NotificationMethod, NullableUserId,
+    OptionalUserId, Organization, PushNotification, SearchResult, SmsNotification, UserResponse,
+    UserRole, UserStatus,
+};
 
 #[tokio::main]
 async fn main() {
@@ -687,6 +694,11 @@ Update complex profile to test nullable field updates
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{
+    Address, Document, EmailNotification, NotificationMethod, NullableUserId, OptionalUserId,
+    Organization, PushNotification, SearchResult, SmsNotification, UserResponse, UserRole,
+    UserStatus,
+};
 
 #[tokio::main]
 async fn main() {
@@ -836,6 +848,11 @@ Test endpoint for validating null deserialization
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{
+    Address, DeserializationTestRequest, Document, EmailNotification, NotificationMethod,
+    NullableUserId, OptionalUserId, Organization, PushNotification, SearchResult, SmsNotification,
+    UserResponse, UserRole, UserStatus,
+};
 
 #[tokio::main]
 async fn main() {
@@ -946,6 +963,7 @@ Filter users by role with nullable enum
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{UserRole, UserStatus};
 
 #[tokio::main]
 async fn main() {

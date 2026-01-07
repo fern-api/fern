@@ -42,8 +42,9 @@ export class PackageClient {
         requestOptions?: PackageClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { for: for_ } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.for = for_;
+        const _queryParams: Record<string, unknown> = {
+            for: for_,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:

@@ -55,29 +55,34 @@ class AbstractNullableService(AbstractFernService):
     @classmethod
     def __init_get_users(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_users)
+        type_hints = typing.get_type_hints(cls.get_users)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "usernames":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             elif parameter_name == "avatar":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             elif parameter_name == "activated":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             elif parameter_name == "tags":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             elif parameter_name == "extra":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -97,7 +102,7 @@ class AbstractNullableService(AbstractFernService):
 
         router.get(
             path="/users",
-            response_model=typing.Sequence[User],
+            response_model=None,
             description=AbstractNullableService.get_users.__doc__,
             **get_route_args(cls.get_users, default_tag="nullable"),
         )(wrapper)
@@ -105,13 +110,18 @@ class AbstractNullableService(AbstractFernService):
     @classmethod
     def __init_create_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_user)
+        type_hints = typing.get_type_hints(cls.create_user)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -131,7 +141,7 @@ class AbstractNullableService(AbstractFernService):
 
         router.post(
             path="/users",
-            response_model=User,
+            response_model=None,
             description=AbstractNullableService.create_user.__doc__,
             **get_route_args(cls.create_user, default_tag="nullable"),
         )(wrapper)
@@ -139,13 +149,18 @@ class AbstractNullableService(AbstractFernService):
     @classmethod
     def __init_delete_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.delete_user)
+        type_hints = typing.get_type_hints(cls.delete_user)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -165,7 +180,7 @@ class AbstractNullableService(AbstractFernService):
 
         router.delete(
             path="/users",
-            response_model=bool,
+            response_model=None,
             description=AbstractNullableService.delete_user.__doc__,
             **get_route_args(cls.delete_user, default_tag="nullable"),
         )(wrapper)

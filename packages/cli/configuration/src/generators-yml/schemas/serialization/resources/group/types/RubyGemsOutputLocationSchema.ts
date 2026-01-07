@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const RubyGemsOutputLocationSchema: core.serialization.ObjectSchema<
     serializers.RubyGemsOutputLocationSchema.Raw,
-    FernDefinition.RubyGemsOutputLocationSchema
+    GeneratorsYml.RubyGemsOutputLocationSchema
 > = core.serialization.object({
     url: core.serialization.string().optional(),
     "package-name": core.serialization.string(),

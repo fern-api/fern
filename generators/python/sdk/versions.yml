@@ -1,5 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
 - version: 4.46.7
   changelogEntry:
     - summary: |
@@ -8,6 +9,27 @@
         form serialization of complex types.
       type: fix
   createdAt: "2025-12-19"
+  irVersion: 62
+
+- version: 4.46.7-rc2
+  changelogEntry:
+    - summary: Fixed Python SDK generation to use native Pydantic field aliases and improved core parsing so wire-key and nested/union validation works correctly across Pydantic v1/v2.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
+- version: 4.46.7-rc1
+  changelogEntry:
+    - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.
+      type: chore
+  createdAt: "2026-01-05"
+  irVersion: 62
+
+- version: 4.46.7-rc0
+  changelogEntry:
+    - summary: Skip installation of generator-cli in Python SDK generator as it is already installed in the base image.
+      type: chore
+  createdAt: "2025-12-23"
   irVersion: 62
 
 - version: 4.46.6

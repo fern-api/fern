@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubLicenseType } from "./GithubLicenseType";
 import { GithubLicenseCustomSchema } from "./GithubLicenseCustomSchema";
 
 export const GithubLicenseSchema: core.serialization.Schema<
     serializers.GithubLicenseSchema.Raw,
-    FernDefinition.GithubLicenseSchema
+    GeneratorsYml.GithubLicenseSchema
 > = core.serialization.undiscriminatedUnion([GithubLicenseType, GithubLicenseCustomSchema]);
 
 export declare namespace GithubLicenseSchema {

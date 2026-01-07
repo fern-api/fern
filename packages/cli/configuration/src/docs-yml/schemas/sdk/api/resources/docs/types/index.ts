@@ -43,6 +43,7 @@ export * from "./DocsTypographyConfig";
 export * from "./LayoutConfig";
 export * from "./DocsSettingsConfig";
 export * from "./ThemeConfig";
+export * from "./ProductSwitcherThemeConfig";
 export * from "./LanguageSwitcherThemeConfig";
 export * from "./FooterNavThemeConfig";
 export * from "./TabsThemeConfig";

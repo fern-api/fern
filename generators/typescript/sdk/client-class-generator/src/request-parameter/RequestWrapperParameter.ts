@@ -10,7 +10,7 @@ import {
     StringType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts } from "@fern-typescript/commons";
+import { createNumericLiteralSafe, GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -253,7 +253,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             return resolvedType.primitive.v2._visit<ts.Expression | undefined>({
                 integer: (integerType: IntegerType) => {
                     if (integerType.default != null) {
-                        return ts.factory.createNumericLiteral(integerType.default.toString());
+                        return createNumericLiteralSafe(integerType.default);
                     }
                     return undefined;
                 },
@@ -264,13 +264,13 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                                 ts.factory.createStringLiteral(longType.default.toString())
                             ]);
                         }
-                        return ts.factory.createNumericLiteral(longType.default.toString());
+                        return createNumericLiteralSafe(longType.default);
                     }
                     return undefined;
                 },
                 double: (doubleType: DoubleType) => {
                     if (doubleType.default != null) {
-                        return ts.factory.createNumericLiteral(doubleType.default.toString());
+                        return createNumericLiteralSafe(doubleType.default);
                     }
                     return undefined;
                 },

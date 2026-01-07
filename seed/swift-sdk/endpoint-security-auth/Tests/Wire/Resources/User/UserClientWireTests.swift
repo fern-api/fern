@@ -114,6 +114,80 @@ import EndpointSecurityAuth
         try #require(response == expectedResponse)
     }
 
+    @Test func getWithBasic1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                [
+                  {
+                    "id": "id",
+                    "name": "name"
+                  },
+                  {
+                    "id": "id",
+                    "name": "name"
+                  }
+                ]
+                """.utf8
+            )
+        )
+        let client = EndpointSecurityAuthClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            User(
+                id: "id",
+                name: "name"
+            ),
+            User(
+                id: "id",
+                name: "name"
+            )
+        ]
+        let response = try await client.user.getWithBasic(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getWithInferredAuth1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                [
+                  {
+                    "id": "id",
+                    "name": "name"
+                  },
+                  {
+                    "id": "id",
+                    "name": "name"
+                  }
+                ]
+                """.utf8
+            )
+        )
+        let client = EndpointSecurityAuthClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            User(
+                id: "id",
+                name: "name"
+            ),
+            User(
+                id: "id",
+                name: "name"
+            )
+        ]
+        let response = try await client.user.getWithInferredAuth(requestOptions: RequestOptions(additionalHeaders: stub.headers))
+        try #require(response == expectedResponse)
+    }
+
     @Test func getWithAnyAuth1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(

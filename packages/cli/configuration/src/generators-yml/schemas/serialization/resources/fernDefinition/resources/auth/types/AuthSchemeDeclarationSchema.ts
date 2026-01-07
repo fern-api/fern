@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { OAuthSchemeSchema } from "./OAuthSchemeSchema";
 import { HeaderAuthSchemeSchema } from "./HeaderAuthSchemeSchema";
@@ -12,7 +12,7 @@ import { BearerAuthSchemeSchema } from "./BearerAuthSchemeSchema";
 
 export const AuthSchemeDeclarationSchema: core.serialization.Schema<
     serializers.fernDefinition.AuthSchemeDeclarationSchema.Raw,
-    FernDefinition.fernDefinition.AuthSchemeDeclarationSchema
+    GeneratorsYml.fernDefinition.AuthSchemeDeclarationSchema
 > = core.serialization.undiscriminatedUnion([
     OAuthSchemeSchema,
     HeaderAuthSchemeSchema,

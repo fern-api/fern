@@ -22,7 +22,7 @@ export class JavaGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         readmeConfigBuilder: ReadmeConfigBuilder;
         ir: IntermediateRepresentation;
     }) {
-        super({ logger, config, selfHosted: ir.selfHosted });
+        super({ logger, config, selfHosted: ir.selfHosted, skipInstall: true });
         this.readmeConfigBuilder = readmeConfigBuilder;
         this.publishConfig = ir.publishConfig;
     }

@@ -102,7 +102,7 @@ export class ObjectWriter {
     }
 
     private writeProperty(writer: CodeBlockWriter, property: ObjectWriter.Property) {
-        if (property.docs != null) {
+        if (property.docs) {
             writer.writeLine("/**");
             writer.write(property.docs.replaceAll(NEWLINE_REGEX, " * "));
             writer.newLineIfLastNot();

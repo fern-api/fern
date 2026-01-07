@@ -36,23 +36,23 @@ export class MultipartFormClient {
         request: SeedEnum.MultipartFormRequest,
         requestOptions?: MultipartFormClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _request = await core.newFormData();
-        _request.append("color", request.color);
+        const _body = await core.newFormData();
+        _body.append("color", request.color);
         if (request.maybeColor != null) {
-            _request.append("maybeColor", request.maybeColor);
+            _body.append("maybeColor", request.maybeColor);
         }
 
         for (const _item of request.colorList) {
-            _request.append("colorList", _item);
+            _body.append("colorList", _item);
         }
 
         if (request.maybeColorList != null) {
             for (const _item of request.maybeColorList) {
-                _request.append("maybeColorList", _item);
+                _body.append("maybeColorList", _item);
             }
         }
 
-        const _maybeEncodedRequest = await _request.getRequest();
+        const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),

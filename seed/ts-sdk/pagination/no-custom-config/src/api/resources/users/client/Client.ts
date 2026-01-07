@@ -42,19 +42,12 @@ export class UsersClient {
                 request: SeedPagination.ListUsersCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (page != null) {
-                    _queryParams.page = page.toString();
-                }
-                if (perPage != null) {
-                    _queryParams.per_page = perPage.toString();
-                }
-                if (order != null) {
-                    _queryParams.order = order;
-                }
-                if (startingAfter != null) {
-                    _queryParams.starting_after = startingAfter;
-                }
+                const _queryParams: Record<string, unknown> = {
+                    page,
+                    per_page: perPage,
+                    order: order != null ? order : undefined,
+                    starting_after: startingAfter,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -125,10 +118,9 @@ export class UsersClient {
                 request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersMixedTypePaginationResponse>> => {
                 const { cursor } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (cursor != null) {
-                    _queryParams.cursor = cursor;
-                }
+                const _queryParams: Record<string, unknown> = {
+                    cursor,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -272,19 +264,12 @@ export class UsersClient {
                 request: SeedPagination.ListUsersOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (page != null) {
-                    _queryParams.page = page.toString();
-                }
-                if (perPage != null) {
-                    _queryParams.per_page = perPage.toString();
-                }
-                if (order != null) {
-                    _queryParams.order = order;
-                }
-                if (startingAfter != null) {
-                    _queryParams.starting_after = startingAfter;
-                }
+                const _queryParams: Record<string, unknown> = {
+                    page,
+                    per_page: perPage,
+                    order: order != null ? order : undefined,
+                    starting_after: startingAfter,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -355,19 +340,12 @@ export class UsersClient {
                 request: SeedPagination.ListUsersDoubleOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (page != null) {
-                    _queryParams.page = page.toString();
-                }
-                if (perPage != null) {
-                    _queryParams.per_page = perPage.toString();
-                }
-                if (order != null) {
-                    _queryParams.order = order;
-                }
-                if (startingAfter != null) {
-                    _queryParams.starting_after = startingAfter;
-                }
+                const _queryParams: Record<string, unknown> = {
+                    page,
+                    per_page: perPage,
+                    order: order != null ? order : undefined,
+                    starting_after: startingAfter,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -508,16 +486,11 @@ export class UsersClient {
                 request: SeedPagination.ListUsersOffsetStepPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const { page, limit, order } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (page != null) {
-                    _queryParams.page = page.toString();
-                }
-                if (limit != null) {
-                    _queryParams.limit = limit.toString();
-                }
-                if (order != null) {
-                    _queryParams.order = order;
-                }
+                const _queryParams: Record<string, unknown> = {
+                    page,
+                    limit,
+                    order: order != null ? order : undefined,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -587,16 +560,11 @@ export class UsersClient {
                 request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const { page, limit, order } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (page != null) {
-                    _queryParams.page = page.toString();
-                }
-                if (limit != null) {
-                    _queryParams.limit = limit.toString();
-                }
-                if (order != null) {
-                    _queryParams.order = order;
-                }
+                const _queryParams: Record<string, unknown> = {
+                    page,
+                    limit,
+                    order: order != null ? order : undefined,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -665,10 +633,9 @@ export class UsersClient {
                 request: SeedPagination.ListUsersExtendedRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersExtendedResponse>> => {
                 const { cursor } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (cursor != null) {
-                    _queryParams.cursor = cursor;
-                }
+                const _queryParams: Record<string, unknown> = {
+                    cursor,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -735,10 +702,9 @@ export class UsersClient {
                 request: SeedPagination.ListUsersExtendedRequestForOptionalData,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersExtendedOptionalListResponse>> => {
                 const { cursor } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (cursor != null) {
-                    _queryParams.cursor = cursor;
-                }
+                const _queryParams: Record<string, unknown> = {
+                    cursor,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -805,10 +771,9 @@ export class UsersClient {
                 request: SeedPagination.ListUsernamesRequest,
             ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> => {
                 const { starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (startingAfter != null) {
-                    _queryParams.starting_after = startingAfter;
-                }
+                const _queryParams: Record<string, unknown> = {
+                    starting_after: startingAfter,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -876,10 +841,9 @@ export class UsersClient {
                 request: SeedPagination.ListUsernamesWithOptionalResponseRequest,
             ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor | undefined>> => {
                 const { starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (startingAfter != null) {
-                    _queryParams.starting_after = startingAfter;
-                }
+                const _queryParams: Record<string, unknown> = {
+                    starting_after: startingAfter,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -947,10 +911,9 @@ export class UsersClient {
                 request: SeedPagination.ListWithGlobalConfigRequest,
             ): Promise<core.WithRawResponse<SeedPagination.UsernameContainer>> => {
                 const { offset } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (offset != null) {
-                    _queryParams.offset = offset.toString();
-                }
+                const _queryParams: Record<string, unknown> = {
+                    offset,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -1018,10 +981,9 @@ export class UsersClient {
                 request: SeedPagination.ListUsersOptionalDataRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersOptionalDataPaginationResponse>> => {
                 const { page } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (page != null) {
-                    _queryParams.page = page.toString();
-                }
+                const _queryParams: Record<string, unknown> = {
+                    page,
+                };
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,

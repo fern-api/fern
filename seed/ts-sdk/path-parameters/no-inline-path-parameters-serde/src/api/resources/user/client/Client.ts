@@ -241,11 +241,9 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User[]>> {
         const { limit } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (limit != null) {
-            _queryParams.limit = limit.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            limit,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

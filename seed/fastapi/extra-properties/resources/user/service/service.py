@@ -38,13 +38,18 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_create_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_user)
+        type_hints = typing.get_type_hints(cls.create_user)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -64,7 +69,7 @@ class AbstractUserService(AbstractFernService):
 
         router.post(
             path="/user",
-            response_model=User,
+            response_model=None,
             description=AbstractUserService.create_user.__doc__,
             **get_route_args(cls.create_user, default_tag="user"),
         )(wrapper)

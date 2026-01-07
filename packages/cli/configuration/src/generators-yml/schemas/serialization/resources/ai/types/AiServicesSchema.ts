@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { ModelProvider } from "./ModelProvider";
 import { ModelName } from "./ModelName";
 
 export const AiServicesSchema: core.serialization.ObjectSchema<
     serializers.AiServicesSchema.Raw,
-    FernDefinition.AiServicesSchema
+    GeneratorsYml.AiServicesSchema
 > = core.serialization.object({
     provider: ModelProvider,
     model: ModelName,

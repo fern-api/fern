@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { WhitelabelGithubConfigurationSchema } from "./WhitelabelGithubConfigurationSchema";
 
 export const WhitelabelConfigurationSchema: core.serialization.ObjectSchema<
     serializers.WhitelabelConfigurationSchema.Raw,
-    FernDefinition.WhitelabelConfigurationSchema
+    GeneratorsYml.WhitelabelConfigurationSchema
 > = core.serialization.object({
     github: WhitelabelGithubConfigurationSchema.optional(),
 });

@@ -34,6 +34,24 @@ public final class UserClient: Sendable {
         )
     }
 
+    public func getWithBasic(requestOptions: RequestOptions? = nil) async throws -> [User] {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            requestOptions: requestOptions,
+            responseType: [User].self
+        )
+    }
+
+    public func getWithInferredAuth(requestOptions: RequestOptions? = nil) async throws -> [User] {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            requestOptions: requestOptions,
+            responseType: [User].self
+        )
+    }
+
     public func getWithAnyAuth(requestOptions: RequestOptions? = nil) async throws -> [User] {
         return try await httpClient.performRequest(
             method: .get,

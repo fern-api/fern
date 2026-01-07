@@ -1,5 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc76
+  createdAt: "2026-01-06"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix wire tests for paginated endpoints not triggering HTTP requests.
+        Cursor and offset pagination endpoints return lazy iterators that don't make HTTP requests
+        until iterated. Wire tests now call `.pages.next_page` on the returned iterator to trigger
+        the first HTTP request, ensuring WireMock receives the expected request for verification.
+    - type: fix
+      summary: |
+        Fix pagination field names to use Ruby-safe method names instead of wire values.
+        Fields like `cursor_field`, `item_field`, and `has_next_field` are used to call Ruby
+        methods on response objects via `send()`. Previously these used `wireValue` which doesn't
+        account for Ruby reserved word escaping (e.g., "next" -> "next_"). Now uses
+        `snakeCase.safeName` which matches the actual Ruby accessor names.
+  irVersion: 61
+
+- version: 1.0.0-rc75
+  createdAt: "2026-01-06"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix inconsistent module naming for organization names containing digits (e.g., "auth0").
+        Previously, internal types used `module Auth0` while public types used `module Auth_0` due to
+        lodash's snakeCase inserting underscores before digits. Now all code paths use upperFirst
+        directly on the organization name, producing consistent module names like `Auth0`.
+        Also fixes test_helper.rb require path to use the correct folder name (e.g., `auth_0`)
+        instead of the module name (e.g., `auth0`), preventing LoadError when running tests.
+  irVersion: 61
+
+- version: 1.0.0-rc75
+  changelogEntry:
+    - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.
+      type: chore
+  createdAt: "2026-01-05"
+  irVersion: 61
+
 - version: 1.0.0-rc74
   createdAt: "2025-12-19"
   changelogEntry:

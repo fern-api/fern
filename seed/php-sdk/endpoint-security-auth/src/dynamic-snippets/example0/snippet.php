@@ -17,6 +17,5 @@ $client->auth->getToken(
         'clientSecret' => 'client_secret',
         'audience' => 'https://api.example.com',
         'grantType' => 'client_credentials',
-        'scope' => 'scope',
     ]),
 );

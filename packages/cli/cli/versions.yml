@@ -1,4 +1,137 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.35.2
+  changelogEntry:
+    - summary: |
+        Default dynamic SDK snippets on if the experimental configuration is already present.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
+- version: 3.35.1
+  changelogEntry:
+    - summary: |
+        Respect the `path-parameter-order` setting from `generators.yml` when importing OpenAPI specs, which is different from the `path-parameter-order` on the `api.settings` level.
+        By setting both levels to `spec-order`, you can preserve the old behavior of using the order defined in the OpenAPI spec.
+      type: fix
+    - summary: |
+        Fix local generation to convert self-hosted GitHub URI (owner/repo) to full URL format,
+        matching Fiddle's remote generation behavior.
+      type: fix
+  createdAt: "2026-01-06"
+  irVersion: 62
+
+- version: 3.35.0
+  changelogEntry:
+    - summary: |
+        Add `x-fern-parameter-name` extension support for AsyncAPI parameters. This allows customizing parameter names in generated SDKs for AsyncAPI specs, similar to existing OpenAPI support.
+      type: feat
+  createdAt: "2026-01-05"
+  irVersion: 62
+
+- version: 3.34.0
+  changelogEntry:
+    - summary: |
+        Updates the SDK snippet generation to use dynamic snippets by default. To disable, set `experimental.dynamicSnippets` to `false` in your `docs.yml` file.
+      type: feat
+  createdAt: "2026-01-05"
+  irVersion: 62
+
+- version: 3.33.0
+  changelogEntry:
+    - summary: |
+        Fix handling of OpenAPI schemas that use `discriminator.mapping` without explicit `oneOf`/`anyOf`. These schemas are now correctly converted as discriminated unions instead of plain objects. This pattern is used by APIs like Dropbox Sign where a base schema defines a discriminator with mapping to variant schemas.
+      type: fix
+  createdAt: "2026-01-06"
+  irVersion: 62
+
+- version: 3.32.0
+  changelogEntry:
+    - summary: |
+        Add `extends` field to dynamic IR ObjectType to expose inheritance information for generators that need to handle inheritance patterns differently (e.g., Rust uses flattened wrapper fields).
+      type: feat
+  createdAt: "2025-12-24"
+  irVersion: 62
+
+- version: 3.31.2
+  changelogEntry:
+    - summary: |
+        Fix broken link checker incorrectly flagging internal paths with external redirects as broken. Links to paths that redirect to external URLs (e.g., `/ui` → `https://auth-platform.example.com`) are now correctly validated.
+      type: fix
+  createdAt: "2025-12-24"
+  irVersion: 62
+
+- version: 3.31.1
+  changelogEntry:
+    - summary: |
+        Fix double JSON.stringify in dynamic IR upload, reducing memory usage and ensuring correct Content-Length header calculation with Buffer.byteLength.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 62
+
+- version: 3.31.0
+  changelogEntry:
+    - summary: |
+        Add a `--dynamic-ir-only` flag to SDK generation to enable access to dynamic snippets from SDKs without regenerating the entire SDK.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 62
+
+- version: 3.30.6
+  changelogEntry:
+    - summary: |
+        Only upload dynamic IR for SDK generation after confirmed success and when not in preview mode.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 62
+
+- version: 3.30.5
+  changelogEntry:
+    - summary: |
+        Support `x-fern-base-path` extension in the OpenAPI v3 parser.
+      type: fix
+  createdAt: "2025-12-22"
+  irVersion: 62
+
+- version: 3.30.4
+  changelogEntry:
+    - summary: |
+        Add ACH to special tokens list to preserve capitalization in docs sidebar navigation.
+      type: chore
+  createdAt: "2025-12-22"
+  irVersion: 62
+
+- version: 3.30.3
+  changelogEntry:
+    - summary: |
+        Adds a `product-switcher.toggle` theme option to the docs configuration.
+      type: chore
+  createdAt: "2025-12-21"
+  irVersion: 62
+
+- version: 3.30.2
+  changelogEntry:
+    - summary: |
+        Export all defined auth schemes when using `endpoint-security` auth in _generators.yml_.
+      type: fix
+  createdAt: "2025-12-21"
+  irVersion: 62
+
+- version: 3.30.1
+  changelogEntry:
+    - summary: |
+        Update generators.yml schema SDK update to include api.auth.endpoint-security support.
+      type: fix
+  createdAt: "2025-12-21"
+  irVersion: 62
+
+- version: 3.30.0
+  changelogEntry:
+    - summary: |
+        Support using local icons in `<Card />` and `<Icon />` components.
+      type: feat
+  createdAt: "2025-12-20"
+  irVersion: 62
+
 - version: 3.29.1
   changelogEntry:
     - summary: |

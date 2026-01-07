@@ -49,34 +49,39 @@ class AbstractRootService(AbstractFernService):
     @classmethod
     def __init_get_foo(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_foo)
+        type_hints = typing.get_type_hints(cls.get_foo)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "optional_baz":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="An optional baz")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(description="An optional baz")],
                         default=None,
                     )
                 )
             elif parameter_name == "optional_nullable_baz":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="An optional baz")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(description="An optional baz")],
                         default=None,
                     )
                 )
             elif parameter_name == "required_baz":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="A required baz")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(description="A required baz")]
                     )
                 )
             elif parameter_name == "required_nullable_baz":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Query(description="A required baz")],
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Query(description="A required baz")],
                         default=None,
                     )
                 )
@@ -98,7 +103,7 @@ class AbstractRootService(AbstractFernService):
 
         router.get(
             path="/foo",
-            response_model=Foo,
+            response_model=None,
             description=AbstractRootService.get_foo.__doc__,
             **get_route_args(cls.get_foo, default_tag=""),
         )(wrapper)
@@ -106,22 +111,27 @@ class AbstractRootService(AbstractFernService):
     @classmethod
     def __init_update_foo(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_foo)
+        type_hints = typing.get_type_hints(cls.update_foo)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             elif parameter_name == "x_idempotency_key":
                 new_parameters.append(
                     parameter.replace(
-                        annotation=typing.Annotated[parameter.annotation, fastapi.Header(alias="X-Idempotency-Key")]
+                        annotation=typing.Annotated[resolved_annotation, fastapi.Header(alias="X-Idempotency-Key")]
                     )
                 )
             else:
@@ -142,7 +152,7 @@ class AbstractRootService(AbstractFernService):
 
         router.patch(
             path="/foo/{id}",
-            response_model=Foo,
+            response_model=None,
             description=AbstractRootService.update_foo.__doc__,
             **get_route_args(cls.update_foo, default_tag=""),
         )(wrapper)

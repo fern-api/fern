@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { GithubSelfhostedMode } from "./GithubSelfhostedMode";
 import { GithubLicenseSchema } from "../../license/types/GithubLicenseSchema";
 
 export const GithubSelfhostedSchema: core.serialization.ObjectSchema<
     serializers.GithubSelfhostedSchema.Raw,
-    FernDefinition.GithubSelfhostedSchema
+    GeneratorsYml.GithubSelfhostedSchema
 > = core.serialization.object({
     uri: core.serialization.string(),
     token: core.serialization.string(),

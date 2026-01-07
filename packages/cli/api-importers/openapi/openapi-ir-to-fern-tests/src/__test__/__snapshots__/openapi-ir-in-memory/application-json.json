@@ -82,6 +82,7 @@
     "wrapReferencesToNullableInOptional": false,
     "coerceOptionalSchemasToNullable": false,
     "removeDiscriminantsFromSchemas": "always",
-    "defaultIntegerFormat": "int32"
+    "defaultIntegerFormat": "int32",
+    "pathParameterOrder": "url-order"
   }
 }

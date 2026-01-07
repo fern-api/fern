@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "package_path": "matryoshka/doll/structure"
-  }
+  },
+  "sdkVersion": "0.0.1"
 }

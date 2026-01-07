@@ -1,4 +1,5 @@
 use seed_trace::prelude::*;
+use seed_trace::{PlaylistCreateRequest, ProblemId};
 
 #[tokio::main]
 async fn main() {
@@ -11,7 +12,7 @@ async fn main() {
     client
         .playlist
         .create_playlist(
-            &1,
+            1,
             &CreatePlaylistRequest {
                 datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
                     .unwrap()

@@ -25,6 +25,8 @@ async fn main() {
             &GetFooQueryRequest {
                 required_baz: "required_baz".to_string(),
                 required_nullable_baz: Some("required_nullable_baz".to_string()),
+                optional_baz: None,
+                optional_nullable_baz: None,
             },
             None,
         )
@@ -109,10 +111,7 @@ async fn main() {
                 nullable_number: Some(Some(1.1)),
                 non_nullable_text: Some("non_nullable_text".to_string()),
             },
-            Some(
-                RequestOptions::new()
-                    .additional_header("X-Idempotency-Key", "X-Idempotency-Key".to_string()),
-            ),
+            Some(RequestOptions::new().additional_header("X-Idempotency-Key", "X-Idempotency-Key")),
         )
         .await;
 }

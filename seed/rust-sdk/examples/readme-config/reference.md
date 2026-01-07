@@ -169,9 +169,7 @@ async fn main() {
         .service
         .get_file(
             &"file.txt".to_string(),
-            Some(
-                RequestOptions::new().additional_header("X-File-API-Version", "0.0.2".to_string()),
-            ),
+            Some(RequestOptions::new().additional_header("X-File-API-Version", "0.0.2")),
         )
         .await;
 }
@@ -334,6 +332,7 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
+use seed_examples::MovieId;
 
 #[tokio::main]
 async fn main() {
@@ -387,6 +386,7 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
+use seed_examples::{Movie, MovieId, Tag};
 
 #[tokio::main]
 async fn main() {
@@ -464,7 +464,7 @@ async fn main() {
                 shallow: Some(false),
                 tag: vec![Some("development".to_string())],
             },
-            Some(RequestOptions::new().additional_header("X-API-Version", "0.0.1".to_string())),
+            Some(RequestOptions::new().additional_header("X-API-Version", "0.0.1")),
         )
         .await;
 }
@@ -516,6 +516,11 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
+use seed_examples::{
+    Actor, Actress, BasicType, BigEntity, CastMember, ComplexType, Data, Directory, Entity,
+    EventInfo, Exception, ExceptionInfo, ExtendedMovie, File, Metadata, Migration, MigrationStatus,
+    Moment, MovieId, Node, StuntDouble, Tag, Test, Tree, Type,
+};
 
 #[tokio::main]
 async fn main() {
@@ -533,19 +538,21 @@ async fn main() {
                     id: "id".to_string(),
                 })),
                 extended_movie: Some(ExtendedMovie {
-                    id: MovieId("id".to_string()),
-                    prequel: Some(MovieId("prequel".to_string())),
-                    title: "title".to_string(),
-                    from: "from".to_string(),
-                    rating: 1.1,
-                    r#type: "movie".to_string(),
-                    tag: Tag("tag".to_string()),
-                    book: Some("book".to_string()),
-                    metadata: HashMap::from([(
-                        "metadata".to_string(),
-                        serde_json::json!({"key":"value"}),
-                    )]),
-                    revenue: 1000000,
+                    movie_fields: Movie {
+                        id: MovieId("id".to_string()),
+                        prequel: Some(MovieId("prequel".to_string())),
+                        title: "title".to_string(),
+                        from: "from".to_string(),
+                        rating: 1.1,
+                        r#type: "movie".to_string(),
+                        tag: Tag("tag".to_string()),
+                        book: Some("book".to_string()),
+                        metadata: HashMap::from([(
+                            "metadata".to_string(),
+                            serde_json::json!({"key":"value"}),
+                        )]),
+                        revenue: 1000000,
+                    },
                     cast: vec!["cast".to_string(), "cast".to_string()],
                 }),
                 entity: Some(Entity {
@@ -767,6 +774,7 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
+use seed_examples::RefreshTokenRequest;
 
 #[tokio::main]
 async fn main() {

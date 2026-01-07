@@ -48,13 +48,18 @@ class AbstractOrganizationsService(AbstractFernService):
     @classmethod
     def __init_get_organization(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_organization)
+        type_hints = typing.get_type_hints(cls.get_organization)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "organization_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -74,7 +79,7 @@ class AbstractOrganizationsService(AbstractFernService):
 
         router.get(
             path="/{tenant_id}/organizations/{organization_id}/",
-            response_model=Organization,
+            response_model=None,
             description=AbstractOrganizationsService.get_organization.__doc__,
             **get_route_args(cls.get_organization, default_tag="organizations"),
         )(wrapper)
@@ -82,17 +87,22 @@ class AbstractOrganizationsService(AbstractFernService):
     @classmethod
     def __init_get_organization_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_organization_user)
+        type_hints = typing.get_type_hints(cls.get_organization_user)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "organization_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             elif parameter_name == "user_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -112,7 +122,7 @@ class AbstractOrganizationsService(AbstractFernService):
 
         router.get(
             path="/{tenant_id}/organizations/{organization_id}/users/{user_id}",
-            response_model=User,
+            response_model=None,
             description=AbstractOrganizationsService.get_organization_user.__doc__,
             **get_route_args(cls.get_organization_user, default_tag="organizations"),
         )(wrapper)
@@ -120,17 +130,22 @@ class AbstractOrganizationsService(AbstractFernService):
     @classmethod
     def __init_search_organizations(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.search_organizations)
+        type_hints = typing.get_type_hints(cls.search_organizations)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "organization_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             elif parameter_name == "limit":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -150,7 +165,7 @@ class AbstractOrganizationsService(AbstractFernService):
 
         router.get(
             path="/{tenant_id}/organizations/{organization_id}/search",
-            response_model=typing.Sequence[Organization],
+            response_model=None,
             description=AbstractOrganizationsService.search_organizations.__doc__,
             **get_route_args(cls.search_organizations, default_tag="organizations"),
         )(wrapper)

@@ -292,6 +292,7 @@ class SdkGenerator(AbstractGenerator):
             generator_exec_wrapper=generator_exec_wrapper,
             context=context,
             endpoint_metadata=endpoint_metadata_collector,
+            skip_install=True,
         )
 
         snippets = snippet_registry.snippets()

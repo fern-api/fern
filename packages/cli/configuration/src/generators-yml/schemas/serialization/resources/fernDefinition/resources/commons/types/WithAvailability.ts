@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../../../index";
-import * as FernDefinition from "../../../../../../api/index";
+import * as GeneratorsYml from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { AvailabilityUnionSchema } from "../../availability/types/AvailabilityUnionSchema";
 
 export const WithAvailability: core.serialization.ObjectSchema<
     serializers.fernDefinition.WithAvailability.Raw,
-    FernDefinition.fernDefinition.WithAvailability
+    GeneratorsYml.fernDefinition.WithAvailability
 > = core.serialization.object({
     availability: AvailabilityUnionSchema.optional(),
 });

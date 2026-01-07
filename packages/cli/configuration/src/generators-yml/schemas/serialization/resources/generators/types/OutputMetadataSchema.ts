@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { OutputMetadataAuthor } from "./OutputMetadataAuthor";
 
 export const OutputMetadataSchema: core.serialization.ObjectSchema<
     serializers.OutputMetadataSchema.Raw,
-    FernDefinition.OutputMetadataSchema
+    GeneratorsYml.OutputMetadataSchema
 > = core.serialization.object({
     description: core.serialization.string().optional(),
     authors: core.serialization.list(OutputMetadataAuthor).optional(),

@@ -11,6 +11,8 @@ from .object_with_optional_field import ObjectWithOptionalField
 
 class NestedObjectWithRequiredField(UniversalBaseModel):
     string: str
-    nested_object: typing_extensions.Annotated[ObjectWithOptionalField, FieldMetadata(alias="NestedObject")]
+    nested_object: typing_extensions.Annotated[ObjectWithOptionalField, FieldMetadata(alias="NestedObject")] = (
+        pydantic.Field(alias="NestedObject")
+    )
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

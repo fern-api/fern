@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 import { ApiConfigurationSchemaInternal } from "./ApiConfigurationSchemaInternal";
 import { NamespacedApiConfigurationSchema } from "./NamespacedApiConfigurationSchema";
@@ -11,7 +11,7 @@ import { ApiConfigurationV2Schema } from "./ApiConfigurationV2Schema";
 
 export const ApiConfigurationSchema: core.serialization.Schema<
     serializers.ApiConfigurationSchema.Raw,
-    FernDefinition.ApiConfigurationSchema
+    GeneratorsYml.ApiConfigurationSchema
 > = core.serialization.undiscriminatedUnion([
     ApiConfigurationSchemaInternal,
     NamespacedApiConfigurationSchema,

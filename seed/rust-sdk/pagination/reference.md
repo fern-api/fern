@@ -14,6 +14,11 @@
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::{
+    MultipleFilterSearchRequest, MultipleFilterSearchRequestOperator,
+    MultipleFilterSearchRequestValue, SearchRequest, SearchRequestQuery, SingleFilterSearchRequest,
+    SingleFilterSearchRequestOperator, StartingAfterPaging,
+};
 
 #[tokio::main]
 async fn main() {
@@ -82,6 +87,7 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -242,7 +248,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest {},
+            &ListWithMixedTypeCursorPaginationQueryRequest { cursor: None },
             None,
         )
         .await;
@@ -290,6 +296,7 @@ in order to fetch the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -379,6 +386,7 @@ the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -480,7 +488,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest {},
+            &ListWithMixedTypeCursorPaginationQueryRequest { cursor: None },
             None,
         )
         .await;
@@ -528,6 +536,7 @@ in order to fetch the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -609,6 +618,7 @@ paginated endpoint.
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -808,6 +818,7 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -822,6 +833,9 @@ async fn main() {
         .list_with_cursor_pagination(
             &ListWithCursorPaginationQueryRequest {
                 starting_after: Some("starting_after".to_string()),
+                page: None,
+                per_page: None,
+                order: None,
             },
             None,
         )
@@ -925,6 +939,7 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -936,7 +951,7 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest {
+            &ListWithCursorPaginationQueryRequest2 {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
@@ -1024,7 +1039,7 @@ async fn main() {
     client
         .users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest {
+            &ListWithMixedTypeCursorPaginationQueryRequest2 {
                 cursor: Some("cursor".to_string()),
             },
             None,
@@ -1082,7 +1097,7 @@ async fn main() {
     client
         .users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest {},
+            &ListWithMixedTypeCursorPaginationQueryRequest2 { cursor: None },
             None,
         )
         .await;
@@ -1130,6 +1145,7 @@ in order to fetch the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1141,7 +1157,7 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest {
+            &ListWithCursorPaginationQueryRequest2 {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
@@ -1218,6 +1234,7 @@ the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1229,7 +1246,7 @@ async fn main() {
     client
         .users
         .list_with_double_offset_pagination(
-            &ListWithDoubleOffsetPaginationQueryRequest {
+            &ListWithDoubleOffsetPaginationQueryRequest2 {
                 page: Some(1.1),
                 per_page: Some(1.1),
                 order: Some(Order::Asc),
@@ -1317,7 +1334,7 @@ async fn main() {
     client
         .users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest {},
+            &ListWithMixedTypeCursorPaginationQueryRequest2 { cursor: None },
             None,
         )
         .await;
@@ -1365,6 +1382,7 @@ in order to fetch the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1376,7 +1394,7 @@ async fn main() {
     client
         .users
         .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest {
+            &ListWithOffsetStepPaginationQueryRequest2 {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
@@ -1445,6 +1463,7 @@ paginated endpoint.
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1456,7 +1475,7 @@ async fn main() {
     client
         .users
         .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest {
+            &ListWithOffsetStepPaginationQueryRequest2 {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
@@ -1536,7 +1555,7 @@ async fn main() {
     client
         .users
         .list_with_extended_results(
-            &ListWithExtendedResultsQueryRequest {
+            &ListWithExtendedResultsQueryRequest2 {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             },
             None,
@@ -1594,7 +1613,7 @@ async fn main() {
     client
         .users
         .list_with_extended_results(
-            &ListWithExtendedResultsQueryRequest {
+            &ListWithExtendedResultsQueryRequest2 {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             },
             None,
@@ -1641,6 +1660,7 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1652,8 +1672,11 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest {
+            &ListWithCursorPaginationQueryRequest2 {
                 starting_after: Some("starting_after".to_string()),
+                page: None,
+                per_page: None,
+                order: None,
             },
             None,
         )
@@ -1702,6 +1725,7 @@ the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1713,8 +1737,11 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest {
+            &ListWithCursorPaginationQueryRequest2 {
                 starting_after: Some("starting_after".to_string()),
+                page: None,
+                per_page: None,
+                order: None,
             },
             None,
         )
@@ -1773,7 +1800,7 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_global_config(&ListWithGlobalConfigQueryRequest { offset: Some(1) }, None)
+        .list_with_global_config(&ListWithGlobalConfigQueryRequest2 { offset: Some(1) }, None)
         .await;
 }
 ```

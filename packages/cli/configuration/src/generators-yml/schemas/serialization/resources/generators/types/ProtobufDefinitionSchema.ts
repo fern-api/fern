@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as FernDefinition from "../../../../api/index";
+import * as GeneratorsYml from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const ProtobufDefinitionSchema: core.serialization.ObjectSchema<
     serializers.ProtobufDefinitionSchema.Raw,
-    FernDefinition.ProtobufDefinitionSchema
+    GeneratorsYml.ProtobufDefinitionSchema
 > = core.serialization.object({
     target: core.serialization.string().optional(),
     root: core.serialization.string(),

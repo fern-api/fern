@@ -13,7 +13,7 @@ from .file_info_v_2 import FileInfoV2
 class GetBasicSolutionFileResponse(UniversalBaseModel):
     solution_file_by_language: typing_extensions.Annotated[
         typing.Dict[Language, FileInfoV2], FieldMetadata(alias="solutionFileByLanguage")
-    ]
+    ] = pydantic.Field(alias="solutionFileByLanguage")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

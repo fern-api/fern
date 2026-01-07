@@ -73,10 +73,14 @@ export function parseAsyncAPIV2({
         const pathParameters: PathParameterWithExample[] = [];
         if (channel.parameters != null) {
             for (const [name, parameter] of Object.entries(channel.parameters ?? {})) {
+                const parameterNameOverride = getExtension<string>(
+                    parameter,
+                    FernAsyncAPIExtension.FERN_PARAMETER_NAME
+                );
                 pathParameters.push({
                     name,
                     description: parameter.description,
-                    parameterNameOverride: undefined,
+                    parameterNameOverride,
                     schema:
                         parameter.schema != null
                             ? convertSchema(
@@ -340,7 +344,6 @@ export function parseAsyncAPIV2({
                     pathParameters: pathParameters.map((param) => {
                         return {
                             ...param,
-                            parameterNameOverride: undefined, // come back
                             schema: convertSchemaWithExampleToSchema(param.schema)
                         };
                     })

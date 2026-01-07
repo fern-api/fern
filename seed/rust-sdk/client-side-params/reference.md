@@ -571,6 +571,7 @@ Create a new user
 
 ```rust
 use seed_client_side_params::prelude::*;
+use seed_client_side_params::CreateUserRequest;
 
 #[tokio::main]
 async fn main() {
@@ -642,6 +643,7 @@ Update a user
 
 ```rust
 use seed_client_side_params::prelude::*;
+use seed_client_side_params::UpdateUserRequest;
 
 #[tokio::main]
 async fn main() {

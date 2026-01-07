@@ -176,9 +176,10 @@ export class ParamsClient {
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.query = query;
-        _queryParams.number = number_.toString();
+        const _queryParams: Record<string, unknown> = {
+            query,
+            number: number_,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -239,19 +240,10 @@ export class ParamsClient {
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (Array.isArray(query)) {
-            _queryParams.query = query.map((item) => item);
-        } else {
-            _queryParams.query = query;
-        }
-
-        if (Array.isArray(number_)) {
-            _queryParams.number = number_.map((item) => item.toString());
-        } else {
-            _queryParams.number = number_.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            query,
+            number: number_,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -314,8 +306,9 @@ export class ParamsClient {
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { query } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.query = query;
+        const _queryParams: Record<string, unknown> = {
+            query,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -376,8 +369,9 @@ export class ParamsClient {
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { param, query } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.query = query;
+        const _queryParams: Record<string, unknown> = {
+            query,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
