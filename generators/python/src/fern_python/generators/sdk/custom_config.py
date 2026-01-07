@@ -43,22 +43,52 @@ class CustomReadmeSection(pydantic.BaseModel):
     content: str
 
 
-class SmokeTestConfig(pydantic.BaseModel):
-    """Configuration for smoke test generation."""
+class ValidationFilterConfig(pydantic.BaseModel):
+    """Configuration for filtering which examples get a specific validation type."""
 
-    # List of example names to include in smoke tests.
-    # If specified, only these examples will be tested.
+    # List of example patterns to include for this validation type.
+    # If None, all examples are included. If empty list, none are included.
     # Format: "ServiceName.methodName" or "ServiceName.methodName:exampleName"
     include_examples: Optional[List[str]] = None
 
-    # List of example names to exclude from smoke tests.
+    # List of example patterns to exclude from this validation type.
     # Format: "ServiceName.methodName" or "ServiceName.methodName:exampleName"
     exclude_examples: Optional[List[str]] = None
 
-    # Whether to use structural validation (validates types/structure but not exact values)
-    # instead of strict validation (validates exact values).
-    # Default is True for smoke tests since production data differs from examples.
-    use_structural_validation: bool = True
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
+class SmokeTestConfig(pydantic.BaseModel):
+    """Configuration for smoke test generation.
+
+    Smoke tests support three layers of validation:
+    1. Status validation: Always runs - verifies the request succeeds (no exception)
+    2. Structural validation: Validates response types/structure match the example
+    3. Strict validation: Validates exact response values match the example
+    """
+
+    # List of example names to include in smoke test generation.
+    # If None, all user-specified examples are included.
+    # Format: "ServiceName.methodName" or "ServiceName.methodName:exampleName"
+    include_examples: Optional[List[str]] = None
+
+    # List of example names to exclude from smoke test generation.
+    # Format: "ServiceName.methodName" or "ServiceName.methodName:exampleName"
+    exclude_examples: Optional[List[str]] = None
+
+    # Configuration for structural validation (validates types/structure but not exact values).
+    # By default, structural validation runs on all generated tests.
+    structural_validation: ValidationFilterConfig = pydantic.Field(
+        default_factory=lambda: ValidationFilterConfig(include_examples=None, exclude_examples=[])
+    )
+
+    # Configuration for strict validation (validates exact response values).
+    # By default, strict validation is disabled (empty include list).
+    # When strict validation runs, it implies structural validation.
+    strict_validation: ValidationFilterConfig = pydantic.Field(
+        default_factory=lambda: ValidationFilterConfig(include_examples=[], exclude_examples=[])
+    )
 
     class Config:
         extra = pydantic.Extra.forbid

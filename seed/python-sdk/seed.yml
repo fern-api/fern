@@ -78,6 +78,17 @@ fixtures:
         use_inheritance_for_extended_models: false
       outputFolder: legacy-wire-tests
     - customConfig:
+        generate_smoke_tests: true
+        smoke_test_config:
+          structural_validation:
+            include_examples: null
+            exclude_examples: []
+          strict_validation:
+            include_examples:
+              - "Service.getMovie"
+            exclude_examples: []
+      outputFolder: smoke-tests
+    - customConfig:
         client:
           filename: base_client.py
           class_name: BaseSeedExhaustive
@@ -385,6 +396,7 @@ allowedFailures:
   - endpoint-security-auth
   - examples:client-filename
   - examples:legacy-wire-tests
+  - examples:smoke-tests  # Smoke tests require a real production API to run against
   - exhaustive:additional_init_exports
   - exhaustive:deps_with_min_python_version
   - exhaustive:pydantic-v1-with-utils

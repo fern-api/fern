@@ -76,13 +76,29 @@ class SmokeTestFactory:
 
         self._service_test_files: Dict[Filepath, SourceFile] = dict()
 
-        # Parse include/exclude patterns
+        # Parse include/exclude patterns for test generation
         self._include_patterns: Set[str] = set()
         self._exclude_patterns: Set[str] = set()
         if smoke_test_config.include_examples:
             self._include_patterns = set(smoke_test_config.include_examples)
         if smoke_test_config.exclude_examples:
             self._exclude_patterns = set(smoke_test_config.exclude_examples)
+
+        # Parse structural validation patterns
+        self._structural_include_patterns: Optional[Set[str]] = None
+        self._structural_exclude_patterns: Set[str] = set()
+        if smoke_test_config.structural_validation.include_examples is not None:
+            self._structural_include_patterns = set(smoke_test_config.structural_validation.include_examples)
+        if smoke_test_config.structural_validation.exclude_examples:
+            self._structural_exclude_patterns = set(smoke_test_config.structural_validation.exclude_examples)
+
+        # Parse strict validation patterns
+        self._strict_include_patterns: Optional[Set[str]] = None
+        self._strict_exclude_patterns: Set[str] = set()
+        if smoke_test_config.strict_validation.include_examples is not None:
+            self._strict_include_patterns = set(smoke_test_config.strict_validation.include_examples)
+        if smoke_test_config.strict_validation.exclude_examples:
+            self._strict_exclude_patterns = set(smoke_test_config.strict_validation.exclude_examples)
 
     def _should_include_example(
         self,
@@ -117,6 +133,79 @@ class SmokeTestFactory:
                 return False
 
         # Default: include all user-specified examples
+        return True
+
+    def _should_structural_validate(
+        self,
+        service_name: str,
+        endpoint_name: str,
+        example_name: Optional[str],
+    ) -> bool:
+        """
+        Determine if structural validation should run for an example.
+        By default, structural validation runs on all examples unless excluded.
+        """
+        endpoint_pattern = f"{service_name}.{endpoint_name}"
+        example_pattern = f"{endpoint_pattern}:{example_name}" if example_name else None
+
+        # If include patterns are specified (not None), only include matching examples
+        if self._structural_include_patterns is not None:
+            if len(self._structural_include_patterns) == 0:
+                return False
+            if endpoint_pattern in self._structural_include_patterns:
+                return True
+            if example_pattern and example_pattern in self._structural_include_patterns:
+                return True
+            return False
+
+        # If exclude patterns are specified, exclude matching examples
+        if self._structural_exclude_patterns:
+            if endpoint_pattern in self._structural_exclude_patterns:
+                return False
+            if example_pattern and example_pattern in self._structural_exclude_patterns:
+                return False
+
+        # Default: structural validation runs on all examples
+        return True
+
+    def _should_strict_validate(
+        self,
+        service_name: str,
+        endpoint_name: str,
+        example_name: Optional[str],
+    ) -> bool:
+        """
+        Determine if strict validation should run for an example.
+        By default, strict validation is disabled (empty include list).
+        """
+        endpoint_pattern = f"{service_name}.{endpoint_name}"
+        example_pattern = f"{endpoint_pattern}:{example_name}" if example_name else None
+
+        # If include patterns are None, strict validation is disabled
+        if self._strict_include_patterns is None:
+            return False
+
+        # If include patterns are empty, strict validation is disabled
+        if len(self._strict_include_patterns) == 0:
+            return False
+
+        # Check if example matches include patterns
+        included = False
+        if endpoint_pattern in self._strict_include_patterns:
+            included = True
+        if example_pattern and example_pattern in self._strict_include_patterns:
+            included = True
+
+        if not included:
+            return False
+
+        # Check exclude patterns
+        if self._strict_exclude_patterns:
+            if endpoint_pattern in self._strict_exclude_patterns:
+                return False
+            if example_pattern and example_pattern in self._strict_exclude_patterns:
+                return False
+
         return True
 
     def _return_expression(self, returned_expression: AST.ClassInstantiation) -> AST.CodeWriter:
@@ -179,6 +268,17 @@ class SmokeTestFactory:
         )
 
     def _instantiate_client(self, client: RootClient) -> AST.ClassInstantiation:
+        # Parameters that should be excluded from env var handling
+        # (either handled specially or not suitable for string env vars)
+        excluded_params = {
+            "base_url",
+            "environment",
+            "_token_getter_override",
+            "headers",  # dict type, not suitable for string env var
+            "httpx_client",  # client instance, not suitable for env var
+            "timeout",  # numeric/complex type
+            "follow_redirects",  # boolean type
+        }
         non_url_params = [
             self._write_envvar_parameter(
                 param.constructor_parameter_name,
@@ -186,9 +286,7 @@ class SmokeTestFactory:
                 param.constructor_parameter_name,
             )
             for param in client.parameters
-            if param.constructor_parameter_name != "base_url"
-            and param.constructor_parameter_name != "environment"
-            and param.constructor_parameter_name != "_token_getter_override"
+            if param.constructor_parameter_name not in excluded_params
         ]
 
         _kwargs = []
@@ -381,6 +479,61 @@ class SmokeTestFactory:
             unknown=lambda _: None,
         )
 
+    def _generate_expected_json_for_type_reference(self, reference: ir_types.ExampleTypeReference) -> object:
+        """Generate expected JSON values for strict validation."""
+        return reference.shape.visit(
+            primitive=lambda primitive: primitive.visit(
+                integer=lambda val: val.integer,
+                double=lambda val: val.double,
+                uint=lambda val: val.uint,
+                uint_64=lambda val: val.uint_64,
+                float_=lambda val: val.float_,
+                base_64=lambda val: val.base_64,
+                big_integer=lambda val: val.big_integer,
+                string=lambda val: val.string,
+                boolean=lambda val: val.boolean,
+                long_=lambda val: val.long_,
+                datetime=lambda val: val.datetime.isoformat()
+                if hasattr(val.datetime, "isoformat")
+                else str(val.datetime),
+                date=lambda val: val.date.isoformat() if hasattr(val.date, "isoformat") else str(val.date),
+                uuid_=lambda val: str(val.uuid_),
+            ),
+            container=lambda container: container.visit(
+                list_=lambda item_type: [self._generate_expected_json_for_type_reference(ex) for ex in item_type.list_],
+                set_=lambda item_type: [self._generate_expected_json_for_type_reference(ex) for ex in item_type.set_],
+                optional=lambda item_type: self._generate_expected_json_for_type_reference(item_type.optional)
+                if item_type.optional is not None
+                else None,
+                nullable=lambda item_type: self._generate_expected_json_for_type_reference(item_type.nullable)
+                if item_type.nullable is not None
+                else None,
+                map_=lambda map_type: {
+                    self._generate_expected_json_for_type_reference(
+                        ex.key
+                    ): self._generate_expected_json_for_type_reference(ex.value)
+                    for ex in map_type.map_
+                },
+                literal=lambda lit: lit.literal.visit(
+                    string=lambda s: s,
+                    boolean=lambda b: b,
+                ),
+            ),
+            named=lambda named: named.shape.visit(
+                alias=lambda alias: self._generate_expected_json_for_type_reference(alias.value),
+                enum=lambda enum: enum.value.wire_value,
+                object=lambda obj: {
+                    prop.name.wire_value: self._generate_expected_json_for_type_reference(prop.value)
+                    for prop in obj.properties
+                },
+                union=lambda union: None,  # Unions are complex, skip for now
+                undiscriminated_union=lambda union: self._generate_expected_json_for_type_reference(
+                    union.single_union_type
+                ),
+            ),
+            unknown=lambda unknown: unknown.unknown,
+        )
+
     def _smoke_test_body(
         self,
         sync_expression: Optional[AST.Expression],
@@ -388,8 +541,10 @@ class SmokeTestFactory:
         example_response: Optional[ir_types.ExampleResponse],
         endpoint: ir_types.HttpEndpoint,
         use_structural_validation: bool,
+        use_strict_validation: bool,
     ) -> AST.CodeWriter:
         type_expectation_name = "expected_types"
+        expected_response_name = "expected_response"
         response_name = "response"
         async_response_name = "async_response"
 
@@ -406,14 +561,30 @@ class SmokeTestFactory:
                 writer.write_line(f" = {maybe_stringify_expectations}")
                 writer.write_newline_if_last_line_not()
 
+            # Generate expected response for strict validation
+            if response_body is not None and use_strict_validation:
+                expected_json = self._generate_expected_json_for_type_reference(response_body)
+                writer.write(f"{expected_response_name}: ")
+                writer.write_node(AST.Expression(AST.TypeHint.any()))
+                writer.write_line(f" = {repr(expected_json)}")
+                writer.write_newline_if_last_line_not()
+
             # Sync client test
             if sync_expression:
                 writer.write(f"{response_name} = ")
                 writer.write_node(sync_expression)
                 writer.write_newline_if_last_line_not()
 
-                if response_body is not None and use_structural_validation:
-                    # Use structural validation
+                if response_body is not None and use_strict_validation:
+                    # Use strict validation (validates exact values)
+                    writer.write_node(
+                        self._validate_strict(
+                            AST.Expression(response_name),
+                            AST.Expression(expected_response_name),
+                        )
+                    )
+                elif response_body is not None and use_structural_validation:
+                    # Use structural validation (validates types/structure only)
                     writer.write_node(
                         self._validate_structure(
                             AST.Expression(response_name),
@@ -421,7 +592,7 @@ class SmokeTestFactory:
                         )
                     )
                 else:
-                    # Just assert the response is not None (basic smoke test)
+                    # Status-only: just assert the response is not None (basic smoke test)
                     writer.write_line(f"assert {response_name} is not None")
 
                 if async_expression:
@@ -433,8 +604,16 @@ class SmokeTestFactory:
                 writer.write_node(async_expression)
                 writer.write_newline_if_last_line_not()
 
-                if response_body is not None and use_structural_validation:
-                    # Use structural validation
+                if response_body is not None and use_strict_validation:
+                    # Use strict validation (validates exact values)
+                    writer.write_node(
+                        self._validate_strict(
+                            AST.Expression(async_response_name),
+                            AST.Expression(expected_response_name),
+                        )
+                    )
+                elif response_body is not None and use_structural_validation:
+                    # Use structural validation (validates types/structure only)
                     writer.write_node(
                         self._validate_structure(
                             AST.Expression(async_response_name),
@@ -442,7 +621,7 @@ class SmokeTestFactory:
                         )
                     )
                 else:
-                    # Just assert the response is not None (basic smoke test)
+                    # Status-only: just assert the response is not None (basic smoke test)
                     writer.write_line(f"assert {async_response_name} is not None")
 
             writer.write_newline_if_last_line_not()
@@ -578,6 +757,10 @@ class SmokeTestFactory:
                     error=lambda _: None,
                 )
 
+                # Determine validation modes for this example
+                use_structural = self._should_structural_validate(service_name, endpoint_name, example_name)
+                use_strict = self._should_strict_validate(service_name, endpoint_name, example_name)
+
                 # Add functions to a test function
                 function_declaration = AST.FunctionDeclaration(
                     name=f"test_{endpoint_name}_smoke{test_suffix}",
@@ -601,7 +784,8 @@ class SmokeTestFactory:
                         async_snippet,
                         response,
                         endpoint,
-                        self._smoke_test_config.use_structural_validation,
+                        use_structural,
+                        use_strict,
                     ),
                 )
 
@@ -659,7 +843,7 @@ class SmokeTestFactory:
             project=self._project,
             path_on_disk=os.path.join(source, "smoke_test_utilities.py"),
             filepath_in_project=utilities_filepath,
-            exports={"validate_smoke_test_response"},
+            exports={"validate_smoke_test_response", "validate_strict_response"},
             include_src_root=False,
         )
 
@@ -680,6 +864,26 @@ class SmokeTestFactory:
                     ),
                 ),
                 args=[response_expression, expected_types_expression],
+            )
+        )
+
+    def _validate_strict(
+        self,
+        response_expression: AST.Expression,
+        expected_response_expression: AST.Expression,
+    ) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(
+                            self._test_base_path.module_name, self._smoke_test_path.module_name, "utilities"
+                        ),
+                        named_import="validate_strict_response",
+                    ),
+                ),
+                args=[response_expression, expected_response_expression],
             )
         )
 

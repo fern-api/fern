@@ -1,0 +1,21 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "generate_smoke_tests": true,
+    "smoke_test_config": {
+      "structural_validation": {
+        "include_examples": null,
+        "exclude_examples": []
+      },
+      "strict_validation": {
+        "include_examples": [
+          "Service.getMovie"
+        ],
+        "exclude_examples": []
+      }
+    }
+  },
+  "sdkVersion": "0.0.1"
+}
