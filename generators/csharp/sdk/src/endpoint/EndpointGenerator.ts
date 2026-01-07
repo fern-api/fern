@@ -103,8 +103,9 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
                 initializer: "default"
             })
         );
-        // Pager return type is already not wrapped in Task (it's a Pager<T>), so no wrapping needed
-        const return_ = this.getPagerReturnType(endpoint);
+        // Wrap pager return type in Task<T> to match the concrete class's async method signature
+        const rawReturn = this.getPagerReturnType(endpoint);
+        const return_ = this.System.Threading.Tasks.Task(rawReturn);
 
         interface_.addMethod({
             name: this.context.getEndpointMethodName(endpoint),
