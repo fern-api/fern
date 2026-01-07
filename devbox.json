@@ -30,8 +30,8 @@
     "scripts": {
       "install": "pnpm install",
       "compile": "pnpm compile",
-      "test":    "pnpm test",
-      "lint":    "pnpm check"
+      "test": "pnpm test",
+      "lint": "pnpm check"
     }
   }
 }
