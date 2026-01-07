@@ -8,7 +8,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { typeSupportsHashAndEq, typeSupportsPartialEq } from "../utils/primitiveTypeUtils";
+import { isDateTimeOnlyType, typeSupportsHashAndEq, typeSupportsPartialEq } from "../utils/primitiveTypeUtils";
 import { isFieldRecursive } from "../utils/recursiveTypeUtils";
 
 export class UndiscriminatedUnionGenerator {
@@ -114,8 +114,20 @@ export class UndiscriminatedUnionGenerator {
         // Generate variant name based on the type or index
         const variantName = this.getVariantNameForMember(member, index);
 
-        // Generate the variant as a tuple variant
-        writer.writeLine(`    ${variantName}(${memberType.toString()}),`);
+        // Check if this is a datetime type that needs flexible parsing
+        const needsFlexibleDateTime =
+            this.context.getDateTimeType() === "flexible" && isDateTimeOnlyType(member.type);
+
+        if (needsFlexibleDateTime) {
+            // Generate multi-line tuple variant with serde attribute on inner field
+            writer.writeLine(`    ${variantName}(`);
+            writer.writeLine(`        #[serde(with = "crate::core::flexible_datetime")]`);
+            writer.writeLine(`        ${memberType.toString()}`);
+            writer.writeLine(`    ),`);
+        } else {
+            // Generate the variant as a simple tuple variant
+            writer.writeLine(`    ${variantName}(${memberType.toString()}),`);
+        }
     }
 
     private getVariantNameForMember(member: UndiscriminatedUnionMember, index: number): string {
