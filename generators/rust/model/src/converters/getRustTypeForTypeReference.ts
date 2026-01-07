@@ -8,8 +8,8 @@ export interface RustTypeGeneratorContext {
         fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
         name: { pascalCase: { safeName: string } };
     }): string;
-    /** DateTime type to use: "utc" for DateTime<Utc>, "naive" for NaiveDateTime */
-    getDateTimeType(): "utc" | "naive";
+    /** DateTime type to use: "utc" for DateTime<Utc>, "naive" for NaiveDateTime, "flexible" for DateTime<Utc> with flexible parsing */
+    getDateTimeType(): "utc" | "naive" | "flexible";
 }
 
 export function generateRustTypeForTypeReference(
