@@ -4,7 +4,7 @@ import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { typeSupportsHashAndEq } from "../utils/primitiveTypeUtils";
+import { isDateTimeOnlyType, typeSupportsHashAndEq } from "../utils/primitiveTypeUtils";
 
 export class AliasGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -58,7 +58,8 @@ export class AliasGenerator {
             innerType: generateRustTypeForTypeReference(this.aliasTypeDeclaration.aliasOf, this.context),
             visibility: PUBLIC,
             innerVisibility: PUBLIC,
-            attributes: this.generateNewtypeAttributes()
+            attributes: this.generateNewtypeAttributes(),
+            innerAttributes: this.generateInnerAttributes()
         });
     }
 
@@ -75,8 +76,16 @@ export class AliasGenerator {
 
         attributes.push(Attribute.derive(derives));
 
-        // DateTime aliases will use default RFC 3339 string serialization
-        // No special serde handling needed for datetime aliases
+        return attributes;
+    }
+
+    private generateInnerAttributes(): rust.Attribute[] {
+        const attributes: rust.Attribute[] = [];
+
+        // Add flexible datetime serde attribute when configured and the alias is a datetime type
+        if (this.context.getDateTimeType() === "flexible" && isDateTimeOnlyType(this.aliasTypeDeclaration.aliasOf)) {
+            attributes.push(Attribute.serde.with("crate::core::flexible_datetime"));
+        }
 
         return attributes;
     }
