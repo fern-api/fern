@@ -515,8 +515,19 @@ class SmokeTestFactory:
                     for ex in map_type.map_
                 },
                 literal=lambda lit: lit.literal.visit(
-                    string=lambda s: s,
-                    boolean=lambda b: b,
+                    integer=lambda v: v,
+                    long_=lambda v: v,
+                    uint=lambda v: v,
+                    uint_64=lambda v: v,
+                    float_=lambda v: v,
+                    double=lambda v: v,
+                    date=lambda v: v.isoformat() if hasattr(v, "isoformat") else str(v),
+                    datetime=lambda v: v.datetime.isoformat() if hasattr(v.datetime, "isoformat") else str(v.datetime),
+                    uuid_=lambda v: str(v),
+                    base_64=lambda v: v,
+                    big_integer=lambda v: v,
+                    string=lambda v: v.original,
+                    boolean=lambda v: v,
                 ),
             ),
             named=lambda named: named.shape.visit(
@@ -531,7 +542,7 @@ class SmokeTestFactory:
                     union.single_union_type
                 ),
             ),
-            unknown=lambda unknown: unknown.unknown if hasattr(unknown, "unknown") else unknown,
+            unknown=lambda u: u,
         )
 
     def _smoke_test_body(
