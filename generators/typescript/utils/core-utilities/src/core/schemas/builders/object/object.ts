@@ -279,10 +279,17 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         if (!transformed.ok) {
                             return transformed;
                         }
+                        const rawPropertyNames = new Set(schema._getRawProperties().map(String));
+                        const unknownKeys: Record<string, unknown> = {};
+                        for (const key of Object.keys(raw as object)) {
+                            if (!rawPropertyNames.has(key)) {
+                                unknownKeys[key] = (raw as Record<string, unknown>)[key];
+                            }
+                        }
                         return {
                             ok: true,
                             value: {
-                                ...(raw as any),
+                                ...unknownKeys,
                                 ...transformed.value,
                             },
                         };
@@ -292,10 +299,17 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         if (!transformed.ok) {
                             return transformed;
                         }
+                        const parsedPropertyNames = new Set(schema._getParsedProperties().map(String));
+                        const unknownKeys: Record<string, unknown> = {};
+                        for (const key of Object.keys(parsed as object)) {
+                            if (!parsedPropertyNames.has(key)) {
+                                unknownKeys[key] = (parsed as Record<string, unknown>)[key];
+                            }
+                        }
                         return {
                             ok: true,
                             value: {
-                                ...(parsed as any),
+                                ...unknownKeys,
                                 ...transformed.value,
                             },
                         };
