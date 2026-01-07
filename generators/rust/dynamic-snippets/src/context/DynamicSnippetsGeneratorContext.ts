@@ -215,9 +215,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     /**
      * Get the datetime type to use for datetime primitives.
-     * Returns "utc" for DateTime<Utc> (default) or "naive" for NaiveDateTime.
+     * Returns "utc" for DateTime<Utc> (default), "naive" for NaiveDateTime,
+     * or "flexible" for DateTime<Utc> with flexible parsing (accepts both formats).
      */
-    public getDateTimeType(): "utc" | "naive" {
+    public getDateTimeType(): "utc" | "naive" | "flexible" {
         return this.customConfig?.dateTimeType ?? "utc";
     }
 
