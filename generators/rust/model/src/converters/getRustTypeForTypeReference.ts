@@ -8,8 +8,8 @@ export interface RustTypeGeneratorContext {
         fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
         name: { pascalCase: { safeName: string } };
     }): string;
-    /** DateTime type to use: "utc" for DateTime<Utc>, "naive" for NaiveDateTime, "flexible" for DateTime<Utc> with flexible parsing */
-    getDateTimeType(): "utc" | "naive" | "flexible";
+    /** DateTime type to use: "utc" for DateTime<Utc>, "flexible" for DateTime<Utc> with flexible parsing */
+    getDateTimeType(): "utc" | "flexible";
 }
 
 export function generateRustTypeForTypeReference(
@@ -102,14 +102,7 @@ export function generateRustTypeForTypeReference(
                     );
                 },
                 dateTime: () => {
-                    // Use DateTime<Utc> or NaiveDateTime based on config
-                    if (context.getDateTimeType() === "naive") {
-                        return rust.Type.reference(
-                            rust.reference({
-                                name: "NaiveDateTime"
-                            })
-                        );
-                    }
+                    // Always use DateTime<Utc> - flexible parsing is handled via serde attributes
                     return rust.Type.reference(
                         rust.reference({
                             name: "DateTime",

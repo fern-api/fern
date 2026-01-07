@@ -346,10 +346,10 @@ export abstract class AbstractRustGeneratorContext<
 
     /**
      * Get the datetime type to use for datetime primitives.
-     * Returns "utc" for DateTime<Utc> (default), "naive" for NaiveDateTime,
+     * Returns "utc" for DateTime<Utc> (default),
      * or "flexible" for DateTime<Utc> with flexible parsing (accepts both formats).
      */
-    public getDateTimeType(): "utc" | "naive" | "flexible" {
+    public getDateTimeType(): "utc" | "flexible" {
         return this.customConfig.dateTimeType ?? "utc";
     }
 

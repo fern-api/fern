@@ -286,26 +286,17 @@ export function writeStructUseStatements(
     // Add chrono imports based on specific types needed
     const hasDateOnly = hasDateFields(properties);
     const hasDateTimeOnly = hasDateTimeOnlyFields(properties);
-    const useNaiveDateTime = context.getDateTimeType() === "naive";
 
     // TODO: @iamnamananand996 - use AST mechanism for all imports
     if (hasDateOnly && hasDateTimeOnly) {
         // Both date and datetime types present
-        if (useNaiveDateTime) {
-            writer.writeLine("use chrono::{NaiveDate, NaiveDateTime};");
-        } else {
-            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
-        }
+        writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
     } else if (hasDateOnly) {
         // Only date type present, import NaiveDate only
         writer.writeLine("use chrono::NaiveDate;");
     } else if (hasDateTimeOnly) {
         // Only datetime type present
-        if (useNaiveDateTime) {
-            writer.writeLine("use chrono::NaiveDateTime;");
-        } else {
-            writer.writeLine("use chrono::{DateTime, Utc};");
-        }
+        writer.writeLine("use chrono::{DateTime, Utc};");
     }
 
     // Add std::collections if we have maps or sets
