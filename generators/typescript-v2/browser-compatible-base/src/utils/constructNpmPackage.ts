@@ -80,13 +80,40 @@ export function getRepoUrlFromUrl(repoUrl: string | undefined): string | undefin
     if (repoUrl == null) {
         return undefined;
     }
-    // Use full URL format for consistency between local and remote generation.
-    // npm pkg fix will normalize these URLs consistently when using the full format.
+    // GitHub URLs use full git+https:// format for consistency between local and remote generation
+    if (repoUrl.startsWith("https://github.com/")) {
+        const cleanUrl = removeGitSuffix(repoUrl);
+        return `git+${cleanUrl}.git`;
+    }
+    if (repoUrl.startsWith("ssh://github.com/")) {
+        const cleanUrl = removeGitSuffix(repoUrl).replace("ssh://", "https://");
+        return `git+${cleanUrl}.git`;
+    }
+    // Bitbucket and GitLab use shorthand format
+    if (repoUrl.startsWith("https://bitbucket.org/")) {
+        return `bitbucket:${removeGitSuffix(repoUrl).replace("https://bitbucket.org/", "")}`;
+    }
+    if (repoUrl.startsWith("ssh://bitbucket.org/")) {
+        return `bitbucket:${removeGitSuffix(repoUrl).replace("ssh://bitbucket.org/", "")}`;
+    }
+    if (repoUrl.startsWith("https://gitlab.com/")) {
+        return `gitlab:${removeGitSuffix(repoUrl).replace("https://gitlab.com/", "")}`;
+    }
+    if (repoUrl.startsWith("ssh://gitlab.com/")) {
+        return `gitlab:${removeGitSuffix(repoUrl).replace("ssh://gitlab.com/", "")}`;
+    }
     if (!repoUrl.startsWith("git+")) {
         repoUrl = `git+${repoUrl}`;
     }
     if (!repoUrl.endsWith(".git")) {
         repoUrl = `${repoUrl}.git`;
+    }
+    return repoUrl;
+}
+
+function removeGitSuffix(repoUrl: string): string {
+    if (repoUrl.endsWith(".git")) {
+        return repoUrl.slice(0, -4);
     }
     return repoUrl;
 }

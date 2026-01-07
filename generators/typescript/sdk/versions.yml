@@ -2,9 +2,9 @@
 - version: 3.43.5
   changelogEntry:
     - summary: |
-        Fix repository URL format in package.json to use full URL format (git+https://...) instead of shorthand
-        format (github:...) for consistency between local and remote generation. This ensures `npm pkg fix`
-        normalizes the URL consistently across all generation environments.
+        Fix GitHub repository URL format in package.json to use full URL format (git+https://github.com/...)
+        instead of shorthand format (github:...) for consistency between local and remote generation.
+        Bitbucket and GitLab URLs continue to use their respective shorthand formats.
       type: fix
   createdAt: "2026-01-07"
   irVersion: 63
