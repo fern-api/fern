@@ -327,10 +327,12 @@ export class WireTestGenerator {
 
             // For error responses, wrap in pytest.raises() to expect the exception
             if (isErrorResponse) {
-                // For streaming responses, we need to consume the iterator inside pytest.raises
-                if (this.isStreamingResponse(endpoint)) {
+                // For streaming endpoints, we need to consume the iterator inside pytest.raises
+                if (this.isStreamingEndpoint(endpoint)) {
                     statements.push(
-                        python.codeBlock(`with pytest.raises(ApiError):\n        list(${apiCallAst.toString()})`)
+                        python.codeBlock(
+                            `with pytest.raises(ApiError):\n        for _ in ${apiCallAst.toString()}:\n            pass`
+                        )
                     );
                 } else {
                     statements.push(
@@ -338,11 +340,12 @@ export class WireTestGenerator {
                     );
                 }
             } else {
-                // For streaming responses (fileDownload, bytes, streaming, streamParameter),
-                // we need to consume the iterator to actually trigger the HTTP request
-                if (this.isStreamingResponse(endpoint)) {
-                    // Wrap in list() to consume the generator and trigger the HTTP request
-                    statements.push(python.codeBlock(`list(${apiCallAst.toString()})`));
+                // For streaming endpoints, wrap the call in a for loop to consume the iterator
+                // This is necessary because streaming methods return lazy generators that don't
+                // execute the HTTP request until iterated
+                if (this.isStreamingEndpoint(endpoint)) {
+                    statements.push(python.codeBlock(`for _ in ${apiCallAst.toString()}:`));
+                    statements.push(python.codeBlock("    pass"));
                 } else {
                     statements.push(apiCallAst);
                 }
@@ -370,18 +373,23 @@ export class WireTestGenerator {
     }
 
     /**
-     * Checks if an endpoint returns a streaming response that needs to be consumed.
-     * Streaming responses return generators/iterators, which don't make the HTTP
-     * request until iterated.
+     * Checks if an endpoint returns a streaming response.
+     * Streaming endpoints return Iterator[bytes] or AsyncIterator[bytes] which are lazy generators.
+     * This includes:
+     * - streaming: SSE or other streaming responses
+     * - streamParameter: Responses controlled by a stream parameter
+     * - fileDownload: File download responses that return an iterator of bytes
      */
-    private isStreamingResponse(endpoint: HttpEndpoint): boolean {
+    private isStreamingEndpoint(endpoint: HttpEndpoint): boolean {
         const responseBody = endpoint.response?.body;
         if (!responseBody) {
             return false;
         }
-        // These response types return iterators that need to be consumed
-        const streamingTypes = ["fileDownload", "bytes", "streaming", "streamParameter"];
-        return streamingTypes.includes(responseBody.type);
+        return (
+            responseBody.type === "streaming" ||
+            responseBody.type === "streamParameter" ||
+            responseBody.type === "fileDownload"
+        );
     }
 
     /**

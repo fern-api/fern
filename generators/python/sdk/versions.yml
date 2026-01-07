@@ -4,11 +4,21 @@
 - version: 4.46.8
   changelogEntry:
     - summary: |
-        Fix wire test generation for APIs with environments, error responses, streaming
-        endpoints, and URL fragments; fix string escaping for JSON examples and multipart
-        form serialization of complex types.
+        Bump version to remove rc from version tag.
       type: fix
-  createdAt: "2025-12-19"
+  createdAt: "2026-01-07"
+  irVersion: 62
+
+- version: 4.46.7-rc3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for streaming endpoints. Streaming methods return lazy iterators
+        (Iterator[bytes] or AsyncIterator[bytes]) that don't execute the HTTP request until iterated.
+        Wire tests now wrap streaming endpoint calls in 'for _ in ...: pass' loops to ensure the
+        HTTP request is actually made. This applies to streaming, streamParameter, and fileDownload
+        response types.
+      type: fix
+  createdAt: "2026-01-07"
   irVersion: 62
 
 - version: 4.46.7-rc2
