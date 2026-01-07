@@ -1800,7 +1800,7 @@ function getDynamicGeneratorConfigFromWorkspace({
             if (generator.config != null) {
                 return {
                     apiName: workspace.workspaceName ?? "",
-                    organization: generatorsConfig.rawConfiguration.organization ?? "",
+                    organization: "",
                     customConfig: generator.config,
                     outputConfig: dynamic.GeneratorOutputConfig.local()
                 };
