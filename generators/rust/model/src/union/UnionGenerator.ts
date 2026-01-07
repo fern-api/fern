@@ -5,6 +5,7 @@ import { SingleUnionType, TypeDeclaration, TypeReference, UnionTypeDeclaration }
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
+    getInnerTypeFromOptional,
     isCollectionType,
     isDateTimeOnlyType,
     isDateTimeType,
@@ -252,12 +253,28 @@ export class UnionGenerator {
                 const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context, isRecursive);
                 const fieldName = singleProperty.name.name.snakeCase.unsafeName;
                 const wireValue = singleProperty.name.wireValue;
+                const isOptional = isOptionalType(singleProperty.type);
 
                 writer.writeLine(`    ${variantName} {`);
 
                 // Add serde rename if field name differs from wire value
                 if (fieldName !== wireValue) {
                     writer.writeLine(`        #[serde(rename = "${wireValue}")]`);
+                }
+
+                // Add flexible datetime serde attribute when configured
+                if (this.context.getDateTimeType() === "flexible") {
+                    const typeRef = isOptional ? getInnerTypeFromOptional(singleProperty.type) : singleProperty.type;
+                    if (isDateTimeOnlyType(typeRef)) {
+                        if (isOptional) {
+                            // For optional datetime fields with custom deserializer, we need serde(default)
+                            // to handle missing fields in JSON (otherwise serde expects the field to be present)
+                            writer.writeLine(`        #[serde(default)]`);
+                            writer.writeLine(`        #[serde(with = "crate::core::flexible_datetime::option")]`);
+                        } else {
+                            writer.writeLine(`        #[serde(with = "crate::core::flexible_datetime")]`);
+                        }
+                    }
                 }
 
                 writer.writeLine(`        ${fieldName}: ${fieldType.toString()},`);
@@ -342,13 +359,29 @@ export class UnionGenerator {
 
             const fieldType = generateRustTypeForTypeReference(property.valueType, this.context, isRecursive);
             const wireValue = property.name.wireValue;
+            const isOptional = isOptionalType(property.valueType);
 
             if (fieldName !== wireValue) {
                 writer.writeLine(`        #[serde(rename = "${wireValue}")]`);
             }
 
-            if (isOptionalType(property.valueType)) {
+            if (isOptional) {
                 writer.writeLine(`        #[serde(skip_serializing_if = "Option::is_none")]`);
+            }
+
+            // Add flexible datetime serde attribute when configured
+            if (this.context.getDateTimeType() === "flexible") {
+                const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
+                if (isDateTimeOnlyType(typeRef)) {
+                    if (isOptional) {
+                        // For optional datetime fields with custom deserializer, we need serde(default)
+                        // to handle missing fields in JSON (otherwise serde expects the field to be present)
+                        writer.writeLine(`        #[serde(default)]`);
+                        writer.writeLine(`        #[serde(with = "crate::core::flexible_datetime::option")]`);
+                    } else {
+                        writer.writeLine(`        #[serde(with = "crate::core::flexible_datetime")]`);
+                    }
+                }
             }
 
             writer.writeLine(`        ${fieldName}: ${fieldType.toString()},`);
