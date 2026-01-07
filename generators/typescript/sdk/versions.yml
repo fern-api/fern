@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.6
+  changelogEntry:
+    - summary: |
+        Fix duplicate keys in serialized objects when using `.passthrough()` with property name transformations.
+        Previously, the passthrough function would spread both the raw input (with original keys like `version_number`)
+        and the transformed output (with camelCase keys like `versionNumber`), resulting in objects with duplicate
+        data under different key names. Now the function correctly returns only the transformed output, which already
+        includes passthrough properties via the `unrecognizedObjectKeys: "passthrough"` option.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 63
+
 - version: 3.43.5
   changelogEntry:
     - summary: |

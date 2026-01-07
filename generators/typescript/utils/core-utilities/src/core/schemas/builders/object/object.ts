@@ -275,30 +275,16 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                     _getParsedProperties: () => schema._getParsedProperties(),
                     _getRawProperties: () => schema._getRawProperties(),
                     parse: (raw, opts) => {
-                        const transformed = schema.parse(raw, { ...opts, unrecognizedObjectKeys: "passthrough" });
-                        if (!transformed.ok) {
-                            return transformed;
-                        }
-                        return {
-                            ok: true,
-                            value: {
-                                ...(raw as any),
-                                ...transformed.value,
-                            },
-                        };
+                        return schema.parse(raw, {
+                            ...opts,
+                            unrecognizedObjectKeys: "passthrough",
+                        }) as MaybeValid<Parsed & { [key: string]: unknown }>;
                     },
                     json: (parsed, opts) => {
-                        const transformed = schema.json(parsed, { ...opts, unrecognizedObjectKeys: "passthrough" });
-                        if (!transformed.ok) {
-                            return transformed;
-                        }
-                        return {
-                            ok: true,
-                            value: {
-                                ...(parsed as any),
-                                ...transformed.value,
-                            },
-                        };
+                        return schema.json(parsed, {
+                            ...opts,
+                            unrecognizedObjectKeys: "passthrough",
+                        }) as MaybeValid<Raw & { [key: string]: unknown }>;
                     },
                     getType: () => SchemaType.OBJECT,
                 };
