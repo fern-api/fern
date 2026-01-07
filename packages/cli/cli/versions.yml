@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.35.3
+  changelogEntry:
+    - summary: |
+        Pass generator configuration to dynamic IR generation in docs resolver, ensuring code examples respect `namespaceExport` and other custom config settings.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
 - version: 3.35.2
   changelogEntry:
     - summary: |

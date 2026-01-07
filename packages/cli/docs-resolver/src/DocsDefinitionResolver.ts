@@ -12,7 +12,7 @@ import {
 import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { dynamic, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -1229,7 +1229,8 @@ export class DocsDefinitionResolver {
                 version: undefined,
                 packageName: undefined,
                 context: this.taskContext,
-                sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
+                sourceResolver: new SourceResolverImpl(this.taskContext, workspace),
+                dynamicGeneratorConfig: getDynamicGeneratorConfigFromWorkspace({ workspace })
             });
         }
 
@@ -1776,4 +1777,36 @@ function convertAvailability(
         default:
             assertNever(availability);
     }
+}
+
+/**
+ * Constructs a dynamic generator config from the workspace's generator configuration.
+ * This is used to pass the customConfig (which includes namespaceExport) to the IR generator
+ * so that dynamic snippets can use the correct client name.
+ */
+function getDynamicGeneratorConfigFromWorkspace({
+    workspace
+}: {
+    workspace: FernWorkspace;
+}): dynamic.GeneratorConfig | undefined {
+    const generatorsConfig = workspace.generatorsConfiguration;
+    if (generatorsConfig?.groups == null) {
+        return undefined;
+    }
+
+    // Find the first generator invocation that has a config (which may contain namespaceExport)
+    for (const group of generatorsConfig.groups) {
+        for (const generator of group.generators) {
+            if (generator.config != null) {
+                return {
+                    apiName: workspace.workspaceName ?? "",
+                    organization: generatorsConfig.rawConfiguration.organization ?? "",
+                    customConfig: generator.config,
+                    outputConfig: dynamic.GeneratorOutputConfig.local()
+                };
+            }
+        }
+    }
+
+    return undefined;
 }
