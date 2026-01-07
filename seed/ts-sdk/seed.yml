@@ -457,6 +457,10 @@ fixtures:
     - outputFolder: .
       customConfig:
         customPagerName: "MyPager"
+  ts-passthrough-extra-properties:
+    - outputFolder: .
+      customConfig:
+        noSerdeLayer: false
 scripts:
   - image: fernapi/ts-seed
     commands:

@@ -1,0 +1,47 @@
+types:
+  User:
+    extra-properties: true
+    properties:
+      id: string
+      user_name: string
+      created_at: datetime
+    examples:
+      - name: BasicUser
+        value:
+          id: "user-123"
+          user_name: "alice"
+          created_at: "2024-01-01T00:00:00Z"
+          extra_field: "unknown value"
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getUser:
+      path: /user/{id}
+      method: GET
+      path-parameters:
+        id: string
+      response: User
+      examples:
+        - path-parameters:
+            id: "user-123"
+          response:
+            body: $User.BasicUser
+    createUser:
+      path: /user
+      method: POST
+      request:
+        name: CreateUserRequest
+        body:
+          extra-properties: true
+          properties:
+            user_name: string
+            created_at: datetime
+      response: User
+      examples:
+        - request:
+            user_name: "alice"
+            created_at: "2024-01-01T00:00:00Z"
+          response:
+            body: $User.BasicUser
