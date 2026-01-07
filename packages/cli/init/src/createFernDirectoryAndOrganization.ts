@@ -13,9 +13,7 @@ import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import { kebabCase } from "lodash-es";
 
-const GITIGNORE_CONTENT = `**/.preview
-**/.definition
-`;
+const GITIGNORE_CONTENT = "**/.preview\n**/.definition\n";
 
 export async function createFernDirectoryAndWorkspace({
     organization,
