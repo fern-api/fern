@@ -1,4 +1,5 @@
 use seed_request_parameters::prelude::*;
+use seed_request_parameters::{NestedUser, User};
 
 #[tokio::main]
 async fn main() {

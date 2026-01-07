@@ -6,7 +6,7 @@ import {
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
-import { capitalize, snakeCase } from "lodash-es";
+import { snakeCase, upperFirst } from "lodash-es";
 import { RubyProject } from "../project/RubyProject";
 import { RubyTypeMapper } from "./RubyTypeMapper";
 
@@ -89,7 +89,8 @@ export abstract class AbstractRubyGeneratorContext<
     }
 
     public getRootModuleName(): string {
-        return capitalize(this.getRootFolderName());
+        // Use upperFirst on the organization name directly to avoid snakeCase
+        return upperFirst(this.customConfig.module ?? this.config.organization);
     }
 
     public getRootModule(): ruby.Module_ {

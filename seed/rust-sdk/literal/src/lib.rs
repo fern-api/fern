@@ -21,8 +21,8 @@
 //!             },
 //!             Some(
 //!                 RequestOptions::new()
-//!                     .additional_header("X-Endpoint-Version", "02-12-2024".to_string())
-//!                     .additional_header("X-Async", true),
+//!                     .additional_header("X-Endpoint-Version", "02-12-2024")
+//!                     .additional_header("X-Async", "true"),
 //!             ),
 //!         )
 //!         .await;

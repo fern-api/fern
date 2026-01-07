@@ -6,6 +6,7 @@
 //!
 //! ```rust
 //! use seed_enum::prelude::*;
+//! use seed_enum::{Color, ColorOrOperand, Operand};
 //!
 //! #[tokio::main]
 //! async fn main() {
@@ -17,9 +18,9 @@
 //!         .headers
 //!         .send(Some(
 //!             RequestOptions::new()
-//!                 .additional_header("operand", Operand::GreaterThan)
-//!                 .additional_header("maybeOperand", Some(Operand::GreaterThan))
-//!                 .additional_header("operandOrColor", ColorOrOperand::Color(Color::Red)),
+//!                 .additional_header("operand", ">")
+//!                 .additional_header("maybeOperand", ">")
+//!                 .additional_header("operandOrColor", "red"),
 //!         ))
 //!         .await;
 //! }

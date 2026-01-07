@@ -1,4 +1,5 @@
 use seed_audiences::prelude::*;
+use seed_audiences::OptionalString;
 
 #[tokio::main]
 async fn main() {

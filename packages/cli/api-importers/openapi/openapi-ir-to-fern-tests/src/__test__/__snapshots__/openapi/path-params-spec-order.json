@@ -1,0 +1,82 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "fooBar": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "bar_id": "bar_id",
+                    "foo_id": "foo_id",
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/foo/{foo_id}/bar/{bar_id}/",
+              "request": {
+                "name": "FooBarRequest",
+                "path-parameters": {
+                  "bar_id": "string",
+                  "foo_id": "string",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    fooBar:
+      path: /foo/{foo_id}/bar/{bar_id}/
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: FooBarRequest
+        path-parameters:
+          bar_id: string
+          foo_id: string
+      examples:
+        - path-parameters:
+            bar_id: bar_id
+            foo_id: foo_id
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Foo Bar API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Foo Bar API
+",
+  },
+}

@@ -55,9 +55,9 @@ async fn main() {
         .user
         .create_user(
             &CreateUserRequest {
-                name: "Alice".to_string(),
                 r#type: "CreateUserRequest".to_string(),
                 version: "v1".to_string(),
+                name: "Alice".to_string(),
             },
             None,
         )

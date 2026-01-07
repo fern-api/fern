@@ -8,7 +8,9 @@ from ....core.serialization import FieldMetadata
 
 class Dog(UniversalBaseModel):
     name: str
-    likes_to_woof: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")]
+    likes_to_woof: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToWoof")] = pydantic.Field(
+        alias="likesToWoof"
+    )
 
     class Config:
         frozen = True

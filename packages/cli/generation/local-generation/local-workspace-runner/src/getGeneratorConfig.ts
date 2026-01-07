@@ -107,8 +107,9 @@ function getGithubPublishConfig(
     return githubPublishInfo != null
         ? FiddleGithubPublishInfo._visit<FernGeneratorExec.GithubPublishInfo | undefined>(githubPublishInfo, {
               npm: (value) => {
-                  const token = (value.token || "${NPM_TOKEN}").trim();
+                  const token = (value.token ?? "").trim();
                   const useOidc = token === "<USE_OIDC>" || token === "OIDC";
+                  const hasToken = token !== "";
                   return FernGeneratorExec.GithubPublishInfo.npm({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
@@ -118,7 +119,8 @@ function getGithubPublishConfig(
                               : token.startsWith("${") && token.endsWith("}")
                                 ? token.slice(2, -1).trim()
                                 : ""
-                      )
+                      ),
+                      shouldGeneratePublishWorkflow: useOidc || hasToken
                   });
               },
               maven: (value) =>
@@ -324,7 +326,8 @@ function newDummyPublishOutputConfig(
     let repoUrl = "";
     if (generatorInvocation.raw?.github != null) {
         if (isGithubSelfhosted(generatorInvocation.raw.github)) {
-            repoUrl = generatorInvocation.raw.github.uri;
+            // Convert shorthand uri (owner/repo) to full URL format to match Fiddle's behavior
+            repoUrl = `https://github.com/${generatorInvocation.raw.github.uri}`;
         } else {
             repoUrl = generatorInvocation.raw?.github.repository;
         }

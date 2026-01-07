@@ -20,7 +20,6 @@ async fn main() {
                 q: Some("q".to_string()),
                 search_engine: Some("search_engine".to_string()),
                 fields: Some("fields".to_string()),
-                ..Default::default()
             },
             None,
         )

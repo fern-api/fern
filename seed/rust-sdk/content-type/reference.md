@@ -27,7 +27,6 @@ async fn main() {
             &PatchProxyRequest {
                 application: Some("application".to_string()),
                 require_auth: Some(true),
-                ..Default::default()
             },
             None,
         )
@@ -126,7 +125,6 @@ async fn main() {
                     "settings".to_string(),
                     serde_json::json!({"key":"value"}),
                 )]))),
-                ..Default::default()
             },
             None,
         )
@@ -282,7 +280,6 @@ async fn main() {
                 app_id: Some("appId".to_string()),
                 instructions: Some("instructions".to_string()),
                 active: Some(true),
-                ..Default::default()
             },
             None,
         )
@@ -490,7 +487,6 @@ async fn main() {
             &RegularPatchRequest {
                 field_1: Some("field1".to_string()),
                 field_2: Some(1),
-                ..Default::default()
             },
             None,
         )

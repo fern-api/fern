@@ -366,7 +366,6 @@ async fn main() {
                 q: Some("q".to_string()),
                 search_engine: Some("search_engine".to_string()),
                 fields: Some("fields".to_string()),
-                ..Default::default()
             },
             None,
         )
@@ -497,7 +496,6 @@ async fn main() {
             &GetUserByIdQueryRequest {
                 fields: Some("fields".to_string()),
                 include_fields: Some(true),
-                ..Default::default()
             },
             None,
         )
@@ -573,6 +571,7 @@ Create a new user
 
 ```rust
 use seed_client_side_params::prelude::*;
+use seed_client_side_params::CreateUserRequest;
 
 #[tokio::main]
 async fn main() {
@@ -644,6 +643,7 @@ Update a user
 
 ```rust
 use seed_client_side_params::prelude::*;
+use seed_client_side_params::UpdateUserRequest;
 
 #[tokio::main]
 async fn main() {
@@ -813,7 +813,6 @@ async fn main() {
                 strategy: Some("strategy".to_string()),
                 name: Some("name".to_string()),
                 fields: Some("fields".to_string()),
-                ..Default::default()
             },
             None,
         )
@@ -903,7 +902,6 @@ async fn main() {
             &"connectionId".to_string(),
             &GetConnectionQueryRequest {
                 fields: Some("fields".to_string()),
-                ..Default::default()
             },
             None,
         )
@@ -991,7 +989,6 @@ async fn main() {
                 is_global: Some(true),
                 is_first_party: Some(true),
                 app_type: Some(vec!["app_type".to_string(), "app_type".to_string()]),
-                ..Default::default()
             },
             None,
         )
@@ -1122,7 +1119,6 @@ async fn main() {
             &GetClientQueryRequest {
                 fields: Some("fields".to_string()),
                 include_fields: Some(true),
-                ..Default::default()
             },
             None,
         )

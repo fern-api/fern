@@ -1,4 +1,5 @@
 use seed_trace::prelude::*;
+use seed_trace::PlaylistId;
 
 #[tokio::main]
 async fn main() {
@@ -10,6 +11,6 @@ async fn main() {
     let client = TraceClient::new(config).expect("Failed to build client");
     client
         .playlist
-        .get_playlist(&1, &PlaylistId("playlistId".to_string()), None)
+        .get_playlist(1, &PlaylistId("playlistId".to_string()), None)
         .await;
 }

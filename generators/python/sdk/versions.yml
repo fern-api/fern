@@ -1,15 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
 - version: 4.47.0-rc0
   changelogEntry:
     - summary: |
-        Add smoke test generation feature. When `generate_smoke_tests: true` is configured, the SDK
-        generates tests in `tests/smoke/` that can be run against a production environment. Features include:
-        - Structural validation that checks response types/structure without requiring exact value matches
-        - Include/exclude patterns to filter which examples are tested (e.g., `ServiceName.methodName`)
+        Add smoke test generation feature with layered validation modes. When `generate_smoke_tests: true`
+        is configured, the SDK generates tests in `tests/smoke/` that can be run against a production
+        environment. Features include:
+        - Three validation modes: status-only, structural (types/structure), and strict (exact values)
+        - Per-endpoint validation filtering via include/exclude patterns (e.g., `ServiceName.methodName`)
         - Environment variable configuration via `SMOKE_TEST_BASE_URL` and `SMOKE_TEST_<PARAM>`
       type: feat
-  createdAt: "2025-01-06"
+  createdAt: "2025-01-07"
+  irVersion: 62
+
+- version: 4.46.7-rc2
+  changelogEntry:
+    - summary: Fixed Python SDK generation to use native Pydantic field aliases and improved core parsing so wire-key and nested/union validation works correctly across Pydantic v1/v2.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
+- version: 4.46.7-rc1
+  changelogEntry:
+    - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.
+      type: chore
+  createdAt: "2026-01-05"
   irVersion: 62
 
 - version: 4.46.7-rc0

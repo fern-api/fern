@@ -10,7 +10,7 @@ from ...core.serialization import FieldMetadata
 
 class Record(UniversalBaseModel):
     foo: typing.Dict[str, str]
-    f_3_d: typing_extensions.Annotated[int, FieldMetadata(alias="3d")]
+    f_3_d: typing_extensions.Annotated[int, FieldMetadata(alias="3d")] = pydantic.Field(alias="3d")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

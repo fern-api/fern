@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.27.6
+  changelogEntry:
+    - summary: |
+        Generate overloads without request wrapper when all query parameters are optional.
+        This prevents compile breaks when optional query parameters are added to endpoints.
+        For example, `getLatestInsurance(String userId)` and `getLatestInsurance(String userId, RequestOptions requestOptions)`
+        overloads are now generated in addition to the request wrapper variants.
+      type: feat
+  createdAt: "2026-01-06"
+  irVersion: 61
+
+- version: 3.27.5-rc4
+  changelogEntry:
+    - summary: |
+        Add fallback SDK name generation for X-Fern-SDK-Name header when no explicit maven config is provided.
+        This ensures local generation matches remote generation for GitHub output mode.
+      type: fix
+  createdAt: "2026-01-05"
+  irVersion: 61
+
 - version: 3.27.5-rc3
   changelogEntry:
     - summary: Retry Publishing of rc2

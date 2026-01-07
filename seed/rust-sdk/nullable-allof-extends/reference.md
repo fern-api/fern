@@ -75,6 +75,7 @@ Creates a test object with nullable allOf in request body.
 
 ```rust
 use seed_api::prelude::*;
+use seed_api::RootObject;
 
 #[tokio::main]
 async fn main() {
@@ -85,8 +86,7 @@ async fn main() {
     client
         .create_test(
             &RootObject {
-                normal_field: None,
-                nullable_field: None,
+                normal_object_fields: NormalObject { normal_field: None },
             },
             None,
         )

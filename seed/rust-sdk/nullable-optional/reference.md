@@ -94,6 +94,7 @@ Create a new user
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{Address, CreateUserRequest, NullableUserId, OptionalUserId};
 
 #[tokio::main]
 async fn main() {
@@ -161,6 +162,7 @@ Update a user (partial update)
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{Address, NullableUserId, OptionalUserId, UpdateUserRequest};
 
 #[tokio::main]
 async fn main() {
@@ -259,7 +261,6 @@ async fn main() {
                 offset: Some(1),
                 include_deleted: Some(true),
                 sort_by: Some(Some("sortBy".to_string())),
-                ..Default::default()
             },
             None,
         )
@@ -441,6 +442,11 @@ Create a complex profile to test nullable enums and unions
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{
+    Address, ComplexProfile, Document, EmailNotification, NotificationMethod, NullableUserId,
+    OptionalUserId, Organization, PushNotification, SearchResult, SmsNotification, UserResponse,
+    UserRole, UserStatus,
+};
 
 #[tokio::main]
 async fn main() {
@@ -688,6 +694,11 @@ Update complex profile to test nullable field updates
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{
+    Address, Document, EmailNotification, NotificationMethod, NullableUserId, OptionalUserId,
+    Organization, PushNotification, SearchResult, SmsNotification, UserResponse, UserRole,
+    UserStatus,
+};
 
 #[tokio::main]
 async fn main() {
@@ -738,7 +749,6 @@ async fn main() {
                     "nullableArray".to_string(),
                     "nullableArray".to_string(),
                 ])),
-                ..Default::default()
             },
             None,
         )
@@ -838,6 +848,11 @@ Test endpoint for validating null deserialization
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{
+    Address, DeserializationTestRequest, Document, EmailNotification, NotificationMethod,
+    NullableUserId, OptionalUserId, Organization, PushNotification, SearchResult, SmsNotification,
+    UserResponse, UserRole, UserStatus,
+};
 
 #[tokio::main]
 async fn main() {
@@ -948,6 +963,7 @@ Filter users by role with nullable enum
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{UserRole, UserStatus};
 
 #[tokio::main]
 async fn main() {
@@ -962,7 +978,6 @@ async fn main() {
                 role: Some(UserRole::Admin),
                 status: Some(UserStatus::Active),
                 secondary_role: Some(Some(UserRole::Admin)),
-                ..Default::default()
             },
             None,
         )
@@ -1119,7 +1134,6 @@ async fn main() {
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 categories: Some(vec!["categories".to_string(), "categories".to_string()]),
                 labels: Some(Some(vec!["labels".to_string(), "labels".to_string()])),
-                ..Default::default()
             },
             None,
         )

@@ -10,7 +10,9 @@ from .submission_id import SubmissionId
 
 
 class StdoutResponse(UniversalBaseModel):
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
+    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")] = pydantic.Field(
+        alias="submissionId"
+    )
     stdout: str
 
     if IS_PYDANTIC_V2:

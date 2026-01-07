@@ -1,4 +1,9 @@
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{
+    Address, Document, EmailNotification, NotificationMethod, NullableUserId, OptionalUserId,
+    Organization, PushNotification, SearchResult, SmsNotification, UserResponse, UserRole,
+    UserStatus,
+};
 
 #[tokio::main]
 async fn main() {
@@ -50,7 +55,6 @@ async fn main() {
                     "nullableArray".to_string(),
                     "nullableArray".to_string(),
                 ])),
-                ..Default::default()
             },
             None,
         )

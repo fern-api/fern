@@ -13,6 +13,7 @@
 
 ```rust
 use seed_alias::prelude::*;
+use seed_alias::TypeId;
 
 #[tokio::main]
 async fn main() {

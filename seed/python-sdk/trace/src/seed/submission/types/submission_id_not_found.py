@@ -10,7 +10,9 @@ from .submission_id import SubmissionId
 
 
 class SubmissionIdNotFound(UniversalBaseModel):
-    missing_submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="missingSubmissionId")]
+    missing_submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="missingSubmissionId")] = (
+        pydantic.Field(alias="missingSubmissionId")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

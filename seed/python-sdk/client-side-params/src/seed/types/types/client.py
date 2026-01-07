@@ -34,7 +34,7 @@ class Client(UniversalBaseModel):
     """
 
     global_: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="global")] = pydantic.Field(
-        default=None
+        alias="global", default=None
     )
     """
     Whether this is a global client

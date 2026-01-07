@@ -1,4 +1,5 @@
 use seed_literal::prelude::*;
+use seed_literal::{ANestedLiteral, ATopLevelLiteral, SomeAliasedLiteral};
 
 #[tokio::main]
 async fn main() {

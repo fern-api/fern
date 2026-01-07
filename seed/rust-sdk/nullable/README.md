@@ -44,6 +44,7 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_nullable::prelude::*;
+use seed_nullable::{Metadata, Status};
 
 #[tokio::main]
 async fn main() {

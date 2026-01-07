@@ -23,7 +23,7 @@
 //!                 grant_type: "client_credentials".to_string(),
 //!                 scope: Some("scope".to_string()),
 //!             },
-//!             Some(RequestOptions::new().additional_header("X-Api-Key", "X-Api-Key".to_string())),
+//!             Some(RequestOptions::new().additional_header("X-Api-Key", "X-Api-Key")),
 //!         )
 //!         .await;
 //! }
