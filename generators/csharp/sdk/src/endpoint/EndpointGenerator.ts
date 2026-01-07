@@ -67,9 +67,31 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             })
         );
         const rawReturn = getEndpointReturnType({ context: this.context, endpoint });
-        // Wrap return type in Task<T> for interface methods (can't use isAsync since interfaces don't support async keyword)
-        const return_ =
-            rawReturn != null ? this.System.Threading.Tasks.Task(rawReturn) : this.System.Threading.Tasks.Task();
+
+        // Check if this is a streaming endpoint (returns IAsyncEnumerable<T>)
+        // Streaming endpoints use async iterators which return IAsyncEnumerable<T> directly, not Task<IAsyncEnumerable<T>>
+        const isStreaming =
+            endpoint.response?.body?._visit({
+                streaming: () => true,
+                json: () => false,
+                fileDownload: () => false,
+                text: () => false,
+                bytes: () => false,
+                streamParameter: () => true,
+                _other: () => false
+            }) ?? false;
+
+        // Wrap return type in Task<T> for interface methods, EXCEPT for streaming endpoints
+        // which use async iterators that return IAsyncEnumerable<T> directly
+        let return_: ast.Type;
+        if (isStreaming) {
+            // Streaming endpoints return IAsyncEnumerable<T> directly (async iterator pattern)
+            return_ = rawReturn ?? this.System.Threading.Tasks.Task();
+        } else {
+            // Regular async methods return Task<T>
+            return_ =
+                rawReturn != null ? this.System.Threading.Tasks.Task(rawReturn) : this.System.Threading.Tasks.Task();
+        }
 
         interface_.addMethod({
             name: this.context.getEndpointMethodName(endpoint),

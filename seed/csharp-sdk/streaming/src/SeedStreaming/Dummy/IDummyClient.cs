@@ -2,7 +2,7 @@ namespace SeedStreaming;
 
 public partial interface IDummyClient
 {
-    Task<IAsyncEnumerable<StreamResponse>> GenerateStreamAsync(
+    IAsyncEnumerable<StreamResponse> GenerateStreamAsync(
         GenerateStreamRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
