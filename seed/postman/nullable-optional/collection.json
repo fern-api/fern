@@ -288,22 +288,26 @@
                 {
                   "key": "limit",
                   "description": null,
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 },
                 {
                   "key": "offset",
                   "description": null,
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 },
                 {
                   "key": "includeDeleted",
                   "description": null,
-                  "value": "true"
+                  "value": "true",
+                  "disabled": true
                 },
                 {
                   "key": "sortBy",
                   "description": null,
-                  "value": "sortBy"
+                  "value": "sortBy",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -339,22 +343,26 @@
                     {
                       "key": "limit",
                       "description": null,
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "offset",
                       "description": null,
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "includeDeleted",
                       "description": null,
-                      "value": "true"
+                      "value": "true",
+                      "disabled": true
                     },
                     {
                       "key": "sortBy",
                       "description": null,
-                      "value": "sortBy"
+                      "value": "sortBy",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -400,17 +408,20 @@
                 {
                   "key": "department",
                   "description": null,
-                  "value": "department"
+                  "value": "department",
+                  "disabled": true
                 },
                 {
                   "key": "role",
                   "description": null,
-                  "value": "role"
+                  "value": "role",
+                  "disabled": true
                 },
                 {
                   "key": "isActive",
                   "description": null,
-                  "value": "true"
+                  "value": "true",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -452,17 +463,20 @@
                     {
                       "key": "department",
                       "description": null,
-                      "value": "department"
+                      "value": "department",
+                      "disabled": true
                     },
                     {
                       "key": "role",
                       "description": null,
-                      "value": "role"
+                      "value": "role",
+                      "disabled": true
                     },
                     {
                       "key": "isActive",
                       "description": null,
-                      "value": "true"
+                      "value": "true",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -843,17 +857,20 @@
                 {
                   "key": "role",
                   "description": null,
-                  "value": "ADMIN"
+                  "value": "ADMIN",
+                  "disabled": true
                 },
                 {
                   "key": "status",
                   "description": null,
-                  "value": "active"
+                  "value": "active",
+                  "disabled": true
                 },
                 {
                   "key": "secondaryRole",
                   "description": null,
-                  "value": "ADMIN"
+                  "value": "ADMIN",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -890,17 +907,20 @@
                     {
                       "key": "role",
                       "description": null,
-                      "value": "ADMIN"
+                      "value": "ADMIN",
+                      "disabled": true
                     },
                     {
                       "key": "status",
                       "description": null,
-                      "value": "active"
+                      "value": "active",
+                      "disabled": true
                     },
                     {
                       "key": "secondaryRole",
                       "description": null,
-                      "value": "ADMIN"
+                      "value": "ADMIN",
+                      "disabled": true
                     }
                   ],
                   "variable": []
