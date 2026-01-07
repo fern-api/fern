@@ -212,6 +212,8 @@ class TypeReferenceToTypeHintConverter:
         )
 
     def _get_type_hint_for_primitive(self, primitive: ir_types.PrimitiveType) -> AST.TypeHint:
+        if self._is_binary_string(primitive):
+            return AST.TypeHint.bytes()
         to_return = primitive.v_1.visit(
             integer=AST.TypeHint.int_,
             double=AST.TypeHint.float_,
@@ -228,6 +230,18 @@ class TypeReferenceToTypeHintConverter:
             float_=AST.TypeHint.float_,
         )
         return to_return
+
+    def _is_binary_string(self, primitive: ir_types.PrimitiveType) -> bool:
+        if primitive.v_1 != ir_types.PrimitiveTypeV1.STRING:
+            return False
+        if primitive.v_2 is None:
+            return False
+        v2_union = primitive.v_2.get_as_union()
+        if v2_union.type != "string":
+            return False
+        if v2_union.validation is None:
+            return False
+        return v2_union.validation.format == "binary"
 
     def _unbox_type_reference(self, type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
         return type_reference.visit(
