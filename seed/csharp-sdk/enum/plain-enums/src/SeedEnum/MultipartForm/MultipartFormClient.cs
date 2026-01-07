@@ -2,7 +2,7 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class MultipartFormClient
+public partial class MultipartFormClient : IMultipartFormClient
 {
     private RawClient _client;
 

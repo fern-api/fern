@@ -4,7 +4,7 @@ using SeedApi.Core;
 
 namespace SeedApi.Folder;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
     private RawClient _client;
 

@@ -3,7 +3,7 @@ using SeedApi.Core;
 
 namespace SeedApi.Folder;
 
-public partial class FolderClient
+public partial class FolderClient : IFolderClient
 {
     private RawClient _client;
 

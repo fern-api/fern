@@ -2,7 +2,7 @@ using SeedBytesDownload.Core;
 
 namespace SeedBytesDownload;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
     private RawClient _client;
 

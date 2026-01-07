@@ -3,7 +3,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-public partial class TypesClient
+public partial class TypesClient : ITypesClient
 {
     private RawClient _client;
 

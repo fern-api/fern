@@ -2,7 +2,7 @@ using SeedVariables.Core;
 
 namespace SeedVariables;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
     private RawClient _client;
 

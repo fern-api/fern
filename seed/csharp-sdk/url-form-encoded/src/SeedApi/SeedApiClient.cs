@@ -3,7 +3,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class SeedApiClient
+public partial class SeedApiClient : ISeedApiClient
 {
     private readonly RawClient _client;
 

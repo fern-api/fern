@@ -2,7 +2,7 @@ using SeedNoEnvironment.Core;
 
 namespace SeedNoEnvironment;
 
-public partial class SeedNoEnvironmentClient
+public partial class SeedNoEnvironmentClient : ISeedNoEnvironmentClient
 {
     private readonly RawClient _client;
 

@@ -2,7 +2,7 @@ using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict;
 
-public partial class SeedCsharpNamespaceConflictClient
+public partial class SeedCsharpNamespaceConflictClient : ISeedCsharpNamespaceConflictClient
 {
     private readonly RawClient _client;
 

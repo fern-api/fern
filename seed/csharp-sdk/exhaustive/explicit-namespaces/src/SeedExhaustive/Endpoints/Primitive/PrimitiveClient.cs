@@ -4,7 +4,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Primitive;
 
-public partial class PrimitiveClient
+public partial class PrimitiveClient : IPrimitiveClient
 {
     private RawClient _client;
 

@@ -5,7 +5,7 @@ using SeedExhaustive.Types.Enum;
 
 namespace SeedExhaustive.Endpoints.Enum;
 
-public partial class EnumClient
+public partial class EnumClient : IEnumClient
 {
     private RawClient _client;
 

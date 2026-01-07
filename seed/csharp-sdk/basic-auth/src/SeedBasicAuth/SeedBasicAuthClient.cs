@@ -2,7 +2,7 @@ using SeedBasicAuth.Core;
 
 namespace SeedBasicAuth;
 
-public partial class SeedBasicAuthClient
+public partial class SeedBasicAuthClient : ISeedBasicAuthClient
 {
     private readonly RawClient _client;
 

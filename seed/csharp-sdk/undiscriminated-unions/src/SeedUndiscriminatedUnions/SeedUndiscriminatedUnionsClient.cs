@@ -2,7 +2,7 @@ using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;
 
-public partial class SeedUndiscriminatedUnionsClient
+public partial class SeedUndiscriminatedUnionsClient : ISeedUndiscriminatedUnionsClient
 {
     private readonly RawClient _client;
 

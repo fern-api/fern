@@ -3,7 +3,7 @@ using SeedBasicAuthEnvironmentVariables.Core;
 
 namespace SeedBasicAuthEnvironmentVariables;
 
-public partial class BasicAuthClient
+public partial class BasicAuthClient : IBasicAuthClient
 {
     private RawClient _client;
 

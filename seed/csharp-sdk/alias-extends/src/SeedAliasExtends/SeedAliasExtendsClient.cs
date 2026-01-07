@@ -2,7 +2,7 @@ using SeedAliasExtends.Core;
 
 namespace SeedAliasExtends;
 
-public partial class SeedAliasExtendsClient
+public partial class SeedAliasExtendsClient : ISeedAliasExtendsClient
 {
     private readonly RawClient _client;
 

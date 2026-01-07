@@ -2,7 +2,7 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class HeadersClient
+public partial class HeadersClient : IHeadersClient
 {
     private RawClient _client;
 

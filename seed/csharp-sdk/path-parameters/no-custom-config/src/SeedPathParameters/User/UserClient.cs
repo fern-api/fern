@@ -3,7 +3,7 @@ using SeedPathParameters.Core;
 
 namespace SeedPathParameters;
 
-public partial class UserClient
+public partial class UserClient : IUserClient
 {
     private RawClient _client;
 

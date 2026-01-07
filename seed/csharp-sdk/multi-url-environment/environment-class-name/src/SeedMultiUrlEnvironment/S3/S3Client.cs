@@ -3,7 +3,7 @@ using SeedMultiUrlEnvironment.Core;
 
 namespace SeedMultiUrlEnvironment;
 
-public partial class S3Client
+public partial class S3Client : IS3Client
 {
     private RawClient _client;
 

@@ -4,7 +4,7 @@ using SeedApi.Core;
 
 namespace SeedApi.A;
 
-public partial class AClient
+public partial class AClient : IAClient
 {
     private RawClient _client;
 

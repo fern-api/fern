@@ -2,7 +2,7 @@ using SeedVariables.Core;
 
 namespace SeedVariables;
 
-public partial class SeedVariablesClient
+public partial class SeedVariablesClient : ISeedVariablesClient
 {
     private readonly RawClient _client;
 

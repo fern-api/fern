@@ -4,7 +4,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Urls;
 
-public partial class UrlsClient
+public partial class UrlsClient : IUrlsClient
 {
     private RawClient _client;
 

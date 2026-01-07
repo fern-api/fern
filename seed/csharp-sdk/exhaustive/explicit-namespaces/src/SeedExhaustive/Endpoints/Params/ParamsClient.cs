@@ -4,7 +4,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Params;
 
-public partial class ParamsClient
+public partial class ParamsClient : IParamsClient
 {
     private RawClient _client;
 

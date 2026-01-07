@@ -3,7 +3,7 @@ using SeedMixedFileDirectory.Core;
 
 namespace SeedMixedFileDirectory;
 
-public partial class OrganizationClient
+public partial class OrganizationClient : IOrganizationClient
 {
     private RawClient _client;
 

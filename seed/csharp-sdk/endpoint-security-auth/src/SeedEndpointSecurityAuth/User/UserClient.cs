@@ -3,7 +3,7 @@ using SeedEndpointSecurityAuth.Core;
 
 namespace SeedEndpointSecurityAuth;
 
-public partial class UserClient
+public partial class UserClient : IUserClient
 {
     private RawClient _client;
 

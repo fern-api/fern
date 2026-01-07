@@ -2,7 +2,7 @@ using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
 
-public partial class SeedObjectsWithImportsClient
+public partial class SeedObjectsWithImportsClient : ISeedObjectsWithImportsClient
 {
     private readonly RawClient _client;
 

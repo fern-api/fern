@@ -5,7 +5,7 @@ using SeedMixedFileDirectory.User_.Events;
 
 namespace SeedMixedFileDirectory.User_;
 
-public partial class EventsClient
+public partial class EventsClient : IEventsClient
 {
     private RawClient _client;
 

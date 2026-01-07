@@ -2,7 +2,7 @@ using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials.NestedNoAuth;
 
-public partial class NestedNoAuthClient
+public partial class NestedNoAuthClient : INestedNoAuthClient
 {
     private RawClient _client;
 
