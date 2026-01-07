@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -34,6 +36,7 @@
     "@types/semver": "^7.5.8",
     "ajv": "^8.17.1",
     "json-schema": "^0.4.0",
+    "jsonpath-plus": "10.3.0",
     "lodash-es": "^4.17.21",
     "semver": "^7.5.8",
     "strip-ansi": "^7.1.0",
