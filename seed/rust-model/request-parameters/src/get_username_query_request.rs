@@ -8,14 +8,17 @@ pub struct GetUsernameQueryRequest {
     pub limit: i64,
     pub id: Uuid,
     pub date: NaiveDate,
-    pub deadline: DateTime<Utc>,
+    #[serde(with = "crate::core::flexible_datetime::offset")]
+    pub deadline: DateTime<FixedOffset>,
     pub bytes: Vec<u8>,
     pub user: User,
     #[serde(rename = "userList")]
     pub user_list: Vec<User>,
     #[serde(rename = "optionalDeadline")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_deadline: Option<DateTime<Utc>>,
+    #[serde(default)]
+    #[serde(with = "crate::core::flexible_datetime::offset::option")]
+    pub optional_deadline: Option<DateTime<FixedOffset>>,
     #[serde(rename = "keyValue")]
     pub key_value: HashMap<String, String>,
     #[serde(rename = "optionalString")]
