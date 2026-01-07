@@ -70,6 +70,12 @@ export class Attribute extends AstNode {
                 args: [`with = ${JSON.stringify(path)}`]
             }),
 
+        deserializeWith: (path: string): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: [`deserialize_with = ${JSON.stringify(path)}`]
+            }),
+
         skip: (): Attribute =>
             new Attribute({
                 name: "serde",

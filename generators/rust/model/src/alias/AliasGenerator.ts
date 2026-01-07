@@ -83,8 +83,10 @@ export class AliasGenerator {
         const attributes: rust.Attribute[] = [];
 
         // Add flexible datetime serde attribute when configured and the alias is a datetime type
+        // Use deserialize_with instead of with to allow Serialize derive to work correctly
+        // Serialization uses default DateTime<Utc> format (RFC3339), deserialization uses flexible parser
         if (this.context.getDateTimeType() === "flexible" && isDateTimeOnlyType(this.aliasTypeDeclaration.aliasOf)) {
-            attributes.push(Attribute.serde.with("crate::core::flexible_datetime"));
+            attributes.push(Attribute.serde.deserializeWith("crate::core::flexible_datetime::deserialize"));
         }
 
         return attributes;
