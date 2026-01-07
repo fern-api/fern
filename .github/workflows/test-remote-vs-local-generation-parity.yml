@@ -6,6 +6,12 @@ on:
   #   - cron: "0 13 * * *"
   # Runs when triggered manually
   workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to test (defaults to main)"
+        required: false
+        default: "main"
+        type: string
 
 # Cancel previous workflows when another is triggered
 concurrency:
@@ -28,7 +34,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ inputs.branch || 'main' }}
 
       - name: Install
         uses: ./.github/actions/install
