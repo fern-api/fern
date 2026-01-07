@@ -16,9 +16,13 @@ class DeserializationTestResponse(UniversalBaseModel):
     """
 
     echo: DeserializationTestRequest
-    processed_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="processedAt")]
-    null_count: typing_extensions.Annotated[int, FieldMetadata(alias="nullCount")]
-    present_fields_count: typing_extensions.Annotated[int, FieldMetadata(alias="presentFieldsCount")]
+    processed_at: typing_extensions.Annotated[dt.datetime, FieldMetadata(alias="processedAt")] = pydantic.Field(
+        alias="processedAt"
+    )
+    null_count: typing_extensions.Annotated[int, FieldMetadata(alias="nullCount")] = pydantic.Field(alias="nullCount")
+    present_fields_count: typing_extensions.Annotated[int, FieldMetadata(alias="presentFieldsCount")] = pydantic.Field(
+        alias="presentFieldsCount"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

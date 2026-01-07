@@ -11,8 +11,12 @@ from .submission_id import SubmissionId
 
 
 class CustomTestCasesUnsupported(UniversalBaseModel):
-    problem_id: typing_extensions.Annotated[ProblemId, FieldMetadata(alias="problemId")]
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
+    problem_id: typing_extensions.Annotated[ProblemId, FieldMetadata(alias="problemId")] = pydantic.Field(
+        alias="problemId"
+    )
+    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")] = pydantic.Field(
+        alias="submissionId"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

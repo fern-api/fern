@@ -22,16 +22,20 @@ from .test import Test
 
 
 class BigEntity(UniversalBaseModel):
-    cast_member: typing_extensions.Annotated[typing.Optional[CastMember], FieldMetadata(alias="castMember")] = None
+    cast_member: typing_extensions.Annotated[typing.Optional[CastMember], FieldMetadata(alias="castMember")] = (
+        pydantic.Field(alias="castMember", default=None)
+    )
     extended_movie: typing_extensions.Annotated[
         typing.Optional[ExtendedMovie], FieldMetadata(alias="extendedMovie")
-    ] = None
+    ] = pydantic.Field(alias="extendedMovie", default=None)
     entity: typing.Optional[Entity] = None
     metadata: typing.Optional[types_types_metadata_Metadata] = None
     common_metadata: typing_extensions.Annotated[
         typing.Optional[commons_types_types_metadata_Metadata], FieldMetadata(alias="commonMetadata")
-    ] = None
-    event_info: typing_extensions.Annotated[typing.Optional[EventInfo], FieldMetadata(alias="eventInfo")] = None
+    ] = pydantic.Field(alias="commonMetadata", default=None)
+    event_info: typing_extensions.Annotated[typing.Optional[EventInfo], FieldMetadata(alias="eventInfo")] = (
+        pydantic.Field(alias="eventInfo", default=None)
+    )
     data: typing.Optional[Data] = None
     migration: typing.Optional[Migration] = None
     exception: typing.Optional[Exception] = None
