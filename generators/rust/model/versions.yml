@@ -2,7 +2,7 @@
 - version: 0.3.0
   changelogEntry:
     - summary: |
-        Change default datetime type to DateTime<FixedOffset> with flexible parsing. This preserves original timezone offsets from server responses while accepting any datetime format (with or without timezone). When no timezone is provided, UTC is assumed. Use `dateTimeType: "utc"` to convert all datetimes to UTC instead.
+        Change default datetime type to `DateTime<FixedOffset>` with flexible parsing. This preserves original timezone offsets from server responses while accepting any datetime format (with or without timezone). When no timezone is provided, UTC is assumed. Use `dateTimeType: "utc"` to convert all datetimes to UTC instead.
       type: feat
   createdAt: "2026-01-07"
   irVersion: 58
