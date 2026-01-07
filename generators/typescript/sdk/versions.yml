@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.4
+  changelogEntry:
+    - summary: |
+        Fix passthrough serialization to only preserve truly unknown keys. Previously, spreading both raw
+        and transformed objects in the passthrough() function caused duplicate keys with different casing
+        (e.g., both version_number and versionNumber would appear in the output). Now filters out known
+        raw/parsed keys before spreading, ensuring only genuinely unknown keys are preserved.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 63
+
 - version: 3.43.3
   changelogEntry:
     - summary: |
