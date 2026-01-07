@@ -3,7 +3,8 @@
 
 - version: 4.46.7-rc3
   changelogEntry:
-    - summary: WebSocket methods now use `bytes` type for binary payloads (format: binary) instead of `str`.
+    - summary: |
+        WebSocket methods now use `bytes` type for binary payloads (format: binary) instead of `str`.
       type: feat
   createdAt: "2026-01-07"
   irVersion: 62
