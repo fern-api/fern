@@ -15,6 +15,7 @@ import {
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
+import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
 export class WireTestGenerator {
@@ -88,6 +89,13 @@ export class WireTestGenerator {
         }
         // Generate docker-compose.test.yml and wiremock-mappings.json for WireMock
         new WireTestSetupGenerator(this.context, this.context.ir).generate();
+
+        // Generate OAuth-specific wire tests if the API uses OAuth
+        const oauthTestGenerator = new OAuthWireTestGenerator(this.context);
+        const oauthTestFile = oauthTestGenerator.generate();
+        if (oauthTestFile != null) {
+            this.context.project.addGoFiles(oauthTestFile);
+        }
     }
 
     private async generateServiceTestFile(
