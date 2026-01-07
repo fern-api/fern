@@ -50,9 +50,11 @@ class Resource_User(Base):
     """
 
     resource_type: typing.Literal["user"] = "user"
-    user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName")]
+    user_name: typing_extensions.Annotated[str, FieldMetadata(alias="userName")] = pydantic.Field(alias="userName")
     metadata_tags: typing.List[str]
-    extra_properties: typing_extensions.Annotated[typing.Dict[str, str], FieldMetadata(alias="EXTRA_PROPERTIES")]
+    extra_properties: typing_extensions.Annotated[typing.Dict[str, str], FieldMetadata(alias="EXTRA_PROPERTIES")] = (
+        pydantic.Field(alias="EXTRA_PROPERTIES")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

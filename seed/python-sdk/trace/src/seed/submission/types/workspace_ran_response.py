@@ -11,8 +11,12 @@ from .workspace_run_details import WorkspaceRunDetails
 
 
 class WorkspaceRanResponse(UniversalBaseModel):
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
-    run_details: typing_extensions.Annotated[WorkspaceRunDetails, FieldMetadata(alias="runDetails")]
+    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")] = pydantic.Field(
+        alias="submissionId"
+    )
+    run_details: typing_extensions.Annotated[WorkspaceRunDetails, FieldMetadata(alias="runDetails")] = pydantic.Field(
+        alias="runDetails"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

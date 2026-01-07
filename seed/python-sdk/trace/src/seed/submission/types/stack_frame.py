@@ -12,8 +12,12 @@ from .scope import Scope
 
 
 class StackFrame(UniversalBaseModel):
-    method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName")]
-    line_number: typing_extensions.Annotated[int, FieldMetadata(alias="lineNumber")]
+    method_name: typing_extensions.Annotated[str, FieldMetadata(alias="methodName")] = pydantic.Field(
+        alias="methodName"
+    )
+    line_number: typing_extensions.Annotated[int, FieldMetadata(alias="lineNumber")] = pydantic.Field(
+        alias="lineNumber"
+    )
     scopes: typing.List[Scope]
 
     if IS_PYDANTIC_V2:

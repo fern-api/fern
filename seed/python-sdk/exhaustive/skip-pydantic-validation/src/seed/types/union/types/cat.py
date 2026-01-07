@@ -11,7 +11,9 @@ from ....core.unchecked_base_model import UncheckedBaseModel
 
 class Cat(UncheckedBaseModel):
     name: str
-    likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]
+    likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")] = pydantic.Field(
+        alias="likesToMeow"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

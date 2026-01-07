@@ -13,7 +13,9 @@ from .file_info_v_2 import FileInfoV2
 
 class DefaultProvidedFile(UniversalBaseModel):
     file: FileInfoV2
-    related_types: typing_extensions.Annotated[typing.List["VariableType"], FieldMetadata(alias="relatedTypes")]
+    related_types: typing_extensions.Annotated[typing.List["VariableType"], FieldMetadata(alias="relatedTypes")] = (
+        pydantic.Field(alias="relatedTypes")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
