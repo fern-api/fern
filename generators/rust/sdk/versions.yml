@@ -3,7 +3,7 @@
 - version: 0.14.0
   changelogEntry:
     - summary: |
-        Add configurable NaiveDateTime support for datetime primitives. Use `dateTimeType: "naive"` in generator config to use NaiveDateTime (no timezone suffix) instead of DateTime<Utc> (default).
+        Add configurable NaiveDateTime support for datetime primitives. Use `dateTimeType: "naive"` in generator config to use `NaiveDateTime` (no timezone suffix) instead of `DateTime<Utc>` (default).
       type: feat
   createdAt: "2026-01-07"
   irVersion: 62
