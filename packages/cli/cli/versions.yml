@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.35.3
+  changelogEntry:
+    - summary: |
+        Disable AI examples by default when generating preview links. AI examples can still be enabled by setting `experimental.aiExamples: true` in docs.yml.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
 - version: 3.35.2
   changelogEntry:
     - summary: |
