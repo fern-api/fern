@@ -213,6 +213,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return validateAndSanitizeCrateName(createName);
     }
 
+    /**
+     * Get the datetime type to use for datetime primitives.
+     * Returns "utc" for DateTime<Utc> (default) or "naive" for NaiveDateTime.
+     */
+    public getDateTimeType(): "utc" | "naive" {
+        return this.customConfig?.dateTimeType ?? "utc";
+    }
+
     // Client methods
     public getClientStructName(): string {
         return this.customConfig?.clientClassName ?? `${convertToPascalCase(this.config.workspaceName)}Client`;

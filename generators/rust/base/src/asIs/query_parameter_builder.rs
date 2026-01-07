@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, NaiveDateTime, Utc};
 use serde::Serialize;
 
 /// Modern query builder with type-safe method chaining
@@ -114,10 +114,19 @@ impl QueryBuilder {
         self
     }
 
-    /// Add a datetime parameter
+    /// Add a datetime parameter (DateTime<Utc>)
     pub fn datetime(mut self, key: &str, value: impl Into<Option<DateTime<Utc>>>) -> Self {
         if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
+        }
+        self
+    }
+
+    /// Add a naive datetime parameter (NaiveDateTime - no timezone)
+    pub fn naive_datetime(mut self, key: &str, value: impl Into<Option<NaiveDateTime>>) -> Self {
+        if let Some(v) = value.into() {
+            // Format as ISO 8601 without timezone suffix
+            self.params.push((key.to_string(), v.format("%Y-%m-%dT%H:%M:%S").to_string()));
         }
         self
     }

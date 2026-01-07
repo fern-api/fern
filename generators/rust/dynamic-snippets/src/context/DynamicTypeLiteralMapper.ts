@@ -121,6 +121,11 @@ export class DynamicTypeLiteralMapper {
             case "DATE":
                 return rust.Expression.raw('NaiveDate::parse_from_str("2024-01-01", "%Y-%m-%d").unwrap()');
             case "DATE_TIME":
+                if (this.context.getDateTimeType() === "naive") {
+                    return rust.Expression.raw(
+                        'NaiveDateTime::parse_from_str("2024-01-01T00:00:00", "%Y-%m-%dT%H:%M:%S").unwrap()'
+                    );
+                }
                 return rust.Expression.raw(
                     'DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap().with_timezone(&Utc)'
                 );
@@ -204,6 +209,19 @@ export class DynamicTypeLiteralMapper {
                 const str = this.context.getValueAsString({ value });
                 if (str == null) {
                     return rust.Expression.raw("Default::default()");
+                }
+                // Use NaiveDateTime or DateTime<Utc> based on config
+                if (this.context.getDateTimeType() === "naive") {
+                    // Parse NaiveDateTime: NaiveDateTime::parse_from_str("2024-01-15T09:30:00", "%Y-%m-%dT%H:%M:%S").unwrap()
+                    // or with fractional seconds: "%Y-%m-%dT%H:%M:%S%.f"
+                    return rust.Expression.methodCall({
+                        target: rust.Expression.functionCall("NaiveDateTime::parse_from_str", [
+                            rust.Expression.stringLiteral(str),
+                            rust.Expression.stringLiteral("%Y-%m-%dT%H:%M:%S%.f")
+                        ]),
+                        method: "unwrap",
+                        args: []
+                    });
                 }
                 // Parse DateTime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap().with_timezone(&Utc)
                 return rust.Expression.methodCall({

@@ -26,6 +26,10 @@ export const BaseRustCustomConfigSchema = z.object({
     // =========================================================================
     // Generate wire tests for serialization/deserialization
     enableWireTests: z.boolean().optional().default(false),
+    // DateTime type to use for datetime primitives:
+    // - "utc": DateTime<Utc> (default) - requires timezone suffix (Z or +00:00)
+    // - "naive": NaiveDateTime - no timezone suffix required
+    dateTimeType: z.enum(["utc", "naive"]).optional().default("utc"),
 
     // =========================================================================
     // Cargo Features Configuration (control package dependencies)

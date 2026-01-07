@@ -345,6 +345,14 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Get the datetime type to use for datetime primitives.
+     * Returns "utc" for DateTime<Utc> (default) or "naive" for NaiveDateTime.
+     */
+    public getDateTimeType(): "utc" | "naive" {
+        return this.customConfig.dateTimeType ?? "utc";
+    }
+
+    /**
      * Check if IR has any file upload endpoints
      */
     public hasFileUploadEndpoints(): boolean {

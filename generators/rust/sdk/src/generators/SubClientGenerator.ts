@@ -596,9 +596,14 @@ export class SubClientGenerator {
                     analysis.chrono.push("Utc");
                 }
             }
-            if (type.includes("NaiveDate")) {
+            if (type.includes("NaiveDate") && !type.includes("NaiveDateTime")) {
                 if (!analysis.chrono.includes("NaiveDate")) {
                     analysis.chrono.push("NaiveDate");
+                }
+            }
+            if (type.includes("NaiveDateTime")) {
+                if (!analysis.chrono.includes("NaiveDateTime")) {
+                    analysis.chrono.push("NaiveDateTime");
                 }
             }
             if (type.includes("serde_json::Value")) {
@@ -657,9 +662,13 @@ export class SubClientGenerator {
                     bigInteger: () => requiredTypes.add("BigInt"), // Direct BigInt parameter
                     date: () => requiredTypes.add("NaiveDate"), // Direct NaiveDate parameter
                     dateTime: () => {
-                        // Direct DateTime<Utc> parameter
-                        requiredTypes.add("DateTime");
-                        requiredTypes.add("Utc");
+                        // Direct DateTime<Utc> or NaiveDateTime parameter based on config
+                        if (this.context.getDateTimeType() === "naive") {
+                            requiredTypes.add("NaiveDateTime");
+                        } else {
+                            requiredTypes.add("DateTime");
+                            requiredTypes.add("Utc");
+                        }
                     },
                     base64: () => {
                         // String is built-in
@@ -1046,7 +1055,7 @@ export class SubClientGenerator {
                     double: () => "float",
                     bigInteger: () => "big_int",
                     date: () => "date",
-                    dateTime: () => "datetime",
+                    dateTime: () => this.context.getDateTimeType() === "naive" ? "naive_datetime" : "datetime",
                     base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"
@@ -1136,7 +1145,7 @@ export class SubClientGenerator {
                     double: () => "float",
                     bigInteger: () => "big_int",
                     date: () => "date",
-                    dateTime: () => "datetime",
+                    dateTime: () => this.context.getDateTimeType() === "naive" ? "naive_datetime" : "datetime",
                     base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"

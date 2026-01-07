@@ -8,6 +8,8 @@ export interface RustTypeGeneratorContext {
         fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
         name: { pascalCase: { safeName: string } };
     }): string;
+    /** DateTime type to use: "utc" for DateTime<Utc>, "naive" for NaiveDateTime */
+    getDateTimeType(): "utc" | "naive";
 }
 
 export function generateRustTypeForTypeReference(
@@ -100,7 +102,14 @@ export function generateRustTypeForTypeReference(
                     );
                 },
                 dateTime: () => {
-                    // Use DateTime<Utc> for timestamps (imported from chrono)
+                    // Use DateTime<Utc> or NaiveDateTime based on config
+                    if (context.getDateTimeType() === "naive") {
+                        return rust.Type.reference(
+                            rust.reference({
+                                name: "NaiveDateTime"
+                            })
+                        );
+                    }
                     return rust.Type.reference(
                         rust.reference({
                             name: "DateTime",
