@@ -364,7 +364,7 @@ class SdkGenerator(AbstractGenerator):
             )
 
         # Generate smoke tests if enabled
-        if context.custom_config.generate_smoke_tests:
+        if context.custom_config.smoke_test_config.generate_smoke_tests:
             self._write_smoke_tests(
                 context=context,
                 project=project,

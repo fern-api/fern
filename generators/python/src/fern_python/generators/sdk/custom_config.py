@@ -68,6 +68,10 @@ class SmokeTestConfig(pydantic.BaseModel):
     3. Strict validation: Validates exact response values match the example
     """
 
+    # Whether to generate smoke tests. When True, generates tests in tests/smoke/
+    # that can be run against a production environment.
+    generate_smoke_tests: bool = False
+
     # List of example names to include in smoke test generation.
     # If None, all user-specified examples are included.
     # Format: "ServiceName.methodName" or "ServiceName.methodName:exampleName"
@@ -178,11 +182,8 @@ class SDKCustomConfig(pydantic.BaseModel):
 
     custom_pager_name: Optional[str] = None
 
-    # Whether to generate smoke tests that can be run against a production environment.
-    # When enabled, generates tests in tests/smoke/ that validate examples work against real APIs.
-    generate_smoke_tests: bool = False
-
-    # Configuration for smoke test generation. Only used when generate_smoke_tests is True.
+    # Configuration for smoke test generation.
+    # Set smoke_test_config.generate_smoke_tests = True to enable.
     smoke_test_config: SmokeTestConfig = SmokeTestConfig()
 
     class Config:

@@ -78,8 +78,8 @@ fixtures:
         use_inheritance_for_extended_models: false
       outputFolder: legacy-wire-tests
     - customConfig:
-        generate_smoke_tests: true
         smoke_test_config:
+          generate_smoke_tests: true
           structural_validation:
             include_examples: null
             exclude_examples: []
