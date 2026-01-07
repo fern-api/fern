@@ -4,7 +4,12 @@ import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { AliasTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isDateTimeOnlyType, typeSupportsHashAndEq } from "../utils/primitiveTypeUtils";
+import {
+    getInnerTypeFromOptional,
+    isDateTimeOnlyType,
+    isOptionalType,
+    typeSupportsHashAndEq
+} from "../utils/primitiveTypeUtils";
 
 export class AliasGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -85,8 +90,23 @@ export class AliasGenerator {
         // Add flexible datetime serde attribute when configured and the alias is a datetime type
         // Use deserialize_with instead of with to allow Serialize derive to work correctly
         // Serialization uses default DateTime<Utc> format (RFC3339), deserialization uses flexible parser
-        if (this.context.getDateTimeType() === "flexible" && isDateTimeOnlyType(this.aliasTypeDeclaration.aliasOf)) {
-            attributes.push(Attribute.serde.deserializeWith("crate::core::flexible_datetime::deserialize"));
+        if (this.context.getDateTimeType() === "flexible") {
+            const aliasType = this.aliasTypeDeclaration.aliasOf;
+
+            if (isDateTimeOnlyType(aliasType)) {
+                // Direct datetime type: DateTime<Utc>
+                attributes.push(Attribute.serde.deserializeWith("crate::core::flexible_datetime::deserialize"));
+            } else if (isOptionalType(aliasType)) {
+                // Optional type - check if inner type is datetime
+                const innerType = getInnerTypeFromOptional(aliasType);
+                if (isDateTimeOnlyType(innerType)) {
+                    // Optional datetime type: Option<DateTime<Utc>>
+                    attributes.push(Attribute.serde.default());
+                    attributes.push(
+                        Attribute.serde.deserializeWith("crate::core::flexible_datetime::option::deserialize")
+                    );
+                }
+            }
         }
 
         return attributes;
