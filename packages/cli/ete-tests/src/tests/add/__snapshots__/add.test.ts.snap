@@ -5,6 +5,13 @@ exports[`fern add > fern add <generator> --group sdk 1`] = `
   {
     "contents": [
       {
+        "contents": "**/.preview
+**/.definition
+",
+        "name": ".gitignore",
+        "type": "file",
+      },
+      {
         "contents": [
           {
             "contents": "name: api
