@@ -75,7 +75,6 @@
         "exhaustive:web-stream-wrapper",
         "oauth-client-credentials:no-custom-config",
         "simple-api:no-custom-config",
-        "extra-properties",
         "simple-api:use-oxfmt",
         "request-parameters:flatten-request-parameters",
         "optional",
