@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.5
+  changelogEntry:
+    - summary: |
+        Fix repository URL format in package.json to use full URL format (git+https://...) instead of shorthand
+        format (github:...) for consistency between local and remote generation. This ensures `npm pkg fix`
+        normalizes the URL consistently across all generation environments.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 63
+
 - version: 3.43.4
   changelogEntry:
     - summary: |
