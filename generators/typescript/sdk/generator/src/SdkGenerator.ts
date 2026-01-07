@@ -1564,14 +1564,12 @@ export class SdkGenerator {
         filepath,
         addExportTypeModifier,
         dynamicExportTypeModifier,
-        overwrite,
         packagePath = this.relativePackagePath
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
         addExportTypeModifier?: boolean;
         dynamicExportTypeModifier?: boolean;
-        overwrite?: boolean;
         packagePath?: string;
     }) {
         filepath.rootDir = packagePath;
@@ -1701,12 +1699,10 @@ export class SdkGenerator {
     private async withRawFile({
         run,
         filepath,
-        overwrite,
         packagePath = this.relativePackagePath
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => Promise<void>;
         filepath: ExportedFilePath;
-        overwrite?: boolean;
         packagePath?: string;
     }) {
         filepath.rootDir = packagePath;
