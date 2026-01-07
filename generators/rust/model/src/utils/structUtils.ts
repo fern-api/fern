@@ -235,6 +235,9 @@ export function generateFieldAttributes(
         const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
         if (isDateTimeOnlyType(typeRef)) {
             if (isOptional) {
+                // For optional datetime fields with custom deserializer, we need serde(default)
+                // to handle missing fields in JSON (otherwise serde expects the field to be present)
+                attributes.push(Attribute.serde.default());
                 attributes.push(Attribute.serde.with("crate::core::flexible_datetime::option"));
             } else {
                 attributes.push(Attribute.serde.with("crate::core::flexible_datetime"));

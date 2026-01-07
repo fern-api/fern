@@ -101,6 +101,12 @@ export class Attribute extends AstNode {
                 args: ["flatten"]
             }),
 
+        default: (): Attribute =>
+            new Attribute({
+                name: "serde",
+                args: ["default"]
+            }),
+
         content: (field: string): Attribute =>
             new Attribute({
                 name: "serde",
