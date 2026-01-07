@@ -10,10 +10,12 @@ import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@f
 import { askToLogin } from "@fern-api/login";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import { kebabCase } from "lodash-es";
 
-const GITIGNORE_ENTRIES = ["fern/**/.preview", "fern/**/.definition"];
+const GITIGNORE_CONTENT = `**/.preview
+**/.definition
+`;
 
 export async function createFernDirectoryAndWorkspace({
     organization,
@@ -59,7 +61,7 @@ export async function createFernDirectoryAndWorkspace({
             organization,
             versionOfCli
         });
-        await updateGitignore({ taskContext });
+        await writeGitignore({ absolutePathToFernDirectory: pathToFernDirectory });
     } else {
         const projectConfig = await loadProjectConfig({
             directory: pathToFernDirectory,
@@ -90,26 +92,11 @@ async function writeProjectConfig({
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
 }
 
-async function updateGitignore({ taskContext }: { taskContext: TaskContext }): Promise<void> {
-    const gitignorePath = join(cwd(), RelativeFilePath.of(".gitignore"));
-
-    let existingContent = "";
-    if (await doesPathExist(gitignorePath)) {
-        existingContent = await readFile(gitignorePath, "utf-8");
-    }
-
-    const existingLines = new Set(existingContent.split("\n").map((line) => line.trim()));
-    const entriesToAdd = GITIGNORE_ENTRIES.filter((entry) => !existingLines.has(entry));
-
-    if (entriesToAdd.length === 0) {
-        return;
-    }
-
-    const newContent =
-        existingContent.length > 0 && !existingContent.endsWith("\n")
-            ? existingContent + "\n" + entriesToAdd.join("\n") + "\n"
-            : existingContent + entriesToAdd.join("\n") + "\n";
-
-    await writeFile(gitignorePath, newContent);
-    taskContext.logger.info(chalk.green("Updated .gitignore"));
+async function writeGitignore({
+    absolutePathToFernDirectory
+}: {
+    absolutePathToFernDirectory: AbsoluteFilePath;
+}): Promise<void> {
+    const gitignorePath = join(absolutePathToFernDirectory, RelativeFilePath.of(".gitignore"));
+    await writeFile(gitignorePath, GITIGNORE_CONTENT);
 }
