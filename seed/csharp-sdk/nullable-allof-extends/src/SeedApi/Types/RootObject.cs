@@ -14,9 +14,11 @@ public record RootObject : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("normalField")]
     public string? NormalField { get; set; }
 
+    [Optional]
     [JsonPropertyName("nullableField")]
     public string? NullableField { get; set; }
 

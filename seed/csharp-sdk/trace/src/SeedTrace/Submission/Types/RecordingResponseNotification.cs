@@ -14,6 +14,7 @@ public record RecordingResponseNotification : IJsonOnDeserialized
     [JsonPropertyName("submissionId")]
     public required string SubmissionId { get; set; }
 
+    [Optional]
     [JsonPropertyName("testCaseId")]
     public string? TestCaseId { get; set; }
 
@@ -23,6 +24,7 @@ public record RecordingResponseNotification : IJsonOnDeserialized
     [JsonPropertyName("lightweightStackInfo")]
     public required LightweightStackframeInformation LightweightStackInfo { get; set; }
 
+    [Optional]
     [JsonPropertyName("tracedFile")]
     public TracedFile? TracedFile { get; set; }
 

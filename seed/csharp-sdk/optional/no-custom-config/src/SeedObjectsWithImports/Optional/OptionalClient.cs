@@ -126,7 +126,7 @@ public partial class OptionalClient
     public async Task<DeployResponse> SendOptionalNullableWithAllOptionalPropertiesAsync(
         string actionId,
         string id,
-        DeployParams? request,
+        Optional<DeployParams?> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

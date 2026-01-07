@@ -17,6 +17,7 @@ public record TokenResponse : IJsonOnDeserialized
     [JsonPropertyName("access_token")]
     public required string AccessToken { get; set; }
 
+    [Optional]
     [JsonPropertyName("refresh_token")]
     public string? RefreshToken { get; set; }
 

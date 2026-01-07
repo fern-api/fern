@@ -355,7 +355,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         }
         return this.csharp.annotation({
             reference: this.csharp.classReference({
-                origin: this.model.staticExplicit("JsonAccess"),
+                origin: this.model.staticExplicit("JsonAccessAttribute"),
                 namespace: this.namespaces.core
             }),
             argument
@@ -366,6 +366,24 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return this.csharp.annotation({
             reference: this.System.Text.Json.Serialization.JsonPropertyName,
             argument: `"${name}"`
+        });
+    }
+
+    public createOptionalAttribute(): ast.Annotation {
+        return this.csharp.annotation({
+            reference: this.csharp.classReference({
+                origin: this.model.staticExplicit("OptionalAttribute"),
+                namespace: this.namespaces.core
+            })
+        });
+    }
+
+    public createNullableAttribute(): ast.Annotation {
+        return this.csharp.annotation({
+            reference: this.csharp.classReference({
+                origin: this.model.staticExplicit("NullableAttribute"),
+                namespace: this.namespaces.core
+            })
         });
     }
 

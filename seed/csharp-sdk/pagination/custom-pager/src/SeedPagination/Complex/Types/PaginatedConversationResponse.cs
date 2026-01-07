@@ -14,6 +14,7 @@ public record PaginatedConversationResponse : IJsonOnDeserialized
     [JsonPropertyName("conversations")]
     public IEnumerable<Conversation> Conversations { get; set; } = new List<Conversation>();
 
+    [Optional]
     [JsonPropertyName("pages")]
     public CursorPages? Pages { get; set; }
 

@@ -12,6 +12,7 @@ public record WithPage : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("page")]
     public int? Page { get; set; }
 

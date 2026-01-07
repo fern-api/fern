@@ -12,6 +12,7 @@ public record WithCursor : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("cursor")]
     public string? Cursor { get; set; }
 

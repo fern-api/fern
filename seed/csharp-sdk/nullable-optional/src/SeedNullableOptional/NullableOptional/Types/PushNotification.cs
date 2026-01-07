@@ -20,6 +20,7 @@ public record PushNotification : IJsonOnDeserialized
     [JsonPropertyName("body")]
     public required string Body { get; set; }
 
+    [Optional]
     [JsonPropertyName("badge")]
     public int? Badge { get; set; }
 

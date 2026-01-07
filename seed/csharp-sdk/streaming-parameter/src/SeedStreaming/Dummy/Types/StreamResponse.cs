@@ -14,6 +14,7 @@ public record StreamResponse : IJsonOnDeserialized
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
+    [Optional]
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 

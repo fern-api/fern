@@ -16,7 +16,7 @@ public record ListUsersRequest
     public bool? IncludeDeleted { get; set; }
 
     [JsonIgnore]
-    public string? SortBy { get; set; }
+    public Optional<string?> SortBy { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

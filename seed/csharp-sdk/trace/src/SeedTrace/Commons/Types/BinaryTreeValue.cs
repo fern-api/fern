@@ -11,6 +11,7 @@ public record BinaryTreeValue : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("root")]
     public string? Root { get; set; }
 

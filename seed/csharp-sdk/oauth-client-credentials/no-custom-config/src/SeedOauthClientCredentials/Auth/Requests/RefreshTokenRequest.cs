@@ -21,6 +21,7 @@ public record RefreshTokenRequest
     [JsonPropertyName("grant_type")]
     public string GrantType { get; set; } = "refresh_token";
 
+    [Optional]
     [JsonPropertyName("scope")]
     public string? Scope { get; set; }
 

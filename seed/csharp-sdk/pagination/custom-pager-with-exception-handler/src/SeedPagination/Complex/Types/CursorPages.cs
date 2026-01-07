@@ -11,15 +11,19 @@ public record CursorPages : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("next")]
     public StartingAfterPaging? Next { get; set; }
 
+    [Optional]
     [JsonPropertyName("page")]
     public int? Page { get; set; }
 
+    [Optional]
     [JsonPropertyName("per_page")]
     public int? PerPage { get; set; }
 
+    [Optional]
     [JsonPropertyName("total_pages")]
     public int? TotalPages { get; set; }
 

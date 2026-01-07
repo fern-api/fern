@@ -17,6 +17,7 @@ public record Resource : IJsonOnDeserialized
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
+    [Optional]
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
@@ -26,6 +27,7 @@ public record Resource : IJsonOnDeserialized
     [JsonPropertyName("updated_at")]
     public required DateTime UpdatedAt { get; set; }
 
+    [Optional]
     [JsonPropertyName("metadata")]
     public Dictionary<string, object?>? Metadata { get; set; }
 

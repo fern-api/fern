@@ -92,11 +92,25 @@ export class CsharpTypeMapper extends WithGeneration {
             }
             case "set":
                 return this.Collection.set(this.convert({ reference: container.set, unboxOptionals: true }));
-            case "optional":
-                return unboxOptionals
-                    ? this.convert({ reference: container.optional, unboxOptionals })
-                    : this.convert({ reference: container.optional }).asOptional();
+            case "optional": {
+                // Check if the inner type is nullable
+                const innerType = container.optional;
+                const isInnerNullable = innerType.type === "container" && innerType.container.type === "nullable";
+
+                if (unboxOptionals) {
+                    return this.convert({ reference: innerType, unboxOptionals });
+                }
+
+                // If optional wraps nullable (optional<nullable<T>>), use Optional<T?> wrapper
+                // Otherwise, use T? to rely on JSON serialization's default omit-if-null behavior
+                if (isInnerNullable) {
+                    return this.asOptionalWrapper(this.convert({ reference: innerType }));
+                } else {
+                    return this.convert({ reference: innerType }).asOptional();
+                }
+            }
             case "nullable":
+                // Use ? syntax for nullable reference types
                 return unboxOptionals
                     ? this.convert({ reference: container.nullable, unboxOptionals })
                     : this.convert({ reference: container.nullable }).asOptional();
@@ -105,6 +119,13 @@ export class CsharpTypeMapper extends WithGeneration {
             default:
                 assertNever(container);
         }
+    }
+
+    /**
+     * Wraps a type in Optional<T> for explicit optional/undefined semantics.
+     */
+    private asOptionalWrapper(type: ast.Type): ast.Type {
+        return new ast.OptionalWrapper(type, this.generation);
     }
 
     private convertPrimitive({ primitive }: { primitive: PrimitiveType }): ast.Type {

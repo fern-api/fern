@@ -14,17 +14,21 @@ public record UpdateUserRequest : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("username")]
     public string? Username { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("email")]
-    public string? Email { get; set; }
+    public Optional<string?> Email { get; set; }
 
+    [Optional]
     [JsonPropertyName("phone")]
     public string? Phone { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("address")]
-    public Address? Address { get; set; }
+    public Optional<Address?> Address { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

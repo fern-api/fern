@@ -17,6 +17,7 @@ public record PaymentInfo : IJsonOnDeserialized
     [JsonPropertyName("currency")]
     public required string Currency { get; set; }
 
+    [Optional]
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 

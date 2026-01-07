@@ -108,7 +108,7 @@ export class Extern {
          */
         Serializable: () =>
             this.csharp.classReference({
-                name: "Serializable",
+                name: "SerializableAttribute",
                 namespace: "System"
             }),
 
@@ -174,7 +174,7 @@ export class Extern {
                          */
                         EnumMember: () =>
                             this.csharp.classReference({
-                                name: "EnumMember",
+                                name: "EnumMemberAttribute",
                                 namespace: "System.Runtime.Serialization"
                             })
                     })
@@ -593,7 +593,7 @@ export class Extern {
                                  */
                                 JsonExtensionData: () =>
                                     this.csharp.classReference({
-                                        name: "JsonExtensionData",
+                                        name: "JsonExtensionDataAttribute",
                                         namespace: "System.Text.Json.Serialization"
                                     }),
 
@@ -616,7 +616,7 @@ export class Extern {
                                  */
                                 JsonIgnore: () =>
                                     this.csharp.classReference({
-                                        name: "JsonIgnore",
+                                        name: "JsonIgnoreAttribute",
                                         namespace: "System.Text.Json.Serialization"
                                     }),
 
@@ -625,7 +625,7 @@ export class Extern {
                                  */
                                 JsonPropertyName: () =>
                                     this.csharp.classReference({
-                                        name: "JsonPropertyName",
+                                        name: "JsonPropertyNameAttribute",
                                         namespace: "System.Text.Json.Serialization"
                                     })
                             })

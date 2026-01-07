@@ -74,7 +74,10 @@ export const AsIsFiles = {
         EnumSerializer: "EnumSerializer.Template.cs",
         JsonAccessAttribute: "JsonAccessAttribute.Template.cs",
         JsonConfiguration: "JsonConfiguration.Template.cs",
+        Nullable: "NullableAttribute.Template.cs",
         OneOfSerializer: "OneOfSerializer.Template.cs",
+        Optional: "Optional.Template.cs",
+        OptionalAttribute: "OptionalAttribute.Template.cs",
         StringEnumSerializer: "StringEnumSerializer.Template.cs"
     },
     Test: {

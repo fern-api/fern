@@ -14,6 +14,7 @@ public record User : IJsonOnDeserialized
     [JsonPropertyName("line1")]
     public required string Line1 { get; set; }
 
+    [Optional]
     [JsonPropertyName("line2")]
     public string? Line2 { get; set; }
 

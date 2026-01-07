@@ -26,6 +26,7 @@ public record PaginatedUserResponse : IJsonOnDeserialized
     [JsonPropertyName("length")]
     public required int Length { get; set; }
 
+    [Optional]
     [JsonPropertyName("total")]
     public int? Total { get; set; }
 

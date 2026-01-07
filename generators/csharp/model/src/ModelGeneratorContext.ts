@@ -71,7 +71,10 @@ export class ModelGeneratorContext extends GeneratorContext {
                 AsIsFiles.Json.DateTimeSerializer,
                 AsIsFiles.Json.JsonAccessAttribute,
                 AsIsFiles.Json.JsonConfiguration,
-                AsIsFiles.Json.OneOfSerializer
+                AsIsFiles.Json.Nullable,
+                AsIsFiles.Json.OneOfSerializer,
+                AsIsFiles.Json.Optional,
+                AsIsFiles.Json.OptionalAttribute
             ]
         );
 

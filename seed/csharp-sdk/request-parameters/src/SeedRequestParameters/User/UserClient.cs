@@ -113,7 +113,7 @@ public partial class UserClient
     /// await client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProperties());
     /// </code></example>
     public async Task CreateUsernameOptionalAsync(
-        CreateUsernameBodyOptionalProperties? request,
+        Optional<CreateUsernameBodyOptionalProperties?> request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )

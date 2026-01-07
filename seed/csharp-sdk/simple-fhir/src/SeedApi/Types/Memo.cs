@@ -14,6 +14,7 @@ public record Memo : IJsonOnDeserialized
     [JsonPropertyName("description")]
     public required string Description { get; set; }
 
+    [Optional]
     [JsonPropertyName("account")]
     public Account? Account { get; set; }
 

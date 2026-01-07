@@ -17,9 +17,11 @@ public record Organization : IJsonOnDeserialized
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
+    [Nullable]
     [JsonPropertyName("domain")]
     public string? Domain { get; set; }
 
+    [Optional]
     [JsonPropertyName("employeeCount")]
     public int? EmployeeCount { get; set; }
 

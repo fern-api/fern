@@ -12,18 +12,21 @@ public record UpdateFooRequest
     /// <summary>
     /// Can be explicitly set to null to clear the value
     /// </summary>
+    [Nullable, Optional]
     [JsonPropertyName("nullable_text")]
-    public string? NullableText { get; set; }
+    public Optional<string?> NullableText { get; set; }
 
     /// <summary>
     /// Can be explicitly set to null to clear the value
     /// </summary>
+    [Nullable, Optional]
     [JsonPropertyName("nullable_number")]
-    public double? NullableNumber { get; set; }
+    public Optional<double?> NullableNumber { get; set; }
 
     /// <summary>
     /// Regular non-nullable field
     /// </summary>
+    [Optional]
     [JsonPropertyName("non_nullable_text")]
     public string? NonNullableText { get; set; }
 

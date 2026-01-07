@@ -11,6 +11,7 @@ public record DeployParams : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("updateDraft")]
     public bool? UpdateDraft { get; set; }
 

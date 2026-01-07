@@ -12,6 +12,7 @@ public record Request : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("union")]
     public OneOf<Dictionary<string, object?>?, NamedMetadata>? Union { get; set; }
 

@@ -31,6 +31,7 @@ public record User : IJsonOnDeserialized
     /// <summary>
     /// The user's age.
     /// </summary>
+    [Optional]
     [JsonPropertyName("age")]
     public int? Age { get; set; }
 

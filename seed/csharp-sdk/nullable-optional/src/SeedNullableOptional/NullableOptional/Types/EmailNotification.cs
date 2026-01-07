@@ -17,6 +17,7 @@ public record EmailNotification : IJsonOnDeserialized
     [JsonPropertyName("subject")]
     public required string Subject { get; set; }
 
+    [Optional]
     [JsonPropertyName("htmlContent")]
     public string? HtmlContent { get; set; }
 

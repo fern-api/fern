@@ -15,6 +15,7 @@ public record GetExecutionSessionStateResponse : IJsonOnDeserialized
     public Dictionary<string, ExecutionSessionState> States { get; set; } =
         new Dictionary<string, ExecutionSessionState>();
 
+    [Optional]
     [JsonPropertyName("numWarmingInstances")]
     public int? NumWarmingInstances { get; set; }
 

@@ -9,8 +9,9 @@ public record DeleteUserRequest
     /// <summary>
     /// The user to delete.
     /// </summary>
+    [Nullable, Optional]
     [JsonPropertyName("username")]
-    public string? Username { get; set; }
+    public Optional<string?> Username { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

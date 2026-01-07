@@ -35,6 +35,7 @@ public record PaginatedClientResponse : IJsonOnDeserialized
     /// <summary>
     /// Total number of items (when include_totals=true)
     /// </summary>
+    [Optional]
     [JsonPropertyName("total")]
     public int? Total { get; set; }
 

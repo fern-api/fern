@@ -20,6 +20,7 @@ public record ListUsersExtendedOptionalListResponse : IJsonOnDeserialized
     [JsonPropertyName("data")]
     public required UserOptionalListContainer Data { get; set; }
 
+    [Optional]
     [JsonPropertyName("next")]
     public string? Next { get; set; }
 

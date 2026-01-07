@@ -9,9 +9,11 @@ public record SearchRequest
     [JsonPropertyName("query")]
     public required string Query { get; set; }
 
+    [Optional]
     [JsonPropertyName("filters")]
     public Dictionary<string, string?>? Filters { get; set; }
 
+    [Nullable]
     [JsonPropertyName("includeTypes")]
     public IEnumerable<string>? IncludeTypes { get; set; }
 

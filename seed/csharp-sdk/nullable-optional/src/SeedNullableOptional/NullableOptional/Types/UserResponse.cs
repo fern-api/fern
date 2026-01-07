@@ -17,18 +17,22 @@ public record UserResponse : IJsonOnDeserialized
     [JsonPropertyName("username")]
     public required string Username { get; set; }
 
+    [Nullable]
     [JsonPropertyName("email")]
     public string? Email { get; set; }
 
+    [Optional]
     [JsonPropertyName("phone")]
     public string? Phone { get; set; }
 
     [JsonPropertyName("createdAt")]
     public required DateTime CreatedAt { get; set; }
 
+    [Nullable]
     [JsonPropertyName("updatedAt")]
     public DateTime? UpdatedAt { get; set; }
 
+    [Optional]
     [JsonPropertyName("address")]
     public Address? Address { get; set; }
 

@@ -14,6 +14,7 @@ public record ExecutionSessionResponse : IJsonOnDeserialized
     [JsonPropertyName("sessionId")]
     public required string SessionId { get; set; }
 
+    [Optional]
     [JsonPropertyName("executionSessionUrl")]
     public string? ExecutionSessionUrl { get; set; }
 

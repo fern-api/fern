@@ -11,9 +11,11 @@ public record WorkspaceRunDetails : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("exceptionV2")]
     public ExceptionV2? ExceptionV2 { get; set; }
 
+    [Optional]
     [JsonPropertyName("exception")]
     public ExceptionInfo? Exception { get; set; }
 

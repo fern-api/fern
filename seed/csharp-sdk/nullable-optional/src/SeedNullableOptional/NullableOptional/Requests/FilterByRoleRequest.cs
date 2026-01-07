@@ -13,7 +13,7 @@ public record FilterByRoleRequest
     public UserStatus? Status { get; set; }
 
     [JsonIgnore]
-    public UserRole? SecondaryRole { get; set; }
+    public Optional<UserRole?> SecondaryRole { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

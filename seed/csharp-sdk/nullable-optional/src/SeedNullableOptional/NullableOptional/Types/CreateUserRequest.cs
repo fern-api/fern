@@ -14,14 +14,17 @@ public record CreateUserRequest : IJsonOnDeserialized
     [JsonPropertyName("username")]
     public required string Username { get; set; }
 
+    [Nullable]
     [JsonPropertyName("email")]
     public string? Email { get; set; }
 
+    [Optional]
     [JsonPropertyName("phone")]
     public string? Phone { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("address")]
-    public Address? Address { get; set; }
+    public Optional<Address?> Address { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

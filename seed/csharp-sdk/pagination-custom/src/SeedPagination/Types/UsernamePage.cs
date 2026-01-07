@@ -11,6 +11,7 @@ public record UsernamePage : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("after")]
     public string? After { get; set; }
 

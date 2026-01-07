@@ -6,20 +6,25 @@ namespace SeedNullableOptional;
 [Serializable]
 public record UpdateComplexProfileRequest
 {
+    [Nullable, Optional]
     [JsonPropertyName("nullableRole")]
-    public UserRole? NullableRole { get; set; }
+    public Optional<UserRole?> NullableRole { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("nullableStatus")]
-    public UserStatus? NullableStatus { get; set; }
+    public Optional<UserStatus?> NullableStatus { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("nullableNotification")]
-    public NotificationMethod? NullableNotification { get; set; }
+    public Optional<NotificationMethod?> NullableNotification { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("nullableSearchResult")]
-    public SearchResult? NullableSearchResult { get; set; }
+    public Optional<SearchResult?> NullableSearchResult { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("nullableArray")]
-    public IEnumerable<string>? NullableArray { get; set; }
+    public Optional<IEnumerable<string>?> NullableArray { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

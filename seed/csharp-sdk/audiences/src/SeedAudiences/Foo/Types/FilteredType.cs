@@ -11,6 +11,7 @@ public record FilteredType : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("public_property")]
     public string? PublicProperty { get; set; }
 

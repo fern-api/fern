@@ -12,9 +12,11 @@ public record MultipleFilterSearchRequest : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("operator")]
     public MultipleFilterSearchRequestOperator? Operator { get; set; }
 
+    [Optional]
     [JsonPropertyName("value")]
     public OneOf<
         IEnumerable<MultipleFilterSearchRequest>,

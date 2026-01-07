@@ -17,6 +17,7 @@ public record ListType : IJsonOnDeserialized
     /// <summary>
     /// Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
     /// </summary>
+    [Optional]
     [JsonPropertyName("isFixedLength")]
     public bool? IsFixedLength { get; set; }
 

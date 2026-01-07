@@ -17,21 +17,26 @@ public record Address : IJsonOnDeserialized
     [JsonPropertyName("street")]
     public required string Street { get; set; }
 
+    [Nullable]
     [JsonPropertyName("city")]
     public string? City { get; set; }
 
+    [Optional]
     [JsonPropertyName("state")]
     public string? State { get; set; }
 
     [JsonPropertyName("zipCode")]
     public required string ZipCode { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("country")]
-    public string? Country { get; set; }
+    public Optional<string?> Country { get; set; }
 
+    [Nullable]
     [JsonPropertyName("buildingId")]
     public string? BuildingId { get; set; }
 
+    [Optional]
     [JsonPropertyName("tenantId")]
     public string? TenantId { get; set; }
 

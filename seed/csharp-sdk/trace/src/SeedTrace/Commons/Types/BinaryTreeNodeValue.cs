@@ -17,9 +17,11 @@ public record BinaryTreeNodeValue : IJsonOnDeserialized
     [JsonPropertyName("val")]
     public required double Val { get; set; }
 
+    [Optional]
     [JsonPropertyName("right")]
     public string? Right { get; set; }
 
+    [Optional]
     [JsonPropertyName("left")]
     public string? Left { get; set; }
 

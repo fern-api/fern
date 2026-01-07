@@ -93,7 +93,7 @@ public partial class NullableClient
     ///             Avatar = "avatar",
     ///             Activated = true,
     ///             Status = new Status(new Status.Active()),
-    ///             Values = new Dictionary&lt;string, string?&gt;() { { "values", "values" } },
+    ///             Values = new Dictionary&lt;string, Optional&lt;string?&gt;&gt;() { { "values", "values" } },
     ///         },
     ///         Avatar = "avatar",
     ///     }

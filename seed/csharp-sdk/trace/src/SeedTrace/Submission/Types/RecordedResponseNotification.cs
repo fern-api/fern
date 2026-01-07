@@ -17,6 +17,7 @@ public record RecordedResponseNotification : IJsonOnDeserialized
     [JsonPropertyName("traceResponsesSize")]
     public required int TraceResponsesSize { get; set; }
 
+    [Optional]
     [JsonPropertyName("testCaseId")]
     public string? TestCaseId { get; set; }
 

@@ -16,7 +16,7 @@ public record SearchUsersRequest
     public string? Role { get; set; }
 
     [JsonIgnore]
-    public bool? IsActive { get; set; }
+    public Optional<bool?> IsActive { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

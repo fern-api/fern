@@ -12,6 +12,7 @@ public record DoubleOptional : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("optionalAlias")]
     public string? OptionalAlias { get; set; }
 

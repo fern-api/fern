@@ -15,6 +15,7 @@ public record FunctionImplementation : IJsonOnDeserialized
     [JsonPropertyName("impl")]
     public required string Impl { get; set; }
 
+    [Optional]
     [JsonPropertyName("imports")]
     public string? Imports { get; set; }
 

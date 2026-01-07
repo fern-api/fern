@@ -16,7 +16,7 @@ public record GetFooRequest
     /// An optional baz
     /// </summary>
     [JsonIgnore]
-    public string? OptionalNullableBaz { get; set; }
+    public Optional<string?> OptionalNullableBaz { get; set; }
 
     /// <summary>
     /// A required baz

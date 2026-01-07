@@ -21,6 +21,7 @@ public record WorkspaceSubmitRequest : IJsonOnDeserialized
     public IEnumerable<SubmissionFileInfo> SubmissionFiles { get; set; } =
         new List<SubmissionFileInfo>();
 
+    [Optional]
     [JsonPropertyName("userId")]
     public string? UserId { get; set; }
 

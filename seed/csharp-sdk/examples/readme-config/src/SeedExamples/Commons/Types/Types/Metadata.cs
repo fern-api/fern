@@ -15,9 +15,11 @@ public record Metadata : IJsonOnDeserialized
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
+    [Optional]
     [JsonPropertyName("data")]
     public Dictionary<string, string>? Data { get; set; }
 
+    [Optional]
     [JsonPropertyName("jsonString")]
     public string? JsonString { get; set; }
 

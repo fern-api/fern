@@ -14,6 +14,7 @@ public record MyObjectWithOptional : IJsonOnDeserialized
     [JsonPropertyName("prop")]
     public required string Prop { get; set; }
 
+    [Optional]
     [JsonPropertyName("optionalProp")]
     public string? OptionalProp { get; set; }
 

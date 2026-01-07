@@ -14,6 +14,7 @@ public record Movie : IJsonOnDeserialized
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
+    [Optional]
     [JsonPropertyName("prequel")]
     public string? Prequel { get; set; }
 
@@ -35,6 +36,7 @@ public record Movie : IJsonOnDeserialized
     [JsonPropertyName("tag")]
     public required string Tag { get; set; }
 
+    [Optional]
     [JsonPropertyName("book")]
     public string? Book { get; set; }
 

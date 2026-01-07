@@ -296,6 +296,7 @@ public record BigUnion
     [JsonPropertyName("created-at")]
     public required DateTime CreatedAt { get; set; }
 
+    [Optional]
     [JsonPropertyName("archived-at")]
     public DateTime? ArchivedAt { get; set; }
 
@@ -1321,6 +1322,7 @@ public record BigUnion
         [JsonPropertyName("created-at")]
         public required DateTime CreatedAt { get; set; }
 
+        [Optional]
         [JsonPropertyName("archived-at")]
         public DateTime? ArchivedAt { get; set; }
     }

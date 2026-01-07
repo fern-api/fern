@@ -12,9 +12,11 @@ public record NestedObjectWithOptionalField : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("string")]
     public string? String { get; set; }
 
+    [Optional]
     [JsonPropertyName("NestedObject")]
     public ObjectWithOptionalField? NestedObject { get; set; }
 

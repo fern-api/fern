@@ -17,17 +17,20 @@ public record Metadata : IJsonOnDeserialized
     [JsonPropertyName("updatedAt")]
     public required DateTime UpdatedAt { get; set; }
 
+    [Nullable]
     [JsonPropertyName("avatar")]
     public string? Avatar { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("activated")]
-    public bool? Activated { get; set; }
+    public Optional<bool?> Activated { get; set; }
 
     [JsonPropertyName("status")]
     public required Status Status { get; set; }
 
+    [Optional]
     [JsonPropertyName("values")]
-    public Dictionary<string, string?>? Values { get; set; }
+    public Dictionary<string, Optional<string?>>? Values { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

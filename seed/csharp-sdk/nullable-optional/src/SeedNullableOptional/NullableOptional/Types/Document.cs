@@ -20,9 +20,11 @@ public record Document : IJsonOnDeserialized
     [JsonPropertyName("content")]
     public required string Content { get; set; }
 
+    [Nullable]
     [JsonPropertyName("author")]
     public string? Author { get; set; }
 
+    [Optional]
     [JsonPropertyName("tags")]
     public IEnumerable<string>? Tags { get; set; }
 

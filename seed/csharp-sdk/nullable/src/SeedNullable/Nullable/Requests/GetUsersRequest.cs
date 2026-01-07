@@ -19,7 +19,7 @@ public record GetUsersRequest
     public IEnumerable<string> Tags { get; set; } = new List<string>();
 
     [JsonIgnore]
-    public bool? Extra { get; set; }
+    public Optional<bool?> Extra { get; set; }
 
     /// <inheritdoc />
     public override string ToString()

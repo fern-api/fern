@@ -17,6 +17,7 @@ public record SmsNotification : IJsonOnDeserialized
     [JsonPropertyName("message")]
     public required string Message { get; set; }
 
+    [Optional]
     [JsonPropertyName("shortCode")]
     public string? ShortCode { get; set; }
 

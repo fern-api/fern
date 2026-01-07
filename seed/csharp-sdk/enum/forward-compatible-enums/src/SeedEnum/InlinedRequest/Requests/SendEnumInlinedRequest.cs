@@ -10,12 +10,14 @@ public record SendEnumInlinedRequest
     [JsonPropertyName("operand")]
     public required Operand Operand { get; set; }
 
+    [Optional]
     [JsonPropertyName("maybeOperand")]
     public Operand? MaybeOperand { get; set; }
 
     [JsonPropertyName("operandOrColor")]
     public required OneOf<Color, Operand> OperandOrColor { get; set; }
 
+    [Optional]
     [JsonPropertyName("maybeOperandOrColor")]
     public OneOf<Color, Operand>? MaybeOperandOrColor { get; set; }
 

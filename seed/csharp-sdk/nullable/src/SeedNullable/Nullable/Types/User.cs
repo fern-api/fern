@@ -18,23 +18,28 @@ public record User : IJsonOnDeserialized
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
+    [Nullable]
     [JsonPropertyName("tags")]
     public IEnumerable<string>? Tags { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("metadata")]
-    public Metadata? Metadata { get; set; }
+    public Optional<Metadata?> Metadata { get; set; }
 
+    [Nullable]
     [JsonPropertyName("email")]
     public string? Email { get; set; }
 
     [JsonPropertyName("favorite-number")]
-    public required OneOf<int, float?, string?, double> FavoriteNumber { get; set; }
+    public required OneOf<int, float?, Optional<string?>, double> FavoriteNumber { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("numbers")]
-    public IEnumerable<int>? Numbers { get; set; }
+    public Optional<IEnumerable<int>?> Numbers { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("strings")]
-    public Dictionary<string, object?>? Strings { get; set; }
+    public Optional<Dictionary<string, object?>?> Strings { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

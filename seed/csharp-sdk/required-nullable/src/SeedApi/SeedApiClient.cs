@@ -46,6 +46,7 @@ public partial class SeedApiClient
     {
         var _query = new Dictionary<string, object>();
         _query["required_baz"] = request.RequiredBaz;
+        _query["required_nullable_baz"] = request.RequiredNullableBaz;
         if (request.OptionalBaz != null)
         {
             _query["optional_baz"] = request.OptionalBaz;
@@ -53,10 +54,6 @@ public partial class SeedApiClient
         if (request.OptionalNullableBaz != null)
         {
             _query["optional_nullable_baz"] = request.OptionalNullableBaz;
-        }
-        if (request.RequiredNullableBaz != null)
-        {
-            _query["required_nullable_baz"] = request.RequiredNullableBaz;
         }
         var response = await _client
             .SendRequestAsync(

@@ -11,12 +11,15 @@ public record Foo : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("bar")]
     public string? Bar { get; set; }
 
+    [Nullable, Optional]
     [JsonPropertyName("nullable_bar")]
-    public string? NullableBar { get; set; }
+    public Optional<string?> NullableBar { get; set; }
 
+    [Nullable]
     [JsonPropertyName("nullable_required_bar")]
     public string? NullableRequiredBar { get; set; }
 

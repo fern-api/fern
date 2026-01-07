@@ -36,6 +36,7 @@ public record TimeZoneModel : IJsonOnDeserialized
     /// <summary>
     /// Special characters:   … · ©
     /// </summary>
+    [Optional]
     [JsonPropertyName("specialChars")]
     public string? SpecialChars { get; set; }
 

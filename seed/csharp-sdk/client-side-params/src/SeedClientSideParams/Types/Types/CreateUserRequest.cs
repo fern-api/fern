@@ -14,24 +14,31 @@ public record CreateUserRequest : IJsonOnDeserialized
     [JsonPropertyName("email")]
     public required string Email { get; set; }
 
+    [Optional]
     [JsonPropertyName("email_verified")]
     public bool? EmailVerified { get; set; }
 
+    [Optional]
     [JsonPropertyName("username")]
     public string? Username { get; set; }
 
+    [Optional]
     [JsonPropertyName("password")]
     public string? Password { get; set; }
 
+    [Optional]
     [JsonPropertyName("phone_number")]
     public string? PhoneNumber { get; set; }
 
+    [Optional]
     [JsonPropertyName("phone_verified")]
     public bool? PhoneVerified { get; set; }
 
+    [Optional]
     [JsonPropertyName("user_metadata")]
     public Dictionary<string, object?>? UserMetadata { get; set; }
 
+    [Optional]
     [JsonPropertyName("app_metadata")]
     public Dictionary<string, object?>? AppMetadata { get; set; }
 

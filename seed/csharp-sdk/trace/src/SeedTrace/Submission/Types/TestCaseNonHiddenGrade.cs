@@ -14,9 +14,11 @@ public record TestCaseNonHiddenGrade : IJsonOnDeserialized
     [JsonPropertyName("passed")]
     public required bool Passed { get; set; }
 
+    [Optional]
     [JsonPropertyName("actualResult")]
     public VariableValue? ActualResult { get; set; }
 
+    [Optional]
     [JsonPropertyName("exception")]
     public ExceptionV2? Exception { get; set; }
 

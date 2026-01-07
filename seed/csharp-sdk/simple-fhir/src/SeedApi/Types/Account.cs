@@ -18,9 +18,11 @@ public record Account : IJsonOnDeserialized
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
+    [Optional]
     [JsonPropertyName("patient")]
     public Patient? Patient { get; set; }
 
+    [Optional]
     [JsonPropertyName("practitioner")]
     public Practitioner? Practitioner { get; set; }
 

@@ -12,6 +12,7 @@ public record GetGeneratedTestCaseFileRequest : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("template")]
     public TestCaseTemplate? Template { get; set; }
 

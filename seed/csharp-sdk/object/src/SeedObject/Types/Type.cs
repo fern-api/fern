@@ -50,6 +50,7 @@ public record Type : IJsonOnDeserialized
     [JsonPropertyName("twelve")]
     public Dictionary<string, bool> Twelve { get; set; } = new Dictionary<string, bool>();
 
+    [Optional]
     [JsonPropertyName("thirteen")]
     public long? Thirteen { get; set; }
 
@@ -84,9 +85,11 @@ public record Type : IJsonOnDeserialized
     [JsonPropertyName("twentythree")]
     public required string Twentythree { get; set; }
 
+    [Optional]
     [JsonPropertyName("twentyfour")]
     public DateTime? Twentyfour { get; set; }
 
+    [Optional]
     [JsonPropertyName("twentyfive")]
     public DateOnly? Twentyfive { get; set; }
 

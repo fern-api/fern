@@ -11,6 +11,7 @@ public record SearchResponse : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [Optional]
     [JsonPropertyName("results")]
     public IEnumerable<string>? Results { get; set; }
 
