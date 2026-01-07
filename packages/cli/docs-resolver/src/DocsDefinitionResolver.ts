@@ -1784,7 +1784,7 @@ function convertAvailability(
  * This is used to pass the customConfig (which includes namespaceExport) to the IR generator
  * so that dynamic snippets can use the correct client name.
  */
-function getDynamicGeneratorConfigFromWorkspace({
+export function getDynamicGeneratorConfigFromWorkspace({
     workspace
 }: {
     workspace: FernWorkspace;

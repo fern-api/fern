@@ -1,4 +1,8 @@
-export { DocsDefinitionResolver, type UploadedFile } from "./DocsDefinitionResolver";
+export {
+    DocsDefinitionResolver,
+    getDynamicGeneratorConfigFromWorkspace,
+    type UploadedFile
+} from "./DocsDefinitionResolver";
 export { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 export { filterOssWorkspaces } from "./utils/filterOssWorkspaces";
 export { generateFdrFromOpenApiWorkspaceV3 } from "./utils/generateFdrFromOpenAPIWorkspaceV3";
