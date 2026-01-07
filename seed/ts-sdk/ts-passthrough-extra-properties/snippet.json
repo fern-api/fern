@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/user/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_.getUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsPassthroughExtraPropertiesClient } from \"@fern/ts-passthrough-extra-properties\";\n\nconst client = new SeedTsPassthroughExtraPropertiesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.getUser(\"user-123\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/user",
+                "method": "POST",
+                "identifier_override": "endpoint_.createUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedTsPassthroughExtraPropertiesClient } from \"@fern/ts-passthrough-extra-properties\";\n\nconst client = new SeedTsPassthroughExtraPropertiesClient({ environment: \"YOUR_BASE_URL\" });\nawait client.createUser({\n    userName: \"alice\",\n    createdAt: new Date(\"2024-01-01T00:00:00.000Z\")\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}
