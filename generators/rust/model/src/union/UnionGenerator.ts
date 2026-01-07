@@ -67,17 +67,26 @@ export class UnionGenerator {
         // Add chrono imports based on specific types needed
         const hasDateOnly = this.hasDateFields();
         const hasDateTimeOnly = this.hasDateTimeOnlyFields();
+        const useNaiveDateTime = this.context.getDateTimeType() === "naive";
 
         // TODO: @iamnamananand996 - use AST mechanism for all imports
         if (hasDateOnly && hasDateTimeOnly) {
             // Both date and datetime types present
-            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+            if (useNaiveDateTime) {
+                writer.writeLine("use chrono::{NaiveDate, NaiveDateTime};");
+            } else {
+                writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+            }
         } else if (hasDateOnly) {
             // Only date type present, import NaiveDate only
             writer.writeLine("use chrono::NaiveDate;");
         } else if (hasDateTimeOnly) {
-            // Only datetime type present, import DateTime and Utc only
-            writer.writeLine("use chrono::{DateTime, Utc};");
+            // Only datetime type present
+            if (useNaiveDateTime) {
+                writer.writeLine("use chrono::NaiveDateTime;");
+            } else {
+                writer.writeLine("use chrono::{DateTime, Utc};");
+            }
         }
 
         // Add std::collections imports based on specific collection types used
