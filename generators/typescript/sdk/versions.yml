@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.5
+  changelogEntry:
+    - summary: |
+        Fix passthrough serialization to avoid duplicate properties when parsing responses with snake_case
+        property names. Previously, the passthrough() function spread all raw properties along with transformed
+        properties, causing both snake_case (e.g., created_at) and camelCase (e.g., createdAt) versions to
+        appear in the result. Now only truly extra/unrecognized properties are included alongside the
+        transformed properties.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 63
+
 - version: 3.43.4
   changelogEntry:
     - summary: |
