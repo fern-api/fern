@@ -345,6 +345,16 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Get the datetime type to use for datetime primitives.
+     * Returns "offset" for DateTime<FixedOffset> (default) - preserves original timezone,
+     * or "utc" for DateTime<Utc> - converts everything to UTC.
+     * Both options use flexible parsing that accepts any format and assumes UTC when no timezone.
+     */
+    public getDateTimeType(): "offset" | "utc" {
+        return this.customConfig.dateTimeType ?? "offset";
+    }
+
+    /**
      * Check if IR has any file upload endpoints
      */
     public hasFileUploadEndpoints(): boolean {

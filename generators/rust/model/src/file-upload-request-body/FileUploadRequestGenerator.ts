@@ -238,7 +238,7 @@ export class FileUploadRequestGenerator {
     private generateRustFieldForProperty(property: ObjectProperty | InlinedRequestBodyProperty): rust.Field {
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
         const fieldType = generateFieldType(property, this.context);
-        const attributes = generateFieldAttributes(property);
+        const attributes = generateFieldAttributes(property, this.context);
 
         return rust.field({
             name: fieldName,
