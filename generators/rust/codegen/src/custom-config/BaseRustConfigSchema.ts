@@ -29,7 +29,8 @@ export const BaseRustCustomConfigSchema = z.object({
     // DateTime type to use for datetime primitives:
     // - "utc": DateTime<Utc> (default) - requires timezone suffix (Z or +00:00)
     // - "naive": NaiveDateTime - no timezone suffix required
-    dateTimeType: z.enum(["utc", "naive"]).optional().default("utc"),
+    // - "flexible": DateTime<Utc> with flexible parsing - accepts both with and without timezone suffix
+    dateTimeType: z.enum(["utc", "naive", "flexible"]).optional().default("utc"),
 
     // =========================================================================
     // Cargo Features Configuration (control package dependencies)

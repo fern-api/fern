@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.2.0
+  changelogEntry:
+    - summary: |
+        Add flexible datetime parsing option. Use `dateTimeType: "flexible"` in generator config to accept both RFC3339 (with Z suffix) and ISO 8601 (without timezone) datetime formats, assuming UTC for timezone-less values.
+      type: feat
+  createdAt: "2026-01-07"
+  irVersion: 58
+
 - version: 0.1.0
   changelogEntry:
     - summary: |

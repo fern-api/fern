@@ -213,7 +213,10 @@ export function generateFieldType(
     }
 }
 
-export function generateFieldAttributes(property: ObjectProperty | InlinedRequestBodyProperty): rust.Attribute[] {
+export function generateFieldAttributes(
+    property: ObjectProperty | InlinedRequestBodyProperty,
+    context?: ModelGeneratorContext
+): rust.Attribute[] {
     const attributes: rust.Attribute[] = [];
 
     // Add serde rename if the field name differs from wire name
@@ -225,6 +228,18 @@ export function generateFieldAttributes(property: ObjectProperty | InlinedReques
     const isOptional = isOptionalType(property.valueType);
     if (isOptional) {
         attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
+    }
+
+    // Add flexible datetime serde attribute when configured
+    if (context?.getDateTimeType() === "flexible") {
+        const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
+        if (isDateTimeOnlyType(typeRef)) {
+            if (isOptional) {
+                attributes.push(Attribute.serde.with("crate::core::flexible_datetime::option"));
+            } else {
+                attributes.push(Attribute.serde.with("crate::core::flexible_datetime"));
+            }
+        }
     }
 
     return attributes;
