@@ -483,21 +483,21 @@ class SmokeTestFactory:
         """Generate expected JSON values for strict validation."""
         return reference.shape.visit(
             primitive=lambda primitive: primitive.visit(
-                integer=lambda val: val.integer,
-                double=lambda val: val.double,
-                uint=lambda val: val.uint,
-                uint_64=lambda val: val.uint_64,
-                float_=lambda val: val.float_,
-                base_64=lambda val: val.base_64,
-                big_integer=lambda val: val.big_integer,
-                string=lambda val: val.string,
-                boolean=lambda val: val.boolean,
-                long_=lambda val: val.long_,
+                integer=lambda val: val,
+                double=lambda val: val,
+                uint=lambda val: val,
+                uint_64=lambda val: val,
+                float_=lambda val: val,
+                base_64=lambda val: val,
+                big_integer=lambda val: val,
+                string=lambda val: val.original,  # EscapedString has .original attribute
+                boolean=lambda val: val,
+                long_=lambda val: val,
                 datetime=lambda val: val.datetime.isoformat()
                 if hasattr(val.datetime, "isoformat")
                 else str(val.datetime),
-                date=lambda val: val.date.isoformat() if hasattr(val.date, "isoformat") else str(val.date),
-                uuid_=lambda val: str(val.uuid_),
+                date=lambda val: val.isoformat() if hasattr(val, "isoformat") else str(val),
+                uuid_=lambda val: str(val),
             ),
             container=lambda container: container.visit(
                 list_=lambda item_type: [self._generate_expected_json_for_type_reference(ex) for ex in item_type.list_],
@@ -531,7 +531,7 @@ class SmokeTestFactory:
                     union.single_union_type
                 ),
             ),
-            unknown=lambda unknown: unknown.unknown,
+            unknown=lambda unknown: unknown.unknown if hasattr(unknown, "unknown") else unknown,
         )
 
     def _smoke_test_body(
