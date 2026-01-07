@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 0.0.5
+- version: 0.1.0
   changelogEntry:
     - summary: |
         Add configurable `NaiveDateTime` support for datetime primitives. Use `dateTimeType: "naive"` in generator config to use `NaiveDateTime` (no timezone suffix) instead of `DateTime<Utc>` (default).
