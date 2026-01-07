@@ -119,8 +119,8 @@ export class UndiscriminatedUnionGenerator {
         if (isDateTimeOnlyType(member.type)) {
             const dateTimeType = this.context.getDateTimeType();
             const modulePath = dateTimeType === "utc" 
-                ? "crate::core::flexible_datetime" 
-                : "crate::core::flexible_datetime_offset";
+                ? "crate::core::flexible_datetime::utc" 
+                : "crate::core::flexible_datetime::offset";
             // Generate multi-line tuple variant with serde attribute on inner field
             writer.writeLine(`    ${variantName}(`);
             writer.writeLine(`        #[serde(with = "${modulePath}")]`);

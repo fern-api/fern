@@ -59,10 +59,6 @@ const AsIsFileSpecs = {
         relativePathToDir: "src/core",
         filename: "flexible_datetime.rs"
     },
-    FlexibleDatetimeOffset: {
-        relativePathToDir: "src/core",
-        filename: "flexible_datetime_offset.rs"
-    },
     CoreMod: {
         relativePathToDir: "src/core",
         filename: "mod.rs"

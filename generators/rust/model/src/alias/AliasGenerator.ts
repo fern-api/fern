@@ -89,13 +89,13 @@ export class AliasGenerator {
 
         // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
         // Use deserialize_with instead of with to allow Serialize derive to work correctly
-        // "offset" uses flexible_datetime_offset module (DateTime<FixedOffset>)
-        // "utc" uses flexible_datetime module (DateTime<Utc>)
+        // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
+        // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
         const dateTimeType = this.context.getDateTimeType();
         const aliasType = this.aliasTypeDeclaration.aliasOf;
         const modulePath = dateTimeType === "utc" 
-            ? "crate::core::flexible_datetime" 
-            : "crate::core::flexible_datetime_offset";
+            ? "crate::core::flexible_datetime::utc" 
+            : "crate::core::flexible_datetime::offset";
 
         if (isDateTimeOnlyType(aliasType)) {
             // Direct datetime type
