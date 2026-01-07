@@ -1,8 +1,10 @@
-import { GeneratorsConfiguration } from "@fern-api/configuration-loader";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 
 import { getDynamicGeneratorConfigFromWorkspace } from "../DocsDefinitionResolver";
+
+type GeneratorsConfiguration = generatorsYml.GeneratorsConfiguration;
 
 describe("getDynamicGeneratorConfigFromWorkspace", () => {
     it("returns undefined when workspace has no generators configuration", () => {
@@ -241,5 +243,5 @@ function createMockWorkspace({
         definition: {} as FernWorkspace["definition"],
         dependenciesConfiguration: { dependencies: {} },
         type: "fern"
-    } as FernWorkspace;
+    } as unknown as FernWorkspace;
 }
