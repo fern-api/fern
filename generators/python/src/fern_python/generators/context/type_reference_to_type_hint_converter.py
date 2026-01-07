@@ -225,6 +225,7 @@ class TypeReferenceToTypeHintConverter:
                 return False
 
             return string_type.validation.format == "binary"
+
         str_type_hint = AST.TypeHint.bytes if is_bytes() else AST.TypeHint.str_
 
         print(str_type_hint)
