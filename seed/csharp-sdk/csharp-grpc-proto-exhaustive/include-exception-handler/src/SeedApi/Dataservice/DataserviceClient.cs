@@ -3,7 +3,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class DataserviceClient
+public partial class DataserviceClient : IDataserviceClient
 {
     private RawClient _client;
 

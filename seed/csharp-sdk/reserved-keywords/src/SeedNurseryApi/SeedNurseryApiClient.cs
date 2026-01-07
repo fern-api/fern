@@ -2,7 +2,7 @@ using SeedNurseryApi.Core;
 
 namespace SeedNurseryApi;
 
-public partial class SeedNurseryApiClient
+public partial class SeedNurseryApiClient : ISeedNurseryApiClient
 {
     private readonly RawClient _client;
 

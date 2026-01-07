@@ -4,7 +4,7 @@ using SeedCsharpNamespaceCollision.System;
 
 namespace SeedCsharpNamespaceCollision;
 
-public partial class SeedCsharpNamespaceCollisionClient
+public partial class SeedCsharpNamespaceCollisionClient : ISeedCsharpNamespaceCollisionClient
 {
     private readonly RawClient _client;
 

@@ -3,7 +3,7 @@ using SeedBasicAuth.Core;
 
 namespace SeedBasicAuth;
 
-public partial class BasicAuthClient
+public partial class BasicAuthClient : IBasicAuthClient
 {
     private RawClient _client;
 

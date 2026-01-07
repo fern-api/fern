@@ -3,7 +3,7 @@ using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
 
-public partial class OptionalClient
+public partial class OptionalClient : IOptionalClient
 {
     private RawClient _client;
 

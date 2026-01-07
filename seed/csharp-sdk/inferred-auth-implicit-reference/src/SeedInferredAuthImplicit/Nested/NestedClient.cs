@@ -2,7 +2,7 @@ using SeedInferredAuthImplicit.Core;
 
 namespace SeedInferredAuthImplicit.Nested;
 
-public partial class NestedClient
+public partial class NestedClient : INestedClient
 {
     private RawClient _client;
 

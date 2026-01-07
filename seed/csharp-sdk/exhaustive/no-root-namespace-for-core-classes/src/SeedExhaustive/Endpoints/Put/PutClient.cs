@@ -3,7 +3,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class PutClient
+public partial class PutClient : IPutClient
 {
     private RawClient _client;
 

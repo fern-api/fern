@@ -3,7 +3,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public partial class SyspropClient
+public partial class SyspropClient : ISyspropClient
 {
     private RawClient _client;
 

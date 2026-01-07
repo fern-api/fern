@@ -3,7 +3,7 @@ using SeedOauthClientCredentialsReference.Core;
 
 namespace SeedOauthClientCredentialsReference;
 
-public partial class AuthClient
+public partial class AuthClient : IAuthClient
 {
     private RawClient _client;
 

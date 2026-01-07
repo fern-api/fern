@@ -3,7 +3,7 @@ using SeedCsharpSystemCollision.Core;
 
 namespace SeedCsharpSystemCollision;
 
-public partial class System
+public partial class System : ISystem
 {
     private readonly RawClient _client;
 

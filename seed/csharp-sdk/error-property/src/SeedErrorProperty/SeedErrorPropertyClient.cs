@@ -2,7 +2,7 @@ using SeedErrorProperty.Core;
 
 namespace SeedErrorProperty;
 
-public partial class SeedErrorPropertyClient
+public partial class SeedErrorPropertyClient : ISeedErrorPropertyClient
 {
     private readonly RawClient _client;
 

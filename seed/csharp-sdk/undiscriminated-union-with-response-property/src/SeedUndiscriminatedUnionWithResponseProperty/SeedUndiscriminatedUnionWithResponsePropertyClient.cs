@@ -4,6 +4,7 @@ using SeedUndiscriminatedUnionWithResponseProperty.Core;
 namespace SeedUndiscriminatedUnionWithResponseProperty;
 
 public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
+    : ISeedUndiscriminatedUnionWithResponsePropertyClient
 {
     private readonly RawClient _client;
 
