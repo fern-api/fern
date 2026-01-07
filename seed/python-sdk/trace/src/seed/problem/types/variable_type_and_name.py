@@ -11,7 +11,9 @@ from ...core.serialization import FieldMetadata
 
 
 class VariableTypeAndName(UniversalBaseModel):
-    variable_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="variableType")]
+    variable_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="variableType")] = pydantic.Field(
+        alias="variableType"
+    )
     name: str
 
     if IS_PYDANTIC_V2:

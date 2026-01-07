@@ -10,8 +10,12 @@ from ...core.serialization import FieldMetadata
 
 
 class InitializeProblemRequest(UniversalBaseModel):
-    problem_id: typing_extensions.Annotated[ProblemId, FieldMetadata(alias="problemId")]
-    problem_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="problemVersion")] = None
+    problem_id: typing_extensions.Annotated[ProblemId, FieldMetadata(alias="problemId")] = pydantic.Field(
+        alias="problemId"
+    )
+    problem_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="problemVersion")] = (
+        pydantic.Field(alias="problemVersion", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

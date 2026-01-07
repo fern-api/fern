@@ -12,12 +12,16 @@ from .submission_id import SubmissionId
 
 
 class WorkspaceSubmitRequest(UniversalBaseModel):
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
+    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")] = pydantic.Field(
+        alias="submissionId"
+    )
     language: Language
     submission_files: typing_extensions.Annotated[
         typing.List[SubmissionFileInfo], FieldMetadata(alias="submissionFiles")
-    ]
-    user_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="userId")] = None
+    ] = pydantic.Field(alias="submissionFiles")
+    user_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="userId")] = pydantic.Field(
+        alias="userId", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
