@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.46.8
+  changelogEntry:
+    - summary: |
+        Bump version to remove rc from version tag.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
 - version: 4.46.7-rc3
   changelogEntry:
     - summary: |
