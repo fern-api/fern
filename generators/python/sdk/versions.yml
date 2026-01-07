@@ -1,6 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.46.8
+  changelogEntry:
+    - summary: |
+        Bump version to remove rc from version tag.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
+- version: 4.46.7-rc3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for streaming endpoints. Streaming methods return lazy iterators
+        (Iterator[bytes] or AsyncIterator[bytes]) that don't execute the HTTP request until iterated.
+        Wire tests now wrap streaming endpoint calls in 'for _ in ...: pass' loops to ensure the
+        HTTP request is actually made. This applies to streaming, streamParameter, and fileDownload
+        response types.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
 - version: 4.46.7-rc2
   changelogEntry:
     - summary: Fixed Python SDK generation to use native Pydantic field aliases and improved core parsing so wire-key and nested/union validation works correctly across Pydantic v1/v2.

@@ -3,7 +3,7 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
-public partial class ComplexClient
+public partial class ComplexClient : IComplexClient
 {
     private RawClient _client;
 

@@ -2,7 +2,7 @@ using SeedApiWideBasePath.Core;
 
 namespace SeedApiWideBasePath;
 
-public partial class SeedApiWideBasePathClient
+public partial class SeedApiWideBasePathClient : ISeedApiWideBasePathClient
 {
     private readonly RawClient _client;
 

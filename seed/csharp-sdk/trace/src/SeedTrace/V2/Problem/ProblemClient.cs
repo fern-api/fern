@@ -4,7 +4,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace.V2;
 
-public partial class ProblemClient
+public partial class ProblemClient : IProblemClient
 {
     private RawClient _client;
 

@@ -2,7 +2,7 @@ using SeedFileDownload.Core;
 
 namespace SeedFileDownload;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
     private RawClient _client;
 

@@ -4,7 +4,7 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class ContainerClient
+public partial class ContainerClient : IContainerClient
 {
     private RawClient _client;
 

@@ -2,7 +2,7 @@ using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
 
-public partial class SeedServerSentEventsClient
+public partial class SeedServerSentEventsClient : ISeedServerSentEventsClient
 {
     private readonly RawClient _client;
 

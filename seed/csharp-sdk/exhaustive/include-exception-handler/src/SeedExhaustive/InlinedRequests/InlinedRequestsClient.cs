@@ -4,7 +4,7 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive;
 
-public partial class InlinedRequestsClient
+public partial class InlinedRequestsClient : IInlinedRequestsClient
 {
     private RawClient _client;
 

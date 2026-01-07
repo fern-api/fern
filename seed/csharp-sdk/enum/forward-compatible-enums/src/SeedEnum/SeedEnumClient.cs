@@ -2,7 +2,7 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class SeedEnumClient
+public partial class SeedEnumClient : ISeedEnumClient
 {
     private readonly RawClient _client;
 

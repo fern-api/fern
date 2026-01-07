@@ -2,7 +2,7 @@ using SeedEndpointSecurityAuth.Core;
 
 namespace SeedEndpointSecurityAuth;
 
-public partial class SeedEndpointSecurityAuthClient
+public partial class SeedEndpointSecurityAuthClient : ISeedEndpointSecurityAuthClient
 {
     private readonly RawClient _client;
 

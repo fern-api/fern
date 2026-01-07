@@ -6,7 +6,7 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.InlinedRequests;
 
-public partial class InlinedRequestsClient
+public partial class InlinedRequestsClient : IInlinedRequestsClient
 {
     private RawClient _client;
 

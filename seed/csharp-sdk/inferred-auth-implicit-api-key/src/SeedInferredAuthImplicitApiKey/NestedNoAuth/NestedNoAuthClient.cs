@@ -2,7 +2,7 @@ using SeedInferredAuthImplicitApiKey.Core;
 
 namespace SeedInferredAuthImplicitApiKey.NestedNoAuth;
 
-public partial class NestedNoAuthClient
+public partial class NestedNoAuthClient : INestedNoAuthClient
 {
     private RawClient _client;
 

@@ -4,7 +4,7 @@ using SeedCrossPackageTypeNames.Core;
 
 namespace SeedCrossPackageTypeNames.FolderD;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
     private RawClient _client;
 

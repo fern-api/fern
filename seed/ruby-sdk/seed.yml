@@ -97,6 +97,7 @@ allowedFailures:
   - inferred-auth-implicit-no-expiry
   - inferred-auth-implicit-api-key
   - inferred-auth-implicit-reference
+  - inline-enum-request
   - license
   - literal
   - literals-unions

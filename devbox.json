@@ -9,7 +9,8 @@
     "jdk@17",
     "dotnet-sdk_10@latest",
     "buf@1.50.0",
-    "git-lfs@latest"
+    "git-lfs@latest",
+    "git@latest"
   ],
   "shell": {
     "init_hook": [

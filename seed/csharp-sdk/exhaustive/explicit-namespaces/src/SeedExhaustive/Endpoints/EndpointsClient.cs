@@ -9,7 +9,7 @@ using SeedExhaustive.Endpoints.Urls;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class EndpointsClient
+public partial class EndpointsClient : IEndpointsClient
 {
     private RawClient _client;
 

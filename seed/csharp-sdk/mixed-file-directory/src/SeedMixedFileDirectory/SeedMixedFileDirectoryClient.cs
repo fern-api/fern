@@ -2,7 +2,7 @@ using SeedMixedFileDirectory.Core;
 
 namespace SeedMixedFileDirectory;
 
-public partial class SeedMixedFileDirectoryClient
+public partial class SeedMixedFileDirectoryClient : ISeedMixedFileDirectoryClient
 {
     private readonly RawClient _client;
 

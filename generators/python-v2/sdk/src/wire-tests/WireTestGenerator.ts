@@ -302,7 +302,16 @@ export class WireTestGenerator {
 
             // Generate the API call AST directly
             const apiCallAst = this.generateApiCallAst(endpoint, example);
-            statements.push(apiCallAst);
+
+            // For streaming endpoints, wrap the call in a for loop to consume the iterator
+            // This is necessary because streaming methods return lazy generators that don't
+            // execute the HTTP request until iterated
+            if (this.isStreamingEndpoint(endpoint)) {
+                statements.push(python.codeBlock(`for _ in ${apiCallAst.toString()}:`));
+                statements.push(python.codeBlock("    pass"));
+            } else {
+                statements.push(apiCallAst);
+            }
 
             // Verify request count using test ID for filtering
             statements.push(
@@ -323,6 +332,26 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Checks if an endpoint returns a streaming response.
+     * Streaming endpoints return Iterator[bytes] or AsyncIterator[bytes] which are lazy generators.
+     * This includes:
+     * - streaming: SSE or other streaming responses
+     * - streamParameter: Responses controlled by a stream parameter
+     * - fileDownload: File download responses that return an iterator of bytes
+     */
+    private isStreamingEndpoint(endpoint: HttpEndpoint): boolean {
+        const responseBody = endpoint.response?.body;
+        if (!responseBody) {
+            return false;
+        }
+        return (
+            responseBody.type === "streaming" ||
+            responseBody.type === "streamParameter" ||
+            responseBody.type === "fileDownload"
+        );
     }
 
     /**

@@ -3,7 +3,7 @@ using SeedCsharpNamespaceCollision.Core;
 
 namespace SeedCsharpNamespaceCollision.System;
 
-public partial class SystemClient
+public partial class SystemClient : ISystemClient
 {
     private RawClient _client;
 

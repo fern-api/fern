@@ -2,7 +2,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class BaseClient
+public partial class BaseClient : IBaseClient
 {
     private readonly RawClient _client;
 

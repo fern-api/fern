@@ -2,7 +2,7 @@ using SeedCrossPackageTypeNames.Core;
 
 namespace SeedCrossPackageTypeNames.FolderD;
 
-public partial class FolderDClient
+public partial class FolderDClient : IFolderDClient
 {
     private RawClient _client;
 
