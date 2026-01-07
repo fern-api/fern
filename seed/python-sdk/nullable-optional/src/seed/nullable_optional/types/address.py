@@ -18,10 +18,14 @@ class Address(UniversalBaseModel):
     street: str
     city: typing.Optional[str] = None
     state: typing.Optional[str] = None
-    zip_code: typing_extensions.Annotated[str, FieldMetadata(alias="zipCode")]
+    zip_code: typing_extensions.Annotated[str, FieldMetadata(alias="zipCode")] = pydantic.Field(alias="zipCode")
     country: typing.Optional[str] = None
-    building_id: typing_extensions.Annotated[NullableUserId, FieldMetadata(alias="buildingId")]
-    tenant_id: typing_extensions.Annotated[OptionalUserId, FieldMetadata(alias="tenantId")]
+    building_id: typing_extensions.Annotated[NullableUserId, FieldMetadata(alias="buildingId")] = pydantic.Field(
+        alias="buildingId"
+    )
+    tenant_id: typing_extensions.Annotated[OptionalUserId, FieldMetadata(alias="tenantId")] = pydantic.Field(
+        alias="tenantId"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -11,7 +11,9 @@ from .submission_id import SubmissionId
 
 
 class BuildingExecutorResponse(UniversalBaseModel):
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
+    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")] = pydantic.Field(
+        alias="submissionId"
+    )
     status: ExecutionSessionStatus
 
     if IS_PYDANTIC_V2:

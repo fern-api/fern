@@ -12,8 +12,10 @@ from .test_case import TestCase
 
 
 class TestCaseWithExpectedResult(UniversalBaseModel):
-    test_case: typing_extensions.Annotated[TestCase, FieldMetadata(alias="testCase")]
-    expected_result: typing_extensions.Annotated["VariableValue", FieldMetadata(alias="expectedResult")]
+    test_case: typing_extensions.Annotated[TestCase, FieldMetadata(alias="testCase")] = pydantic.Field(alias="testCase")
+    expected_result: typing_extensions.Annotated["VariableValue", FieldMetadata(alias="expectedResult")] = (
+        pydantic.Field(alias="expectedResult")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

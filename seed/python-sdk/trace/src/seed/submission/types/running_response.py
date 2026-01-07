@@ -11,7 +11,9 @@ from .submission_id import SubmissionId
 
 
 class RunningResponse(UniversalBaseModel):
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
+    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")] = pydantic.Field(
+        alias="submissionId"
+    )
     state: RunningSubmissionState
 
     if IS_PYDANTIC_V2:

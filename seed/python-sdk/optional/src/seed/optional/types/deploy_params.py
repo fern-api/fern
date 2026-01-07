@@ -9,7 +9,9 @@ from ...core.serialization import FieldMetadata
 
 
 class DeployParams(UniversalBaseModel):
-    update_draft: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="updateDraft")] = None
+    update_draft: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="updateDraft")] = (
+        pydantic.Field(alias="updateDraft", default=None)
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

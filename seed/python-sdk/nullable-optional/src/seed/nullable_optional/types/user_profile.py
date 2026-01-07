@@ -17,34 +17,54 @@ class UserProfile(UniversalBaseModel):
 
     id: str
     username: str
-    nullable_string: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nullableString")] = None
-    nullable_integer: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="nullableInteger")] = None
-    nullable_boolean: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="nullableBoolean")] = None
-    nullable_date: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="nullableDate")] = None
-    nullable_object: typing_extensions.Annotated[typing.Optional[Address], FieldMetadata(alias="nullableObject")] = None
+    nullable_string: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nullableString")] = (
+        pydantic.Field(alias="nullableString", default=None)
+    )
+    nullable_integer: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="nullableInteger")] = (
+        pydantic.Field(alias="nullableInteger", default=None)
+    )
+    nullable_boolean: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="nullableBoolean")] = (
+        pydantic.Field(alias="nullableBoolean", default=None)
+    )
+    nullable_date: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="nullableDate")] = (
+        pydantic.Field(alias="nullableDate", default=None)
+    )
+    nullable_object: typing_extensions.Annotated[typing.Optional[Address], FieldMetadata(alias="nullableObject")] = (
+        pydantic.Field(alias="nullableObject", default=None)
+    )
     nullable_list: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="nullableList")
-    ] = None
+    ] = pydantic.Field(alias="nullableList", default=None)
     nullable_map: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, str]], FieldMetadata(alias="nullableMap")
-    ] = None
-    optional_string: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="optionalString")] = None
-    optional_integer: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="optionalInteger")] = None
-    optional_boolean: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="optionalBoolean")] = None
-    optional_date: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="optionalDate")] = None
-    optional_object: typing_extensions.Annotated[typing.Optional[Address], FieldMetadata(alias="optionalObject")] = None
+    ] = pydantic.Field(alias="nullableMap", default=None)
+    optional_string: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="optionalString")] = (
+        pydantic.Field(alias="optionalString", default=None)
+    )
+    optional_integer: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="optionalInteger")] = (
+        pydantic.Field(alias="optionalInteger", default=None)
+    )
+    optional_boolean: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="optionalBoolean")] = (
+        pydantic.Field(alias="optionalBoolean", default=None)
+    )
+    optional_date: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="optionalDate")] = (
+        pydantic.Field(alias="optionalDate", default=None)
+    )
+    optional_object: typing_extensions.Annotated[typing.Optional[Address], FieldMetadata(alias="optionalObject")] = (
+        pydantic.Field(alias="optionalObject", default=None)
+    )
     optional_list: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="optionalList")
-    ] = None
+    ] = pydantic.Field(alias="optionalList", default=None)
     optional_map: typing_extensions.Annotated[
         typing.Optional[typing.Dict[str, str]], FieldMetadata(alias="optionalMap")
-    ] = None
+    ] = pydantic.Field(alias="optionalMap", default=None)
     optional_nullable_string: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="optionalNullableString")
-    ] = None
+    ] = pydantic.Field(alias="optionalNullableString", default=None)
     optional_nullable_object: typing_extensions.Annotated[
         typing.Optional[Address], FieldMetadata(alias="optionalNullableObject")
-    ] = None
+    ] = pydantic.Field(alias="optionalNullableObject", default=None)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

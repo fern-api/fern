@@ -27,7 +27,9 @@ class EventInfo_Metadata(UniversalBaseModel):
     type: typing.Literal["metadata"] = "metadata"
     id: str
     data: typing.Optional[typing.Dict[str, str]] = None
-    json_string: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="jsonString")] = None
+    json_string: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="jsonString")] = pydantic.Field(
+        alias="jsonString", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
