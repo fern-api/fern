@@ -57,6 +57,7 @@ types:
       key: string
       value: string
       description: optional<string>
+      disabled: optional<boolean>
 
   PostmanRequest:
     properties:
