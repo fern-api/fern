@@ -87,25 +87,28 @@ export class AliasGenerator {
     private generateInnerAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Add flexible datetime serde attribute when configured and the alias is a datetime type
+        // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
         // Use deserialize_with instead of with to allow Serialize derive to work correctly
-        // Serialization uses default DateTime<Utc> format (RFC3339), deserialization uses flexible parser
-        if (this.context.getDateTimeType() === "flexible") {
-            const aliasType = this.aliasTypeDeclaration.aliasOf;
+        // "offset" uses flexible_datetime_offset module (DateTime<FixedOffset>)
+        // "utc" uses flexible_datetime module (DateTime<Utc>)
+        const dateTimeType = this.context.getDateTimeType();
+        const aliasType = this.aliasTypeDeclaration.aliasOf;
+        const modulePath = dateTimeType === "utc" 
+            ? "crate::core::flexible_datetime" 
+            : "crate::core::flexible_datetime_offset";
 
-            if (isDateTimeOnlyType(aliasType)) {
-                // Direct datetime type: DateTime<Utc>
-                attributes.push(Attribute.serde.deserializeWith("crate::core::flexible_datetime::deserialize"));
-            } else if (isOptionalType(aliasType)) {
-                // Optional type - check if inner type is datetime
-                const innerType = getInnerTypeFromOptional(aliasType);
-                if (isDateTimeOnlyType(innerType)) {
-                    // Optional datetime type: Option<DateTime<Utc>>
-                    attributes.push(Attribute.serde.default());
-                    attributes.push(
-                        Attribute.serde.deserializeWith("crate::core::flexible_datetime::option::deserialize")
-                    );
-                }
+        if (isDateTimeOnlyType(aliasType)) {
+            // Direct datetime type
+            attributes.push(Attribute.serde.deserializeWith(`${modulePath}::deserialize`));
+        } else if (isOptionalType(aliasType)) {
+            // Optional type - check if inner type is datetime
+            const innerType = getInnerTypeFromOptional(aliasType);
+            if (isDateTimeOnlyType(innerType)) {
+                // Optional datetime type
+                attributes.push(Attribute.serde.default());
+                attributes.push(
+                    Attribute.serde.deserializeWith(`${modulePath}::option::deserialize`)
+                );
             }
         }
 

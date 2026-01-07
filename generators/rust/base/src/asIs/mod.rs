@@ -7,6 +7,7 @@ mod query_parameter_builder;
 mod sse_stream;
 mod utils;
 pub mod flexible_datetime;
+pub mod flexible_datetime_offset;
 
 pub use http_client::{ByteStream, HttpClient};
 pub use request_options::RequestOptions;

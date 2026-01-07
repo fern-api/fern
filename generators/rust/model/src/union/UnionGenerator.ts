@@ -68,17 +68,28 @@ export class UnionGenerator {
         // Add chrono imports based on specific types needed
         const hasDateOnly = this.hasDateFields();
         const hasDateTimeOnly = this.hasDateTimeOnlyFields();
+        const useUtc = this.context.getDateTimeType() === "utc";
 
         // TODO: @iamnamananand996 - use AST mechanism for all imports
         if (hasDateOnly && hasDateTimeOnly) {
             // Both date and datetime types present
-            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+            if (useUtc) {
+                writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+            } else {
+                // Default: DateTime<FixedOffset>
+                writer.writeLine("use chrono::{DateTime, FixedOffset, NaiveDate};");
+            }
         } else if (hasDateOnly) {
             // Only date type present, import NaiveDate only
             writer.writeLine("use chrono::NaiveDate;");
         } else if (hasDateTimeOnly) {
             // Only datetime type present
-            writer.writeLine("use chrono::{DateTime, Utc};");
+            if (useUtc) {
+                writer.writeLine("use chrono::{DateTime, Utc};");
+            } else {
+                // Default: DateTime<FixedOffset>
+                writer.writeLine("use chrono::{DateTime, FixedOffset};");
+            }
         }
 
         // Add std::collections imports based on specific collection types used
@@ -360,18 +371,22 @@ export class UnionGenerator {
                 writer.writeLine(`        #[serde(skip_serializing_if = "Option::is_none")]`);
             }
 
-            // Add flexible datetime serde attribute when configured
-            if (this.context.getDateTimeType() === "flexible") {
-                const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
-                if (isDateTimeOnlyType(typeRef)) {
-                    if (isOptional) {
-                        // For optional datetime fields with custom deserializer, we need serde(default)
-                        // to handle missing fields in JSON (otherwise serde expects the field to be present)
-                        writer.writeLine(`        #[serde(default)]`);
-                        writer.writeLine(`        #[serde(with = "crate::core::flexible_datetime::option")]`);
-                    } else {
-                        writer.writeLine(`        #[serde(with = "crate::core::flexible_datetime")]`);
-                    }
+            // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
+            // "offset" uses flexible_datetime_offset module (DateTime<FixedOffset>)
+            // "utc" uses flexible_datetime module (DateTime<Utc>)
+            const dateTimeType = this.context.getDateTimeType();
+            const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
+            if (isDateTimeOnlyType(typeRef)) {
+                const modulePath = dateTimeType === "utc" 
+                    ? "crate::core::flexible_datetime" 
+                    : "crate::core::flexible_datetime_offset";
+                if (isOptional) {
+                    // For optional datetime fields with custom deserializer, we need serde(default)
+                    // to handle missing fields in JSON (otherwise serde expects the field to be present)
+                    writer.writeLine(`        #[serde(default)]`);
+                    writer.writeLine(`        #[serde(with = "${modulePath}::option")]`);
+                } else {
+                    writer.writeLine(`        #[serde(with = "${modulePath}")]`);
                 }
             }
 

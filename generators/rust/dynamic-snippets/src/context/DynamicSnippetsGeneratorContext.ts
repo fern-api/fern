@@ -215,11 +215,12 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     /**
      * Get the datetime type to use for datetime primitives.
-     * Returns "utc" for DateTime<Utc> (default),
-     * or "flexible" for DateTime<Utc> with flexible parsing (accepts both formats).
+     * Returns "offset" for DateTime<FixedOffset> (default) - preserves original timezone,
+     * or "utc" for DateTime<Utc> - converts everything to UTC.
+     * Both options use flexible parsing that accepts any format and assumes UTC when no timezone.
      */
-    public getDateTimeType(): "utc" | "flexible" {
-        return this.customConfig?.dateTimeType ?? "utc";
+    public getDateTimeType(): "offset" | "utc" {
+        return this.customConfig?.dateTimeType ?? "offset";
     }
 
     // Client methods

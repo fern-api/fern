@@ -8,8 +8,8 @@ export interface RustTypeGeneratorContext {
         fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
         name: { pascalCase: { safeName: string } };
     }): string;
-    /** DateTime type to use: "utc" for DateTime<Utc>, "flexible" for DateTime<Utc> with flexible parsing */
-    getDateTimeType(): "utc" | "flexible";
+    /** DateTime type to use: "offset" for DateTime<FixedOffset> (default), "utc" for DateTime<Utc> */
+    getDateTimeType(): "offset" | "utc";
 }
 
 export function generateRustTypeForTypeReference(
@@ -102,14 +102,29 @@ export function generateRustTypeForTypeReference(
                     );
                 },
                 dateTime: () => {
-                    // Always use DateTime<Utc> - flexible parsing is handled via serde attributes
+                    // Use DateTime<Utc> when "utc" config is set, otherwise DateTime<FixedOffset> (default)
+                    if (context.getDateTimeType() === "utc") {
+                        return rust.Type.reference(
+                            rust.reference({
+                                name: "DateTime",
+                                genericArgs: [
+                                    rust.Type.reference(
+                                        rust.reference({
+                                            name: "Utc"
+                                        })
+                                    )
+                                ]
+                            })
+                        );
+                    }
+                    // Default: DateTime<FixedOffset> - preserves original timezone
                     return rust.Type.reference(
                         rust.reference({
                             name: "DateTime",
                             genericArgs: [
                                 rust.Type.reference(
                                     rust.reference({
-                                        name: "Utc"
+                                        name: "FixedOffset"
                                     })
                                 )
                             ]

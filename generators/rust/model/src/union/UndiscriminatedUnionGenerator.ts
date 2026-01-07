@@ -115,13 +115,15 @@ export class UndiscriminatedUnionGenerator {
         const variantName = this.getVariantNameForMember(member, index);
 
         // Check if this is a datetime type that needs flexible parsing
-        const needsFlexibleDateTime =
-            this.context.getDateTimeType() === "flexible" && isDateTimeOnlyType(member.type);
-
-        if (needsFlexibleDateTime) {
+        // Both "offset" (default) and "utc" use flexible parsing
+        if (isDateTimeOnlyType(member.type)) {
+            const dateTimeType = this.context.getDateTimeType();
+            const modulePath = dateTimeType === "utc" 
+                ? "crate::core::flexible_datetime" 
+                : "crate::core::flexible_datetime_offset";
             // Generate multi-line tuple variant with serde attribute on inner field
             writer.writeLine(`    ${variantName}(`);
-            writer.writeLine(`        #[serde(with = "crate::core::flexible_datetime")]`);
+            writer.writeLine(`        #[serde(with = "${modulePath}")]`);
             writer.writeLine(`        ${memberType.toString()}`);
             writer.writeLine(`    ),`);
         } else {

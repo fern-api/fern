@@ -230,17 +230,23 @@ export function generateFieldAttributes(
         attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
     }
 
-    // Add flexible datetime serde attribute when configured
-    if (context?.getDateTimeType() === "flexible") {
+    // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
+    // "offset" uses flexible_datetime_offset module (DateTime<FixedOffset>)
+    // "utc" uses flexible_datetime module (DateTime<Utc>)
+    if (context) {
+        const dateTimeType = context.getDateTimeType();
         const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
         if (isDateTimeOnlyType(typeRef)) {
+            const modulePath = dateTimeType === "utc" 
+                ? "crate::core::flexible_datetime" 
+                : "crate::core::flexible_datetime_offset";
             if (isOptional) {
                 // For optional datetime fields with custom deserializer, we need serde(default)
                 // to handle missing fields in JSON (otherwise serde expects the field to be present)
                 attributes.push(Attribute.serde.default());
-                attributes.push(Attribute.serde.with("crate::core::flexible_datetime::option"));
+                attributes.push(Attribute.serde.with(`${modulePath}::option`));
             } else {
-                attributes.push(Attribute.serde.with("crate::core::flexible_datetime"));
+                attributes.push(Attribute.serde.with(modulePath));
             }
         }
     }
@@ -286,17 +292,28 @@ export function writeStructUseStatements(
     // Add chrono imports based on specific types needed
     const hasDateOnly = hasDateFields(properties);
     const hasDateTimeOnly = hasDateTimeOnlyFields(properties);
+    const useUtc = context.getDateTimeType() === "utc";
 
     // TODO: @iamnamananand996 - use AST mechanism for all imports
     if (hasDateOnly && hasDateTimeOnly) {
         // Both date and datetime types present
-        writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+        if (useUtc) {
+            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+        } else {
+            // Default: DateTime<FixedOffset>
+            writer.writeLine("use chrono::{DateTime, FixedOffset, NaiveDate};");
+        }
     } else if (hasDateOnly) {
         // Only date type present, import NaiveDate only
         writer.writeLine("use chrono::NaiveDate;");
     } else if (hasDateTimeOnly) {
         // Only datetime type present
-        writer.writeLine("use chrono::{DateTime, Utc};");
+        if (useUtc) {
+            writer.writeLine("use chrono::{DateTime, Utc};");
+        } else {
+            // Default: DateTime<FixedOffset>
+            writer.writeLine("use chrono::{DateTime, FixedOffset};");
+        }
     }
 
     // Add std::collections if we have maps or sets
