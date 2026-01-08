@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.46.7-rc4
+- version: 4.46.9
   changelogEntry:
     - summary: |
         Support `bytes` as a response type for websocket channel methods.
