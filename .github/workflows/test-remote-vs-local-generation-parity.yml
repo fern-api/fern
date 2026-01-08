@@ -63,7 +63,7 @@ jobs:
       fail-fast: false
       matrix:
         generator:
-          # - ts-sdk  # temporarily disabled
+          - ts-sdk
           - java-sdk
           - go-sdk
           - python-sdk
