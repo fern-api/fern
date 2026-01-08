@@ -29,8 +29,8 @@ describe("parse inline types", () => {
         const expectedTypeReference = TypeReference.container(
             ContainerType.optional(
                 TypeReference.container(
-                    ContainerType.list({
-                        itemType: TypeReference.named({
+                    ContainerType.list(
+                        TypeReference.named({
                             typeId: "type_a/b/c:Dummy",
                             fernFilepath: convertToFernFilepath({
                                 relativeFilepath: dummyFilepath,
@@ -40,9 +40,8 @@ describe("parse inline types", () => {
                             default: undefined,
                             inline: undefined,
                             displayName: undefined
-                        }),
-                        validation: undefined
-                    })
+                        })
+                    )
                 )
             )
         );
