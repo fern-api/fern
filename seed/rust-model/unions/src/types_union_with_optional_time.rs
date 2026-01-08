@@ -8,6 +8,8 @@ pub enum UnionWithOptionalTime {
         },
 
         Datetime {
-            value: Option<DateTime<Utc>>,
+            #[serde(default)]
+            #[serde(with = "crate::core::flexible_datetime::offset::option")]
+            value: Option<DateTime<FixedOffset>>,
         },
 }
