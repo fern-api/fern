@@ -187,6 +187,9 @@ types:
   LocalFileSystemOutputLocationSchema:
     properties:
       path: string
+      generateFullProject:
+        type: optional<boolean>
+        docs: If true, generates the complete project including package.json, pyproject.toml, etc. Requires paid plan.
 
   NugetOutputLocationSchema:
     properties:
