@@ -293,6 +293,7 @@ export type DocsNavigationItem =
     | DocsNavigationItem.Page
     | DocsNavigationItem.Section
     | DocsNavigationItem.ApiSection
+    | DocsNavigationItem.LibrarySection
     | DocsNavigationItem.Link
     | DocsNavigationItem.Changelog;
 
@@ -368,6 +369,26 @@ export declare namespace DocsNavigationItem {
         icon: string | AbsoluteFilePath | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
+    }
+
+    export interface LibrarySection
+        extends CjsFdrSdk.navigation.v1.WithPermissions,
+            CjsFdrSdk.navigation.latest.WithFeatureFlags {
+        type: "librarySection";
+        /** GitHub URL to the repository containing the library source code */
+        githubUrl: string;
+        /** Git branch to clone. Defaults to default branch. */
+        branch: string | undefined;
+        /** Path to package within repo. For monorepos. */
+        packagePath: string | undefined;
+        /** Navigation title. Defaults to "Library Reference". */
+        title: string | undefined;
+        /** URL slug. Defaults to "library-reference". */
+        slug: string | undefined;
+        icon: string | AbsoluteFilePath | undefined;
+        hidden: boolean | undefined;
+        collapsed: boolean | undefined;
+        availability: Availability | undefined;
     }
 
     export interface VersionedSnippetLanguageConfiguration {

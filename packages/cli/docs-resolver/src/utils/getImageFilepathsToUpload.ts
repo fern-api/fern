@@ -328,5 +328,13 @@ async function collectIconsFromNavigationItem({
                 });
             }
             break;
+        case "librarySection":
+            if (item.icon != null) {
+                await addIconToFilepaths({
+                    iconPath: item.icon,
+                    filepaths
+                });
+            }
+            break;
     }
 }

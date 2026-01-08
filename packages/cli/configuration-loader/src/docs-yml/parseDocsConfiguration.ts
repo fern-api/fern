@@ -1086,6 +1086,23 @@ async function convertNavigationItem({
             context
         });
     }
+    if (isRawLibrarySectionConfig(rawConfig)) {
+        return {
+            type: "librarySection",
+            githubUrl: rawConfig.libraryDocs,
+            branch: rawConfig.branch ?? undefined,
+            packagePath: rawConfig.packagePath ?? undefined,
+            title: rawConfig.title ?? undefined,
+            slug: rawConfig.slug ?? undefined,
+            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
+            hidden: rawConfig.hidden ?? undefined,
+            collapsed: rawConfig.collapsed ?? undefined,
+            availability: rawConfig.availability ?? undefined,
+            viewers: parseRoles(rawConfig.viewers),
+            orphaned: rawConfig.orphaned,
+            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+        };
+    }
     assertNever(rawConfig);
 }
 
@@ -1260,6 +1277,10 @@ function isRawChangelogConfig(item: unknown): item is docsYml.RawSchemas.Changel
 
 function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConfiguration {
     return isPlainObject(item) && typeof item.folder === "string";
+}
+
+function isRawLibrarySectionConfig(item: unknown): item is docsYml.RawSchemas.LibraryReferenceConfiguration {
+    return isPlainObject(item) && typeof item.libraryDocs === "string";
 }
 
 function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceSectionConfiguration {

@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { PageConfiguration } from "./PageConfiguration";
 import { ApiReferenceConfiguration } from "./ApiReferenceConfiguration";
+import { LibraryReferenceConfiguration } from "./LibraryReferenceConfiguration";
 import { LinkConfiguration } from "./LinkConfiguration";
 import { ChangelogConfiguration } from "./ChangelogConfiguration";
 import { FolderConfiguration } from "./FolderConfiguration";
@@ -16,6 +17,7 @@ export const NavigationItem: core.serialization.Schema<serializers.NavigationIte
         PageConfiguration,
         core.serialization.lazyObject(() => serializers.SectionConfiguration),
         ApiReferenceConfiguration,
+        LibraryReferenceConfiguration,
         LinkConfiguration,
         ChangelogConfiguration,
         FolderConfiguration,
@@ -26,6 +28,7 @@ export declare namespace NavigationItem {
         | PageConfiguration.Raw
         | serializers.SectionConfiguration.Raw
         | ApiReferenceConfiguration.Raw
+        | LibraryReferenceConfiguration.Raw
         | LinkConfiguration.Raw
         | ChangelogConfiguration.Raw
         | FolderConfiguration.Raw;

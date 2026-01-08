@@ -75,6 +75,7 @@ export * from "./ChangelogConfiguration";
 export * from "./SectionConfiguration";
 export * from "./FolderConfiguration";
 export * from "./ApiReferenceConfiguration";
+export * from "./LibraryReferenceConfiguration";
 export * from "./ApiReferenceLayoutItem";
 export * from "./ApiReferenceSectionConfiguration";
 export * from "./ApiReferencePackageConfiguration";

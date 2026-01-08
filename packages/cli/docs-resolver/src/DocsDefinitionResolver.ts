@@ -1126,7 +1126,9 @@ export class DocsDefinitionResolver {
             apiSection: async (value) => this.toApiSectionNode({ item: value, parentSlug }),
             section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug }),
             link: async (value) => this.toLinkNode(value),
-            changelog: async (value) => this.toChangelogNode(value, parentSlug)
+            changelog: async (value) => this.toChangelogNode(value, parentSlug),
+            // Library sections are handled by FDR during registration, returning placeholder
+            librarySection: async () => this.toLibrarySectionPlaceholder(parentSlug)
         });
     }
 
@@ -1150,7 +1152,9 @@ export class DocsDefinitionResolver {
             section: async (value) =>
                 this.toSectionNode({ prefix, item: value, parentSlug, hideChildren, parentAvailability }),
             link: async (value) => this.toLinkNode(value),
-            changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren)
+            changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren),
+            // Library sections are handled by FDR during registration, returning placeholder
+            librarySection: async () => this.toLibrarySectionPlaceholder(parentSlug)
         });
     }
 
@@ -1339,6 +1343,38 @@ export class DocsDefinitionResolver {
             url: FernNavigation.V1.Url(item.url),
             icon: this.resolveIconFileId(item.icon),
             target: item.target
+        };
+    }
+
+    /**
+     * Library sections are handled by FDR during finishDocsRegister.
+     * The CLI starts the generation job, polls for completion, and passes the jobId to FDR.
+     * FDR then merges the generated library docs into the navigation.
+     *
+     * This placeholder returns a hidden section that will be replaced/augmented by FDR.
+     */
+    private toLibrarySectionPlaceholder(
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): FernNavigation.V1.SectionNode {
+        // Return a hidden placeholder section - FDR will append the actual library docs
+        const slug = parentSlug.apply({ urlSlug: "library-docs", skipUrlSlug: true });
+        return {
+            type: "section",
+            id: this.#idgen.get("library-docs-placeholder"),
+            slug: slug.get(),
+            title: "Library Reference",
+            collapsed: false,
+            hidden: true, // Hidden - actual content comes from FDR
+            children: [],
+            overviewPageId: undefined,
+            icon: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            authed: undefined,
+            pointsTo: undefined,
+            availability: undefined,
+            featureFlags: undefined,
+            noindex: undefined
         };
     }
 

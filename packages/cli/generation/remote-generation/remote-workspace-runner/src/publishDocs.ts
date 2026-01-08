@@ -5,6 +5,7 @@ import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
+import { RawSchemas } from "@fern-api/configuration/docs-yml";
 
 type DynamicIr = APIV1Write.DynamicIr;
 type DynamicIrUpload = APIV1Write.DynamicIrUpload;
@@ -403,13 +404,81 @@ export async function publishDocs({
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
+    // Handle library docs generation if configured
+    let libraryDocsConfig: DocsV2Write.LibraryDocsRegistrationConfig | undefined;
+    const librarySection = extractLibrarySectionFromConfig(docsWorkspace.config);
+    if (librarySection != null) {
+        context.logger.info(`Generating library documentation from ${librarySection.libraryDocs}...`);
+
+        // Start library docs generation
+        const startResponse = await fdr.docs.v2.write.startLibraryDocsGeneration({
+            orgId: CjsFdrSdk.OrgId(organization),
+            githubUrl: CjsFdrSdk.Url(librarySection.libraryDocs),
+            language: "PYTHON",
+            config: {
+                branch: librarySection.branch,
+                packagePath: librarySection.packagePath,
+                title: librarySection.title,
+                slug: librarySection.slug
+            }
+        });
+
+        if (!startResponse.ok) {
+            return context.failAndThrow(
+                `Failed to start library docs generation for ${librarySection.libraryDocs}`,
+                startResponse.error
+            );
+        }
+
+        const jobId = startResponse.body.jobId;
+        context.logger.debug(`Library docs generation started with jobId: ${jobId}`);
+
+        // Poll for completion
+        const POLL_INTERVAL_MS = 3000;
+        const MAX_POLL_ATTEMPTS = 100; // ~5 minutes
+        let pollAttempts = 0;
+
+        while (pollAttempts < MAX_POLL_ATTEMPTS) {
+            const statusResponse = await fdr.docs.v2.write.getLibraryDocsGenerationStatus(jobId);
+
+            if (!statusResponse.ok) {
+                return context.failAndThrow(`Failed to check library docs generation status`, statusResponse.error);
+            }
+
+            const status = statusResponse.body.status;
+            context.logger.debug(`Library docs generation status: ${status}`);
+
+            if (status === "COMPLETED") {
+                context.logger.info("Library documentation generation completed.");
+                libraryDocsConfig = {
+                    jobId,
+                    slug: librarySection.slug,
+                    title: librarySection.title
+                };
+                break;
+            } else if (status === "FAILED") {
+                const errorMsg = statusResponse.body.error?.message ?? "Unknown error";
+                return context.failAndThrow(`Library docs generation failed: ${errorMsg}`);
+            }
+
+            // Wait before next poll
+            await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+            pollAttempts++;
+        }
+
+        if (pollAttempts >= MAX_POLL_ATTEMPTS) {
+            return context.failAndThrow("Library docs generation timed out");
+        }
+    }
+
     context.logger.info("Publishing docs to FDR...");
     const publishStart = performance.now();
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         DocsV1Write.DocsRegistrationId(docsRegistrationId),
         {
             docsDefinition,
-            excludeApis: false
+            excludeApis: false,
+            libraryDocs: libraryDocsConfig
         }
     );
 
@@ -435,6 +504,11 @@ export async function publishDocs({
                 return context.failAndThrow(
                     "Failed to publish docs to " + domain,
                     `Docs registration ID ${docsRegistrationId} does not exist.`
+                );
+            case "LibraryDocsJobInvalidForRegistrationError":
+                return context.failAndThrow(
+                    "Failed to publish docs to " + domain,
+                    "Library docs job is invalid for registration. The job may not exist, may not be completed, or may belong to a different organization."
                 );
             default:
                 return context.failAndThrow("Failed to publish docs to " + domain, registerDocsResponse.error);
@@ -1054,4 +1128,80 @@ function extractErrorDetails(error: unknown): Record<string, unknown> {
         // Include the raw error for complete debugging if needed
         rawError: error
     };
+}
+
+/**
+ * Extracts the first library section configuration from the docs config navigation.
+ * Only supports Python libraries for now.
+ */
+function extractLibrarySectionFromConfig(
+    config: docsYml.RawSchemas.DocsConfiguration
+): docsYml.RawSchemas.LibraryReferenceConfiguration | undefined {
+    const navigation = config.navigation;
+    if (navigation == null) {
+        return undefined;
+    }
+
+    // Helper to check if an item is a library reference config
+    const isLibraryConfig = (item: unknown): item is docsYml.RawSchemas.LibraryReferenceConfiguration => {
+        return (
+            item != null &&
+            typeof item === "object" &&
+            "libraryDocs" in item &&
+            typeof (item as Record<string, unknown>).libraryDocs === "string"
+        );
+    };
+
+    // Helper to recursively search navigation items
+    const findLibrarySection = (
+        items: docsYml.RawSchemas.NavigationItem[] | undefined
+    ): docsYml.RawSchemas.LibraryReferenceConfiguration | undefined => {
+        if (items == null) {
+            return undefined;
+        }
+        for (const item of items) {
+            if (isLibraryConfig(item)) {
+                return item;
+            }
+            // Check in section contents
+            if ("section" in item && item.contents) {
+                const found = findLibrarySection(item.contents);
+                if (found) {
+                    return found;
+                }
+            }
+        }
+        return undefined;
+    };
+
+    // Handle different navigation structures
+    if (Array.isArray(navigation)) {
+        return findLibrarySection(navigation);
+    }
+
+    // Tabbed navigation
+    if ("tabs" in navigation && Array.isArray(navigation.tabs)) {
+        for (const tab of navigation.tabs) {
+            if ("layout" in tab && Array.isArray(tab.layout)) {
+                const found = findLibrarySection(tab.layout);
+                if (found) {
+                    return found;
+                }
+            }
+        }
+    }
+
+    // Versioned navigation
+    if ("versions" in navigation && Array.isArray(navigation.versions)) {
+        for (const version of navigation.versions) {
+            if ("navigation" in version && Array.isArray(version.navigation)) {
+                const found = findLibrarySection(version.navigation);
+                if (found) {
+                    return found;
+                }
+            }
+        }
+    }
+
+    return undefined;
 }

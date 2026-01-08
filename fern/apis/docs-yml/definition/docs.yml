@@ -525,6 +525,7 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiReferenceConfiguration
+      - LibraryReferenceConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
       - FolderConfiguration
@@ -1094,6 +1095,40 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
+
+  LibraryReferenceConfiguration:
+    extends: [WithPermissions, WithFeatureFlags]
+    docs: |
+      Configuration for generating and displaying library documentation from source code.
+      The library docs are generated from a GitHub repository and merged into the navigation.
+    properties:
+      library-docs:
+        type: string
+        docs: |
+          GitHub URL to the repository containing the library source code.
+          Example: https://github.com/NVIDIA/NeMo-RL
+      branch:
+        type: optional<string>
+        docs: Git branch to clone. Defaults to the repository's default branch.
+      package-path:
+        type: optional<string>
+        docs: |
+          Path to the package within the repository. Useful for monorepos where
+          the library is not at the root level.
+      title:
+        type: optional<string>
+        docs: |
+          Navigation title for the library reference section.
+          @default: "Library Reference"
+      slug:
+        type: optional<string>
+        docs: |
+          URL slug for the library reference pages.
+          @default: "library-reference"
+      icon: optional<string>
+      hidden: optional<boolean>
+      collapsed: optional<boolean>
+      availability: optional<Availability>
 
   ApiReferenceLayoutItem:
     docs: |
