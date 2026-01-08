@@ -3191,6 +3191,16 @@
             },
             "path": {
               "type": "string"
+            },
+            "generateFullProject": {
+              "oneOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           },
           "required": [

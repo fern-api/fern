@@ -4,4 +4,6 @@
 
 export interface LocalFileSystemOutputLocationSchema {
     path: string;
+    /** If true, generates the complete project including package.json, pyproject.toml, etc. Requires paid plan. */
+    generateFullProject?: boolean;
 }
