@@ -1,0 +1,44 @@
+openapi: 3.1.0
+info:
+  title: Passthrough Additional Properties Test
+  version: 1.0.0
+paths:
+  /user:
+    get:
+      operationId: getUser
+      summary: Get a user
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              examples:
+                default:
+                  value:
+                    id: "user_123"
+                    user_name: "john_doe"
+                    created_at: "2024-01-15T09:30:00Z"
+                    updated_at: "2024-01-15T09:30:00Z"
+components:
+  schemas:
+    User:
+      type: object
+      additionalProperties: true
+      required:
+        - id
+        - user_name
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: string
+        user_name:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
