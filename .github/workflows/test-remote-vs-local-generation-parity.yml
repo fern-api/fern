@@ -1,9 +1,6 @@
 name: Test Remote vs Local Generation Parity
 
 on:
-  # Runs every morning at 8:00 AM Eastern Time (1:00 PM UTC)
-  # schedule:
-  #   - cron: "0 13 * * *"
   # Runs when triggered manually
   workflow_dispatch:
     inputs:
