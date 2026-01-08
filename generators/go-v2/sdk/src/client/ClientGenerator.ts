@@ -550,8 +550,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             return this.context.getFieldName(requestProperty.property.name.name);
         }
         // Fallback to default names if we can't extract from IR
-        // Use "ClientID" with uppercase ID to follow Go naming conventions for acronyms
-        return "ClientID";
+        return "ClientId";
     }
 
     private isRequestPropertyOptional(requestProperty: RequestProperty): boolean {
