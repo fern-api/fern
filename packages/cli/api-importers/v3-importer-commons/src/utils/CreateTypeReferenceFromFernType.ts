@@ -113,8 +113,7 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                 return FernIr.TypeReference.container(
                     FernIr.ContainerType.map({
                         keyType,
-                        valueType,
-                        validation: undefined
+                        valueType
                     })
                 );
             },
