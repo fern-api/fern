@@ -40,6 +40,12 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Compile
+        run: pnpm compile
+
+      - name: Build Fern CLI
+        run: pnpm fern:build
+
       - name: Build Seed CLI
         run: pnpm seed:build
 
