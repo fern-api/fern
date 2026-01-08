@@ -9,12 +9,15 @@ import { SubmissionClient } from "./api/resources/submission/client/Client.js";
 import { SyspropClient } from "./api/resources/sysprop/client/Client.js";
 import { V2Client } from "./api/resources/v2/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import { normalizeClientOptionsWithAuth, type NormalizedClientOptionsWithAuth } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import * as environments from "./environments.js";
 
 export declare namespace SeedTraceClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SeedTraceClient {
@@ -29,7 +32,10 @@ export class SeedTraceClient {
     protected _sysprop: SyspropClient | undefined;
 
     constructor(options: SeedTraceClient.Options = {}) {
-        this._options = normalizeClientOptionsWithAuth(options);
+
+
+                        this._options = normalizeClientOptionsWithAuth(options);
+                    
     }
 
     public get v2(): V2Client {

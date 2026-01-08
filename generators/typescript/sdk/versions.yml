@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.43.6
+- version: 3.43.7
   changelogEntry:
     - summary: |
         Fix passthrough schema to only include truly additional properties when parsing.
@@ -7,6 +7,15 @@
         serialization layer would include both the raw (snake_case) and transformed (camelCase)
         versions of properties in the deserialized response. Now only properties that are not
         part of the schema's defined properties are passed through.
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 63
+
+- version: 3.43.6
+  changelogEntry:
+    - summary: |
+        Fix fetcher tests to use `.trim()` for platform-agnostic line ending comparisons.
+        This resolves test failures on Windows where files have CRLF line endings instead of LF.
       type: fix
   createdAt: "2026-01-08"
   irVersion: 63

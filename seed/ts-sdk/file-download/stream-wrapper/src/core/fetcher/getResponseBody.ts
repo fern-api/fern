@@ -3,6 +3,7 @@ import { getBinaryResponse } from "./BinaryResponse.js";
 
 import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper.js";
 
+
 export async function getResponseBody(response: Response, responseType?: string): Promise<unknown> {
     switch (responseType) {
         case "binary-response":
@@ -32,9 +33,9 @@ export async function getResponseBody(response: Response, responseType?: string)
                     },
                 };
             }
-
+            
             return chooseStreamWrapper(response.body);
-
+            
         case "text":
             return await response.text();
     }

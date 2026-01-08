@@ -4,45 +4,39 @@ import { SeedMixedFileDirectoryClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("OrganizationClient", () => {
+    
     test("create", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMixedFileDirectoryClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { name: "name" };
-        const rawResponseBody = {
-            id: "id",
-            name: "name",
-            users: [
-                { id: "id", name: "name", age: 1 },
-                { id: "id", name: "name", age: 1 },
-            ],
-        };
+        const client = new SeedMixedFileDirectoryClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "name" : "name" };
+        const rawResponseBody = { "id" : "id" , "name" : "name" , "users" : [ { "id" : "id" , "name" : "name" , "age" : 1 } , { "id" : "id" , "name" : "name" , "age" : 1 } ] };
         server
             .mockEndpoint()
-            .post("/organizations/")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/organizations/").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.organization.create({
-            name: "name",
-        });
-        expect(response).toEqual({
+        
+                    
+                            const response = await client.organization.create({
+    name: "name"
+});
+                            expect(response).toEqual({
+    id: "id",
+    name: "name",
+    users: [{
             id: "id",
             name: "name",
-            users: [
-                {
-                    id: "id",
-                    name: "name",
-                    age: 1,
-                },
-                {
-                    id: "id",
-                    name: "name",
-                    age: 1,
-                },
-            ],
-        });
+            age: 1
+        }, {
+            id: "id",
+            name: "name",
+            age: 1
+        }]
+});
+                          
+                
     });
+          
 });

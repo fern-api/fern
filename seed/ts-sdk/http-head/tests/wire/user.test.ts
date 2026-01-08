@@ -4,38 +4,46 @@ import { SeedHttpHeadClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("UserClient", () => {
+    
     test("head", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedHttpHeadClient({ maxRetries: 0, environment: server.baseUrl });
-
-        server.mockEndpoint().head("/users").respondWith().statusCode(200).build();
+        const client = new SeedHttpHeadClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        
+        server
+            .mockEndpoint()
+            .head("/users").respondWith()
+            .statusCode(200).build();
 
         const headers = await client.user.head();
         expect(headers).toBeInstanceOf(Headers);
     });
-
+          
     test("list", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedHttpHeadClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedHttpHeadClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = [ { "name" : "name" , "tags" : [ "tags" , "tags" ] } , { "name" : "name" , "tags" : [ "tags" , "tags" ] } ];
+        server
+            .mockEndpoint()
+            .get("/users").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = [
-            { name: "name", tags: ["tags", "tags"] },
-            { name: "name", tags: ["tags", "tags"] },
-        ];
-        server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.user.list({
-            limit: 1,
-        });
-        expect(response).toEqual([
-            {
-                name: "name",
-                tags: ["tags", "tags"],
-            },
-            {
-                name: "name",
-                tags: ["tags", "tags"],
-            },
-        ]);
+        
+                    
+                            const response = await client.user.list({
+    limit: 1
+});
+                            expect(response).toEqual([{
+        name: "name",
+        tags: ["tags", "tags"]
+    }, {
+        name: "name",
+        tags: ["tags", "tags"]
+    }]);
+                          
+                
     });
+          
 });
