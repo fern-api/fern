@@ -20,40 +20,7 @@ env:
   TURBO_TEAM: "buildwithfern"
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.branch || 'main' }}
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Compile
-        run: pnpm compile
-
-      - name: Build Fern CLI
-        run: pnpm fern:build
-
-      - name: Build Seed CLI
-        run: pnpm seed:build
-
-      - name: Cache Build Artifacts
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            packages/cli/cli/dist
-            packages/seed/dist
-            node_modules
-            packages/**/node_modules
-            packages/**/dist
-          key: build-${{ github.run_id }}
-
   test-remote-local-parity:
-    needs: setup
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
@@ -73,16 +40,14 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Restore Build Artifacts
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            packages/cli/cli/dist
-            packages/seed/dist
-            node_modules
-            packages/**/node_modules
-            packages/**/dist
-          key: build-${{ github.run_id }}
+      - name: Compile
+        run: pnpm compile
+
+      - name: Build Fern CLI
+        run: pnpm fern:build
+
+      - name: Build Seed CLI
+        run: pnpm seed:build
 
       - name: Run Seed Test Remote-Local (${{ matrix.generator }})
         run: pnpm seed test-remote-local --generator ${{ matrix.generator }} --output-mode github
