@@ -1,0 +1,2839 @@
+{
+  "apiDisplayName": "Min/Max Values Test API",
+  "apiDocs": undefined,
+  "apiName": {
+    "camelCase": {
+      "safeName": "minMaxValuesTestApi",
+      "unsafeName": "minMaxValuesTestApi",
+    },
+    "originalName": "Min/Max Values Test API",
+    "pascalCase": {
+      "safeName": "MinMaxValuesTestApi",
+      "unsafeName": "MinMaxValuesTestApi",
+    },
+    "screamingSnakeCase": {
+      "safeName": "MIN_MAX_VALUES_TEST_API",
+      "unsafeName": "MIN_MAX_VALUES_TEST_API",
+    },
+    "snakeCase": {
+      "safeName": "min_max_values_test_api",
+      "unsafeName": "min_max_values_test_api",
+    },
+  },
+  "apiPlayground": undefined,
+  "apiVersion": undefined,
+  "audiences": undefined,
+  "auth": {
+    "docs": undefined,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": undefined,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "dynamic": undefined,
+  "environments": {
+    "defaultEnvironment": "Production server",
+    "environments": {
+      "_visit": [Function],
+      "environments": [
+        {
+          "docs": "Production server",
+          "id": "Production server",
+          "name": {
+            "camelCase": {
+              "safeName": "productionServer",
+              "unsafeName": "productionServer",
+            },
+            "originalName": "Production server",
+            "pascalCase": {
+              "safeName": "ProductionServer",
+              "unsafeName": "ProductionServer",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PRODUCTION_SERVER",
+              "unsafeName": "PRODUCTION_SERVER",
+            },
+            "snakeCase": {
+              "safeName": "production_server",
+              "unsafeName": "production_server",
+            },
+          },
+          "url": "https://api.example.com/v1",
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
+  "errorDiscriminationStrategy": {
+    "_visit": [Function],
+    "type": "statusCode",
+  },
+  "errors": {
+    "CreateProductRequestBadRequestError": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "createProductRequestBadRequestError",
+            "unsafeName": "createProductRequestBadRequestError",
+          },
+          "originalName": "CreateProductRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateProductRequestBadRequestError",
+            "unsafeName": "CreateProductRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_product_request_bad_request_error",
+            "unsafeName": "create_product_request_bad_request_error",
+          },
+        },
+        "wireValue": "CreateProductRequestBadRequestError",
+      },
+      "displayName": "BadRequestError",
+      "docs": "Validation error",
+      "examples": [],
+      "headers": [],
+      "isWildcardStatusCode": undefined,
+      "name": {
+        "errorId": "CreateProductRequestBadRequestError",
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createProductRequestBadRequestError",
+            "unsafeName": "createProductRequestBadRequestError",
+          },
+          "originalName": "CreateProductRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateProductRequestBadRequestError",
+            "unsafeName": "CreateProductRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_product_request_bad_request_error",
+            "unsafeName": "create_product_request_bad_request_error",
+          },
+        },
+      },
+      "statusCode": 400,
+      "type": {
+        "_visit": [Function],
+        "default": undefined,
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "inline": false,
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "type": "named",
+        "typeId": "Error",
+      },
+      "v2Examples": {
+        "autogeneratedExamples": {},
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "fdrApiDefinitionId": undefined,
+  "generationMetadata": undefined,
+  "headers": [],
+  "idempotencyHeaders": [],
+  "pathParameters": [],
+  "publishConfig": undefined,
+  "readmeConfig": undefined,
+  "rootPackage": {
+    "docs": undefined,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": undefined,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": false,
+    "navigationConfig": undefined,
+    "service": "service_",
+    "subpackages": [],
+    "types": [
+      "CreateProductRequest",
+      "Product",
+      "Error",
+    ],
+    "webhooks": undefined,
+    "websocket": undefined,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": true,
+    "platformHeaders": {
+      "language": "",
+      "sdkName": "",
+      "sdkVersion": "",
+      "userAgent": undefined,
+    },
+  },
+  "selfHosted": false,
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_": {
+      "audiences": undefined,
+      "availability": undefined,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": undefined,
+      "encoding": undefined,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server",
+          "displayName": "Create a new product",
+          "docs": "Creates a product with various min/max constrained fields",
+          "errors": [
+            {
+              "docs": "Validation error",
+              "error": {
+                "errorId": "CreateProductRequestBadRequestError",
+                "fernFilepath": {
+                  "allParts": [],
+                  "file": undefined,
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "createProductRequestBadRequestError",
+                    "unsafeName": "createProductRequestBadRequestError",
+                  },
+                  "originalName": "CreateProductRequestBadRequestError",
+                  "pascalCase": {
+                    "safeName": "CreateProductRequestBadRequestError",
+                    "unsafeName": "CreateProductRequestBadRequestError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+                    "unsafeName": "CREATE_PRODUCT_REQUEST_BAD_REQUEST_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "create_product_request_bad_request_error",
+                    "unsafeName": "create_product_request_bad_request_error",
+                  },
+                },
+              },
+            },
+          ],
+          "fullPath": {
+            "head": "/products",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_.createProduct",
+          "idempotent": false,
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "createProduct",
+              "unsafeName": "createProduct",
+            },
+            "originalName": "createProduct",
+            "pascalCase": {
+              "safeName": "CreateProduct",
+              "unsafeName": "CreateProduct",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_PRODUCT",
+              "unsafeName": "CREATE_PRODUCT",
+            },
+            "snakeCase": {
+              "safeName": "create_product",
+              "unsafeName": "create_product",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/products",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "_visit": [Function],
+            "contentType": "application/json",
+            "docs": undefined,
+            "requestBodyType": {
+              "_visit": [Function],
+              "default": undefined,
+              "displayName": undefined,
+              "fernFilepath": {
+                "allParts": [],
+                "file": undefined,
+                "packagePath": [],
+              },
+              "inline": false,
+              "name": {
+                "camelCase": {
+                  "safeName": "createProductRequest",
+                  "unsafeName": "createProductRequest",
+                },
+                "originalName": "CreateProductRequest",
+                "pascalCase": {
+                  "safeName": "CreateProductRequest",
+                  "unsafeName": "CreateProductRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATE_PRODUCT_REQUEST",
+                  "unsafeName": "CREATE_PRODUCT_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "create_product_request",
+                  "unsafeName": "create_product_request",
+                },
+              },
+              "type": "named",
+              "typeId": "CreateProductRequest",
+            },
+            "type": "reference",
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "createProductExample": {
+                  "name": "string",
+                  "price": 1.1,
+                  "quantity": 1,
+                },
+              },
+              "userSpecifiedExamples": {},
+            },
+          },
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Product created successfully",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "product",
+                      "unsafeName": "product",
+                    },
+                    "originalName": "Product",
+                    "pascalCase": {
+                      "safeName": "Product",
+                      "unsafeName": "Product",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PRODUCT",
+                      "unsafeName": "PRODUCT",
+                    },
+                    "snakeCase": {
+                      "safeName": "product",
+                      "unsafeName": "product",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "Product",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createProductExample": {
+                      "attributes": {},
+                      "categories": [
+                        "string",
+                      ],
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "description": "string",
+                      "discountedPrice": 1.1,
+                      "id": "string",
+                      "metadata": {},
+                      "name": "string",
+                      "price": 1.1,
+                      "quantity": 1,
+                      "rating": 1.1,
+                      "tags": [
+                        "string",
+                      ],
+                      "weight": 1.1,
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "docs": "Product created successfully",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 201,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "createProductExample_201": {
+                "codeSamples": undefined,
+                "displayName": "createProductExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "POST",
+                    "path": "/products",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {},
+                  "queryParameters": {},
+                  "requestBody": {
+                    "name": "string",
+                    "price": 1.1,
+                    "quantity": 1,
+                  },
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "attributes": {},
+                      "categories": [
+                        "string",
+                      ],
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "description": "string",
+                      "discountedPrice": 1.1,
+                      "id": "string",
+                      "metadata": {},
+                      "name": "string",
+                      "price": 1.1,
+                      "quantity": 1,
+                      "rating": 1.1,
+                      "tags": [
+                        "string",
+                      ],
+                      "weight": 1.1,
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 201,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": [
+              {
+                "_visit": [Function],
+                "contentType": "application/json",
+                "docs": undefined,
+                "requestBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "createProductRequest",
+                      "unsafeName": "createProductRequest",
+                    },
+                    "originalName": "CreateProductRequest",
+                    "pascalCase": {
+                      "safeName": "CreateProductRequest",
+                      "unsafeName": "CreateProductRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "CREATE_PRODUCT_REQUEST",
+                      "unsafeName": "CREATE_PRODUCT_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "create_product_request",
+                      "unsafeName": "create_product_request",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "CreateProductRequest",
+                },
+                "type": "reference",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "createProductExample": {
+                      "name": "string",
+                      "price": 1.1,
+                      "quantity": 1,
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            ],
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Product created successfully",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "product",
+                          "unsafeName": "product",
+                        },
+                        "originalName": "Product",
+                        "pascalCase": {
+                          "safeName": "Product",
+                          "unsafeName": "Product",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PRODUCT",
+                          "unsafeName": "PRODUCT",
+                        },
+                        "snakeCase": {
+                          "safeName": "product",
+                          "unsafeName": "product",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "Product",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "createProductExample": {
+                          "attributes": {},
+                          "categories": [
+                            "string",
+                          ],
+                          "createdAt": "2024-01-15T09:30:00Z",
+                          "description": "string",
+                          "discountedPrice": 1.1,
+                          "id": "string",
+                          "metadata": {},
+                          "name": "string",
+                          "price": 1.1,
+                          "quantity": 1,
+                          "rating": 1.1,
+                          "tags": [
+                            "string",
+                          ],
+                          "weight": 1.1,
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "docs": "Product created successfully",
+                "isWildcardStatusCode": undefined,
+                "statusCode": 201,
+              },
+            ],
+          },
+        },
+        {
+          "allPathParameters": [
+            {
+              "docs": undefined,
+              "explode": undefined,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "productId",
+                  "unsafeName": "productId",
+                },
+                "originalName": "productId",
+                "pascalCase": {
+                  "safeName": "ProductId",
+                  "unsafeName": "ProductId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PRODUCT_ID",
+                  "unsafeName": "PRODUCT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "product_id",
+                  "unsafeName": "product_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "productId_example": "productId",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 50,
+                      "minLength": 1,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "apiPlayground": undefined,
+          "audiences": [],
+          "auth": false,
+          "autogeneratedExamples": [],
+          "availability": undefined,
+          "basePath": undefined,
+          "baseUrl": "Production server",
+          "displayName": "Get product by ID",
+          "docs": undefined,
+          "errors": [],
+          "fullPath": {
+            "head": "/products/",
+            "parts": [
+              {
+                "pathParameter": "productId",
+                "tail": "",
+              },
+            ],
+          },
+          "headers": [],
+          "id": "endpoint_.getProduct",
+          "idempotent": false,
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "getProduct",
+              "unsafeName": "getProduct",
+            },
+            "originalName": "getProduct",
+            "pascalCase": {
+              "safeName": "GetProduct",
+              "unsafeName": "GetProduct",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_PRODUCT",
+              "unsafeName": "GET_PRODUCT",
+            },
+            "snakeCase": {
+              "safeName": "get_product",
+              "unsafeName": "get_product",
+            },
+          },
+          "pagination": undefined,
+          "path": {
+            "head": "/products/",
+            "parts": [
+              {
+                "pathParameter": "productId",
+                "tail": "",
+              },
+            ],
+          },
+          "pathParameters": [
+            {
+              "docs": undefined,
+              "explode": undefined,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "productId",
+                  "unsafeName": "productId",
+                },
+                "originalName": "productId",
+                "pascalCase": {
+                  "safeName": "ProductId",
+                  "unsafeName": "ProductId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PRODUCT_ID",
+                  "unsafeName": "PRODUCT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "product_id",
+                  "unsafeName": "product_id",
+                },
+              },
+              "v2Examples": {
+                "autogeneratedExamples": {
+                  "productId_example": "productId",
+                },
+                "userSpecifiedExamples": {},
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": {
+                  "v1": "STRING",
+                  "v2": {
+                    "_visit": [Function],
+                    "default": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": 50,
+                      "minLength": 1,
+                      "pattern": undefined,
+                    },
+                  },
+                },
+                "type": "primitive",
+              },
+              "variable": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "requestBody": undefined,
+          "response": {
+            "body": {
+              "_visit": [Function],
+              "type": "json",
+              "value": {
+                "_visit": [Function],
+                "docs": "Product found",
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "displayName": undefined,
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": undefined,
+                    "packagePath": [],
+                  },
+                  "inline": false,
+                  "name": {
+                    "camelCase": {
+                      "safeName": "product",
+                      "unsafeName": "product",
+                    },
+                    "originalName": "Product",
+                    "pascalCase": {
+                      "safeName": "Product",
+                      "unsafeName": "Product",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PRODUCT",
+                      "unsafeName": "PRODUCT",
+                    },
+                    "snakeCase": {
+                      "safeName": "product",
+                      "unsafeName": "product",
+                    },
+                  },
+                  "type": "named",
+                  "typeId": "Product",
+                },
+                "type": "response",
+                "v2Examples": {
+                  "autogeneratedExamples": {
+                    "getProductExample": {
+                      "attributes": {},
+                      "categories": [
+                        "string",
+                      ],
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "description": "string",
+                      "discountedPrice": 1.1,
+                      "id": "string",
+                      "metadata": {},
+                      "name": "string",
+                      "price": 1.1,
+                      "quantity": 1,
+                      "rating": 1.1,
+                      "tags": [
+                        "string",
+                      ],
+                      "weight": 1.1,
+                    },
+                  },
+                  "userSpecifiedExamples": {},
+                },
+              },
+            },
+            "docs": "Product found",
+            "isWildcardStatusCode": undefined,
+            "statusCode": 200,
+          },
+          "retries": undefined,
+          "sdkRequest": undefined,
+          "security": undefined,
+          "source": {
+            "_visit": [Function],
+            "type": "openapi",
+          },
+          "transport": undefined,
+          "userSpecifiedExamples": [],
+          "v2BaseUrls": undefined,
+          "v2Examples": {
+            "autogeneratedExamples": {
+              "base_getProductExample_200": {
+                "codeSamples": undefined,
+                "displayName": "getProductExample",
+                "request": {
+                  "auth": undefined,
+                  "baseUrl": undefined,
+                  "docs": undefined,
+                  "endpoint": {
+                    "method": "GET",
+                    "path": "/products/productId",
+                  },
+                  "environment": "Production server",
+                  "headers": {},
+                  "pathParameters": {
+                    "productId": "productId",
+                  },
+                  "queryParameters": {},
+                  "requestBody": undefined,
+                },
+                "response": {
+                  "body": {
+                    "_visit": [Function],
+                    "type": "json",
+                    "value": {
+                      "attributes": {},
+                      "categories": [
+                        "string",
+                      ],
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "description": "string",
+                      "discountedPrice": 1.1,
+                      "id": "string",
+                      "metadata": {},
+                      "name": "string",
+                      "price": 1.1,
+                      "quantity": 1,
+                      "rating": 1.1,
+                      "tags": [
+                        "string",
+                      ],
+                      "weight": 1.1,
+                    },
+                  },
+                  "docs": undefined,
+                  "statusCode": 200,
+                },
+              },
+            },
+            "userSpecifiedExamples": {},
+          },
+          "v2RequestBodies": {
+            "requestBodies": undefined,
+          },
+          "v2Responses": {
+            "responses": [
+              {
+                "body": {
+                  "_visit": [Function],
+                  "type": "json",
+                  "value": {
+                    "_visit": [Function],
+                    "docs": "Product found",
+                    "responseBodyType": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "displayName": undefined,
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": undefined,
+                        "packagePath": [],
+                      },
+                      "inline": false,
+                      "name": {
+                        "camelCase": {
+                          "safeName": "product",
+                          "unsafeName": "product",
+                        },
+                        "originalName": "Product",
+                        "pascalCase": {
+                          "safeName": "Product",
+                          "unsafeName": "Product",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PRODUCT",
+                          "unsafeName": "PRODUCT",
+                        },
+                        "snakeCase": {
+                          "safeName": "product",
+                          "unsafeName": "product",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "Product",
+                    },
+                    "type": "response",
+                    "v2Examples": {
+                      "autogeneratedExamples": {
+                        "getProductExample": {
+                          "attributes": {},
+                          "categories": [
+                            "string",
+                          ],
+                          "createdAt": "2024-01-15T09:30:00Z",
+                          "description": "string",
+                          "discountedPrice": 1.1,
+                          "id": "string",
+                          "metadata": {},
+                          "name": "string",
+                          "price": 1.1,
+                          "quantity": 1,
+                          "rating": 1.1,
+                          "tags": [
+                            "string",
+                          ],
+                          "weight": 1.1,
+                        },
+                      },
+                      "userSpecifiedExamples": {},
+                    },
+                  },
+                },
+                "docs": "Product found",
+                "isWildcardStatusCode": undefined,
+                "statusCode": 200,
+              },
+            ],
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+      "transport": undefined,
+    },
+  },
+  "sourceConfig": undefined,
+  "subpackages": {},
+  "types": {
+    "CreateProductRequest": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "createProductRequest",
+            "unsafeName": "createProductRequest",
+          },
+          "originalName": "CreateProductRequest",
+          "pascalCase": {
+            "safeName": "CreateProductRequest",
+            "unsafeName": "CreateProductRequest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_PRODUCT_REQUEST",
+            "unsafeName": "CREATE_PRODUCT_REQUEST",
+          },
+          "snakeCase": {
+            "safeName": "create_product_request",
+            "unsafeName": "create_product_request",
+          },
+        },
+        "typeId": "CreateProductRequest",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Product name with length constraints",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateProductRequestName_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product description with length constraints",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+                "originalName": "description",
+                "pascalCase": {
+                  "safeName": "Description",
+                  "unsafeName": "Description",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DESCRIPTION",
+                  "unsafeName": "DESCRIPTION",
+                },
+                "snakeCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+              },
+              "wireValue": "description",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateProductRequestDescription_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": 1000,
+                        "minLength": 10,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product price with minimum value (inclusive)",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "price",
+                  "unsafeName": "price",
+                },
+                "originalName": "price",
+                "pascalCase": {
+                  "safeName": "Price",
+                  "unsafeName": "Price",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PRICE",
+                  "unsafeName": "PRICE",
+                },
+                "snakeCase": {
+                  "safeName": "price",
+                  "unsafeName": "price",
+                },
+              },
+              "wireValue": "price",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateProductRequestPrice_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "DOUBLE",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "double",
+                  "validation": {
+                    "exclusiveMax": undefined,
+                    "exclusiveMin": undefined,
+                    "max": undefined,
+                    "min": 0,
+                    "multipleOf": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Discounted price with exclusive minimum (must be greater than 0)",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "discountedPrice",
+                  "unsafeName": "discountedPrice",
+                },
+                "originalName": "discountedPrice",
+                "pascalCase": {
+                  "safeName": "DiscountedPrice",
+                  "unsafeName": "DiscountedPrice",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DISCOUNTED_PRICE",
+                  "unsafeName": "DISCOUNTED_PRICE",
+                },
+                "snakeCase": {
+                  "safeName": "discounted_price",
+                  "unsafeName": "discounted_price",
+                },
+              },
+              "wireValue": "discountedPrice",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateProductRequestDiscountedPrice_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "double",
+                      "validation": {
+                        "exclusiveMax": undefined,
+                        "exclusiveMin": undefined,
+                        "max": undefined,
+                        "min": undefined,
+                        "multipleOf": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Available quantity with min/max range",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "quantity",
+                  "unsafeName": "quantity",
+                },
+                "originalName": "quantity",
+                "pascalCase": {
+                  "safeName": "Quantity",
+                  "unsafeName": "Quantity",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "QUANTITY",
+                  "unsafeName": "QUANTITY",
+                },
+                "snakeCase": {
+                  "safeName": "quantity",
+                  "unsafeName": "quantity",
+                },
+              },
+              "wireValue": "quantity",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateProductRequestQuantity_example_autogenerated": 1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "INTEGER",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "integer",
+                  "validation": {
+                    "exclusiveMax": undefined,
+                    "exclusiveMin": undefined,
+                    "max": 10000,
+                    "min": 0,
+                    "multipleOf": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product rating between 0 and 5 (exclusive max)",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "rating",
+                  "unsafeName": "rating",
+                },
+                "originalName": "rating",
+                "pascalCase": {
+                  "safeName": "Rating",
+                  "unsafeName": "Rating",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RATING",
+                  "unsafeName": "RATING",
+                },
+                "snakeCase": {
+                  "safeName": "rating",
+                  "unsafeName": "rating",
+                },
+              },
+              "wireValue": "rating",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateProductRequestRating_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "FLOAT",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "float",
+                      "validation": {
+                        "exclusiveMax": undefined,
+                        "exclusiveMin": undefined,
+                        "max": undefined,
+                        "min": 0,
+                        "multipleOf": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product weight with exclusive bounds",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "weight",
+                  "unsafeName": "weight",
+                },
+                "originalName": "weight",
+                "pascalCase": {
+                  "safeName": "Weight",
+                  "unsafeName": "Weight",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "WEIGHT",
+                  "unsafeName": "WEIGHT",
+                },
+                "snakeCase": {
+                  "safeName": "weight",
+                  "unsafeName": "weight",
+                },
+              },
+              "wireValue": "weight",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateProductRequestWeight_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "double",
+                      "validation": {
+                        "exclusiveMax": undefined,
+                        "exclusiveMin": undefined,
+                        "max": undefined,
+                        "min": undefined,
+                        "multipleOf": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product tags with array size constraints",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "tags",
+                  "unsafeName": "tags",
+                },
+                "originalName": "tags",
+                "pascalCase": {
+                  "safeName": "Tags",
+                  "unsafeName": "Tags",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TAGS",
+                  "unsafeName": "TAGS",
+                },
+                "snakeCase": {
+                  "safeName": "tags",
+                  "unsafeName": "tags",
+                },
+              },
+              "wireValue": "tags",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateProductRequestTags_example_autogenerated": [
+                  "string",
+                ],
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "list": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": 50,
+                            "minLength": 1,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "list",
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product categories (at least 1, at most 5)",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "categories",
+                  "unsafeName": "categories",
+                },
+                "originalName": "categories",
+                "pascalCase": {
+                  "safeName": "Categories",
+                  "unsafeName": "Categories",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CATEGORIES",
+                  "unsafeName": "CATEGORIES",
+                },
+                "snakeCase": {
+                  "safeName": "categories",
+                  "unsafeName": "categories",
+                },
+              },
+              "wireValue": "categories",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateProductRequestCategories_example_autogenerated": [
+                  "string",
+                ],
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "list": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "list",
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Additional metadata with property count constraints",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+                "originalName": "metadata",
+                "pascalCase": {
+                  "safeName": "Metadata",
+                  "unsafeName": "Metadata",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "METADATA",
+                  "unsafeName": "METADATA",
+                },
+                "snakeCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+              },
+              "wireValue": "metadata",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateProductRequestMetadata_example_autogenerated": {},
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "keyType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": undefined,
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "map",
+                    "valueType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": "Product attributes with min properties only",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "attributes",
+                  "unsafeName": "attributes",
+                },
+                "originalName": "attributes",
+                "pascalCase": {
+                  "safeName": "Attributes",
+                  "unsafeName": "Attributes",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ATTRIBUTES",
+                  "unsafeName": "ATTRIBUTES",
+                },
+                "snakeCase": {
+                  "safeName": "attributes",
+                  "unsafeName": "attributes",
+                },
+              },
+              "wireValue": "attributes",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "CreateProductRequestAttributes_example_autogenerated": {},
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "keyType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": undefined,
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "map",
+                    "valueType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "CreateProductRequest_example_autogenerated": {
+            "name": "string",
+            "price": 1.1,
+            "quantity": 1,
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "Error": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
+        "typeId": "Error",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+                "originalName": "code",
+                "pascalCase": {
+                  "safeName": "Code",
+                  "unsafeName": "Code",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CODE",
+                  "unsafeName": "CODE",
+                },
+                "snakeCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+              },
+              "wireValue": "code",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ErrorCode_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": 50,
+                    "minLength": 1,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ErrorMessage_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": 500,
+                    "minLength": 1,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "details",
+                  "unsafeName": "details",
+                },
+                "originalName": "details",
+                "pascalCase": {
+                  "safeName": "Details",
+                  "unsafeName": "Details",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DETAILS",
+                  "unsafeName": "DETAILS",
+                },
+                "snakeCase": {
+                  "safeName": "details",
+                  "unsafeName": "details",
+                },
+              },
+              "wireValue": "details",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ErrorDetails_example_autogenerated": [
+                  "string",
+                ],
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "list": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "list",
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Error_example_autogenerated": {
+            "code": "string",
+            "message": "string",
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+    "Product": {
+      "autogeneratedExamples": [],
+      "availability": undefined,
+      "docs": undefined,
+      "encoding": undefined,
+      "inline": false,
+      "name": {
+        "displayName": undefined,
+        "fernFilepath": {
+          "allParts": [],
+          "file": undefined,
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "product",
+            "unsafeName": "product",
+          },
+          "originalName": "Product",
+          "pascalCase": {
+            "safeName": "Product",
+            "unsafeName": "Product",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PRODUCT",
+            "unsafeName": "PRODUCT",
+          },
+          "snakeCase": {
+            "safeName": "product",
+            "unsafeName": "product",
+          },
+        },
+        "typeId": "Product",
+      },
+      "referencedTypes": Set {},
+      "shape": {
+        "_visit": [Function],
+        "extendedProperties": [],
+        "extends": [],
+        "extraProperties": false,
+        "properties": [
+          {
+            "availability": undefined,
+            "docs": "Unique product identifier",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductId_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": 50,
+                    "minLength": 1,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductName_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "STRING",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "string",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": 100,
+                    "minLength": 1,
+                    "pattern": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+                "originalName": "description",
+                "pascalCase": {
+                  "safeName": "Description",
+                  "unsafeName": "Description",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DESCRIPTION",
+                  "unsafeName": "DESCRIPTION",
+                },
+                "snakeCase": {
+                  "safeName": "description",
+                  "unsafeName": "description",
+                },
+              },
+              "wireValue": "description",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductDescription_example_autogenerated": "string",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "string",
+                      "validation": {
+                        "format": undefined,
+                        "maxLength": 1000,
+                        "minLength": 10,
+                        "pattern": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "price",
+                  "unsafeName": "price",
+                },
+                "originalName": "price",
+                "pascalCase": {
+                  "safeName": "Price",
+                  "unsafeName": "Price",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PRICE",
+                  "unsafeName": "PRICE",
+                },
+                "snakeCase": {
+                  "safeName": "price",
+                  "unsafeName": "price",
+                },
+              },
+              "wireValue": "price",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductPrice_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "DOUBLE",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "double",
+                  "validation": {
+                    "exclusiveMax": undefined,
+                    "exclusiveMin": undefined,
+                    "max": undefined,
+                    "min": 0,
+                    "multipleOf": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "discountedPrice",
+                  "unsafeName": "discountedPrice",
+                },
+                "originalName": "discountedPrice",
+                "pascalCase": {
+                  "safeName": "DiscountedPrice",
+                  "unsafeName": "DiscountedPrice",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DISCOUNTED_PRICE",
+                  "unsafeName": "DISCOUNTED_PRICE",
+                },
+                "snakeCase": {
+                  "safeName": "discounted_price",
+                  "unsafeName": "discounted_price",
+                },
+              },
+              "wireValue": "discountedPrice",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductDiscountedPrice_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "double",
+                      "validation": {
+                        "exclusiveMax": undefined,
+                        "exclusiveMin": undefined,
+                        "max": undefined,
+                        "min": undefined,
+                        "multipleOf": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "quantity",
+                  "unsafeName": "quantity",
+                },
+                "originalName": "quantity",
+                "pascalCase": {
+                  "safeName": "Quantity",
+                  "unsafeName": "Quantity",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "QUANTITY",
+                  "unsafeName": "QUANTITY",
+                },
+                "snakeCase": {
+                  "safeName": "quantity",
+                  "unsafeName": "quantity",
+                },
+              },
+              "wireValue": "quantity",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductQuantity_example_autogenerated": 1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "INTEGER",
+                "v2": {
+                  "_visit": [Function],
+                  "default": undefined,
+                  "type": "integer",
+                  "validation": {
+                    "exclusiveMax": undefined,
+                    "exclusiveMin": undefined,
+                    "max": 10000,
+                    "min": 0,
+                    "multipleOf": undefined,
+                  },
+                },
+              },
+              "type": "primitive",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "rating",
+                  "unsafeName": "rating",
+                },
+                "originalName": "rating",
+                "pascalCase": {
+                  "safeName": "Rating",
+                  "unsafeName": "Rating",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RATING",
+                  "unsafeName": "RATING",
+                },
+                "snakeCase": {
+                  "safeName": "rating",
+                  "unsafeName": "rating",
+                },
+              },
+              "wireValue": "rating",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductRating_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "FLOAT",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "float",
+                      "validation": {
+                        "exclusiveMax": undefined,
+                        "exclusiveMin": undefined,
+                        "max": undefined,
+                        "min": 0,
+                        "multipleOf": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "weight",
+                  "unsafeName": "weight",
+                },
+                "originalName": "weight",
+                "pascalCase": {
+                  "safeName": "Weight",
+                  "unsafeName": "Weight",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "WEIGHT",
+                  "unsafeName": "WEIGHT",
+                },
+                "snakeCase": {
+                  "safeName": "weight",
+                  "unsafeName": "weight",
+                },
+              },
+              "wireValue": "weight",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductWeight_example_autogenerated": 1.1,
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "_visit": [Function],
+                      "default": undefined,
+                      "type": "double",
+                      "validation": {
+                        "exclusiveMax": undefined,
+                        "exclusiveMin": undefined,
+                        "max": undefined,
+                        "min": undefined,
+                        "multipleOf": undefined,
+                      },
+                    },
+                  },
+                  "type": "primitive",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "tags",
+                  "unsafeName": "tags",
+                },
+                "originalName": "tags",
+                "pascalCase": {
+                  "safeName": "Tags",
+                  "unsafeName": "Tags",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TAGS",
+                  "unsafeName": "TAGS",
+                },
+                "snakeCase": {
+                  "safeName": "tags",
+                  "unsafeName": "tags",
+                },
+              },
+              "wireValue": "tags",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductTags_example_autogenerated": [
+                  "string",
+                ],
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "list": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": 50,
+                            "minLength": 1,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "list",
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "categories",
+                  "unsafeName": "categories",
+                },
+                "originalName": "categories",
+                "pascalCase": {
+                  "safeName": "Categories",
+                  "unsafeName": "Categories",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CATEGORIES",
+                  "unsafeName": "CATEGORIES",
+                },
+                "snakeCase": {
+                  "safeName": "categories",
+                  "unsafeName": "categories",
+                },
+              },
+              "wireValue": "categories",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductCategories_example_autogenerated": [
+                  "string",
+                ],
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "list": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "list",
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+                "originalName": "metadata",
+                "pascalCase": {
+                  "safeName": "Metadata",
+                  "unsafeName": "Metadata",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "METADATA",
+                  "unsafeName": "METADATA",
+                },
+                "snakeCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+              },
+              "wireValue": "metadata",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductMetadata_example_autogenerated": {},
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "keyType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": undefined,
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "map",
+                    "valueType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "attributes",
+                  "unsafeName": "attributes",
+                },
+                "originalName": "attributes",
+                "pascalCase": {
+                  "safeName": "Attributes",
+                  "unsafeName": "Attributes",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ATTRIBUTES",
+                  "unsafeName": "ATTRIBUTES",
+                },
+                "snakeCase": {
+                  "safeName": "attributes",
+                  "unsafeName": "attributes",
+                },
+              },
+              "wireValue": "attributes",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductAttributes_example_autogenerated": {},
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "container": {
+                "_visit": [Function],
+                "optional": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "keyType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": undefined,
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                    "type": "map",
+                    "valueType": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "_visit": [Function],
+                          "default": undefined,
+                          "type": "string",
+                          "validation": {
+                            "format": undefined,
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
+                          },
+                        },
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "container",
+                },
+                "type": "optional",
+              },
+              "type": "container",
+            },
+          },
+          {
+            "availability": undefined,
+            "docs": undefined,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "createdAt",
+                  "unsafeName": "createdAt",
+                },
+                "originalName": "createdAt",
+                "pascalCase": {
+                  "safeName": "CreatedAt",
+                  "unsafeName": "CreatedAt",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATED_AT",
+                  "unsafeName": "CREATED_AT",
+                },
+                "snakeCase": {
+                  "safeName": "created_at",
+                  "unsafeName": "created_at",
+                },
+              },
+              "wireValue": "createdAt",
+            },
+            "propertyAccess": undefined,
+            "v2Examples": {
+              "autogeneratedExamples": {
+                "ProductCreatedAt_example_autogenerated": "2024-01-15T09:30:00Z",
+              },
+              "userSpecifiedExamples": {},
+            },
+            "valueType": {
+              "_visit": [Function],
+              "primitive": {
+                "v1": "DATE_TIME",
+                "v2": {
+                  "_visit": [Function],
+                  "type": "dateTime",
+                },
+              },
+              "type": "primitive",
+            },
+          },
+        ],
+        "type": "object",
+      },
+      "source": undefined,
+      "userProvidedExamples": [],
+      "v2Examples": {
+        "autogeneratedExamples": {
+          "Product_example_autogenerated": {
+            "createdAt": "2024-01-15T09:30:00Z",
+            "id": "string",
+            "name": "string",
+            "price": 1.1,
+            "quantity": 1,
+          },
+        },
+        "userSpecifiedExamples": {},
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+  "websocketChannels": undefined,
+}

@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.46.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to filter out nop values when generating method arguments.
+        This prevents invalid Python syntax like `param=` without a value when an example
+        contains an invalid enum value or undefined property.
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 62
+
 - version: 4.46.8
   changelogEntry:
     - summary: |
