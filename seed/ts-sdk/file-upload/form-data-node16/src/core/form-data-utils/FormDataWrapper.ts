@@ -2,23 +2,24 @@ import { toMultipartDataPart, type Uploadable } from "../../core/file/index.js";
 import { toJson } from "../../core/json.js";
 import { RUNTIME } from "../runtime/index.js";
 
-export async function toReadableStream(
-    encoder: import("form-data-encoder").FormDataEncoder,
-): Promise<ReadableStream<Uint8Array<ArrayBufferLike>>> {
-    const iterator = encoder.encode();
 
-    return new ReadableStream({
-        async pull(controller) {
-            const { value, done } = await iterator.next();
 
-            if (done) {
-                return controller.close();
-            }
+export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder): Promise<ReadableStream<Uint8Array<ArrayBufferLike>>> {
+  const iterator = encoder.encode()
 
-            controller.enqueue(value);
-        },
-    });
+  return new ReadableStream({
+    async pull(controller) {
+      const {value, done} = await iterator.next()
+
+      if (done) {
+        return controller.close()
+      }
+
+      controller.enqueue(value)
+    }
+  })
 }
+
 
 export type MaybePromise<T> = Promise<T> | T;
 
@@ -85,7 +86,7 @@ export class Node18FormData implements CrossPlatformFormData {
                 [Symbol.toStringTag]: "File",
                 stream() {
                     return data;
-                },
+                }
             });
         }
     }
@@ -95,7 +96,7 @@ export class Node18FormData implements CrossPlatformFormData {
         return {
             body: await toReadableStream(encoder),
             headers: encoder.headers,
-            duplex: "half",
+            duplex: "half"
         };
     }
 }
@@ -113,7 +114,7 @@ export type Node16FormDataFd =
                         filename?: string;
                         filepath?: string;
                         contentType?: string;
-                    },
+                    }
           ): void;
 
           getHeaders(): Record<string, string>;
@@ -154,7 +155,7 @@ export class Node16FormData implements CrossPlatformFormData {
     public getRequest(): FormDataRequest<Node16FormDataFd> {
         return {
             body: this.fd,
-            headers: this.fd ? this.fd.getHeaders() : {},
+            headers: this.fd ? this.fd.getHeaders() : {}
         };
     }
 }
@@ -192,6 +193,7 @@ export class WebFormData implements CrossPlatformFormData {
         };
     }
 }
+
 
 type StreamLike = {
     read?: () => unknown;
@@ -253,7 +255,7 @@ async function streamToBuffer(stream: unknown): Promise<Buffer> {
     }
 
     throw new Error(
-        `Unsupported stream type: ${typeof stream}. Expected Node.js Readable stream or Web ReadableStream.`,
+        "Unsupported stream type: " + typeof stream + ". Expected Node.js Readable stream or Web ReadableStream.",
     );
 }
 

@@ -4,29 +4,33 @@ import { SeedExhaustiveClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("UnionClient", () => {
+    
     test("getAndReturnUnion", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
-        const rawRequestBody = { animal: "dog", name: "name", likesToWoof: true };
-        const rawResponseBody = { animal: "dog", name: "name", likesToWoof: true };
+        const client = new SeedExhaustiveClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
+        const rawRequestBody = { "animal" : "dog" , "name" : "name" , "likesToWoof" : true };
+        const rawResponseBody = { "animal" : "dog" , "name" : "name" , "likesToWoof" : true };
         server
             .mockEndpoint()
-            .post("/union")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/union").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.endpoints.union.getAndReturnUnion({
-            animal: "dog",
-            name: "name",
-            likesToWoof: true,
-        });
-        expect(response).toEqual({
-            animal: "dog",
-            name: "name",
-            likesToWoof: true,
-        });
+        
+                    
+                            const response = await client.endpoints.union.getAndReturnUnion({
+    animal: "dog",
+    name: "name",
+    likesToWoof: true
+});
+                            expect(response).toEqual({
+    animal: "dog",
+    name: "name",
+    likesToWoof: true
+});
+                          
+                
     });
+          
 });

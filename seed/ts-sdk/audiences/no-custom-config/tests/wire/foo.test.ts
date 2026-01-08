@@ -4,27 +4,31 @@ import { SeedAudiencesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("FooClient", () => {
+    
     test("find", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedAudiencesClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { publicProperty: "publicProperty", privateProperty: 1 };
-        const rawResponseBody = { imported: "imported" };
+        const client = new SeedAudiencesClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "publicProperty" : "publicProperty" , "privateProperty" : 1 };
+        const rawResponseBody = { "imported" : "imported" };
         server
             .mockEndpoint()
-            .post("")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.foo.find({
-            optionalString: "optionalString",
-            publicProperty: "publicProperty",
-            privateProperty: 1,
-        });
-        expect(response).toEqual({
-            imported: "imported",
-        });
+        
+                    
+                            const response = await client.foo.find({
+    optionalString: "optionalString",
+    publicProperty: "publicProperty",
+    privateProperty: 1
+});
+                            expect(response).toEqual({
+    imported: "imported"
+});
+                          
+                
     });
+          
 });

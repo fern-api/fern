@@ -5,20 +5,24 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 import { mockOAuthScheme } from "./mockAuth";
 
 describe("SimpleClient", () => {
+    
     test("getSomething", async () => {
-        const server = mockServerPool.createServer();
-        mockOAuthScheme(server);
+        const server = mockServerPool.createServer();mockOAuthScheme(server);
 
-        const client = new SeedOauthClientCredentialsReferenceClient({
-            maxRetries: 0,
-            clientId: "client_id",
-            clientSecret: "client_secret",
-            environment: server.baseUrl,
-        });
+        const client = new SeedOauthClientCredentialsReferenceClient({ "maxRetries" : 0 , "clientId" : "client_id" , "clientSecret" : "client_secret" , "environment" : server.baseUrl });
+        
+        
+        server
+            .mockEndpoint()
+            .get("/get-something").respondWith()
+            .statusCode(200).build();
 
-        server.mockEndpoint().get("/get-something").respondWith().statusCode(200).build();
-
-        const response = await client.simple.getSomething();
-        expect(response).toEqual(undefined);
+        
+                    
+                            const response = await client.simple.getSomething();
+                            expect(response).toEqual(undefined);
+                          
+                
     });
+          
 });

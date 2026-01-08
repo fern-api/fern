@@ -4,41 +4,32 @@ import { SeedEndpointSecurityAuthClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("AuthClient", () => {
+    
     test("getToken", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedEndpointSecurityAuthClient({
-            maxRetries: 0,
-            bearer: { token: "test" },
-            apiKey: { apiKey: "test" },
-            oauth: { clientId: "client_id", clientSecret: "client_secret" },
-            basic: { username: "test", password: "test" },
-            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
-            environment: server.baseUrl,
-        });
-        const rawRequestBody = {
-            client_id: "client_id",
-            client_secret: "client_secret",
-            audience: "https://api.example.com",
-            grant_type: "client_credentials",
-        };
-        const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
+        const client = new SeedEndpointSecurityAuthClient({ "maxRetries" : 0 , "bearer" : { "token" : "test" } , "apiKey" : { "apiKey" : "test" } , "oauth" : { "clientId" : "client_id" , "clientSecret" : "client_secret" } , "basic" : { "username" : "test" , "password" : "test" } , "inferredAuth" : { "clientId" : "client_id" , "clientSecret" : "client_secret" } , "environment" : server.baseUrl });
+        const rawRequestBody = { "client_id" : "client_id" , "client_secret" : "client_secret" , "audience" : "https://api.example.com" , "grant_type" : "client_credentials" };
+        const rawResponseBody = { "access_token" : "access_token" , "expires_in" : 1 , "refresh_token" : "refresh_token" };
         server
             .mockEndpoint()
-            .post("/token")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/token").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.auth.getToken({
-            client_id: "client_id",
-            client_secret: "client_secret",
-        });
-        expect(response).toEqual({
-            access_token: "access_token",
-            expires_in: 1,
-            refresh_token: "refresh_token",
-        });
+        
+                    
+                            const response = await client.auth.getToken({
+    client_id: "client_id",
+    client_secret: "client_secret"
+});
+                            expect(response).toEqual({
+    access_token: "access_token",
+    expires_in: 1,
+    refresh_token: "refresh_token"
+});
+                          
+                
     });
+          
 });
