@@ -66,6 +66,7 @@ export async function getGeneratorInvocation({
                 : undefined,
         readme,
         settings: undefined,
+        generateFullProject: false,
         raw
     };
 }
