@@ -21,9 +21,7 @@ export class ArraySchemaConverter extends AbstractConverter<
     AbstractConverterContext<object>,
     ArraySchemaConverter.Output
 > {
-    private static LIST_UNKNOWN = TypeReference.container(
-        ContainerType.list({ itemType: TypeReference.unknown(), validation: undefined })
-    );
+    private static LIST_UNKNOWN = TypeReference.container(ContainerType.list(TypeReference.unknown()));
 
     private readonly schema: OpenAPIV3_1.ArraySchemaObject;
 
@@ -59,18 +57,7 @@ export class ArraySchemaConverter extends AbstractConverter<
                     });
                 }
                 return {
-                    typeReference: TypeReference.container(
-                        ContainerType.list({
-                            itemType: convertedSchema.type,
-                            validation:
-                                this.schema.minItems != null || this.schema.maxItems != null
-                                    ? {
-                                          minLength: this.schema.minItems,
-                                          maxLength: this.schema.maxItems
-                                      }
-                                    : undefined
-                        })
-                    ),
+                    typeReference: TypeReference.container(ContainerType.list(convertedSchema.type)),
                     referencedTypes,
                     inlinedTypes: convertedSchema.inlinedTypes
                 };

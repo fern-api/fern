@@ -122,7 +122,7 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                 if (itemType == null) {
                     return undefined;
                 }
-                return FernIr.TypeReference.container(FernIr.ContainerType.list({ itemType, validation: undefined }));
+                return FernIr.TypeReference.container(FernIr.ContainerType.list(itemType));
             },
             optional: (itemType) => {
                 if (itemType == null) {
@@ -140,7 +140,7 @@ export function createTypeReferenceFromFernType(fernType: string): FernIr.TypeRe
                 if (itemType == null) {
                     return undefined;
                 }
-                return FernIr.TypeReference.container(FernIr.ContainerType.set({ itemType, validation: undefined }));
+                return FernIr.TypeReference.container(FernIr.ContainerType.set(itemType));
             },
             literal: (literal) => {
                 return FernIr.TypeReference.container(
