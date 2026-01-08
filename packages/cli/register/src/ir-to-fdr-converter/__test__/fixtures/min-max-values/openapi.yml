@@ -1,0 +1,227 @@
+openapi: 3.0.3
+info:
+  title: Min/Max Values Test API
+  version: 1.0.0
+  description: Tests OpenAPI min/max validation keywords for numbers, strings, arrays, and objects
+
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+
+paths:
+  /products:
+    post:
+      operationId: createProduct
+      summary: Create a new product
+      description: Creates a product with various min/max constrained fields
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProductRequest"
+      responses:
+        "201":
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "400":
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /products/{productId}:
+    get:
+      operationId: getProduct
+      summary: Get product by ID
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 50
+      responses:
+        "200":
+          description: Product found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+
+components:
+  schemas:
+    CreateProductRequest:
+      type: object
+      required:
+        - name
+        - price
+        - quantity
+      properties:
+        name:
+          type: string
+          description: Product name with length constraints
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          description: Product description with length constraints
+          minLength: 10
+          maxLength: 1000
+        price:
+          type: number
+          format: double
+          description: Product price with minimum value (inclusive)
+          minimum: 0
+        discountedPrice:
+          type: number
+          format: double
+          description: Discounted price with exclusive minimum (must be greater than 0)
+          exclusiveMinimum: 0
+        quantity:
+          type: integer
+          description: Available quantity with min/max range
+          minimum: 0
+          maximum: 10000
+        rating:
+          type: number
+          format: float
+          description: Product rating between 0 and 5 (exclusive max)
+          minimum: 0
+          exclusiveMaximum: 5
+        weight:
+          type: number
+          format: double
+          description: Product weight with exclusive bounds
+          exclusiveMinimum: 0
+          exclusiveMaximum: 1000
+        tags:
+          type: array
+          description: Product tags with array size constraints
+          minItems: 1
+          maxItems: 10
+          items:
+            type: string
+            minLength: 1
+            maxLength: 50
+        categories:
+          type: array
+          description: Product categories (at least 1, at most 5)
+          minItems: 1
+          maxItems: 5
+          items:
+            type: string
+        metadata:
+          type: object
+          description: Additional metadata with property count constraints
+          minProperties: 1
+          maxProperties: 20
+          additionalProperties:
+            type: string
+        attributes:
+          type: object
+          description: Product attributes with min properties only
+          minProperties: 0
+          maxProperties: 50
+          additionalProperties:
+            type: string
+
+    Product:
+      type: object
+      required:
+        - id
+        - name
+        - price
+        - quantity
+        - createdAt
+      properties:
+        id:
+          type: string
+          description: Unique product identifier
+          minLength: 1
+          maxLength: 50
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        description:
+          type: string
+          minLength: 10
+          maxLength: 1000
+        price:
+          type: number
+          format: double
+          minimum: 0
+        discountedPrice:
+          type: number
+          format: double
+          exclusiveMinimum: 0
+        quantity:
+          type: integer
+          minimum: 0
+          maximum: 10000
+        rating:
+          type: number
+          format: float
+          minimum: 0
+          exclusiveMaximum: 5
+        weight:
+          type: number
+          format: double
+          exclusiveMinimum: 0
+          exclusiveMaximum: 1000
+        tags:
+          type: array
+          minItems: 0
+          maxItems: 10
+          items:
+            type: string
+            minLength: 1
+            maxLength: 50
+        categories:
+          type: array
+          minItems: 0
+          maxItems: 5
+          items:
+            type: string
+        metadata:
+          type: object
+          minProperties: 0
+          maxProperties: 20
+          additionalProperties:
+            type: string
+        attributes:
+          type: object
+          minProperties: 0
+          maxProperties: 50
+          additionalProperties:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          minLength: 1
+          maxLength: 50
+        message:
+          type: string
+          minLength: 1
+          maxLength: 500
+        details:
+          type: array
+          minItems: 0
+          maxItems: 100
+          items:
+            type: string

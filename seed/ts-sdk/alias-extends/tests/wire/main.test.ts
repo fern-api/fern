@@ -4,23 +4,27 @@ import { SeedAliasExtendsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedAliasExtendsClient", () => {
+    
     test("extendedInlineRequestBody", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedAliasExtendsClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { child: "child", parent: "parent" };
-
+        const client = new SeedAliasExtendsClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "child" : "child" , "parent" : "parent" };
+        
         server
             .mockEndpoint()
-            .post("/extends/extended-inline-request-body")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .build();
+            .post("/extends/extended-inline-request-body").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).build();
 
-        const response = await client.extendedInlineRequestBody({
-            child: "child",
-            parent: "parent",
-        });
-        expect(response).toEqual(undefined);
+        
+                    
+                            const response = await client.extendedInlineRequestBody({
+    child: "child",
+    parent: "parent"
+});
+                            expect(response).toEqual(undefined);
+                          
+                
     });
+          
 });

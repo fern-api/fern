@@ -3,12 +3,14 @@
 import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { RealtimeClient } from "./api/resources/realtime/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import { normalizeClientOptionsWithAuth, type NormalizedClientOptionsWithAuth } from "./BaseClient.js";
+import * as core from "./core/index.js";
 
 export declare namespace SeedWebsocketAuthClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SeedWebsocketAuthClient {
@@ -17,7 +19,10 @@ export class SeedWebsocketAuthClient {
     protected _realtime: RealtimeClient | undefined;
 
     constructor(options: SeedWebsocketAuthClient.Options) {
-        this._options = normalizeClientOptionsWithAuth(options);
+
+
+                        this._options = normalizeClientOptionsWithAuth(options);
+                    
     }
 
     public get auth(): AuthClient {

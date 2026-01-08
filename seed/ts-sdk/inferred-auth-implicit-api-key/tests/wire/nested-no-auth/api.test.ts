@@ -5,19 +5,24 @@ import { mockServerPool } from "../../mock-server/MockServerPool";
 import { mockInferredAuthScheme } from "../mockAuth";
 
 describe("ApiClient", () => {
+    
     test("getSomething", async () => {
-        const server = mockServerPool.createServer();
-        mockInferredAuthScheme(server);
+        const server = mockServerPool.createServer();mockInferredAuthScheme(server);
 
-        const client = new SeedInferredAuthImplicitApiKeyClient({
-            maxRetries: 0,
-            apiKey: "api_key",
-            environment: server.baseUrl,
-        });
+        const client = new SeedInferredAuthImplicitApiKeyClient({ "maxRetries" : 0 , "apiKey" : "api_key" , "environment" : server.baseUrl });
+        
+        
+        server
+            .mockEndpoint()
+            .get("/nested-no-auth/get-something").respondWith()
+            .statusCode(200).build();
 
-        server.mockEndpoint().get("/nested-no-auth/get-something").respondWith().statusCode(200).build();
-
-        const response = await client.nestedNoAuth.api.getSomething();
-        expect(response).toEqual(undefined);
+        
+                    
+                            const response = await client.nestedNoAuth.api.getSomething();
+                            expect(response).toEqual(undefined);
+                          
+                
     });
+          
 });

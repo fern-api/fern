@@ -2,12 +2,14 @@
 
 import { RetriesClient } from "./api/resources/retries/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
 
 export declare namespace SeedNoRetriesClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SeedNoRetriesClient {
@@ -15,6 +17,7 @@ export class SeedNoRetriesClient {
     protected _retries: RetriesClient | undefined;
 
     constructor(options: SeedNoRetriesClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

@@ -114,7 +114,7 @@ impl QueryBuilder {
         self
     }
 
-    /// Add a datetime parameter
+    /// Add a datetime parameter (DateTime<Utc>)
     pub fn datetime(mut self, key: &str, value: impl Into<Option<DateTime<Utc>>>) -> Self {
         if let Some(v) = value.into() {
             self.params.push((

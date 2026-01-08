@@ -3,16 +3,17 @@
 import { AClient } from "./api/resources/a/client/Client.js";
 import { FolderClient } from "./api/resources/folder/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
-import { mergeHeaders } from "./core/headers.js";
+import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedApiClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SeedApiClient {
@@ -21,6 +22,7 @@ export class SeedApiClient {
     protected _folder: FolderClient | undefined;
 
     constructor(options: SeedApiClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -43,11 +45,9 @@ export class SeedApiClient {
     }
 
     private async __foo(requestOptions?: SeedApiClient.RequestOptions): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+            url: await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -55,7 +55,7 @@ export class SeedApiClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -65,7 +65,7 @@ export class SeedApiClient {
             throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 

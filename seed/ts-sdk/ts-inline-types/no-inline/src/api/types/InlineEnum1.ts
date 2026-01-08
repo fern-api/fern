@@ -2,9 +2,9 @@
 
 /** lorem ipsum */
 export const InlineEnum1 = {
-    Sunny: "SUNNY",
-    Cloudy: "CLOUDY",
-    Raining: "RAINING",
-    Snowing: "SNOWING",
-} as const;
-export type InlineEnum1 = (typeof InlineEnum1)[keyof typeof InlineEnum1];
+        Sunny: "SUNNY",
+        Cloudy: "CLOUDY",
+        Raining: "RAINING",
+        Snowing: "SNOWING"
+    } as const;
+export type InlineEnum1 = typeof InlineEnum1[keyof typeof InlineEnum1];
