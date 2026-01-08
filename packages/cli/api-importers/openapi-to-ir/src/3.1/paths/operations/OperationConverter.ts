@@ -42,6 +42,7 @@ export declare namespace OperationConverter {
         streamResponse: HttpResponse | undefined;
         errors: ResponseErrorConverter.Output[];
         examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+        responseHeaders: FernIr.HttpHeader[];
     }
 
     type BaseEndpoint = Omit<
@@ -194,6 +195,7 @@ export class OperationConverter extends AbstractOperationConverter {
             headers: headers.filter(
                 (header, index, self) => index === self.findIndex((h) => h.name.wireValue === header.name.wireValue)
             ),
+            responseHeaders: convertedResponseBody?.responseHeaders,
             sdkRequest: undefined,
             errors,
             auth:
@@ -321,7 +323,8 @@ export class OperationConverter extends AbstractOperationConverter {
                     v2Responses: undefined,
                     streamResponse: undefined,
                     errors: [],
-                    examples: {}
+                    examples: {},
+                    responseHeaders: []
                 };
             }
             // Convert Successful Responses (2xx)
@@ -367,6 +370,10 @@ export class OperationConverter extends AbstractOperationConverter {
                             body: converted.streamResponseBody,
                             docs: resolvedResponse.description
                         };
+
+                        if (converted.headers != null) {
+                            convertedResponseBody.responseHeaders = converted.headers;
+                        }
                     }
 
                     convertedResponseBody.v2Responses = [
@@ -419,7 +426,8 @@ export class OperationConverter extends AbstractOperationConverter {
                     v2Responses: undefined,
                     streamResponse: undefined,
                     errors: [],
-                    examples: {}
+                    examples: {},
+                    responseHeaders: []
                 };
             }
             const responseBodyConverter = new ResponseBodyConverter({
