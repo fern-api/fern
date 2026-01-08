@@ -12,18 +12,20 @@ service:
       response: enums.WeatherReport
 
     # Test case for wire test generation with optional enum field
-    # The example includes an empty string for the enum field to test that nop values
+    # The example includes an invalid enum value to test that nop values
     # are properly filtered out when generating method arguments
+    # This reproduces a bug found in Twilio API where Status: "status" was used
+    # as a placeholder instead of a valid enum value
     getAndReturnObjectWithOptionalEnum:
       method: POST
       path: /object-with-optional-enum
       request: enums.ObjectWithOptionalEnum
       response: enums.ObjectWithOptionalEnum
       examples:
-        - name: WithEmptyOptionalEnum
+        - name: WithInvalidOptionalEnum
           request:
             string: "test-string"
-            weather: ""
+            weather: "invalid_enum_value"
           response:
             body:
               string: "test-string"

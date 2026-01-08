@@ -88,7 +88,7 @@ class EnumClient:
         )
         client.endpoints.enum.get_and_return_object_with_optional_enum(
             string="test-string",
-            weather="",
+            weather="invalid_enum_value",
         )
         """
         _response = self._raw_client.get_and_return_object_with_optional_enum(
@@ -186,7 +186,7 @@ class AsyncEnumClient:
         async def main() -> None:
             await client.endpoints.enum.get_and_return_object_with_optional_enum(
                 string="test-string",
-                weather="",
+                weather="invalid_enum_value",
             )
 
 

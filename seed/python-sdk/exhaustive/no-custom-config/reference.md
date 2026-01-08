@@ -848,7 +848,7 @@ client = SeedExhaustive(
 )
 client.endpoints.enum.get_and_return_object_with_optional_enum(
     string="test-string",
-    weather="",
+    weather="invalid_enum_value",
 )
 
 ```

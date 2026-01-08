@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "string": {
+      "type": "string"
+    },
+    "weather": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/types.enum.WeatherReport"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "string"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "types.enum.WeatherReport": {
+      "type": "string",
+      "enum": [
+        "SUNNY",
+        "CLOUDY",
+        "RAINING",
+        "SNOWING"
+      ]
+    }
+  }
+}
