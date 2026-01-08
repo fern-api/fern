@@ -514,4 +514,3 @@ allowedFailures:
   - trace:no-custom-config
   - trace:serde
   - inferred-auth-implicit-reference
-  - ts-passthrough-additional-properties:.

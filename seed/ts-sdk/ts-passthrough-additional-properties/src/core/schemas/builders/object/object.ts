@@ -279,9 +279,7 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
                         if (!transformed.ok) {
                             return transformed;
                         }
-                        const rawPropertiesSet = new Set<string>(
-                            schema._getRawProperties().map((p) => p as string),
-                        );
+                        const rawPropertiesSet = new Set<string>(schema._getRawProperties().map((p) => p as string));
                         const extraProperties: Record<string, unknown> = {};
                         for (const [key, value] of Object.entries(raw as object)) {
                             if (!rawPropertiesSet.has(key)) {

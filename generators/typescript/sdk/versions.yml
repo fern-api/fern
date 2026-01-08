@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.6
+  changelogEntry:
+    - summary: |
+        Fix passthrough schema to only include truly additional properties when parsing.
+        Previously, when an OpenAPI schema had `additionalProperties: true`, the generated
+        serialization layer would include both the raw (snake_case) and transformed (camelCase)
+        versions of properties in the deserialized response. Now only properties that are not
+        part of the schema's defined properties are passed through.
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 63
+
 - version: 3.43.5
   changelogEntry:
     - summary: |
