@@ -10,3 +10,20 @@ service:
       path: ""
       request: enums.WeatherReport
       response: enums.WeatherReport
+
+    # Test case for wire test generation with optional enum field
+    # The example includes an empty string for the enum field to test that nop values
+    # are properly filtered out when generating method arguments
+    getAndReturnObjectWithOptionalEnum:
+      method: POST
+      path: /object-with-optional-enum
+      request: enums.ObjectWithOptionalEnum
+      response: enums.ObjectWithOptionalEnum
+      examples:
+        - name: WithEmptyOptionalEnum
+          request:
+            string: "test-string"
+            weather: ""
+          response:
+            body:
+              string: "test-string"
