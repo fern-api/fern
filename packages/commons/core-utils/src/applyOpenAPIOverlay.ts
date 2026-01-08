@@ -1,18 +1,17 @@
-import {JSONPath} from "jsonpath-plus";
+import { JSONPath } from "jsonpath-plus";
+import { mergeWithOverrides } from "./mergeWithOverrides";
 
 type OverlayAction = {
     target: string;
     description: string;
     update: unknown;
     remove: boolean;
-}
+};
 
 type OverlaySpecification = {
     actions: OverlayAction[];
-}
+};
 
-// TODO: How do we select an array item with jsonpath and then remove it?
-// Use parent && parentPropety?
 export function applyOpenAPIOverlay<T extends object>({
     data,
     overlay
@@ -20,32 +19,47 @@ export function applyOpenAPIOverlay<T extends object>({
     data: T;
     overlay: OverlaySpecification;
 }): T {
-    // TODO: Do we throw here on invalid overlay transformations?
     for (const action of overlay.actions) {
-        const result = JSONPath({
+        JSONPath({
             path: action.target,
             json: data,
             resultType: "all",
-            callback: (_payload, _payloadType, fullPayload) => {
-                console.log("fullPayload", fullPayload);
+            callback: (_payload, _payloadType, { parent, parentProperty }) => {
+                console.log("parent", parent, parentProperty);
+                console.log("action", action);
+                if (typeof parent !== "object" || parent == null) {
+                    throw new Error(`Invalid target returned for json path: ${action.target}`);
+                }
+
+                if (action.remove) {
+                    if (Array.isArray(parent)) {
+                        console.log("splicing", parentProperty);
+                        parent.splice(Number(parentProperty), 1);
+                    } else {
+                        delete parent[parentProperty];
+                    }
+                } else {
+                    if (typeof action.update !== "object" || action.update == null) {
+                        throw new Error(
+                            `Invalid update value type for json path: ${action.target}: ${typeof action.update}`
+                        );
+                    }
+                    // For array targets with non-array update values, the spec
+                    // requires we append the value to the array.
+                    if (Array.isArray(parent[parentProperty]) && !Array.isArray(action.update)) {
+                        parent[parentProperty].push(action.update);
+                    } else {
+                        parent[parentProperty] = mergeWithOverrides({
+                            data: parent[parentProperty],
+                            overrides: action.update
+                        });
+                    }
+                }
+                console.log("data", JSON.stringify(data, null, 2));
             }
         });
     }
 
-    return data
-    // const merged = mergeWith(data, mergeWith, overrides, (obj, src) =>
-    //     Array.isArray(obj) && Array.isArray(src)
-    //         ? src.every((element) => typeof element === "object") && obj.every((element) => typeof element === "object")
-    //             ? // nested arrays of objects are merged
-    //               undefined
-    //             : // nested arrays of primitives are replaced
-    //               [...src]
-    //         : undefined
-    // ) as T;
-    // // Remove any nullified values
-    // const filtered = omitDeepBy(merged, isNull, {
-    //     ancestorKeys: allowNullKeys ?? [],
-    //     allowOmissionCursor: false
-    // });
-    // return filtered as T;
+    // TODO: Should we be removing nullish values similar to mergeWithOverrides?
+    return data;
 }
