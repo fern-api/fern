@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.46.10
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to use endpoint ID for lookup instead of path matching.
+        This fixes a bug where wire tests would call the wrong client methods when multiple
+        namespaces have endpoints with the same HTTP method and path pattern (e.g., POST /v2/Services).
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 62
+
 - version: 4.46.9
   changelogEntry:
     - summary: |
