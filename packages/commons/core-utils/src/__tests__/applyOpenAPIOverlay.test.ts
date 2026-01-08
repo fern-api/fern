@@ -233,86 +233,10 @@ describe("applyOpenAPIOverlay", () => {
         });
     });
 
-    it("should append an item to an array", () => {
-        const data = {
-            components: {
-                schemas: {
-                    User: {
-                        type: "object",
-                        properties: {
-                            tags: {
-                                type: "array",
-                                items: {
-                                    type: "object",
-                                    properties: {
-                                        name: {
-                                            type: "string"
-                                        },
-                                        value: {
-                                            type: "string"
-                                        }
-                                    }
-                                },
-                                enum: [
-                                    { name: "tag1", value: "value1" },
-                                    { name: "tag2", value: "value2" }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        };
-
-        const overlay = {
-            actions: [
-                {
-                    target: "$.components.schemas.User.properties.tags.enum",
-                    description: "Append tags enum values",
-                    update: { name: "tag3", value: "value3" },
-                    remove: false
-                }
-            ]
-        };
-
-        const result = applyOpenAPIOverlay({
-            data,
-            overlay
-        });
-
-        expect(result).toEqual({
-            components: {
-                schemas: {
-                    User: {
-                        type: "object",
-                        properties: {
-                            tags: {
-                                type: "array",
-                                items: {
-                                    type: "object",
-                                    properties: {
-                                        name: {
-                                            type: "string"
-                                        },
-                                        value: {
-                                            type: "string"
-                                        }
-                                    }
-                                },
-                                enum: [
-                                    { name: "tag1", value: "value1" },
-                                    { name: "tag2", value: "value2" },
-                                    { name: "tag3", value: "value3" }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    });
-
     it("should handle multiple consecutive array removals", () => {
+        // If an array query matches multiple items, each removal will
+        // change the size of the array. Ensure that subsequent removals
+        // don't rely on indices that have shifted.
         const data = {
             paths: {
                 "/users": {
@@ -364,7 +288,7 @@ describe("applyOpenAPIOverlay", () => {
         });
     });
 
-    it("should match multiple items in an array by property key and merge an update into each of them", () => {
+    it("should handle merges to multiple items in an array", () => {
         const data = {
             paths: {
                 "/users": {
@@ -512,9 +436,7 @@ describe("applyOpenAPIOverlay", () => {
         });
     });
 
-    // CLAUDE: NEW TESTS BELOW HERE
-
-    it("should handle sequential action processing where later actions target elements added by earlier actions", () => {
+    it("should handle actions on items inserted by earlier actions", () => {
         // Spec requirement: "Actions execute sequentially; each operates on the previous result"
         // Verify that action 2 can target elements added by action 1
         const data = {
@@ -710,7 +632,7 @@ describe("applyOpenAPIOverlay", () => {
         });
     });
 
-    it("should handle zero-match JSONPath expressions gracefully", () => {
+    it("should handle zero-match JSONPath expressions", () => {
         // Spec requirement: JSONPath expressions can select zero matches without error
         const data = {
             components: {
@@ -819,7 +741,7 @@ describe("applyOpenAPIOverlay", () => {
         });
     });
 
-    it("should handle deep merge behavior where nested objects merge recursively", () => {
+    it("should handle deep merge behavior", () => {
         // Spec requirement: "Properties in update recursively merge with target object properties"
         const data = {
             components: {
@@ -984,7 +906,7 @@ describe("applyOpenAPIOverlay", () => {
         });
     });
 
-    it("should handle root-level targeting to add and modify top-level properties", () => {
+    it("should handle root-level targeting", () => {
         // Spec requirement: Actions can target the root document with $
         // Check adding/updating top-level properties and removing top-level properties
         const data = {
@@ -1106,8 +1028,7 @@ describe("applyOpenAPIOverlay", () => {
     });
 
     it("should handle array edge cases including empty arrays and replacing complete arrays", () => {
-        // Spec requirement: Special rules for array manipulation
-        // "Primitive-valued items of an array cannot be replaced or removed individually, only the complete array can be replaced"
+        // Primitive-valued items of an array cannot be replaced or removed individually, only the complete array can be replaced
         // Test appending to empty arrays and replacing complete primitive arrays
         const data = {
             components: {

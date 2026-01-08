@@ -37,7 +37,8 @@ export class OpenAPILoader {
                         const openAPI = await loadOpenAPI({
                             absolutePathToOpenAPI: spec.absoluteFilepath,
                             context,
-                            absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides
+                            absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides,
+                            absolutePathToOpenAPIOverlays: spec.absoluteFilepathToOverlays
                         });
                         if (isOpenAPIV3(openAPI)) {
                             documents.push({

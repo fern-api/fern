@@ -1,5 +1,10 @@
 import { JSONPath } from "jsonpath-plus";
-import { mergeWithOverrides } from "./mergeWithOverrides";
+import { merge } from "lodash-es";
+
+/**
+ * OpenAPI Overlay Specification v1.0.0
+ * @see https://spec.openapis.org/overlay/latest.html
+ */
 
 type OverlayAction = {
     target: string;
@@ -8,21 +13,20 @@ type OverlayAction = {
     remove: boolean;
 };
 
-type OverlaySpecification = {
-    actions: OverlayAction[];
-};
-
 export function applyOpenAPIOverlay<T extends object>({
     data,
     overlay
 }: {
     data: T;
-    overlay: OverlaySpecification;
+    overlay: {
+        actions: OverlayAction[];
+    };
 }): T {
+    const output = data;
     for (const action of overlay.actions) {
         const results = JSONPath({
             path: action.target,
-            json: data,
+            json: output,
             resultType: "all"
         }) as Array<{ value: unknown; parent: unknown; parentProperty: string | number }>;
 
@@ -39,7 +43,7 @@ export function applyOpenAPIOverlay<T extends object>({
                         );
                     }
                     // Merge the update directly into the root data object
-                    mergeWithOverrides({ data, overrides: action.update });
+                    merge(output, action.update);
                 }
                 continue;
             }
@@ -78,10 +82,7 @@ export function applyOpenAPIOverlay<T extends object>({
                     if (typeof value !== "object" || value == null) {
                         throw new Error(`Invalid target value type for json path: ${action.target}: ${typeof value}`);
                     }
-                    const updatedValue = mergeWithOverrides({
-                        data: value,
-                        overrides: action.update
-                    });
+                    const updatedValue = merge(value, action.update);
                     if (Array.isArray(parentObj)) {
                         // We are okay to update by index here since this action
                         // won't modify the array length.
@@ -100,5 +101,5 @@ export function applyOpenAPIOverlay<T extends object>({
         }
     }
 
-    return data;
+    return output;
 }
