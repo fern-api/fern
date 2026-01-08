@@ -74,69 +74,6 @@ describe("applyOpenAPIOverlay", () => {
         });
     });
 
-    // TODO: I think this case is invalid? We don't allow null keys for applyOverrides
-    // it.only("should handle schema with null examples", () => {
-    //     const data = {
-    //         components: {
-    //             schemas: {
-    //                 User: {
-    //                     type: "object",
-    //                     properties: {
-    //                         name: {
-    //                             type: "string",
-    //                             examples: {
-    //                                 example1: null,
-    //                                 example2: null
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     };
-
-    //     const overlay = {
-    //         actions: [
-    //             {
-    //                 target: "$.components.schemas.User.properties.name",
-    //                 description: "Update name property examples",
-    //                 update: {
-    //                     type: "string",
-    //                     examples: {
-    //                         example1: null,
-    //                         example2: null
-    //                     }
-    //                 },
-    //                 remove: false
-    //             }
-    //         ]
-    //     };
-
-    //     const result = applyOpenAPIOverlay({
-    //         data,
-    //         overlay
-    //     });
-
-    //     expect(result).toEqual({
-    //         components: {
-    //             schemas: {
-    //                 User: {
-    //                     type: "object",
-    //                     properties: {
-    //                         name: {
-    //                             type: "string",
-    //                             examples: {
-    //                                 example1: null,
-    //                                 example2: null
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //     });
-    // });
-
     it("should merge arrays of objects in OpenAPI paths", () => {
         const data = {
             paths: {
@@ -427,32 +364,18 @@ describe("applyOpenAPIOverlay", () => {
         });
     });
 
-    it("should handle nested object merging in OpenAPI components", () => {
+    it("should match multiple items in an array by property key and merge an update into each of them", () => {
         const data = {
-            components: {
-                schemas: {
-                    User: {
-                        type: "object",
-                        properties: {
-                            config: {
-                                type: "object",
-                                properties: {
-                                    settings: {
-                                        type: "object",
-                                        properties: {
-                                            theme: {
-                                                type: "string",
-                                                enum: ["light"]
-                                            },
-                                            notifications: {
-                                                type: "boolean",
-                                                default: true
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+            paths: {
+                "/users": {
+                    get: {
+                        parameters: [
+                            { name: "id", in: "query", required: true },
+                            { name: "limit", in: "query", required: false },
+                            { name: "authorization", in: "header", required: true },
+                            { name: "offset", in: "query", required: false },
+                            { name: "sort", in: "query", required: false }
+                        ]
                     }
                 }
             }
@@ -461,20 +384,10 @@ describe("applyOpenAPIOverlay", () => {
         const overlay = {
             actions: [
                 {
-                    target: "$.components.schemas.User.properties.config.properties.settings",
-                    description: "Update settings properties",
+                    target: "$.paths['/users'].get.parameters[?(@.in == 'query')]",
+                    description: "Add description to all query parameters",
                     update: {
-                        type: "object",
-                        properties: {
-                            theme: {
-                                type: "string",
-                                enum: ["dark"]
-                            },
-                            sound: {
-                                type: "boolean",
-                                default: false
-                            }
-                        }
+                        description: "Query parameter"
                     },
                     remove: false
                 }
@@ -487,34 +400,16 @@ describe("applyOpenAPIOverlay", () => {
         });
 
         expect(result).toEqual({
-            components: {
-                schemas: {
-                    User: {
-                        type: "object",
-                        properties: {
-                            config: {
-                                type: "object",
-                                properties: {
-                                    settings: {
-                                        type: "object",
-                                        properties: {
-                                            theme: {
-                                                type: "string",
-                                                enum: ["dark"]
-                                            },
-                                            notifications: {
-                                                type: "boolean",
-                                                default: true
-                                            },
-                                            sound: {
-                                                type: "boolean",
-                                                default: false
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+            paths: {
+                "/users": {
+                    get: {
+                        parameters: [
+                            { name: "id", in: "query", required: true, description: "Query parameter" },
+                            { name: "limit", in: "query", required: false, description: "Query parameter" },
+                            { name: "authorization", in: "header", required: true },
+                            { name: "offset", in: "query", required: false, description: "Query parameter" },
+                            { name: "sort", in: "query", required: false, description: "Query parameter" }
+                        ]
                     }
                 }
             }
@@ -617,25 +512,19 @@ describe("applyOpenAPIOverlay", () => {
         });
     });
 
-    it("should handle updating requestBody content schema", () => {
+    // CLAUDE: NEW TESTS BELOW HERE
+
+    it("should handle sequential action processing where later actions target elements added by earlier actions", () => {
+        // Spec requirement: "Actions execute sequentially; each operates on the previous result"
+        // Verify that action 2 can target elements added by action 1
         const data = {
-            paths: {
-                "/users": {
-                    post: {
-                        summary: "Create a user",
-                        requestBody: {
-                            required: true,
-                            content: {
-                                "application/json": {
-                                    schema: {
-                                        type: "object",
-                                        properties: {
-                                            name: {
-                                                type: "string"
-                                            }
-                                        }
-                                    }
-                                }
+            components: {
+                schemas: {
+                    User: {
+                        type: "object",
+                        properties: {
+                            id: {
+                                type: "string"
                             }
                         }
                     }
@@ -646,8 +535,29 @@ describe("applyOpenAPIOverlay", () => {
         const overlay = {
             actions: [
                 {
-                    target: "$.paths['/users'].post.requestBody.content['application/json'].schema",
-                    description: "Add email property to request body schema",
+                    target: "$.components.schemas.User",
+                    description: "Add profile property to User schema",
+                    update: {
+                        type: "object",
+                        properties: {
+                            id: {
+                                type: "string"
+                            },
+                            profile: {
+                                type: "object",
+                                properties: {
+                                    name: {
+                                        type: "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    remove: false
+                },
+                {
+                    target: "$.components.schemas.User.properties.profile",
+                    description: "Add email property to the profile object that was just added",
                     update: {
                         type: "object",
                         properties: {
@@ -655,7 +565,8 @@ describe("applyOpenAPIOverlay", () => {
                                 type: "string"
                             },
                             email: {
-                                type: "string"
+                                type: "string",
+                                format: "email"
                             }
                         }
                     },
@@ -670,24 +581,23 @@ describe("applyOpenAPIOverlay", () => {
         });
 
         expect(result).toEqual({
-            paths: {
-                "/users": {
-                    post: {
-                        summary: "Create a user",
-                        requestBody: {
-                            required: true,
-                            content: {
-                                "application/json": {
-                                    schema: {
-                                        type: "object",
-                                        properties: {
-                                            name: {
-                                                type: "string"
-                                            },
-                                            email: {
-                                                type: "string"
-                                            }
-                                        }
+            components: {
+                schemas: {
+                    User: {
+                        type: "object",
+                        properties: {
+                            id: {
+                                type: "string"
+                            },
+                            profile: {
+                                type: "object",
+                                properties: {
+                                    name: {
+                                        type: "string"
+                                    },
+                                    email: {
+                                        type: "string",
+                                        format: "email"
                                     }
                                 }
                             }
@@ -698,28 +608,34 @@ describe("applyOpenAPIOverlay", () => {
         });
     });
 
-    it("should handle updating response schemas", () => {
+    it("should handle wildcard path matching across multiple paths", () => {
+        // Spec requirement: JSONPath expressions support wildcards like $.paths.*.get
         const data = {
             paths: {
                 "/users": {
                     get: {
-                        responses: {
-                            "200": {
-                                description: "Success",
-                                content: {
-                                    "application/json": {
-                                        schema: {
-                                            type: "object",
-                                            properties: {
-                                                id: {
-                                                    type: "string"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        summary: "Get users",
+                        operationId: "getUsers"
+                    },
+                    post: {
+                        summary: "Create user",
+                        operationId: "createUser"
+                    }
+                },
+                "/posts": {
+                    get: {
+                        summary: "Get posts",
+                        operationId: "getPosts"
+                    }
+                },
+                "/comments": {
+                    get: {
+                        summary: "Get comments",
+                        operationId: "getComments"
+                    },
+                    delete: {
+                        summary: "Delete comment",
+                        operationId: "deleteComment"
                     }
                 }
             }
@@ -728,9 +644,78 @@ describe("applyOpenAPIOverlay", () => {
         const overlay = {
             actions: [
                 {
-                    target: "$.paths['/users'].get.responses['200'].content['application/json'].schema",
-                    description: "Add name property to response schema",
+                    target: "$.paths.*.get",
+                    description: "Add security requirement to all GET operations",
                     update: {
+                        security: [
+                            {
+                                Bearer: []
+                            }
+                        ]
+                    },
+                    remove: false
+                }
+            ]
+        };
+
+        const result = applyOpenAPIOverlay({
+            data,
+            overlay
+        });
+
+        expect(result).toEqual({
+            paths: {
+                "/users": {
+                    get: {
+                        summary: "Get users",
+                        operationId: "getUsers",
+                        security: [
+                            {
+                                Bearer: []
+                            }
+                        ]
+                    },
+                    post: {
+                        summary: "Create user",
+                        operationId: "createUser"
+                    }
+                },
+                "/posts": {
+                    get: {
+                        summary: "Get posts",
+                        operationId: "getPosts",
+                        security: [
+                            {
+                                Bearer: []
+                            }
+                        ]
+                    }
+                },
+                "/comments": {
+                    get: {
+                        summary: "Get comments",
+                        operationId: "getComments",
+                        security: [
+                            {
+                                Bearer: []
+                            }
+                        ]
+                    },
+                    delete: {
+                        summary: "Delete comment",
+                        operationId: "deleteComment"
+                    }
+                }
+            }
+        });
+    });
+
+    it("should handle zero-match JSONPath expressions gracefully", () => {
+        // Spec requirement: JSONPath expressions can select zero matches without error
+        const data = {
+            components: {
+                schemas: {
+                    User: {
                         type: "object",
                         properties: {
                             id: {
@@ -740,6 +725,58 @@ describe("applyOpenAPIOverlay", () => {
                                 type: "string"
                             }
                         }
+                    }
+                }
+            },
+            paths: {
+                "/users": {
+                    get: {
+                        summary: "Get users"
+                    }
+                }
+            }
+        };
+
+        const overlay = {
+            actions: [
+                {
+                    target: "$.components.schemas.NonExistentSchema",
+                    description: "Try to update a schema that doesn't exist",
+                    update: {
+                        type: "object",
+                        properties: {
+                            someProperty: {
+                                type: "string"
+                            }
+                        }
+                    },
+                    remove: false
+                },
+                {
+                    target: "$.paths['/nonexistent'].post",
+                    description: "Try to update an operation that doesn't exist",
+                    update: {
+                        summary: "Non-existent operation"
+                    },
+                    remove: false
+                },
+                {
+                    target: "$.components.schemas.User",
+                    description: "This action should still execute normally after the non-matching ones",
+                    update: {
+                        type: "object",
+                        properties: {
+                            id: {
+                                type: "string"
+                            },
+                            name: {
+                                type: "string"
+                            },
+                            email: {
+                                type: "string",
+                                format: "email"
+                            }
+                        }
                     },
                     remove: false
                 }
@@ -751,46 +788,77 @@ describe("applyOpenAPIOverlay", () => {
             overlay
         });
 
+        // The document should remain mostly unchanged except for the valid action
         expect(result).toEqual({
+            components: {
+                schemas: {
+                    User: {
+                        type: "object",
+                        properties: {
+                            id: {
+                                type: "string"
+                            },
+                            name: {
+                                type: "string"
+                            },
+                            email: {
+                                type: "string",
+                                format: "email"
+                            }
+                        }
+                    }
+                }
+            },
             paths: {
                 "/users": {
                     get: {
-                        responses: {
-                            "200": {
-                                description: "Success",
-                                content: {
-                                    "application/json": {
-                                        schema: {
-                                            type: "object",
-                                            properties: {
-                                                id: {
-                                                    type: "string"
-                                                },
-                                                name: {
-                                                    type: "string"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        summary: "Get users"
                     }
                 }
             }
         });
     });
 
-    it("should handle updating enum values in schema properties", () => {
+    it("should handle deep merge behavior where nested objects merge recursively", () => {
+        // Spec requirement: "Properties in update recursively merge with target object properties"
         const data = {
             components: {
                 schemas: {
                     User: {
                         type: "object",
                         properties: {
-                            status: {
-                                type: "string",
-                                enum: ["active", "suspended", "deleted"]
+                            profile: {
+                                type: "object",
+                                properties: {
+                                    personal: {
+                                        type: "object",
+                                        properties: {
+                                            name: {
+                                                type: "string"
+                                            },
+                                            age: {
+                                                type: "integer"
+                                            }
+                                        }
+                                    },
+                                    contact: {
+                                        type: "object",
+                                        properties: {
+                                            phone: {
+                                                type: "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            settings: {
+                                type: "object",
+                                properties: {
+                                    theme: {
+                                        type: "string",
+                                        default: "light"
+                                    }
+                                }
                             }
                         }
                     }
@@ -801,12 +869,48 @@ describe("applyOpenAPIOverlay", () => {
         const overlay = {
             actions: [
                 {
-                    target: "$.components.schemas.User.properties.status",
-                    description: "Add inactive to status enum",
+                    target: "$.components.schemas.User.properties.profile",
+                    description:
+                        "Deep merge into profile - should preserve existing nested structure while adding new properties",
                     update: {
-                        type: "string",
-                        enum: ["active", "suspended", "deleted", "inactive"],
-                        nullable: true
+                        type: "object",
+                        properties: {
+                            personal: {
+                                type: "object",
+                                properties: {
+                                    name: {
+                                        type: "string"
+                                    },
+                                    // Add bio, keep existing age
+                                    bio: {
+                                        type: "string"
+                                    }
+                                }
+                            },
+                            contact: {
+                                type: "object",
+                                properties: {
+                                    // Keep existing phone, add email
+                                    phone: {
+                                        type: "string"
+                                    },
+                                    email: {
+                                        type: "string",
+                                        format: "email"
+                                    }
+                                }
+                            },
+                            // Add new top-level property
+                            preferences: {
+                                type: "object",
+                                properties: {
+                                    newsletter: {
+                                        type: "boolean",
+                                        default: false
+                                    }
+                                }
+                            }
+                        }
                     },
                     remove: false
                 }
@@ -824,12 +928,434 @@ describe("applyOpenAPIOverlay", () => {
                     User: {
                         type: "object",
                         properties: {
-                            status: {
-                                type: "string",
-                                enum: ["active", "suspended", "deleted", "inactive"],
-                                nullable: true
+                            profile: {
+                                type: "object",
+                                properties: {
+                                    personal: {
+                                        type: "object",
+                                        properties: {
+                                            name: {
+                                                type: "string"
+                                            },
+                                            age: {
+                                                type: "integer"
+                                            },
+                                            bio: {
+                                                type: "string"
+                                            }
+                                        }
+                                    },
+                                    contact: {
+                                        type: "object",
+                                        properties: {
+                                            phone: {
+                                                type: "string"
+                                            },
+                                            email: {
+                                                type: "string",
+                                                format: "email"
+                                            }
+                                        }
+                                    },
+                                    preferences: {
+                                        type: "object",
+                                        properties: {
+                                            newsletter: {
+                                                type: "boolean",
+                                                default: false
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            settings: {
+                                type: "object",
+                                properties: {
+                                    theme: {
+                                        type: "string",
+                                        default: "light"
+                                    }
+                                }
                             }
                         }
+                    }
+                }
+            }
+        });
+    });
+
+    it("should handle root-level targeting to add and modify top-level properties", () => {
+        // Spec requirement: Actions can target the root document with $
+        // This test verifies targeting `$` to add new top-level sections and modify existing ones
+        const data = {
+            openapi: "3.0.0",
+            info: {
+                title: "Test API",
+                version: "1.0.0"
+            },
+            paths: {
+                "/users": {
+                    get: {
+                        summary: "Get users"
+                    }
+                }
+            }
+        };
+
+        const overlay = {
+            actions: [
+                {
+                    target: "$",
+                    description: "Add servers and modify info at root level",
+                    update: {
+                        openapi: "3.0.0",
+                        info: {
+                            title: "Test API",
+                            version: "1.0.0",
+                            description: "A comprehensive API for testing overlay functionality",
+                            contact: {
+                                name: "API Team",
+                                email: "api@example.com"
+                            }
+                        },
+                        servers: [
+                            {
+                                url: "https://api.example.com/v1",
+                                description: "Production server"
+                            },
+                            {
+                                url: "https://staging-api.example.com/v1",
+                                description: "Staging server"
+                            }
+                        ],
+                        externalDocs: {
+                            description: "Find more info here",
+                            url: "https://docs.example.com"
+                        }
+                    },
+                    remove: false
+                }
+            ]
+        };
+
+        const result = applyOpenAPIOverlay({
+            data,
+            overlay
+        });
+
+        expect(result).toEqual({
+            openapi: "3.0.0",
+            info: {
+                title: "Test API",
+                version: "1.0.0",
+                description: "A comprehensive API for testing overlay functionality",
+                contact: {
+                    name: "API Team",
+                    email: "api@example.com"
+                }
+            },
+            paths: {
+                "/users": {
+                    get: {
+                        summary: "Get users"
+                    }
+                }
+            },
+            servers: [
+                {
+                    url: "https://api.example.com/v1",
+                    description: "Production server"
+                },
+                {
+                    url: "https://staging-api.example.com/v1",
+                    description: "Staging server"
+                }
+            ],
+            externalDocs: {
+                description: "Find more info here",
+                url: "https://docs.example.com"
+            }
+        });
+    });
+
+    it("should handle array edge cases including empty arrays and replacing complete arrays", () => {
+        // Spec requirement: Special rules for array manipulation
+        // "Primitive-valued items of an array cannot be replaced or removed individually, only the complete array can be replaced"
+        // Test appending to empty arrays and replacing complete primitive arrays
+        const data = {
+            components: {
+                schemas: {
+                    User: {
+                        type: "object",
+                        properties: {
+                            tags: {
+                                type: "array",
+                                items: {
+                                    type: "string"
+                                },
+                                enum: [] // Empty array
+                            },
+                            permissions: {
+                                type: "array",
+                                items: {
+                                    type: "string"
+                                },
+                                enum: ["read"]
+                            },
+                            roles: {
+                                type: "array",
+                                items: {
+                                    type: "object"
+                                },
+                                enum: [] // Empty object array
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const overlay = {
+            actions: [
+                {
+                    target: "$.components.schemas.User.properties.tags",
+                    description: "Replace complete primitive array (was empty)",
+                    update: {
+                        type: "array",
+                        items: {
+                            type: "string"
+                        },
+                        enum: ["tag1", "tag2"]
+                    },
+                    remove: false
+                },
+                {
+                    target: "$.components.schemas.User.properties.permissions",
+                    description: "Replace complete primitive array (had existing values)",
+                    update: {
+                        type: "array",
+                        items: {
+                            type: "string"
+                        },
+                        enum: ["read", "write", "admin"]
+                    },
+                    remove: false
+                },
+                {
+                    target: "$.components.schemas.User.properties.roles.enum",
+                    description: "Append object to empty object array",
+                    update: { name: "admin", level: 1 },
+                    remove: false
+                },
+                {
+                    target: "$.components.schemas.User.properties.roles.enum",
+                    description: "Append another object to the array",
+                    update: { name: "user", level: 2 },
+                    remove: false
+                }
+            ]
+        };
+
+        const result = applyOpenAPIOverlay({
+            data,
+            overlay
+        });
+
+        expect(result).toEqual({
+            components: {
+                schemas: {
+                    User: {
+                        type: "object",
+                        properties: {
+                            tags: {
+                                type: "array",
+                                items: {
+                                    type: "string"
+                                },
+                                enum: ["tag1", "tag2"]
+                            },
+                            permissions: {
+                                type: "array",
+                                items: {
+                                    type: "string"
+                                },
+                                enum: ["read", "write", "admin"]
+                            },
+                            roles: {
+                                type: "array",
+                                items: {
+                                    type: "object"
+                                },
+                                enum: [
+                                    { name: "admin", level: 1 },
+                                    { name: "user", level: 2 }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    it("should handle complex JSONPath expressions including recursive descent and filters", () => {
+        // Spec requirement: Support for advanced JSONPath features
+        // Test recursive descent, filter conditions, and index-based selection
+        const data = {
+            components: {
+                schemas: {
+                    User: {
+                        type: "object",
+                        properties: {
+                            name: {
+                                type: "string"
+                            },
+                            address: {
+                                type: "object",
+                                properties: {
+                                    street: {
+                                        type: "string"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    Product: {
+                        type: "object",
+                        properties: {
+                            title: {
+                                type: "string"
+                            },
+                            metadata: {
+                                type: "object",
+                                properties: {
+                                    tags: {
+                                        type: "array",
+                                        items: {
+                                            type: "object"
+                                        },
+                                        enum: [
+                                            { name: "featured", active: true },
+                                            { name: "sale", active: false },
+                                            { name: "new", active: true }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            paths: {
+                "/users": {
+                    get: {
+                        parameters: [
+                            { name: "limit", in: "query", schema: { type: "integer" } },
+                            { name: "offset", in: "query", schema: { type: "integer" } }
+                        ]
+                    }
+                }
+            }
+        };
+
+        const overlay = {
+            actions: [
+                {
+                    target: "$..properties[?(@.type == 'string')]",
+                    description: "Use recursive descent to find all string type properties and add format validation",
+                    update: {
+                        type: "string",
+                        minLength: 1
+                    },
+                    remove: false
+                },
+                {
+                    target: "$.components.schemas.Product.properties.metadata.properties.tags.enum[?(@.active == true)]",
+                    description: "Filter array items by property value",
+                    update: {
+                        priority: "high"
+                    },
+                    remove: false
+                },
+                {
+                    target: "$.paths['/users'].get.parameters[0]",
+                    description: "Target specific array index",
+                    update: {
+                        name: "limit",
+                        in: "query",
+                        schema: { type: "integer", minimum: 1, maximum: 100 },
+                        description: "Maximum number of items to return"
+                    },
+                    remove: false
+                }
+            ]
+        };
+
+        const result = applyOpenAPIOverlay({
+            data,
+            overlay
+        });
+
+        expect(result).toEqual({
+            components: {
+                schemas: {
+                    User: {
+                        type: "object",
+                        properties: {
+                            name: {
+                                type: "string",
+                                minLength: 1
+                            },
+                            address: {
+                                type: "object",
+                                properties: {
+                                    street: {
+                                        type: "string",
+                                        minLength: 1
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    Product: {
+                        type: "object",
+                        properties: {
+                            title: {
+                                type: "string",
+                                minLength: 1
+                            },
+                            metadata: {
+                                type: "object",
+                                properties: {
+                                    tags: {
+                                        type: "array",
+                                        items: {
+                                            type: "object"
+                                        },
+                                        enum: [
+                                            { name: "featured", active: true, priority: "high" },
+                                            { name: "sale", active: false },
+                                            { name: "new", active: true, priority: "high" }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            paths: {
+                "/users": {
+                    get: {
+                        parameters: [
+                            {
+                                name: "limit",
+                                in: "query",
+                                schema: { type: "integer", minimum: 1, maximum: 100 },
+                                description: "Maximum number of items to return"
+                            },
+                            { name: "offset", in: "query", schema: { type: "integer" } }
+                        ]
                     }
                 }
             }
