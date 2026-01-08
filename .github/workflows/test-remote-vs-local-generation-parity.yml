@@ -46,3 +46,6 @@ jobs:
 
       - name: Run Seed Test Remote-Local (GitHub Output Mode)
         run: pnpm seed test-remote-local --output-mode github
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_FERN_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TEST_REMOTE_LOCAL_GITHUB_TOKEN }}
