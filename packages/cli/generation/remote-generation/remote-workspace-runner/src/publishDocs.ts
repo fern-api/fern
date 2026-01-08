@@ -5,7 +5,6 @@ import { createFdrService } from "@fern-api/core";
 import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
-import { RawSchemas } from "@fern-api/configuration/docs-yml";
 
 type DynamicIr = APIV1Write.DynamicIr;
 type DynamicIrUpload = APIV1Write.DynamicIrUpload;
@@ -408,12 +407,15 @@ export async function publishDocs({
     let libraryDocsConfig: DocsV2Write.LibraryDocsRegistrationConfig | undefined;
     const librarySection = extractLibrarySectionFromConfig(docsWorkspace.config);
     if (librarySection != null) {
-        context.logger.info(`Generating library documentation from ${librarySection.libraryDocs}...`);
+        // Config is already deserialized with camelCase properties
+        const githubUrl = librarySection.libraryDocs;
+
+        context.logger.info(`Generating library documentation from ${githubUrl}...`);
 
         // Start library docs generation
         const startResponse = await fdr.docs.v2.write.startLibraryDocsGeneration({
             orgId: CjsFdrSdk.OrgId(organization),
-            githubUrl: CjsFdrSdk.Url(librarySection.libraryDocs),
+            githubUrl: CjsFdrSdk.Url(githubUrl),
             language: "PYTHON",
             config: {
                 branch: librarySection.branch,
@@ -425,7 +427,7 @@ export async function publishDocs({
 
         if (!startResponse.ok) {
             return context.failAndThrow(
-                `Failed to start library docs generation for ${librarySection.libraryDocs}`,
+                `Failed to start library docs generation for ${githubUrl}`,
                 startResponse.error
             );
         }
@@ -1143,6 +1145,7 @@ function extractLibrarySectionFromConfig(
     }
 
     // Helper to check if an item is a library reference config
+    // Note: The config is deserialized, so the key is "libraryDocs" (camelCase)
     const isLibraryConfig = (item: unknown): item is docsYml.RawSchemas.LibraryReferenceConfiguration => {
         return (
             item != null &&
@@ -1153,8 +1156,8 @@ function extractLibrarySectionFromConfig(
     };
 
     // Helper to recursively search navigation items
-    const findLibrarySection = (
-        items: docsYml.RawSchemas.NavigationItem[] | undefined
+    const findLibrarySectionInItems = (
+        items: unknown[] | undefined
     ): docsYml.RawSchemas.LibraryReferenceConfiguration | undefined => {
         if (items == null) {
             return undefined;
@@ -1164,10 +1167,23 @@ function extractLibrarySectionFromConfig(
                 return item;
             }
             // Check in section contents
-            if ("section" in item && item.contents) {
-                const found = findLibrarySection(item.contents);
-                if (found) {
-                    return found;
+            if (item != null && typeof item === "object" && "section" in item) {
+                const sectionItem = item as { contents?: unknown[] };
+                if (sectionItem.contents) {
+                    const found = findLibrarySectionInItems(sectionItem.contents);
+                    if (found) {
+                        return found;
+                    }
+                }
+            }
+            // Check in tabbed navigation items (items with tab and layout properties)
+            if (item != null && typeof item === "object" && "tab" in item && "layout" in item) {
+                const tabbedItem = item as { layout?: unknown[] };
+                if (tabbedItem.layout) {
+                    const found = findLibrarySectionInItems(tabbedItem.layout);
+                    if (found) {
+                        return found;
+                    }
                 }
             }
         }
@@ -1175,29 +1191,44 @@ function extractLibrarySectionFromConfig(
     };
 
     // Handle different navigation structures
-    if (Array.isArray(navigation)) {
-        return findLibrarySection(navigation);
+    // Navigation can be: NavigationItem[] | TabbedNavigationConfig | VersionedNavigationConfig
+    const nav = navigation as unknown;
+
+    // Check if it's an array (simple navigation)
+    if (Array.isArray(nav)) {
+        return findLibrarySectionInItems(nav);
     }
 
-    // Tabbed navigation
-    if ("tabs" in navigation && Array.isArray(navigation.tabs)) {
-        for (const tab of navigation.tabs) {
-            if ("layout" in tab && Array.isArray(tab.layout)) {
-                const found = findLibrarySection(tab.layout);
-                if (found) {
-                    return found;
+    // Check if it's an object with tabs or versions
+    if (nav != null && typeof nav === "object") {
+        const navObj = nav as Record<string, unknown>;
+
+        // Tabbed navigation - check each tab's layout
+        if (Array.isArray(navObj.tabs)) {
+            for (const tab of navObj.tabs) {
+                if (tab != null && typeof tab === "object") {
+                    const tabObj = tab as Record<string, unknown>;
+                    if (Array.isArray(tabObj.layout)) {
+                        const found = findLibrarySectionInItems(tabObj.layout);
+                        if (found) {
+                            return found;
+                        }
+                    }
                 }
             }
         }
-    }
 
-    // Versioned navigation
-    if ("versions" in navigation && Array.isArray(navigation.versions)) {
-        for (const version of navigation.versions) {
-            if ("navigation" in version && Array.isArray(version.navigation)) {
-                const found = findLibrarySection(version.navigation);
-                if (found) {
-                    return found;
+        // Versioned navigation - check each version's navigation
+        if (Array.isArray(navObj.versions)) {
+            for (const version of navObj.versions) {
+                if (version != null && typeof version === "object") {
+                    const versionObj = version as Record<string, unknown>;
+                    if (Array.isArray(versionObj.navigation)) {
+                        const found = findLibrarySectionInItems(versionObj.navigation);
+                        if (found) {
+                            return found;
+                        }
+                    }
                 }
             }
         }
