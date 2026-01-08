@@ -2494,4 +2494,71 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             "__snapshots__/auth-scheme-example-selection-ir.snap"
         );
     });
+
+    it("should handle OpenAPI with min/max validation keywords", async () => {
+        // Test OpenAPI spec with min/max validation keywords:
+        // - minimum, maximum, exclusiveMinimum, exclusiveMaximum for numbers
+        // - minLength, maxLength for strings
+        // - minItems, maxItems for arrays
+        // - minProperties, maxProperties for objects
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/min-max-values")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "min-max-values"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate types were processed correctly
+        expect(intermediateRepresentation.types).toBeDefined();
+        expect(Object.keys(intermediateRepresentation.types).length).toBeGreaterThan(0);
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.rootPackage?.endpoints).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/min-max-values-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/min-max-values-ir.snap");
+    });
 });
