@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Service Beta API
+  version: 1.0.0
+  description: Service Beta with /v2/Services endpoint (same path as Alpha)
+
+paths:
+  /v2/Services:
+    get:
+      operationId: listServices
+      summary: List services from Beta
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: string
+              example:
+                items: ["beta1", "beta2"]
+    post:
+      operationId: createService
+      summary: Create a service in Beta
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - beta_title
+              properties:
+                beta_title:
+                  type: string
+            example:
+              beta_title: "my-beta-service"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+              example:
+                uuid: "beta-456"
+
+  /v2/Services/{Sid}:
+    get:
+      operationId: fetchService
+      summary: Fetch a service from Beta
+      parameters:
+        - name: Sid
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "Sid"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+              example:
+                title: "beta-service"

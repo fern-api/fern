@@ -1,0 +1,6 @@
+api:
+  specs:
+    - openapi: ./service_alpha.yml
+      namespace: alpha
+    - openapi: ./service_beta.yml
+      namespace: beta

@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: Service Alpha API
+  version: 1.0.0
+  description: Service Alpha with /v2/Services endpoint
+
+paths:
+  /v2/Services:
+    get:
+      operationId: listServices
+      summary: List services from Alpha
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  services:
+                    type: array
+                    items:
+                      type: string
+              example:
+                services: ["alpha1", "alpha2"]
+    post:
+      operationId: createService
+      summary: Create a service in Alpha
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - alpha_name
+              properties:
+                alpha_name:
+                  type: string
+            example:
+              alpha_name: "my-alpha-service"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+              example:
+                id: "alpha-123"
+
+  /v2/Services/{Sid}:
+    get:
+      operationId: fetchService
+      summary: Fetch a service from Alpha
+      parameters:
+        - name: Sid
+          in: path
+          required: true
+          schema:
+            type: string
+          example: "Sid"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+              example:
+                name: "alpha-service"

@@ -346,6 +346,10 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  python-wire-test-path-collision:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: no-custom-config
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2
