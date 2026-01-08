@@ -180,12 +180,18 @@ describe("TypeScript SDK Migrations", () => {
 
             // Apply 1.0.0 migration
             const after1 = migrations[0]?.migrateGeneratorConfig({ config: initialConfig, context: mockContext });
+            if (!after1) {
+                throw new Error("1.0.0 migration failed");
+            }
 
             // Apply 2.0.0 migration
-            const after2 = migrations[1]?.migrateGeneratorConfig({ config: after1!, context: mockContext });
+            const after2 = migrations[1]?.migrateGeneratorConfig({ config: after1, context: mockContext });
+            if (!after2) {
+                throw new Error("2.0.0 migration failed");
+            }
 
             // Apply 3.0.0 migration
-            const finalConfig = migrations[2]?.migrateGeneratorConfig({ config: after2!, context: mockContext });
+            const finalConfig = migrations[2]?.migrateGeneratorConfig({ config: after2, context: mockContext });
 
             // Should have all old defaults set
             expect(finalConfig?.config).toEqual({
@@ -226,9 +232,12 @@ describe("TypeScript SDK Migrations", () => {
 
             // Apply 2.0.0 migration
             const after2 = migrations[1]?.migrateGeneratorConfig({ config: initialConfig, context: mockContext });
+            if (!after2) {
+                throw new Error("2.0.0 migration failed");
+            }
 
             // Apply 3.0.0 migration
-            const finalConfig = migrations[2]?.migrateGeneratorConfig({ config: after2!, context: mockContext });
+            const finalConfig = migrations[2]?.migrateGeneratorConfig({ config: after2, context: mockContext });
 
             expect(finalConfig?.config).toEqual({
                 // User's explicit values preserved

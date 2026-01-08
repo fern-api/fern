@@ -3,11 +3,11 @@
   changelogEntry:
     - summary: |
         Generate interfaces for all SDK clients to enable dependency injection and mocking for unit testing.
-        
+
         Each client class now implements a corresponding interface:
         * Root client implements `I{ClientName}` (e.g., `IAcmeClient`)
         * Sub-package clients implement `I{SubpackageName}Client` (e.g., `IUsersClient`)
-        
+
         This allows consumers to:
         * Use dependency injection frameworks to inject client interfaces
         * Mock client interfaces in unit tests using libraries like Moq or NSubstitute
