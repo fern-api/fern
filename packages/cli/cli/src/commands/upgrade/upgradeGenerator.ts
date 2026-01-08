@@ -16,6 +16,7 @@ import semver from "semver";
 import YAML from "yaml";
 
 import { CliContext } from "../../cli-context/CliContext";
+import { loadAndRunMigrations } from "./migrations";
 
 interface SkippedMajorUpgrade {
     generatorName: string;
@@ -28,6 +29,8 @@ interface AppliedUpgrade {
     groupName: string;
     previousVersion: string;
     newVersion: string;
+    migrationsApplied?: number;
+    migrationVersions?: string[];
 }
 
 interface AlreadyUpToDate {
@@ -169,12 +172,58 @@ export async function loadAndUpdateGenerators({
                     context.logger.debug(
                         chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
                     );
+
+                    // Update the version in YAML
                     generator.set("version", latestVersion);
+
+                    // Run migrations if available
+                    let migrationsApplied = 0;
+                    let migrationVersions: string[] = [];
+
+                    try {
+                        // Convert YAML map to plain object for migration
+                        // toJSON() returns a plain object with all the YAML properties
+                        const currentConfig = generator.toJSON();
+
+                        const migrationResult = await loadAndRunMigrations(
+                            normalizedGeneratorName,
+                            currentGeneratorVersion,
+                            latestVersion,
+                            currentConfig,
+                            context.logger
+                        );
+
+                        if (migrationResult != null) {
+                            migrationsApplied = migrationResult.migrationsApplied;
+                            migrationVersions = migrationResult.appliedVersions;
+
+                            // Apply migrated config back to YAML
+                            // We need to update the generator map with the migrated values
+                            for (const [key, value] of Object.entries(migrationResult.config)) {
+                                if (key !== "version") {
+                                    // Don't override the version we just set
+                                    generator.set(key, value);
+                                }
+                            }
+
+                            context.logger.debug(
+                                chalk.dim(`Applied ${migrationsApplied} migration(s): ${migrationVersions.join(", ")}`)
+                            );
+                        }
+                    } catch (error) {
+                        // Log migration errors but don't fail the upgrade
+                        context.logger.debug(
+                            chalk.yellow(`Warning: Failed to run migrations for ${generatorName}: ${error}`)
+                        );
+                    }
+
                     appliedUpgrades.push({
                         generatorName,
                         groupName,
                         previousVersion: currentGeneratorVersion,
-                        newVersion: latestVersion
+                        newVersion: latestVersion,
+                        migrationsApplied: migrationsApplied > 0 ? migrationsApplied : undefined,
+                        migrationVersions: migrationVersions.length > 0 ? migrationVersions : undefined
                     });
                 } else {
                     // Generator is already on the latest version
@@ -315,6 +364,14 @@ export async function upgradeGenerator({
                             `  - ${upgrade.generatorName}: ${chalk.dim(upgrade.previousVersion)} → ${upgrade.newVersion}`
                         )
                     );
+                    // Show migration info if migrations were applied
+                    if (upgrade.migrationsApplied != null && upgrade.migrationsApplied > 0) {
+                        cliContext.logger.info(
+                            chalk.dim(
+                                `    Applied ${upgrade.migrationsApplied} migration(s): ${upgrade.migrationVersions?.join(", ") ?? ""}`
+                            )
+                        );
+                    }
                     // Use normalized name for changelog lookup since the map uses fernapi/... keys
                     const changelogUrl = getChangelogUrl(addDefaultDockerOrgIfNotPresent(upgrade.generatorName));
                     if (changelogUrl != null) {

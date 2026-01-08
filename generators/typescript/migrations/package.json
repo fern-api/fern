@@ -1,0 +1,54 @@
+{
+  "name": "@fern-api/typescript-sdk-migrations",
+  "version": "0.0.0",
+  "description": "Migration package for TypeScript SDK generator configuration",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "generators/typescript/migrations"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
+    "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --passWithNoTests --run -u"
+  },
+  "keywords": [
+    "fern",
+    "generator",
+    "migration",
+    "typescript-sdk"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@fern-api/migrations-base": "workspace:*"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@fern-api/logger": "workspace:*",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
+    "typescript": "5.9.3",
+    "vitest": "^4.0.8"
+  }
+}
