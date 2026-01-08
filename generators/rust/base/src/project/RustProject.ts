@@ -127,6 +127,9 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
             content = content.replace(/\{\{UUID_EXPORTS\}\}/g, "");
         }
 
+        // Replace API key header name from IR auth schemes
+        content = content.replace(/\{\{API_KEY_HEADER\}\}/g, this.context.getApiKeyHeaderName());
+
         return content;
     }
 
