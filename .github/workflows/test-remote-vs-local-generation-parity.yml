@@ -1,6 +1,11 @@
 name: Test Remote vs Local Generation Parity
 
 on:
+  # Runs on every commit to main
+  push:
+    branches:
+      - main
+
   # Runs when triggered manually
   workflow_dispatch:
     inputs:
@@ -9,6 +14,18 @@ on:
         required: false
         default: "main"
         type: string
+
+  # Runs when a generator is published successfully
+  workflow_run:
+    workflows:
+      - "Publish TypeScript SDK Generator"
+      - "Publish Go SDK Generator"
+      - "Publish Java SDK Generator"
+      - "Publish Python SDK Generator"
+    types:
+      - completed
+    branches:
+      - main
 
 # Cancel previous workflows when another is triggered
 concurrency:
@@ -20,17 +37,49 @@ env:
   TURBO_TEAM: "buildwithfern"
 
 jobs:
+  # Determine which generator to test based on the triggering workflow
+  determine-generator:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    outputs:
+      generators: ${{ steps.set-generators.outputs.generators }}
+    steps:
+      - name: Set generators to test
+        id: set-generators
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            # Map workflow name to generator
+            case "${{ github.event.workflow_run.name }}" in
+              "Publish TypeScript SDK Generator")
+                echo 'generators=["ts-sdk"]' >> $GITHUB_OUTPUT
+                ;;
+              "Publish Go SDK Generator")
+                echo 'generators=["go-sdk"]' >> $GITHUB_OUTPUT
+                ;;
+              "Publish Java SDK Generator")
+                echo 'generators=["java-sdk"]' >> $GITHUB_OUTPUT
+                ;;
+              "Publish Python SDK Generator")
+                echo 'generators=["python-sdk"]' >> $GITHUB_OUTPUT
+                ;;
+              *)
+                echo "Unknown workflow: ${{ github.event.workflow_run.name }}"
+                exit 1
+                ;;
+            esac
+          else
+            # For push and workflow_dispatch, test all generators
+            echo 'generators=["ts-sdk", "java-sdk", "go-sdk", "python-sdk"]' >> $GITHUB_OUTPUT
+          fi
+
   test-remote-local-parity:
+    needs: determine-generator
     runs-on: ubuntu-latest
     timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
-        generator:
-          - ts-sdk
-          - java-sdk
-          - go-sdk
-          - python-sdk
+        generator: ${{ fromJson(needs.determine-generator.outputs.generators) }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4

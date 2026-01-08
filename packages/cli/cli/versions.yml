@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Add Excel file support (.xlsx) to the allowed file types for documentation uploads. This enables users to host Excel files using the `<Download />` component.
-      type: feat
+      type: chore
   createdAt: "2026-01-08"
   irVersion: 62
 
