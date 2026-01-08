@@ -1719,6 +1719,7 @@
                       "type": "primitive",
                     },
                     "type": "map",
+                    "validation": undefined,
                     "valueType": {
                       "_visit": [Function],
                       "type": "unknown",
@@ -1942,6 +1943,7 @@
                       "type": "primitive",
                     },
                     "type": "map",
+                    "validation": undefined,
                     "valueType": {
                       "_visit": [Function],
                       "type": "unknown",
@@ -2659,6 +2661,7 @@
                       "type": "primitive",
                     },
                     "type": "map",
+                    "validation": undefined,
                     "valueType": {
                       "_visit": [Function],
                       "type": "unknown",

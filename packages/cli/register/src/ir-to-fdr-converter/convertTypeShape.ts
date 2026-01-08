@@ -131,10 +131,10 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
     return irTypeReference._visit<FdrCjsSdk.api.v1.register.TypeReference>({
         container: (container) => {
             return Ir.types.ContainerType._visit<FdrCjsSdk.api.v1.register.TypeReference>(container, {
-                list: (itemType) => {
+                list: (listType) => {
                     return {
                         type: "list",
-                        itemType: convertTypeReference(itemType)
+                        itemType: convertTypeReference(listType.itemType)
                     };
                 },
                 map: ({ keyType, valueType }) => {
@@ -157,10 +157,10 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         itemType: convertTypeReference(itemType)
                     };
                 },
-                set: (itemType) => {
+                set: (setType) => {
                     return {
                         type: "set",
-                        itemType: convertTypeReference(itemType)
+                        itemType: convertTypeReference(setType.itemType)
                     };
                 },
                 literal: (literal) => {

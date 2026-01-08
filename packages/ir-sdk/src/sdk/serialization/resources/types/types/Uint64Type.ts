@@ -9,11 +9,13 @@ import { Uint64ValidationRules } from "./Uint64ValidationRules";
 
 export const Uint64Type: core.serialization.ObjectSchema<serializers.Uint64Type.Raw, FernIr.Uint64Type> =
     core.serialization.objectWithoutOptionalProperties({
+        default: core.serialization.number().optional(),
         validation: Uint64ValidationRules.optional(),
     });
 
 export declare namespace Uint64Type {
     export interface Raw {
+        default?: number | null;
         validation?: Uint64ValidationRules.Raw | null;
     }
 }

@@ -1078,7 +1078,7 @@
                 "docs": undefined,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "955ed4d9",
+                "id": "1c0d7821",
                 "name": undefined,
                 "queryParameters": [],
                 "request": {
@@ -1424,7 +1424,7 @@
                                   "_visit": [Function],
                                   "container": {
                                     "_visit": [Function],
-                                    "list": {
+                                    "itemType": {
                                       "_visit": [Function],
                                       "primitive": {
                                         "v1": "STRING",
@@ -1443,6 +1443,7 @@
                                       "type": "primitive",
                                     },
                                     "type": "list",
+                                    "validation": undefined,
                                   },
                                   "type": "container",
                                 },
@@ -1998,7 +1999,7 @@
                                       "_visit": [Function],
                                       "container": {
                                         "_visit": [Function],
-                                        "list": {
+                                        "itemType": {
                                           "_visit": [Function],
                                           "primitive": {
                                             "v1": "STRING",
@@ -2017,6 +2018,7 @@
                                           "type": "primitive",
                                         },
                                         "type": "list",
+                                        "validation": undefined,
                                       },
                                       "type": "container",
                                     },
@@ -2781,7 +2783,7 @@
                   "_visit": [Function],
                   "container": {
                     "_visit": [Function],
-                    "list": {
+                    "itemType": {
                       "_visit": [Function],
                       "primitive": {
                         "v1": "STRING",
@@ -2800,6 +2802,7 @@
                       "type": "primitive",
                     },
                     "type": "list",
+                    "validation": undefined,
                   },
                   "type": "container",
                 },

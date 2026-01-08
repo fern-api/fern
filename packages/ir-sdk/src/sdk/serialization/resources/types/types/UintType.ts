@@ -9,11 +9,13 @@ import { UintValidationRules } from "./UintValidationRules";
 
 export const UintType: core.serialization.ObjectSchema<serializers.UintType.Raw, FernIr.UintType> =
     core.serialization.objectWithoutOptionalProperties({
+        default: core.serialization.number().optional(),
         validation: UintValidationRules.optional(),
     });
 
 export declare namespace UintType {
     export interface Raw {
+        default?: number | null;
         validation?: UintValidationRules.Raw | null;
     }
 }

@@ -5,5 +5,6 @@
 import * as FernIr from "../../../index";
 
 export interface FloatType {
+    default: number | undefined;
     validation: FernIr.FloatValidationRules | undefined;
 }

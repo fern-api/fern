@@ -318,6 +318,7 @@ types:
 
   UintType:
     properties:
+      default: optional<uint>
       validation: optional<UintValidationRules>
 
   UintValidationRules:
@@ -330,6 +331,7 @@ types:
 
   Uint64Type:
     properties:
+      default: optional<uint64>
       validation: optional<Uint64ValidationRules>
 
   Uint64ValidationRules:
@@ -342,6 +344,7 @@ types:
 
   FloatType:
     properties:
+      default: optional<float>
       validation: optional<FloatValidationRules>
 
   FloatValidationRules:

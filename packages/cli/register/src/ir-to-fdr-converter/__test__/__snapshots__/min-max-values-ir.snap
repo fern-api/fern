@@ -1487,7 +1487,7 @@
                   "_visit": [Function],
                   "container": {
                     "_visit": [Function],
-                    "list": {
+                    "itemType": {
                       "_visit": [Function],
                       "primitive": {
                         "v1": "STRING",
@@ -1506,6 +1506,10 @@
                       "type": "primitive",
                     },
                     "type": "list",
+                    "validation": {
+                      "maxLength": 10,
+                      "minLength": 1,
+                    },
                   },
                   "type": "container",
                 },
@@ -1556,7 +1560,7 @@
                   "_visit": [Function],
                   "container": {
                     "_visit": [Function],
-                    "list": {
+                    "itemType": {
                       "_visit": [Function],
                       "primitive": {
                         "v1": "STRING",
@@ -1575,6 +1579,10 @@
                       "type": "primitive",
                     },
                     "type": "list",
+                    "validation": {
+                      "maxLength": 5,
+                      "minLength": 1,
+                    },
                   },
                   "type": "container",
                 },
@@ -1637,6 +1645,7 @@
                       "type": "primitive",
                     },
                     "type": "map",
+                    "validation": undefined,
                     "valueType": {
                       "_visit": [Function],
                       "primitive": {
@@ -1717,6 +1726,7 @@
                       "type": "primitive",
                     },
                     "type": "map",
+                    "validation": undefined,
                     "valueType": {
                       "_visit": [Function],
                       "primitive": {
@@ -1944,7 +1954,7 @@
                   "_visit": [Function],
                   "container": {
                     "_visit": [Function],
-                    "list": {
+                    "itemType": {
                       "_visit": [Function],
                       "primitive": {
                         "v1": "STRING",
@@ -1963,6 +1973,10 @@
                       "type": "primitive",
                     },
                     "type": "list",
+                    "validation": {
+                      "maxLength": 100,
+                      "minLength": 0,
+                    },
                   },
                   "type": "container",
                 },
@@ -2514,7 +2528,7 @@
                   "_visit": [Function],
                   "container": {
                     "_visit": [Function],
-                    "list": {
+                    "itemType": {
                       "_visit": [Function],
                       "primitive": {
                         "v1": "STRING",
@@ -2533,6 +2547,10 @@
                       "type": "primitive",
                     },
                     "type": "list",
+                    "validation": {
+                      "maxLength": 10,
+                      "minLength": 0,
+                    },
                   },
                   "type": "container",
                 },
@@ -2583,7 +2601,7 @@
                   "_visit": [Function],
                   "container": {
                     "_visit": [Function],
-                    "list": {
+                    "itemType": {
                       "_visit": [Function],
                       "primitive": {
                         "v1": "STRING",
@@ -2602,6 +2620,10 @@
                       "type": "primitive",
                     },
                     "type": "list",
+                    "validation": {
+                      "maxLength": 5,
+                      "minLength": 0,
+                    },
                   },
                   "type": "container",
                 },
@@ -2664,6 +2686,7 @@
                       "type": "primitive",
                     },
                     "type": "map",
+                    "validation": undefined,
                     "valueType": {
                       "_visit": [Function],
                       "primitive": {
@@ -2744,6 +2767,7 @@
                       "type": "primitive",
                     },
                     "type": "map",
+                    "validation": undefined,
                     "valueType": {
                       "_visit": [Function],
                       "primitive": {

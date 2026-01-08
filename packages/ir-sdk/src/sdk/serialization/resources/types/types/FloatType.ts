@@ -9,11 +9,13 @@ import { FloatValidationRules } from "./FloatValidationRules";
 
 export const FloatType: core.serialization.ObjectSchema<serializers.FloatType.Raw, FernIr.FloatType> =
     core.serialization.objectWithoutOptionalProperties({
+        default: core.serialization.number().optional(),
         validation: FloatValidationRules.optional(),
     });
 
 export declare namespace FloatType {
     export interface Raw {
+        default?: number | null;
         validation?: FloatValidationRules.Raw | null;
     }
 }

@@ -432,7 +432,7 @@ export class DynamicSnippetsConverter {
     private convertContainerType(container: ContainerType): DynamicSnippets.TypeReference {
         switch (container.type) {
             case "list":
-                return DynamicSnippets.TypeReference.list(this.convertTypeReference(container.list));
+                return DynamicSnippets.TypeReference.list(this.convertTypeReference(container.itemType));
             case "map":
                 return DynamicSnippets.TypeReference.map({
                     key: this.convertTypeReference(container.keyType),
@@ -443,7 +443,7 @@ export class DynamicSnippetsConverter {
             case "nullable":
                 return DynamicSnippets.TypeReference.nullable(this.convertTypeReference(container.nullable));
             case "set":
-                return DynamicSnippets.TypeReference.set(this.convertTypeReference(container.set));
+                return DynamicSnippets.TypeReference.set(this.convertTypeReference(container.itemType));
             case "literal":
                 return DynamicSnippets.TypeReference.literal(this.convertLiteral(container.literal));
             default:

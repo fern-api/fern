@@ -5,5 +5,6 @@
 import * as FernIr from "../../../index";
 
 export interface Uint64Type {
+    default: number | undefined;
     validation: FernIr.Uint64ValidationRules | undefined;
 }
