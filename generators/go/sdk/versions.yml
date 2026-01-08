@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.22.4
+  changelogEntry:
+    - summary: |
+        Fix wiremock port collisions when running wire tests in parallel. The docker-compose
+        configuration now uses ephemeral ports (0:8080) instead of fixed port 8080, and the
+        generated test code reads the WIREMOCK_PORT environment variable to discover the
+        dynamically assigned port at runtime.
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 60
+
 - version: 1.22.3
   changelogEntry:
     - summary: |
