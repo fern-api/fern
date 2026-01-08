@@ -448,7 +448,12 @@ export class WireTestGenerator {
             };
 
             // Generate just the method call AST using DynamicSnippetsGenerator
-            return this.snippetGenerator.generateMethodCallSnippetAst(snippetRequest);
+            // Use the endpoint ID directly to avoid path collision issues when multiple
+            // namespaces have endpoints with the same HTTP method and path pattern
+            return this.snippetGenerator.generateMethodCallSnippetAstById({
+                endpointId: endpoint.id,
+                request: snippetRequest
+            });
         } catch (error) {
             // Fallback: log error and generate a placeholder
             this.context.logger.error(
