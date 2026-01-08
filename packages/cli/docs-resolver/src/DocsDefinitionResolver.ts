@@ -1353,9 +1353,7 @@ export class DocsDefinitionResolver {
      *
      * This placeholder returns a hidden section that will be replaced/augmented by FDR.
      */
-    private toLibrarySectionPlaceholder(
-        parentSlug: FernNavigation.V1.SlugGenerator
-    ): FernNavigation.V1.SectionNode {
+    private toLibrarySectionPlaceholder(parentSlug: FernNavigation.V1.SlugGenerator): FernNavigation.V1.SectionNode {
         // Return a hidden placeholder section - FDR will append the actual library docs
         const slug = parentSlug.apply({ urlSlug: "library-docs", skipUrlSlug: true });
         return {
