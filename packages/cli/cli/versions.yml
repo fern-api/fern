@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        Fix `security: []` handling in OpenAPI importer to correctly mark endpoints as not requiring authentication.
+      type: fix
+  createdAt: "2026-01-10"
+  irVersion: 62
 
 - version: 3.37.3
   changelogEntry:
