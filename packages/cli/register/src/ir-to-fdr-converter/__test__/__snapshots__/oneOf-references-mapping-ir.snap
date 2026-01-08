@@ -2115,7 +2115,6 @@
                       "type": "primitive",
                     },
                     "type": "map",
-                    "validation": undefined,
                     "valueType": {
                       "_visit": [Function],
                       "primitive": {

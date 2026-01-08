@@ -509,7 +509,7 @@
               "_visit": [Function],
               "container": {
                 "_visit": [Function],
-                "itemType": {
+                "list": {
                   "_visit": [Function],
                   "default": undefined,
                   "displayName": undefined,
@@ -542,7 +542,6 @@
                   "typeId": "RateTier",
                 },
                 "type": "list",
-                "validation": undefined,
               },
               "type": "container",
             },

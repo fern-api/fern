@@ -329,7 +329,7 @@
                   "_visit": [Function],
                   "container": {
                     "_visit": [Function],
-                    "itemType": {
+                    "list": {
                       "_visit": [Function],
                       "default": undefined,
                       "displayName": undefined,
@@ -362,7 +362,6 @@
                       "typeId": "User",
                     },
                     "type": "list",
-                    "validation": undefined,
                   },
                   "type": "container",
                 },
@@ -453,7 +452,7 @@
                       "_visit": [Function],
                       "container": {
                         "_visit": [Function],
-                        "itemType": {
+                        "list": {
                           "_visit": [Function],
                           "default": undefined,
                           "displayName": undefined,
@@ -486,7 +485,6 @@
                           "typeId": "User",
                         },
                         "type": "list",
-                        "validation": undefined,
                       },
                       "type": "container",
                     },

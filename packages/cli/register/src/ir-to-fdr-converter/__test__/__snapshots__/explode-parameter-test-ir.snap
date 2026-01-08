@@ -566,7 +566,7 @@
                     "_visit": [Function],
                     "container": {
                       "_visit": [Function],
-                      "itemType": {
+                      "list": {
                         "_visit": [Function],
                         "primitive": {
                           "v1": "STRING",
@@ -585,7 +585,6 @@
                         "type": "primitive",
                       },
                       "type": "list",
-                      "validation": undefined,
                     },
                     "type": "container",
                   },
@@ -637,7 +636,7 @@
                     "_visit": [Function],
                     "container": {
                       "_visit": [Function],
-                      "itemType": {
+                      "list": {
                         "_visit": [Function],
                         "primitive": {
                           "v1": "STRING",
@@ -656,7 +655,6 @@
                         "type": "primitive",
                       },
                       "type": "list",
-                      "validation": undefined,
                     },
                     "type": "container",
                   },
@@ -708,7 +706,7 @@
                     "_visit": [Function],
                     "container": {
                       "_visit": [Function],
-                      "itemType": {
+                      "list": {
                         "_visit": [Function],
                         "primitive": {
                           "v1": "STRING",
@@ -727,7 +725,6 @@
                         "type": "primitive",
                       },
                       "type": "list",
-                      "validation": undefined,
                     },
                     "type": "container",
                   },
@@ -779,7 +776,7 @@
                     "_visit": [Function],
                     "container": {
                       "_visit": [Function],
-                      "itemType": {
+                      "list": {
                         "_visit": [Function],
                         "primitive": {
                           "v1": "STRING",
@@ -798,7 +795,6 @@
                         "type": "primitive",
                       },
                       "type": "list",
-                      "validation": undefined,
                     },
                     "type": "container",
                   },
@@ -881,7 +877,7 @@
                   "_visit": [Function],
                   "container": {
                     "_visit": [Function],
-                    "itemType": {
+                    "list": {
                       "_visit": [Function],
                       "default": undefined,
                       "displayName": undefined,
@@ -914,7 +910,6 @@
                       "typeId": "Item",
                     },
                     "type": "list",
-                    "validation": undefined,
                   },
                   "type": "container",
                 },
@@ -1005,7 +1000,7 @@
                       "_visit": [Function],
                       "container": {
                         "_visit": [Function],
-                        "itemType": {
+                        "list": {
                           "_visit": [Function],
                           "default": undefined,
                           "displayName": undefined,
@@ -1038,7 +1033,6 @@
                           "typeId": "Item",
                         },
                         "type": "list",
-                        "validation": undefined,
                       },
                       "type": "container",
                     },
@@ -1595,7 +1589,7 @@
                   "_visit": [Function],
                   "container": {
                     "_visit": [Function],
-                    "itemType": {
+                    "list": {
                       "_visit": [Function],
                       "primitive": {
                         "v1": "STRING",
@@ -1614,7 +1608,6 @@
                       "type": "primitive",
                     },
                     "type": "list",
-                    "validation": undefined,
                   },
                   "type": "container",
                 },
@@ -1886,7 +1879,6 @@
                       "type": "primitive",
                     },
                     "type": "map",
-                    "validation": undefined,
                     "valueType": {
                       "_visit": [Function],
                       "type": "unknown",
