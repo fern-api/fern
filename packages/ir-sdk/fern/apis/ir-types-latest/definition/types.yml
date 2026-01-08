@@ -229,12 +229,6 @@ types:
     properties:
       keyType: TypeReference
       valueType: TypeReference
-      validation: optional<MapValidationRules>
-
-  MapValidationRules:
-    properties:
-      minProperties: optional<integer>
-      maxProperties: optional<integer>
 
   PrimitiveType:
     properties:

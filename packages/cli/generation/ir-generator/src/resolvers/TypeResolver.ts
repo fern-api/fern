@@ -150,8 +150,7 @@ export class TypeResolverImpl implements TypeResolver {
                               originalTypeReference: TypeReference.container(
                                   ContainerType.map({
                                       keyType: keyType.originalTypeReference,
-                                      valueType: valueType.originalTypeReference,
-                                      validation: undefined
+                                      valueType: valueType.originalTypeReference
                                   })
                               )
                           }
@@ -165,10 +164,7 @@ export class TypeResolverImpl implements TypeResolver {
                                   itemType
                               },
                               originalTypeReference: TypeReference.container(
-                                  ContainerType.list({
-                                      itemType: itemType.originalTypeReference,
-                                      validation: undefined
-                                  })
+                                  ContainerType.list(itemType.originalTypeReference)
                               )
                           }
                         : undefined,
@@ -207,10 +203,7 @@ export class TypeResolverImpl implements TypeResolver {
                                   itemType
                               },
                               originalTypeReference: TypeReference.container(
-                                  ContainerType.set({
-                                      itemType: itemType.originalTypeReference,
-                                      validation: undefined
-                                  })
+                                  ContainerType.set(itemType.originalTypeReference)
                               )
                           }
                         : undefined,

@@ -451,7 +451,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
     } {
         if (this.context.isList(typeReference)) {
             return this.recursivelyCheckTypeReferenceIsFile({
-                typeReference: typeReference.container.itemType,
+                typeReference: typeReference.container.list,
                 isOptional,
                 isArray: true
             });

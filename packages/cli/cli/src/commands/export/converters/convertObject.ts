@@ -37,7 +37,7 @@ export function convertObject({
             objectProperty.example != null &&
             objectProperty.valueType.type === "container" &&
             objectProperty.valueType.container.type === "list" &&
-            objectProperty.valueType.container.itemType.type === "primitive"
+            objectProperty.valueType.container.list.type === "primitive"
         ) {
             example = objectProperty.example.value.jsonExample;
         }

@@ -7,5 +7,4 @@ import * as FernIr from "../../../index";
 export interface MapType {
     keyType: FernIr.TypeReference;
     valueType: FernIr.TypeReference;
-    validation: FernIr.MapValidationRules | undefined;
 }
