@@ -336,6 +336,18 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return endpoints;
     }
 
+    public resolveEndpointById(endpointId: FernIr.dynamic.EndpointId): FernIr.dynamic.Endpoint | undefined {
+        return this._ir.endpoints[endpointId];
+    }
+
+    public resolveEndpointByIdOrThrow(endpointId: FernIr.dynamic.EndpointId): FernIr.dynamic.Endpoint {
+        const endpoint = this.resolveEndpointById(endpointId);
+        if (endpoint == null) {
+            throw new Error(`Failed to find endpoint with ID "${endpointId}"`);
+        }
+        return endpoint;
+    }
+
     public needsRequestParameter({
         request,
         inlinePathParameters,
