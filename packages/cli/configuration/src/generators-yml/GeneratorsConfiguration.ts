@@ -159,6 +159,11 @@ export interface GeneratorInvocation {
     readme: ReadmeSchema | undefined;
     settings: ApiDefinitionSettingsSchema | undefined;
     /**
+     * If true, generates the complete project including package.json, pyproject.toml, etc.
+     * Defaults to false when not specified.
+     */
+    generateFullProject: boolean;
+    /**
      * Override the API configuration for this generator.
      * When provided, these values take precedence over the top-level api configuration.
      */

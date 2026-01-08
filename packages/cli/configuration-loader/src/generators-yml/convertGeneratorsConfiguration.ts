@@ -577,6 +577,10 @@ async function convertGenerator({
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
         settings: generator.api?.settings ?? undefined,
+        generateFullProject:
+            generator.output?.location === "local-file-system"
+                ? (generator.output.generateFullProject ?? false)
+                : false,
         apiOverride:
             generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null
                 ? {

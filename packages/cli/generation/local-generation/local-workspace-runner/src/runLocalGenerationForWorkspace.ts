@@ -553,7 +553,7 @@ function getPublishConfig({
         }
 
         return FernIr.PublishingConfig.filesystem({
-            generateFullProject: org?.selfHostedSdKs ?? false,
+            generateFullProject: generatorInvocation.generateFullProject || (org?.selfHostedSdKs ?? false),
             publishTarget
         });
     }
@@ -561,7 +561,7 @@ function getPublishConfig({
     return generatorInvocation.outputMode._visit({
         downloadFiles: () => {
             return FernIr.PublishingConfig.filesystem({
-                generateFullProject: org?.selfHostedSdKs ?? false,
+                generateFullProject: generatorInvocation.generateFullProject || (org?.selfHostedSdKs ?? false),
                 publishTarget: undefined
             });
         },
