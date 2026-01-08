@@ -1035,16 +1035,16 @@ export class IntermediateRepresentationChangeDetector {
             case "list":
                 if (to.type === "list") {
                     return this.areTypeReferencesCompatible({
-                        from: from.itemType,
-                        to: to.itemType
+                        from: from.list,
+                        to: to.list
                     });
                 }
                 break;
             case "set":
                 if (to.type === "set") {
                     return this.areTypeReferencesCompatible({
-                        from: from.itemType,
-                        to: to.itemType
+                        from: from.set,
+                        to: to.set
                     });
                 }
                 break;

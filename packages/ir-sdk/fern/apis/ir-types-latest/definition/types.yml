@@ -208,7 +208,9 @@ types:
       value: _type
       name: type
     union:
-      list: ListType
+      list:
+        type: TypeReference
+        key: list
       map: MapType
       nullable:
         type: TypeReference
@@ -216,30 +218,12 @@ types:
       optional:
         type: TypeReference
         key: optional
-      set: SetType
+      set:
+        type: TypeReference
+        key: set
       literal:
         type: Literal
         key: literal
-
-  ListType:
-    properties:
-      itemType: TypeReference
-      validation: optional<ListValidationRules>
-
-  ListValidationRules:
-    properties:
-      minLength: optional<integer>
-      maxLength: optional<integer>
-
-  SetType:
-    properties:
-      itemType: TypeReference
-      validation: optional<SetValidationRules>
-
-  SetValidationRules:
-    properties:
-      minLength: optional<integer>
-      maxLength: optional<integer>
 
   MapType:
     properties:

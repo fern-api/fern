@@ -16,7 +16,7 @@ export function convertContainerToJsonSchema({
         case "list":
             return {
                 type: "array",
-                items: convertTypeReferenceToJsonSchema({ typeReference: container.itemType, context })
+                items: convertTypeReferenceToJsonSchema({ typeReference: container.list, context })
             };
         case "map":
             return {
@@ -51,7 +51,7 @@ export function convertContainerToJsonSchema({
         case "set":
             return {
                 type: "array",
-                items: convertTypeReferenceToJsonSchema({ typeReference: container.itemType, context }),
+                items: convertTypeReferenceToJsonSchema({ typeReference: container.set, context }),
                 uniqueItems: true
             };
         // biome-ignore lint/suspicious/noFallthroughSwitchClause: allow
