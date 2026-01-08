@@ -986,7 +986,7 @@ describe("applyOpenAPIOverlay", () => {
 
     it("should handle root-level targeting to add and modify top-level properties", () => {
         // Spec requirement: Actions can target the root document with $
-        // This test verifies targeting `$` to add new top-level sections and modify existing ones
+        // Check adding/updating top-level properties and removing top-level properties
         const data = {
             openapi: "3.0.0",
             info: {
@@ -997,6 +997,21 @@ describe("applyOpenAPIOverlay", () => {
                 "/users": {
                     get: {
                         summary: "Get users"
+                    }
+                }
+            },
+            tags: [
+                {
+                    name: "legacy",
+                    description: "Legacy endpoints"
+                }
+            ],
+            components: {
+                securitySchemes: {
+                    apiKey: {
+                        type: "apiKey",
+                        in: "header",
+                        name: "X-API-Key"
                     }
                 }
             }
@@ -1034,6 +1049,18 @@ describe("applyOpenAPIOverlay", () => {
                         }
                     },
                     remove: false
+                },
+                {
+                    target: "$.tags",
+                    description: "Remove tags top-level property",
+                    update: {},
+                    remove: true
+                },
+                {
+                    target: "$.components",
+                    description: "Remove components top-level property",
+                    update: {},
+                    remove: true
                 }
             ]
         };

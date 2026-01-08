@@ -29,11 +29,15 @@ export function applyOpenAPIOverlay<T extends object>({
         for (const { value, parent, parentProperty } of results) {
             // When parent is null, this indicates we're targeting the root
             if (parent == null) {
-                // Root-level targeting - merge directly into the data object
                 if (action.remove) {
                     // Root removal doesn't make sense in this context
                     throw new Error(`Cannot remove the root object with path: ${action.target}`);
                 } else {
+                    if (typeof action.update !== "object" || action.update == null) {
+                        throw new Error(
+                            `Update values must be objects or arrays. Value provided for path ${action.target} is of type ${typeof action.update}`
+                        );
+                    }
                     // Merge the update directly into the root data object
                     mergeWithOverrides({ data, overrides: action.update });
                 }
