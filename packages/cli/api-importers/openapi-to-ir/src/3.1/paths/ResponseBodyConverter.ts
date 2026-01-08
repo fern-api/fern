@@ -8,7 +8,12 @@ import {
     TypeReference,
     V2SchemaExamples
 } from "@fern-api/ir-sdk";
-import { AbstractConverter, Converters, ExampleConverter, SchemaOrReferenceConverter } from "@fern-api/v3-importer-commons";
+import {
+    AbstractConverter,
+    Converters,
+    ExampleConverter,
+    SchemaOrReferenceConverter
+} from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
 import { FernStreamingExtension } from "../../extensions/x-fern-streaming";
