@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.36.1
+- version: 3.37.0
   changelogEntry:
     - summary: |
         Add Excel file support (.xlsx) to the allowed file types for documentation uploads. This enables users to host Excel files using the `<Download />` component.
