@@ -124,12 +124,64 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
                     if property_as_union.type == "bodyProperty" and property_as_union.content_type is not None:
                         continue
                     elif property_as_union.type == "bodyProperty":
-                        writer.write_line(
-                            f'"{property_as_union.name.wire_value}": {self._get_body_property_name(property_as_union)},'
-                        )
+                        prop_name = self._get_body_property_name(property_as_union)
+                        # For multipart form data, httpx expects primitive types (str, int, etc.)
+                        # Object types need to be JSON serialized as strings
+                        if self._is_primitive_type(property_as_union.value_type):
+                            writer.write_line(f'"{property_as_union.name.wire_value}": {prop_name},')
+                        else:
+                            # JSON serialize complex types for multipart form compatibility
+                            writer.write(f'"{property_as_union.name.wire_value}": ')
+                            writer.write_node(
+                                AST.Expression(
+                                    Json.dumps(
+                                        AST.Expression(
+                                            self._context.core_utilities.jsonable_encoder(AST.Expression(prop_name))
+                                        )
+                                    )
+                                )
+                            )
+                            writer.write_line(",")
             writer.write_line("}")
 
         return AST.Expression(AST.CodeWriter(write))
+
+    def _is_primitive_type(self, type_reference: ir_types.TypeReference) -> bool:
+        """Check if a type is a primitive that can be used directly in multipart form data."""
+        HTTPX_PRIMITIVE_TYPES = {
+            ir_types.PrimitiveTypeV1.STRING,
+            ir_types.PrimitiveTypeV1.INTEGER,
+            ir_types.PrimitiveTypeV1.DOUBLE,
+            ir_types.PrimitiveTypeV1.BOOLEAN,
+            ir_types.PrimitiveTypeV1.LONG,
+            ir_types.PrimitiveTypeV1.UINT,
+            ir_types.PrimitiveTypeV1.UINT_64,
+            ir_types.PrimitiveTypeV1.FLOAT,
+        }
+
+        def check_type(tr: ir_types.TypeReference) -> bool:
+            union = tr.get_as_union()
+            if union.type == "primitive":
+                return union.primitive.v_1 in HTTPX_PRIMITIVE_TYPES
+            elif union.type == "container":
+                container = union.container.get_as_union()
+                if container.type == "optional":
+                    return check_type(container.optional)
+                elif container.type == "nullable":
+                    return check_type(container.nullable)
+                return False
+            elif union.type == "named":
+                # Named types (objects, enums, aliases) need to be checked further
+                type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(union.type_id)
+                shape = type_declaration.shape.get_as_union()
+                if shape.type == "alias":
+                    return check_type(shape.alias_of)
+                elif shape.type == "enum":
+                    return True  # Enums serialize to their string value
+                return False  # Objects and unions need JSON serialization
+            return False
+
+        return check_type(type_reference)
 
     def get_files(self) -> Optional[AST.Expression]:
         def write(writer: AST.NodeWriter) -> None:
