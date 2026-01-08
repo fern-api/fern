@@ -17,28 +17,29 @@ export class BearerAuthProvider implements core.AuthProvider {
         return options?.[TOKEN_PARAM] != null || process.env?.[ENV_TOKEN] != null;
     }
 
-    public async getAuthRequest({
-        endpointMetadata,
-    }: {
-        endpointMetadata?: core.EndpointMetadata;
-    } = {}): Promise<core.AuthRequest> {
-        const apiKey = (await core.Supplier.get(this.options[TOKEN_PARAM])) ?? process.env?.[ENV_TOKEN];
-        if (apiKey == null) {
-            throw new errors.SeedBearerTokenEnvironmentVariableError({
-                message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
-            });
-        }
+    public async getAuthRequest({ endpointMetadata }: {
+            endpointMetadata?: core.EndpointMetadata;
+        } = {}): Promise<core.AuthRequest> {
 
-        return {
-            headers: { Authorization: `Bearer ${apiKey}` },
-        };
+                const apiKey = 
+                    (await core.Supplier.get(this.options[TOKEN_PARAM])) ??
+                    process.env?.[ENV_TOKEN];
+                if (apiKey == null) {
+                    throw new errors.SeedBearerTokenEnvironmentVariableError({
+                        message: BearerAuthProvider.AUTH_CONFIG_ERROR_MESSAGE,
+                    });
+                }
+
+                return {
+                    headers: { Authorization: `Bearer ${apiKey}` },
+                };
+                
     }
 }
 
 export namespace BearerAuthProvider {
     export const AUTH_SCHEME = "Bearer" as const;
-    export const AUTH_CONFIG_ERROR_MESSAGE: string =
-        `Please provide '${TOKEN_PARAM}' when initializing the client, or set the '${ENV_TOKEN}' environment variable` as const;
+    export const AUTH_CONFIG_ERROR_MESSAGE: string = `Please provide '${TOKEN_PARAM}' when initializing the client, or set the '${ENV_TOKEN}' environment variable` as const;
     export type Options = AuthOptions;
     export type AuthOptions = { [TOKEN_PARAM]?: core.Supplier<core.BearerToken> | undefined };
 

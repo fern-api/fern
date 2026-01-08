@@ -2,7 +2,7 @@
 
 import * as core from "../../../../core/index.js";
 import { fromJson, toJson } from "../../../../core/json.js";
-import type * as SeedWebsocketBearerAuth from "../../../index.js";
+import * as SeedWebsocketBearerAuth from "../../../index.js";
 
 export declare namespace RealtimeNoAuthSocket {
     export interface Args {
@@ -11,31 +11,31 @@ export declare namespace RealtimeNoAuthSocket {
 
     export type Response = SeedWebsocketBearerAuth.NoAuthReceiveEvent;
     type EventHandlers = {
-        open?: () => void;
-        message?: (message: Response) => void;
-        close?: (event: core.CloseEvent) => void;
-        error?: (error: Error) => void;
-    };
+            open?: () => void;
+            message?: (message: Response) => void;
+            close?: (event: core.CloseEvent) => void;
+            error?: (error: Error) => void;
+        };
 }
 
 export class RealtimeNoAuthSocket {
     public readonly socket: core.ReconnectingWebSocket;
     protected readonly eventHandlers: RealtimeNoAuthSocket.EventHandlers = {};
     private handleOpen: () => void = () => {
-        this.eventHandlers.open?.();
-    };
-    private handleMessage: (event: { data: string }) => void = (event) => {
-        const data = fromJson(event.data);
-
-        this.eventHandlers.message?.(data as RealtimeNoAuthSocket.Response);
-    };
-    private handleClose: (event: core.CloseEvent) => void = (event) => {
-        this.eventHandlers.close?.(event);
-    };
-    private handleError: (event: core.ErrorEvent) => void = (event) => {
-        const message = event.message;
-        this.eventHandlers.error?.(new Error(message));
-    };
+                this.eventHandlers.open?.();
+            };
+    private handleMessage: (event: { data: string }) => void = event => {
+                const data = fromJson(event.data);
+            
+            this.eventHandlers.message?.(data as RealtimeNoAuthSocket.Response);
+            };
+    private handleClose: (event: core.CloseEvent) => void = event => {
+                this.eventHandlers.close?.(event);
+            };
+    private handleError: (event: core.ErrorEvent) => void = event => {
+                const message = event.message;
+                this.eventHandlers.error?.(new Error(message));
+            };
 
     constructor(args: RealtimeNoAuthSocket.Args) {
         this.socket = args.socket;
@@ -60,10 +60,7 @@ export class RealtimeNoAuthSocket {
      * });
      * ```
      */
-    public on<T extends keyof RealtimeNoAuthSocket.EventHandlers>(
-        event: T,
-        callback: RealtimeNoAuthSocket.EventHandlers[T],
-    ): void {
+    public on<T extends keyof RealtimeNoAuthSocket.EventHandlers>(event: T, callback: RealtimeNoAuthSocket.EventHandlers[T]): void {
         this.eventHandlers[event] = callback;
     }
 
@@ -75,21 +72,21 @@ export class RealtimeNoAuthSocket {
     /** Connect to the websocket and register event handlers. */
     public connect(): RealtimeNoAuthSocket {
         this.socket.reconnect();
-
+        
         this.socket.addEventListener("open", this.handleOpen);
         this.socket.addEventListener("message", this.handleMessage);
         this.socket.addEventListener("close", this.handleClose);
         this.socket.addEventListener("error", this.handleError);
-
+        
         return this;
     }
 
     /** Close the websocket and unregister event handlers. */
     public close(): void {
         this.socket.close();
-
+        
         this.handleClose({ code: 1000 } as CloseEvent);
-
+        
         this.socket.removeEventListener("open", this.handleOpen);
         this.socket.removeEventListener("message", this.handleMessage);
         this.socket.removeEventListener("close", this.handleClose);
@@ -106,7 +103,7 @@ export class RealtimeNoAuthSocket {
             this.socket.addEventListener("open", () => {
                 resolve(this.socket);
             });
-
+        
             this.socket.addEventListener("error", (event: unknown) => {
                 reject(event);
             });
@@ -118,6 +115,8 @@ export class RealtimeNoAuthSocket {
         if (!this.socket) {
             throw new Error("Socket is not connected.");
         }
+
+        
 
         if (this.socket.readyState !== core.ReconnectingWebSocket.OPEN) {
             throw new Error("Socket is not open.");

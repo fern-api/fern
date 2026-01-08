@@ -1,3 +1,4 @@
+
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Node18FormData, WebFormData } from "../../../src/core/form-data-utils/FormDataWrapper";
 
@@ -16,7 +17,7 @@ describe("CrossPlatformFormData", () => {
 
             await formData.appendFile("file", {
                 data: value,
-                filename,
+                filename
             });
 
             const request = await formData.getRequest();
@@ -34,7 +35,7 @@ describe("CrossPlatformFormData", () => {
 
             await formData.appendFile("file", {
                 data: value,
-                filename,
+                filename
             });
 
             const request = await formData.getRequest();
@@ -52,7 +53,7 @@ describe("CrossPlatformFormData", () => {
 
             await formData.appendFile("file", {
                 data: value,
-                filename,
+                filename
             });
 
             const request = await formData.getRequest();
@@ -92,7 +93,7 @@ describe("CrossPlatformFormData", () => {
             for await (const chunk of request.body) {
                 data += decoder.decode(chunk);
             }
-            expect(data).toContain(`Content-Disposition: form-data; name=\"file\"; filename=\"${expectedFileName}\"`);
+            expect(data).toContain("Content-Disposition: form-data; name=\"file\"; filename=\"" + expectedFileName + "\"");
         });
     });
 
@@ -110,7 +111,7 @@ describe("CrossPlatformFormData", () => {
 
             await formData.appendFile("file", {
                 data: value,
-                filename,
+                filename
             });
 
             const request = formData.getRequest();
@@ -123,7 +124,7 @@ describe("CrossPlatformFormData", () => {
 
             await formData.appendFile("file", {
                 data: value,
-                filename,
+                filename
             });
 
             const request = formData.getRequest();
@@ -147,7 +148,7 @@ describe("CrossPlatformFormData", () => {
 
             await formData.appendFile("file", {
                 data: value,
-                filename: "test.txt",
+                filename: "test.txt"
             });
 
             const request = formData.getRequest();

@@ -4,31 +4,49 @@ import { SeedEnumClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("QueryParamClient", () => {
+    
     test("send", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedEnumClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedEnumClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        
+        server
+            .mockEndpoint()
+            .post("/query").respondWith()
+            .statusCode(200).build();
 
-        server.mockEndpoint().post("/query").respondWith().statusCode(200).build();
-
-        const response = await client.queryParam.send({
-            operand: ">",
-            operandOrColor: "red",
-        });
-        expect(response).toEqual(undefined);
+        
+                    
+                            const response = await client.queryParam.send({
+    operand: ">",
+    operandOrColor: "red"
+});
+                            expect(response).toEqual(undefined);
+                          
+                
     });
-
+          
     test("sendList", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedEnumClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedEnumClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        
+        server
+            .mockEndpoint()
+            .post("/query-list").respondWith()
+            .statusCode(200).build();
 
-        server.mockEndpoint().post("/query-list").respondWith().statusCode(200).build();
-
-        const response = await client.queryParam.sendList({
-            operand: ">",
-            maybeOperand: ">",
-            operandOrColor: "red",
-            maybeOperandOrColor: "red",
-        });
-        expect(response).toEqual(undefined);
+        
+                    
+                            const response = await client.queryParam.sendList({
+    operand: ">",
+    maybeOperand: ">",
+    operandOrColor: "red",
+    maybeOperandOrColor: "red"
+});
+                            expect(response).toEqual(undefined);
+                          
+                
     });
+          
 });

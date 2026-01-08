@@ -242,6 +242,12 @@ export class WireMock {
         if (!path.startsWith("/")) {
             path = "/" + path;
         }
+        // Strip URL fragment - fragments are never sent to the server in HTTP requests
+        // e.g., "/oauth2/token#refresh" -> "/oauth2/token"
+        const fragmentIndex = path.indexOf("#");
+        if (fragmentIndex !== -1) {
+            path = path.substring(0, fragmentIndex);
+        }
         return path;
     }
 

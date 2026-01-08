@@ -4,59 +4,59 @@ import { SeedUnknownAsAnyClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("UnknownClient", () => {
+    
     test("post", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnknownAsAnyClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { key: "value" };
-        const rawResponseBody = [{ key: "value" }, { key: "value" }];
+        const client = new SeedUnknownAsAnyClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "key" : "value" };
+        const rawResponseBody = [ { "key" : "value" } , { "key" : "value" } ];
         server
             .mockEndpoint()
-            .post("")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.unknown.post({
-            key: "value",
-        });
-        expect(response).toEqual([
-            {
-                key: "value",
-            },
-            {
-                key: "value",
-            },
-        ]);
+        
+                    
+                            const response = await client.unknown.post({
+    "key": "value"
+});
+                            expect(response).toEqual([{
+        "key": "value"
+    }, {
+        "key": "value"
+    }]);
+                          
+                
     });
-
+          
     test("postObject", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnknownAsAnyClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { unknown: { key: "value" } };
-        const rawResponseBody = [{ key: "value" }, { key: "value" }];
+        const client = new SeedUnknownAsAnyClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "unknown" : { "key" : "value" } };
+        const rawResponseBody = [ { "key" : "value" } , { "key" : "value" } ];
         server
             .mockEndpoint()
-            .post("/with-object")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/with-object").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.unknown.postObject({
-            unknown: {
-                key: "value",
-            },
-        });
-        expect(response).toEqual([
-            {
-                key: "value",
-            },
-            {
-                key: "value",
-            },
-        ]);
+        
+                    
+                            const response = await client.unknown.postObject({
+    unknown: {
+        "key": "value"
+    }
+});
+                            expect(response).toEqual([{
+        "key": "value"
+    }, {
+        "key": "value"
+    }]);
+                          
+                
     });
+          
 });

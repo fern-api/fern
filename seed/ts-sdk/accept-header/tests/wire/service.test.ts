@@ -5,25 +5,40 @@ import { SeedAcceptClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("ServiceClient", () => {
+    
     test("endpoint (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedAcceptClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const client = new SeedAcceptClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
+        
+        
+        server
+            .mockEndpoint()
+            .delete("/container/").respondWith()
+            .statusCode(200).build();
 
-        server.mockEndpoint().delete("/container/").respondWith().statusCode(200).build();
-
-        const response = await client.service.endpoint();
-        expect(response).toEqual(undefined);
+        
+                    
+                            const response = await client.service.endpoint();
+                            expect(response).toEqual(undefined);
+                          
+                
     });
-
+          
     test("endpoint (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedAcceptClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const client = new SeedAcceptClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "key" : "value" };
+        server
+            .mockEndpoint()
+            .delete("/container/").respondWith()
+            .statusCode(404).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = { key: "value" };
-        server.mockEndpoint().delete("/container/").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
-
-        await expect(async () => {
-            return await client.service.endpoint();
-        }).rejects.toThrow(SeedAccept.NotFoundError);
+        
+            await expect(async () => {
+                return await client.service.endpoint()
+            }).rejects.toThrow(SeedAccept.NotFoundError);
     });
+          
 });

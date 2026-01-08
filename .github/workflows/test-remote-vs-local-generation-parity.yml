@@ -1,9 +1,6 @@
 name: Test Remote vs Local Generation Parity
 
 on:
-  # Runs every morning at 8:00 AM Eastern Time (1:00 PM UTC)
-  # schedule:
-  #   - cron: "0 13 * * *"
   # Runs when triggered manually
   workflow_dispatch:
     inputs:
@@ -25,7 +22,15 @@ env:
 jobs:
   test-remote-local-parity:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        generator:
+          - ts-sdk
+          - java-sdk
+          - go-sdk
+          - python-sdk
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -44,8 +49,8 @@ jobs:
       - name: Build Seed CLI
         run: pnpm seed:build
 
-      - name: Run Seed Test Remote-Local (GitHub Output Mode)
-        run: pnpm seed test-remote-local --output-mode github
+      - name: Run Seed Test Remote-Local (${{ matrix.generator }})
+        run: pnpm seed test-remote-local --generator ${{ matrix.generator }} --output-mode github
         env:
           FERN_TOKEN: ${{ secrets.FERN_FERN_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.TEST_REMOTE_LOCAL_GITHUB_TOKEN }}

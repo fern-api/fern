@@ -4,26 +4,30 @@ import { SeedStreamingClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("DummyClient", () => {
+    
     test("generate", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedStreamingClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { stream: false, num_events: 5 };
-        const rawResponseBody = { id: "id", name: "name" };
+        const client = new SeedStreamingClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        const rawRequestBody = { "stream" : false , "num_events" : 5 };
+        const rawResponseBody = { "id" : "id" , "name" : "name" };
         server
             .mockEndpoint()
-            .post("/generate")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/generate").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.dummy.generate({
-            numEvents: 5,
-        });
-        expect(response).toEqual({
-            id: "id",
-            name: "name",
-        });
+        
+                    
+                            const response = await client.dummy.generate({
+    numEvents: 5
+});
+                            expect(response).toEqual({
+    id: "id",
+    name: "name"
+});
+                          
+                
     });
+          
 });

@@ -64,6 +64,24 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         );
     }
 
+    /**
+     * Generates just the method call AST without the client instantiation, using the endpoint ID directly.
+     * This is useful for wire tests where the client is created separately with test-specific configuration,
+     * and when there are multiple endpoints with the same HTTP method and path pattern across different namespaces.
+     */
+    public generateMethodCallSnippetAstById({
+        endpointId,
+        request
+    }: {
+        endpointId: FernIr.dynamic.EndpointId;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+    }): python.AstNode {
+        const endpoint = this.context.resolveEndpointByIdOrThrow(endpointId);
+        const context = this.context.clone() as DynamicSnippetsGeneratorContext;
+        const snippetGenerator = this.createSnippetGenerator(context);
+        return snippetGenerator.generateMethodCallSnippetAst({ endpoint, request });
+    }
+
     protected createSnippetGenerator(context: DynamicSnippetsGeneratorContext): EndpointSnippetGenerator {
         return new EndpointSnippetGenerator({ context });
     }
