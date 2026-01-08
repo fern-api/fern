@@ -136,9 +136,7 @@ async fn main() {
         .send_test_submission_update(
             &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             &TestSubmissionUpdate {
-                update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                    .unwrap()
-                    .with_timezone(&Utc),
+                update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 update_info: TestSubmissionUpdateInfo::Running {
                     value: Default::default(),
                 },
@@ -266,9 +264,7 @@ async fn main() {
         .send_workspace_submission_update(
             &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             &WorkspaceSubmissionUpdate {
-                update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                    .unwrap()
-                    .with_timezone(&Utc),
+                update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 update_info: WorkspaceSubmissionUpdateInfo::Running {
                     value: Default::default(),
                 },
@@ -1089,13 +1085,9 @@ async fn main() {
         .create_playlist(
             1,
             &CreatePlaylistRequest {
-                datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                    .unwrap()
-                    .with_timezone(&Utc),
+                datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 optional_datetime: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 ),
                 body: PlaylistCreateRequest {
                     name: "name".to_string(),

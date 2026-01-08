@@ -122,12 +122,8 @@ async fn main() {
                 username: "username".to_string(),
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 metadata: Some(Metadata {
-                    created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
-                    updated_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                    updated_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                     avatar: Some("avatar".to_string()),
                     activated: Some(Some(true)),
                     status: Status::Active,

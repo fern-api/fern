@@ -1,5 +1,6 @@
 //! Core client infrastructure
 
+pub mod flexible_datetime;
 mod http_client;
 mod query_parameter_builder;
 mod request_options;
