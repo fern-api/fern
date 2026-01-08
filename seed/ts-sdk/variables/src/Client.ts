@@ -2,12 +2,14 @@
 
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
 
 export declare namespace SeedVariablesClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SeedVariablesClient {
@@ -15,6 +17,7 @@ export class SeedVariablesClient {
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedVariablesClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

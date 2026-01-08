@@ -5,71 +5,59 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 import { mockInferredAuth, mockOAuth } from "./mockAuth";
 
 describe("UserClient", () => {
+    
     test("get", async () => {
-        const server = mockServerPool.createServer();
-        mockOAuth(server);
-        mockInferredAuth(server);
+        const server = mockServerPool.createServer();mockOAuth(server);
+mockInferredAuth(server);
 
-        const client = new SeedAnyAuthClient({
-            maxRetries: 0,
-            bearer: { token: "test" },
-            apiKey: { apiKey: "test" },
-            oauth: { clientId: "client_id", clientSecret: "client_secret" },
-            basic: { username: "test", password: "test" },
-            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
-            environment: server.baseUrl,
-        });
+        const client = new SeedAnyAuthClient({ "maxRetries" : 0 , "bearer" : { "token" : "test" } , "apiKey" : { "apiKey" : "test" } , "oauth" : { "clientId" : "client_id" , "clientSecret" : "client_secret" } , "basic" : { "username" : "test" , "password" : "test" } , "inferredAuth" : { "clientId" : "client_id" , "clientSecret" : "client_secret" } , "environment" : server.baseUrl });
+        
+        const rawResponseBody = [ { "id" : "id" , "name" : "name" } , { "id" : "id" , "name" : "name" } ];
+        server
+            .mockEndpoint()
+            .post("/users").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = [
-            { id: "id", name: "name" },
-            { id: "id", name: "name" },
-        ];
-        server.mockEndpoint().post("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.user.get();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        
+                    
+                            const response = await client.user.get();
+                            expect(response).toEqual([{
+        id: "id",
+        name: "name"
+    }, {
+        id: "id",
+        name: "name"
+    }]);
+                          
+                
     });
-
+          
     test("getAdmins", async () => {
-        const server = mockServerPool.createServer();
-        mockOAuth(server);
-        mockInferredAuth(server);
+        const server = mockServerPool.createServer();mockOAuth(server);
+mockInferredAuth(server);
 
-        const client = new SeedAnyAuthClient({
-            maxRetries: 0,
-            bearer: { token: "test" },
-            apiKey: { apiKey: "test" },
-            oauth: { clientId: "client_id", clientSecret: "client_secret" },
-            basic: { username: "test", password: "test" },
-            inferredAuth: { clientId: "client_id", clientSecret: "client_secret" },
-            environment: server.baseUrl,
-        });
+        const client = new SeedAnyAuthClient({ "maxRetries" : 0 , "bearer" : { "token" : "test" } , "apiKey" : { "apiKey" : "test" } , "oauth" : { "clientId" : "client_id" , "clientSecret" : "client_secret" } , "basic" : { "username" : "test" , "password" : "test" } , "inferredAuth" : { "clientId" : "client_id" , "clientSecret" : "client_secret" } , "environment" : server.baseUrl });
+        
+        const rawResponseBody = [ { "id" : "id" , "name" : "name" } , { "id" : "id" , "name" : "name" } ];
+        server
+            .mockEndpoint()
+            .get("/admins").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = [
-            { id: "id", name: "name" },
-            { id: "id", name: "name" },
-        ];
-        server.mockEndpoint().get("/admins").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.user.getAdmins();
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        
+                    
+                            const response = await client.user.getAdmins();
+                            expect(response).toEqual([{
+        id: "id",
+        name: "name"
+    }, {
+        id: "id",
+        name: "name"
+    }]);
+                          
+                
     });
+          
 });

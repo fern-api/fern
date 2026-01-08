@@ -4,1665 +4,568 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedApiClient", () => {
+    
     test("getAccount", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-
-        const rawResponseBody = {
-            resource_type: "Account",
-            name: "name",
-            patient: {
-                resource_type: "Patient",
-                name: "name",
-                scripts: [
-                    {
-                        resource_type: "Script",
-                        name: "name",
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                    {
-                        resource_type: "Script",
-                        name: "name",
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                ],
-                id: "id",
-                related_resources: [
-                    {
-                        resource_type: "Account",
-                        name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                    {
-                        resource_type: "Account",
-                        name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                ],
-                memo: {
-                    description: "description",
-                    account: {
-                        resource_type: "Account",
-                        name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                },
-            },
-            practitioner: {
-                resource_type: "Practitioner",
-                name: "name",
-                id: "id",
-                related_resources: [
-                    {
-                        resource_type: "Account",
-                        name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                    {
-                        resource_type: "Account",
-                        name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                ],
-                memo: {
-                    description: "description",
-                    account: {
-                        resource_type: "Account",
-                        name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                },
-            },
-            id: "id",
-            related_resources: [
-                {
-                    resource_type: "Account",
-                    name: "name",
-                    patient: {
-                        resource_type: "Patient",
-                        name: "name",
-                        scripts: [
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                    practitioner: {
-                        resource_type: "Practitioner",
-                        name: "name",
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                    id: "id",
-                    related_resources: [
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                    ],
-                    memo: {
-                        description: "description",
-                        account: {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                    },
-                },
-                {
-                    resource_type: "Account",
-                    name: "name",
-                    patient: {
-                        resource_type: "Patient",
-                        name: "name",
-                        scripts: [
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                    practitioner: {
-                        resource_type: "Practitioner",
-                        name: "name",
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                    id: "id",
-                    related_resources: [
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                    ],
-                    memo: {
-                        description: "description",
-                        account: {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                    },
-                },
-            ],
-            memo: {
-                description: "description",
-                account: {
-                    resource_type: "Account",
-                    name: "name",
-                    patient: {
-                        resource_type: "Patient",
-                        name: "name",
-                        scripts: [
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                    practitioner: {
-                        resource_type: "Practitioner",
-                        name: "name",
-                        id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        ],
-                        memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                        },
-                    },
-                    id: "id",
-                    related_resources: [
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                    ],
-                    memo: {
-                        description: "description",
-                        account: {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: { description: "description" },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: { description: "description" },
-                        },
-                    },
-                },
-            },
-        };
+        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ { "resource_type" : "Script" , "name" : "name" , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } , { "resource_type" : "Script" , "name" : "name" , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } ] , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } , { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } , { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } } } , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ { "resource_type" : "Script" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Script" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } , { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ { "resource_type" : "Script" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Script" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ { "resource_type" : "Script" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Script" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } , "id" : "id" , "related_resources" : [ { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } ] , "memo" : { "description" : "description" , "account" : { "resource_type" : "Account" , "name" : "name" , "patient" : { "resource_type" : "Patient" , "name" : "name" , "scripts" : [ ] , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "practitioner" : { "resource_type" : "Practitioner" , "name" : "name" , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } , "id" : "id" , "related_resources" : [ ] , "memo" : { "description" : "description" } } } } } };
         server
             .mockEndpoint()
-            .get("/account/account_id")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .get("/account/account_id").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.getAccount("account_id");
-        expect(response).toEqual({
+        
+                    
+                            const response = await client.getAccount("account_id");
+                            expect(response).toEqual({
+    resource_type: "Account",
+    name: "name",
+    patient: {
+        resource_type: "Patient",
+        name: "name",
+        scripts: [{
+                resource_type: "Script",
+                name: "name",
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
+            }, {
+                resource_type: "Script",
+                name: "name",
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
+            }],
+        id: "id",
+        related_resources: [{
+                resource_type: "Account",
+                name: "name",
+                patient: {
+                    resource_type: "Patient",
+                    name: "name",
+                    scripts: [],
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                practitioner: {
+                    resource_type: "Practitioner",
+                    name: "name",
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
+            }, {
+                resource_type: "Account",
+                name: "name",
+                patient: {
+                    resource_type: "Patient",
+                    name: "name",
+                    scripts: [],
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                practitioner: {
+                    resource_type: "Practitioner",
+                    name: "name",
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
+            }],
+        memo: {
+            description: "description",
+            account: {
+                resource_type: "Account",
+                name: "name",
+                patient: {
+                    resource_type: "Patient",
+                    name: "name",
+                    scripts: [],
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                practitioner: {
+                    resource_type: "Practitioner",
+                    name: "name",
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    practitioner: {
+        resource_type: "Practitioner",
+        name: "name",
+        id: "id",
+        related_resources: [{
+                resource_type: "Account",
+                name: "name",
+                patient: {
+                    resource_type: "Patient",
+                    name: "name",
+                    scripts: [],
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                practitioner: {
+                    resource_type: "Practitioner",
+                    name: "name",
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
+            }, {
+                resource_type: "Account",
+                name: "name",
+                patient: {
+                    resource_type: "Patient",
+                    name: "name",
+                    scripts: [],
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                practitioner: {
+                    resource_type: "Practitioner",
+                    name: "name",
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
+            }],
+        memo: {
+            description: "description",
+            account: {
+                resource_type: "Account",
+                name: "name",
+                patient: {
+                    resource_type: "Patient",
+                    name: "name",
+                    scripts: [],
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                practitioner: {
+                    resource_type: "Practitioner",
+                    name: "name",
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                },
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    id: "id",
+    related_resources: [{
             resource_type: "Account",
             name: "name",
             patient: {
                 resource_type: "Patient",
                 name: "name",
-                scripts: [
-                    {
+                scripts: [{
                         resource_type: "Script",
                         name: "name",
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
-                    },
-                    {
+                            description: "description"
+                        }
+                    }, {
                         resource_type: "Script",
                         name: "name",
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
-                    },
-                ],
+                            description: "description"
+                        }
+                    }],
                 id: "id",
-                related_resources: [
-                    {
+                related_resources: [{
                         resource_type: "Account",
                         name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
-                    },
-                    {
+                            description: "description"
+                        }
+                    }, {
                         resource_type: "Account",
                         name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
-                    },
-                ],
+                            description: "description"
+                        }
+                    }],
                 memo: {
                     description: "description",
                     account: {
                         resource_type: "Account",
                         name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
-                    },
-                },
+                            description: "description"
+                        }
+                    }
+                }
             },
             practitioner: {
                 resource_type: "Practitioner",
                 name: "name",
                 id: "id",
-                related_resources: [
-                    {
+                related_resources: [{
                         resource_type: "Account",
                         name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
-                    },
-                    {
+                            description: "description"
+                        }
+                    }, {
                         resource_type: "Account",
                         name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
-                    },
-                ],
+                            description: "description"
+                        }
+                    }],
                 memo: {
                     description: "description",
                     account: {
                         resource_type: "Account",
                         name: "name",
-                        patient: {
-                            resource_type: "Patient",
-                            name: "name",
-                            scripts: [],
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                        practitioner: {
-                            resource_type: "Practitioner",
-                            name: "name",
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
-                    },
-                },
+                            description: "description"
+                        }
+                    }
+                }
             },
             id: "id",
-            related_resources: [
-                {
+            related_resources: [{
                     resource_type: "Account",
                     name: "name",
                     patient: {
                         resource_type: "Patient",
                         name: "name",
-                        scripts: [
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        scripts: [],
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
+                            description: "description"
+                        }
                     },
                     practitioner: {
                         resource_type: "Practitioner",
                         name: "name",
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
+                            description: "description"
+                        }
                     },
                     id: "id",
-                    related_resources: [
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                    ],
+                    related_resources: [],
                     memo: {
-                        description: "description",
-                        account: {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                    },
-                },
-                {
+                        description: "description"
+                    }
+                }, {
                     resource_type: "Account",
                     name: "name",
                     patient: {
                         resource_type: "Patient",
                         name: "name",
-                        scripts: [
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        scripts: [],
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
+                            description: "description"
+                        }
                     },
                     practitioner: {
                         resource_type: "Practitioner",
                         name: "name",
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
+                            description: "description"
+                        }
                     },
                     id: "id",
-                    related_resources: [
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                    ],
+                    related_resources: [],
                     memo: {
-                        description: "description",
-                        account: {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                    },
-                },
-            ],
+                        description: "description"
+                    }
+                }],
             memo: {
                 description: "description",
                 account: {
@@ -1671,189 +574,387 @@ describe("SeedApiClient", () => {
                     patient: {
                         resource_type: "Patient",
                         name: "name",
-                        scripts: [
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Script",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        scripts: [],
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
+                            description: "description"
+                        }
                     },
                     practitioner: {
                         resource_type: "Practitioner",
                         name: "name",
                         id: "id",
-                        related_resources: [
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        ],
+                        related_resources: [],
                         memo: {
-                            description: "description",
-                            account: {
-                                resource_type: "Account",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                        },
+                            description: "description"
+                        }
                     },
                     id: "id",
-                    related_resources: [
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                        {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                    ],
+                    related_resources: [],
                     memo: {
-                        description: "description",
-                        account: {
-                            resource_type: "Account",
-                            name: "name",
-                            patient: {
-                                resource_type: "Patient",
-                                name: "name",
-                                scripts: [],
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            practitioner: {
-                                resource_type: "Practitioner",
-                                name: "name",
-                                id: "id",
-                                related_resources: [],
-                                memo: {
-                                    description: "description",
-                                },
-                            },
-                            id: "id",
-                            related_resources: [],
-                            memo: {
-                                description: "description",
-                            },
-                        },
-                    },
-                },
+                        description: "description"
+                    }
+                }
+            }
+        }, {
+            resource_type: "Account",
+            name: "name",
+            patient: {
+                resource_type: "Patient",
+                name: "name",
+                scripts: [{
+                        resource_type: "Script",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Script",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
             },
-        });
+            practitioner: {
+                resource_type: "Practitioner",
+                name: "name",
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
+            },
+            id: "id",
+            related_resources: [{
+                    resource_type: "Account",
+                    name: "name",
+                    patient: {
+                        resource_type: "Patient",
+                        name: "name",
+                        scripts: [],
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    practitioner: {
+                        resource_type: "Practitioner",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                }, {
+                    resource_type: "Account",
+                    name: "name",
+                    patient: {
+                        resource_type: "Patient",
+                        name: "name",
+                        scripts: [],
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    practitioner: {
+                        resource_type: "Practitioner",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                }],
+            memo: {
+                description: "description",
+                account: {
+                    resource_type: "Account",
+                    name: "name",
+                    patient: {
+                        resource_type: "Patient",
+                        name: "name",
+                        scripts: [],
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    practitioner: {
+                        resource_type: "Practitioner",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                }
+            }
+        }],
+    memo: {
+        description: "description",
+        account: {
+            resource_type: "Account",
+            name: "name",
+            patient: {
+                resource_type: "Patient",
+                name: "name",
+                scripts: [{
+                        resource_type: "Script",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Script",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
+            },
+            practitioner: {
+                resource_type: "Practitioner",
+                name: "name",
+                id: "id",
+                related_resources: [{
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }, {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }],
+                memo: {
+                    description: "description",
+                    account: {
+                        resource_type: "Account",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    }
+                }
+            },
+            id: "id",
+            related_resources: [{
+                    resource_type: "Account",
+                    name: "name",
+                    patient: {
+                        resource_type: "Patient",
+                        name: "name",
+                        scripts: [],
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    practitioner: {
+                        resource_type: "Practitioner",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                }, {
+                    resource_type: "Account",
+                    name: "name",
+                    patient: {
+                        resource_type: "Patient",
+                        name: "name",
+                        scripts: [],
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    practitioner: {
+                        resource_type: "Practitioner",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                }],
+            memo: {
+                description: "description",
+                account: {
+                    resource_type: "Account",
+                    name: "name",
+                    patient: {
+                        resource_type: "Patient",
+                        name: "name",
+                        scripts: [],
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    practitioner: {
+                        resource_type: "Practitioner",
+                        name: "name",
+                        id: "id",
+                        related_resources: [],
+                        memo: {
+                            description: "description"
+                        }
+                    },
+                    id: "id",
+                    related_resources: [],
+                    memo: {
+                        description: "description"
+                    }
+                }
+            }
+        }
+    }
+});
+                          
+                
     });
+          
 });

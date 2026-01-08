@@ -4,43 +4,49 @@ import { SeedExamplesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedExamplesClient", () => {
+    
     test("echo", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
         const rawRequestBody = "Hello world!\\n\\nwith\\n\\tnewlines";
         const rawResponseBody = "Hello world!\\n\\nwith\\n\\tnewlines";
         server
             .mockEndpoint()
-            .post("/")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("/").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
-        expect(response).toEqual("Hello world!\\n\\nwith\\n\\tnewlines");
+        
+                    
+                            const response = await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
+                            expect(response).toEqual("Hello world!\\n\\nwith\\n\\tnewlines");
+                          
+                
     });
-
+          
     test("createType", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
         const rawRequestBody = "primitive";
-        const rawResponseBody = { type: "primitive", value: "value", label: "label" };
+        const rawResponseBody = { "type" : "primitive" , "value" : "value" , "label" : "label" };
         server
             .mockEndpoint()
-            .post("")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+            .post("").jsonBody(rawRequestBody)
+                .respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const response = await client.createType("primitive");
-        expect(response).toEqual({
-            type: "primitive",
-            value: "value",
-            label: "label",
-        });
+        
+                    
+                            const response = await client.createType("primitive");
+                            expect(response).toEqual({
+    type: "primitive",
+    value: "value",
+    label: "label"
+});
+                          
+                
     });
+          
 });
