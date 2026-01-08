@@ -5,10 +5,15 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { Uint64ValidationRules } from "./Uint64ValidationRules";
 
 export const Uint64Type: core.serialization.ObjectSchema<serializers.Uint64Type.Raw, FernIr.Uint64Type> =
-    core.serialization.objectWithoutOptionalProperties({});
+    core.serialization.objectWithoutOptionalProperties({
+        validation: Uint64ValidationRules.optional(),
+    });
 
 export declare namespace Uint64Type {
-    export interface Raw {}
+    export interface Raw {
+        validation?: Uint64ValidationRules.Raw | null;
+    }
 }

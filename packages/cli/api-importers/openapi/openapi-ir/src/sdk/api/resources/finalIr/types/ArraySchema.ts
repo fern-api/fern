@@ -14,4 +14,6 @@ export interface ArraySchema
         FernOpenapiIr.WithTitle,
         FernOpenapiIr.WithInline {
     value: FernOpenapiIr.Schema;
+    minItems: number | undefined;
+    maxItems: number | undefined;
 }

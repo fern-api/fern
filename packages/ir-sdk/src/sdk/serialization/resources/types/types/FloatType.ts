@@ -5,10 +5,15 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { FloatValidationRules } from "./FloatValidationRules";
 
 export const FloatType: core.serialization.ObjectSchema<serializers.FloatType.Raw, FernIr.FloatType> =
-    core.serialization.objectWithoutOptionalProperties({});
+    core.serialization.objectWithoutOptionalProperties({
+        validation: FloatValidationRules.optional(),
+    });
 
 export declare namespace FloatType {
-    export interface Raw {}
+    export interface Raw {
+        validation?: FloatValidationRules.Raw | null;
+    }
 }

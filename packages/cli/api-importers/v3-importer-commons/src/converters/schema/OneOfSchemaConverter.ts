@@ -285,7 +285,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         type: TypeReference.container(
                             ContainerType.map({
                                 keyType: AbstractConverter.STRING,
-                                valueType: TypeReference.unknown()
+                                valueType: TypeReference.unknown(),
+                                validation: undefined
                             })
                         ),
                         docs: subSchema.description

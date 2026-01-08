@@ -5,10 +5,15 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { UintValidationRules } from "./UintValidationRules";
 
 export const UintType: core.serialization.ObjectSchema<serializers.UintType.Raw, FernIr.UintType> =
-    core.serialization.objectWithoutOptionalProperties({});
+    core.serialization.objectWithoutOptionalProperties({
+        validation: UintValidationRules.optional(),
+    });
 
 export declare namespace UintType {
-    export interface Raw {}
+    export interface Raw {
+        validation?: UintValidationRules.Raw | null;
+    }
 }

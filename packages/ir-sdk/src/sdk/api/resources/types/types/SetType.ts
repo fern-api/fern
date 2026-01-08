@@ -4,6 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface FloatType {
-    validation: FernIr.FloatValidationRules | undefined;
+export interface SetType {
+    itemType: FernIr.TypeReference;
+    validation: FernIr.SetValidationRules | undefined;
 }

@@ -208,9 +208,7 @@ types:
       value: _type
       name: type
     union:
-      list:
-        type: TypeReference
-        key: list
+      list: ListType
       map: MapType
       nullable:
         type: TypeReference
@@ -218,17 +216,41 @@ types:
       optional:
         type: TypeReference
         key: optional
-      set:
-        type: TypeReference
-        key: set
+      set: SetType
       literal:
         type: Literal
         key: literal
+
+  ListType:
+    properties:
+      itemType: TypeReference
+      validation: optional<ListValidationRules>
+
+  ListValidationRules:
+    properties:
+      minLength: optional<integer>
+      maxLength: optional<integer>
+
+  SetType:
+    properties:
+      itemType: TypeReference
+      validation: optional<SetValidationRules>
+
+  SetValidationRules:
+    properties:
+      minLength: optional<integer>
+      maxLength: optional<integer>
 
   MapType:
     properties:
       keyType: TypeReference
       valueType: TypeReference
+      validation: optional<MapValidationRules>
+
+  MapValidationRules:
+    properties:
+      minProperties: optional<integer>
+      maxProperties: optional<integer>
 
   PrimitiveType:
     properties:
@@ -284,15 +306,51 @@ types:
   LongType:
     properties:
       default: optional<long>
+      validation: optional<LongValidationRules>
+
+  LongValidationRules:
+    properties:
+      min: optional<long>
+      max: optional<long>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<long>
 
   UintType:
-    properties: {}
+    properties:
+      validation: optional<UintValidationRules>
+
+  UintValidationRules:
+    properties:
+      min: optional<uint>
+      max: optional<uint>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<uint>
 
   Uint64Type:
-    properties: {}
+    properties:
+      validation: optional<Uint64ValidationRules>
+
+  Uint64ValidationRules:
+    properties:
+      min: optional<uint64>
+      max: optional<uint64>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<uint64>
 
   FloatType:
-    properties: {}
+    properties:
+      validation: optional<FloatValidationRules>
+
+  FloatValidationRules:
+    properties:
+      min: optional<float>
+      max: optional<float>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<float>
 
   DoubleType:
     properties:

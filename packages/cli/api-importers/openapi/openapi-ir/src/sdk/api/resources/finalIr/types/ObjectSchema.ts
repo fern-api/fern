@@ -18,4 +18,6 @@ export interface ObjectSchema
     properties: FernOpenapiIr.ObjectProperty[];
     allOfPropertyConflicts: FernOpenapiIr.AllOfPropertyConflict[];
     additionalProperties: boolean;
+    minProperties: number | undefined;
+    maxProperties: number | undefined;
 }

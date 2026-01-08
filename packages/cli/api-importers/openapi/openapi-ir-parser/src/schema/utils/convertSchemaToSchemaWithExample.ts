@@ -27,7 +27,9 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 additionalProperties: schema.additionalProperties,
                 availability: schema.availability,
                 source: schema.source,
-                inline: undefined
+                inline: undefined,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
         case "array":
             return SchemaWithExample.array({
@@ -40,7 +42,9 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 nameOverride: schema.nameOverride,
                 groupName: schema.groupName,
                 example: undefined,
-                inline: undefined
+                inline: undefined,
+                minItems: schema.minItems,
+                maxItems: schema.maxItems
             });
         case "enum":
             return SchemaWithExample.enum({
@@ -125,7 +129,9 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 groupName: schema.groupName,
                 encoding: schema.encoding,
                 example: undefined,
-                inline: undefined
+                inline: undefined,
+                minProperties: schema.minProperties,
+                maxProperties: schema.maxProperties
             });
         case "reference":
             return SchemaWithExample.reference({

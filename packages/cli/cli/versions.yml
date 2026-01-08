@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.37.0
+  changelogEntry:
+    - summary: |
+        Add support for OpenAPI min/max validation keywords in the IR. This includes `minimum`, `maximum`, `exclusiveMinimum`, `exclusiveMaximum`, and `multipleOf` for numeric types (float, long, uint, uint64), as well as `minItems`/`maxItems` for list and set containers, and `minProperties`/`maxProperties` for map containers and objects.
+      type: feat
+  createdAt: "2026-01-08"
+  irVersion: 62
+
 - version: 3.36.0
   changelogEntry:
     - summary: |
