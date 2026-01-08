@@ -8,6 +8,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
+from ...types.enum.types.object_with_optional_enum import ObjectWithOptionalEnum
 from ...types.enum.types.weather_report import WeatherReport
 
 # this is used as the default value for optional parameters
@@ -55,6 +56,52 @@ class RawEnumClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_and_return_object_with_optional_enum(
+        self,
+        *,
+        string: str,
+        weather: typing.Optional[WeatherReport] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ObjectWithOptionalEnum]:
+        """
+        Parameters
+        ----------
+        string : str
+
+        weather : typing.Optional[WeatherReport]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ObjectWithOptionalEnum]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "enum/object-with-optional-enum",
+            method="POST",
+            json={
+                "string": string,
+                "weather": weather,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithOptionalEnum,
+                    parse_obj_as(
+                        type_=ObjectWithOptionalEnum,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawEnumClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -88,6 +135,52 @@ class AsyncRawEnumClient:
                     WeatherReport,
                     parse_obj_as(
                         type_=WeatherReport,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_and_return_object_with_optional_enum(
+        self,
+        *,
+        string: str,
+        weather: typing.Optional[WeatherReport] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ObjectWithOptionalEnum]:
+        """
+        Parameters
+        ----------
+        string : str
+
+        weather : typing.Optional[WeatherReport]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ObjectWithOptionalEnum]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "enum/object-with-optional-enum",
+            method="POST",
+            json={
+                "string": string,
+                "weather": weather,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithOptionalEnum,
+                    parse_obj_as(
+                        type_=ObjectWithOptionalEnum,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

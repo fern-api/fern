@@ -4,6 +4,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.enum.types.object_with_optional_enum import ObjectWithOptionalEnum
 from ...types.enum.types.weather_report import WeatherReport
 from .raw_client import AsyncRawEnumClient, RawEnumClient
 
@@ -54,6 +55,45 @@ class EnumClient:
         )
         """
         _response = self._raw_client.get_and_return_enum(request=request, request_options=request_options)
+        return _response.data
+
+    def get_and_return_object_with_optional_enum(
+        self,
+        *,
+        string: str,
+        weather: typing.Optional[WeatherReport] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithOptionalEnum:
+        """
+        Parameters
+        ----------
+        string : str
+
+        weather : typing.Optional[WeatherReport]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalEnum
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.enum.get_and_return_object_with_optional_enum(
+            string="test-string",
+            weather="",
+        )
+        """
+        _response = self._raw_client.get_and_return_object_with_optional_enum(
+            string=string, weather=weather, request_options=request_options
+        )
         return _response.data
 
 
@@ -108,4 +148,51 @@ class AsyncEnumClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_and_return_enum(request=request, request_options=request_options)
+        return _response.data
+
+    async def get_and_return_object_with_optional_enum(
+        self,
+        *,
+        string: str,
+        weather: typing.Optional[WeatherReport] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ObjectWithOptionalEnum:
+        """
+        Parameters
+        ----------
+        string : str
+
+        weather : typing.Optional[WeatherReport]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalEnum
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.enum.get_and_return_object_with_optional_enum(
+                string="test-string",
+                weather="",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_object_with_optional_enum(
+            string=string, weather=weather, request_options=request_options
+        )
         return _response.data

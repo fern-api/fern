@@ -6,9 +6,13 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import WeatherReport
+    from .types import ObjectWithOptionalEnum, WeatherReport
     from .errors import ErrorWithEnumBody
-_dynamic_imports: typing.Dict[str, str] = {"ErrorWithEnumBody": ".errors", "WeatherReport": ".types"}
+_dynamic_imports: typing.Dict[str, str] = {
+    "ErrorWithEnumBody": ".errors",
+    "ObjectWithOptionalEnum": ".types",
+    "WeatherReport": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -32,4 +36,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ErrorWithEnumBody", "WeatherReport"]
+__all__ = ["ErrorWithEnumBody", "ObjectWithOptionalEnum", "WeatherReport"]

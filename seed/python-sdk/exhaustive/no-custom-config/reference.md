@@ -827,6 +827,72 @@ client.endpoints.enum.get_and_return_enum(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.enum.<a href="src/seed/endpoints/enum/client.py">get_and_return_object_with_optional_enum</a>(...) -> AsyncHttpResponse[ObjectWithOptionalEnum]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.enum.get_and_return_object_with_optional_enum(
+    string="test-string",
+    weather="",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**string:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**weather:** `typing.Optional[WeatherReport]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints HttpMethods
 <details><summary><code>client.endpoints.http_methods.<a href="src/seed/endpoints/http_methods/client.py">test_get</a>(...) -> AsyncHttpResponse[str]</code></summary>
 <dl>
