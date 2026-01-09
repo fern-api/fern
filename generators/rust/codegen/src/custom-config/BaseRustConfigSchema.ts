@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
+import { DependencyValueSchema } from "./RustDependencySpecSchema";
 
 export const BaseRustCustomConfigSchema = z.object({
     // =========================================================================
@@ -10,8 +11,8 @@ export const BaseRustCustomConfigSchema = z.object({
     clientClassName: z.string().optional(),
     environmentEnumName: z.string().optional(),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
-    extraDependencies: z.record(z.string()).optional(),
-    extraDevDependencies: z.record(z.string()).optional(),
+    extraDependencies: z.record(DependencyValueSchema).optional(),
+    extraDevDependencies: z.record(DependencyValueSchema).optional(),
 
     // =========================================================================
     // Package Metadata (for crates.io publishing)

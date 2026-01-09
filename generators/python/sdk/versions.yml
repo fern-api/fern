@@ -1,5 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.46.12
+  changelogEntry:
+    - summary: |
+        Support `bytes` as a response type for websocket channel methods.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 4.46.11
+  changelogEntry:
+    - summary: |
+        Wire test generator now skips undefined example values and injects `X-Test-Id` in a constructor-compatible way via `headers` or `httpx_client`.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
 
 - version: 4.46.10
   changelogEntry:

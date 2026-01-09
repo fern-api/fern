@@ -96,8 +96,12 @@ export abstract class AbstractRustGeneratorContext<
         }
 
         const extraDevDeps = this.customConfig.extraDevDependencies ?? {};
-        for (const [name, version] of Object.entries(extraDevDeps)) {
-            this.dependencyManager.add(name, version, RustDependencyType.DEV);
+        for (const [name, versionOrSpec] of Object.entries(extraDevDeps)) {
+            if (typeof versionOrSpec === "string") {
+                this.dependencyManager.add(name, versionOrSpec, RustDependencyType.DEV);
+            } else {
+                this.dependencyManager.add(name, versionOrSpec as RustDependencySpec, RustDependencyType.DEV);
+            }
         }
     }
 
@@ -595,14 +599,14 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Get extra dependencies with empty object fallback
      */
-    public getExtraDependencies(): Record<string, string> {
+    public getExtraDependencies(): Record<string, string | RustDependencySpec> {
         return this.customConfig.extraDependencies ?? {};
     }
 
     /**
      * Get extra dev dependencies with empty object fallback
      */
-    public getExtraDevDependencies(): Record<string, string> {
+    public getExtraDevDependencies(): Record<string, string | RustDependencySpec> {
         return this.customConfig.extraDevDependencies ?? {};
     }
 
@@ -1073,6 +1077,22 @@ export abstract class AbstractRustGeneratorContext<
         // Fallback to old behavior if not found (shouldn't happen in normal flow)
         const pathParts = subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
         return pathParts.join("") + "Client";
+    }
+
+    /**
+     * Get the API key header name from the IR auth schemes.
+     * Returns the wireValue of the first header auth scheme, or "api_key" as default.
+     */
+    public getApiKeyHeaderName(): string {
+        if (this.ir.auth?.schemes) {
+            for (const scheme of this.ir.auth.schemes) {
+                const schemeAsUnion = scheme as { type?: string; name?: { wireValue?: string } };
+                if (schemeAsUnion.type === "header" && schemeAsUnion.name?.wireValue) {
+                    return schemeAsUnion.name.wireValue;
+                }
+            }
+        }
+        return "api_key";
     }
 
     /**

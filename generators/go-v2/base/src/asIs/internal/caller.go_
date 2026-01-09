@@ -247,39 +247,22 @@ func newFormURLEncodedBody(bodyProperties map[string]interface{}) io.Reader {
 // from the given request struct and body properties.
 func newFormURLEncodedRequestBody(request interface{}, bodyProperties map[string]interface{}) (io.Reader, error) {
 	values := url.Values{}
-	// Use reflection to extract fields from the request struct.
-	val := reflect.ValueOf(request)
-	if val.Kind() == reflect.Ptr {
-		val = val.Elem()
+	// Marshal the request to JSON first to respect any custom MarshalJSON methods,
+	// then unmarshal into a map to extract the field values.
+	jsonBytes, err := json.Marshal(request)
+	if err != nil {
+		return nil, err
 	}
-	if val.Kind() == reflect.Struct {
-		typ := val.Type()
-		for i := 0; i < val.NumField(); i++ {
-			field := typ.Field(i)
-			fieldVal := val.Field(i)
-			// Get the json tag to use as the key.
-			jsonTag := field.Tag.Get("json")
-			if jsonTag == "" || jsonTag == "-" {
-				continue
-			}
-			// Parse the json tag to get the field name (handles "name,omitempty").
-			tagName := strings.Split(jsonTag, ",")[0]
-			if tagName == "" {
-				continue
-			}
-			// Skip zero values for optional fields (those with omitempty).
-			if strings.Contains(jsonTag, "omitempty") && isZeroValue(fieldVal) {
-				continue
-			}
-			// Handle pointer types by dereferencing.
-			if fieldVal.Kind() == reflect.Ptr {
-				if fieldVal.IsNil() {
-					continue
-				}
-				fieldVal = fieldVal.Elem()
-			}
-			values.Set(tagName, fmt.Sprintf("%v", fieldVal.Interface()))
+	var jsonMap map[string]interface{}
+	if err := json.Unmarshal(jsonBytes, &jsonMap); err != nil {
+		return nil, err
+	}
+	// Convert the JSON map to form URL encoded values.
+	for key, val := range jsonMap {
+		if val == nil {
+			continue
 		}
+		values.Set(key, fmt.Sprintf("%v", val))
 	}
 	// Add any extra body properties.
 	for key, val := range bodyProperties {

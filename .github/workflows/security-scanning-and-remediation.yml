@@ -19,9 +19,6 @@ name: Create PRs to Remediate vulns
 # ============================================================
 
 on:
-  schedule:
-    # Run at 5AM EST (10AM UTC) every day
-    - cron: "0 10 * * *"
   workflow_dispatch: # Allow manual triggering
 
 jobs:

@@ -236,6 +236,15 @@ class SocketClientGenerator:
 
         return _get_start_listening_method_body
 
+    def _is_pydantic_model_type(self, type_reference: ir_types.TypeReference) -> bool:
+        """Check if the type reference is a Pydantic model (not a primitive or container)."""
+        return type_reference.visit(
+            container=lambda _: False,
+            named=lambda _: True,
+            primitive=lambda _: False,
+            unknown=lambda: False,
+        )
+
     def _get_send_message_method(self, message: ir_types.WebSocketMessage, is_async: bool) -> AST.FunctionDeclaration:
         # Use custom method_name if provided, otherwise default to send_{message_type}
         method_name = snake_case(message.method_name) if message.method_name else f"send_{snake_case(message.type)}"
@@ -255,12 +264,13 @@ class SocketClientGenerator:
                     ],
                     return_type=AST.TypeHint.none(),
                 ),
-                body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async)),
+                body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async, use_send_model=True)),
                 docstring=AST.CodeWriter(self._get_send_message_docstring(message_type=AST.TypeHint.any())),
             )
 
         message_type = union.body_type
         message_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(message_type)
+        use_send_model = self._is_pydantic_model_type(message_type)
         return AST.FunctionDeclaration(
             name=method_name,
             is_async=is_async,
@@ -273,7 +283,7 @@ class SocketClientGenerator:
                 ],
                 return_type=AST.TypeHint.none(),
             ),
-            body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async)),
+            body=AST.CodeWriter(self._get_send_message_method_body(is_async=is_async, use_send_model=use_send_model)),
             docstring=AST.CodeWriter(self._get_send_message_docstring(message_type=message_type_hint)),
         )
 
@@ -286,9 +296,12 @@ class SocketClientGenerator:
 
         return _write_docstring
 
-    def _get_send_message_method_body(self, is_async: bool) -> CodeWriterFunction:
+    def _get_send_message_method_body(self, is_async: bool, use_send_model: bool) -> CodeWriterFunction:
         def _get_send_message_method_body(writer: AST.NodeWriter) -> None:
-            writer.write_line(f"{'await ' if is_async else ''}self._send_model(message)")
+            if use_send_model:
+                writer.write_line(f"{'await ' if is_async else ''}self._send_model(message)")
+            else:
+                writer.write_line(f"{'await ' if is_async else ''}self._send(message)")
 
         return _get_send_message_method_body
 
