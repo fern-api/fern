@@ -80,6 +80,7 @@ function convertApiAuth(auth: IrVersions.V63.ApiAuth): IrVersions.V62.ApiAuth {
         requirement: IrVersions.V63.AuthSchemesRequirement._visit(auth.requirement, {
             all: () => IrVersions.V62.AuthSchemesRequirement.All,
             any: () => IrVersions.V62.AuthSchemesRequirement.Any,
+            // Convert ENDPOINT_SECURITY to ALL when migrating backwards since v62 doesn't support ENDPOINT_SECURITY
             endpointSecurity: () => IrVersions.V62.AuthSchemesRequirement.All,
             _other: () => IrVersions.V62.AuthSchemesRequirement.All
         }),
