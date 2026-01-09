@@ -10,7 +10,8 @@
     "dotnet-sdk_10@latest",
     "buf@1.50.0",
     "git-lfs@latest",
-    "git@latest"
+    "git@latest",
+    "docker@latest"
   ],
   "shell": {
     "init_hook": [
@@ -25,6 +26,7 @@
       "echo 'Java:' $(java --version 2>&1 | head -1)",
       "echo '.NET:' $(dotnet --version)",
       "echo 'buf:' $(buf --version)",
+      "echo 'Docker:' $(docker --version 2>/dev/null || echo 'not available')",
       "echo 'protoc-gen-openapi:' $(ls -l ~/go/bin/protoc-gen-openapi 2>/dev/null | awk '{print $6,$7,$8}' || echo 'not installed')"
     ],
     "scripts": {

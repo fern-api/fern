@@ -1,10 +1,10 @@
 # @fern-api/migrations-base
 
-Base types and utilities for Fern generator migrations.
+Base utilities and types for Fern generator configuration migrations using [Immer](https://immerjs.github.io/immer/).
 
 ## Overview
 
-This package provides common types and helper functions that can be shared across all generator migration packages. It ensures consistency and reduces code duplication.
+This package provides the `migrateConfig()` function for writing clean, immutable generator configuration migrations using Immer.
 
 ## Installation
 
@@ -14,126 +14,98 @@ npm install @fern-api/migrations-base
 
 ## Usage
 
-### Types
-
 ```typescript
-import type { Migration, MigrationModule, GeneratorsYmlDocument } from "@fern-api/migrations-base";
+import { migrateConfig, type Migration } from "@fern-api/migrations-base";
 
-const migration: Migration = {
-  version: "2.0.0",
-  migrateGeneratorConfig: (config) => {
-    // Your migration logic
-    return config;
-  },
-  migrateGeneratorsYml: (document) => document
-};
-
-export const migrations: MigrationModule["migrations"] = [migration];
-```
-
-### Helper Functions
-
-#### `getConfigObject(config)`
-
-Safely extracts the config object from a generator invocation:
-
-```typescript
-import { getConfigObject } from "@fern-api/migrations-base";
-
-const configObj = getConfigObject(config);
-// Returns empty object if config is undefined or not an object
-```
-
-#### `setIfUndefined(configObj, field, defaultValue)`
-
-Sets a field only if it's currently undefined:
-
-```typescript
-import { getConfigObject, setIfUndefined } from "@fern-api/migrations-base";
-
-const configObj = getConfigObject(config);
-const migratedConfig = {
-  ...configObj,
-  ...setIfUndefined(configObj, "newField", "default"),
-  ...setIfUndefined(configObj, "anotherField", true)
+export const migration_1_0_0: Migration = {
+    version: "1.0.0",
+    migrateGeneratorConfig: ({ config }) =>
+        migrateConfig(config, (draft) => {
+            // Your migration logic here
+            // draft is a mutable proxy that Immer converts to immutable updates
+        }),
+    migrateGeneratorsYml: ({ document }) => document
 };
 ```
 
-#### `applyDefaults(configObj, defaults)`
+## Migration Patterns
 
-Applies multiple defaults in a single call:
+### Setting Defaults
+
+Use the nullish coalescing assignment operator (`??=`) to set values only if undefined:
 
 ```typescript
-import { getConfigObject, applyDefaults, createMigratedConfig } from "@fern-api/migrations-base";
-
-const configObj = getConfigObject(config);
-const migratedConfig = applyDefaults(configObj, {
-  field1: "default1",
-  field2: true,
-  field3: 42
+migrateConfig(config, (draft) => {
+    draft.field1 ??= false;
+    draft.field2 ??= "default-value";
+    draft.field3 ??= true;
 });
-
-return createMigratedConfig(config, migratedConfig);
 ```
 
-#### `createMigratedConfig(originalConfig, migratedConfigObj)`
-
-Creates a new generator config with the migrated config object:
+### Removing Fields
 
 ```typescript
-import { getConfigObject, createMigratedConfig } from "@fern-api/migrations-base";
-
-const configObj = getConfigObject(config);
-const migratedConfigObj = {
-  ...configObj,
-  newField: "value"
-};
-
-return createMigratedConfig(config, migratedConfigObj);
+migrateConfig(config, (draft) => {
+    delete draft.deprecatedField;
+});
 ```
 
-## Complete Example
+### Renaming Fields
+
+```typescript
+migrateConfig(config, (draft) => {
+    draft.newFieldName = draft.oldFieldName;
+    delete draft.oldFieldName;
+});
+```
+
+### Nested Updates
+
+```typescript
+migrateConfig(config, (draft) => {
+    draft.nested ??= {};
+    draft.nested.field1 = "value";
+    draft.nested.field2 = true;
+});
+```
+
+### Conditional Transformations
+
+```typescript
+migrateConfig(config, (draft) => {
+    if (draft.deprecated === "old-value") {
+        delete draft.deprecated;
+    }
+
+    if (typeof draft.oldFormat === "string") {
+        draft.newFormat = { type: draft.oldFormat };
+        delete draft.oldFormat;
+    }
+});
+```
+
+## Example
 
 ```typescript
 import type { Migration } from "@fern-api/migrations-base";
-import { applyDefaults, createMigratedConfig, getConfigObject } from "@fern-api/migrations-base";
+import { migrateConfig } from "@fern-api/migrations-base";
 
+/**
+ * Migration for version 2.0.0
+ *
+ * Changed defaults:
+ * - streamType: "wrapper" → "web"
+ * - fileResponseType: "stream" → "binary-response"
+ */
 export const migration_2_0_0: Migration = {
-  version: "2.0.0",
+    version: "2.0.0",
 
-  migrateGeneratorConfig: (config) => {
-    const configObj = getConfigObject(config);
+    migrateGeneratorConfig: ({ config }) =>
+        migrateConfig(config, (draft) => {
+            draft.streamType ??= "wrapper";
+            draft.fileResponseType ??= "stream";
+        }),
 
-    // Apply old defaults for backwards compatibility
-    const migratedConfig = applyDefaults(configObj, {
-      streamType: "wrapper",
-      fileResponseType: "stream",
-      formDataSupport: "Node16",
-      fetchSupport: "node-fetch"
-    });
-
-    return createMigratedConfig(config, migratedConfig);
-  },
-
-  migrateGeneratorsYml: (document) => document
+    migrateGeneratorsYml: ({ document }) => document
 };
 ```
-
-## Benefits
-
-- **Type Safety**: Shared TypeScript types across all migration packages
-- **Consistency**: Same helper functions used everywhere
-- **Less Boilerplate**: Common patterns abstracted into utilities
-- **Better Maintainability**: Changes propagate to all migration packages
-- **Easier Testing**: Shared utilities are tested once
-
-## For Migration Package Authors
-
-When creating a new generator migration package:
-
-1. Add `@fern-api/migrations-base` as a dependency
-2. Import types and utilities
-3. Use helper functions to reduce boilerplate
-4. Focus on the migration logic, not the plumbing
-
-See `/generators/typescript/migrations/` for a complete example.

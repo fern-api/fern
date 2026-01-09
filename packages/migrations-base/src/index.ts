@@ -13,5 +13,5 @@ export type {
     MigrationContext,
     MigrationModule,
     MigrationResult
-} from "./types";
-export { applyDefaults, createMigratedConfig, getConfigObject, setIfUndefined } from "./utils";
+} from "./types.js";
+export { migrateConfig } from "./utils.js";

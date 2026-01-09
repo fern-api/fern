@@ -1,4 +1,5 @@
 import type { generatorsYml } from "@fern-api/configuration";
+import { produce } from "immer";
 
 /**
  * Helper function to safely get config object from generator invocation.
@@ -156,6 +157,60 @@ export function applyDefaults(
     }
 
     return result;
+}
+
+/**
+ * Migrate a generator config using Immer's produce for immutable updates.
+ * This is the recommended way to write migrations as it handles nested updates elegantly.
+ *
+ * @param config - The original generator config
+ * @param updater - Function that mutates the config draft (uses Immer)
+ * @returns A new generator config with updates applied
+ *
+ * @example
+ * ```typescript
+ * // Simple field updates
+ * return migrateConfig(config, (draft) => {
+ *   draft.oldField = false;  // Set old default
+ *   draft.newField = true;   // Set new default
+ * });
+ *
+ * // Conditional updates (only if undefined)
+ * return migrateConfig(config, (draft) => {
+ *   draft.field1 ??= false;  // Only set if undefined
+ *   draft.field2 ??= true;
+ * });
+ *
+ * // Nested updates
+ * return migrateConfig(config, (draft) => {
+ *   draft.nested ??= {};
+ *   draft.nested.field = "value";
+ * });
+ *
+ * // Removing fields
+ * return migrateConfig(config, (draft) => {
+ *   delete draft.deprecated;
+ * });
+ *
+ * // Renaming fields
+ * return migrateConfig(config, (draft) => {
+ *   draft.newName = draft.oldName;
+ *   delete draft.oldName;
+ * });
+ * ```
+ */
+export function migrateConfig(
+    config: generatorsYml.GeneratorInvocationSchema,
+    updater: (draft: Record<string, unknown>) => void
+): generatorsYml.GeneratorInvocationSchema {
+    const configObj = getConfigObject(config);
+
+    const migratedConfigObj = produce(configObj, updater);
+
+    return {
+        ...config,
+        config: migratedConfigObj
+    };
 }
 
 /**

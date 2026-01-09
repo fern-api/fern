@@ -13,68 +13,79 @@ The migration system allows generator authors to publish migration packages that
 When a user runs `fern generator upgrade`:
 
 1. **CLI detects version change** - Compares current version to latest version
-2. **Loads migration package** - Attempts to download `@fern-api/generator-migration-{generator}` from npm
-3. **Filters migrations** - Selects migrations where `from < version <= to`
-4. **Sorts migrations** - Orders by version ascending
-5. **Applies sequentially** - Pipes output of each migration to input of next
-6. **Updates YAML** - Writes transformed configuration back to `generators.yml`
+2. **Loads unified migration package** - Downloads `@fern-api/generator-migrations@latest` from npm to local cache (`~/.fern/migration-cache/`)
+3. **Looks up generator migrations** - Finds migrations for the specific generator by its full name (e.g., `fernapi/fern-typescript-sdk`)
+4. **Filters migrations** - Selects migrations where `from < version <= to`
+5. **Sorts migrations** - Orders by version ascending
+6. **Applies sequentially** - Pipes output of each migration to input of next
+7. **Updates YAML** - Writes transformed configuration back to `generators.yml`
 
-### Package Naming Convention
+### Unified Package Architecture
 
-Migration packages are registered in the `GENERATOR_MIGRATION_PACKAGES` map in [`loader.ts`](loader.ts). This provides an explicit, centralized mapping between generators and their migration packages.
+All generator migrations are consolidated into a single npm package: `@fern-api/generator-migrations`.
 
-To add a new migration package:
-1. Create the package under `generators/{language}/migrations/`
-2. Uncomment the corresponding entry in `GENERATOR_MIGRATION_PACKAGES` in [`loader.ts`](loader.ts)
-3. Publish the package to npm
+**Benefits:**
+- **Simpler maintenance** - One package to version and publish
+- **Easier discovery** - Single source of truth for all migrations
+- **Better for monorepo** - Fits naturally into the Fern monorepo structure
+- **Consistent versioning** - All generators migrate together
+- **Reduced installation overhead** - Only one package to download
 
-Currently available migration packages:
-- `typescript-sdk` → `@fern-api/typescript-sdk-migrations`
-- `typescript` → `@fern-api/typescript-sdk-migrations`
+The package exports a record mapping full generator names (with `fernapi/` prefix) to migration modules:
 
-Future migration packages (commented out in map):
-- **TypeScript**: `typescript-node-sdk`, `typescript-browser-sdk`, `typescript-express`
-- **Python**: `python-sdk`, `fastapi-server`, `pydantic-model`
-- **Java**: `java-sdk`, `java`, `java-model`, `java-spring`
-- **Go**: `go-sdk`, `go-model`, `go-fiber`
-- **C#**: `csharp-sdk`, `csharp-model`
-- **Ruby**: `ruby-sdk`, `ruby-model`
-- **PHP**: `php-sdk`, `php-model`
-- **Rust**: `rust-sdk`, `rust-model`
-- **Swift**: `swift-sdk`, `swift-model`
-- **Other**: `openapi`, `stoplight`, `postman`, `openapi-python-client`
+```typescript
+export const migrations: Record<string, MigrationModule> = {
+    "fernapi/fern-typescript": typescriptSdkMigrations,
+    "fernapi/fern-typescript-sdk": typescriptSdkMigrations,
+    "fernapi/fern-typescript-node-sdk": typescriptSdkMigrations,
+    "fernapi/fern-typescript-browser-sdk": typescriptSdkMigrations
+    // Additional generators added here as migrations are implemented
+};
+```
 
-All generator names match those defined in `packages/cli/configuration/src/generators-yml/schemas/GeneratorName.ts`
+### Currently Supported Generators
 
-The map uses full generator names (with `fernapi/` prefix) as keys for exact matching.
+**TypeScript SDK** (all variants share migrations):
+- `fernapi/fern-typescript`
+- `fernapi/fern-typescript-sdk`
+- `fernapi/fern-typescript-node-sdk`
+- `fernapi/fern-typescript-browser-sdk`
 
-### Migration Package Contract
+### Adding Migrations for New Generators
 
-Each migration package must default export a `MigrationModule` object:
+See [packages/generator-migrations/README.md](../../../../../generator-migrations/README.md) for detailed instructions on adding migrations for additional generators.
+
+### Migration Module Contract
+
+Each generator's migration module exports a `MigrationModule` object containing an array of migrations:
 
 ```typescript
 import type { MigrationModule } from "@fern-api/migrations-base";
+import { migrateConfig } from "@fern-api/migrations-base";
+
+export const migration_1_0_0: Migration = {
+  version: "1.0.0",  // Version this migration upgrades TO
+
+  migrateGeneratorConfig: ({ config, context }) =>
+    migrateConfig(config, (draft) => {
+      // Transform individual generator config using Immer
+      draft.newField ??= "default-value";
+    }),
+
+  migrateGeneratorsYml: ({ document, context }) => {
+    // Transform entire generators.yml (rarely needed)
+    return document;
+  }
+};
 
 const migrationModule: MigrationModule = {
-  migrations: [
-    {
-      version: "2.0.0",  // Version this migration upgrades TO
-      migrateGeneratorConfig: ({ config, context }) => {
-        // Transform individual generator config
-        return config;
-      },
-      migrateGeneratorsYml: ({ document, context }) => {
-        // Transform entire generators.yml (optional)
-        return document;
-      }
-    }
-  ]
+  migrations: [migration_1_0_0]
 };
 
 export default migrationModule;
 ```
 
-All types (`Migration`, `MigrationModule`, `MigrationContext`, etc.) are defined in `@fern-api/migrations-base` to ensure consistency across all migration packages.
+All types (`Migration`, `MigrationModule`, `MigrationContext`, etc.) are defined in `@fern-api/migrations-base` to ensure consistency across all generators.
 
 ## Implementation Files
 
@@ -88,11 +99,12 @@ Re-exports core types from `@fern-api/migrations-base`:
 
 ### [loader.ts](loader.ts)
 Core implementation:
-- `GENERATOR_MIGRATION_PACKAGES` - Map of full generator names to migration package names
-- `loadMigrationModule()` - Downloads and imports migration packages from npm (with user-friendly error logging)
-- `runMigrations()` - Applies migrations sequentially (uses options object pattern)
-- `loadAndRunMigrations()` - Main entry point combining load + run
-- `filterMigrations()` - Selects applicable migrations by version range
+- `getMigrationCacheDir()` - Returns cache directory path (`~/.fern/migration-cache/`)
+- `isValidGeneratorConfig()` - Runtime type guard for config validation (see [TYPE_SAFETY.md](TYPE_SAFETY.md))
+- `loadMigrationModule()` - Downloads unified package and looks up generator-specific migrations
+- `filterMigrations()` - Selects migrations where `from < version <= to`
+- `runMigrations()` - Applies migrations sequentially, piping outputs
+- `loadAndRunMigrations()` - Main entry point combining load + filter + run with validation
 
 ### [index.ts](index.ts)
 Public exports for use by the CLI.
@@ -111,93 +123,55 @@ If migrations fail, the upgrade continues (graceful degradation).
 
 ## Security
 
-Migration packages are installed with:
+### Package Installation
+
+The unified migration package is installed to a local cache directory:
 ```bash
-npm install {package}@latest --ignore-scripts --no-audit --no-fund
+npm install @fern-api/generator-migrations@latest \
+  --prefix ~/.fern/migration-cache \
+  --ignore-scripts \
+  --no-audit \
+  --no-fund
 ```
 
-The `--ignore-scripts` flag prevents arbitrary code execution during installation.
+- `--prefix` - Installs to local cache instead of project `node_modules`
+- `--ignore-scripts` - Prevents arbitrary code execution during installation
+- `--no-audit` - Skips security audit for faster installation
+- `--no-fund` - Suppresses funding messages
+
+npm's package cache (`~/.npm`) provides fast installs without repeated downloads.
+
+### Runtime Validation
+
+The migration loader validates configuration structure before processing:
+- Ensures config is an object with required properties
+- Prevents crashes from malformed YAML parsing
+- Logs warnings for invalid configurations
+- Gracefully skips migrations if config is invalid
+
+See [TYPE_SAFETY.md](TYPE_SAFETY.md) for detailed documentation on runtime validation.
 
 ## Error Handling
 
-The migration system gracefully handles missing packages:
-- If a generator has no migration package registered in the map, it logs a debug message and continues
-- If a package is not found on npm (404 error), it logs an info message explaining the upgrade will continue without migrations
-- If installation fails for other reasons, it logs a warning with the error details and continues
-- The upgrade process never fails due to missing migration packages
+The migration system gracefully handles errors:
+- If the unified package is not found on npm (404 error), logs an info message and continues without migrations
+- If a generator has no migrations registered in the package, logs a debug message and continues
+- If installation or loading fails for other reasons, logs a warning and continues
+- The upgrade process never fails due to migration issues
 
-## Example Migration Package
+This ensures users can always upgrade generators, even if migrations are unavailable.
 
-See the TypeScript SDK migration package for a complete example:
-[`/generators/typescript/generator-migration/`](/generators/typescript/generator-migration/)
+## Example Migrations
+
+See the TypeScript SDK migrations in the unified package for complete examples:
+[`/packages/generator-migrations/src/generators/typescript/migrations/`](/packages/generator-migrations/src/generators/typescript/migrations/)
 
 This demonstrates:
-- Package structure and configuration
-- Migration implementation patterns
-- Common transformations (add, rename, remove fields)
-- Testing and publishing workflow
-
-## Creating a Migration Package
-
-### 1. Create Package Structure
-
-```
-generators/{language}/generator-migration/
-├── package.json
-├── tsconfig.json
-├── src/
-│   └── index.ts
-└── README.md
-```
-
-### 2. Configure package.json
-
-```json
-{
-  "name": "@fern-api/generator-migration-{generator}",
-  "version": "1.0.0",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "files": ["lib"],
-  "dependencies": {
-    "@fern-api/configuration": "workspace:*"
-  }
-}
-```
-
-### 3. Implement Migrations
-
-```typescript
-import type { MigrationModule } from "@fern-api/migrations-base";
-
-const migrationModule: MigrationModule = {
-  migrations: [
-    {
-      version: "2.0.0",
-      migrateGeneratorConfig: ({ config, context }) => {
-        context.logger.debug("Applying migration 2.0.0");
-        return {
-          ...config,
-          config: {
-            ...(typeof config.config === 'object' ? config.config : {}),
-            newField: "default"
-          }
-        };
-      },
-      migrateGeneratorsYml: ({ document }) => document
-    }
-  ]
-};
-
-export default migrationModule;
-```
-
-### 4. Compile and Publish
-
-```bash
-pnpm compile
-npm publish
-```
+- Migration file structure and naming
+- Using the `migrateConfig` helper with Immer
+- Setting old defaults for backwards compatibility
+- Comprehensive documentation with before/after examples
+- Testing patterns
 
 ## Testing
 
@@ -219,90 +193,97 @@ pnpm test -- migrations/__test__/loader.test.ts
 Test with a real Fern project:
 
 ```bash
-# Link migration package locally
-cd generators/typescript/generator-migration
+# Link unified migration package locally for development
+cd packages/generator-migrations
 npm link
 
-# In test project
-npm link @fern-api/generator-migration-typescript-sdk
+# Create symlink in migration cache directory
+mkdir -p ~/.fern/migration-cache/node_modules/@fern-api
+cd ~/.fern/migration-cache/node_modules/@fern-api
+ln -s /path/to/fern/packages/generator-migrations generator-migrations
 
-# Run upgrade
-cd test-project
+# Run upgrade in test project
+cd /path/to/test-project
 fern generator upgrade --generator typescript-sdk
+
+# Clean up after testing
+rm ~/.fern/migration-cache/node_modules/@fern-api/generator-migrations
 ```
 
 ## Common Migration Patterns
 
-### Adding a Field
+### Setting Defaults (Most Common)
+
+Use the nullish coalescing assignment operator (`??=`) to set values only if undefined:
 
 ```typescript
-migrateGeneratorConfig: (config) => ({
-  ...config,
-  config: {
-    ...(typeof config.config === 'object' ? config.config : {}),
-    newField: "default-value"
+import { migrateConfig } from "@fern-api/migrations-base";
+
+migrateGeneratorConfig: ({ config }) =>
+  migrateConfig(config, (draft) => {
+    draft.field1 ??= false;
+    draft.field2 ??= "default-value";
+    draft.field3 ??= true;
+  })
+```
+
+### Renaming Fields
+
+```typescript
+migrateConfig(config, (draft) => {
+  if (draft.oldFieldName !== undefined) {
+    draft.newFieldName = draft.oldFieldName;
+    delete draft.oldFieldName;
   }
 })
 ```
 
-### Renaming a Field
+### Removing Fields
 
 ```typescript
-migrateGeneratorConfig: (config) => {
-  const cfg = typeof config.config === 'object' ? config.config : {};
-  if ('oldName' in cfg) {
-    const { oldName, ...rest } = cfg;
-    return {
-      ...config,
-      config: { ...rest, newName: oldName }
-    };
-  }
-  return config;
-}
+migrateConfig(config, (draft) => {
+  delete draft.deprecatedField;
+})
 ```
 
-### Removing a Field
+### Conditional Transformations
 
 ```typescript
-migrateGeneratorConfig: (config) => {
-  const cfg = typeof config.config === 'object' ? config.config : {};
-  if ('deprecated' in cfg) {
-    const { deprecated, ...rest } = cfg;
-    return { ...config, config: rest };
-  }
-  return config;
-}
-```
-
-### Transforming Values
-
-```typescript
-migrateGeneratorConfig: (config) => ({
-  ...config,
-  config: {
-    ...(typeof config.config === 'object' ? config.config : {}),
-    timeout: typeof config.config?.timeout === 'number'
-      ? config.config.timeout * 1000  // Convert to milliseconds
-      : 30000
+migrateConfig(config, (draft) => {
+  if (draft.oldFormat === "legacy") {
+    draft.newFormat = { type: "modern", legacy: true };
+    delete draft.oldFormat;
   }
 })
 ```
+
+For more patterns and examples, see the [generator-migrations package README](/packages/generator-migrations/README.md#migration-patterns).
 
 ## Best Practices
 
-1. **Pure Functions** - Always return new objects, never mutate
-2. **Idempotent** - Safe to run multiple times
-3. **Defensive Coding** - Don't assume fields exist
-4. **Preserve Unknown Fields** - Use spread operators
-5. **Document Intent** - Comment why migrations are needed
-6. **Version Alignment** - Migration version matches generator version it upgrades TO
-7. **Test Thoroughly** - Test with various configuration shapes
+1. **Pure Functions** - Use the `migrateConfig` helper with Immer, never mutate input directly
+2. **Idempotent** - Use `??=` to set values only if undefined, making migrations safe to run multiple times
+3. **Defensive Coding** - Don't assume fields exist, check before accessing nested properties
+4. **Preserve Unknown Fields** - Immer automatically preserves fields you don't modify
+5. **Document Intent** - Add comprehensive comments explaining why defaults changed and what the migration does
+6. **Version Alignment** - Migration version must match the generator version it upgrades TO
+7. **Test Thoroughly** - Test with empty configs, partially configured, and fully configured scenarios
+
+For complete best practices and examples, see:
+- [generator-migrations README](/packages/generator-migrations/README.md#migration-best-practices)
+- [migrations-base README](/packages/migrations-base/README.md)
+- [TypeScript SDK migration examples](/packages/generator-migrations/src/generators/typescript/migrations/)
+
+## Related Documentation
+
+- [Unified Migration Package](/packages/generator-migrations/README.md) - Adding migrations for new generators
+- [migrations-base Package](/packages/migrations-base/README.md) - Core types and utilities
+- [Type Safety Documentation](TYPE_SAFETY.md) - Runtime validation strategy
 
 ## Future Enhancements
 
-Potential improvements:
-- Validation of migration package structure
-- Dry-run mode to preview changes
-- Migration rollback support
-- Batch migration across multiple generators
-- Migration verification against generator schema
+Potential improvements tracked in GitHub issues:
+- Dry-run mode to preview migrations before applying
+- Migration rollback support for recovering from issues
+- Schema validation of migrated configs against generator schemas
+- Telemetry to understand which migrations are commonly needed

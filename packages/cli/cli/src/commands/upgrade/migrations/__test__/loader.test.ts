@@ -1,7 +1,7 @@
 import { NOOP_LOGGER } from "@fern-api/logger";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-import { runMigrations } from "../loader";
+import { loadAndRunMigrations, runMigrations } from "../loader";
 import { Migration } from "../types";
 
 describe("runMigrations", () => {
@@ -229,6 +229,193 @@ describe("runMigrations", () => {
             config: {
                 kept: "should-remain"
             }
+        });
+    });
+});
+
+describe("loadAndRunMigrations", () => {
+    describe("config validation", () => {
+        it("should reject null config", async () => {
+            const mockLogger = {
+                debug: vi.fn(),
+                info: vi.fn(),
+                warn: vi.fn(),
+                error: vi.fn()
+            };
+
+            const result = await loadAndRunMigrations({
+                generatorName: "fernapi/fern-typescript-sdk",
+                from: "1.0.0",
+                to: "2.0.0",
+                config: null,
+                logger: mockLogger as never
+            });
+
+            expect(result).toBeUndefined();
+            expect(mockLogger.warn).toHaveBeenCalledWith(
+                expect.stringContaining("Invalid generator configuration structure")
+            );
+        });
+
+        it("should reject undefined config", async () => {
+            const mockLogger = {
+                debug: vi.fn(),
+                info: vi.fn(),
+                warn: vi.fn(),
+                error: vi.fn()
+            };
+
+            const result = await loadAndRunMigrations({
+                generatorName: "fernapi/fern-typescript-sdk",
+                from: "1.0.0",
+                to: "2.0.0",
+                config: undefined,
+                logger: mockLogger as never
+            });
+
+            expect(result).toBeUndefined();
+            expect(mockLogger.warn).toHaveBeenCalledWith(
+                expect.stringContaining("Invalid generator configuration structure")
+            );
+        });
+
+        it("should reject string config", async () => {
+            const mockLogger = {
+                debug: vi.fn(),
+                info: vi.fn(),
+                warn: vi.fn(),
+                error: vi.fn()
+            };
+
+            const result = await loadAndRunMigrations({
+                generatorName: "fernapi/fern-typescript-sdk",
+                from: "1.0.0",
+                to: "2.0.0",
+                config: "invalid-string-config",
+                logger: mockLogger as never
+            });
+
+            expect(result).toBeUndefined();
+            expect(mockLogger.warn).toHaveBeenCalledWith(
+                expect.stringContaining("Invalid generator configuration structure")
+            );
+        });
+
+        it("should reject number config", async () => {
+            const mockLogger = {
+                debug: vi.fn(),
+                info: vi.fn(),
+                warn: vi.fn(),
+                error: vi.fn()
+            };
+
+            const result = await loadAndRunMigrations({
+                generatorName: "fernapi/fern-typescript-sdk",
+                from: "1.0.0",
+                to: "2.0.0",
+                config: 42,
+                logger: mockLogger as never
+            });
+
+            expect(result).toBeUndefined();
+            expect(mockLogger.warn).toHaveBeenCalledWith(
+                expect.stringContaining("Invalid generator configuration structure")
+            );
+        });
+
+        it("should reject object without name property", async () => {
+            const mockLogger = {
+                debug: vi.fn(),
+                info: vi.fn(),
+                warn: vi.fn(),
+                error: vi.fn()
+            };
+
+            const result = await loadAndRunMigrations({
+                generatorName: "fernapi/fern-typescript-sdk",
+                from: "1.0.0",
+                to: "2.0.0",
+                config: { version: "1.0.0" },
+                logger: mockLogger as never
+            });
+
+            expect(result).toBeUndefined();
+            expect(mockLogger.warn).toHaveBeenCalledWith(
+                expect.stringContaining("Invalid generator configuration structure")
+            );
+        });
+
+        it("should reject object with non-string name property", async () => {
+            const mockLogger = {
+                debug: vi.fn(),
+                info: vi.fn(),
+                warn: vi.fn(),
+                error: vi.fn()
+            };
+
+            const result = await loadAndRunMigrations({
+                generatorName: "fernapi/fern-typescript-sdk",
+                from: "1.0.0",
+                to: "2.0.0",
+                config: { name: 123, version: "1.0.0" },
+                logger: mockLogger as never
+            });
+
+            expect(result).toBeUndefined();
+            expect(mockLogger.warn).toHaveBeenCalledWith(
+                expect.stringContaining("Invalid generator configuration structure")
+            );
+        });
+
+        it("should accept valid config with name property", async () => {
+            const mockLogger = {
+                debug: vi.fn(),
+                info: vi.fn(),
+                warn: vi.fn(),
+                error: vi.fn()
+            };
+
+            // This will return undefined because no migration package exists,
+            // but it should not reject the config
+            const result = await loadAndRunMigrations({
+                generatorName: "fernapi/fern-typescript-sdk",
+                from: "1.0.0",
+                to: "2.0.0",
+                config: { name: "fernapi/fern-typescript-sdk", version: "1.0.0" },
+                logger: mockLogger as never
+            });
+
+            // Should not call warn for invalid structure
+            expect(mockLogger.warn).not.toHaveBeenCalledWith(
+                expect.stringContaining("Invalid generator configuration structure")
+            );
+        });
+
+        it("should accept config with additional properties", async () => {
+            const mockLogger = {
+                debug: vi.fn(),
+                info: vi.fn(),
+                warn: vi.fn(),
+                error: vi.fn()
+            };
+
+            const result = await loadAndRunMigrations({
+                generatorName: "fernapi/fern-typescript-sdk",
+                from: "1.0.0",
+                to: "2.0.0",
+                config: {
+                    name: "fernapi/fern-typescript-sdk",
+                    version: "1.0.0",
+                    config: { customField: "value" },
+                    output: { location: "npm" }
+                },
+                logger: mockLogger as never
+            });
+
+            // Should not call warn for invalid structure
+            expect(mockLogger.warn).not.toHaveBeenCalledWith(
+                expect.stringContaining("Invalid generator configuration structure")
+            );
         });
     });
 });

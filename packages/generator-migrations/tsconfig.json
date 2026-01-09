@@ -1,15 +1,15 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
+    "composite": false,
     "outDir": "lib",
     "rootDir": "src"
   },
   "include": ["./src/**/*"],
-  "exclude": [],
+  "exclude": ["./src/**/__test__/**/*", "./src/**/*.test.ts"],
   "references": [
     {
-      "path": "../../../packages/migrations-base"
+      "path": "../migrations-base"
     }
   ]
 }

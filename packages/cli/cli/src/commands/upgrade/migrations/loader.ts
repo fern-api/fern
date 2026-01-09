@@ -1,8 +1,7 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import type { Logger } from "@fern-api/logger";
-import { execSync } from "child_process";
-import { mkdirSync } from "fs";
-import { rm } from "fs/promises";
+import { loggingExeca } from "@fern-api/logging-execa";
+import { mkdir, readFile } from "fs/promises";
 import { homedir } from "os";
 import { join } from "path";
 import semver from "semver";
@@ -10,78 +9,17 @@ import semver from "semver";
 import { Migration, MigrationModule, MigrationResult } from "./types";
 
 /**
- * Map of generator names to their migration package names.
- * This defines which generators have migration packages available.
- *
- * Key: Full generator name (e.g., "fernapi/fern-typescript-sdk")
- * Value: NPM package name for the migration package
- *
- * Generator names come from packages/cli/configuration/src/generators-yml/schemas/GeneratorName.ts
- *
- * When adding a new generator migration package:
- * 1. Create the migration package under generators/{language}/migrations/
- * 2. Uncomment the entry in this map
- * 3. Publish the package to npm as @fern-api/{package-name}
- *
- * Entries are commented out until their migration packages are created and published.
+ * The unified migration package name.
+ * All generator migrations are in a single package, indexed by full generator name.
  */
-const GENERATOR_MIGRATION_PACKAGES: Record<string, string> = {
-    // TypeScript
-    "fernapi/fern-typescript": "@fern-api/typescript-sdk-migrations",
-    "fernapi/fern-typescript-sdk": "@fern-api/typescript-sdk-migrations",
-    "fernapi/fern-typescript-node-sdk": "@fern-api/typescript-sdk-migrations",
-    "fernapi/fern-typescript-browser-sdk": "@fern-api/typescript-sdk-migrations",
-    "fernapi/fern-typescript-express": "@fern-api/typescript-express-migrations",
-
-    // Python
-    "fernapi/fern-python-sdk": "@fern-api/python-sdk-migrations",
-    "fernapi/fern-fastapi-server": "@fern-api/fastapi-server-migrations",
-    "fernapi/fern-pydantic-model": "@fern-api/pydantic-model-migrations",
-
-    // Java
-    "fernapi/fern-java-sdk": "@fern-api/java-sdk-migrations",
-    "fernapi/fern-java": "@fern-api/java-migrations",
-    "fernapi/java-model": "@fern-api/java-model-migrations",
-    "fernapi/fern-java-spring": "@fern-api/java-spring-migrations",
-
-    // Go
-    "fernapi/fern-go-sdk": "@fern-api/go-sdk-migrations",
-    "fernapi/fern-go-model": "@fern-api/go-model-migrations",
-    "fernapi/fern-go-fiber": "@fern-api/go-fiber-migrations",
-
-    // C#
-    "fernapi/fern-csharp-sdk": "@fern-api/csharp-sdk-migrations",
-    "fernapi/fern-csharp-model": "@fern-api/csharp-model-migrations",
-
-    // Ruby
-    "fernapi/fern-ruby-sdk": "@fern-api/ruby-sdk-migrations",
-    "fernapi/fern-ruby-model": "@fern-api/ruby-model-migrations",
-
-    // PHP
-    "fernapi/fern-php-sdk": "@fern-api/php-sdk-migrations",
-    "fernapi/fern-php-model": "@fern-api/php-model-migrations",
-
-    // Rust
-    "fernapi/fern-rust-sdk": "@fern-api/rust-sdk-migrations",
-    "fernapi/fern-rust-model": "@fern-api/rust-model-migrations",
-
-    // Swift
-    "fernapi/fern-swift-sdk": "@fern-api/swift-sdk-migrations",
-    "fernapi/fern-swift-model": "@fern-api/swift-model-migrations",
-
-    // OpenAPI/Postman
-    "fernapi/fern-openapi": "@fern-api/openapi-migrations",
-    "fernapi/fern-stoplight": "@fern-api/stoplight-migrations",
-    "fernapi/fern-postman": "@fern-api/postman-migrations",
-    "fernapi/openapi-python-client": "@fern-api/openapi-python-client-migrations"
-};
+const MIGRATION_PACKAGE_NAME = "@fern-api/generator-migrations";
 
 /**
  * Gets the cache directory for migration packages.
  * Migrations are installed to ~/.fern/migration-cache/ to avoid polluting the project.
  *
- * Note: We always fetch @latest, so old versions are cleaned up before each install
- * to prevent the cache from growing indefinitely.
+ * Note: npm's @latest tag resolution ensures we always get the current latest version,
+ * and npm's global cache (~/.npm) provides fast installs without repeated downloads.
  */
 function getMigrationCacheDir(): string {
     return join(homedir(), ".fern", "migration-cache");
@@ -89,59 +27,75 @@ function getMigrationCacheDir(): string {
 
 /**
  * Loads a migration module for a specific generator.
- * Downloads the migration package from npm if not already cached.
+ * Downloads the unified migration package from npm if not already cached,
+ * then imports the specific generator's migrations.
  *
- * @param generatorName - The full generator name (e.g., "fernapi/fern-typescript-sdk")
- *                        Must be normalized with fernapi/ prefix before calling this function.
- *                        Use getGeneratorNameOrThrow() or addDefaultDockerOrgIfNotPresent() from
- *                        @fern-api/configuration-loader to normalize.
- * @param logger - Logger for user feedback
- * @returns The migration module, or undefined if the package doesn't exist
+ * @param params - Parameters object
+ * @param params.generatorName - The full generator name (e.g., "fernapi/fern-typescript-sdk")
+ *                               Must be normalized with fernapi/ prefix before calling this function.
+ *                               Use getGeneratorNameOrThrow() or addDefaultDockerOrgIfNotPresent() from
+ *                               @fern-api/configuration-loader to normalize.
+ * @param params.logger - Logger for user feedback
+ * @returns The migration module, or undefined if migrations don't exist for this generator
  *
  * @example
  * ```typescript
- * const module = await loadMigrationModule("fernapi/fern-typescript-sdk", logger);
+ * const module = await loadMigrationModule({
+ *   generatorName: "fernapi/fern-typescript-sdk",
+ *   logger
+ * });
  * if (module) {
  *   console.log(`Found ${module.migrations.length} migrations`);
  * }
  * ```
  */
-export async function loadMigrationModule(generatorName: string, logger: Logger): Promise<MigrationModule | undefined> {
+export async function loadMigrationModule(params: {
+    generatorName: string;
+    logger: Logger;
+}): Promise<MigrationModule | undefined> {
+    const { generatorName, logger } = params;
     const cacheDir = getMigrationCacheDir();
-    mkdirSync(cacheDir, { recursive: true });
-
-    // Look up the migration package name from the map using the full generator name
-    // Note: generatorName must already be normalized with fernapi/ prefix (done in upgradeGenerator.ts)
-    const packageName = GENERATOR_MIGRATION_PACKAGES[generatorName];
-
-    if (packageName == null) {
-        // No migration package registered for this generator
-        logger.debug(`No migration package registered for generator: ${generatorName}`);
-        return undefined;
-    }
+    await mkdir(cacheDir, { recursive: true });
 
     try {
-        const packagePath = join(cacheDir, "node_modules", packageName);
-
-        // Clean up any existing version of this package to ensure we always get @latest
-        // and prevent the cache from accumulating old versions
-        try {
-            await rm(packagePath, { recursive: true, force: true });
-        } catch {
-            // Ignore errors if the package doesn't exist yet
-        }
-
-        // Install the migration package to the cache directory
+        // Install/update the unified migration package to the cache directory
+        // npm will check if @latest is already installed and skip reinstallation if so
         // --ignore-scripts: Security - prevent running arbitrary code during install
         // --no-audit: Skip audit checks for faster installation
         // --no-fund: Skip funding messages
-        // stdio: "pipe": Suppress npm output
-        execSync(`npm install ${packageName}@latest --prefix "${cacheDir}" --ignore-scripts --no-audit --no-fund`, {
-            stdio: "pipe"
-        });
+        await loggingExeca(logger, "npm", [
+            "install",
+            `${MIGRATION_PACKAGE_NAME}@latest`,
+            "--prefix",
+            cacheDir,
+            "--ignore-scripts",
+            "--no-audit",
+            "--no-fund"
+        ]);
 
-        // Import the installed module
-        const module = (await import(packagePath)) as MigrationModule;
+        // Read the package.json to get the entry point from the main field
+        const packageDir = join(cacheDir, "node_modules", MIGRATION_PACKAGE_NAME);
+        const packageJsonPath = join(packageDir, "package.json");
+        const packageJsonContent = await readFile(packageJsonPath, "utf-8");
+        const packageJson = JSON.parse(packageJsonContent) as { main?: string };
+
+        if (packageJson.main == null) {
+            throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
+        }
+
+        // Resolve the entry point relative to the package directory
+        const packageEntryPoint = join(packageDir, packageJson.main);
+        const { migrations } = await import(packageEntryPoint);
+
+        // Look up the migration module directly by generator name
+        // Note: generatorName must already be normalized with fernapi/ prefix (done in upgradeGenerator.ts)
+        const module = migrations[generatorName];
+
+        if (module == null) {
+            // No migrations registered for this generator
+            logger.debug(`No migrations registered for generator: ${generatorName}. Continuing without migrations.`);
+            return undefined;
+        }
 
         return module;
     } catch (error) {
@@ -155,7 +109,7 @@ export async function loadMigrationModule(generatorName: string, logger: Logger)
             );
         } else {
             logger.warn(
-                `Failed to load migration package ${packageName}: ${errorMessage}. Continuing without migrations.`
+                `Failed to load migration package ${MIGRATION_PACKAGE_NAME}: ${errorMessage}. Continuing without migrations.`
             );
         }
 
@@ -167,10 +121,11 @@ export async function loadMigrationModule(generatorName: string, logger: Logger)
  * Filters migrations to those that should be applied for the given version range.
  * Returns migrations where: from < migration.version <= to
  *
- * @param migrations - All available migrations
- * @param from - The current version (exclusive)
- * @param to - The target version (inclusive)
- * @param logger - Logger for warning about invalid versions
+ * @param params - Parameters object
+ * @param params.migrations - All available migrations
+ * @param params.from - The current version (exclusive)
+ * @param params.to - The target version (inclusive)
+ * @param params.logger - Logger for warning about invalid versions
  * @returns Filtered migrations, sorted by version ascending
  *
  * @example
@@ -180,10 +135,11 @@ export async function loadMigrationModule(generatorName: string, logger: Logger)
  *   { version: "2.0.0", ... },
  *   { version: "2.1.0", ... }
  * ];
- * filterMigrations(migrations, "1.0.0", "2.0.0", logger); // ["1.5.0", "2.0.0"]
+ * filterMigrations({ migrations, from: "1.0.0", to: "2.0.0", logger }); // ["1.5.0", "2.0.0"]
  * ```
  */
-function filterMigrations(migrations: Migration[], from: string, to: string, logger: Logger): Migration[] {
+function filterMigrations(params: { migrations: Migration[]; from: string; to: string; logger: Logger }): Migration[] {
+    const { migrations, from, to, logger } = params;
     return migrations
         .filter((migration) => {
             const migrationVersion = semver.parse(migration.version);
@@ -268,23 +224,42 @@ export function runMigrations(params: {
 }
 
 /**
+ * Validates that a config object has the minimum required shape for migrations.
+ * Checks that the config is an object with a 'name' property.
+ *
+ * @param config - The config to validate
+ * @returns True if the config is valid, false otherwise
+ */
+function isValidGeneratorConfig(config: unknown): config is generatorsYml.GeneratorInvocationSchema {
+    return (
+        typeof config === "object" &&
+        config != null &&
+        "name" in config &&
+        typeof (config as { name: unknown }).name === "string"
+    );
+}
+
+/**
  * Loads and runs migrations for a generator configuration.
  * This is the main entry point for the migration system.
  *
- * @param generatorName - The name of the generator
- * @param from - The current version
- * @param to - The target version
- * @param config - The generator configuration to migrate
+ * @param params - Parameters object
+ * @param params.generatorName - The name of the generator
+ * @param params.from - The current version
+ * @param params.to - The target version
+ * @param params.config - The generator configuration to migrate
+ * @param params.logger - Logger for migration feedback
  * @returns The migration result, or undefined if no migrations are available
  *
  * @example
  * ```typescript
- * const result = await loadAndRunMigrations(
- *   "fernapi/fern-typescript-sdk",
- *   "1.0.0",
- *   "2.0.0",
- *   config
- * );
+ * const result = await loadAndRunMigrations({
+ *   generatorName: "fernapi/fern-typescript-sdk",
+ *   from: "1.0.0",
+ *   to: "2.0.0",
+ *   config,
+ *   logger
+ * });
  *
  * if (result) {
  *   console.log(`Applied ${result.migrationsApplied} migrations`);
@@ -294,18 +269,26 @@ export function runMigrations(params: {
  * }
  * ```
  */
-export async function loadAndRunMigrations(
-    generatorName: string,
-    from: string,
-    to: string,
-    config: unknown,
-    logger: Logger
-): Promise<MigrationResult | undefined> {
-    // Cast to the expected type - we trust that the YAML was parsed correctly
-    const typedConfig = config as generatorsYml.GeneratorInvocationSchema;
+export async function loadAndRunMigrations(params: {
+    generatorName: string;
+    from: string;
+    to: string;
+    config: unknown;
+    logger: Logger;
+}): Promise<MigrationResult | undefined> {
+    const { generatorName, from, to, config, logger } = params;
+    // Validate config structure before proceeding
+    if (!isValidGeneratorConfig(config)) {
+        logger.warn(
+            `Invalid generator configuration structure for ${generatorName}. Expected an object with 'name' property. Skipping migrations.`
+        );
+        return undefined;
+    }
+
+    const typedConfig = config;
 
     // Load the migration module
-    const migrationModule = await loadMigrationModule(generatorName, logger);
+    const migrationModule = await loadMigrationModule({ generatorName, logger });
 
     if (migrationModule == null) {
         // No migration package available for this generator
@@ -313,7 +296,7 @@ export async function loadAndRunMigrations(
     }
 
     // Filter migrations to those in the version range
-    const applicableMigrations = filterMigrations(migrationModule.migrations, from, to, logger);
+    const applicableMigrations = filterMigrations({ migrations: migrationModule.migrations, from, to, logger });
 
     if (applicableMigrations.length === 0) {
         // No migrations need to be applied

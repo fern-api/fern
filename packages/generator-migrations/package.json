@@ -1,11 +1,11 @@
 {
-  "name": "@fern-api/migration-test-utils",
+  "name": "@fern-api/generator-migrations",
   "version": "0.0.0",
-  "description": "Testing utilities for Fern generator migrations",
+  "description": "Unified migration package for all Fern generator configurations",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/migration-test-utils"
+    "url": "git+https://github.com/fern-api/fern.git",
+    "directory": "packages/generator-migrations"
   },
   "sideEffects": false,
   "type": "module",
@@ -13,35 +13,37 @@
     ".": {
       "development": "./src/index.ts",
       "source": "./src/index.ts",
-      "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
-      "default": "./lib/index.js"
+      "types": "./lib/index.d.mts",
+      "import": "./lib/index.mjs",
+      "default": "./lib/index.mjs"
     }
   },
-  "main": "lib/index.js",
+  "main": "lib/index.mjs",
   "source": "src/index.ts",
-  "types": "lib/index.d.ts",
+  "types": "lib/index.d.mts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
+    "dist": "node build.mjs",
     "depcheck": "depcheck",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
-  "keywords": ["fern", "generator", "migration", "testing", "utilities"],
+  "keywords": ["fern", "generator", "migration"],
   "license": "MIT",
-  "dependencies": {
-    "@fern-api/configuration": "workspace:*",
-    "@fern-api/logger": "workspace:*",
-    "@fern-api/migrations-base": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
+    "@fern-api/migrations-base": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/logger": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
+    "rolldown": "1.0.0-beta.59",
+    "rolldown-plugin-dts": "^0.20.0",
+    "tsdown": "0.19.0-beta.5",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

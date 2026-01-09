@@ -35,7 +35,8 @@
   "license": "MIT",
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
-    "@fern-api/logger": "workspace:*"
+    "@fern-api/logger": "workspace:*",
+    "immer": "^10.0.3"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

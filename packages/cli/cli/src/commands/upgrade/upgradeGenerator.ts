@@ -78,6 +78,7 @@ export async function loadAndUpdateGenerators({
     alreadyUpToDate: AlreadyUpToDate[];
 }> {
     const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
+
     if (filepath == null || !(await doesPathExist(filepath))) {
         context.logger.debug("Generators configuration file was not found, no generators to upgrade.");
         return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [], alreadyUpToDate: [] };
@@ -185,13 +186,13 @@ export async function loadAndUpdateGenerators({
                         // toJSON() returns a plain object with all the YAML properties
                         const currentConfig = generator.toJSON();
 
-                        const migrationResult = await loadAndRunMigrations(
-                            normalizedGeneratorName,
-                            currentGeneratorVersion,
-                            latestVersion,
-                            currentConfig,
-                            context.logger
-                        );
+                        const migrationResult = await loadAndRunMigrations({
+                            generatorName: normalizedGeneratorName,
+                            from: currentGeneratorVersion,
+                            to: latestVersion,
+                            config: currentConfig,
+                            logger: context.logger
+                        });
 
                         if (migrationResult != null) {
                             migrationsApplied = migrationResult.migrationsApplied;
