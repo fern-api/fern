@@ -2,7 +2,7 @@
 
 import type * as SeedPagination from "../../../index.js";
 
-export interface UserOptionalListPage {
-    data: SeedPagination.UserOptionalListContainer;
-    next?: string;
+export interface ListUsersTopLevelCursorPaginationResponse {
+    next_cursor?: string;
+    data: SeedPagination.User[];
 }
