@@ -43,6 +43,9 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
+            if (value === undefined) {
+                continue;
+            }
             this.errors.scope(key);
             try {
                 const parameter = parameters.find((param) => param.name.wireValue === key);
@@ -115,6 +118,9 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
+            if (value === undefined) {
+                continue;
+            }
             this.errors.scope(key);
             try {
                 const parameter = parameters.find((param) => param.name.wireValue === key);
