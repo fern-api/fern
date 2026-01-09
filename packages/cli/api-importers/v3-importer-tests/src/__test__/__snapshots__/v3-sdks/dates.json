@@ -486,6 +486,7 @@
               }
             }
           ],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "userSpecifiedExamples": [],
