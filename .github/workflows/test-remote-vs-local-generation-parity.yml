@@ -99,7 +99,12 @@ jobs:
         run: pnpm seed:build
 
       - name: Run Seed Test Remote-Local (${{ matrix.generator }})
-        run: pnpm seed test-remote-local --generator ${{ matrix.generator }} --output-mode github
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 30
+          max_attempts: 5
+          retry_wait_seconds: 120
+          command: pnpm seed test-remote-local --generator ${{ matrix.generator }} --output-mode github
         env:
           FERN_TOKEN: ${{ secrets.FERN_FERN_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.TEST_REMOTE_LOCAL_GITHUB_TOKEN }}
