@@ -238,7 +238,7 @@ function convertService(
                     availability: convertIrAvailability(header.availability)
                 })
             ),
-            request:irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
+            request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             requestsV2: {
                 requests: irEndpoint.v2RequestBodies?.requestBodies?.map(convertRequestBody).filter(isNonNullish)
             },
