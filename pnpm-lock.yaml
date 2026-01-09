@@ -7855,6 +7855,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../configs
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../cli/configuration
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../cli/logger
@@ -7867,12 +7870,6 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
-      rolldown:
-        specifier: 1.0.0-beta.59
-        version: 1.0.0-beta.59
-      rolldown-plugin-dts:
-        specifier: ^0.20.0
-        version: 0.20.0(rolldown@1.0.0-beta.59)(typescript@5.9.3)
       tsdown:
         specifier: 0.19.0-beta.5
         version: 0.19.0-beta.5(typescript@5.9.3)
