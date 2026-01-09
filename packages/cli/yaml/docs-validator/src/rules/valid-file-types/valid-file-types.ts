@@ -26,6 +26,9 @@ const ALLOWED_FILE_TYPES = new Set<MimeType>([
     // document files
     "application/pdf",
     "application/xml",
+    // spreadsheet files
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+    "application/x-cfb", // .xls (and other legacy Microsoft Office formats)
     // font files
     "font/woff",
     "font/woff2",

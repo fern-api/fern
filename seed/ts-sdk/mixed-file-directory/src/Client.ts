@@ -3,12 +3,14 @@
 import { OrganizationClient } from "./api/resources/organization/client/Client.js";
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
 
 export declare namespace SeedMixedFileDirectoryClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SeedMixedFileDirectoryClient {
@@ -17,6 +19,7 @@ export class SeedMixedFileDirectoryClient {
     protected _user: UserClient | undefined;
 
     constructor(options: SeedMixedFileDirectoryClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

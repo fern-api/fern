@@ -43,6 +43,9 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
+            if (value === undefined) {
+                continue;
+            }
             this.errors.scope(key);
             try {
                 const parameter = parameters.find((param) => param.name.wireValue === key);
@@ -115,6 +118,9 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
     }): TypeInstance[] {
         const instances: TypeInstance[] = [];
         for (const [key, value] of Object.entries(values)) {
+            if (value === undefined) {
+                continue;
+            }
             this.errors.scope(key);
             try {
                 const parameter = parameters.find((param) => param.name.wireValue === key);
@@ -334,6 +340,18 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
             throw new Error(`Failed to find endpoint identified by "${location.method} ${location.path}"`);
         }
         return endpoints;
+    }
+
+    public resolveEndpointById(endpointId: FernIr.dynamic.EndpointId): FernIr.dynamic.Endpoint | undefined {
+        return this._ir.endpoints[endpointId];
+    }
+
+    public resolveEndpointByIdOrThrow(endpointId: FernIr.dynamic.EndpointId): FernIr.dynamic.Endpoint {
+        const endpoint = this.resolveEndpointById(endpointId);
+        if (endpoint == null) {
+            throw new Error(`Failed to find endpoint with ID "${endpointId}"`);
+        }
+        return endpoint;
     }
 
     public needsRequestParameter({

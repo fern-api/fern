@@ -1,16 +1,17 @@
-import { Blob, File } from "buffer";
-import { join } from "path";
+
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Readable } from "stream";
+import { join } from "path";
+import { File, Blob } from "buffer";
 import { FormDataWrapper, newFormData } from "../../../src/core/form-data-utils/FormDataWrapper";
 
 // Helper function to serialize FormData to string for inspection
 async function serializeFormData(formData: FormData): Promise<string> {
-    const request = new Request("http://localhost", {
-        method: "POST",
-        body: formData,
+    const request = new Request('http://localhost', {
+        method: 'POST',
+        body: formData
     });
-
+    
     const buffer = await request.arrayBuffer();
     return new TextDecoder().decode(buffer);
 }
@@ -53,7 +54,7 @@ describe("FormDataWrapper", () => {
             const stream = Readable.from(["file content"]);
             await formData.appendFile("file", {
                 data: stream,
-                filename: "testfile.txt",
+                filename: "testfile.txt"
             });
 
             const serialized = await serializeFormData(formData.getRequest().body);
@@ -87,7 +88,7 @@ describe("FormDataWrapper", () => {
             const stream = Readable.from([]);
             await formData.appendFile("file", {
                 data: stream,
-                filename: "empty.txt",
+                filename: "empty.txt"
             });
 
             const serialized = await serializeFormData(formData.getRequest().body);
@@ -105,7 +106,7 @@ describe("FormDataWrapper", () => {
 
             await formData.appendFile("file", {
                 data: stream,
-                filename: "webstream.txt",
+                filename: "webstream.txt"
             });
 
             const serialized = await serializeFormData(formData.getRequest().body);
@@ -122,7 +123,7 @@ describe("FormDataWrapper", () => {
 
             await formData.appendFile("file", {
                 data: stream,
-                filename: "empty.txt",
+                filename: "empty.txt"
             });
 
             const serialized = await serializeFormData(formData.getRequest().body);
@@ -136,7 +137,7 @@ describe("FormDataWrapper", () => {
             const blob = new Blob(["file content"], { type: "text/plain" });
             await formData.appendFile("file", {
                 data: blob,
-                filename: "testfile.txt",
+                filename: "testfile.txt"
             });
 
             const serialized = await serializeFormData(formData.getRequest().body);
@@ -169,7 +170,7 @@ describe("FormDataWrapper", () => {
                 const file = new File(["file content"], "original.txt", { type: "text/plain" });
                 await formData.appendFile("file", {
                     data: file,
-                    filename: "override.txt",
+                    filename: "override.txt"
                 });
 
                 const serialized = await serializeFormData(formData.getRequest().body);
@@ -186,7 +187,7 @@ describe("FormDataWrapper", () => {
 
             await formData.appendFile("file", {
                 data: arrayBuffer,
-                filename: "binary.bin",
+                filename: "binary.bin"
             });
 
             const serialized = await serializeFormData(formData.getRequest().body);
@@ -198,7 +199,7 @@ describe("FormDataWrapper", () => {
             const uint8Array = new Uint8Array([72, 101, 108, 108, 111]); // "Hello"
             await formData.appendFile("file", {
                 data: uint8Array,
-                filename: "binary.bin",
+                filename: "binary.bin"
             });
 
             const serialized = await serializeFormData(formData.getRequest().body);
@@ -210,7 +211,7 @@ describe("FormDataWrapper", () => {
             const int16Array = new Int16Array([1000, 2000, 3000]);
             await formData.appendFile("file", {
                 data: int16Array,
-                filename: "numbers.bin",
+                filename: "numbers.bin"
             });
 
             const serialized = await serializeFormData(formData.getRequest().body);
@@ -222,7 +223,7 @@ describe("FormDataWrapper", () => {
                 const buffer = Buffer.from("test content");
                 await formData.appendFile("file", {
                     data: buffer,
-                    filename: "test.txt",
+                    filename: "test.txt"
                 });
 
                 const serialized = await serializeFormData(formData.getRequest().body);
@@ -238,7 +239,7 @@ describe("FormDataWrapper", () => {
 
             const serialized = await serializeFormData(formData.getRequest().body);
             expect(serialized).toContain('name="text"');
-            expect(serialized).not.toContain("filename=");
+            expect(serialized).not.toContain('filename=');
             expect(serialized).toContain("test string");
         });
 
@@ -256,7 +257,7 @@ describe("FormDataWrapper", () => {
         it("handles empty filename gracefully", async () => {
             await formData.appendFile("file", {
                 data: new Blob(["content"], { type: "text/plain" }),
-                filename: "",
+                filename: ""
             });
 
             const serialized = await serializeFormData(formData.getRequest().body);
@@ -266,16 +267,16 @@ describe("FormDataWrapper", () => {
         it("handles multiple files in single form", async () => {
             await formData.appendFile("file1", {
                 data: new Blob(["content1"], { type: "text/plain" }),
-                filename: "file1.txt",
+                filename: "file1.txt"
             });
             await formData.appendFile("file2", {
                 data: new Blob(["content2"], { type: "text/plain" }),
-                filename: "file2.txt",
+                filename: "file2.txt"
             });
             formData.append("text", "regular field");
 
             const serialized = await serializeFormData(formData.getRequest().body);
-
+            
             expect(serialized).toContain('filename="file1.txt"');
             expect(serialized).toContain('filename="file2.txt"');
             expect(serialized).toContain('name="text"');
@@ -287,7 +288,7 @@ describe("FormDataWrapper", () => {
         it("returns correct request structure", async () => {
             await formData.appendFile("file", {
                 data: new Blob(["content"], { type: "text/plain" }),
-                filename: "test.txt",
+                filename: "test.txt"
             });
 
             const request = formData.getRequest();
@@ -303,7 +304,7 @@ describe("FormDataWrapper", () => {
         it("generates proper multipart boundary structure", async () => {
             await formData.appendFile("file", {
                 data: new Blob(["test content"], { type: "text/plain" }),
-                filename: "test.txt",
+                filename: "test.txt"
             });
             formData.append("field", "value");
 
