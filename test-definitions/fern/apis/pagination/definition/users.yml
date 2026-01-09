@@ -154,6 +154,27 @@ service:
                 The object that contains the cursor used for pagination
                 in order to fetch the next page of results.
       response: ListUsersPaginationResponse
+      examples:
+        - name: WithCursor
+          request:
+            pagination:
+              cursor: "cursor_value"
+          response:
+            body:
+              hasNextPage: true
+              page:
+                page: 1
+                next:
+                  page: 2
+                  starting_after: "next_cursor_value"
+                per_page: 10
+                total_page: 5
+              total_count: 50
+              data:
+                - name: "Alice"
+                  id: 1
+                - name: "Bob"
+                  id: 2
 
     listWithOffsetPagination:
       pagination:

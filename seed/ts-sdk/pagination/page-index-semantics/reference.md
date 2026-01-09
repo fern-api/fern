@@ -1056,7 +1056,7 @@ const response = page.response;
 ```typescript
 const pageableResponse = await client.users.listWithBodyCursorPagination({
     pagination: {
-        cursor: "cursor"
+        cursor: "cursor_value"
     }
 });
 for await (const item of pageableResponse) {
@@ -1066,7 +1066,7 @@ for await (const item of pageableResponse) {
 // Or you can manually iterate page-by-page
 let page = await client.users.listWithBodyCursorPagination({
     pagination: {
-        cursor: "cursor"
+        cursor: "cursor_value"
     }
 });
 while (page.hasNextPage()) {
