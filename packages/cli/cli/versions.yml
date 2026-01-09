@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 3.37.3
+  changelogEntry:
+    - summary: |
+        no-op: initiate bulk cli update
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
 - version: 3.37.2
   changelogEntry:
     - summary: |
