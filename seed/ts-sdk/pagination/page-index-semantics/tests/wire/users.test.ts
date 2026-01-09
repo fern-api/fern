@@ -174,7 +174,7 @@ describe("UsersClient", () => {
         server
             .mockEndpoint({ once: false })
             .post("/users/top-level-cursor")
-            .jsonBody(rawRequestBody)
+            .jsonBody(rawRequestBody, { ignoredFields: ["cursor"] })
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
