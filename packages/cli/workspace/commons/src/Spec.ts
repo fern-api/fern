@@ -17,7 +17,7 @@ export interface OpenAPISpec {
 export interface OpenRPCSpec {
     type: "openrpc";
     absoluteFilepath: AbsoluteFilePath;
-    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
     namespace?: string;
 }
 
@@ -25,7 +25,7 @@ export interface ProtobufSpec {
     type: "protobuf";
     absoluteFilepathToProtobufRoot: AbsoluteFilePath;
     absoluteFilepathToProtobufTarget: AbsoluteFilePath | undefined;
-    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
     relativeFilepathToProtobufRoot: RelativeFilePath;
     generateLocally: boolean;
     fromOpenAPI: boolean;
