@@ -4,6 +4,9 @@
     - summary: |
         Add support for multiple override files in OpenAPI spec configuration. The `overrides` field now accepts either a single path or an array of paths. When multiple paths are provided, overrides are applied sequentially in order, allowing for layered customization of OpenAPI specs.
       type: feat
+    - summary: |
+        Add support for generator-level overrides. Each generator invocation can now specify its own `overrides` field, which applies additional override files after the top-level spec overrides. This allows for generator-specific customizations without affecting other generators.
+      type: feat
   createdAt: "2026-01-09"
   irVersion: 62
 

@@ -3804,6 +3804,16 @@
             }
           ]
         },
+        "overrides": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OverridesSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "disable-examples": {
           "oneOf": [
             {

@@ -39,6 +39,12 @@ types:
       api:
         type: optional<GeneratorAPISettingsSchema>
         docs: Override API import settings (this is applied across all specs)
+      overrides:
+        type: optional<generators.OverridesSchema>
+        docs: |
+          Additional override file(s) to apply for this generator.
+          These overrides are applied after the top-level spec overrides.
+          Can be a single path or an array of paths applied sequentially.
       disable-examples:
         type: optional<boolean>
         docs: Temporary way to unblock example serialization.

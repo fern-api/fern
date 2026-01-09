@@ -159,6 +159,11 @@ export interface GeneratorInvocation {
     readme: ReadmeSchema | undefined;
     settings: ApiDefinitionSettingsSchema | undefined;
     /**
+     * Additional override file(s) to apply for this generator.
+     * These overrides are applied after the top-level spec overrides.
+     */
+    overrides: string | string[] | undefined;
+    /**
      * Override the API configuration for this generator.
      * When provided, these values take precedence over the top-level api configuration.
      */
