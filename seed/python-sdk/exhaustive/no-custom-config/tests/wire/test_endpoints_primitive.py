@@ -48,7 +48,7 @@ def test_endpoints_primitive_get_and_return_datetime() -> None:
     """Test getAndReturnDatetime endpoint with WireMock"""
     test_id = "endpoints.primitive.get_and_return_datetime.0"
     client = get_client(test_id)
-    client.endpoints.primitive.get_and_return_datetime(request=datetime.fromisoformat("2024-01-15T09:30:00Z"))
+    client.endpoints.primitive.get_and_return_datetime(request=datetime.fromisoformat("2024-01-15T09:30:00+00:00"))
     verify_request_count(test_id, "POST", "/primitive/datetime", None, 1)
 
 
