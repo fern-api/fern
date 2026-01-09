@@ -58,10 +58,10 @@ export const V63_TO_V62_MIGRATION: IrMigration<
             types: v62Types,
             services: mapValues(v63.services, (service) => convertHttpService(service)),
             errors: mapValues(v63.errors, (error) => convertErrorDeclaration(error)),
-            headers: v63.headers.map((header) => convertHttpHeader(header)),
-            idempotencyHeaders: v63.idempotencyHeaders.map((header) => convertHttpHeader(header)),
-            pathParameters: v63.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
-            variables: v63.variables.map((variable) => convertVariable(variable)),
+            headers: v63.headers?.map((header) => convertHttpHeader(header)) ?? [],
+            idempotencyHeaders: v63.idempotencyHeaders?.map((header) => convertHttpHeader(header)) ?? [],
+            pathParameters: v63.pathParameters?.map((pathParameter) => convertPathParameter(pathParameter)) ?? [],
+            variables: v63.variables?.map((variable) => convertVariable(variable)) ?? [],
             webhookGroups: mapValues(v63.webhookGroups, (webhookGroup) => convertWebhookGroup(webhookGroup)),
             websocketChannels:
                 v63.websocketChannels != null
@@ -102,6 +102,10 @@ function convertAuthScheme(scheme: IrVersions.V63.AuthScheme): IrVersions.V62.Au
             // OAuth contains nested TypeReferences that need conversion, but since skipValidation is true
             // in the serializer, we can pass it through with a type assertion
             return IrVersions.V62.AuthScheme.oauth(scheme as unknown as IrVersions.V62.auth.OAuthScheme);
+        case "inferred":
+            // Inferred auth scheme contains nested TypeReferences that need conversion, but since skipValidation is true
+            // in the serializer, we can pass it through with a type assertion
+            return IrVersions.V62.AuthScheme.inferred(scheme as unknown as IrVersions.V62.auth.InferredAuthScheme);
         default:
             throw new Error("Unknown AuthScheme type");
     }
