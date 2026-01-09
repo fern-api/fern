@@ -70,7 +70,13 @@ async function writeDefinitionForOpenAPIWorkspace({
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         let existingOverrides: any = {};
         if (spec.absoluteFilepathToOverrides !== undefined) {
-            existingOverrides = await readExistingOverrides(spec.absoluteFilepathToOverrides, context);
+            // Use the first override file if an array is provided
+            const overridesPath = Array.isArray(spec.absoluteFilepathToOverrides)
+                ? spec.absoluteFilepathToOverrides[0]
+                : spec.absoluteFilepathToOverrides;
+            if (overridesPath !== undefined) {
+                existingOverrides = await readExistingOverrides(overridesPath, context);
+            }
         }
 
         const paths: Record<string, Record<string, unknown>> = "path" in existingOverrides
