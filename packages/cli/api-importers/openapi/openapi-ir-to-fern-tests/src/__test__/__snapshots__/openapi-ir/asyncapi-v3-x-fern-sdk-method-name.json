@@ -36,35 +36,34 @@
             },
             "type": "reference"
           },
-          "methodName": "sendMessage"
-        },
-        {
-          "origin": "client",
-          "name": "userMessage",
-          "body": {
-            "generatedName": "UserMessage",
-            "schema": "UserMessagePayload",
-            "source": {
-              "file": "../asyncapi.yml",
-              "type": "openapi"
-            },
-            "type": "reference"
-          },
-          "methodName": "sendMessage"
-        },
-        {
-          "origin": "client",
-          "name": "userMessage",
-          "body": {
-            "generatedName": "UserMessage",
-            "schema": "UserMessagePayload",
-            "source": {
-              "file": "../asyncapi.yml",
-              "type": "openapi"
-            },
-            "type": "reference"
-          },
           "methodName": "onNotification"
+        },
+        {
+          "origin": "client",
+          "name": "userMessage",
+          "body": {
+            "generatedName": "UserMessage",
+            "schema": "UserMessagePayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "methodName": "sendMessage"
+        },
+        {
+          "origin": "client",
+          "name": "userMessage",
+          "body": {
+            "generatedName": "UserMessage",
+            "schema": "UserMessagePayload",
+            "source": {
+              "file": "../asyncapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
         }
       ],
       "servers": [
