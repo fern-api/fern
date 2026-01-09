@@ -8,23 +8,38 @@ import "google/protobuf/struct.proto";
 option csharp_namespace = "User.V1";
 option go_package = "user/v1";
 
+// UserModel represents a user in the system.
+// It contains basic user information like username, email, age, and weight.
 message UserModel {
+    // The unique username for the user.
     string username = 1; 
+    // The email address of the user.
     string email = 2;
+    // The age of the user in years.
     uint32 age = 3;
+    // The weight of the user in kilograms.
     float weight = 4;
+    // Additional metadata associated with the user.
     google.protobuf.Struct metadata = 5;
 }
 
+// CreateRequest is the request message for creating a new user.
 message CreateRequest {
+    // The username for the new user.
     string username = 1;
+    // The email address for the new user.
     string email = 2;
+    // The age of the new user in years.
     uint32 age = 3;
+    // The weight of the new user in kilograms.
     float weight = 4;
+    // Additional metadata for the new user.
     google.protobuf.Struct metadata = 5;
 }
 
+// CreateResponse is the response message after creating a user.
 message CreateResponse {
+    // The created user.
     UserModel user = 1;
 }
 
