@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.38.0
+  changelogEntry:
+    - summary: |
+        Add support for automatic configuration migration in _generators.yml_ when running `fern generator upgrade --include-major`.
+        Major version upgrades with breaking configuration changes will now automatically update your generator configuration, eliminating manual migration steps.
+      type: feat
+  createdAt: "2026-01-09"
+  irVersion: 62
+
 - version: 3.37.3
   changelogEntry:
     - summary: |
