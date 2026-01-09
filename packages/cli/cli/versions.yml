@@ -4,7 +4,7 @@
     - summary: |
         Push full channel message payload schemas through when creating type references; helps support 'bytes' for websocket methods.
       type: fix
-  createdAt: "2026-01-08"
+  createdAt: "2026-01-09"
   irVersion: 62
 
 - version: 3.37.0
