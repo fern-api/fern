@@ -45,7 +45,6 @@ httpx = ">=0.21.2"
 pydantic = ">= 1.9.2"
 pydantic-core = ">=2.18.2"
 typing_extensions = ">= 4.0.0"
-urllib3 = {version = ">=2.6.3", python = ">=3.9"}
 
 [tool.poetry.group.dev.dependencies]
 mypy = "==1.13.0"
