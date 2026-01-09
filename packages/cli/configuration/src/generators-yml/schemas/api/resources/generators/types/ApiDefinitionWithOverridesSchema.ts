@@ -8,8 +8,8 @@ export interface ApiDefinitionWithOverridesSchema {
     path: FernDefinition.ApiDefinitionPathSchema;
     /** The URL of the API definition origin, from which the file should be polled. */
     origin?: string;
-    /** Path to the OpenAPI or AsyncAPI overrides */
-    overrides?: string;
+    /** Path(s) to the OpenAPI or AsyncAPI overrides. Can be a single path or an array of paths applied sequentially. */
+    overrides?: FernDefinition.OverridesSchema;
     /** Audiences that you would like to filter to */
     audiences?: string[];
     settings?: FernDefinition.ApiDefinitionSettingsSchema;

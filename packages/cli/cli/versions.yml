@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add support for multiple override files in OpenAPI spec configuration. The `overrides` field now accepts either a single path or an array of paths. When multiple paths are provided, overrides are applied sequentially in order, allowing for layered customization of OpenAPI specs.
+      type: feat
+  irVersion: 61
+  createdAt: "2026-01-09"
+  version: 1.3.0
+
+- changelogEntry:
+    - summary: |
         Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays "generating AI examples for {API name} - X/Y" to track progress without creating terminal noise.
       type: feat
   irVersion: 61

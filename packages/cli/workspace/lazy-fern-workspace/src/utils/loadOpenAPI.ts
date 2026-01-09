@@ -57,30 +57,38 @@ export async function loadOpenAPI({
 }: {
     context: TaskContext;
     absolutePathToOpenAPI: AbsoluteFilePath;
-    absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
+    absolutePathToOpenAPIOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
 }): Promise<OpenAPI.Document> {
     const parsed = await parseOpenAPI({
         absolutePathToOpenAPI
     });
 
-    let overridesFilepath = undefined;
+    // Normalize overrides to an array for consistent processing
+    let overridesFilepaths: AbsoluteFilePath[] = [];
     if (absolutePathToOpenAPIOverrides != null) {
-        overridesFilepath = absolutePathToOpenAPIOverrides;
+        if (Array.isArray(absolutePathToOpenAPIOverrides)) {
+            overridesFilepaths = absolutePathToOpenAPIOverrides;
+        } else {
+            overridesFilepaths = [absolutePathToOpenAPIOverrides];
+        }
     } else if (
         typeof parsed === "object" &&
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         (parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH] != null
     ) {
-        overridesFilepath = join(
-            dirname(absolutePathToOpenAPI),
-            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            RelativeFilePath.of((parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH])
-        );
+        overridesFilepaths = [
+            join(
+                dirname(absolutePathToOpenAPI),
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+                RelativeFilePath.of((parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH])
+            )
+        ];
     }
 
     let result = parsed;
 
-    if (overridesFilepath != null) {
+    // Apply each override file sequentially in order
+    for (const overridesFilepath of overridesFilepaths) {
         result = await mergeWithOverrides<OpenAPI.Document>({
             absoluteFilePathToOverrides: overridesFilepath,
             context,
@@ -142,7 +150,7 @@ export async function loadOpenAPI({
         context.logger.debug(`No AI examples override file found at ${aiExamplesOverrideFilepath}`);
     }
 
-    if (overridesFilepath != null || result !== parsed) {
+    if (overridesFilepaths.length > 0 || result !== parsed) {
         return await parseOpenAPI({
             absolutePathToOpenAPI,
             absolutePathToOpenAPIOverrides,

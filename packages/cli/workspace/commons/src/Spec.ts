@@ -8,7 +8,7 @@ export type Spec = OpenAPISpec | ProtobufSpec | OpenRPCSpec;
 export interface OpenAPISpec {
     type: "openapi";
     absoluteFilepath: AbsoluteFilePath;
-    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
     source: Source;
     namespace?: string;
     settings?: ParseOpenAPIOptions;

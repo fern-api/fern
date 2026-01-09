@@ -7,7 +7,7 @@ import * as FernDefinition from "../../../index";
 export interface AsyncApiSpecSchema {
     asyncapi: string;
     origin?: string;
-    overrides?: string;
+    overrides?: FernDefinition.OverridesSchema;
     namespace?: string;
     settings?: FernDefinition.AsyncApiSettingsSchema;
 }

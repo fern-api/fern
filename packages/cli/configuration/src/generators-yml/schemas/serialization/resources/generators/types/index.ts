@@ -18,6 +18,7 @@ export * from "./RemoveDiscriminantsFromSchemas";
 export * from "./PathParameterOrder";
 export * from "./UnionSettingsSchema";
 export * from "./MessageNamingSettingsSchema";
+export * from "./OverridesSchema";
 export * from "./ApiDefinitionWithOverridesSchema";
 export * from "./ProtobufDefinitionSchema";
 export * from "./ProtobufApiDefinitionSchema";

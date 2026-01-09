@@ -5,20 +5,21 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { OverridesSchema } from "./OverridesSchema";
 
 export const OpenRpcSpecSchema: core.serialization.ObjectSchema<
     serializers.OpenRpcSpecSchema.Raw,
     FernDefinition.OpenRpcSpecSchema
 > = core.serialization.object({
     openrpc: core.serialization.string(),
-    overrides: core.serialization.string().optional(),
+    overrides: OverridesSchema.optional(),
     namespace: core.serialization.string().optional(),
 });
 
 export declare namespace OpenRpcSpecSchema {
     export interface Raw {
         openrpc: string;
-        overrides?: string | null;
+        overrides?: OverridesSchema.Raw | null;
         namespace?: string | null;
     }
 }

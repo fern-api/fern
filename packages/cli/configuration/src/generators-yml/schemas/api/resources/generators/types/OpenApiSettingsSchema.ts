@@ -7,7 +7,7 @@ import * as FernDefinition from "../../../index";
 export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSchema {
     /** Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false. */
     "only-include-referenced-schemas"?: boolean;
-    /** Whether to include path parameters within the generated in-lined request. Defaults to false. */
+    /** Whether to include path parameters within the generated in-lined request. Defaults to true. */
     "inline-path-parameters"?: boolean;
     /** Whether to prefer undiscriminated unions with literals. Defaults to false. */
     "prefer-undiscriminated-unions-with-literals"?: boolean;

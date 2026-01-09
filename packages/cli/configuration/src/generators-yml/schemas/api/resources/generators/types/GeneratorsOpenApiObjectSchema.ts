@@ -7,7 +7,7 @@ import * as FernDefinition from "../../../index";
 export interface GeneratorsOpenApiObjectSchema {
     path: string;
     origin?: string;
-    overrides?: string;
+    overrides?: FernDefinition.OverridesSchema;
     "disable-examples"?: boolean;
     settings: FernDefinition.OpenApiSettingsSchema;
 }

@@ -89,7 +89,7 @@ export interface APIDefinitionSettings {
 export interface APIDefinitionLocation {
     schema: APIDefinitionSchema;
     origin: string | undefined;
-    overrides: string | undefined;
+    overrides: string | string[] | undefined;
     audiences: string[] | undefined;
     settings: APIDefinitionSettings | undefined;
 }

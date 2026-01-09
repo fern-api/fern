@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { OverridesSchema } from "./OverridesSchema";
 import { OpenApiSettingsSchema } from "./OpenApiSettingsSchema";
 
 export const GeneratorsOpenApiObjectSchema: core.serialization.ObjectSchema<
@@ -13,7 +14,7 @@ export const GeneratorsOpenApiObjectSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     path: core.serialization.string(),
     origin: core.serialization.string().optional(),
-    overrides: core.serialization.string().optional(),
+    overrides: OverridesSchema.optional(),
     "disable-examples": core.serialization.boolean().optional(),
     settings: OpenApiSettingsSchema,
 });
@@ -22,7 +23,7 @@ export declare namespace GeneratorsOpenApiObjectSchema {
     export interface Raw {
         path: string;
         origin?: string | null;
-        overrides?: string | null;
+        overrides?: OverridesSchema.Raw | null;
         "disable-examples"?: boolean | null;
         settings: OpenApiSettingsSchema.Raw;
     }
