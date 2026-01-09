@@ -1299,6 +1299,18 @@ describe("${serviceName}", () => {
             hasPagination = false;
         }
 
+        // Extract pagination cursor field names to ignore in request body matching
+        // When getNextPage() is called, the SDK sends a different cursor value than the original request
+        const paginationIgnoredFields: string[] = [];
+        if (endpoint.pagination !== undefined && endpoint.pagination.type === "cursor") {
+            // For cursor pagination, the page property contains the cursor field in the request
+            const pageProperty = endpoint.pagination.page;
+            if (pageProperty.propertyPath == null || pageProperty.propertyPath.length === 0) {
+                // Top-level cursor field
+                paginationIgnoredFields.push(pageProperty.property.name.wireValue);
+            }
+        }
+
         const expectedDeclaration = code`const expected = ${expected};`;
 
         const paginationBlock =
@@ -1353,7 +1365,10 @@ describe("${serviceName}", () => {
                     `;
                 })}${
                 rawRequestBody
-                    ? code`.${mockBodyMethod}(rawRequestBody)
+                    ? paginationIgnoredFields.length > 0
+                        ? code`.${mockBodyMethod}(rawRequestBody, { ignoredFields: ${literalOf(paginationIgnoredFields)} })
+                `
+                        : code`.${mockBodyMethod}(rawRequestBody)
                 `
                     : ""
             }.respondWith()
