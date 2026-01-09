@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.37.2
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --preview` failing with permission errors when the `.preview` folder already exists. The CLI now properly handles read-only files (like `.git/objects`) by making them writable before deletion.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
 - version: 3.37.1
   changelogEntry:
     - summary: |
