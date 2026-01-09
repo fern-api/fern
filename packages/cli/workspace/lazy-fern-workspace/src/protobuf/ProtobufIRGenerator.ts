@@ -255,21 +255,12 @@ export class ProtobufIRGenerator {
                     bufLockExists = false;
                 }
 
-                // Try to update dependencies from the network first
-                const bufDepUpdateResult = await buf(["dep", "update"]);
-                if (bufDepUpdateResult.exitCode !== 0) {
-                    // If update fails, check if we have a cached buf.lock to fall back to
-                    if (bufLockExists) {
-                        this.context.logger.warn(
-                            "Failed to update buf dependencies from network, using cached buf.lock file."
-                        );
-                    } else {
-                        // No cache available, fail with the original error
-                        this.context.failAndThrow(
-                            `Failed to update buf dependencies and no cached buf.lock file found. ` +
-                                `In air-gapped environments, pre-cache dependencies by running 'buf dep update' ` +
-                                `in your protobuf directory before building. Error: ${bufDepUpdateResult.stderr}`
-                        );
+                // Skip buf dep update if we already have a cached buf.lock file
+                // This enables air-gapped environments to work by pre-caching dependencies
+                if (!bufLockExists) {
+                    const bufDepUpdateResult = await buf(["dep", "update"]);
+                    if (bufDepUpdateResult.exitCode !== 0) {
+                        this.context.failAndThrow(bufDepUpdateResult.stderr);
                     }
                 }
             }
