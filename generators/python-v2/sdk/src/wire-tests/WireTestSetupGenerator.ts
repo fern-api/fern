@@ -124,6 +124,7 @@ once per test run, even when using pytest-xdist.
 from typing import Any, Dict, Optional
 
 import requests
+import inspect
 
 ${clientImport}
 ${environmentSetup.imports}
@@ -138,9 +139,24 @@ def get_client(test_id: str) -> ${clientClassName}:
     Returns:
         A configured client instance with all required auth parameters.
     """
+    test_headers = {"X-Test-Id": test_id}
+
+    # Prefer passing headers directly if the client constructor supports it.
+    try:
+        if "headers" in inspect.signature(${clientClassName}).parameters:
+            return ${clientClassName}(
+                ${environmentSetup.param},
+                headers=test_headers,
+${clientConstructorParams}
+            )
+    except (TypeError, ValueError):
+        pass
+
+    import httpx
+
     return ${clientClassName}(
         ${environmentSetup.param},
-        headers={"X-Test-Id": test_id},
+        httpx_client=httpx.Client(headers=test_headers),
 ${clientConstructorParams}
     )
 
