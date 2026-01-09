@@ -3880,7 +3880,8 @@
                                     "v1": "LONG",
                                     "v2": {
                                         "type": "long",
-                                        "default": 9223372036854776000
+                                        "default": 9223372036854776000,
+                                        "validation": null
                                     }
                                 }
                             },
