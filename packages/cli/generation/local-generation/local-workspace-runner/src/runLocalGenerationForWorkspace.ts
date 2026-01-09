@@ -706,7 +706,8 @@ function mergeGeneratorOverridesWithSpecs(
     return specsOverride.map((spec) => {
         if (generatorsYml.isOpenApiSpecSchema(spec)) {
             // Get existing overrides as array
-            const existingOverrides = spec.overrides != null ? (Array.isArray(spec.overrides) ? spec.overrides : [spec.overrides]) : [];
+            const existingOverrides =
+                spec.overrides != null ? (Array.isArray(spec.overrides) ? spec.overrides : [spec.overrides]) : [];
 
             // Append generator overrides
             const mergedOverrides = [...existingOverrides, ...generatorOverridesArray];
