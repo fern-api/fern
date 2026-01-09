@@ -253,6 +253,15 @@ types:
       - v1
       - v2
 
+  OverridesSchema:
+    discriminated: false
+    docs: |
+      Path(s) to override file(s). Can be a single path or an array of paths.
+      When multiple paths are provided, overrides are applied sequentially in order.
+    union:
+      - string
+      - list<string>
+
   APIDefinitionWithOverridesSchema:
     properties:
       path: APIDefinitionPathSchema
@@ -260,8 +269,8 @@ types:
         type: optional<string>
         docs: The URL of the API definition origin, from which the file should be polled.
       overrides:
-        type: optional<string>
-        docs: Path to the OpenAPI or AsyncAPI overrides
+        type: optional<OverridesSchema>
+        docs: Path(s) to the OpenAPI or AsyncAPI overrides. Can be a single path or an array of paths applied sequentially.
       audiences:
         type: optional<list<string>>
         docs: Audiences that you would like to filter to
@@ -276,8 +285,8 @@ types:
         type: string
         docs: The path to the `.proto` directory root (e.g. `proto`).
       overrides:
-        type: optional<string>
-        docs: Path to the overrides configuration
+        type: optional<OverridesSchema>
+        docs: Path(s) to the overrides configuration. Can be a single path or an array of paths applied sequentially.
       local-generation:
         type: optional<boolean>
         docs: Whether to compile the `.proto` files locally. By default, we generate remotely.
@@ -510,14 +519,14 @@ types:
     properties:
       openapi: string
       origin: optional<string>
-      overrides: optional<string>
+      overrides: optional<OverridesSchema>
       namespace: optional<string>
       settings: optional<OpenAPISettingsSchema>
 
   OpenRPCSpecSchema:
     properties:
       openrpc: string
-      overrides: optional<string>
+      overrides: optional<OverridesSchema>
       namespace: optional<string>
 
   AsyncAPISettingsSchema:
@@ -532,7 +541,7 @@ types:
     properties:
       asyncapi: string
       origin: optional<string>
-      overrides: optional<string>
+      overrides: optional<OverridesSchema>
       namespace: optional<string>
       settings: optional<AsyncAPISettingsSchema>
 

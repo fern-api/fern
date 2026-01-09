@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.38.0
+  changelogEntry:
+    - summary: |
+        Add support for multiple override files in OpenAPI spec configuration. The `overrides` field now accepts either a single path or an array of paths. When multiple paths are provided, overrides are applied sequentially in order, allowing for layered customization of OpenAPI specs.
+      type: feat
+  createdAt: "2026-01-09"
+  irVersion: 62
+
 - version: 3.37.2
   changelogEntry:
     - summary: |
