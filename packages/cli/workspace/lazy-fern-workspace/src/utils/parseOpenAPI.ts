@@ -11,9 +11,13 @@ export async function parseOpenAPI({
     parsed
 }: {
     absolutePathToOpenAPI: AbsoluteFilePath;
-    absolutePathToOpenAPIOverrides?: AbsoluteFilePath;
+    absolutePathToOpenAPIOverrides?: AbsoluteFilePath | AbsoluteFilePath[];
     parsed?: OpenAPI.Document;
 }): Promise<OpenAPI.Document> {
+    // For ref resolution, use the first override path if an array is provided
+    const overridesPathForRefResolver = Array.isArray(absolutePathToOpenAPIOverrides)
+        ? absolutePathToOpenAPIOverrides[0]
+        : absolutePathToOpenAPIOverrides;
     const result =
         parsed != null
             ? await bundle({
@@ -22,12 +26,12 @@ export async function parseOpenAPI({
                       source: new Source(absolutePathToOpenAPI, "<openapi>"),
                       parsed
                   },
-                  externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
+                  externalRefResolver: new OpenAPIRefResolver(overridesPathForRefResolver)
               })
             : await bundle({
                   ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
                   ref: absolutePathToOpenAPI,
-                  externalRefResolver: new OpenAPIRefResolver(absolutePathToOpenAPIOverrides)
+                  externalRefResolver: new OpenAPIRefResolver(overridesPathForRefResolver)
               });
 
     return result.bundle.parsed;
