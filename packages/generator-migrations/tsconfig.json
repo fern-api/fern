@@ -9,6 +9,12 @@
   "exclude": ["./src/**/__test__/**/*", "./src/**/*.test.ts"],
   "references": [
     {
+      "path": "../cli/configuration"
+    },
+    {
+      "path": "../cli/logger"
+    },
+    {
       "path": "../migrations-base"
     }
   ]

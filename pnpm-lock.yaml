@@ -7898,34 +7898,6 @@ importers:
         specifier: ^4.0.8
         version: 4.0.8(@types/debug@4.1.12)(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
 
-  packages/migration-test-utils:
-    dependencies:
-      '@fern-api/configuration':
-        specifier: workspace:*
-        version: link:../cli/configuration
-      '@fern-api/logger':
-        specifier: workspace:*
-        version: link:../cli/logger
-      '@fern-api/migrations-base':
-        specifier: workspace:*
-        version: link:../migrations-base
-    devDependencies:
-      '@fern-api/configs':
-        specifier: workspace:*
-        version: link:../configs
-      '@types/node':
-        specifier: 18.15.3
-        version: 18.15.3
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
-      vitest:
-        specifier: ^4.0.8
-        version: 4.0.8(@types/debug@4.1.12)(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
-
   packages/migrations-base:
     dependencies:
       '@fern-api/configuration':
