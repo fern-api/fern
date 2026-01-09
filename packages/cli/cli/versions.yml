@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        Fix protobuf IR generation to support air-gapped environments. The CLI now attempts to run `buf dep update` first, and if it fails (e.g., no network access), falls back to using a pre-cached `buf.lock` file. If no cached `buf.lock` exists, a helpful error message is shown explaining how to pre-cache dependencies. This enables self-hosted deployments to work in air-gapped environments by running `buf dep update` at build time.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
 - version: 3.37.3
   changelogEntry:
     - summary: |
