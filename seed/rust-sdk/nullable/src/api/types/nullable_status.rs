@@ -6,11 +6,15 @@ pub enum Status {
     Active,
 
     Archived {
-        value: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        value: Option<DateTime<FixedOffset>>,
     },
 
     #[serde(rename = "soft-deleted")]
     SoftDeleted {
-        value: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        value: Option<DateTime<FixedOffset>>,
     },
 }

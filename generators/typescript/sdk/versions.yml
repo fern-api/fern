@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.6
+  changelogEntry:
+    - summary: |
+        Fix fetcher tests to use `.trim()` for platform-agnostic line ending comparisons.
+        This resolves test failures on Windows where files have CRLF line endings instead of LF.
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 63
+
 - version: 3.43.5
   changelogEntry:
     - summary: |

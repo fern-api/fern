@@ -11,7 +11,7 @@ use std::{
     task::{Context, Poll},
 };
 
-/// A streaming byte stream for downloading files efficiently
+/// A streaming byte stream for downloading files efficiently.
 pub struct ByteStream {
     content_length: Option<u64>,
     inner: Pin<Box<dyn Stream<Item = Result<bytes::Bytes, reqwest::Error>> + Send>>,
@@ -230,7 +230,10 @@ impl HttpClient {
             .or(self.config.api_key.as_ref());
 
         if let Some(key) = api_key {
-            headers.insert("api_key", key.parse().map_err(|_| ApiError::InvalidHeader)?);
+            headers.insert(
+                "X-API-Key",
+                key.parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
         }
 
         // Apply bearer token (request options override config)

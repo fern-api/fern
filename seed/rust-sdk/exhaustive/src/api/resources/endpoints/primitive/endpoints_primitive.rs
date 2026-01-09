@@ -96,9 +96,9 @@ impl PrimitiveClient {
 
     pub async fn get_and_return_datetime(
         &self,
-        request: &DateTime<Utc>,
+        request: &DateTime<FixedOffset>,
         options: Option<RequestOptions>,
-    ) -> Result<DateTime<Utc>, ApiError> {
+    ) -> Result<DateTime<FixedOffset>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

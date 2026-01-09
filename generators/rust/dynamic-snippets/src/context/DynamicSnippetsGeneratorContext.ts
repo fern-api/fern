@@ -213,6 +213,16 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return validateAndSanitizeCrateName(createName);
     }
 
+    /**
+     * Get the datetime type to use for datetime primitives.
+     * Returns "offset" for DateTime<FixedOffset> (default) - preserves original timezone,
+     * or "utc" for DateTime<Utc> - converts everything to UTC.
+     * Both options use flexible parsing that accepts any format and assumes UTC when no timezone.
+     */
+    public getDateTimeType(): "offset" | "utc" {
+        return this.customConfig?.dateTimeType ?? "offset";
+    }
+
     // Client methods
     public getClientStructName(): string {
         return this.customConfig?.clientClassName ?? `${convertToPascalCase(this.config.workspaceName)}Client`;

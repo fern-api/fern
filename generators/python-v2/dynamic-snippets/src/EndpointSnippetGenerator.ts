@@ -407,12 +407,14 @@ export class EndpointSnippetGenerator {
         return python.invokeMethod({
             on: python.reference({ name: CLIENT_VAR_NAME }),
             method: this.getMethod({ endpoint }),
-            arguments_: this.getMethodArgs({ endpoint, snippet }).map((arg) =>
-                python.methodArgument({
-                    name: arg.name,
-                    value: arg.value
-                })
-            ),
+            arguments_: this.getMethodArgs({ endpoint, snippet })
+                .filter((arg) => !python.TypeInstantiation.isNop(arg.value))
+                .map((arg) =>
+                    python.methodArgument({
+                        name: arg.name,
+                        value: arg.value
+                    })
+                ),
             multiline: true
         });
     }

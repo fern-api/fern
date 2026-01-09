@@ -90,7 +90,8 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
                 extraDevDependencies: this.getExtraDevDependencies(),
                 generateBuilders: false,
                 deriveDebug: true,
-                deriveClone: true
+                deriveClone: true,
+                dateTimeType: this.customConfig.dateTimeType ?? "utc"
             }),
             this.generatorNotificationService
         );

@@ -114,7 +114,7 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         if (this.context.usesDateTime()) {
             content = content.replace(
                 /\{\{CHRONO_EXPORTS\}\}/g,
-                "\npub use chrono::{DateTime, NaiveDate, NaiveDateTime, Utc};"
+                "\npub use chrono::{DateTime, FixedOffset, NaiveDate, NaiveDateTime, Utc};"
             );
         } else {
             content = content.replace(/\{\{CHRONO_EXPORTS\}\}/g, "");
@@ -126,6 +126,9 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         } else {
             content = content.replace(/\{\{UUID_EXPORTS\}\}/g, "");
         }
+
+        // Replace API key header name from IR auth schemes
+        content = content.replace(/\{\{API_KEY_HEADER\}\}/g, this.context.getApiKeyHeaderName());
 
         return content;
     }

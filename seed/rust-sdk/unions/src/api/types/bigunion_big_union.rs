@@ -8,10 +8,13 @@ pub enum BigUnion {
         data: NormalSweet,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     ThankfulFactor {
@@ -19,10 +22,13 @@ pub enum BigUnion {
         data: ThankfulFactor,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     JumboEnd {
@@ -30,10 +36,13 @@ pub enum BigUnion {
         data: JumboEnd,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     HastyPain {
@@ -41,10 +50,13 @@ pub enum BigUnion {
         data: HastyPain,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     MistySnow {
@@ -52,10 +64,13 @@ pub enum BigUnion {
         data: MistySnow,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     DistinctFailure {
@@ -63,10 +78,13 @@ pub enum BigUnion {
         data: DistinctFailure,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     PracticalPrinciple {
@@ -74,10 +92,13 @@ pub enum BigUnion {
         data: PracticalPrinciple,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     LimpingStep {
@@ -85,10 +106,13 @@ pub enum BigUnion {
         data: LimpingStep,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     VibrantExcitement {
@@ -96,10 +120,13 @@ pub enum BigUnion {
         data: VibrantExcitement,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     ActiveDiamond {
@@ -107,10 +134,13 @@ pub enum BigUnion {
         data: ActiveDiamond,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     PopularLimit {
@@ -118,10 +148,13 @@ pub enum BigUnion {
         data: PopularLimit,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     FalseMirror {
@@ -129,10 +162,13 @@ pub enum BigUnion {
         data: FalseMirror,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     PrimaryBlock {
@@ -140,10 +176,13 @@ pub enum BigUnion {
         data: PrimaryBlock,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     RotatingRatio {
@@ -151,10 +190,13 @@ pub enum BigUnion {
         data: RotatingRatio,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     ColorfulCover {
@@ -162,10 +204,13 @@ pub enum BigUnion {
         data: ColorfulCover,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     DisloyalValue {
@@ -173,10 +218,13 @@ pub enum BigUnion {
         data: DisloyalValue,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     GruesomeCoach {
@@ -184,10 +232,13 @@ pub enum BigUnion {
         data: GruesomeCoach,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     TotalWork {
@@ -195,10 +246,13 @@ pub enum BigUnion {
         data: TotalWork,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     HarmoniousPlay {
@@ -206,10 +260,13 @@ pub enum BigUnion {
         data: HarmoniousPlay,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     UniqueStress {
@@ -217,10 +274,13 @@ pub enum BigUnion {
         data: UniqueStress,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     UnwillingSmoke {
@@ -228,10 +288,13 @@ pub enum BigUnion {
         data: UnwillingSmoke,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     FrozenSleep {
@@ -239,10 +302,13 @@ pub enum BigUnion {
         data: FrozenSleep,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     DiligentDeal {
@@ -250,10 +316,13 @@ pub enum BigUnion {
         data: DiligentDeal,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     AttractiveScript {
@@ -261,10 +330,13 @@ pub enum BigUnion {
         data: AttractiveScript,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     HoarseMouse {
@@ -272,10 +344,13 @@ pub enum BigUnion {
         data: HoarseMouse,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     CircularCard {
@@ -283,10 +358,13 @@ pub enum BigUnion {
         data: CircularCard,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     PotableBad {
@@ -294,10 +372,13 @@ pub enum BigUnion {
         data: PotableBad,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     TriangularRepair {
@@ -305,10 +386,13 @@ pub enum BigUnion {
         data: TriangularRepair,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 
     GaseousRoad {
@@ -316,10 +400,13 @@ pub enum BigUnion {
         data: GaseousRoad,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: DateTime<Utc>,
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        created_at: DateTime<FixedOffset>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<DateTime<Utc>>,
+        #[serde(default)]
+        #[serde(with = "crate::core::flexible_datetime::offset::option")]
+        archived_at: Option<DateTime<FixedOffset>>,
     },
 }
 
@@ -358,7 +445,7 @@ impl BigUnion {
         }
     }
 
-    pub fn get_created_at(&self) -> &DateTime<Utc> {
+    pub fn get_created_at(&self) -> &DateTime<FixedOffset> {
         match self {
             Self::NormalSweet { created_at, .. } => created_at,
             Self::ThankfulFactor { created_at, .. } => created_at,
@@ -392,7 +479,7 @@ impl BigUnion {
         }
     }
 
-    pub fn get_archived_at(&self) -> &Option<DateTime<Utc>> {
+    pub fn get_archived_at(&self) -> &Option<DateTime<FixedOffset>> {
         match self {
             Self::NormalSweet { archived_at, .. } => archived_at,
             Self::ThankfulFactor { archived_at, .. } => archived_at,
