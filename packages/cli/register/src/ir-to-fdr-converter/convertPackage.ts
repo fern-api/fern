@@ -238,15 +238,7 @@ function convertService(
                     availability: convertIrAvailability(header.availability)
                 })
             ),
-            responseHeaders: irEndpoint.responseHeaders?.map(
-                (header): FdrCjsSdk.api.v1.register.Header => ({
-                    description: header.docs ?? undefined,
-                    key: header.name.wireValue,
-                    type: convertTypeReference(header.valueType),
-                    availability: convertIrAvailability(header.availability)
-                })
-            ),
-            request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
+            request:irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             requestsV2: {
                 requests: irEndpoint.v2RequestBodies?.requestBodies?.map(convertRequestBody).filter(isNonNullish)
             },
