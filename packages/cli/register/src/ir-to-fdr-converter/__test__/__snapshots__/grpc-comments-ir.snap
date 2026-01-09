@@ -944,6 +944,13 @@
                       "_visit": [Function],
                       "default": undefined,
                       "type": "long",
+                      "validation": {
+                        "exclusiveMax": undefined,
+                        "exclusiveMin": undefined,
+                        "max": undefined,
+                        "min": undefined,
+                        "multipleOf": undefined,
+                      },
                     },
                   },
                   "type": "primitive",
