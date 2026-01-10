@@ -5,6 +5,14 @@
         Add support for parsing response headers from OpenAPI specs. Response headers defined on success responses (2xx) are now captured in the IR and available for SDK generators and documentation.
       type: feat
   createdAt: "2026-01-09"
+  irVersion: 64
+
+- version: 3.37.3
+  changelogEntry:
+    - summary: |
+        no-op: initiate bulk cli update
+      type: fix
+  createdAt: "2026-01-09"
   irVersion: 62
 
 - version: 3.37.2
