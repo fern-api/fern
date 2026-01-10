@@ -338,6 +338,22 @@ export class WireTestGenerator {
             // This ensures all required auth parameters are supplied with fake values
             statements.push(python.codeBlock(`client = get_client(test_id)`));
 
+            // Exclusions use definition-level identifiers in the form "<service_path>.<endpoint_name>"
+            // or "<service_path>.*" to exclude an entire service.
+            const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+            const servicePath = servicePathParts.join(".");
+            const selector =
+                servicePath.length > 0
+                    ? `${servicePath}.${endpoint.name.snakeCase.safeName}`
+                    : endpoint.name.snakeCase.safeName;
+            const excluded = this.context.customConfig.wire_test_exclusions ?? [];
+            if (
+                excluded.includes(selector) ||
+                excluded.some((pattern) => pattern.endsWith(".*") && selector.startsWith(pattern.slice(0, -2) + "."))
+            ) {
+                return null;
+            }
+
             // Generate the API call AST directly
             const apiCallAst = this.generateApiCallAst(endpoint, example);
 

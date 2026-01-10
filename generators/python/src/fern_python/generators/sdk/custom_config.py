@@ -71,6 +71,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     # parameters in function signatures where possible.
     inline_request_params: bool = True
 
+    # Wire-test generation only: exclude specific endpoints/services from wire tests using
+    # definition-level identifiers in the form "<service_path>.<endpoint_name>" or "<service_path>.*".
+    wire_test_exclusions: Optional[List[str]] = None
+
     # If true, treats path parameters as named parameters in endpoint functions
     inline_path_params: bool = False
 
