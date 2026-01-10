@@ -463,6 +463,12 @@ export class WireTestGenerator {
                 requestBody: example.requestBody
             };
 
+            // If this is a multipart/file-upload endpoint, static examples often omit file content.
+            // However, generated Python client methods can require these file parameters. To keep
+            // wire tests runnable and generic, synthesize placeholder file values for any required
+            // file fields that are missing from the example request body.
+            this.addPlaceholderFileUploadFields({ endpoint, snippetRequest });
+
             // Generate just the method call AST using DynamicSnippetsGenerator
             // Use the endpoint ID directly to avoid path collision issues when multiple
             // namespaces have endpoints with the same HTTP method and path pattern
@@ -477,6 +483,36 @@ export class WireTestGenerator {
             );
             throw error;
         }
+    }
+
+    private addPlaceholderFileUploadFields({
+        endpoint,
+        snippetRequest
+    }: {
+        endpoint: HttpEndpoint;
+        snippetRequest: FernIr.dynamic.EndpointSnippetRequest;
+    }): void {
+        const requestBody = endpoint.requestBody;
+        if (requestBody?.type !== "fileUpload" || !Array.isArray(requestBody.properties)) {
+            return;
+        }
+        const record =
+            typeof snippetRequest.requestBody === "object" && snippetRequest.requestBody != null
+                ? (snippetRequest.requestBody as Record<string, unknown>)
+                : {};
+        for (const property of requestBody.properties) {
+            if (property.type !== "file") {
+                continue;
+            }
+            const fileValue = property.value;
+            const key = fileValue.key;
+            if (key.wireValue == null || fileValue.isOptional || record[key.wireValue] != null) {
+                continue;
+            }
+            const placeholder = `example_${key.wireValue}`;
+            record[key.wireValue] = fileValue.type === "fileArray" ? [placeholder] : placeholder;
+        }
+        snippetRequest.requestBody = record;
     }
 
     /**
