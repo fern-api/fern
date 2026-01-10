@@ -61,11 +61,111 @@ describe("@fern-api/generator-migrations", () => {
         });
     });
 
+    describe("C# SDK migrations", () => {
+        it("includes C# SDK migration entries", () => {
+            expect(migrations["fernapi/fern-csharp-sdk"]).toBeDefined();
+            expect(migrations["fernapi/fern-csharp-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernapi/fern-csharp-sdk"]?.migrations)).toBe(true);
+        });
+
+        it("C# migrations have correct structure", () => {
+            const module = migrations["fernapi/fern-csharp-sdk"];
+
+            expect(module).toBeDefined();
+            expect(module?.migrations.length).toBeGreaterThan(0);
+
+            for (const migration of module?.migrations ?? []) {
+                expect(migration).toHaveProperty("version");
+                expect(migration).toHaveProperty("migrateGeneratorConfig");
+                expect(migration).toHaveProperty("migrateGeneratorsYml");
+            }
+        });
+
+        it("C# migrations are in semver order", () => {
+            const module = migrations["fernapi/fern-csharp-sdk"];
+            const versions = module?.migrations.map((m) => m.version) ?? [];
+
+            expect(versions).toEqual(["1.0.0", "2.0.0"]);
+        });
+    });
+
+    describe("Java SDK migrations", () => {
+        it("includes Java SDK migration entries", () => {
+            expect(migrations["fernapi/fern-java-sdk"]).toBeDefined();
+            expect(migrations["fernapi/fern-java-sdk"]?.migrations).toBeDefined();
+            expect(Array.isArray(migrations["fernapi/fern-java-sdk"]?.migrations)).toBe(true);
+        });
+
+        it("Java SDK migrations are in semver order", () => {
+            const module = migrations["fernapi/fern-java-sdk"];
+            const versions = module?.migrations.map((m) => m.version) ?? [];
+
+            expect(versions).toEqual(["2.0.0", "3.0.0"]);
+        });
+    });
+
+    describe("Java Model migrations", () => {
+        it("includes Java Model migration entries", () => {
+            const javaModelGenerators = ["fernapi/fern-java-model", "fernapi/fern-java-spring"];
+
+            for (const generatorName of javaModelGenerators) {
+                expect(migrations[generatorName]).toBeDefined();
+                expect(migrations[generatorName]?.migrations).toBeDefined();
+                expect(Array.isArray(migrations[generatorName]?.migrations)).toBe(true);
+            }
+        });
+
+        it("Java Model and Spring share the same migration module", () => {
+            const javaModelModule = migrations["fernapi/fern-java-model"];
+            const javaSpringModule = migrations["fernapi/fern-java-spring"];
+
+            expect(javaModelModule).toBe(javaSpringModule);
+        });
+
+        it("Java Model migrations are in semver order", () => {
+            const module = migrations["fernapi/fern-java-model"];
+            const versions = module?.migrations.map((m) => m.version) ?? [];
+
+            expect(versions).toEqual(["1.0.0"]);
+        });
+    });
+
+    describe("Python SDK migrations", () => {
+        it("includes Python SDK migration entries", () => {
+            const pythonGenerators = [
+                "fernapi/fern-python-sdk",
+                "fernapi/fern-fastapi-server",
+                "fernapi/fern-pydantic-model"
+            ];
+
+            for (const generatorName of pythonGenerators) {
+                expect(migrations[generatorName]).toBeDefined();
+                expect(migrations[generatorName]?.migrations).toBeDefined();
+                expect(Array.isArray(migrations[generatorName]?.migrations)).toBe(true);
+            }
+        });
+
+        it("all Python variants share the same migration module", () => {
+            const pythonSdkModule = migrations["fernapi/fern-python-sdk"];
+            const fastapiModule = migrations["fernapi/fern-fastapi-server"];
+            const pydanticModule = migrations["fernapi/fern-pydantic-model"];
+
+            expect(pythonSdkModule).toBe(fastapiModule);
+            expect(fastapiModule).toBe(pydanticModule);
+        });
+
+        it("Python migrations are in semver order", () => {
+            const module = migrations["fernapi/fern-python-sdk"];
+            const versions = module?.migrations.map((m) => m.version) ?? [];
+
+            expect(versions).toEqual(["4.0.0"]);
+        });
+    });
+
     describe("generator name lookup", () => {
         it("returns undefined for generators without migrations", () => {
-            expect(migrations["fernapi/fern-python-sdk"]).toBeUndefined();
-            expect(migrations["fernapi/fern-java-sdk"]).toBeUndefined();
             expect(migrations["fernapi/fern-go-sdk"]).toBeUndefined();
+            expect(migrations["fernapi/fern-ruby-sdk"]).toBeUndefined();
         });
 
         it("requires full generator name with fernapi prefix", () => {

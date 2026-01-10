@@ -7,6 +7,10 @@
  */
 
 import type { MigrationModule } from "@fern-api/migrations-base";
+import csharpSdkMigrations from "./generators/csharp/migrations/index.js";
+import javaSdkMigrations from "./generators/java/migrations/index.js";
+import javaModelMigrations from "./generators/java-model/migrations/index.js";
+import pythonSdkMigrations from "./generators/python/migrations/index.js";
 import typescriptSdkMigrations from "./generators/typescript/migrations/index.js";
 
 /**
@@ -18,6 +22,21 @@ import typescriptSdkMigrations from "./generators/typescript/migrations/index.js
  * 3. Add entries for all generator name variants
  */
 export const migrations: Record<string, MigrationModule> = {
+    // C# SDK
+    "fernapi/fern-csharp-sdk": csharpSdkMigrations,
+
+    // Java Model - both model and spring generators share the same migrations
+    "fernapi/fern-java-model": javaModelMigrations,
+    "fernapi/fern-java-spring": javaModelMigrations,
+
+    // Java SDK
+    "fernapi/fern-java-sdk": javaSdkMigrations,
+
+    // Python - SDK, FastAPI, and Pydantic all share the same migrations
+    "fernapi/fern-python-sdk": pythonSdkMigrations,
+    "fernapi/fern-fastapi-server": pythonSdkMigrations,
+    "fernapi/fern-pydantic-model": pythonSdkMigrations,
+
     // TypeScript SDK - all variants share the same migrations
     "fernapi/fern-typescript": typescriptSdkMigrations,
     "fernapi/fern-typescript-sdk": typescriptSdkMigrations,
