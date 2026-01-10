@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.46.14
+  changelogEntry:
+    - summary: |
+        Fix Python wire test generation/runtime robustness for missing examples, OMIT handling, client setup, and multipart file uploads.
+      type: fix
+  createdAt: "2026-01-10"
+  irVersion: 62
+
 - version: 4.46.13
   changelogEntry:
     - summary: |
