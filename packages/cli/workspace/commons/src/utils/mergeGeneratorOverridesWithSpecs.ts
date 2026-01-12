@@ -2,11 +2,13 @@ import { generatorsYml } from "@fern-api/configuration";
 
 /**
  * Merges generator-level overrides with spec-level overrides.
- * Generator overrides are appended after spec-level overrides for each OpenAPI spec.
+ * Generator overrides are appended after spec-level overrides for each spec that supports overrides.
+ * Supports OpenAPI, AsyncAPI, and OpenRPC specs.
  */
 export function mergeGeneratorOverridesWithSpecs(
     specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema | undefined,
-    generatorOverrides: string | string[] | undefined
+    generatorOverrides: string | string[] | undefined,
+    workspaceSpecs?: generatorsYml.ApiConfigurationV2SpecsSchema
 ): generatorsYml.ApiConfigurationV2SpecsSchema | undefined {
     // If no generator-level overrides, return the original specs override
     if (generatorOverrides == null) {
@@ -16,34 +18,56 @@ export function mergeGeneratorOverridesWithSpecs(
     // Normalize generator overrides to array
     const generatorOverridesArray = Array.isArray(generatorOverrides) ? generatorOverrides : [generatorOverrides];
 
-    // If no specs override, we can't apply generator overrides
-    // (they need to be applied to specific specs)
-    if (specsOverride == null) {
+    // Determine which specs to use: specsOverride if provided, otherwise workspaceSpecs
+    const targetSpecs = specsOverride ?? workspaceSpecs;
+
+    // If no specs to apply overrides to, we can't apply generator overrides
+    if (targetSpecs == null) {
         return undefined;
     }
 
     // Handle conjure schema case (not an array)
-    if (!Array.isArray(specsOverride)) {
+    if (!Array.isArray(targetSpecs)) {
         // Conjure specs don't support overrides
-        return specsOverride;
+        return targetSpecs;
     }
 
-    // Merge generator overrides into each spec
-    return specsOverride.map((spec) => {
+    // Merge generator overrides into each spec that supports overrides
+    return targetSpecs.map((spec) => {
+        // Handle OpenAPI specs
         if (generatorsYml.isOpenApiSpecSchema(spec)) {
-            // Get existing overrides as array
             const existingOverrides =
                 spec.overrides != null ? (Array.isArray(spec.overrides) ? spec.overrides : [spec.overrides]) : [];
-
-            // Append generator overrides
             const mergedOverrides = [...existingOverrides, ...generatorOverridesArray];
-
             return {
                 ...spec,
                 overrides: mergedOverrides.length > 0 ? mergedOverrides : undefined
             };
         }
-        // For non-OpenAPI specs, return as-is (they don't support overrides)
+
+        // Handle AsyncAPI specs
+        if (generatorsYml.isAsyncApiSpecSchema(spec)) {
+            const existingOverrides =
+                spec.overrides != null ? (Array.isArray(spec.overrides) ? spec.overrides : [spec.overrides]) : [];
+            const mergedOverrides = [...existingOverrides, ...generatorOverridesArray];
+            return {
+                ...spec,
+                overrides: mergedOverrides.length > 0 ? mergedOverrides : undefined
+            };
+        }
+
+        // Handle OpenRPC specs
+        if (generatorsYml.isOpenRpcSpecSchema(spec)) {
+            const existingOverrides =
+                spec.overrides != null ? (Array.isArray(spec.overrides) ? spec.overrides : [spec.overrides]) : [];
+            const mergedOverrides = [...existingOverrides, ...generatorOverridesArray];
+            return {
+                ...spec,
+                overrides: mergedOverrides.length > 0 ? mergedOverrides : undefined
+            };
+        }
+
+        // For other spec types (e.g., Protobuf), return as-is (they don't support overrides)
         return spec;
     });
 }

@@ -57,10 +57,17 @@ export async function runLocalGenerationForWorkspace({
 
                 generatorInvocation = substituteEnvVars(generatorInvocation);
 
+                // Get workspace specs from raw configuration if available (for V2 API config)
+                const rawApi = workspace.generatorsConfiguration?.rawConfiguration.api;
+                const workspaceSpecs =
+                    rawApi != null && "specs" in rawApi ? (rawApi as { specs: unknown }).specs : undefined;
+
                 // Merge generator-level overrides with spec-level overrides
+                // If no apiOverride.specs but generator overrides exist, apply to workspace specs
                 const specsWithGeneratorOverrides = mergeGeneratorOverridesWithSpecs(
                     generatorInvocation.apiOverride?.specs,
-                    generatorInvocation.overrides
+                    generatorInvocation.overrides,
+                    workspaceSpecs as generatorsYml.ApiConfigurationV2SpecsSchema | undefined
                 );
 
                 const fernWorkspace = await workspace.toFernWorkspace(

@@ -88,12 +88,21 @@ export async function loadOpenAPI({
     let result = parsed;
 
     // Apply each override file sequentially in order
+    // After each override, resolve refs using that override's directory as the base
     for (const overridesFilepath of overridesFilepaths) {
         result = await mergeWithOverrides<OpenAPI.Document>({
             absoluteFilePathToOverrides: overridesFilepath,
             context,
             data: result,
             allowNullKeys: OPENAPI_EXAMPLES_KEYS
+        });
+
+        // Resolve refs after each override is applied, using the current override's path
+        // This ensures refs added by this override file are resolved relative to its location
+        result = await parseOpenAPI({
+            absolutePathToOpenAPI,
+            absolutePathToOpenAPIOverrides: overridesFilepath,
+            parsed: result
         });
     }
 
@@ -150,10 +159,12 @@ export async function loadOpenAPI({
         // Silently ignore if AI examples override file doesn't exist
     }
 
-    if (overridesFilepaths.length > 0 || result !== parsed) {
+    // If AI examples were added (result !== parsed) but no override files were processed,
+    // we still need to parse to resolve any refs. If override files were processed,
+    // refs were already resolved after each override.
+    if (result !== parsed && overridesFilepaths.length === 0) {
         return await parseOpenAPI({
             absolutePathToOpenAPI,
-            absolutePathToOpenAPIOverrides,
             parsed: result
         });
     }
