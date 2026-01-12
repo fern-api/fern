@@ -257,6 +257,7 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [],
           "auth": false,
           "security": [],
