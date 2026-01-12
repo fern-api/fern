@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.38.0
+  changelogEntry:
+    - summary: |
+        Add PR update feature for local SDK generation in GitHub output mode. When generating SDKs with `mode: pull-request`, the CLI now checks for existing open PRs that were created by the fern-api bot and contain only generation commits. If such a PR exists, it updates the existing PR's branch instead of creating a new one, reducing PR clutter when regenerating SDKs multiple times.
+      type: feat
+  createdAt: "2026-01-12"
+  irVersion: 63
+
 - version: 3.37.6
   changelogEntry:
     - summary: |
