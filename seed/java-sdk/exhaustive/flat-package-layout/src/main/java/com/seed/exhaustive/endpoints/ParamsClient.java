@@ -53,6 +53,13 @@ public class ParamsClient {
     /**
      * GET with path param
      */
+    public String getWithInlinePath(String param, RequestOptions requestOptions) {
+        return this.rawClient.getWithInlinePath(param, requestOptions).body();
+    }
+
+    /**
+     * GET with path param
+     */
     public String getWithInlinePath(String param, GetWithInlinePath request) {
         return this.rawClient.getWithInlinePath(param, request).body();
     }

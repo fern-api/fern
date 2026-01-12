@@ -49,6 +49,13 @@ public class AsyncSeedApiClient {
     /**
      * Creates a test object with nullable allOf in request body.
      */
+    public CompletableFuture<RootObject> createTest(RequestOptions requestOptions) {
+        return this.rawClient.createTest(requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Creates a test object with nullable allOf in request body.
+     */
     public CompletableFuture<RootObject> createTest(RootObject request) {
         return this.rawClient.createTest(request).thenApply(response -> response.body());
     }

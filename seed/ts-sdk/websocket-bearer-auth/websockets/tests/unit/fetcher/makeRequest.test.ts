@@ -1,5 +1,5 @@
+import type { Mock } from "vitest";
 import { makeRequest } from "../../../src/core/fetcher/makeRequest";
-import { Mock } from "vitest";
 
 describe("Test makeRequest", () => {
     const mockPostUrl = "https://httpbin.org/post";

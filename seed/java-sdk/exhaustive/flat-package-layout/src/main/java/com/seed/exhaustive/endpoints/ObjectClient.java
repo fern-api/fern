@@ -33,6 +33,10 @@ public class ObjectClient {
         return this.rawClient.getAndReturnWithOptionalField().body();
     }
 
+    public ObjectWithOptionalField getAndReturnWithOptionalField(RequestOptions requestOptions) {
+        return this.rawClient.getAndReturnWithOptionalField(requestOptions).body();
+    }
+
     public ObjectWithOptionalField getAndReturnWithOptionalField(ObjectWithOptionalField request) {
         return this.rawClient.getAndReturnWithOptionalField(request).body();
     }
@@ -65,6 +69,12 @@ public class ObjectClient {
 
     public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField() {
         return this.rawClient.getAndReturnNestedWithOptionalField().body();
+    }
+
+    public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnNestedWithOptionalField(requestOptions)
+                .body();
     }
 
     public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField request) {

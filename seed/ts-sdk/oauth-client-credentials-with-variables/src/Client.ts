@@ -6,14 +6,12 @@ import { NestedNoAuthClient } from "./api/resources/nestedNoAuth/client/Client.j
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import { SimpleClient } from "./api/resources/simple/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptionsWithAuth, type NormalizedClientOptionsWithAuth } from "./BaseClient.js";
-import * as core from "./core/index.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedOauthClientCredentialsWithVariablesClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedOauthClientCredentialsWithVariablesClient {
@@ -25,10 +23,7 @@ export class SeedOauthClientCredentialsWithVariablesClient {
     protected _simple: SimpleClient | undefined;
 
     constructor(options: SeedOauthClientCredentialsWithVariablesClient.Options) {
-
-
-                        this._options = normalizeClientOptionsWithAuth(options);
-                    
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get auth(): AuthClient {

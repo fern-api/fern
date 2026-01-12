@@ -34,6 +34,10 @@ public class AsyncRawSinglePropertyClient {
         return doThing(id, GetThingRequest.builder().build());
     }
 
+    public CompletableFuture<SeedSinglePropertyHttpResponse<String>> doThing(String id, RequestOptions requestOptions) {
+        return doThing(id, GetThingRequest.builder().build(), requestOptions);
+    }
+
     public CompletableFuture<SeedSinglePropertyHttpResponse<String>> doThing(String id, GetThingRequest request) {
         return doThing(id, request, null);
     }

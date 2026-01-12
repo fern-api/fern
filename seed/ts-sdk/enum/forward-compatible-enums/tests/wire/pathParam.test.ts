@@ -4,23 +4,13 @@ import { SeedEnumClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("PathParamClient", () => {
-    
     test("send", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedEnumClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        
-        
-        server
-            .mockEndpoint()
-            .post("/path/%3E/red").respondWith()
-            .statusCode(200).build();
+        const client = new SeedEnumClient({ maxRetries: 0, environment: server.baseUrl });
 
-        
-                    
-                            const response = await client.pathParam.send(">", "red");
-                            expect(response).toEqual(undefined);
-                          
-                
+        server.mockEndpoint().post("/path/%3E/red").respondWith().statusCode(200).build();
+
+        const response = await client.pathParam.send(">", "red");
+        expect(response).toEqual(undefined);
     });
-          
 });

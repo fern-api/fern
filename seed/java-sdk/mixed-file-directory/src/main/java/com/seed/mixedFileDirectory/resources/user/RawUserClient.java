@@ -39,6 +39,13 @@ public class RawUserClient {
     /**
      * List all users.
      */
+    public SeedMixedFileDirectoryHttpResponse<List<User>> list(RequestOptions requestOptions) {
+        return list(ListUsersRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all users.
+     */
     public SeedMixedFileDirectoryHttpResponse<List<User>> list(ListUsersRequest request) {
         return list(request, null);
     }
