@@ -37,7 +37,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                     ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                     this.convert(params)(reference),
                     ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                    ts.factory.createIdentifier("null")
+                    ts.factory.createIdentifier("undefined")
                 );
         }
         return (reference) =>
