@@ -114,6 +114,11 @@ export class ReferenceGenerator {
     }
 
     private wrapInLink(content: string, link?: RelativeLocation) {
-        return link != null ? `<a href="${link.path}">${content}</a>` : content;
+        const encodedContent = this.htmlEncode(content);
+        return link != null ? `<a href="${link.path}">${encodedContent}</a>` : encodedContent;
+    }
+
+    private htmlEncode(content: string): string {
+        return content.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 }
