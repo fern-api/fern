@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.37.5
+  changelogEntry:
+    - summary: |
+        Fix `fern docs preview delete` and `fern docs preview list` commands to support preview URLs with UUID-style hashes containing hyphens (e.g., `org-preview-9b2b47f0-c44b-4338-b579-46872f33404a.docs.buildwithfern.com`).
+      type: fix
+  createdAt: "2026-01-12"
+  irVersion: 62
+
 - version: 3.37.4
   changelogEntry:
     - summary: |
