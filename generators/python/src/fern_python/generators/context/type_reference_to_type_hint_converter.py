@@ -228,10 +228,6 @@ class TypeReferenceToTypeHintConverter:
 
         str_type_hint = AST.TypeHint.bytes if is_bytes() else AST.TypeHint.str_
 
-        print(str_type_hint)
-        print(primitive)
-        print()
-
         to_return = primitive.v_1.visit(
             integer=AST.TypeHint.int_,
             double=AST.TypeHint.float_,
