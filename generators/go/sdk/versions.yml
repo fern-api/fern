@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.22.5
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets for optional aliases to literal types. Previously, the generator
+        would produce invalid Go code like `&SortField("DEFAULT")` which tries to take the
+        address of a type conversion. Now it correctly uses the primitive's pointer helper
+        function (e.g., `fern.String("DEFAULT")`) for optional literal aliases.
+      type: fix
+  createdAt: "2026-01-12"
+  irVersion: 60
+
 - version: 1.22.4
   changelogEntry:
     - summary: |
