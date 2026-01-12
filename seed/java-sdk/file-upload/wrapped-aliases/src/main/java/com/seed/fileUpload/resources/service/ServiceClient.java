@@ -162,6 +162,10 @@ public class ServiceClient {
         return this.rawClient.optionalArgs(imageFile).body();
     }
 
+    public String optionalArgs(Optional<File> imageFile, RequestOptions requestOptions) {
+        return this.rawClient.optionalArgs(imageFile, requestOptions).body();
+    }
+
     public String optionalArgs(Optional<File> imageFile, OptionalArgsRequest request) {
         return this.rawClient.optionalArgs(imageFile, request).body();
     }

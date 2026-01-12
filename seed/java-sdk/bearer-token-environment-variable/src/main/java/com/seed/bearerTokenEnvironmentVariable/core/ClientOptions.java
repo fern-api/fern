@@ -37,6 +37,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:bearer-token-environment-variable/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:bearer-token-environment-variable-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

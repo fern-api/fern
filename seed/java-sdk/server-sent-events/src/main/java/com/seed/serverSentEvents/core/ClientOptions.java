@@ -37,6 +37,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:server-sent-events/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:server-sent-events-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

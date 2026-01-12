@@ -10,5 +10,5 @@
     "useReaderForBytesRequest": false,
     "union": "v0"
   },
-  "sdkVersion": "0.0.1"
+  "sdkVersion": "v0.0.1"
 }
