@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, Optional, Tuple, Union
+from typing import Any, Dict, Optional, Set, Tuple, Union
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.reference_node.reference_node import ReferenceNode
@@ -19,6 +19,7 @@ from fern_python.generators.sdk.client_generator.generated_root_client import (
     RootClient,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.generators.sdk.custom_config import WireTestValidationConfig
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
     MultipleBaseUrlsEnvironmentGenerator,
 )
@@ -36,6 +37,7 @@ class SnippetTestFactory:
     ASYNC_CLIENT_FIXTURE_NAME = "async_client"
     ENVVAR_PREFIX = "ENV_"
     TEST_URL_ENVVAR = "TESTS_BASE_URL"
+    WIRE_TEST_VALIDATION_ENVVAR = "WIRE_TEST_VALIDATION"
 
     def __init__(
         self,
@@ -44,6 +46,7 @@ class SnippetTestFactory:
         generator_exec_wrapper: GeneratorExecWrapper,
         generated_root_client: GeneratedRootClient,
         generated_environment: Optional[Union[SingleBaseUrlEnvironmentGenerator, MultipleBaseUrlsEnvironmentGenerator]],
+        wire_test_validation_config: Optional[WireTestValidationConfig] = None,
     ) -> None:
         self._project = project
         self._context = context
@@ -54,12 +57,124 @@ class SnippetTestFactory:
             if generated_environment is not None and type(generated_environment) is MultipleBaseUrlsEnvironmentGenerator
             else None
         )
+        self._wire_test_validation_config = wire_test_validation_config
 
         self._test_base_path = Filepath.DirectoryFilepathPart(
             module_name="tests",
         )
 
         self._service_test_files: Dict[Filepath, SourceFile] = dict()
+
+        # Parse validation patterns if config is provided
+        self._structural_include_patterns: Optional[Set[str]] = None
+        self._structural_exclude_patterns: Set[str] = set()
+        self._strict_include_patterns: Optional[Set[str]] = None
+        self._strict_exclude_patterns: Set[str] = set()
+
+        if wire_test_validation_config is not None:
+            # Parse structural validation patterns
+            if wire_test_validation_config.structural_validation.include_examples is not None:
+                self._structural_include_patterns = set(
+                    wire_test_validation_config.structural_validation.include_examples
+                )
+            if wire_test_validation_config.structural_validation.exclude_examples:
+                self._structural_exclude_patterns = set(
+                    wire_test_validation_config.structural_validation.exclude_examples
+                )
+
+            # Parse strict validation patterns
+            if wire_test_validation_config.strict_validation.include_examples is not None:
+                self._strict_include_patterns = set(wire_test_validation_config.strict_validation.include_examples)
+            if wire_test_validation_config.strict_validation.exclude_examples:
+                self._strict_exclude_patterns = set(wire_test_validation_config.strict_validation.exclude_examples)
+
+    def _get_service_name(self, service: ir_types.HttpService) -> str:
+        """Get a human-readable service name for pattern matching."""
+        fern_filepath = service.name.fern_filepath
+        if fern_filepath.file is not None:
+            return fern_filepath.file.pascal_case.safe_name
+        if len(fern_filepath.package_path) > 0:
+            return fern_filepath.package_path[-1].pascal_case.safe_name
+        return "Root"
+
+    def _should_structural_validate(
+        self,
+        service_name: str,
+        endpoint_name: str,
+        example_name: Optional[str],
+    ) -> bool:
+        """
+        Determine if structural validation should run for an example.
+        By default, structural validation runs on all examples unless excluded.
+        """
+        if self._wire_test_validation_config is None:
+            return False
+
+        endpoint_pattern = f"{service_name}.{endpoint_name}"
+        example_pattern = f"{endpoint_pattern}:{example_name}" if example_name else None
+
+        # If include patterns are specified (not None), only include matching examples
+        if self._structural_include_patterns is not None:
+            if len(self._structural_include_patterns) == 0:
+                return False
+            if endpoint_pattern in self._structural_include_patterns:
+                return True
+            if example_pattern and example_pattern in self._structural_include_patterns:
+                return True
+            return False
+
+        # If exclude patterns are specified, exclude matching examples
+        if self._structural_exclude_patterns:
+            if endpoint_pattern in self._structural_exclude_patterns:
+                return False
+            if example_pattern and example_pattern in self._structural_exclude_patterns:
+                return False
+
+        # Default: structural validation runs on all examples
+        return True
+
+    def _should_strict_validate(
+        self,
+        service_name: str,
+        endpoint_name: str,
+        example_name: Optional[str],
+    ) -> bool:
+        """
+        Determine if strict validation should run for an example.
+        By default, strict validation is disabled (empty include list).
+        """
+        if self._wire_test_validation_config is None:
+            return False
+
+        endpoint_pattern = f"{service_name}.{endpoint_name}"
+        example_pattern = f"{endpoint_pattern}:{example_name}" if example_name else None
+
+        # If include patterns are None, strict validation is disabled
+        if self._strict_include_patterns is None:
+            return False
+
+        # If include patterns are empty, strict validation is disabled
+        if len(self._strict_include_patterns) == 0:
+            return False
+
+        # Check if example matches include patterns
+        included = False
+        if endpoint_pattern in self._strict_include_patterns:
+            included = True
+        if example_pattern and example_pattern in self._strict_include_patterns:
+            included = True
+
+        if not included:
+            return False
+
+        # Check exclude patterns
+        if self._strict_exclude_patterns:
+            if endpoint_pattern in self._strict_exclude_patterns:
+                return False
+            if example_pattern and example_pattern in self._strict_exclude_patterns:
+                return False
+
+        return True
 
     def _return_expression(self, returned_expression: AST.ClassInstantiation) -> AST.CodeWriter:
         def return_writer(writer: AST.NodeWriter) -> None:
@@ -323,6 +438,8 @@ class SnippetTestFactory:
         async_expression: Optional[AST.Expression],
         example_response: Optional[ir_types.ExampleResponse],
         endpoint: ir_types.HttpEndpoint,
+        do_structural_validation: bool = False,
+        do_strict_validation: bool = False,
     ) -> AST.CodeWriter:
         expectation_name = "expected_response"
         type_expectation_name = "expected_types"
@@ -331,6 +448,9 @@ class SnippetTestFactory:
 
         response_body = self.maybe_get_response_body(example_response)
         response_json = response_body.json_example if response_body is not None else None
+
+        # Determine if we should use the new validation modes or the existing behavior
+        use_new_validation = do_structural_validation or do_strict_validation
 
         def writer(writer: AST.NodeWriter) -> None:
             if response_json is not None:
@@ -359,13 +479,36 @@ class SnippetTestFactory:
                     writer.write(f"{response_name} = ")
                     writer.write_node(sync_expression)
                     writer.write_newline_if_last_line_not()
-                    writer.write_node(
-                        self._validate_response(
-                            AST.Expression(response_name),
-                            AST.Expression(expectation_name),
-                            AST.Expression(type_expectation_name),
+
+                    if use_new_validation:
+                        # Use new validation with runtime env var control
+                        writer.write_line(f'if os.getenv("{self.WIRE_TEST_VALIDATION_ENVVAR}", "on").lower() != "off":')
+                        with writer.indent():
+                            if do_strict_validation:
+                                writer.write_node(
+                                    self._validate_response(
+                                        AST.Expression(response_name),
+                                        AST.Expression(expectation_name),
+                                        AST.Expression(type_expectation_name),
+                                    )
+                                )
+                            elif do_structural_validation:
+                                writer.write_node(
+                                    self._validate_response(
+                                        AST.Expression(response_name),
+                                        AST.Expression(expectation_name),
+                                        AST.Expression(type_expectation_name),
+                                    )
+                                )
+                    else:
+                        # Use existing validation behavior
+                        writer.write_node(
+                            self._validate_response(
+                                AST.Expression(response_name),
+                                AST.Expression(expectation_name),
+                                AST.Expression(type_expectation_name),
+                            )
                         )
-                    )
                 else:
                     writer.write_line(
                         "# Type ignore to avoid mypy complaining about the function not being meant to return a value"
@@ -392,13 +535,36 @@ class SnippetTestFactory:
                     writer.write(f"{async_response_name} = ")
                     writer.write_node(async_expression)
                     writer.write_newline_if_last_line_not()
-                    writer.write_node(
-                        self._validate_response(
-                            AST.Expression(async_response_name),
-                            AST.Expression(expectation_name),
-                            AST.Expression(type_expectation_name),
+
+                    if use_new_validation:
+                        # Use new validation with runtime env var control
+                        writer.write_line(f'if os.getenv("{self.WIRE_TEST_VALIDATION_ENVVAR}", "on").lower() != "off":')
+                        with writer.indent():
+                            if do_strict_validation:
+                                writer.write_node(
+                                    self._validate_response(
+                                        AST.Expression(async_response_name),
+                                        AST.Expression(expectation_name),
+                                        AST.Expression(type_expectation_name),
+                                    )
+                                )
+                            elif do_structural_validation:
+                                writer.write_node(
+                                    self._validate_response(
+                                        AST.Expression(async_response_name),
+                                        AST.Expression(expectation_name),
+                                        AST.Expression(type_expectation_name),
+                                    )
+                                )
+                    else:
+                        # Use existing validation behavior
+                        writer.write_node(
+                            self._validate_response(
+                                AST.Expression(async_response_name),
+                                AST.Expression(expectation_name),
+                                AST.Expression(type_expectation_name),
+                            )
                         )
-                    )
                 else:
                     if sync_expression is None:
                         writer.write_line(
@@ -463,6 +629,7 @@ class SnippetTestFactory:
         fern_filepath = service.name.fern_filepath
         filepath = self._get_filepath_for_fern_filepath(fern_filepath)
         package_path = self._get_subpackage_client_accessor(fern_filepath)
+        service_name = self._get_service_name(service)
 
         source_file = self._service_test_files.get(filepath)
 
@@ -499,6 +666,7 @@ class SnippetTestFactory:
             ):
                 continue
             endpoint_name = endpoint.name.snake_case.safe_name
+            endpoint_pascal_name = endpoint.name.pascal_case.safe_name
 
             examples = [ex.example for ex in endpoint.user_specified_examples if ex.example is not None]
             if len(endpoint.user_specified_examples) == 0:
@@ -517,59 +685,85 @@ class SnippetTestFactory:
             if successful_examples is None or len(successful_examples) == 0:
                 continue
 
-            example = successful_examples[0]
-            _path_parameter_names = dict()
-            for path_parameter in endpoint.all_path_parameters:
-                _path_parameter_names[path_parameter.name] = path_parameter.name.snake_case.safe_name
-            endpoint_snippet = self._function_generator(
-                snippet_writer=snippet_writer,
-                service=service,
-                endpoint=endpoint,
-            ).generate_endpoint_snippet_raw(example=example)
-
-            sync_snippet = self._client_snippet(False, package_path, endpoint_snippet)
-            async_snippet = self._client_snippet(True, package_path, endpoint_snippet)
-
-            if async_snippet is None and sync_snippet is None:
-                continue
-
-            response = ir_types.ExampleResponse.visit(
-                example.response,
-                ok=lambda _: example.response,
-                error=lambda _: None,
+            # Determine which examples to test
+            test_all = (
+                self._wire_test_validation_config is not None and self._wire_test_validation_config.test_all_examples
             )
-            # Add functions to a test function
-            function_declaration = AST.FunctionDeclaration(
-                name=f"test_{endpoint_name}",
-                # All tests will have the sync and async instantiation within them
-                is_async=True,
-                signature=AST.FunctionSignature(
-                    # Adds in the parameters for the pytest fixtures to be injected in
-                    parameters=[
-                        AST.FunctionParameter(
-                            name=self.SYNC_CLIENT_FIXTURE_NAME,
-                            type_hint=AST.TypeHint(self._generated_root_client.sync_client.class_reference),
-                        ),
-                        AST.FunctionParameter(
-                            name=self.ASYNC_CLIENT_FIXTURE_NAME,
-                            type_hint=AST.TypeHint(self._generated_root_client.async_client.class_reference),
-                        ),
-                    ],
-                    named_parameters=[],
-                    return_type=AST.TypeHint.none(),
-                ),
-                body=self._test_body(sync_snippet, async_snippet, response, endpoint),
-            )
+            examples_to_test = successful_examples if test_all else [successful_examples[0]]
 
-            # At least one endpoint has a snippet, now make the file
-            source_file = source_file or self._context.source_file_factory.create(
-                project=self._project,
-                filepath=filepath,
-                generator_exec_wrapper=self._generator_exec_wrapper,
-                from_src=False,
-            )
-            # Add function to file
-            source_file.add_expression(AST.Expression(function_declaration))
+            for example_idx, example in enumerate(examples_to_test):
+                # Get example name for pattern matching
+                example_name = example.name.original_name if example.name else None
+
+                _path_parameter_names = dict()
+                for path_parameter in endpoint.all_path_parameters:
+                    _path_parameter_names[path_parameter.name] = path_parameter.name.snake_case.safe_name
+                endpoint_snippet = self._function_generator(
+                    snippet_writer=snippet_writer,
+                    service=service,
+                    endpoint=endpoint,
+                ).generate_endpoint_snippet_raw(example=example)
+
+                sync_snippet = self._client_snippet(False, package_path, endpoint_snippet)
+                async_snippet = self._client_snippet(True, package_path, endpoint_snippet)
+
+                if async_snippet is None and sync_snippet is None:
+                    continue
+
+                response = ir_types.ExampleResponse.visit(
+                    example.response,
+                    ok=lambda _: example.response,
+                    error=lambda _: None,
+                )
+
+                # Determine validation modes for this example
+                do_structural = self._should_structural_validate(service_name, endpoint_pascal_name, example_name)
+                do_strict = self._should_strict_validate(service_name, endpoint_pascal_name, example_name)
+
+                # Generate test function name (include index if testing multiple examples)
+                test_name = f"test_{endpoint_name}"
+                if len(examples_to_test) > 1:
+                    test_name = f"test_{endpoint_name}_{example_idx}"
+
+                # Add functions to a test function
+                function_declaration = AST.FunctionDeclaration(
+                    name=test_name,
+                    # All tests will have the sync and async instantiation within them
+                    is_async=True,
+                    signature=AST.FunctionSignature(
+                        # Adds in the parameters for the pytest fixtures to be injected in
+                        parameters=[
+                            AST.FunctionParameter(
+                                name=self.SYNC_CLIENT_FIXTURE_NAME,
+                                type_hint=AST.TypeHint(self._generated_root_client.sync_client.class_reference),
+                            ),
+                            AST.FunctionParameter(
+                                name=self.ASYNC_CLIENT_FIXTURE_NAME,
+                                type_hint=AST.TypeHint(self._generated_root_client.async_client.class_reference),
+                            ),
+                        ],
+                        named_parameters=[],
+                        return_type=AST.TypeHint.none(),
+                    ),
+                    body=self._test_body(
+                        sync_snippet,
+                        async_snippet,
+                        response,
+                        endpoint,
+                        do_structural_validation=do_structural,
+                        do_strict_validation=do_strict,
+                    ),
+                )
+
+                # At least one endpoint has a snippet, now make the file
+                source_file = source_file or self._context.source_file_factory.create(
+                    project=self._project,
+                    filepath=filepath,
+                    generator_exec_wrapper=self._generator_exec_wrapper,
+                    from_src=False,
+                )
+                # Add function to file
+                source_file.add_expression(AST.Expression(function_declaration))
 
         if source_file:
             self._service_test_files[filepath] = source_file
