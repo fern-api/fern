@@ -14,7 +14,7 @@ func do() {
         ),
     )
     request := &fern.SearchRequest{
-        SortField: &fern.SortField(
+        SortField: fern.String(
             "DEFAULT",
         ),
         Query: "query",
