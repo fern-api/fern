@@ -166,6 +166,19 @@ public class RawUnionClient {
                 .build());
     }
 
+    public SeedUndiscriminatedUnionsHttpResponse<Boolean> call(RequestOptions requestOptions) {
+        return call(
+                com.seed
+                        .undiscriminatedUnions
+                        .resources
+                        .union
+                        .types
+                        .Request
+                        .builder()
+                        .build(),
+                requestOptions);
+    }
+
     public SeedUndiscriminatedUnionsHttpResponse<Boolean> call(
             com.seed.undiscriminatedUnions.resources.union.types.Request request) {
         return call(request, null);

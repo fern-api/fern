@@ -315,6 +315,11 @@ public class RawContainerClient {
     }
 
     public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
+            RequestOptions requestOptions) {
+        return getAndReturnOptional(Optional.empty(), requestOptions);
+    }
+
+    public SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request) {
         return getAndReturnOptional(request, null);
     }

@@ -272,7 +272,8 @@ client = Acme()
 client.service.post(
     file="Hello, world!",
     file_list=["First", "Second"],
-    maybe_file="example_maybe_file"
+    maybe_file="example_maybe_file",
+    maybe_file_list=["example_maybe_file_list"]
 )
 "
 `;

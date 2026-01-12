@@ -593,6 +593,14 @@ export class EndpointSnippetGenerator {
                     }
                 ];
             case "object": {
+                if (this.context.customConfig.inline_request_params === false) {
+                    return [
+                        {
+                            name: REQUEST_BODY_ARG_NAME,
+                            value: this.context.dynamicTypeLiteralMapper.convert({ typeReference, value })
+                        }
+                    ];
+                }
                 const bodyProperties = this.context.associateByWireValue({
                     parameters: named.properties,
                     values: this.context.getRecord(value) ?? {}

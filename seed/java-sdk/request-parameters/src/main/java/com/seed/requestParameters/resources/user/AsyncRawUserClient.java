@@ -158,6 +158,11 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<SeedRequestParametersHttpResponse<Void>> createUsernameOptional(
+            RequestOptions requestOptions) {
+        return createUsernameOptional(Optional.empty(), requestOptions);
+    }
+
+    public CompletableFuture<SeedRequestParametersHttpResponse<Void>> createUsernameOptional(
             Optional<CreateUsernameBodyOptionalProperties> request) {
         return createUsernameOptional(request, null);
     }

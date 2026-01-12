@@ -3,10 +3,8 @@
     "compilerOptions": {
         "module": "esnext",
         "outDir": "dist/esm",
-        "verbatimModuleSyntax": true
+        "verbatimModuleSyntax": true,
     },
-    "include": [
-        "src"
-    ],
-    "exclude": []
+    "include": ["src"],
+    "exclude": [],
 }

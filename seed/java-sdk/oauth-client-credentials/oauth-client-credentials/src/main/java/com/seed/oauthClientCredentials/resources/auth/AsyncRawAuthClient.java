@@ -3,9 +3,7 @@
  */
 package com.seed.oauthClientCredentials.resources.auth;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.oauthClientCredentials.core.ClientOptions;
-import com.seed.oauthClientCredentials.core.MediaTypes;
 import com.seed.oauthClientCredentials.core.ObjectMappers;
 import com.seed.oauthClientCredentials.core.RequestOptions;
 import com.seed.oauthClientCredentials.core.SeedOauthClientCredentialsApiException;
@@ -18,11 +16,11 @@ import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
@@ -45,20 +43,25 @@ public class AsyncRawAuthClient {
                 .newBuilder()
                 .addPathSegments("token")
                 .build();
-        RequestBody body;
+        FormBody.Builder body = new FormBody.Builder();
         try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedOauthClientCredentialsException("Failed to serialize request", e);
+            body.add("client_id", String.valueOf(request.getClientId()));
+            body.add("client_secret", String.valueOf(request.getClientSecret()));
+            body.add("audience", String.valueOf(request.getAudience()));
+            body.add("grant_type", String.valueOf(request.getGrantType()));
+            if (request.getScope().isPresent()) {
+                body.add("scope", String.valueOf(request.getScope().get()));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body)
+                .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
@@ -105,20 +108,26 @@ public class AsyncRawAuthClient {
                 .newBuilder()
                 .addPathSegments("token")
                 .build();
-        RequestBody body;
+        FormBody.Builder body = new FormBody.Builder();
         try {
-            body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (JsonProcessingException e) {
-            throw new SeedOauthClientCredentialsException("Failed to serialize request", e);
+            body.add("client_id", String.valueOf(request.getClientId()));
+            body.add("client_secret", String.valueOf(request.getClientSecret()));
+            body.add("refresh_token", String.valueOf(request.getRefreshToken()));
+            body.add("audience", String.valueOf(request.getAudience()));
+            body.add("grant_type", String.valueOf(request.getGrantType()));
+            if (request.getScope().isPresent()) {
+                body.add("scope", String.valueOf(request.getScope().get()));
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        Request okhttpRequest = new Request.Builder()
+        Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body)
+                .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Accept", "application/json")
-                .build();
+                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);

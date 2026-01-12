@@ -96,6 +96,10 @@ public class AsyncContainerClient {
         return this.rawClient.getAndReturnOptional().thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(RequestOptions requestOptions) {
+        return this.rawClient.getAndReturnOptional(requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Optional<ObjectWithRequiredField>> getAndReturnOptional(
             Optional<ObjectWithRequiredField> request) {
         return this.rawClient.getAndReturnOptional(request).thenApply(response -> response.body());

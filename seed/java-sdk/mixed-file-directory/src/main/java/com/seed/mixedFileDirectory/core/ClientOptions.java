@@ -37,6 +37,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:mixed-file-directory/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:mixed-file-directory-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

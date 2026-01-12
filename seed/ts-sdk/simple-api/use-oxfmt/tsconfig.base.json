@@ -11,10 +11,8 @@
         "rootDir": "src",
         "baseUrl": "src",
         "isolatedModules": true,
-        "isolatedDeclarations": true
+        "isolatedDeclarations": true,
     },
-    "include": [
-        "src"
-    ],
-    "exclude": []
+    "include": ["src"],
+    "exclude": [],
 }

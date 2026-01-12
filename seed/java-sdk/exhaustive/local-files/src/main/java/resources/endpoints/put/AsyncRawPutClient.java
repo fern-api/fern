@@ -40,6 +40,11 @@ public class AsyncRawPutClient {
   }
 
   public CompletableFuture<SeedExhaustiveHttpResponse<PutResponse>> add(String id,
+      RequestOptions requestOptions) {
+    return add(id,PutRequest.builder().build(),requestOptions);
+  }
+
+  public CompletableFuture<SeedExhaustiveHttpResponse<PutResponse>> add(String id,
       PutRequest request) {
     return add(id,request,null);
   }

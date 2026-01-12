@@ -5,59 +5,56 @@ import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("TestGroupClient", () => {
-    
     test("test_method_name (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { };
-        const rawResponseBody = { "key" : "value" };
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = { key: "value" };
         server
             .mockEndpoint()
-            .post("/optional-request-body/path_param").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/optional-request-body/path_param")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.testGroup.testMethodName({
-    path_param: "path_param",
-    body: {}
-});
-                            expect(response).toEqual({
-    "key": "value"
-});
-                          
-                
+        const response = await client.testGroup.testMethodName({
+            path_param: "path_param",
+            body: {},
+        });
+        expect(response).toEqual({
+            key: "value",
+        });
     });
-          
+
     test("test_method_name (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "id" : "id" , "name" : "name" };
-        const rawResponseBody = { "id" : "id" , "name" : "name" };
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { id: "id", name: "name" };
+        const rawResponseBody = { id: "id", name: "name" };
         server
             .mockEndpoint()
-            .post("/optional-request-body/path_param").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(422).jsonBody(rawResponseBody)
-                .build();
+            .post("/optional-request-body/path_param")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-            await expect(async () => {
-                return await client.testGroup.testMethodName({
-    path_param: "path_param",
-    query_param_object: {
-        id: "id",
-        name: "name"
-    },
-    query_param_integer: 1,
-    body: {
-        id: "id",
-        name: "name"
-    }
-})
-            }).rejects.toThrow(SeedApi.UnprocessableEntityError);
+        await expect(async () => {
+            return await client.testGroup.testMethodName({
+                path_param: "path_param",
+                query_param_object: {
+                    id: "id",
+                    name: "name",
+                },
+                query_param_integer: 1,
+                body: {
+                    id: "id",
+                    name: "name",
+                },
+            });
+        }).rejects.toThrow(SeedApi.UnprocessableEntityError);
     });
-          
 });

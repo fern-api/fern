@@ -44,6 +44,11 @@ public class AsyncRawUserClient {
         return getUser(userId, GetUsersRequest.builder().build());
     }
 
+    public CompletableFuture<SeedPathParametersHttpResponse<User>> getUser(
+            String userId, RequestOptions requestOptions) {
+        return getUser(userId, GetUsersRequest.builder().build(), requestOptions);
+    }
+
     public CompletableFuture<SeedPathParametersHttpResponse<User>> getUser(String userId, GetUsersRequest request) {
         return getUser(userId, request, null);
     }
@@ -221,6 +226,11 @@ public class AsyncRawUserClient {
     }
 
     public CompletableFuture<SeedPathParametersHttpResponse<List<User>>> searchUsers(
+            String userId, RequestOptions requestOptions) {
+        return searchUsers(userId, SearchUsersRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPathParametersHttpResponse<List<User>>> searchUsers(
             String userId, SearchUsersRequest request) {
         return searchUsers(userId, request, null);
     }
@@ -284,6 +294,14 @@ public class AsyncRawUserClient {
      */
     public CompletableFuture<SeedPathParametersHttpResponse<User>> getUserMetadata(String userId, int version) {
         return getUserMetadata(userId, version, GetUserMetadataRequest.builder().build());
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public CompletableFuture<SeedPathParametersHttpResponse<User>> getUserMetadata(
+            String userId, int version, RequestOptions requestOptions) {
+        return getUserMetadata(userId, version, GetUserMetadataRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -354,6 +372,15 @@ public class AsyncRawUserClient {
             String userId, int version, String thought) {
         return getUserSpecifics(
                 userId, version, thought, GetUserSpecificsRequest.builder().build());
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public CompletableFuture<SeedPathParametersHttpResponse<User>> getUserSpecifics(
+            String userId, int version, String thought, RequestOptions requestOptions) {
+        return getUserSpecifics(
+                userId, version, thought, GetUserSpecificsRequest.builder().build(), requestOptions);
     }
 
     /**

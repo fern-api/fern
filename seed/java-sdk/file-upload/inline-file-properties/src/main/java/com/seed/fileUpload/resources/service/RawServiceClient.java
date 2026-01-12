@@ -867,6 +867,10 @@ public class RawServiceClient {
         return optionalArgs(OptionalArgsRequest.builder().build());
     }
 
+    public SeedFileUploadHttpResponse<String> optionalArgs(RequestOptions requestOptions) {
+        return optionalArgs(OptionalArgsRequest.builder().build(), requestOptions);
+    }
+
     public SeedFileUploadHttpResponse<String> optionalArgs(OptionalArgsRequest request) {
         return optionalArgs(request, null);
     }

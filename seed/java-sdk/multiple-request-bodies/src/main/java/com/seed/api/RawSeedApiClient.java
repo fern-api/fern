@@ -37,6 +37,10 @@ public class RawSeedApiClient {
         return uploadJsonDocument(UploadDocumentRequest.builder().build());
     }
 
+    public SeedApiHttpResponse<UploadDocumentResponse> uploadJsonDocument(RequestOptions requestOptions) {
+        return uploadJsonDocument(UploadDocumentRequest.builder().build(), requestOptions);
+    }
+
     public SeedApiHttpResponse<UploadDocumentResponse> uploadJsonDocument(UploadDocumentRequest request) {
         return uploadJsonDocument(request, null);
     }
