@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix how npm finds and executes generator-cli.
+      type: fix
+  createdAt: "2026-01-12"
+  version: 0.5.2
+
+- changelogEntry:
+    - summary: |
         Fix HTML encoding of generic type parameters in reference.md generation. Characters like `<` and `>` in return types (e.g., `core.Page<User, Response>`) are now properly encoded as `&lt;` and `&gt;` to display correctly in markdown.
       type: fix
   createdAt: "2026-01-12"
