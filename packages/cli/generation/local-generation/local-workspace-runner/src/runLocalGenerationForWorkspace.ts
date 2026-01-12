@@ -60,7 +60,9 @@ export async function runLocalGenerationForWorkspace({
                 // Get workspace specs from raw configuration if available (for V2 API config)
                 const rawApi = workspace.generatorsConfiguration?.rawConfiguration.api;
                 const workspaceSpecs =
-                    rawApi != null && "specs" in rawApi ? (rawApi as { specs: unknown }).specs : undefined;
+                    rawApi != null && typeof rawApi === "object" && "specs" in rawApi
+                        ? (rawApi as { specs: unknown }).specs
+                        : undefined;
 
                 // Merge generator-level overrides with spec-level overrides
                 // If no apiOverride.specs but generator overrides exist, apply to workspace specs
