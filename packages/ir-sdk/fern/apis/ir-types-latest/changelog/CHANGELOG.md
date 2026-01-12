@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v64.0.0] - 2026-01-09
+## [v63.1.0] - 2026-01-12
 - Feature: Add `responseHeaders` field to `HttpResponse` for capturing response headers from OpenAPI specs.
   Response headers defined on success responses (2xx) are now parsed and available in the IR for SDK generators and documentation.
 
