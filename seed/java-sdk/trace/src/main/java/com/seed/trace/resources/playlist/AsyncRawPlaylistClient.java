@@ -248,6 +248,14 @@ public class AsyncRawPlaylistClient {
      * Updates a playlist
      */
     public CompletableFuture<SeedTraceHttpResponse<Optional<Playlist>>> updatePlaylist(
+            int serviceParam, String playlistId, RequestOptions requestOptions) {
+        return updatePlaylist(serviceParam, playlistId, Optional.empty(), requestOptions);
+    }
+
+    /**
+     * Updates a playlist
+     */
+    public CompletableFuture<SeedTraceHttpResponse<Optional<Playlist>>> updatePlaylist(
             int serviceParam, String playlistId, Optional<UpdatePlaylistRequest> request) {
         return updatePlaylist(serviceParam, playlistId, request, null);
     }

@@ -2,14 +2,12 @@
 
 import { FolderDClient } from "./api/resources/folderD/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
-import * as core from "./core/index.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedAudiencesClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedAudiencesClient {
@@ -17,7 +15,6 @@ export class SeedAudiencesClient {
     protected _folderD: FolderDClient | undefined;
 
     constructor(options: SeedAudiencesClient.Options) {
-
         this._options = normalizeClientOptions(options);
     }
 

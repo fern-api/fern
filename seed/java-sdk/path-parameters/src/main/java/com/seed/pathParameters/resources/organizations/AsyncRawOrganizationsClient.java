@@ -94,6 +94,12 @@ public class AsyncRawOrganizationsClient {
     }
 
     public CompletableFuture<SeedPathParametersHttpResponse<User>> getOrganizationUser(
+            String organizationId, String userId, RequestOptions requestOptions) {
+        return getOrganizationUser(
+                organizationId, userId, GetOrganizationUserRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPathParametersHttpResponse<User>> getOrganizationUser(
             String organizationId, String userId, GetOrganizationUserRequest request) {
         return getOrganizationUser(organizationId, userId, request, null);
     }
@@ -152,6 +158,12 @@ public class AsyncRawOrganizationsClient {
             String organizationId) {
         return searchOrganizations(
                 organizationId, SearchOrganizationsRequest.builder().build());
+    }
+
+    public CompletableFuture<SeedPathParametersHttpResponse<List<Organization>>> searchOrganizations(
+            String organizationId, RequestOptions requestOptions) {
+        return searchOrganizations(
+                organizationId, SearchOrganizationsRequest.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedPathParametersHttpResponse<List<Organization>>> searchOrganizations(

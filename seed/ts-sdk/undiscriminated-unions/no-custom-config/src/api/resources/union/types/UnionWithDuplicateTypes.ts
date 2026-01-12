@@ -3,8 +3,4 @@
 /**
  * Duplicate types.
  */
-export type UnionWithDuplicateTypes = 
-    | string
-    | string[]
-    | number
-    | string[];
+export type UnionWithDuplicateTypes = string | string[] | number | string[];

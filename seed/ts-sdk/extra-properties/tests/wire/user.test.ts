@@ -4,33 +4,35 @@ import { SeedExtraPropertiesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("UserClient", () => {
-    
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExtraPropertiesClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "age" : 30 , "location" : "Wonderland" , "name" : "Alice" , "_type" : "CreateUserRequest" , "_version" : "v1" };
-        const rawResponseBody = { "age" : 30 , "location" : "Wonderland" , "name" : "Alice" };
+        const client = new SeedExtraPropertiesClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = {
+            age: 30,
+            location: "Wonderland",
+            name: "Alice",
+            _type: "CreateUserRequest",
+            _version: "v1",
+        };
+        const rawResponseBody = { age: 30, location: "Wonderland", name: "Alice" };
         server
             .mockEndpoint()
-            .post("/user").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/user")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.user.createUser({
-    name: "Alice",
-    age: 30,
-    location: "Wonderland"
-});
-                            expect(response).toEqual({
-    name: "Alice",
-    age: 30,
-    location: "Wonderland"
-});
-                          
-                
+        const response = await client.user.createUser({
+            name: "Alice",
+            age: 30,
+            location: "Wonderland",
+        });
+        expect(response).toEqual({
+            name: "Alice",
+            age: 30,
+            location: "Wonderland",
+        });
     });
-          
 });

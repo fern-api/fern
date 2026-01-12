@@ -9,8 +9,7 @@ import * as environments from "./environments.js";
 export declare namespace SeedSimpleApiClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {
-    }
+    export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedSimpleApiClient {
@@ -18,10 +17,7 @@ export class SeedSimpleApiClient {
     protected _user: UserClient | undefined;
 
     constructor(options: SeedSimpleApiClient.Options) {
-
-
-                        this._options = normalizeClientOptionsWithAuth(options);
-                    
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get user(): UserClient {

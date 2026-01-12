@@ -64,7 +64,7 @@ func (r *RawClient) GetFile(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(pleaseinhere.ErrorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(file.ErrorCodes),
 		},
 	)
 	if err != nil {

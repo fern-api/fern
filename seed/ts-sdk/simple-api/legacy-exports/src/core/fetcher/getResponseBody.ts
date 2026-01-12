@@ -1,7 +1,6 @@
 import { fromJson } from "../json";
 import { getBinaryResponse } from "./BinaryResponse";
 
-
 export async function getResponseBody(response: Response, responseType?: string): Promise<unknown> {
     switch (responseType) {
         case "binary-response":
@@ -31,9 +30,9 @@ export async function getResponseBody(response: Response, responseType?: string)
                     },
                 };
             }
-            
+
             return response.body;
-            
+
         case "text":
             return await response.text();
     }

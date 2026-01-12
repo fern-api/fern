@@ -213,6 +213,13 @@ public class RawServiceClient {
     /**
      * List or search for users
      */
+    public SeedClientSideParamsHttpResponse<PaginatedUserResponse> listUsers(RequestOptions requestOptions) {
+        return listUsers(ListUsersRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List or search for users
+     */
     public SeedClientSideParamsHttpResponse<PaginatedUserResponse> listUsers(ListUsersRequest request) {
         return listUsers(request, null);
     }
@@ -283,6 +290,13 @@ public class RawServiceClient {
      */
     public SeedClientSideParamsHttpResponse<User> getUserById(String userId) {
         return getUserById(userId, GetUserRequest.builder().build());
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public SeedClientSideParamsHttpResponse<User> getUserById(String userId, RequestOptions requestOptions) {
+        return getUserById(userId, GetUserRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -392,6 +406,13 @@ public class RawServiceClient {
     /**
      * Update a user
      */
+    public SeedClientSideParamsHttpResponse<User> updateUser(String userId, RequestOptions requestOptions) {
+        return updateUser(userId, UpdateUserRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Update a user
+     */
     public SeedClientSideParamsHttpResponse<User> updateUser(String userId, UpdateUserRequest request) {
         return updateUser(userId, request, null);
     }
@@ -490,6 +511,13 @@ public class RawServiceClient {
     /**
      * List all connections
      */
+    public SeedClientSideParamsHttpResponse<List<Connection>> listConnections(RequestOptions requestOptions) {
+        return listConnections(ListConnectionsRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all connections
+     */
     public SeedClientSideParamsHttpResponse<List<Connection>> listConnections(ListConnectionsRequest request) {
         return listConnections(request, null);
     }
@@ -553,6 +581,14 @@ public class RawServiceClient {
      * Get a connection by ID
      */
     public SeedClientSideParamsHttpResponse<Connection> getConnection(
+            String connectionId, RequestOptions requestOptions) {
+        return getConnection(connectionId, GetConnectionRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public SeedClientSideParamsHttpResponse<Connection> getConnection(
             String connectionId, GetConnectionRequest request) {
         return getConnection(connectionId, request, null);
     }
@@ -601,6 +637,13 @@ public class RawServiceClient {
      */
     public SeedClientSideParamsHttpResponse<PaginatedClientResponse> listClients() {
         return listClients(ListClientsRequest.builder().build());
+    }
+
+    /**
+     * List all clients/applications
+     */
+    public SeedClientSideParamsHttpResponse<PaginatedClientResponse> listClients(RequestOptions requestOptions) {
+        return listClients(ListClientsRequest.builder().build(), requestOptions);
     }
 
     /**
@@ -682,6 +725,13 @@ public class RawServiceClient {
      */
     public SeedClientSideParamsHttpResponse<Client> getClient(String clientId) {
         return getClient(clientId, GetClientRequest.builder().build());
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public SeedClientSideParamsHttpResponse<Client> getClient(String clientId, RequestOptions requestOptions) {
+        return getClient(clientId, GetClientRequest.builder().build(), requestOptions);
     }
 
     /**

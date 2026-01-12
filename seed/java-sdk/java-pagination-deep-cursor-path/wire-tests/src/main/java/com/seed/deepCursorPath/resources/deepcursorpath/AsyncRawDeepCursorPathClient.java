@@ -48,6 +48,11 @@ public class AsyncRawDeepCursorPathClient {
         return doThing(A.builder().build());
     }
 
+    public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThing(
+            RequestOptions requestOptions) {
+        return doThing(A.builder().build(), requestOptions);
+    }
+
     public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThing(A request) {
         return doThing(request, null);
     }
@@ -220,6 +225,11 @@ public class AsyncRawDeepCursorPathClient {
 
     public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThingInline() {
         return doThingInline(InlineA.builder().build());
+    }
+
+    public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThingInline(
+            RequestOptions requestOptions) {
+        return doThingInline(InlineA.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> doThingInline(

@@ -61,6 +61,11 @@ public class AsyncHttpMethodsClient {
   }
 
   public CompletableFuture<ObjectWithOptionalField> testPatch(String id,
+      RequestOptions requestOptions) {
+    return this.rawClient.testPatch(id, requestOptions).thenApply(response -> response.body());
+  }
+
+  public CompletableFuture<ObjectWithOptionalField> testPatch(String id,
       ObjectWithOptionalField request) {
     return this.rawClient.testPatch(id, request).thenApply(response -> response.body());
   }

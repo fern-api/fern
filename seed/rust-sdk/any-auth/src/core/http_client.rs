@@ -11,7 +11,7 @@ use std::{
     task::{Context, Poll},
 };
 
-/// A streaming byte stream for downloading files efficiently.
+/// A streaming byte stream for downloading files efficiently
 pub struct ByteStream {
     content_length: Option<u64>,
     inner: Pin<Box<dyn Stream<Item = Result<bytes::Bytes, reqwest::Error>> + Send>>,

@@ -157,6 +157,11 @@ public class RawServiceClient {
     }
 
     public SeedExamplesHttpResponse<com.seed.examples.resources.types.types.Response> createBigEntity(
+            RequestOptions requestOptions) {
+        return createBigEntity(BigEntity.builder().build(), requestOptions);
+    }
+
+    public SeedExamplesHttpResponse<com.seed.examples.resources.types.types.Response> createBigEntity(
             BigEntity request) {
         return createBigEntity(request, null);
     }
@@ -204,6 +209,10 @@ public class RawServiceClient {
 
     public SeedExamplesHttpResponse<Void> refreshToken() {
         return refreshToken(Optional.empty());
+    }
+
+    public SeedExamplesHttpResponse<Void> refreshToken(RequestOptions requestOptions) {
+        return refreshToken(Optional.empty(), requestOptions);
     }
 
     public SeedExamplesHttpResponse<Void> refreshToken(Optional<RefreshTokenRequest> request) {
