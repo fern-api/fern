@@ -1,7 +1,7 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 
@@ -116,7 +116,7 @@ export async function generateAPIWorkspaces({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const absolutePathToPreview = preview
                     ? previewOutputDir != null
-                        ? AbsoluteFilePath.of(previewOutputDir)
+                        ? AbsoluteFilePath.of(resolve(cwd(), previewOutputDir))
                         : join(workspace.absoluteFilePath, RelativeFilePath.of(PREVIEW_DIRECTORY))
                     : undefined;
 
