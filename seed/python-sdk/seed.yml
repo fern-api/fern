@@ -346,6 +346,14 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  python-mypy-exclude:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        mypy_exclude:
+          - "legacy/"
+          - "tests/integration/"
+      outputFolder: with-mypy-exclude
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2
