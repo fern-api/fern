@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
-- version: 4.46.15
+- version: 4.47.0
   changelogEntry:
     - summary: |
         Add `mypy_exclude` custom config option to exclude directories from mypy type checking.
