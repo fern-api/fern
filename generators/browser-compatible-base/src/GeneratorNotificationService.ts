@@ -17,6 +17,7 @@ export class GeneratorNotificationService implements AbstractGeneratorNotificati
     private client: FernGeneratorExecClient | undefined;
     private taskId: FernGeneratorExec.TaskId | undefined;
     private buffer: FernGeneratorExec.GeneratorUpdate[] = [];
+    private flushIntervalId: ReturnType<typeof setInterval> | undefined;
 
     constructor(environment: FernGeneratorExec.GeneratorEnvironment) {
         if (environment.type === "remote") {
@@ -27,7 +28,7 @@ export class GeneratorNotificationService implements AbstractGeneratorNotificati
             this.taskId = environment.id;
             // Every 2 seconds we flush the buffer
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            setInterval(async () => {
+            this.flushIntervalId = setInterval(async () => {
                 if (this.buffer.length > 0) {
                     await this.flush();
                 }
@@ -52,6 +53,13 @@ export class GeneratorNotificationService implements AbstractGeneratorNotificati
 
         this.buffer.push(update);
         await this.flush();
+    }
+
+    public stop(): void {
+        if (this.flushIntervalId != null) {
+            clearInterval(this.flushIntervalId);
+            this.flushIntervalId = undefined;
+        }
     }
 
     private async flush(): Promise<void> {

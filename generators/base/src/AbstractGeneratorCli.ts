@@ -61,6 +61,9 @@ export abstract class AbstractGeneratorCli<
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
+
+            // Stop the notification service to allow the process to exit
+            generatorNotificationService.stop();
         } catch (e) {
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
@@ -69,6 +72,9 @@ export abstract class AbstractGeneratorCli<
                     })
                 )
             );
+
+            // Stop the notification service to allow the process to exit
+            generatorNotificationService.stop();
             throw e;
         }
     }

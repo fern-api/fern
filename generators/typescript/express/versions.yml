@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Fix generator containers not exiting after completing their work. The `GeneratorNotificationService`
+        now properly clears its flush interval when stopped, allowing the Node.js process to exit naturally.
+      type: fix
+  irVersion: 61
+  createdAt: "2026-01-12"
+  version: 0.18.9
+
+- changelogEntry:
     - summary: Bump generator CLI version to publish new Docker image.
       type: chore
   irVersion: 61

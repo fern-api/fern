@@ -12,4 +12,9 @@ export class NopGeneratorNotificationService extends AbstractGeneratorNotificati
         // no-op
         return Promise.resolve();
     }
+
+    public stop(): void {
+        // no-op
+        return;
+    }
 }

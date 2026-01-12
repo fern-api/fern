@@ -235,10 +235,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             );
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent success event to coordinator");
+
+            // Stop the notification service to allow the process to exit
+            generatorNotificationService.stop();
         } catch (e) {
-            // This call tears down generator service
-            // TODO: if using in conjunction with MCP server generator, MCP server generator to tear down the service?
-            // SEE: go-v2
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
@@ -248,6 +248,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             );
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent error event to coordinator");
+
+            // Stop the notification service to allow the process to exit
+            generatorNotificationService.stop();
             throw e;
         }
     }
