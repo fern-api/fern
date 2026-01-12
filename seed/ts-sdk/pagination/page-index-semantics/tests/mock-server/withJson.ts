@@ -42,9 +42,7 @@ export function withJson(
         }
 
         const mismatches = findMismatches(actualBody, expectedBody);
-        const filteredMismatches = Object.keys(mismatches).filter(
-            (key) => !key.startsWith("pagination.") && !ignoredFields.includes(key),
-        );
+        const filteredMismatches = Object.keys(mismatches).filter((key) => !ignoredFields.includes(key));
         if (filteredMismatches.length > 0) {
             console.error("JSON body mismatch:", toJson(mismatches, undefined, 2));
             return passthrough();

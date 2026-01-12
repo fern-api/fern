@@ -119,7 +119,7 @@ describe("UsersClient", () => {
         server
             .mockEndpoint({ once: false })
             .post("/users")
-            .jsonBody(rawRequestBody)
+            .jsonBody(rawRequestBody, { ignoredFields: ["pagination.cursor"] })
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -334,7 +334,7 @@ describe("UsersClient", () => {
         server
             .mockEndpoint({ once: false })
             .post("/users")
-            .jsonBody(rawRequestBody)
+            .jsonBody(rawRequestBody, { ignoredFields: ["pagination.page"] })
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
