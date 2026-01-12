@@ -1,3 +1,4 @@
+import path from "node:path";
 import { ClientRegistry } from "@boundaryml/baml";
 import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME, getFernIgnorePaths } from "@fern-api/configuration";
@@ -6,7 +7,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
-import { cp, readdir, readFile, rm } from "fs/promises";
+import { cp, lstat, readdir, readFile, rm } from "fs/promises";
 import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
@@ -26,6 +27,7 @@ export declare namespace LocalTaskHandler {
         version: string | undefined;
         ai: AiServicesSchema | undefined;
         isWhitelabel: boolean;
+        preserveUnmanagedFiles: boolean;
     }
 }
 
@@ -40,6 +42,7 @@ export class LocalTaskHandler {
     private version: string | undefined;
     private ai: AiServicesSchema | undefined;
     private isWhitelabel: boolean;
+    private preserveUnmanagedFiles: boolean;
 
     constructor({
         context,
@@ -51,7 +54,8 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel
+        isWhitelabel,
+        preserveUnmanagedFiles
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -63,13 +67,16 @@ export class LocalTaskHandler {
         this.version = version;
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
+        this.preserveUnmanagedFiles = preserveUnmanagedFiles;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
         const isFernIgnorePresent = await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
 
-        if (isFernIgnorePresent && isExistingGitRepo) {
+        if (this.preserveUnmanagedFiles) {
+            await this.copyGeneratedFilesPreservingUnmanagedFiles();
+        } else if (isFernIgnorePresent && isExistingGitRepo) {
             await this.copyGeneratedFilesWithFernIgnoreInExistingRepo();
         } else if (isFernIgnorePresent && !isExistingGitRepo) {
             await this.copyGeneratedFilesWithFernIgnoreInTempRepo();
@@ -107,6 +114,159 @@ export class LocalTaskHandler {
             return { shouldCommit: true, autoVersioningCommitMessage: autoVersionResult.commitMessage };
         }
         return { shouldCommit: true, autoVersioningCommitMessage: undefined };
+    }
+
+    private async copyGeneratedFilesPreservingUnmanagedFiles(): Promise<void> {
+        const fernIgnorePaths = (await this.isFernIgnorePresent())
+            ? await getFernIgnorePaths({
+                  absolutePathToFernignore: join(
+                      this.absolutePathToLocalOutput,
+                      RelativeFilePath.of(FERNIGNORE_FILENAME)
+                  )
+              })
+            : [];
+
+        await this.removeFernIgnoredPathsFromTmpOutput(fernIgnorePaths);
+
+        const tmpOutputItems = await readdir(this.absolutePathToTmpOutputDirectory);
+        if (tmpOutputItems.length === 0) {
+            return;
+        }
+        // In the case where the generator produces a zip, LocalTaskHandler will decompress it on copy.
+        // We cannot safely infer stale files without inspecting the zip contents, so we skip pruning.
+        if (tmpOutputItems.some((item) => item.endsWith(".zip"))) {
+            this.context.logger.warn(
+                "preserve-unmanaged-files is enabled, but generator output is a zip. Skipping stale file pruning."
+            );
+            await this.copyGeneratedFilesToDirectory(this.absolutePathToLocalOutput);
+            return;
+        }
+
+        const managedRoots = await this.getManagedRootsFromTmpOutput();
+        const generatedFiles = new Set(await this.listFilesRecursivelyRelative(this.absolutePathToTmpOutputDirectory));
+        await this.pruneStaleFilesInManagedRoots({
+            managedRoots,
+            generatedFiles,
+            fernIgnorePaths
+        });
+
+        await this.copyGeneratedFilesToDirectory(this.absolutePathToLocalOutput);
+    }
+
+    private async getManagedRootsFromTmpOutput(): Promise<string[]> {
+        const entries = await readdir(this.absolutePathToTmpOutputDirectory, { withFileTypes: true });
+        return entries
+            .filter((entry) => entry.name !== ".git") // should never be present, but be safe
+            .map((entry) => entry.name);
+    }
+
+    private async removeFernIgnoredPathsFromTmpOutput(fernIgnorePaths: string[]): Promise<void> {
+        await Promise.all(
+            fernIgnorePaths.map(async (ignoredPath) => {
+                const normalized = ignoredPath.replace(/\/+$/, "");
+                if (normalized.length === 0) {
+                    return;
+                }
+                const absolutePathToIgnored = AbsoluteFilePath.of(
+                    pathJoin(this.absolutePathToTmpOutputDirectory, normalized)
+                );
+                await rm(absolutePathToIgnored, { force: true, recursive: true });
+            })
+        );
+    }
+
+    private isPathFernIgnored(pathToCheck: string, fernIgnorePaths: string[]): boolean {
+        const normalizedPath = pathToCheck.replace(/\/+$/, "");
+        for (const ignorePathRaw of fernIgnorePaths) {
+            const ignorePath = ignorePathRaw.trim().replace(/\/+$/, "");
+            if (ignorePath.length === 0) {
+                continue;
+            }
+            if (normalizedPath === ignorePath || normalizedPath.startsWith(`${ignorePath}/`)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private async pruneStaleFilesInManagedRoots({
+        managedRoots,
+        generatedFiles,
+        fernIgnorePaths
+    }: {
+        managedRoots: string[];
+        generatedFiles: Set<string>;
+        fernIgnorePaths: string[];
+    }): Promise<void> {
+        const deletes: Promise<void>[] = [];
+        let deleteCount = 0;
+        for (const root of managedRoots) {
+            // Never touch git metadata
+            if (root === ".git") {
+                continue;
+            }
+            if (this.isPathFernIgnored(root, fernIgnorePaths)) {
+                // If the entire root is fernignored, we don't manage it
+                continue;
+            }
+            const absoluteRoot = AbsoluteFilePath.of(pathJoin(this.absolutePathToLocalOutput, root));
+            if (!(await doesPathExist(absoluteRoot))) {
+                continue;
+            }
+            const localFilesUnderRoot = await this.listFilesRecursivelyRelative(this.absolutePathToLocalOutput, root);
+            for (const relativeFile of localFilesUnderRoot) {
+                if (relativeFile === ".git" || relativeFile.startsWith(".git/")) {
+                    continue;
+                }
+                if (this.isPathFernIgnored(relativeFile, fernIgnorePaths)) {
+                    continue;
+                }
+                if (!generatedFiles.has(relativeFile)) {
+                    const absoluteToDelete = AbsoluteFilePath.of(
+                        pathJoin(this.absolutePathToLocalOutput, relativeFile)
+                    );
+                    deletes.push(rm(absoluteToDelete, { force: true, recursive: true }));
+                    deleteCount += 1;
+                }
+            }
+        }
+        this.context.logger.debug(
+            `preserve-unmanaged-files: pruned ${deleteCount} stale file(s) across ${managedRoots.length} managed root(s)`
+        );
+        await Promise.all(deletes);
+    }
+
+    private async listFilesRecursivelyRelative(root: AbsoluteFilePath, subpath?: string): Promise<string[]> {
+        const start = subpath ? AbsoluteFilePath.of(pathJoin(root, subpath)) : root;
+        const results: string[] = [];
+
+        const walk = async (current: AbsoluteFilePath) => {
+            const entries = await readdir(current, { withFileTypes: true });
+            await Promise.all(
+                entries.map(async (entry) => {
+                    const absoluteEntryPath = AbsoluteFilePath.of(pathJoin(current, entry.name));
+                    if (entry.isDirectory()) {
+                        await walk(absoluteEntryPath);
+                        return;
+                    }
+                    if (entry.isFile() || entry.isSymbolicLink()) {
+                        const relative = path.relative(root, absoluteEntryPath);
+                        results.push(relative.split(path.sep).join("/"));
+                    }
+                })
+            );
+        };
+
+        if (await doesPathExist(start)) {
+            const stats = await lstat(start);
+            if (stats.isDirectory()) {
+                await walk(start);
+            } else if (stats.isFile() || stats.isSymbolicLink()) {
+                const relative = path.relative(root, start);
+                results.push(relative.split(path.sep).join("/"));
+            }
+        }
+        return results;
     }
 
     /**
