@@ -181,48 +181,41 @@ export async function loadAndUpdateGenerators({
                     let migrationsApplied = 0;
                     let migrationVersions: string[] = [];
 
-                    try {
-                        // Convert YAML map to plain object for migration
-                        // toJSON() returns a plain object with all the YAML properties
-                        const currentConfig = generator.toJSON();
+                    // Convert YAML map to plain object for migration
+                    // toJSON() returns a plain object with all the YAML properties
+                    const currentConfig = generator.toJSON();
 
-                        const migrationResult = await loadAndRunMigrations({
-                            generatorName: normalizedGeneratorName,
-                            from: currentGeneratorVersion,
-                            to: latestVersion,
-                            config: currentConfig,
-                            logger: context.logger
-                        });
+                    const migrationResult = await loadAndRunMigrations({
+                        generatorName: normalizedGeneratorName,
+                        from: currentGeneratorVersion,
+                        to: latestVersion,
+                        config: currentConfig,
+                        logger: context.logger
+                    });
 
-                        if (migrationResult != null) {
-                            migrationsApplied = migrationResult.migrationsApplied;
-                            migrationVersions = migrationResult.appliedVersions;
+                    if (migrationResult != null) {
+                        migrationsApplied = migrationResult.migrationsApplied;
+                        migrationVersions = migrationResult.appliedVersions;
 
-                            // Apply migrated config back to YAML, preserving formatting and comments
-                            // Get the original and migrated keys to detect what changed
-                            const originalKeys = new Set(Object.keys(currentConfig));
-                            const migratedKeys = new Set(Object.keys(migrationResult.config));
+                        // Apply migrated config back to YAML, preserving formatting and comments
+                        // Get the original and migrated keys to detect what changed
+                        const originalKeys = new Set(Object.keys(currentConfig));
+                        const migratedKeys = new Set(Object.keys(migrationResult.config));
 
-                            // Remove keys that are in original but not in migration result
-                            for (const key of originalKeys) {
-                                if (!migratedKeys.has(key)) {
-                                    generator.delete(key);
-                                }
+                        // Remove keys that are in original but not in migration result
+                        for (const key of originalKeys) {
+                            if (!migratedKeys.has(key)) {
+                                generator.delete(key);
                             }
-
-                            // Add or update keys from migration result
-                            for (const [key, value] of Object.entries(migrationResult.config)) {
-                                generator.set(key, value);
-                            }
-
-                            context.logger.debug(
-                                chalk.dim(`Applied ${migrationsApplied} migration(s): ${migrationVersions.join(", ")}`)
-                            );
                         }
-                    } catch (error) {
-                        // Log migration errors but don't fail the upgrade
+
+                        // Add or update keys from migration result
+                        for (const [key, value] of Object.entries(migrationResult.config)) {
+                            generator.set(key, value);
+                        }
+
                         context.logger.debug(
-                            chalk.yellow(`Warning: Failed to run migrations for ${generatorName}: ${error}`)
+                            chalk.dim(`Applied ${migrationsApplied} migration(s): ${migrationVersions.join(", ")}`)
                         );
                     }
 

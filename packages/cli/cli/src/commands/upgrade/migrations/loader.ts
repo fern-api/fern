@@ -100,20 +100,29 @@ export async function loadMigrationModule(params: {
         return module;
     } catch (error) {
         // Migration package doesn't exist or failed to install
-        // This is expected for generators that don't have migrations yet
         const errorMessage = error instanceof Error ? error.message : String(error);
 
+        // 404 errors mean the migration package doesn't exist yet - this is expected
+        // for generators that don't have migrations
         if (errorMessage.includes("404") || errorMessage.includes("E404")) {
-            logger.info(
+            logger.debug(
                 `No migration package found for ${generatorName}. The generator will be upgraded without configuration migrations.`
             );
-        } else {
-            logger.warn(
-                `Failed to load migration package ${MIGRATION_PACKAGE_NAME}: ${errorMessage}. Continuing without migrations.`
-            );
+            return undefined;
         }
 
-        return undefined;
+        // Any other error indicates a problem loading migrations that should halt the upgrade
+        const userFriendlyError = new Error(
+            `Failed to load generator migrations for ${generatorName}.\n\n` +
+                `Reason: ${errorMessage}\n\n` +
+                `This error occurred while trying to install the migration package (${MIGRATION_PACKAGE_NAME}). ` +
+                `Please check your internet connection and npm configuration, then try again.\n\n` +
+                `If the problem persists, you can:\n` +
+                `  1. Check if npm is working: npm --version\n` +
+                `  2. Clear the migration cache: rm -rf ~/.fern/migration-cache\n` +
+                `  3. Try the upgrade again: fern generator upgrade`
+        );
+        throw userFriendlyError;
     }
 }
 
@@ -206,14 +215,25 @@ export function runMigrations(params: {
     const appliedVersions: string[] = [];
 
     for (const migration of migrations) {
-        // Create a context for this migration with the logger
-        const context = {
-            logger
-        };
+        try {
+            // Create a context for this migration with the logger
+            const context = {
+                logger
+            };
 
-        // Apply the migration, creating a new config object
-        currentConfig = migration.migrateGeneratorConfig({ config: currentConfig, context });
-        appliedVersions.push(migration.version);
+            // Apply the migration, creating a new config object
+            currentConfig = migration.migrateGeneratorConfig({ config: currentConfig, context });
+            appliedVersions.push(migration.version);
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            throw new Error(
+                `Failed to apply migration for version ${migration.version}.\n\n` +
+                    `Reason: ${errorMessage}\n\n` +
+                    `This migration was attempting to update your generator configuration. ` +
+                    `The upgrade has been halted to prevent partial or invalid changes.\n\n` +
+                    `Please report this issue at: https://github.com/fern-api/fern/issues`
+            );
+        }
     }
 
     return {
@@ -279,10 +299,12 @@ export async function loadAndRunMigrations(params: {
     const { generatorName, from, to, config, logger } = params;
     // Validate config structure before proceeding
     if (!isValidGeneratorConfig(config)) {
-        logger.warn(
-            `Invalid generator configuration structure for ${generatorName}. Expected an object with 'name' property. Skipping migrations.`
+        throw new Error(
+            `Invalid generator configuration for ${generatorName}.\n\n` +
+                `The generator configuration must be an object with a 'name' property, but the current configuration ` +
+                `does not match this structure. This may indicate a malformed generators.yml file.\n\n` +
+                `Please check your generators.yml file and ensure the generator is properly configured.`
         );
-        return undefined;
     }
 
     const typedConfig = config;
