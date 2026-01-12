@@ -15,6 +15,14 @@
   createdAt: "2026-01-10"
   irVersion: 62
 
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        Fix protobuf IR generation to support air-gapped environments. The CLI now uses a pre-cached `buf.lock` file if it exists, skipping the network call to `buf dep update`. This enables self-hosted deployments to work in air-gapped environments by running `buf dep update` at build time to cache dependencies.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
 - version: 3.37.3
   changelogEntry:
     - summary: |
