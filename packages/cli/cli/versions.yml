@@ -7,6 +7,14 @@
   createdAt: "2026-01-10"
   irVersion: 62
 
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        Fix `fern docs preview delete` to accept preview URLs with UUID-format hashes (e.g., `org-preview-9b2b47f0-c44b-4338-b579-46872f33404a.docs.buildwithfern.com`). Previously, the command only accepted short alphanumeric hashes and rejected UUIDs containing hyphens.
+      type: fix
+  createdAt: "2026-01-10"
+  irVersion: 62
+
 - version: 3.37.3
   changelogEntry:
     - summary: |

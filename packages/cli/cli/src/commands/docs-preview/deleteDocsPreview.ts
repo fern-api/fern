@@ -7,9 +7,10 @@ import { CliContext } from "../../cli-context/CliContext";
 
 /**
  * Preview URLs follow the pattern: {org}-preview-{hash}.docs.buildwithfern.com
+ * The hash can be a short alphanumeric string or a UUID with hyphens.
  * This regex validates that the hostname contains "-preview-" and ends with ".docs.buildwithfern.com"
  */
-const PREVIEW_URL_PATTERN = /^[a-z0-9-]+-preview-[a-z0-9]+\.docs\.buildwithfern\.com$/i;
+const PREVIEW_URL_PATTERN = /^[a-z0-9-]+-preview-[a-z0-9-]+\.docs\.buildwithfern\.com$/i;
 
 function isPreviewUrl(url: string): boolean {
     // Normalize the URL to extract just the hostname
