@@ -198,10 +198,7 @@ export class OperationConverter extends AbstractOperationConverter {
             responseHeaders: convertedResponseBody?.responseHeaders,
             sdkRequest: undefined,
             errors,
-            auth:
-                this.operation.security != null ||
-                this.context.spec.security != null ||
-                this.shouldApplyDefaultAuthOverrides(),
+            auth: this.computeEndpointAuth(),
             security:
                 this.operation.security ?? this.context.spec.security ?? this.getDefaultSecurityFromAuthOverrides(),
             availability: this.context.getAvailability({
@@ -471,6 +468,21 @@ export class OperationConverter extends AbstractOperationConverter {
         return convertedResponseBody;
     }
 
+    private computeEndpointAuth(): boolean {
+        if (this.operation.security != null && this.operation.security.length === 0) {
+            return false;
+        }
+
+        if (this.operation.security != null && this.operation.security.length > 0) {
+            return true;
+        }
+
+        return (
+            (this.context.spec.security != null && this.context.spec.security.length > 0) ||
+            this.shouldApplyDefaultAuthOverrides()
+        );
+    }
+
     /**
      * Converts security scheme IDs to HTTP headers
      * @param securitySchemeIds - List of security scheme IDs
@@ -482,7 +494,8 @@ export class OperationConverter extends AbstractOperationConverter {
         }
 
         const hasGlobalSecurity = this.context.spec.security != null && this.context.spec.security.length > 0;
-        const hasEndpointSecurity = this.operation.security != null;
+        // Check for non-empty endpoint security (empty array means explicit no-auth, not "has security")
+        const hasEndpointSecurity = this.operation.security != null && this.operation.security.length > 0;
 
         // If there's already security defined (global or endpoint), don't apply defaults
         return !(hasGlobalSecurity || hasEndpointSecurity);
