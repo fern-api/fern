@@ -5,33 +5,39 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 import { mockInferredAuthScheme } from "./mockAuth";
 
 describe("AuthClient", () => {
-    
     test("getToken", async () => {
-        const server = mockServerPool.createServer();mockInferredAuthScheme(server);
+        const server = mockServerPool.createServer();
+        mockInferredAuthScheme(server);
 
-        const client = new SeedInferredAuthImplicitApiKeyClient({ "maxRetries" : 0 , "apiKey" : "api_key" , "environment" : server.baseUrl });
-        
-        const rawResponseBody = { "access_token" : "access_token" , "token_type" : "token_type" , "expires_in" : 1 , "scope" : "scope" };
+        const client = new SeedInferredAuthImplicitApiKeyClient({
+            maxRetries: 0,
+            apiKey: "api_key",
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = {
+            access_token: "access_token",
+            token_type: "token_type",
+            expires_in: 1,
+            scope: "scope",
+        };
         server
             .mockEndpoint()
-            .post("/token").header("X-Api-Key", "api_key")
-                    .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/token")
+            .header("X-Api-Key", "api_key")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.auth.getToken({
-    "X-Api-Key": "api_key"
-});
-                            expect(response).toEqual({
-    access_token: "access_token",
-    token_type: "token_type",
-    expires_in: 1,
-    scope: "scope"
-});
-                          
-                
+        const response = await client.auth.getToken({
+            "X-Api-Key": "api_key",
+        });
+        expect(response).toEqual({
+            access_token: "access_token",
+            token_type: "token_type",
+            expires_in: 1,
+            scope: "scope",
+        });
     });
-          
 });

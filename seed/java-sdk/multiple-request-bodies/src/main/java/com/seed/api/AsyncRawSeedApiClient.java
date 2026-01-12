@@ -42,6 +42,11 @@ public class AsyncRawSeedApiClient {
     }
 
     public CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> uploadJsonDocument(
+            RequestOptions requestOptions) {
+        return uploadJsonDocument(UploadDocumentRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> uploadJsonDocument(
             UploadDocumentRequest request) {
         return uploadJsonDocument(request, null);
     }

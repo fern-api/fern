@@ -37,6 +37,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:java-with-property-conflict/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:java-with-property-conflict-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

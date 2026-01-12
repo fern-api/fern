@@ -39,6 +39,13 @@ public class RawEventsClient {
     /**
      * List all user events.
      */
+    public SeedMixedFileDirectoryHttpResponse<List<Event>> listEvents(RequestOptions requestOptions) {
+        return listEvents(ListUserEventsRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all user events.
+     */
     public SeedMixedFileDirectoryHttpResponse<List<Event>> listEvents(ListUserEventsRequest request) {
         return listEvents(request, null);
     }

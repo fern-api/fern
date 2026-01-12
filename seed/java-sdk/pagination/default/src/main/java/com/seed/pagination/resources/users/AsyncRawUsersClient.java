@@ -72,6 +72,12 @@ public class AsyncRawUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithCursorPagination(
+            RequestOptions requestOptions) {
+        return listWithCursorPagination(
+                ListUsersCursorPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithCursorPagination(
             ListUsersCursorPaginationRequest request) {
         return listWithCursorPagination(request, null);
     }
@@ -160,6 +166,12 @@ public class AsyncRawUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithMixedTypeCursorPagination(
+            RequestOptions requestOptions) {
+        return listWithMixedTypeCursorPagination(
+                ListUsersMixedTypeCursorPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithMixedTypeCursorPagination(
             ListUsersMixedTypeCursorPaginationRequest request) {
         return listWithMixedTypeCursorPagination(request, null);
     }
@@ -233,6 +245,12 @@ public class AsyncRawUsersClient {
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithBodyCursorPagination() {
         return listWithBodyCursorPagination(
                 ListUsersBodyCursorPaginationRequest.builder().build());
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithBodyCursorPagination(
+            RequestOptions requestOptions) {
+        return listWithBodyCursorPagination(
+                ListUsersBodyCursorPaginationRequest.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithBodyCursorPagination(
@@ -323,6 +341,12 @@ public class AsyncRawUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetPagination(
+            RequestOptions requestOptions) {
+        return listWithOffsetPagination(
+                ListUsersOffsetPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetPagination(
             ListUsersOffsetPaginationRequest request) {
         return listWithOffsetPagination(request, null);
     }
@@ -409,6 +433,12 @@ public class AsyncRawUsersClient {
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithDoubleOffsetPagination() {
         return listWithDoubleOffsetPagination(
                 ListUsersDoubleOffsetPaginationRequest.builder().build());
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithDoubleOffsetPagination(
+            RequestOptions requestOptions) {
+        return listWithDoubleOffsetPagination(
+                ListUsersDoubleOffsetPaginationRequest.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithDoubleOffsetPagination(
@@ -502,6 +532,12 @@ public class AsyncRawUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithBodyOffsetPagination(
+            RequestOptions requestOptions) {
+        return listWithBodyOffsetPagination(
+                ListUsersBodyOffsetPaginationRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithBodyOffsetPagination(
             ListUsersBodyOffsetPaginationRequest request) {
         return listWithBodyOffsetPagination(request, null);
     }
@@ -588,6 +624,12 @@ public class AsyncRawUsersClient {
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetStepPagination() {
         return listWithOffsetStepPagination(
                 ListUsersOffsetStepPaginationRequest.builder().build());
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetStepPagination(
+            RequestOptions requestOptions) {
+        return listWithOffsetStepPagination(
+                ListUsersOffsetStepPaginationRequest.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetStepPagination(
@@ -678,6 +720,12 @@ public class AsyncRawUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetPaginationHasNextPage(
+            RequestOptions requestOptions) {
+        return listWithOffsetPaginationHasNextPage(
+                ListWithOffsetPaginationHasNextPageRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOffsetPaginationHasNextPage(
             ListWithOffsetPaginationHasNextPageRequest request) {
         return listWithOffsetPaginationHasNextPage(request, null);
     }
@@ -763,6 +811,11 @@ public class AsyncRawUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithExtendedResults(
+            RequestOptions requestOptions) {
+        return listWithExtendedResults(ListUsersExtendedRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithExtendedResults(
             ListUsersExtendedRequest request) {
         return listWithExtendedResults(request, null);
     }
@@ -836,6 +889,12 @@ public class AsyncRawUsersClient {
             listWithExtendedResultsAndOptionalData() {
         return listWithExtendedResultsAndOptionalData(
                 ListUsersExtendedRequestForOptionalData.builder().build());
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>>
+            listWithExtendedResultsAndOptionalData(RequestOptions requestOptions) {
+        return listWithExtendedResultsAndOptionalData(
+                ListUsersExtendedRequestForOptionalData.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>>
@@ -915,6 +974,11 @@ public class AsyncRawUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> listUsernames(
+            RequestOptions requestOptions) {
+        return listUsernames(ListUsernamesRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> listUsernames(
             ListUsernamesRequest request) {
         return listUsernames(request, null);
     }
@@ -990,6 +1054,12 @@ public class AsyncRawUsersClient {
             listUsernamesWithOptionalResponse() {
         return listUsernamesWithOptionalResponse(
                 ListUsernamesWithOptionalResponseRequest.builder().build());
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> listUsernamesWithOptionalResponse(
+            RequestOptions requestOptions) {
+        return listUsernamesWithOptionalResponse(
+                ListUsernamesWithOptionalResponseRequest.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> listUsernamesWithOptionalResponse(
@@ -1073,6 +1143,11 @@ public class AsyncRawUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> listWithGlobalConfig(
+            RequestOptions requestOptions) {
+        return listWithGlobalConfig(ListWithGlobalConfigRequest.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<String>>> listWithGlobalConfig(
             ListWithGlobalConfigRequest request) {
         return listWithGlobalConfig(request, null);
     }
@@ -1146,6 +1221,11 @@ public class AsyncRawUsersClient {
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalData() {
         return listWithOptionalData(ListUsersOptionalDataRequest.builder().build());
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalData(
+            RequestOptions requestOptions) {
+        return listWithOptionalData(ListUsersOptionalDataRequest.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<User>>> listWithOptionalData(

@@ -37,6 +37,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:java-optional-query-params-overloads/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:java-optional-query-params-overloads-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

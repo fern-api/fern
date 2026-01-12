@@ -94,6 +94,13 @@ public class ServiceClient {
     /**
      * List or search for users
      */
+    public PaginatedUserResponse listUsers(RequestOptions requestOptions) {
+        return this.rawClient.listUsers(requestOptions).body();
+    }
+
+    /**
+     * List or search for users
+     */
     public PaginatedUserResponse listUsers(ListUsersRequest request) {
         return this.rawClient.listUsers(request).body();
     }
@@ -110,6 +117,13 @@ public class ServiceClient {
      */
     public User getUserById(String userId) {
         return this.rawClient.getUserById(userId).body();
+    }
+
+    /**
+     * Get a user by ID
+     */
+    public User getUserById(String userId, RequestOptions requestOptions) {
+        return this.rawClient.getUserById(userId, requestOptions).body();
     }
 
     /**
@@ -150,6 +164,13 @@ public class ServiceClient {
     /**
      * Update a user
      */
+    public User updateUser(String userId, RequestOptions requestOptions) {
+        return this.rawClient.updateUser(userId, requestOptions).body();
+    }
+
+    /**
+     * Update a user
+     */
     public User updateUser(String userId, UpdateUserRequest request) {
         return this.rawClient.updateUser(userId, request).body();
     }
@@ -185,6 +206,13 @@ public class ServiceClient {
     /**
      * List all connections
      */
+    public List<Connection> listConnections(RequestOptions requestOptions) {
+        return this.rawClient.listConnections(requestOptions).body();
+    }
+
+    /**
+     * List all connections
+     */
     public List<Connection> listConnections(ListConnectionsRequest request) {
         return this.rawClient.listConnections(request).body();
     }
@@ -201,6 +229,13 @@ public class ServiceClient {
      */
     public Connection getConnection(String connectionId) {
         return this.rawClient.getConnection(connectionId).body();
+    }
+
+    /**
+     * Get a connection by ID
+     */
+    public Connection getConnection(String connectionId, RequestOptions requestOptions) {
+        return this.rawClient.getConnection(connectionId, requestOptions).body();
     }
 
     /**
@@ -229,6 +264,13 @@ public class ServiceClient {
     /**
      * List all clients/applications
      */
+    public PaginatedClientResponse listClients(RequestOptions requestOptions) {
+        return this.rawClient.listClients(requestOptions).body();
+    }
+
+    /**
+     * List all clients/applications
+     */
     public PaginatedClientResponse listClients(ListClientsRequest request) {
         return this.rawClient.listClients(request).body();
     }
@@ -245,6 +287,13 @@ public class ServiceClient {
      */
     public Client getClient(String clientId) {
         return this.rawClient.getClient(clientId).body();
+    }
+
+    /**
+     * Get a client by ID
+     */
+    public Client getClient(String clientId, RequestOptions requestOptions) {
+        return this.rawClient.getClient(clientId, requestOptions).body();
     }
 
     /**

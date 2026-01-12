@@ -173,6 +173,10 @@ public class AsyncServiceClient {
         return this.rawClient.optionalArgs(imageFile).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<String> optionalArgs(Optional<File> imageFile, RequestOptions requestOptions) {
+        return this.rawClient.optionalArgs(imageFile, requestOptions).thenApply(response -> response.body());
+    }
+
     public CompletableFuture<String> optionalArgs(Optional<File> imageFile, OptionalArgsRequest request) {
         return this.rawClient.optionalArgs(imageFile, request).thenApply(response -> response.body());
     }

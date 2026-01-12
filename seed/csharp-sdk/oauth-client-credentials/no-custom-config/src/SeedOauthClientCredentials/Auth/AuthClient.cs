@@ -32,12 +32,13 @@ public partial class AuthClient : IAuthClient
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new FormRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/token",
                     Body = request,
+                    ContentType = "application/x-www-form-urlencoded",
                     Options = options,
                 },
                 cancellationToken
@@ -87,12 +88,13 @@ public partial class AuthClient : IAuthClient
     {
         var response = await _client
             .SendRequestAsync(
-                new JsonRequest
+                new FormRequest
                 {
                     BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/token",
                     Body = request,
+                    ContentType = "application/x-www-form-urlencoded",
                     Options = options,
                 },
                 cancellationToken

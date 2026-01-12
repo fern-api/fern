@@ -26,7 +26,7 @@ describe("ComplexClient", () => {
         server
             .mockEndpoint({ once: false })
             .post("/index/conversations/search")
-            .jsonBody(rawRequestBody, { ignoredFields: ["pagination.starting_after"] })
+            .jsonBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)

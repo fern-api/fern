@@ -4,41 +4,41 @@ import { SeedPropertyAccessClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
 describe("SeedPropertyAccessClient", () => {
-    
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPropertyAccessClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
-        const rawRequestBody = { "password" : "password" , "profile" : { "name" : "name" , "verification" : { } , "ssn" : "ssn" } };
-        const rawResponseBody = { "id" : "id" , "email" : "email" , "profile" : { "name" : "name" , "verification" : { "verified" : "verified" } } };
+        const client = new SeedPropertyAccessClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = { password: "password", profile: { name: "name", verification: {}, ssn: "ssn" } };
+        const rawResponseBody = {
+            id: "id",
+            email: "email",
+            profile: { name: "name", verification: { verified: "verified" } },
+        };
         server
             .mockEndpoint()
-            .post("/users").jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/users")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                    
-                            const response = await client.createUser({
-    password: "password",
-    profile: {
-        name: "name",
-        verification: {},
-        ssn: "ssn"
-    }
-});
-                            expect(response).toEqual({
-    id: "id",
-    email: "email",
-    profile: {
-        name: "name",
-        verification: {
-            verified: "verified"
-        }
-    }
-});
-                          
-                
+        const response = await client.createUser({
+            password: "password",
+            profile: {
+                name: "name",
+                verification: {},
+                ssn: "ssn",
+            },
+        });
+        expect(response).toEqual({
+            id: "id",
+            email: "email",
+            profile: {
+                name: "name",
+                verification: {
+                    verified: "verified",
+                },
+            },
+        });
     });
-          
 });

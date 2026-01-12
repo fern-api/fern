@@ -43,6 +43,13 @@ public class AsyncRawUserClient {
     /**
      * List all users.
      */
+    public CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<User>>> list(RequestOptions requestOptions) {
+        return list(ListUsersRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all users.
+     */
     public CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<User>>> list(ListUsersRequest request) {
         return list(request, null);
     }

@@ -202,6 +202,11 @@ public class AsyncRawHttpMethodsClient {
     }
 
     public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPatch(
+            String id, RequestOptions requestOptions) {
+        return testPatch(id, ObjectWithOptionalField.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<BestHttpResponse<ObjectWithOptionalField>> testPatch(
             String id, ObjectWithOptionalField request) {
         return testPatch(id, request, null);
     }

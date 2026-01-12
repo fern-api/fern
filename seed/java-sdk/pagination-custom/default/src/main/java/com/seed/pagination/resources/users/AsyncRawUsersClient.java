@@ -38,6 +38,11 @@ public class AsyncRawUsersClient {
     }
 
     public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
+            listUsernamesCustom(RequestOptions requestOptions) {
+        return listUsernamesCustom(ListUsernamesRequestCustom.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncFernCustomPaginator<String>>>>
             listUsernamesCustom(ListUsernamesRequestCustom request) {
         return listUsernamesCustom(request, null);
     }
