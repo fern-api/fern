@@ -42,7 +42,8 @@ export const SdkCustomConfigSchema = z.object({
     enable_wire_tests: z.boolean().optional(),
     package_path: relativePathSchema.optional(),
     client: ClientConfigSchema.optional(),
-    client_class_name: z.string().optional()
+    client_class_name: z.string().optional(),
+    inline_request_params: z.boolean().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;
