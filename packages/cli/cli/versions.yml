@@ -8,7 +8,15 @@
         Add support for generator-level overrides. Each generator invocation can now specify its own `overrides` field, which applies additional override files after the top-level spec overrides. This allows for generator-specific customizations without affecting other generators.
       type: feat
   createdAt: "2026-01-09"
-  irVersion: 62
+  irVersion: 63
+
+- version: 3.37.6
+  changelogEntry:
+    - summary: |
+        Bump IR version to 63.
+      type: chore
+  createdAt: "2026-01-12"
+  irVersion: 63
 
 - version: 3.37.5
   changelogEntry:
