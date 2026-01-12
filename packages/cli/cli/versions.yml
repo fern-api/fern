@@ -7,6 +7,22 @@
   createdAt: "2026-01-09"
   irVersion: 62
 
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        Fix `security: []` handling in OpenAPI importer to correctly mark endpoints as not requiring authentication.
+      type: fix
+  createdAt: "2026-01-10"
+  irVersion: 62
+
+- version: 3.37.3
+  changelogEntry:
+    - summary: |
+        no-op: initiate bulk cli update
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
 - version: 3.37.2
   changelogEntry:
     - summary: |

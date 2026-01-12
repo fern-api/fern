@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 4.46.13
+  changelogEntry:
+    - summary: |
+        Fixes Python SDK import generation to avoid invalid `._` module segments by deriving type paths from canonical declarations.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
 - version: 4.46.12
   changelogEntry:
     - summary: |
