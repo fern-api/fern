@@ -198,13 +198,21 @@ export async function loadAndUpdateGenerators({
                             migrationsApplied = migrationResult.migrationsApplied;
                             migrationVersions = migrationResult.appliedVersions;
 
-                            // Apply migrated config back to YAML
-                            // We need to update the generator map with the migrated values
-                            for (const [key, value] of Object.entries(migrationResult.config)) {
-                                if (key !== "version") {
-                                    // Don't override the version we just set
-                                    generator.set(key, value);
+                            // Apply migrated config back to YAML, preserving formatting and comments
+                            // Get the original and migrated keys to detect what changed
+                            const originalKeys = new Set(Object.keys(currentConfig));
+                            const migratedKeys = new Set(Object.keys(migrationResult.config));
+
+                            // Remove keys that are in original but not in migration result
+                            for (const key of originalKeys) {
+                                if (!migratedKeys.has(key)) {
+                                    generator.delete(key);
                                 }
+                            }
+
+                            // Add or update keys from migration result
+                            for (const [key, value] of Object.entries(migrationResult.config)) {
+                                generator.set(key, value);
                             }
 
                             context.logger.debug(
