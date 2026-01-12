@@ -2,7 +2,7 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class InlinedRequestClient
+public partial class InlinedRequestClient : IInlinedRequestClient
 {
     private RawClient _client;
 

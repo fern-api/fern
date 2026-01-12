@@ -4,7 +4,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Put;
 
-public partial class PutClient
+public partial class PutClient : IPutClient
 {
     private RawClient _client;
 

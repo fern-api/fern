@@ -4,7 +4,7 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class HttpMethodsClient
+public partial class HttpMethodsClient : IHttpMethodsClient
 {
     private RawClient _client;
 

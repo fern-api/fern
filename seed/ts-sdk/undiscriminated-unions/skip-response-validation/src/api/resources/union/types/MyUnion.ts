@@ -3,4 +3,10 @@
 /**
  * Several different types are accepted.
  */
-export type MyUnion = string | string[] | number | number[] | number[][] | string[];
+export type MyUnion = 
+    | string
+    | string[]
+    | number
+    | number[]
+    | number[][]
+    | string[];

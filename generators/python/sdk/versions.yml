@@ -17,6 +17,70 @@
   createdAt: "2025-01-12"
   irVersion: 62
 
+- version: 4.46.13
+  changelogEntry:
+    - summary: |
+        Fixes Python SDK import generation to avoid invalid `._` module segments by deriving type paths from canonical declarations.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 4.46.12
+  changelogEntry:
+    - summary: |
+        Support `bytes` as a response type for websocket channel methods.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 4.46.11
+  changelogEntry:
+    - summary: |
+        Wire test generator now skips undefined example values and injects `X-Test-Id` in a constructor-compatible way via `headers` or `httpx_client`.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 4.46.10
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to use endpoint ID for lookup instead of path matching.
+        This fixes a bug where wire tests would call the wrong client methods when multiple
+        namespaces have endpoints with the same HTTP method and path pattern (e.g., POST /v2/Services).
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 62
+
+- version: 4.46.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to filter out nop values when generating method arguments.
+        This prevents invalid Python syntax like `param=` without a value when an example
+        contains an invalid enum value or undefined property.
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 62
+
+- version: 4.46.8
+  changelogEntry:
+    - summary: |
+        Bump version to remove rc from version tag.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
+- version: 4.46.7-rc3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for streaming endpoints. Streaming methods return lazy iterators
+        (Iterator[bytes] or AsyncIterator[bytes]) that don't execute the HTTP request until iterated.
+        Wire tests now wrap streaming endpoint calls in 'for _ in ...: pass' loops to ensure the
+        HTTP request is actually made. This applies to streaming, streamParameter, and fileDownload
+        response types.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
 - version: 4.46.7-rc2
   changelogEntry:
     - summary: Fixed Python SDK generation to use native Pydantic field aliases and improved core parsing so wire-key and nested/union validation works correctly across Pydantic v1/v2.

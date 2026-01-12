@@ -1,11 +1,31 @@
 name: Test Remote vs Local Generation Parity
 
 on:
-  # Runs every morning at 8:00 AM Eastern Time (1:00 PM UTC)
-  # schedule:
-  #   - cron: "0 13 * * *"
+  # Runs on every commit to main
+  push:
+    branches:
+      - main
+
   # Runs when triggered manually
   workflow_dispatch:
+    inputs:
+      branch:
+        description: "Branch to test (defaults to main)"
+        required: false
+        default: "main"
+        type: string
+
+  # Runs when a generator is published successfully
+  workflow_run:
+    workflows:
+      - "Publish TypeScript SDK Generator"
+      - "Publish Go SDK Generator"
+      - "Publish Java SDK Generator"
+      - "Publish Python SDK Generator"
+    types:
+      - completed
+    branches:
+      - main
 
 # Cancel previous workflows when another is triggered
 concurrency:
@@ -16,19 +36,55 @@ env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
 
-permissions:
-  pull-requests: write
-  contents: write
-
 jobs:
-  test-remote-local-parity:
+  # Determine which generator to test based on the triggering workflow
+  determine-generator:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    outputs:
+      generators: ${{ steps.set-generators.outputs.generators }}
+    steps:
+      - name: Set generators to test
+        id: set-generators
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            # Map workflow name to generator
+            case "${{ github.event.workflow_run.name }}" in
+              "Publish TypeScript SDK Generator")
+                echo 'generators=["ts-sdk"]' >> $GITHUB_OUTPUT
+                ;;
+              "Publish Go SDK Generator")
+                echo 'generators=["go-sdk"]' >> $GITHUB_OUTPUT
+                ;;
+              "Publish Java SDK Generator")
+                echo 'generators=["java-sdk"]' >> $GITHUB_OUTPUT
+                ;;
+              "Publish Python SDK Generator")
+                echo 'generators=["python-sdk"]' >> $GITHUB_OUTPUT
+                ;;
+              *)
+                echo "Unknown workflow: ${{ github.event.workflow_run.name }}"
+                exit 1
+                ;;
+            esac
+          else
+            # For push and workflow_dispatch, test all generators
+            echo 'generators=["ts-sdk", "java-sdk", "go-sdk", "python-sdk"]' >> $GITHUB_OUTPUT
+          fi
+
+  test-remote-local-parity:
+    needs: determine-generator
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        generator: ${{ fromJson(needs.determine-generator.outputs.generators) }}
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ inputs.branch || 'main' }}
 
       - name: Install
         uses: ./.github/actions/install
@@ -42,58 +98,13 @@ jobs:
       - name: Build Seed CLI
         run: pnpm seed:build
 
-      - name: Run Seed Test Remote-Local (GitHub Output Mode)
-        run: pnpm seed test-remote-local --output-mode github
-
-      # - name: Run Seed Test Remote-Local (Local Output Mode)
-      # run: pnpm seed test-remote-local --output-mode local
-
-      - name: Check for Changes
-        id: check-changes
-        run: |
-          if [[ -n $(git status --porcelain) ]]; then
-            echo "has-changes=true" >> $GITHUB_OUTPUT
-          else
-            echo "has-changes=false" >> $GITHUB_OUTPUT
-          fi
-
-      # - name: Create Pull Request
-      #   if: steps.check-changes.outputs.has-changes == 'true'
-      #   id: cpr
-      #   uses: peter-evans/create-pull-request@v5
-      #   with:
-      #     token: ${{ secrets.ACTIONS_PAT }}
-      #     commit-message: "chore(seed): update remote-local parity test outputs"
-      #     title: "chore(seed): update remote-local parity test outputs"
-      #     branch: seed-remote-local-parity-updates
-      #     body: |
-      #       Auto-generated PR from seed-remote-local-parity workflow.
-
-      #       This PR contains updates from running:
-      #       - `pnpm seed test-remote-local --output-mode github`
-      #       - `pnpm seed test-remote-local --output-mode local`
-
-      #       Triggered by: ${{ github.event_name }}
-      #       Branch: ${{ github.ref_name }}
-      #       Workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-      #     delete-branch: true
-      #     add-paths: |
-      #       seed-remote-local/**
-      #     labels: |
-      #       seed
-      #       automated-pr
-
-      # - name: Log PR Creation
-      #   if: steps.cpr.outputs.pull-request-operation == 'created'
-      #   run: |
-      #     echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
-
-      # - name: Log PR Update
-      #   if: steps.cpr.outputs.pull-request-operation == 'updated'
-      #   run: |
-      #     echo "PR Updated: ${{ steps.cpr.outputs.pull-request-url }}"
-
-      # - name: Log No Changes
-      #   if: steps.check-changes.outputs.has-changes == 'false'
-      #   run: |
-      #     echo "No changes detected - skipping PR creation"
+      - name: Run Seed Test Remote-Local (${{ matrix.generator }})
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 30
+          max_attempts: 5
+          retry_wait_seconds: 120
+          command: pnpm seed test-remote-local --generator ${{ matrix.generator }} --output-mode github
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_FERN_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TEST_REMOTE_LOCAL_GITHUB_TOKEN }}

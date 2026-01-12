@@ -3,6 +3,7 @@ using SeedBearerTokenEnvironmentVariable.Core;
 namespace SeedBearerTokenEnvironmentVariable;
 
 public partial class SeedBearerTokenEnvironmentVariableClient
+    : ISeedBearerTokenEnvironmentVariableClient
 {
     private readonly RawClient _client;
 

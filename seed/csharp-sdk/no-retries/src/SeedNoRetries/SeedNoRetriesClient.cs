@@ -2,7 +2,7 @@ using SeedNoRetries.Core;
 
 namespace SeedNoRetries;
 
-public partial class SeedNoRetriesClient
+public partial class SeedNoRetriesClient : ISeedNoRetriesClient
 {
     private readonly RawClient _client;
 

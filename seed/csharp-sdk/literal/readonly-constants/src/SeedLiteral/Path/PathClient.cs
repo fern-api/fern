@@ -3,7 +3,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public partial class PathClient
+public partial class PathClient : IPathClient
 {
     private RawClient _client;
 

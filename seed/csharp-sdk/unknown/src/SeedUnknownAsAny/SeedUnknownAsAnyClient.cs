@@ -2,7 +2,7 @@ using SeedUnknownAsAny.Core;
 
 namespace SeedUnknownAsAny;
 
-public partial class SeedUnknownAsAnyClient
+public partial class SeedUnknownAsAnyClient : ISeedUnknownAsAnyClient
 {
     private readonly RawClient _client;
 

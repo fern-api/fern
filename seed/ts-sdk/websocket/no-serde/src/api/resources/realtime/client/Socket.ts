@@ -78,7 +78,7 @@ export class RealtimeSocket {
         this.sendJson(message);
     }
 
-    public sendSend2(message: SeedWebsocket.SendEvent2): void {
+    public customSend(message: SeedWebsocket.SendEvent2): void {
         this.assertSocketIsOpen();
         this.sendJson(message);
     }

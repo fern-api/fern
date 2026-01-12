@@ -4,28 +4,32 @@ import { SeedMixedFileDirectoryClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("EventsClient", () => {
+    
     test("listEvents", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMixedFileDirectoryClient({ maxRetries: 0, environment: server.baseUrl });
+        const client = new SeedMixedFileDirectoryClient({ "maxRetries" : 0 , "environment" : server.baseUrl });
+        
+        const rawResponseBody = [ { "id" : "id" , "name" : "name" } , { "id" : "id" , "name" : "name" } ];
+        server
+            .mockEndpoint()
+            .get("/users/events/").respondWith()
+            .statusCode(200).jsonBody(rawResponseBody)
+                .build();
 
-        const rawResponseBody = [
-            { id: "id", name: "name" },
-            { id: "id", name: "name" },
-        ];
-        server.mockEndpoint().get("/users/events/").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
-
-        const response = await client.user.events.listEvents({
-            limit: 1,
-        });
-        expect(response).toEqual([
-            {
-                id: "id",
-                name: "name",
-            },
-            {
-                id: "id",
-                name: "name",
-            },
-        ]);
+        
+                    
+                            const response = await client.user.events.listEvents({
+    limit: 1
+});
+                            expect(response).toEqual([{
+        id: "id",
+        name: "name"
+    }, {
+        id: "id",
+        name: "name"
+    }]);
+                          
+                
     });
+          
 });

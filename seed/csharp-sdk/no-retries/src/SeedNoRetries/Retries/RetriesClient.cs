@@ -3,7 +3,7 @@ using SeedNoRetries.Core;
 
 namespace SeedNoRetries;
 
-public partial class RetriesClient
+public partial class RetriesClient : IRetriesClient
 {
     private RawClient _client;
 

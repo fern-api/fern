@@ -3,7 +3,7 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class PathParamClient
+public partial class PathParamClient : IPathParamClient
 {
     private RawClient _client;
 

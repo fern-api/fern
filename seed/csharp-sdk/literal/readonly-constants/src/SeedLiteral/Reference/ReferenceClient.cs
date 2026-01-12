@@ -3,7 +3,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public partial class ReferenceClient
+public partial class ReferenceClient : IReferenceClient
 {
     private RawClient _client;
 

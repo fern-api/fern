@@ -212,10 +212,26 @@ class TypeReferenceToTypeHintConverter:
         )
 
     def _get_type_hint_for_primitive(self, primitive: ir_types.PrimitiveType) -> AST.TypeHint:
+        def is_bytes() -> bool:
+            if primitive.v_2 is None:
+                return False
+
+            v2_union = primitive.v_2.get_as_union()
+            if v2_union.type != "string":
+                return False
+
+            string_type: ir_types.StringType = v2_union
+            if string_type.validation is None:
+                return False
+
+            return string_type.validation.format == "binary"
+
+        str_type_hint = AST.TypeHint.bytes if is_bytes() else AST.TypeHint.str_
+
         to_return = primitive.v_1.visit(
             integer=AST.TypeHint.int_,
             double=AST.TypeHint.float_,
-            string=AST.TypeHint.str_,
+            string=str_type_hint,
             boolean=AST.TypeHint.bool_,
             long_=AST.TypeHint.int_,
             date_time=AST.TypeHint.datetime,

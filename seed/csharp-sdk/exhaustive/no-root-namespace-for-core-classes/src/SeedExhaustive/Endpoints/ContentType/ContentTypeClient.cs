@@ -3,7 +3,7 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class ContentTypeClient
+public partial class ContentTypeClient : IContentTypeClient
 {
     private RawClient _client;
 

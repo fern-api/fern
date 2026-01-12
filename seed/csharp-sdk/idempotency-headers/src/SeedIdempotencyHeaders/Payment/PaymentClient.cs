@@ -3,7 +3,7 @@ using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
 
-public partial class PaymentClient
+public partial class PaymentClient : IPaymentClient
 {
     private RawClient _client;
 

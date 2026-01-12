@@ -2,12 +2,14 @@
 
 import { CompletionsClient } from "./api/resources/completions/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
 
 export declare namespace SeedServerSentEventsClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SeedServerSentEventsClient {
@@ -15,6 +17,7 @@ export class SeedServerSentEventsClient {
     protected _completions: CompletionsClient | undefined;
 
     constructor(options: SeedServerSentEventsClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

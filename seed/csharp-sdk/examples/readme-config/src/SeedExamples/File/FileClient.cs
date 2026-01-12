@@ -3,7 +3,7 @@ using SeedExamples.File_.Notification;
 
 namespace SeedExamples.File_;
 
-public partial class FileClient
+public partial class FileClient : IFileClient
 {
     private RawClient _client;
 

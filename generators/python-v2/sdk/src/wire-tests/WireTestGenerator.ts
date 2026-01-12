@@ -118,6 +118,13 @@ export class WireTestGenerator {
     }
 
     /**
+     * Checks if an example has an error response (non-2xx status code).
+     */
+    private isErrorResponse(example: ExampleEndpointCall): boolean {
+        return example.response.type === "error";
+    }
+
+    /**
      * Converts a static IR example to a wire test example format.
      */
     private convertStaticExampleToWireTest(
@@ -176,6 +183,7 @@ export class WireTestGenerator {
             example: WireTestExample;
             service: HttpService;
             exampleIndex: number;
+            isErrorResponse: boolean;
         }> = [];
 
         for (const endpoint of endpoints) {
@@ -192,7 +200,14 @@ export class WireTestGenerator {
             const staticExample = this.getStaticIrExample(endpoint);
             if (staticExample) {
                 const wireTestExample = this.convertStaticExampleToWireTest(endpoint, staticExample);
-                endpointTestCases.push({ endpoint, example: wireTestExample, service, exampleIndex: 0 });
+                const isErrorResponse = this.isErrorResponse(staticExample);
+                endpointTestCases.push({
+                    endpoint,
+                    example: wireTestExample,
+                    service,
+                    exampleIndex: 0,
+                    isErrorResponse
+                });
             }
         }
 
@@ -224,6 +239,7 @@ export class WireTestGenerator {
             example: WireTestExample;
             service: HttpService;
             exampleIndex: number;
+            isErrorResponse: boolean;
         }>
     ): python.PythonFile {
         const statements: python.AstNode[] = [];
@@ -237,13 +253,14 @@ export class WireTestGenerator {
         statements.push(this.createImportRegistration());
 
         // Add test functions for each endpoint
-        for (const { endpoint, example, service, exampleIndex } of testCases) {
+        for (const { endpoint, example, service, exampleIndex, isErrorResponse } of testCases) {
             const testFunction = this.generateEndpointTestFunction(
                 serviceName,
                 endpoint,
                 example,
                 service,
-                exampleIndex
+                exampleIndex,
+                isErrorResponse
             );
             if (testFunction) {
                 statements.push(testFunction);
@@ -269,6 +286,10 @@ export class WireTestGenerator {
         node.addReference(python.reference({ name: "get_client", modulePath: [".conftest"] }));
         node.addReference(python.reference({ name: "verify_request_count", modulePath: [".conftest"] }));
 
+        // Import ApiError from the SDK's core module for error response tests
+        const orgName = this.context.config.organization;
+        node.addReference(python.reference({ name: "ApiError", modulePath: [orgName, "core"] }));
+
         return node;
     }
 
@@ -281,7 +302,8 @@ export class WireTestGenerator {
         endpoint: HttpEndpoint,
         example: WireTestExample,
         service: HttpService,
-        exampleIndex: number
+        exampleIndex: number,
+        isErrorResponse: boolean
     ): python.Method | null {
         try {
             const testName = this.getTestFunctionName(serviceName, endpoint);
@@ -302,7 +324,32 @@ export class WireTestGenerator {
 
             // Generate the API call AST directly
             const apiCallAst = this.generateApiCallAst(endpoint, example);
-            statements.push(apiCallAst);
+
+            // For error responses, wrap in pytest.raises() to expect the exception
+            if (isErrorResponse) {
+                // For streaming endpoints, we need to consume the iterator inside pytest.raises
+                if (this.isStreamingEndpoint(endpoint)) {
+                    statements.push(
+                        python.codeBlock(
+                            `with pytest.raises(ApiError):\n        for _ in ${apiCallAst.toString()}:\n            pass`
+                        )
+                    );
+                } else {
+                    statements.push(
+                        python.codeBlock(`with pytest.raises(ApiError):\n        ${apiCallAst.toString()}`)
+                    );
+                }
+            } else {
+                // For streaming endpoints, wrap the call in a for loop to consume the iterator
+                // This is necessary because streaming methods return lazy generators that don't
+                // execute the HTTP request until iterated
+                if (this.isStreamingEndpoint(endpoint)) {
+                    statements.push(python.codeBlock(`for _ in ${apiCallAst.toString()}:`));
+                    statements.push(python.codeBlock("    pass"));
+                } else {
+                    statements.push(apiCallAst);
+                }
+            }
 
             // Verify request count using test ID for filtering
             statements.push(
@@ -323,6 +370,26 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Checks if an endpoint returns a streaming response.
+     * Streaming endpoints return Iterator[bytes] or AsyncIterator[bytes] which are lazy generators.
+     * This includes:
+     * - streaming: SSE or other streaming responses
+     * - streamParameter: Responses controlled by a stream parameter
+     * - fileDownload: File download responses that return an iterator of bytes
+     */
+    private isStreamingEndpoint(endpoint: HttpEndpoint): boolean {
+        const responseBody = endpoint.response?.body;
+        if (!responseBody) {
+            return false;
+        }
+        return (
+            responseBody.type === "streaming" ||
+            responseBody.type === "streamParameter" ||
+            responseBody.type === "fileDownload"
+        );
     }
 
     /**
@@ -381,7 +448,12 @@ export class WireTestGenerator {
             };
 
             // Generate just the method call AST using DynamicSnippetsGenerator
-            return this.snippetGenerator.generateMethodCallSnippetAst(snippetRequest);
+            // Use the endpoint ID directly to avoid path collision issues when multiple
+            // namespaces have endpoints with the same HTTP method and path pattern
+            return this.snippetGenerator.generateMethodCallSnippetAstById({
+                endpointId: endpoint.id,
+                request: snippetRequest
+            });
         } catch (error) {
             // Fallback: log error and generate a placeholder
             this.context.logger.error(
@@ -500,7 +572,15 @@ export class WireTestGenerator {
             basePath = "/" + basePath;
         }
 
+        // Strip URL fragment - fragments are never sent to the server in HTTP requests
+        // e.g., "/oauth2/token#refresh" -> "/oauth2/token"
+        const fragmentIndex = basePath.indexOf("#");
+        if (fragmentIndex !== -1) {
+            basePath = basePath.substring(0, fragmentIndex);
+        }
+
         // Substitute path parameters with actual values from WireMock mapping
+        // Use the path WITHOUT fragment to look up the mapping, since mock-utils strips fragments
         const mappingKey = this.wiremockMappingKey({
             requestMethod: endpoint.method,
             requestUrlPathTemplate: basePath

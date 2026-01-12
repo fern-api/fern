@@ -2,7 +2,7 @@ using SeedWebsocketAuth.Core;
 
 namespace SeedWebsocketAuth;
 
-public partial class SeedWebsocketAuthClient
+public partial class SeedWebsocketAuthClient : ISeedWebsocketAuthClient
 {
     private readonly RawClient _client;
 

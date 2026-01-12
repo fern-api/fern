@@ -5,7 +5,7 @@ using SeedExhaustive.GeneralErrors;
 
 namespace SeedExhaustive.NoAuth;
 
-public partial class NoAuthClient
+public partial class NoAuthClient : INoAuthClient
 {
     private RawClient _client;
 

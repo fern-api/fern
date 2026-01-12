@@ -2,7 +2,7 @@ using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
 
-public partial class SeedFileUploadClient
+public partial class SeedFileUploadClient : ISeedFileUploadClient
 {
     private readonly RawClient _client;
 

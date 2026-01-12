@@ -2,7 +2,7 @@ using SeedMultiUrlEnvironment.Core;
 
 namespace SeedMultiUrlEnvironment;
 
-public partial class Ec2Client
+public partial class Ec2Client : IEc2Client
 {
     private RawClient _client;
 

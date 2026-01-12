@@ -6,12 +6,14 @@ import { PathClient } from "./api/resources/path/client/Client.js";
 import { QueryClient } from "./api/resources/query/client/Client.js";
 import { ReferenceClient } from "./api/resources/reference/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import { normalizeClientOptions, type NormalizedClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
 
 export declare namespace SeedLiteralClient {
     export type Options = BaseClientOptions;
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SeedLiteralClient {
@@ -23,6 +25,7 @@ export class SeedLiteralClient {
     protected _reference: ReferenceClient | undefined;
 
     constructor(options: SeedLiteralClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

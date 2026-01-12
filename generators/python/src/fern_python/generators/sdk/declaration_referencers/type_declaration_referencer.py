@@ -21,9 +21,10 @@ class TypeDeclarationReferencer(SdkDeclarationReferencer[ir_types.DeclaredTypeNa
 
     def get_filepath(self, *, name: ir_types.DeclaredTypeName, as_request: bool) -> Filepath:
         should_use_request_dir = self._has_typeddict_variant(name=name, as_request=as_request)
+        declaration_fern_filepath = self._types[name.type_id].name.fern_filepath
         return Filepath(
             directories=self._get_directories_for_fern_filepath(
-                fern_filepath=name.fern_filepath,
+                fern_filepath=declaration_fern_filepath,
             )
             + (
                 Filepath.DirectoryFilepathPart(

@@ -8,6 +8,8 @@ export interface RustTypeGeneratorContext {
         fernFilepath: { allParts: Array<{ pascalCase: { safeName: string } }> };
         name: { pascalCase: { safeName: string } };
     }): string;
+    /** DateTime type to use: "offset" for DateTime<FixedOffset> (default), "utc" for DateTime<Utc> */
+    getDateTimeType(): "offset" | "utc";
 }
 
 export function generateRustTypeForTypeReference(
@@ -100,14 +102,29 @@ export function generateRustTypeForTypeReference(
                     );
                 },
                 dateTime: () => {
-                    // Use DateTime<Utc> for timestamps (imported from chrono)
+                    // Use DateTime<Utc> when "utc" config is set, otherwise DateTime<FixedOffset> (default)
+                    if (context.getDateTimeType() === "utc") {
+                        return rust.Type.reference(
+                            rust.reference({
+                                name: "DateTime",
+                                genericArgs: [
+                                    rust.Type.reference(
+                                        rust.reference({
+                                            name: "Utc"
+                                        })
+                                    )
+                                ]
+                            })
+                        );
+                    }
+                    // Default: DateTime<FixedOffset> - preserves original timezone
                     return rust.Type.reference(
                         rust.reference({
                             name: "DateTime",
                             genericArgs: [
                                 rust.Type.reference(
                                     rust.reference({
-                                        name: "Utc"
+                                        name: "FixedOffset"
                                     })
                                 )
                             ]

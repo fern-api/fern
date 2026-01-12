@@ -3,7 +3,7 @@ using SeedValidation.Core;
 
 namespace SeedValidation;
 
-public partial class SeedValidationClient
+public partial class SeedValidationClient : ISeedValidationClient
 {
     private readonly RawClient _client;
 
