@@ -1,4 +1,4 @@
-import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import { computeSemanticVersion, mergeGeneratorOverridesWithSpecs } from "@fern-api/api-workspace-commons";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
@@ -667,57 +667,4 @@ function getSelfhostedGithubConfig(
         };
     }
     return undefined;
-}
-
-/**
- * Merges generator-level overrides with spec-level overrides.
- * Generator-level overrides are appended to each spec's existing overrides,
- * so they are applied after the spec-level overrides.
- *
- * @param specsOverride - The spec-level overrides from apiOverride.specs
- * @param generatorOverrides - The generator-level overrides
- * @returns The merged specs with generator overrides appended, or undefined if no overrides
- */
-function mergeGeneratorOverridesWithSpecs(
-    specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema | undefined,
-    generatorOverrides: string | string[] | undefined
-): generatorsYml.ApiConfigurationV2SpecsSchema | undefined {
-    // If no generator-level overrides, return the original specs override
-    if (generatorOverrides == null) {
-        return specsOverride;
-    }
-
-    // Normalize generator overrides to array
-    const generatorOverridesArray = Array.isArray(generatorOverrides) ? generatorOverrides : [generatorOverrides];
-
-    // If no specs override, we can't apply generator overrides
-    // (they need to be applied to specific specs)
-    if (specsOverride == null) {
-        return undefined;
-    }
-
-    // Handle conjure schema case (not an array)
-    if (!Array.isArray(specsOverride)) {
-        // Conjure specs don't support overrides
-        return specsOverride;
-    }
-
-    // Merge generator overrides into each spec
-    return specsOverride.map((spec) => {
-        if (generatorsYml.isOpenApiSpecSchema(spec)) {
-            // Get existing overrides as array
-            const existingOverrides =
-                spec.overrides != null ? (Array.isArray(spec.overrides) ? spec.overrides : [spec.overrides]) : [];
-
-            // Append generator overrides
-            const mergedOverrides = [...existingOverrides, ...generatorOverridesArray];
-
-            return {
-                ...spec,
-                overrides: mergedOverrides.length > 0 ? mergedOverrides : undefined
-            };
-        }
-        // For non-OpenAPI specs, return as-is (they don't support overrides)
-        return spec;
-    });
 }
