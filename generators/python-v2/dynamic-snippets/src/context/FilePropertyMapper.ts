@@ -95,7 +95,8 @@ export class FilePropertyMapper {
     }): python.TypeInstantiation {
         const fileValues = this.context.getFileArrayValues({ property, record });
         if (fileValues == null) {
-            return python.TypeInstantiation.nop();
+            const fallback = `example_${property.wireValue ?? "files"}`;
+            return python.TypeInstantiation.list([this.context.getFileFromString(fallback)]);
         }
         return python.TypeInstantiation.list(fileValues.map((value) => this.context.getFileFromString(value)));
     }

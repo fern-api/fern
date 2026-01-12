@@ -414,8 +414,12 @@ export class DynamicTypeLiteralMapper {
     }): python.TypeInstantiation | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
             try {
-                return this.convert({ typeReference, value });
-            } catch (e) {
+                const instantiation = this.convert({ typeReference, value });
+                if (python.TypeInstantiation.isNop(instantiation)) {
+                    continue;
+                }
+                return instantiation;
+            } catch {
                 continue;
             }
         }

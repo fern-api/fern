@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.37.6
+  changelogEntry:
+    - summary: |
+        Bump IR version to 63.
+      type: chore
+  createdAt: "2026-01-12"
+  irVersion: 63
+
+- version: 3.37.5
+  changelogEntry:
+    - summary: |
+        Fix `fern docs preview delete` and `fern docs preview list` commands to support preview URLs with UUID-style hashes containing hyphens (e.g., `org-preview-9b2b47f0-c44b-4338-b579-46872f33404a.docs.buildwithfern.com`).
+      type: fix
+  createdAt: "2026-01-12"
+  irVersion: 62
+
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        Fix `security: []` handling in OpenAPI importer to correctly mark endpoints as not requiring authentication.
+      type: fix
+  createdAt: "2026-01-10"
+  irVersion: 62
+
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        Fix protobuf IR generation to support air-gapped environments. The CLI now uses a pre-cached `buf.lock` file if it exists, skipping the network call to `buf dep update`. This enables self-hosted deployments to work in air-gapped environments by running `buf dep update` at build time to cache dependencies.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
 
 - version: 3.38.0
   changelogEntry:
