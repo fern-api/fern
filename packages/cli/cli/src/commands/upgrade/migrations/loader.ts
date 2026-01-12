@@ -177,8 +177,13 @@ function filterMigrations(params: { migrations: Migration[]; from: string; to: s
             const aVersion = semver.parse(a.version);
             const bVersion = semver.parse(b.version);
 
+            // After filtering, all versions should be valid. This is a sanity check.
             if (aVersion == null || bVersion == null) {
-                return 0;
+                throw new Error(
+                    `Internal error: Invalid migration version found during sort. ` +
+                        `Version A: ${a.version}, Version B: ${b.version}. ` +
+                        `This should not happen as invalid versions are filtered out.`
+                );
             }
 
             return semver.compare(aVersion, bVersion);
