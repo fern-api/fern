@@ -22,9 +22,14 @@ export abstract class AbstractGoGeneratorCli<
     }
 
     protected async generateMetadata(context: GoGeneratorContext): Promise<void> {
+        // Go convention requires version strings to have a "v" prefix
+        let sdkVersion = context.version;
+        if (sdkVersion != null && sdkVersion !== "" && !sdkVersion.startsWith("v")) {
+            sdkVersion = "v" + sdkVersion;
+        }
         const metadata = {
             ...context.ir.generationMetadata,
-            sdkVersion: context.version
+            sdkVersion
         };
         const content = JSON.stringify(metadata, null, 2);
         context.project.addRawFiles(

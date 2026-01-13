@@ -42,7 +42,6 @@
       "outputs": [],
       "inputs": [
         "$TURBO_ROOT$/packages/configs/**",
-        "$TURBO_ROOT$/shared/vitest.config.ts",
         "$TURBO_ROOT$/test-definitions-openapi/**",
         "$TURBO_ROOT$/test-definitions/**",
         "$TURBO_ROOT$/tsconfig.eslint.json",
@@ -58,7 +57,6 @@
       "outputs": [],
       "inputs": [
         "$TURBO_ROOT$/packages/configs/**",
-        "$TURBO_ROOT$/shared/vitest.config.ts",
         "$TURBO_ROOT$/test-definitions-openapi/**",
         "$TURBO_ROOT$/test-definitions/**",
         "$TURBO_ROOT$/tsconfig.eslint.json",
@@ -74,7 +72,6 @@
       "outputs": [],
       "inputs": [
         "$TURBO_ROOT$/packages/configs/**",
-        "$TURBO_ROOT$/shared/vitest.config.ts",
         "$TURBO_ROOT$/test-definitions-openapi/**",
         "$TURBO_ROOT$/test-definitions/**",
         "$TURBO_ROOT$/tsconfig.eslint.json",

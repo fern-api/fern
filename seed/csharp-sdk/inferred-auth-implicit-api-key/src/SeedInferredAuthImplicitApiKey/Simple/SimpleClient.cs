@@ -2,7 +2,7 @@ using SeedInferredAuthImplicitApiKey.Core;
 
 namespace SeedInferredAuthImplicitApiKey;
 
-public partial class SimpleClient
+public partial class SimpleClient : ISimpleClient
 {
     private RawClient _client;
 

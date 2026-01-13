@@ -3,9 +3,16 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(tag = "type")]
 pub enum UnionWithTime {
-    Value { value: i64 },
+    Value {
+        value: i64,
+    },
 
-    Date { value: NaiveDate },
+    Date {
+        value: NaiveDate,
+    },
 
-    Datetime { value: DateTime<Utc> },
+    Datetime {
+        #[serde(with = "crate::core::flexible_datetime::offset")]
+        value: DateTime<FixedOffset>,
+    },
 }

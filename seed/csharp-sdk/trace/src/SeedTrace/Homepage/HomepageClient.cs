@@ -3,7 +3,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public partial class HomepageClient
+public partial class HomepageClient : IHomepageClient
 {
     private RawClient _client;
 

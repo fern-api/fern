@@ -3,6 +3,7 @@ using SeedMultiUrlEnvironmentNoDefault.Core;
 namespace SeedMultiUrlEnvironmentNoDefault;
 
 public partial class SeedMultiUrlEnvironmentNoDefaultClient
+    : ISeedMultiUrlEnvironmentNoDefaultClient
 {
     private readonly RawClient _client;
 

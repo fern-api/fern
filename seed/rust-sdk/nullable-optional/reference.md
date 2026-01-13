@@ -94,6 +94,7 @@ Create a new user
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{Address, CreateUserRequest, NullableUserId, OptionalUserId};
 
 #[tokio::main]
 async fn main() {
@@ -161,6 +162,7 @@ Update a user (partial update)
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{Address, NullableUserId, OptionalUserId, UpdateUserRequest};
 
 #[tokio::main]
 async fn main() {
@@ -440,6 +442,11 @@ Create a complex profile to test nullable enums and unions
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{
+    Address, ComplexProfile, Document, EmailNotification, NotificationMethod, NullableUserId,
+    OptionalUserId, Organization, PushNotification, SearchResult, SmsNotification, UserResponse,
+    UserRole, UserStatus,
+};
 
 #[tokio::main]
 async fn main() {
@@ -485,13 +492,9 @@ async fn main() {
                         username: "username".to_string(),
                         email: Some("email".to_string()),
                         phone: Some("phone".to_string()),
-                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         updated_at: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         address: Some(Address {
                             street: "street".to_string(),
@@ -510,13 +513,9 @@ async fn main() {
                         username: "username".to_string(),
                         email: Some("email".to_string()),
                         phone: Some("phone".to_string()),
-                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         updated_at: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         address: Some(Address {
                             street: "street".to_string(),
@@ -687,6 +686,11 @@ Update complex profile to test nullable field updates
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{
+    Address, Document, EmailNotification, NotificationMethod, NullableUserId, OptionalUserId,
+    Organization, PushNotification, SearchResult, SmsNotification, UserResponse, UserRole,
+    UserStatus,
+};
 
 #[tokio::main]
 async fn main() {
@@ -714,13 +718,9 @@ async fn main() {
                         username: "username".to_string(),
                         email: Some("email".to_string()),
                         phone: Some("phone".to_string()),
-                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         updated_at: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         address: Some(Address {
                             street: "street".to_string(),
@@ -836,6 +836,11 @@ Test endpoint for validating null deserialization
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{
+    Address, DeserializationTestRequest, Document, EmailNotification, NotificationMethod,
+    NullableUserId, OptionalUserId, Organization, PushNotification, SearchResult, SmsNotification,
+    UserResponse, UserRole, UserStatus,
+};
 
 #[tokio::main]
 async fn main() {
@@ -866,13 +871,9 @@ async fn main() {
                         username: "username".to_string(),
                         email: Some("email".to_string()),
                         phone: Some("phone".to_string()),
-                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
+                        created_at: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         updated_at: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         address: Some(Address {
                             street: "street".to_string(),
@@ -946,6 +947,7 @@ Filter users by role with nullable enum
 
 ```rust
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{UserRole, UserStatus};
 
 #[tokio::main]
 async fn main() {

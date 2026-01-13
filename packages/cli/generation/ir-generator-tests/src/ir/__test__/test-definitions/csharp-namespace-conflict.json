@@ -1348,6 +1348,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -1511,6 +1512,7 @@
                     }
                 },
                 "properties": [],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_a/aa:B": {
@@ -1620,6 +1622,7 @@
                     }
                 },
                 "properties": [],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_a/aa:SubTestType": {
@@ -1790,6 +1793,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_b:TestType": {
@@ -1922,6 +1926,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_tasktest:Task": {
@@ -2022,6 +2027,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },

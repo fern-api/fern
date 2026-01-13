@@ -54,12 +54,10 @@ export class PlaylistClient {
         requestOptions?: PlaylistClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.Playlist>> {
         const { datetime, optionalDatetime, body: _body } = request;
-        const _queryParams: Record<string, unknown> = {};
-        _queryParams.datetime = datetime.toISOString();
-        if (optionalDatetime != null) {
-            _queryParams.optionalDatetime = optionalDatetime.toISOString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            datetime: datetime.toISOString(),
+            optionalDatetime: optionalDatetime?.toISOString(),
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -150,27 +148,13 @@ export class PlaylistClient {
         requestOptions?: PlaylistClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedTrace.Playlist[]>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
-        const _queryParams: Record<string, unknown> = {};
-        if (limit != null) {
-            _queryParams.limit = limit;
-        }
-
-        _queryParams.otherField = otherField;
-        _queryParams.multiLineDocs = multiLineDocs;
-        if (optionalMultipleField != null) {
-            if (Array.isArray(optionalMultipleField)) {
-                _queryParams.optionalMultipleField = optionalMultipleField.map((item) => item);
-            } else {
-                _queryParams.optionalMultipleField = optionalMultipleField;
-            }
-        }
-
-        if (Array.isArray(multipleField)) {
-            _queryParams.multipleField = multipleField.map((item) => item);
-        } else {
-            _queryParams.multipleField = multipleField;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            limit,
+            otherField,
+            multiLineDocs,
+            optionalMultipleField,
+            multipleField,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,

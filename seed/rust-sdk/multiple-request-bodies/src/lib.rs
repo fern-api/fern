@@ -15,7 +15,14 @@
 //!     };
 //!     let client = ApiClient::new(config).expect("Failed to build client");
 //!     client
-//!         .upload_json_document(&UploadDocumentRequest {}, None)
+//!         .upload_json_document(
+//!             &UploadDocumentRequest {
+//!                 author: None,
+//!                 tags: None,
+//!                 title: None,
+//!             },
+//!             None,
+//!         )
 //!         .await;
 //! }
 //! ```

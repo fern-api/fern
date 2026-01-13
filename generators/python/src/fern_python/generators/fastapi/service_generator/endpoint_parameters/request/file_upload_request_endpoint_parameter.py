@@ -37,7 +37,7 @@ class FileUploadRequestFileParameter(EndpointParameter):
         )
 
     def get_fastapi_marker(self) -> AST.Expression:
-        return FastAPI.File(
+        return self._context.fastapi_params.File(
             variable_name=self._get_request_param_name(),
             wire_value=self._request_property.get_as_union().key.wire_value,
             docs=None,
@@ -77,7 +77,9 @@ class FileUploadRequestBodyParameter(EndpointParameter):
         )
 
     def get_fastapi_marker(self) -> AST.Expression:
-        return FastAPI.Body(variable_name=self._parameter_name(), wire_value=self._request_property.name.wire_value)
+        return self._context.fastapi_params.Body(
+            variable_name=self._parameter_name(), wire_value=self._request_property.name.wire_value
+        )
 
 
 class FileUploadRequestEndpointParameters:

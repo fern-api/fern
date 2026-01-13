@@ -37,6 +37,7 @@ public final class ClientOptions {
             {
                 put("User-Agent", "com.fern:java-default-timeout/0.0.1");
                 put("X-Fern-Language", "JAVA");
+                put("X-Fern-SDK-Name", "com.seed.fern:java-default-timeout-sdk");
             }
         });
         this.headerSuppliers = headerSuppliers;

@@ -9,7 +9,7 @@ import axios from "axios";
 import chalk from "chalk";
 import decompress from "decompress";
 import { createWriteStream } from "fs";
-import { cp, mkdir, rm } from "fs/promises";
+import { chmod, cp, mkdir, readdir, rm } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
@@ -26,6 +26,7 @@ export declare namespace RemoteTaskHandler {
     export interface Response {
         createdSnippets: boolean;
         snippetsS3PreSignedReadUrl: string | undefined;
+        actualVersion: string | undefined;
     }
 }
 
@@ -60,6 +61,19 @@ export class RemoteTaskHandler {
             });
         });
 
+        // extract actual version from the first package for dynamic IR upload
+        if (remoteTask.packages.length > 0 && this.#actualVersion == null) {
+            this.#actualVersion = remoteTask.packages[0]?.coordinate._visit({
+                npm: (npmPackage) => npmPackage.version,
+                maven: (mavenPackage) => mavenPackage.version,
+                pypi: (pypiPackage) => pypiPackage.version,
+                ruby: (rubyGem) => rubyGem.version,
+                nuget: (nugetPackage) => nugetPackage.version,
+                crates: (cratesPackage) => cratesPackage.version,
+                _other: () => undefined
+            });
+        }
+
         if (this.absolutePathToPreview == null) {
             this.context.setSubtitle(
                 coordinates.length > 0
@@ -74,6 +88,14 @@ export class RemoteTaskHandler {
 
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
             this.context.logger.log(convertLogLevel(newLog.level), newLog.message);
+
+            // extract version from log messages as fallback (e.g., "Tagging release 0.0.9")
+            if (this.#actualVersion == null) {
+                const tagMatch = newLog.message.match(/Tagging release (\d+\.\d+\.\d+)/);
+                if (tagMatch) {
+                    this.#actualVersion = tagMatch[1];
+                }
+            }
         }
         this.lengthOfLastLogs = remoteTask.logs.length;
 
@@ -123,7 +145,8 @@ export class RemoteTaskHandler {
         return this.#isFinished
             ? {
                   createdSnippets: this.#createdSnippets,
-                  snippetsS3PreSignedReadUrl: this.#snippetsS3PreSignedReadUrl
+                  snippetsS3PreSignedReadUrl: this.#snippetsS3PreSignedReadUrl,
+                  actualVersion: this.#actualVersion
               }
             : undefined;
     }
@@ -147,6 +170,11 @@ export class RemoteTaskHandler {
     #snippetsS3PreSignedReadUrl: string | undefined = undefined;
     public get snippetsS3PreSignedReadUrl(): string | undefined {
         return this.#snippetsS3PreSignedReadUrl;
+    }
+
+    #actualVersion: string | undefined = undefined;
+    public get actualVersion(): string | undefined {
+        return this.#actualVersion;
     }
 }
 
@@ -206,11 +234,38 @@ async function downloadZipForTask({
     await pipeline(request.data, createWriteStream(outputZipPath));
 
     // decompress to user-specified location
-    if (await doesPathExist(absolutePathToLocalOutput)) {
-        await rm(absolutePathToLocalOutput, { recursive: true });
-    }
+    // Force remove the directory to handle read-only files (e.g., .git/objects)
+    await forceRemoveDirectory(absolutePathToLocalOutput);
     await mkdir(absolutePathToLocalOutput, { recursive: true });
     await decompress(outputZipPath, absolutePathToLocalOutput);
+}
+
+async function forceRemoveDirectory(dirPath: AbsoluteFilePath): Promise<void> {
+    if (!(await doesPathExist(dirPath))) {
+        return;
+    }
+    await makeWritableRecursive(dirPath);
+    await rm(dirPath, { recursive: true, force: true });
+}
+
+async function makeWritableRecursive(dirPath: AbsoluteFilePath): Promise<void> {
+    try {
+        const entries = await readdir(dirPath, { withFileTypes: true });
+        for (const entry of entries) {
+            const fullPath = AbsoluteFilePath.of(path.join(dirPath, entry.name));
+            if (entry.isDirectory()) {
+                await makeWritableRecursive(fullPath);
+            }
+            try {
+                await chmod(fullPath, 0o755);
+            } catch {
+                // Ignore chmod errors - file might be deleted or inaccessible
+            }
+        }
+        await chmod(dirPath, 0o755);
+    } catch {
+        // Ignore errors - directory might not exist or be inaccessible
+    }
 }
 
 function convertLogLevel(logLevel: FernFiddle.LogLevel): LogLevel {
@@ -314,9 +369,9 @@ async function downloadFilesWithFernIgnoreInTempRepo({
 
     await runGitCommand(["restore", "."], tmpOutputResolutionDir, context);
 
-    await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true });
+    await forceRemoveDirectory(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")));
 
-    await rm(absolutePathToLocalOutput, { recursive: true });
+    await forceRemoveDirectory(absolutePathToLocalOutput);
     await cp(tmpOutputResolutionDir, absolutePathToLocalOutput, { recursive: true });
 }
 

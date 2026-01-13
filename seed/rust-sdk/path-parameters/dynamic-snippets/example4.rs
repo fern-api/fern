@@ -1,4 +1,5 @@
 use seed_path_parameters::prelude::*;
+use seed_path_parameters::User;
 
 #[tokio::main]
 async fn main() {

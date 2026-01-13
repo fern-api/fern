@@ -31,6 +31,10 @@ public class RawPutClient {
         return add(id, PutRequest.builder().build());
     }
 
+    public SeedExhaustiveHttpResponse<PutResponse> add(String id, RequestOptions requestOptions) {
+        return add(id, PutRequest.builder().build(), requestOptions);
+    }
+
     public SeedExhaustiveHttpResponse<PutResponse> add(String id, PutRequest request) {
         return add(id, request, null);
     }

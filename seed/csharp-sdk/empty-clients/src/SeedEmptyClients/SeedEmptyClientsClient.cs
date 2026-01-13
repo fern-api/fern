@@ -2,7 +2,7 @@ using SeedEmptyClients.Core;
 
 namespace SeedEmptyClients;
 
-public partial class SeedEmptyClientsClient
+public partial class SeedEmptyClientsClient : ISeedEmptyClientsClient
 {
     private readonly RawClient _client;
 

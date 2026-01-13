@@ -1,4 +1,5 @@
 use seed_nullable_optional::prelude::*;
+use seed_nullable_optional::{UserRole, UserStatus};
 
 #[tokio::main]
 async fn main() {

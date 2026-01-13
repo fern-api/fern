@@ -144,6 +144,7 @@ puts user.name",
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {

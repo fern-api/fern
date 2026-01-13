@@ -5,6 +5,7 @@ using SeedInferredAuthImplicitNoExpiry.NestedNoAuth;
 namespace SeedInferredAuthImplicitNoExpiry;
 
 public partial class SeedInferredAuthImplicitNoExpiryClient
+    : ISeedInferredAuthImplicitNoExpiryClient
 {
     private readonly RawClient _client;
 

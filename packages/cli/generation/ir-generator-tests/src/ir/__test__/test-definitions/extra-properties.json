@@ -1666,6 +1666,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -1785,6 +1786,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": true
             },
             "type_user:User": {
@@ -1885,6 +1887,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": true
             }
         },

@@ -41,13 +41,18 @@ class AbstractUnknownService(AbstractFernService):
     @classmethod
     def __init_post(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post)
+        type_hints = typing.get_type_hints(cls.post)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -67,7 +72,7 @@ class AbstractUnknownService(AbstractFernService):
 
         router.post(
             path="/",
-            response_model=typing.Sequence[typing.Any],
+            response_model=None,
             description=AbstractUnknownService.post.__doc__,
             **get_route_args(cls.post, default_tag="unknown"),
         )(wrapper)
@@ -75,13 +80,18 @@ class AbstractUnknownService(AbstractFernService):
     @classmethod
     def __init_post_object(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.post_object)
+        type_hints = typing.get_type_hints(cls.post_object)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -101,7 +111,7 @@ class AbstractUnknownService(AbstractFernService):
 
         router.post(
             path="/with-object",
-            response_model=typing.Sequence[typing.Any],
+            response_model=None,
             description=AbstractUnknownService.post_object.__doc__,
             **get_route_args(cls.post_object, default_tag="unknown"),
         )(wrapper)

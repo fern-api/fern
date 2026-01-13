@@ -90,6 +90,14 @@ public class RawParamsClient {
    * GET with path param
    */
   public SeedExhaustiveHttpResponse<String> getWithInlinePath(String param,
+      RequestOptions requestOptions) {
+    return getWithInlinePath(param,GetWithInlinePath.builder().build(),requestOptions);
+  }
+
+  /**
+   * GET with path param
+   */
+  public SeedExhaustiveHttpResponse<String> getWithInlinePath(String param,
       GetWithInlinePath request) {
     return getWithInlinePath(param,request,null);
   }

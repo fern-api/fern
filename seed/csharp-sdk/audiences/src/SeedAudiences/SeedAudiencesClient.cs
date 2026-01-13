@@ -4,7 +4,7 @@ using SeedAudiences.FolderD;
 
 namespace SeedAudiences;
 
-public partial class SeedAudiencesClient
+public partial class SeedAudiencesClient : ISeedAudiencesClient
 {
     private readonly RawClient _client;
 

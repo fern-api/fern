@@ -133,7 +133,8 @@ export function getPackageOutputConfig(
             case "ts-sdk":
                 return {
                     location: PACKAGE_LOCATION_NPM,
-                    "package-name": TS_SDK_PACKAGE_NAME
+                    "package-name": TS_SDK_PACKAGE_NAME,
+                    token: "OIDC"
                 };
             case "java-sdk":
                 return {

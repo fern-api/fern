@@ -123,7 +123,7 @@ class PydanticModel:
         )
 
         initializer = get_field_name_initializer(
-            alias=field.json_field_name if (is_aliased and self._use_pydantic_field_aliases) else None,
+            alias=field.json_field_name if is_aliased else None,
             default_factory=field.default_factory,
             description=field.description,
             default=default_value,

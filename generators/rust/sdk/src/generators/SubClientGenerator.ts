@@ -596,7 +596,12 @@ export class SubClientGenerator {
                     analysis.chrono.push("Utc");
                 }
             }
-            if (type.includes("NaiveDate")) {
+            if (type.includes("FixedOffset")) {
+                if (!analysis.chrono.includes("FixedOffset")) {
+                    analysis.chrono.push("FixedOffset");
+                }
+            }
+            if (type.includes("NaiveDate") && !type.includes("NaiveDateTime")) {
                 if (!analysis.chrono.includes("NaiveDate")) {
                     analysis.chrono.push("NaiveDate");
                 }

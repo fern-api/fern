@@ -63,6 +63,13 @@ async fn main() {
 
 ```rust
 use seed_unions::prelude::*;
+use seed_unions::{
+    ActiveDiamond, AttractiveScript, BigUnion, CircularCard, ColorfulCover, DiligentDeal,
+    DisloyalValue, DistinctFailure, FalseMirror, FrozenSleep, GaseousRoad, GruesomeCoach,
+    HarmoniousPlay, HastyPain, HoarseMouse, JumboEnd, LimpingStep, MistySnow, NormalSweet,
+    PopularLimit, PotableBad, PracticalPrinciple, PrimaryBlock, RotatingRatio, ThankfulFactor,
+    TotalWork, TriangularRepair, UniqueStress, UnwillingSmoke, VibrantExcitement,
+};
 
 #[tokio::main]
 async fn main() {
@@ -107,6 +114,13 @@ async fn main() {
 
 ```rust
 use seed_unions::prelude::*;
+use seed_unions::{
+    ActiveDiamond, AttractiveScript, BigUnion, CircularCard, ColorfulCover, DiligentDeal,
+    DisloyalValue, DistinctFailure, FalseMirror, FrozenSleep, GaseousRoad, GruesomeCoach,
+    HarmoniousPlay, HastyPain, HoarseMouse, JumboEnd, LimpingStep, MistySnow, NormalSweet,
+    PopularLimit, PotableBad, PracticalPrinciple, PrimaryBlock, RotatingRatio, ThankfulFactor,
+    TotalWork, TriangularRepair, UniqueStress, UnwillingSmoke, VibrantExcitement,
+};
 
 #[tokio::main]
 async fn main() {
@@ -208,6 +222,7 @@ async fn main() {
 
 ```rust
 use seed_unions::prelude::*;
+use seed_unions::UnionWithTime;
 
 #[tokio::main]
 async fn main() {
@@ -300,6 +315,7 @@ async fn main() {
 
 ```rust
 use seed_unions::prelude::*;
+use seed_unions::{Circle, Shape, Square};
 
 #[tokio::main]
 async fn main() {

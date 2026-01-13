@@ -1,4 +1,87 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.8
+  changelogEntry:
+    - summary: |
+        Fix wire test mock server to ignore cursor mismatches in pagination tests.
+        When pagination tests call `getNextPage()`, the SDK correctly sends the cursor from the response,
+        but the mock server was rejecting the request because the cursor didn't match the original request.
+        The mock server now accepts an `ignoredFields` option to specify which fields to ignore during
+        request body matching. The test generator extracts pagination cursor field names from the IR
+        and passes them to the mock server at code generation time.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 63
+
+- version: 3.43.7
+  changelogEntry:
+    - summary: |
+        Support `bytes` argument type and custom method names for websocket messages.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 63
+
+- version: 3.43.6
+  changelogEntry:
+    - summary: |
+        Fix fetcher tests to use `.trim()` for platform-agnostic line ending comparisons.
+        This resolves test failures on Windows where files have CRLF line endings instead of LF.
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 63
+
+- version: 3.43.5
+  changelogEntry:
+    - summary: |
+        Fix GitHub repository URL format in package.json to use `git+https://` format,
+        ensuring local generation output matches remote generation.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 63
+
+- version: 3.43.4
+  changelogEntry:
+    - summary: |
+        Fix export of inline enum const values from request types. Previously, request types with inline enums
+        (defined directly in OpenAPI schemas) were exported using `export type { ... }` which only exports the
+        type, not the runtime const values. SDK consumers couldn't access enum values like `ConvertRequest.Resource.Auto`
+        at runtime. Now request types are exported using `export { ... }` which exports both the type and the const.
+      type: fix
+  createdAt: "2026-01-06"
+  irVersion: 63
+
+- version: 3.43.3
+  changelogEntry:
+    - summary: |
+        Fix repository URL format in package.json for self-hosted GitHub configurations to use full https URL
+        format matching Fiddle's output.
+      type: fix
+  createdAt: "2026-01-05"
+  irVersion: 63
+
+- version: 3.43.2
+  changelogEntry:
+    - summary: |
+        Simplify optional query parameter handling by removing unnecessary null/undefined checks.
+        Query parameters can now be assigned directly without wrapping in if-statements, as it's
+        safe to pass null or undefined values to query string parameters.
+      type: chore
+    - summary: |
+        Use optional chaining (?.) for optional query parameters that require method calls like
+        toISOString() for dates, instead of ternary expressions.
+      type: chore
+    - summary: |
+        Skip unnecessary .map() calls for list query parameters when the item type doesn't need
+        transformation (e.g., string arrays). Also skip the Array.isArray check entirely when
+        both scalar and array branches would produce identical code.
+      type: chore
+    - summary: |
+        Refactor query parameter generation to use object initializers instead of sequential
+        property assignments. This produces cleaner, more idiomatic TypeScript code where all
+        query parameters are defined in a single object literal.
+      type: chore
+  createdAt: "2025-12-22"
+  irVersion: 63
+
 - version: 3.43.1
   changelogEntry:
     - summary: |

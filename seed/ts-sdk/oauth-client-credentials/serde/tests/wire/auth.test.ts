@@ -26,7 +26,7 @@ describe("AuthClient", () => {
         server
             .mockEndpoint()
             .post("/token")
-            .jsonBody(rawRequestBody)
+            .formUrlEncodedBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -66,7 +66,7 @@ describe("AuthClient", () => {
         server
             .mockEndpoint()
             .post("/token")
-            .jsonBody(rawRequestBody)
+            .formUrlEncodedBody(rawRequestBody)
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)

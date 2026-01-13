@@ -285,6 +285,7 @@ async fn main() {
 
 ```rust
 use seed_path_parameters::prelude::*;
+use seed_path_parameters::User;
 
 #[tokio::main]
 async fn main() {
@@ -344,6 +345,7 @@ async fn main() {
 
 ```rust
 use seed_path_parameters::prelude::*;
+use seed_path_parameters::User;
 
 #[tokio::main]
 async fn main() {
@@ -356,11 +358,9 @@ async fn main() {
         .update_user(
             &"tenant_id".to_string(),
             &"user_id".to_string(),
-            &UpdateUserRequest {
-                body: User {
-                    name: "name".to_string(),
-                    tags: vec!["tags".to_string(), "tags".to_string()],
-                },
+            &User {
+                name: "name".to_string(),
+                tags: vec!["tags".to_string(), "tags".to_string()],
             },
             None,
         )
@@ -510,7 +510,7 @@ async fn main() {
     let client = PathParametersClient::new(config).expect("Failed to build client");
     client
         .user
-        .get_user_metadata(&"tenant_id".to_string(), &"user_id".to_string(), &1, None)
+        .get_user_metadata(&"tenant_id".to_string(), &"user_id".to_string(), 1, None)
         .await;
 }
 ```
@@ -595,7 +595,7 @@ async fn main() {
         .get_user_specifics(
             &"tenant_id".to_string(),
             &"user_id".to_string(),
-            &1,
+            1,
             &"thought".to_string(),
             None,
         )

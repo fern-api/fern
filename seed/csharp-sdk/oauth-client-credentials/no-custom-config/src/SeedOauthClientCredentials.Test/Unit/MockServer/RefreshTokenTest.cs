@@ -34,6 +34,7 @@ public class RefreshTokenTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
+                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -88,6 +89,7 @@ public class RefreshTokenTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
+                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

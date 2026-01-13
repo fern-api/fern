@@ -1,13 +1,194 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-
-- version: 3.31.0
+- version: 3.39.0
   changelogEntry:
     - summary: |
         Add opt-in `pydantic_config.positional_single_property_constructors` to allow `Wrapper("value")`
         for single-required-field models (excluding discriminator literals). Note: can break if the model
         later adds required fields; kwargs are more stable.
       type: feat
-  createdAt: "2025-12-19"
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.38.1
+  changelogEntry:
+    - summary: |
+        Fix protobuf OpenAPI generation to support air-gapped environments. The CLI now checks for a pre-cached `buf.lock` file in the proto directory before calling `buf dep update`. This enables self-hosted deployments with `from-openapi: true` proto specs to work in air-gapped environments by pre-caching dependencies.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.38.0
+  changelogEntry:
+    - summary: |
+        Add support for parsing response headers from OpenAPI specs. Response headers defined on success responses (2xx) are now captured in the IR and available for SDK generators and documentation.
+      type: feat
+  createdAt: "2026-01-12"
+  irVersion: 63
+
+- version: 3.37.6
+  changelogEntry:
+    - summary: |
+        Bump IR version to 63.
+      type: chore
+  createdAt: "2026-01-12"
+  irVersion: 63
+
+- version: 3.37.5
+  changelogEntry:
+    - summary: |
+        Fix `fern docs preview delete` and `fern docs preview list` commands to support preview URLs with UUID-style hashes containing hyphens (e.g., `org-preview-9b2b47f0-c44b-4338-b579-46872f33404a.docs.buildwithfern.com`).
+      type: fix
+  createdAt: "2026-01-12"
+  irVersion: 62
+
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        Fix `security: []` handling in OpenAPI importer to correctly mark endpoints as not requiring authentication.
+      type: fix
+  createdAt: "2026-01-10"
+  irVersion: 62
+
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        Fix protobuf IR generation to support air-gapped environments. The CLI now uses a pre-cached `buf.lock` file if it exists, skipping the network call to `buf dep update`. This enables self-hosted deployments to work in air-gapped environments by running `buf dep update` at build time to cache dependencies.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 3.38.0
+  changelogEntry:
+    - summary: |
+        Add support for automatic configuration migration in _generators.yml_ when running `fern generator upgrade --include-major`.
+        Major version upgrades with breaking configuration changes will now automatically update your generator configuration, eliminating manual migration steps.
+      type: feat
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 3.37.3
+  changelogEntry:
+    - summary: |
+        no-op: initiate bulk cli update
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 3.37.2
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --preview` failing with permission errors when the `.preview` folder already exists. The CLI now properly handles read-only files (like `.git/objects`) by making them writable before deletion.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 3.37.1
+  changelogEntry:
+    - summary: |
+        Push full channel message payload schemas through when creating type references; helps support 'bytes' for websocket methods.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 3.37.0
+  changelogEntry:
+    - summary: |
+        Add Excel file support (.xlsx) to the allowed file types for documentation uploads. This enables users to host Excel files using the `<Download />` component.
+      type: chore
+  createdAt: "2026-01-08"
+  irVersion: 62
+
+- version: 3.36.0
+  changelogEntry:
+    - summary: |
+        The `fern init` command now automatically creates a `.gitignore` file inside the `fern/` folder with entries to ignore `.preview` and `.definition` directories.
+      type: feat
+  createdAt: "2026-01-07"
+  irVersion: 62
+
+- version: 3.35.2
+  changelogEntry:
+    - summary: |
+        Default dynamic SDK snippets on if the experimental configuration is already present.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
+- version: 3.35.1
+  changelogEntry:
+    - summary: |
+        Respect the `path-parameter-order` setting from `generators.yml` when importing OpenAPI specs, which is different from the `path-parameter-order` on the `api.settings` level.
+        By setting both levels to `spec-order`, you can preserve the old behavior of using the order defined in the OpenAPI spec.
+      type: fix
+    - summary: |
+        Fix local generation to convert self-hosted GitHub URI (owner/repo) to full URL format,
+        matching Fiddle's remote generation behavior.
+      type: fix
+  createdAt: "2026-01-06"
+  irVersion: 62
+
+- version: 3.35.0
+  changelogEntry:
+    - summary: |
+        Add `x-fern-parameter-name` extension support for AsyncAPI parameters. This allows customizing parameter names in generated SDKs for AsyncAPI specs, similar to existing OpenAPI support.
+      type: feat
+  createdAt: "2026-01-05"
+  irVersion: 62
+
+- version: 3.34.0
+  changelogEntry:
+    - summary: |
+        Updates the SDK snippet generation to use dynamic snippets by default. To disable, set `experimental.dynamicSnippets` to `false` in your `docs.yml` file.
+      type: feat
+  createdAt: "2026-01-05"
+  irVersion: 62
+
+- version: 3.33.0
+  changelogEntry:
+    - summary: |
+        Fix handling of OpenAPI schemas that use `discriminator.mapping` without explicit `oneOf`/`anyOf`. These schemas are now correctly converted as discriminated unions instead of plain objects. This pattern is used by APIs like Dropbox Sign where a base schema defines a discriminator with mapping to variant schemas.
+      type: fix
+  createdAt: "2026-01-06"
+  irVersion: 62
+
+- version: 3.32.0
+  changelogEntry:
+    - summary: |
+        Add `extends` field to dynamic IR ObjectType to expose inheritance information for generators that need to handle inheritance patterns differently (e.g., Rust uses flattened wrapper fields).
+      type: feat
+  createdAt: "2025-12-24"
+  irVersion: 62
+
+- version: 3.31.2
+  changelogEntry:
+    - summary: |
+        Fix broken link checker incorrectly flagging internal paths with external redirects as broken. Links to paths that redirect to external URLs (e.g., `/ui` → `https://auth-platform.example.com`) are now correctly validated.
+      type: fix
+  createdAt: "2025-12-24"
+  irVersion: 62
+
+- version: 3.31.1
+  changelogEntry:
+    - summary: |
+        Fix double JSON.stringify in dynamic IR upload, reducing memory usage and ensuring correct Content-Length header calculation with Buffer.byteLength.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 62
+
+- version: 3.31.0
+  changelogEntry:
+    - summary: |
+        Add a `--dynamic-ir-only` flag to SDK generation to enable access to dynamic snippets from SDKs without regenerating the entire SDK.
+      type: fix
+  createdAt: "2025-12-23"
+  irVersion: 62
+
+- version: 3.30.6
+  changelogEntry:
+    - summary: |
+        Only upload dynamic IR for SDK generation after confirmed success and when not in preview mode.
+      type: fix
+  createdAt: "2025-12-23"
   irVersion: 62
 
 - version: 3.30.5
@@ -112,8 +293,8 @@
 - version: 3.27.0
   changelogEntry:
     - summary: |
-        Add `ENDPOINT_SECURITY` value to `AuthSchemesRequirement` enum in the IR. 
-        This allows users to specify that authentication requirements are defined per-endpoint rather than globally. 
+        Add `ENDPOINT_SECURITY` value to `AuthSchemesRequirement` enum in the IR.
+        This allows users to specify that authentication requirements are defined per-endpoint rather than globally.
         Users can now use `endpoint-security: {}` in their Fern API definition's `auth` field to indicate that security is configured on individual endpoints via the `security` field.
       type: feat
   createdAt: "2025-12-18"

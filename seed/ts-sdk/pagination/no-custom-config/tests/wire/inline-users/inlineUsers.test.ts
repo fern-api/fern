@@ -129,7 +129,7 @@ describe("InlineUsersClient", () => {
         server
             .mockEndpoint({ once: false })
             .post("/inline-users")
-            .jsonBody(rawRequestBody)
+            .jsonBody(rawRequestBody, { ignoredFields: ["pagination.cursor"] })
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -312,7 +312,7 @@ describe("InlineUsersClient", () => {
         server
             .mockEndpoint({ once: false })
             .post("/inline-users")
-            .jsonBody(rawRequestBody)
+            .jsonBody(rawRequestBody, { ignoredFields: ["pagination.page"] })
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)

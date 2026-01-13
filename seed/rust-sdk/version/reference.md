@@ -14,6 +14,7 @@
 
 ```rust
 use seed_version::prelude::*;
+use seed_version::UserId;
 
 #[tokio::main]
 async fn main() {

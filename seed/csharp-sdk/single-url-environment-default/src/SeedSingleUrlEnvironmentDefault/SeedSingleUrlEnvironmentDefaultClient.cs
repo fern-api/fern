@@ -2,7 +2,7 @@ using SeedSingleUrlEnvironmentDefault.Core;
 
 namespace SeedSingleUrlEnvironmentDefault;
 
-public partial class SeedSingleUrlEnvironmentDefaultClient
+public partial class SeedSingleUrlEnvironmentDefaultClient : ISeedSingleUrlEnvironmentDefaultClient
 {
     private readonly RawClient _client;
 

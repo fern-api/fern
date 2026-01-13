@@ -3,7 +3,7 @@ using SeedRequestParameters.Core;
 
 namespace SeedRequestParameters;
 
-public partial class UserClient
+public partial class UserClient : IUserClient
 {
     private RawClient _client;
 

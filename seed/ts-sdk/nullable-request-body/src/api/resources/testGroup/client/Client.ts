@@ -52,15 +52,10 @@ export class TestGroupClient {
             query_param_integer: queryParamInteger,
             body: _body,
         } = request;
-        const _queryParams: Record<string, unknown> = {};
-        if (queryParamObject !== undefined) {
-            _queryParams.query_param_object = queryParamObject;
-        }
-
-        if (queryParamInteger !== undefined) {
-            _queryParams.query_param_integer = queryParamInteger;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            query_param_object: queryParamObject,
+            query_param_integer: queryParamInteger,
+        };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

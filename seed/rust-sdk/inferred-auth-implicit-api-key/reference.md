@@ -24,7 +24,7 @@ async fn main() {
     client
         .auth
         .get_token(Some(
-            RequestOptions::new().additional_header("X-Api-Key", "api_key".to_string()),
+            RequestOptions::new().additional_header("X-Api-Key", "api_key"),
         ))
         .await;
 }

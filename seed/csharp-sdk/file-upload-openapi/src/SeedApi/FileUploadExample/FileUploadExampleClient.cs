@@ -3,7 +3,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class FileUploadExampleClient
+public partial class FileUploadExampleClient : IFileUploadExampleClient
 {
     private RawClient _client;
 

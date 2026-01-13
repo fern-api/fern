@@ -19,6 +19,12 @@
       "path": "../../../packages/commons/path-utils"
     },
     {
+      "path": "../../../packages/commons/mock-utils"
+    },
+    {
+      "path": "../../../packages/commons/logging-execa"
+    },
+    {
       "path": "../../../packages/cli/logger"
     },
     {
@@ -29,9 +35,6 @@
     },
     {
       "path": "../../base"
-    },
-    {
-      "path": "../../../packages/commons/logging-execa"
     }
   ]
 }

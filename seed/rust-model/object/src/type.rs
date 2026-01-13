@@ -8,7 +8,8 @@ pub struct Type {
     pub three: String,
     pub four: bool,
     pub five: i64,
-    pub six: DateTime<Utc>,
+    #[serde(with = "crate::core::flexible_datetime::offset")]
+    pub six: DateTime<FixedOffset>,
     pub seven: NaiveDate,
     pub eight: Uuid,
     pub nine: Vec<u8>,
@@ -28,7 +29,9 @@ pub struct Type {
     pub twentytwo: f64,
     pub twentythree: num_bigint::BigInt,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub twentyfour: Option<DateTime<Utc>>,
+    #[serde(default)]
+    #[serde(with = "crate::core::flexible_datetime::offset::option")]
+    pub twentyfour: Option<DateTime<FixedOffset>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub twentyfive: Option<NaiveDate>,
 }

@@ -445,6 +445,7 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [
             {
               "error": {
@@ -1217,6 +1218,7 @@
           ],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [
             {
               "error": {
@@ -2093,6 +2095,7 @@
           "pathParameters": [],
           "queryParameters": [],
           "headers": [],
+          "responseHeaders": [],
           "errors": [
             {
               "error": {

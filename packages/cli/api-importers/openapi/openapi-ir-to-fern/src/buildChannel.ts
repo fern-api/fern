@@ -35,8 +35,19 @@ export function buildChannel({
         `[buildChannel] Channel path="${channel.path}", server name="${firstServer?.name}", server url="${firstServer?.url}", resolved urlId="${urlId}" (from collision map: ${context.getUrlId(firstServer?.url ?? "") != null})`
     );
 
+    // Build path with SDK names (using parameterNameOverride when available)
+    let convertedPath = channel.path;
+    for (const pathParameter of channel.handshake.pathParameters) {
+        if (pathParameter.parameterNameOverride != null) {
+            convertedPath = convertedPath.replace(
+                `{${pathParameter.name}}`,
+                `{${pathParameter.parameterNameOverride}}`
+            );
+        }
+    }
+
     const convertedChannel: RawSchemas.WebSocketChannelSchema = {
-        path: channel.path,
+        path: convertedPath,
         url: urlId,
         auth: false
     };
@@ -58,7 +69,9 @@ export function buildChannel({
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     if (channel.handshake.pathParameters.length > 0) {
         for (const pathParameter of channel.handshake.pathParameters) {
-            pathParameters[pathParameter.name] = buildPathParameter({
+            // Use SDK name (parameterNameOverride) as the key if available
+            const parameterKey = pathParameter.parameterNameOverride ?? pathParameter.name;
+            pathParameters[parameterKey] = buildPathParameter({
                 pathParameter,
                 context,
                 fileContainingReference: declarationFile,

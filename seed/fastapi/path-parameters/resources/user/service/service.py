@@ -65,13 +65,18 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_get_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_user)
+        type_hints = typing.get_type_hints(cls.get_user)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -91,7 +96,7 @@ class AbstractUserService(AbstractFernService):
 
         router.get(
             path="/{tenant_id}/user/{user_id}",
-            response_model=User,
+            response_model=None,
             description=AbstractUserService.get_user.__doc__,
             **get_route_args(cls.get_user, default_tag="user"),
         )(wrapper)
@@ -99,13 +104,18 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_create_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.create_user)
+        type_hints = typing.get_type_hints(cls.create_user)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -125,7 +135,7 @@ class AbstractUserService(AbstractFernService):
 
         router.post(
             path="/{tenant_id}/user/",
-            response_model=User,
+            response_model=None,
             description=AbstractUserService.create_user.__doc__,
             **get_route_args(cls.create_user, default_tag="user"),
         )(wrapper)
@@ -133,17 +143,22 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_update_user(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.update_user)
+        type_hints = typing.get_type_hints(cls.update_user)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             elif parameter_name == "user_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -163,7 +178,7 @@ class AbstractUserService(AbstractFernService):
 
         router.patch(
             path="/{tenant_id}/user/{user_id}",
-            response_model=User,
+            response_model=None,
             description=AbstractUserService.update_user.__doc__,
             **get_route_args(cls.update_user, default_tag="user"),
         )(wrapper)
@@ -171,17 +186,22 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_search_users(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.search_users)
+        type_hints = typing.get_type_hints(cls.search_users)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             elif parameter_name == "limit":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Query()], default=None)
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Query()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -201,7 +221,7 @@ class AbstractUserService(AbstractFernService):
 
         router.get(
             path="/{tenant_id}/user/{user_id}/search",
-            response_model=typing.Sequence[User],
+            response_model=None,
             description=AbstractUserService.search_users.__doc__,
             **get_route_args(cls.search_users, default_tag="user"),
         )(wrapper)
@@ -209,17 +229,22 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_get_user_metadata(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_user_metadata)
+        type_hints = typing.get_type_hints(cls.get_user_metadata)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             elif parameter_name == "version":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -239,7 +264,7 @@ class AbstractUserService(AbstractFernService):
 
         router.get(
             path="/{tenant_id}/user/{user_id}/metadata/v{version}",
-            response_model=User,
+            response_model=None,
             description=AbstractUserService.get_user_metadata.__doc__,
             **get_route_args(cls.get_user_metadata, default_tag="user"),
         )(wrapper)
@@ -247,21 +272,26 @@ class AbstractUserService(AbstractFernService):
     @classmethod
     def __init_get_user_specifics(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.get_user_specifics)
+        type_hints = typing.get_type_hints(cls.get_user_specifics)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "user_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             elif parameter_name == "version":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             elif parameter_name == "thought":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Path()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Path()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -281,7 +311,7 @@ class AbstractUserService(AbstractFernService):
 
         router.get(
             path="/{tenant_id}/user/{user_id}/specifics/{version}/{thought}",
-            response_model=User,
+            response_model=None,
             description=AbstractUserService.get_user_specifics.__doc__,
             **get_route_args(cls.get_user_specifics, default_tag="user"),
         )(wrapper)

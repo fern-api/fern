@@ -51,13 +51,18 @@ class AbstractSimpleService(AbstractFernService):
     @classmethod
     def __init_foo_without_endpoint_error(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.foo_without_endpoint_error)
+        type_hints = typing.get_type_hints(cls.foo_without_endpoint_error)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -79,7 +84,7 @@ class AbstractSimpleService(AbstractFernService):
 
         router.post(
             path="/foo1",
-            response_model=FooResponse,
+            response_model=None,
             description=AbstractSimpleService.foo_without_endpoint_error.__doc__,
             **get_route_args(cls.foo_without_endpoint_error, default_tag="simple"),
         )(wrapper)
@@ -87,13 +92,18 @@ class AbstractSimpleService(AbstractFernService):
     @classmethod
     def __init_foo(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.foo)
+        type_hints = typing.get_type_hints(cls.foo)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -115,7 +125,7 @@ class AbstractSimpleService(AbstractFernService):
 
         router.post(
             path="/foo2",
-            response_model=FooResponse,
+            response_model=None,
             description=AbstractSimpleService.foo.__doc__,
             **get_route_args(cls.foo, default_tag="simple"),
         )(wrapper)
@@ -123,13 +133,18 @@ class AbstractSimpleService(AbstractFernService):
     @classmethod
     def __init_foo_with_examples(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.foo_with_examples)
+        type_hints = typing.get_type_hints(cls.foo_with_examples)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "body":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
                 )
             else:
                 new_parameters.append(parameter)
@@ -151,7 +166,7 @@ class AbstractSimpleService(AbstractFernService):
 
         router.post(
             path="/foo3",
-            response_model=FooResponse,
+            response_model=None,
             description=AbstractSimpleService.foo_with_examples.__doc__,
             **get_route_args(cls.foo_with_examples, default_tag="simple"),
         )(wrapper)

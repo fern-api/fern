@@ -7,6 +7,11 @@ import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
 import { runCommands, subVersion } from "../../utils/publishUtilities";
 import { getNewCliVersion, VersionFilePair } from "../../utils/versionUtilities";
 
+export interface PublishCliResult {
+    published: boolean;
+    version?: string;
+}
+
 export async function publishCli({
     version,
     context,
@@ -15,9 +20,8 @@ export async function publishCli({
     version: string | VersionFilePair;
     context: TaskContext;
     isDevRelease: boolean | undefined;
-}): Promise<void> {
+}): Promise<PublishCliResult> {
     const cliWorkspace = await loadCliWorkspace();
-    context.logger.info(`Publishing CLI@${version}...`);
 
     let publishVersion: string;
     if (typeof version !== "string") {
@@ -32,15 +36,15 @@ export async function publishCli({
         });
 
         if (maybeNewVersion == null) {
-            context.failWithoutThrowing(
-                "No version to publish! There must not have been a new version since the last publish."
-            );
-            return;
+            context.logger.info("No new version to publish. Skipping.");
+            return { published: false };
         }
         publishVersion = maybeNewVersion;
     } else {
         publishVersion = version;
     }
+
+    context.logger.info(`Publishing CLI@${publishVersion}...`);
 
     let publishConfig: PublishCommand;
     if (isDevRelease) {
@@ -67,4 +71,5 @@ export async function publishCli({
         );
     }
     await runCommands(subbedCommands, context, workingDirectory);
+    return { published: true, version: publishVersion };
 }

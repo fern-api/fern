@@ -121,8 +121,14 @@ export class DynamicTypeLiteralMapper {
             case "DATE":
                 return rust.Expression.raw('NaiveDate::parse_from_str("2024-01-01", "%Y-%m-%d").unwrap()');
             case "DATE_TIME":
+                if (this.context.getDateTimeType() === "utc") {
+                    return rust.Expression.raw(
+                        'DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap().with_timezone(&Utc)'
+                    );
+                }
+                // Default: DateTime<FixedOffset> - preserves original timezone
                 return rust.Expression.raw(
-                    'DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap().with_timezone(&Utc)'
+                    'DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap()'
                 );
             default:
                 return rust.Expression.raw("Default::default()");
@@ -205,17 +211,27 @@ export class DynamicTypeLiteralMapper {
                 if (str == null) {
                     return rust.Expression.raw("Default::default()");
                 }
-                // Parse DateTime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap().with_timezone(&Utc)
+                // For "utc" config, convert to UTC: DateTime::parse_from_rfc3339("...").unwrap().with_timezone(&Utc)
+                if (this.context.getDateTimeType() === "utc") {
+                    return rust.Expression.methodCall({
+                        target: rust.Expression.methodCall({
+                            target: rust.Expression.functionCall("DateTime::parse_from_rfc3339", [
+                                rust.Expression.stringLiteral(str)
+                            ]),
+                            method: "unwrap",
+                            args: []
+                        }),
+                        method: "with_timezone",
+                        args: [rust.Expression.raw("&Utc")]
+                    });
+                }
+                // Default: DateTime<FixedOffset> - preserves original timezone
                 return rust.Expression.methodCall({
-                    target: rust.Expression.methodCall({
-                        target: rust.Expression.functionCall("DateTime::parse_from_rfc3339", [
-                            rust.Expression.stringLiteral(str)
-                        ]),
-                        method: "unwrap",
-                        args: []
-                    }),
-                    method: "with_timezone",
-                    args: [rust.Expression.raw("&Utc")]
+                    target: rust.Expression.functionCall("DateTime::parse_from_rfc3339", [
+                        rust.Expression.stringLiteral(str)
+                    ]),
+                    method: "unwrap",
+                    args: []
                 });
             }
             case "BASE_64": {
@@ -464,14 +480,17 @@ export class DynamicTypeLiteralMapper {
         baseObjectType: FernIr.dynamic.ObjectType;
         baseFieldName: string;
     } | null {
-        // Check if extends information is available in the object
+        // Check if extends information is available in the object (from dynamic IR)
+        // Note: We use a type assertion here because the extends field may not be
+        // in the published @fern-api/dynamic-ir-sdk yet, but will be populated at runtime
+        // by the updated IR generator.
         const extendsProperty = (objectType as { extends?: string[] }).extends;
-        if (extendsProperty && Array.isArray(extendsProperty) && extendsProperty.length > 0) {
+        if (extendsProperty != null && extendsProperty.length > 0) {
             const baseTypeId = extendsProperty[0];
-            if (baseTypeId) {
+            if (baseTypeId != null) {
                 const baseType = this.context.ir.types[baseTypeId];
 
-                if (baseType && baseType.type === "object") {
+                if (baseType != null && baseType.type === "object") {
                     // For Rust, the flattened field is typically named after the base type
                     const baseFieldName = this.getBaseFieldName(baseType.declaration.name);
 
@@ -484,18 +503,18 @@ export class DynamicTypeLiteralMapper {
             }
         }
 
-        // General case: Check if this object has properties that suggest it extends another object
+        // Fallback: Check if this object has properties that suggest it extends another object
         // Look for properties that might be flattened base objects
         const potentialBaseFieldProperty = objectType.properties.find((prop) => {
             const propertyName = prop.name.name.snakeCase.safeName;
             return propertyName.endsWith("_fields") && prop.typeReference.type === "named";
         });
 
-        if (potentialBaseFieldProperty && potentialBaseFieldProperty.typeReference.type === "named") {
+        if (potentialBaseFieldProperty != null && potentialBaseFieldProperty.typeReference.type === "named") {
             const baseTypeId = potentialBaseFieldProperty.typeReference.value;
             const baseType = this.context.ir.types[baseTypeId];
 
-            if (baseType && baseType.type === "object") {
+            if (baseType != null && baseType.type === "object") {
                 return {
                     baseObjectTypeId: baseTypeId,
                     baseObjectType: baseType,
@@ -525,21 +544,34 @@ export class DynamicTypeLiteralMapper {
     }): rust.Expression {
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
-        // Create the base object with all base properties
-        const baseProperties = this.context.associateByWireValue({
-            parameters: extendsInfo.baseObjectType.properties,
-            values: value
-        });
-
-        const baseStructFields = baseProperties.map((property) => {
+        // Create the base object with ALL base properties (not just those with values)
+        // For missing required fields, use Default::default()
+        const baseStructFields = extendsInfo.baseObjectType.properties.map((property) => {
             this.context.scopeError(property.name.wireValue);
             try {
+                const propertyValue = value[property.name.wireValue];
+                let fieldValue: rust.Expression;
+
+                if (propertyValue !== undefined) {
+                    // Value is provided in the example
+                    fieldValue = this.convert({
+                        typeReference: property.typeReference,
+                        value: propertyValue
+                    });
+                } else if (
+                    property.typeReference.type === "optional" ||
+                    property.typeReference.type === "nullable"
+                ) {
+                    // Optional field without value -> None
+                    fieldValue = rust.Expression.raw("None");
+                } else {
+                    // Required field without value -> Default::default()
+                    fieldValue = rust.Expression.raw("Default::default()");
+                }
+
                 return {
                     name: this.context.getPropertyName(property.name.name),
-                    value: this.convert({
-                        typeReference: property.typeReference,
-                        value: property.value
-                    })
+                    value: fieldValue
                 };
             } finally {
                 this.context.unscopeError();

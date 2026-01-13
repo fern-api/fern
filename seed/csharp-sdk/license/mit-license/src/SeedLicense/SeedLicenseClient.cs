@@ -2,7 +2,7 @@ using SeedLicense.Core;
 
 namespace SeedLicense;
 
-public partial class SeedLicenseClient
+public partial class SeedLicenseClient : ISeedLicenseClient
 {
     private readonly RawClient _client;
 

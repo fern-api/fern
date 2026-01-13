@@ -21498,6 +21498,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -22136,6 +22137,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -23296,6 +23298,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -24174,6 +24177,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -24937,6 +24941,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -25668,6 +25673,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 },
@@ -26332,6 +26338,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": null
                 }
@@ -30142,6 +30149,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:ThankfulFactor": {
@@ -30242,6 +30250,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:JumboEnd": {
@@ -30342,6 +30351,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:HastyPain": {
@@ -30442,6 +30452,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:MistySnow": {
@@ -30542,6 +30553,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:DistinctFailure": {
@@ -30642,6 +30654,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:PracticalPrinciple": {
@@ -30742,6 +30755,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:LimpingStep": {
@@ -30842,6 +30856,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:VibrantExcitement": {
@@ -30942,6 +30957,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:ActiveDiamond": {
@@ -31042,6 +31058,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:PopularLimit": {
@@ -31142,6 +31159,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:FalseMirror": {
@@ -31242,6 +31260,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:PrimaryBlock": {
@@ -31342,6 +31361,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:RotatingRatio": {
@@ -31442,6 +31462,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:ColorfulCover": {
@@ -31542,6 +31563,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:DisloyalValue": {
@@ -31642,6 +31664,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:GruesomeCoach": {
@@ -31742,6 +31765,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:TotalWork": {
@@ -31842,6 +31866,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:HarmoniousPlay": {
@@ -31942,6 +31967,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:UniqueStress": {
@@ -32042,6 +32068,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:UnwillingSmoke": {
@@ -32142,6 +32169,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:FrozenSleep": {
@@ -32242,6 +32270,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:DiligentDeal": {
@@ -32342,6 +32371,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:AttractiveScript": {
@@ -32442,6 +32472,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:HoarseMouse": {
@@ -32542,6 +32573,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:CircularCard": {
@@ -32642,6 +32674,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:PotableBad": {
@@ -32742,6 +32775,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:TriangularRepair": {
@@ -32842,6 +32876,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_bigunion:GaseousRoad": {
@@ -32942,6 +32977,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_types:Union": {
@@ -35340,6 +35376,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_types:FooExtended": {
@@ -35470,6 +35507,9 @@
                         "variable": null
                     }
                 ],
+                "extends": [
+                    "type_types:Foo"
+                ],
                 "additionalProperties": false
             },
             "type_types:Bar": {
@@ -35570,6 +35610,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_types:UnionWithSameStringTypes": {
@@ -36032,6 +36073,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_union:WithName": {
@@ -36132,6 +36174,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_union:Shape": {
@@ -36499,6 +36542,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             },
             "type_union:Square": {
@@ -36599,6 +36643,7 @@
                         "variable": null
                     }
                 ],
+                "extends": null,
                 "additionalProperties": false
             }
         },

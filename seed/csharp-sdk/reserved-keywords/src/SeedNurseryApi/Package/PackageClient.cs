@@ -2,7 +2,7 @@ using SeedNurseryApi.Core;
 
 namespace SeedNurseryApi;
 
-public partial class PackageClient
+public partial class PackageClient : IPackageClient
 {
     private RawClient _client;
 

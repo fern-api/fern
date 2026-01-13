@@ -3,7 +3,7 @@ using SeedAnyAuth.Core;
 
 namespace SeedAnyAuth;
 
-public partial class AuthClient
+public partial class AuthClient : IAuthClient
 {
     private RawClient _client;
 

@@ -44,13 +44,13 @@ export class FileUploadExampleClient {
         request: SeedApi.UploadFileRequest,
         requestOptions?: FileUploadExampleClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedApi.FileId>> {
-        const _request = await core.newFormData();
-        _request.append("name", request.name);
+        const _body = await core.newFormData();
+        _body.append("name", request.name);
         if (request.file != null) {
-            await _request.appendFile("file", request.file);
+            await _body.appendFile("file", request.file);
         }
 
-        const _maybeEncodedRequest = await _request.getRequest();
+        const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),

@@ -2,7 +2,7 @@ using SeedPlainText.Core;
 
 namespace SeedPlainText;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
     private RawClient _client;
 

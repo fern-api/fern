@@ -2,7 +2,7 @@ using SeedMixedCase.Core;
 
 namespace SeedMixedCase;
 
-public partial class SeedMixedCaseClient
+public partial class SeedMixedCaseClient : ISeedMixedCaseClient
 {
     private readonly RawClient _client;
 

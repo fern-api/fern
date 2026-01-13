@@ -12,9 +12,19 @@ buildScripts:
       - golangci-lint run --timeout=5m
   testScript:
     commands:
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
-      - go test -v ./...
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
+      - |
+        PROJECT_NAME="wiremock-$(basename $(dirname $(pwd)) | tr -d '.')"
+        if [ -f wiremock/docker-compose.test.yml ]; then
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
+          export WIREMOCK_PORT=$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+        fi
+        go test -v ./...
+        TEST_EXIT_CODE=$?
+        if [ -f wiremock/docker-compose.test.yml ]; then
+          docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+        fi
+        exit $TEST_EXIT_CODE
 publish:
   workingDirectory: generators/go
   preBuildCommands:
@@ -235,6 +245,10 @@ fixtures:
   nullable-request-body:
     - outputFolder: dynamic-snippets-disabled
       disableDynamicSnippetTests: true
+  oauth-client-credentials:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   oauth-client-credentials-mandatory-auth:
     - outputFolder: no-custom-config
       customConfig: null
@@ -246,9 +260,19 @@ scripts:
   - image: fernapi/go-seed:1.0.0
     commands:
       test:
-        - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
-        - CGO_ENABLED=0 go test ./...
-        - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
+        - |
+          PROJECT_NAME="wiremock-$(basename $(dirname $(pwd)) | tr -d '.')"
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
+            export WIREMOCK_PORT=$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+          fi
+          CGO_ENABLED=0 go test ./...
+          TEST_EXIT_CODE=$?
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
+          fi
+          exit $TEST_EXIT_CODE
 allowedFailures:
   - alias-extends
   - bytes-download

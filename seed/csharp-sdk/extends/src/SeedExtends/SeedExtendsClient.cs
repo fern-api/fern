@@ -2,7 +2,7 @@ using SeedExtends.Core;
 
 namespace SeedExtends;
 
-public partial class SeedExtendsClient
+public partial class SeedExtendsClient : ISeedExtendsClient
 {
     private readonly RawClient _client;
 

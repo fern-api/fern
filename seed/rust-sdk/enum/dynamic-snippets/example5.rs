@@ -1,4 +1,5 @@
 use seed_enum::prelude::*;
+use seed_enum::{Color, ColorOrOperand, Operand};
 
 #[tokio::main]
 async fn main() {
@@ -13,6 +14,8 @@ async fn main() {
             &SendQueryRequest {
                 operand: Operand::GreaterThan,
                 operand_or_color: ColorOrOperand::Color(Color::Red),
+                maybe_operand: None,
+                maybe_operand_or_color: None,
             },
             None,
         )

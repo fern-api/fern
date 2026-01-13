@@ -31,6 +31,10 @@ public class PutClient {
     return this.rawClient.add(id).body();
   }
 
+  public PutResponse add(String id, RequestOptions requestOptions) {
+    return this.rawClient.add(id, requestOptions).body();
+  }
+
   public PutResponse add(String id, PutRequest request) {
     return this.rawClient.add(id, request).body();
   }

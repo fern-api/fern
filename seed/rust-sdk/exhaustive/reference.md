@@ -53,6 +53,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -141,6 +142,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -227,6 +229,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -274,6 +277,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -319,6 +323,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithOptionalField;
 
 #[tokio::main]
 async fn main() {
@@ -337,11 +342,7 @@ async fn main() {
                 long: Some(1000000),
                 double: Some(1.1),
                 bool: Some(true),
-                datetime: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
-                ),
+                datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
                 base_64: Some("SGVsbG8gd29ybGQh".to_string()),
@@ -379,6 +380,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithOptionalField;
 
 #[tokio::main]
 async fn main() {
@@ -397,11 +399,7 @@ async fn main() {
                 long: Some(1000000),
                 double: Some(1.1),
                 bool: Some(true),
-                datetime: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
-                ),
+                datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
                 base_64: Some("SGVsbG8gd29ybGQh".to_string()),
@@ -440,6 +438,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::WeatherReport;
 
 #[tokio::main]
 async fn main() {
@@ -534,6 +533,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -578,6 +578,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -638,6 +639,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithOptionalField;
 
 #[tokio::main]
 async fn main() {
@@ -657,11 +659,7 @@ async fn main() {
                 long: Some(1000000),
                 double: Some(1.1),
                 bool: Some(true),
-                datetime: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
-                ),
+                datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
                 base_64: Some("SGVsbG8gd29ybGQh".to_string()),
@@ -769,6 +767,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithOptionalField;
 
 #[tokio::main]
 async fn main() {
@@ -787,11 +786,7 @@ async fn main() {
                 long: Some(1000000),
                 double: Some(1.1),
                 bool: Some(true),
-                datetime: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
-                ),
+                datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                 date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                 uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
                 base_64: Some("SGVsbG8gd29ybGQh".to_string()),
@@ -829,6 +824,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -873,6 +869,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithMapOfMap;
 
 #[tokio::main]
 async fn main() {
@@ -920,6 +917,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::{NestedObjectWithOptionalField, ObjectWithOptionalField};
 
 #[tokio::main]
 async fn main() {
@@ -940,11 +938,7 @@ async fn main() {
                     long: Some(1000000),
                     double: Some(1.1),
                     bool: Some(true),
-                    datetime: Some(
-                        DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
-                    ),
+                    datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
                     base_64: Some("SGVsbG8gd29ybGQh".to_string()),
@@ -983,6 +977,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::{NestedObjectWithRequiredField, ObjectWithOptionalField};
 
 #[tokio::main]
 async fn main() {
@@ -1004,11 +999,7 @@ async fn main() {
                     long: Some(1000000),
                     double: Some(1.1),
                     bool: Some(true),
-                    datetime: Some(
-                        DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
-                    ),
+                    datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
                     base_64: Some("SGVsbG8gd29ybGQh".to_string()),
@@ -1062,6 +1053,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::{NestedObjectWithRequiredField, ObjectWithOptionalField};
 
 #[tokio::main]
 async fn main() {
@@ -1084,9 +1076,7 @@ async fn main() {
                         double: Some(1.1),
                         bool: Some(true),
                         datetime: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                         uuid: Some(
@@ -1108,9 +1098,7 @@ async fn main() {
                         double: Some(1.1),
                         bool: Some(true),
                         datetime: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                         uuid: Some(
@@ -1962,9 +1950,7 @@ async fn main() {
         .endpoints
         .primitive
         .get_and_return_datetime(
-            &DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                .unwrap()
-                .with_timezone(&Utc),
+            &DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
             None,
         )
         .await;
@@ -2169,6 +2155,7 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::{Animal, Cat, Dog};
 
 #[tokio::main]
 async fn main() {
@@ -2372,6 +2359,7 @@ POST with custom object in request body, response is an object
 
 ```rust
 use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithOptionalField;
 
 #[tokio::main]
 async fn main() {
@@ -2392,11 +2380,7 @@ async fn main() {
                     long: Some(1000000),
                     double: Some(1.1),
                     bool: Some(true),
-                    datetime: Some(
-                        DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                            .unwrap()
-                            .with_timezone(&Utc),
-                    ),
+                    datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
                     date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                     uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
                     base_64: Some("SGVsbG8gd29ybGQh".to_string()),
@@ -2602,16 +2586,11 @@ async fn main() {
     client
         .req_with_headers
         .get_with_custom_header(
-            &ReqWithHeaders {
-                body: "string".to_string(),
-            },
+            &"string".to_string(),
             Some(
                 RequestOptions::new()
-                    .additional_header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER".to_string())
-                    .additional_header(
-                        "X-TEST-ENDPOINT-HEADER",
-                        "X-TEST-ENDPOINT-HEADER".to_string(),
-                    ),
+                    .additional_header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
+                    .additional_header("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER"),
             ),
         )
         .await;

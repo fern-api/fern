@@ -49,13 +49,18 @@ class AbstractEndpointsUrlsService(AbstractFernService):
     @classmethod
     def __init_with_mixed_case(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.with_mixed_case)
+        type_hints = typing.get_type_hints(cls.with_mixed_case)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -75,7 +80,7 @@ class AbstractEndpointsUrlsService(AbstractFernService):
 
         router.get(
             path="/urls/MixedCase",
-            response_model=str,
+            response_model=None,
             description=AbstractEndpointsUrlsService.with_mixed_case.__doc__,
             **get_route_args(cls.with_mixed_case, default_tag="endpoints.urls"),
         )(wrapper)
@@ -83,13 +88,18 @@ class AbstractEndpointsUrlsService(AbstractFernService):
     @classmethod
     def __init_no_ending_slash(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.no_ending_slash)
+        type_hints = typing.get_type_hints(cls.no_ending_slash)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -109,7 +119,7 @@ class AbstractEndpointsUrlsService(AbstractFernService):
 
         router.get(
             path="/urls/no-ending-slash",
-            response_model=str,
+            response_model=None,
             description=AbstractEndpointsUrlsService.no_ending_slash.__doc__,
             **get_route_args(cls.no_ending_slash, default_tag="endpoints.urls"),
         )(wrapper)
@@ -117,13 +127,18 @@ class AbstractEndpointsUrlsService(AbstractFernService):
     @classmethod
     def __init_with_ending_slash(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.with_ending_slash)
+        type_hints = typing.get_type_hints(cls.with_ending_slash)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -143,7 +158,7 @@ class AbstractEndpointsUrlsService(AbstractFernService):
 
         router.get(
             path="/urls/with-ending-slash/",
-            response_model=str,
+            response_model=None,
             description=AbstractEndpointsUrlsService.with_ending_slash.__doc__,
             **get_route_args(cls.with_ending_slash, default_tag="endpoints.urls"),
         )(wrapper)
@@ -151,13 +166,18 @@ class AbstractEndpointsUrlsService(AbstractFernService):
     @classmethod
     def __init_with_underscores(cls, router: fastapi.APIRouter) -> None:
         endpoint_function = inspect.signature(cls.with_underscores)
+        type_hints = typing.get_type_hints(cls.with_underscores)
+
         new_parameters: typing.List[inspect.Parameter] = []
         for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "auth":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[parameter.annotation, fastapi.Depends(FernAuth)])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
                 )
             else:
                 new_parameters.append(parameter)
@@ -177,7 +197,7 @@ class AbstractEndpointsUrlsService(AbstractFernService):
 
         router.get(
             path="/urls/with_underscores",
-            response_model=str,
+            response_model=None,
             description=AbstractEndpointsUrlsService.with_underscores.__doc__,
             **get_route_args(cls.with_underscores, default_tag="endpoints.urls"),
         )(wrapper)

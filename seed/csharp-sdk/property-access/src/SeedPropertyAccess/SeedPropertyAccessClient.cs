@@ -3,7 +3,7 @@ using SeedPropertyAccess.Core;
 
 namespace SeedPropertyAccess;
 
-public partial class SeedPropertyAccessClient
+public partial class SeedPropertyAccessClient : ISeedPropertyAccessClient
 {
     private readonly RawClient _client;
 

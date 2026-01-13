@@ -692,6 +692,14 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         });
     }
 
+    public getSubpackageInterfaceReference(subpackage: Subpackage): ast.ClassReference {
+        return this.csharp.classReference({
+            name: `I${subpackage.name.pascalCase.unsafeName}Client`,
+            namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath),
+            origin: this.model.explicit(subpackage, "Interface")
+        });
+    }
+
     /**
      * Returns the service with the given id
      * @param serviceId

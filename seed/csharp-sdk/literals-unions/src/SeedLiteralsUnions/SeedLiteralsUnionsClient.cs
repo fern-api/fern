@@ -2,7 +2,7 @@ using SeedLiteralsUnions.Core;
 
 namespace SeedLiteralsUnions;
 
-public partial class SeedLiteralsUnionsClient
+public partial class SeedLiteralsUnionsClient : ISeedLiteralsUnionsClient
 {
     private readonly RawClient _client;
 

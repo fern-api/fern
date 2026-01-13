@@ -1,4 +1,5 @@
 use seed_cross_package_type_names::prelude::*;
+use seed_cross_package_type_names::OptionalString;
 
 #[tokio::main]
 async fn main() {

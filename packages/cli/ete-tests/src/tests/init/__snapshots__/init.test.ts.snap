@@ -5,6 +5,13 @@ exports[`fern init > init docs 1`] = `
   {
     "contents": [
       {
+        "contents": "**/.preview
+**/.definition
+",
+        "name": ".gitignore",
+        "type": "file",
+      },
+      {
         "contents": [
           {
             "contents": "name: api
@@ -187,6 +194,13 @@ exports[`fern init > init openapi 1`] = `
   {
     "contents": [
       {
+        "contents": "**/.preview
+**/.definition
+",
+        "name": ".gitignore",
+        "type": "file",
+      },
+      {
         "contents": "{
     "organization": "fern",
     "version": "0.0.0"
@@ -339,6 +353,13 @@ components:
 
 exports[`fern init > no existing fern directory 1`] = `
 [
+  {
+    "contents": "**/.preview
+**/.definition
+",
+    "name": ".gitignore",
+    "type": "file",
+  },
   {
     "contents": [
       {

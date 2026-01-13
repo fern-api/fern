@@ -2,7 +2,7 @@ using SeedExtraProperties.Core;
 
 namespace SeedExtraProperties;
 
-public partial class SeedExtraPropertiesClient
+public partial class SeedExtraPropertiesClient : ISeedExtraPropertiesClient
 {
     private readonly RawClient _client;
 

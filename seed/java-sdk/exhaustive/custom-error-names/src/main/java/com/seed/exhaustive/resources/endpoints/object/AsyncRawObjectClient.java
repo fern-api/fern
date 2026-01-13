@@ -42,6 +42,11 @@ public class AsyncRawObjectClient {
     }
 
     public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> getAndReturnWithOptionalField(
+            RequestOptions requestOptions) {
+        return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build(), requestOptions);
+    }
+
+    public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> getAndReturnWithOptionalField(
             ObjectWithOptionalField request) {
         return getAndReturnWithOptionalField(request, null);
     }
@@ -222,6 +227,12 @@ public class AsyncRawObjectClient {
             getAndReturnNestedWithOptionalField() {
         return getAndReturnNestedWithOptionalField(
                 NestedObjectWithOptionalField.builder().build());
+    }
+
+    public CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithOptionalField>>
+            getAndReturnNestedWithOptionalField(RequestOptions requestOptions) {
+        return getAndReturnNestedWithOptionalField(
+                NestedObjectWithOptionalField.builder().build(), requestOptions);
     }
 
     public CompletableFuture<SeedExhaustiveHttpResponse<NestedObjectWithOptionalField>>

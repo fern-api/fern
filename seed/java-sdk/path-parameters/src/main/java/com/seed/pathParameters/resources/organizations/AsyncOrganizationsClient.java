@@ -42,6 +42,13 @@ public class AsyncOrganizationsClient {
     }
 
     public CompletableFuture<User> getOrganizationUser(
+            String organizationId, String userId, RequestOptions requestOptions) {
+        return this.rawClient
+                .getOrganizationUser(organizationId, userId, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<User> getOrganizationUser(
             String organizationId, String userId, GetOrganizationUserRequest request) {
         return this.rawClient
                 .getOrganizationUser(organizationId, userId, request)
@@ -57,6 +64,13 @@ public class AsyncOrganizationsClient {
 
     public CompletableFuture<List<Organization>> searchOrganizations(String organizationId) {
         return this.rawClient.searchOrganizations(organizationId).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<List<Organization>> searchOrganizations(
+            String organizationId, RequestOptions requestOptions) {
+        return this.rawClient
+                .searchOrganizations(organizationId, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<List<Organization>> searchOrganizations(

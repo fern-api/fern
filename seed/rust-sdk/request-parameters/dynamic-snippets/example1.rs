@@ -1,4 +1,5 @@
 use seed_request_parameters::prelude::*;
+use seed_request_parameters::CreateUsernameBody;
 
 #[tokio::main]
 async fn main() {
@@ -10,7 +11,7 @@ async fn main() {
     client
         .user
         .create_username_with_referenced_type(
-            &CreateUsernameReferencedRequest {
+            &CreateUsernameWithReferencedTypeRequest {
                 tags: vec!["tags".to_string(), "tags".to_string()],
                 body: CreateUsernameBody {
                     username: "username".to_string(),
