@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>$client->users->listUsernamesCustom($request) -> UsernameCursor</code></summary>
+<details><summary><code>$client-&gt;users-&gt;listUsernamesCustom($request) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 

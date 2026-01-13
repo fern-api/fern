@@ -7,10 +7,18 @@ import path from "path";
  */
 export class OpenAPIRefResolver extends BaseResolver {
     private absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
+    private absolutePathToOpenAPIOverlays: AbsoluteFilePath | undefined;
 
-    constructor(absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined) {
+    constructor({
+        absolutePathToOpenAPIOverrides,
+        absolutePathToOpenAPIOverlays
+    }: {
+        absolutePathToOpenAPIOverrides?: AbsoluteFilePath;
+        absolutePathToOpenAPIOverlays?: AbsoluteFilePath;
+    }) {
         super();
         this.absolutePathToOpenAPIOverrides = absolutePathToOpenAPIOverrides;
+        this.absolutePathToOpenAPIOverlays = absolutePathToOpenAPIOverlays;
     }
 
     public resolveExternalRef(base: string | null, ref: string): string {
@@ -27,10 +35,19 @@ export class OpenAPIRefResolver extends BaseResolver {
         }
 
         // If we fail to resolve the ref, we try to resolve it relative to the
-        // absolutePathToOpenAPIOverrides as a best effort.
+        // absolutePathToOpenAPIOverlays first (since overlays are applied after overrides),
+        // then fall back to absolutePathToOpenAPIOverrides as a best effort.
         //
         // This is especially useful for OpenAPI sources that require writing to
-        // temporary directories (e.g. Protobuf).
+        // temporary directories (e.g. Protobuf) and for resolving refs in overlays
+        // that may be relative to the overlay file location.
+        if (this.absolutePathToOpenAPIOverlays != null) {
+            const overlayResolved = path.resolve(path.dirname(this.absolutePathToOpenAPIOverlays), ref);
+            if (doesPathExistSync(AbsoluteFilePath.of(overlayResolved))) {
+                return overlayResolved;
+            }
+        }
+
         if (this.absolutePathToOpenAPIOverrides != null) {
             return path.resolve(path.dirname(this.absolutePathToOpenAPIOverrides), ref);
         }

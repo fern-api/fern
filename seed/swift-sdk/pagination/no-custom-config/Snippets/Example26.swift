@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.users.listWithOptionalData(page: 1)
+    _ = try await client.users.listWithCursorPagination(startingAfter: "starting_after")
 }
 
 try await main()

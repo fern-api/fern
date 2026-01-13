@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalBodyAsync</a>(Dictionary<string, object?>? { ... }) -> string</code></summary>
+<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalBodyAsync</a>(Dictionary&lt;string, object?&gt;? { ... }) -> string</code></summary>
 <dl>
 <dd>
 

@@ -76,7 +76,7 @@ client.getLatestInsurance(
 </dl>
 </details>
 
-<details><summary><code>client.searchPolicies() -> List&lt;InsurancePolicy&gt;</code></summary>
+<details><summary><code>client.searchPolicies() -> List&amp;lt;InsurancePolicy&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -144,7 +144,7 @@ client.searchPolicies(
 </dl>
 </details>
 
-<details><summary><code>client.listAllPolicies() -> List&lt;InsurancePolicy&gt;</code></summary>
+<details><summary><code>client.listAllPolicies() -> List&amp;lt;InsurancePolicy&amp;gt;</code></summary>
 <dl>
 <dd>
 

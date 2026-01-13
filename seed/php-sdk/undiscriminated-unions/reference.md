@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>$client->union->get($request) -> string|array|int</code></summary>
+<details><summary><code>$client-&gt;union-&gt;get($request) -> string|array|int</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ $client->union->get(
 </dl>
 </details>
 
-<details><summary><code>$client->union->getMetadata() -> array</code></summary>
+<details><summary><code>$client-&gt;union-&gt;getMetadata() -> array</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ $client->union->getMetadata();
 </dl>
 </details>
 
-<details><summary><code>$client->union->updateMetadata($request) -> bool</code></summary>
+<details><summary><code>$client-&gt;union-&gt;updateMetadata($request) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -113,7 +113,7 @@ $client->union->updateMetadata(
 </dl>
 </details>
 
-<details><summary><code>$client->union->call($request) -> bool</code></summary>
+<details><summary><code>$client-&gt;union-&gt;call($request) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -161,7 +161,7 @@ $client->union->call(
 </dl>
 </details>
 
-<details><summary><code>$client->union->duplicateTypesUnion($request) -> string|array|int</code></summary>
+<details><summary><code>$client-&gt;union-&gt;duplicateTypesUnion($request) -> string|array|int</code></summary>
 <dl>
 <dd>
 
@@ -203,7 +203,7 @@ $client->union->duplicateTypesUnion(
 </dl>
 </details>
 
-<details><summary><code>$client->union->nestedUnions($request) -> string</code></summary>
+<details><summary><code>$client-&gt;union-&gt;nestedUnions($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -245,7 +245,7 @@ $client->union->nestedUnions(
 </dl>
 </details>
 
-<details><summary><code>$client->union->testCamelCaseProperties($request) -> string</code></summary>
+<details><summary><code>$client-&gt;union-&gt;testCamelCaseProperties($request) -> string</code></summary>
 <dl>
 <dd>
 

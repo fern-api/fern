@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>$client->ec2->bootInstance($request)</code></summary>
+<details><summary><code>$client-&gt;ec2-&gt;bootInstance($request)</code></summary>
 <dl>
 <dd>
 
@@ -45,7 +45,7 @@ $client->ec2->bootInstance(
 </details>
 
 ## S3
-<details><summary><code>$client->s3->getPresignedUrl($request) -> string</code></summary>
+<details><summary><code>$client-&gt;s3-&gt;getPresignedUrl($request) -> string</code></summary>
 <dl>
 <dd>
 

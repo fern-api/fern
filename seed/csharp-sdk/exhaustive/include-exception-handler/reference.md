@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnListOfPrimitivesAsync</a>(IEnumerable<string> { ... }) -> IEnumerable<string></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnListOfPrimitivesAsync</a>(IEnumerable&lt;string&gt; { ... }) -> IEnumerable&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnListOfObjectsAsync</a>(IEnumerable<ObjectWithRequiredField> { ... }) -> IEnumerable<ObjectWithRequiredField></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnListOfObjectsAsync</a>(IEnumerable&lt;ObjectWithRequiredField&gt; { ... }) -> IEnumerable&lt;ObjectWithRequiredField&gt;</code></summary>
 <dl>
 <dd>
 
@@ -88,7 +88,7 @@ await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnSetOfPrimitivesAsync</a>(HashSet<string> { ... }) -> HashSet<string></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnSetOfPrimitivesAsync</a>(HashSet&lt;string&gt; { ... }) -> HashSet&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -130,7 +130,7 @@ await client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnSetOfObjectsAsync</a>(HashSet<ObjectWithRequiredField> { ... }) -> HashSet<ObjectWithRequiredField></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnSetOfObjectsAsync</a>(HashSet&lt;ObjectWithRequiredField&gt; { ... }) -> HashSet&lt;ObjectWithRequiredField&gt;</code></summary>
 <dl>
 <dd>
 
@@ -172,7 +172,7 @@ await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapPrimToPrimAsync</a>(Dictionary<string, string> { ... }) -> Dictionary<string, string></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapPrimToPrimAsync</a>(Dictionary&lt;string, string&gt; { ... }) -> Dictionary&lt;string, string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -214,7 +214,7 @@ await client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapOfPrimToObjectAsync</a>(Dictionary<string, ObjectWithRequiredField> { ... }) -> Dictionary<string, ObjectWithRequiredField></code></summary>
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapOfPrimToObjectAsync</a>(Dictionary&lt;string, ObjectWithRequiredField&gt; { ... }) -> Dictionary&lt;string, ObjectWithRequiredField&gt;</code></summary>
 <dl>
 <dd>
 
@@ -980,7 +980,7 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnNestedWithRequiredFieldAsListAsync</a>(IEnumerable<NestedObjectWithRequiredField> { ... }) -> NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnNestedWithRequiredFieldAsListAsync</a>(IEnumerable&lt;NestedObjectWithRequiredField&gt; { ... }) -> NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
