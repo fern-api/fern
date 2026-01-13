@@ -1,4 +1,4 @@
-use seed_path_parameters::prelude::{*};
+use seed_path_parameters::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,5 +7,14 @@ async fn main() {
         ..Default::default()
     };
     let client = PathParametersClient::new(config).expect("Failed to build client");
-    client.user.get_user_specifics(&"tenant_id".to_string(), &"user_id".to_string(), 1, &"thought".to_string(), None).await;
+    client
+        .user
+        .get_user_specifics(
+            &"tenant_id".to_string(),
+            &"user_id".to_string(),
+            1,
+            &"thought".to_string(),
+            None,
+        )
+        .await;
 }

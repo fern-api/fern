@@ -5,20 +5,17 @@ import com.seed.stagedBuilderOrdering.resources.types.types.MediumStaged;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedStagedBuilderOrderingClient client = SeedStagedBuilderOrderingClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
-        client.service().createMedium(
-            MediumStaged
-                .builder()
-                .alpha("alpha")
-                .beta(1)
-                .gamma("gamma")
-                .delta(true)
-                .optional("optional")
-                .build()
-        );
+        client.service()
+                .createMedium(MediumStaged.builder()
+                        .alpha("alpha")
+                        .beta(1)
+                        .gamma("gamma")
+                        .delta(true)
+                        .optional("optional")
+                        .build());
     }
 }

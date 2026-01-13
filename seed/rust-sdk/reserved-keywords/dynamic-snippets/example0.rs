@@ -1,4 +1,4 @@
-use seed_nursery_api::prelude::{*};
+use seed_nursery_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,7 +7,13 @@ async fn main() {
         ..Default::default()
     };
     let client = NurseryApiClient::new(config).expect("Failed to build client");
-    client.package.test(&TestQueryRequest {
-        r#for: "for".to_string()
-    }, None).await;
+    client
+        .package
+        .test(
+            &TestQueryRequest {
+                r#for: "for".to_string(),
+            },
+            None,
+        )
+        .await;
 }

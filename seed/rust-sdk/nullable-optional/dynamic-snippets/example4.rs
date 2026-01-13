@@ -1,4 +1,4 @@
-use seed_nullable_optional::prelude::{*};
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,10 +7,16 @@ async fn main() {
         ..Default::default()
     };
     let client = NullableOptionalClient::new(config).expect("Failed to build client");
-    client.nullable_optional.search_users(&SearchUsersQueryRequest {
-        query: "query".to_string(),
-        department: Some("department".to_string()),
-        role: Some("role".to_string()),
-        is_active: Some(Some(true))
-    }, None).await;
+    client
+        .nullable_optional
+        .search_users(
+            &SearchUsersQueryRequest {
+                query: "query".to_string(),
+                department: Some("department".to_string()),
+                role: Some("role".to_string()),
+                is_active: Some(Some(true)),
+            },
+            None,
+        )
+        .await;
 }

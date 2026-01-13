@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::{*};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -8,5 +8,15 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.req_with_headers.get_with_custom_header(&"string".to_string(), Some(RequestOptions::new().additional_header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER").additional_header("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER"))).await;
+    client
+        .req_with_headers
+        .get_with_custom_header(
+            &"string".to_string(),
+            Some(
+                RequestOptions::new()
+                    .additional_header("X-TEST-SERVICE-HEADER", "X-TEST-SERVICE-HEADER")
+                    .additional_header("X-TEST-ENDPOINT-HEADER", "X-TEST-ENDPOINT-HEADER"),
+            ),
+        )
+        .await;
 }

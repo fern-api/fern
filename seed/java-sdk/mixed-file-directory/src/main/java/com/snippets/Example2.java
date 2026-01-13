@@ -5,16 +5,12 @@ import com.seed.mixedFileDirectory.resources.user.events.requests.ListUserEvents
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedMixedFileDirectoryClient client = SeedMixedFileDirectoryClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
-        client.user().events().listEvents(
-            ListUserEventsRequest
-                .builder()
-                .limit(1)
-                .build()
-        );
+        client.user()
+                .events()
+                .listEvents(ListUserEventsRequest.builder().limit(1).build());
     }
 }

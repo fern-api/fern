@@ -1,5 +1,5 @@
-use seed_mixed_file_directory::prelude::{*};
-use seed_mixed_file_directory::{Id};
+use seed_mixed_file_directory::prelude::*;
+use seed_mixed_file_directory::Id;
 
 #[tokio::main]
 async fn main() {
@@ -8,7 +8,15 @@ async fn main() {
         ..Default::default()
     };
     let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
-    client.user.events.metadata.get_metadata(&GetMetadataQueryRequest {
-        id: Id("id".to_string())
-    }, None).await;
+    client
+        .user
+        .events
+        .metadata
+        .get_metadata(
+            &GetMetadataQueryRequest {
+                id: Id("id".to_string()),
+            },
+            None,
+        )
+        .await;
 }

@@ -1,5 +1,9 @@
-use seed_trace::prelude::{*};
-use seed_trace::{SubmissionId, WorkspaceSubmissionUpdate, WorkspaceSubmissionUpdateInfo, RunningSubmissionState, WorkspaceRunDetails, ExceptionV2, ExceptionInfo, WorkspaceTracedUpdate, ErrorInfo, CompileError, RuntimeError, InternalError};
+use seed_trace::prelude::*;
+use seed_trace::{
+    CompileError, ErrorInfo, ExceptionInfo, ExceptionV2, InternalError, RunningSubmissionState,
+    RuntimeError, SubmissionId, WorkspaceRunDetails, WorkspaceSubmissionUpdate,
+    WorkspaceSubmissionUpdateInfo, WorkspaceTracedUpdate,
+};
 
 #[tokio::main]
 async fn main() {
@@ -9,10 +13,17 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.admin.send_workspace_submission_update(&SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()), &WorkspaceSubmissionUpdate {
-        update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-        update_info: WorkspaceSubmissionUpdateInfo::Running {
-            value: Default::default()
-        }
-    }, None).await;
+    client
+        .admin
+        .send_workspace_submission_update(
+            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+            &WorkspaceSubmissionUpdate {
+                update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+                update_info: WorkspaceSubmissionUpdateInfo::Running {
+                    value: Default::default(),
+                },
+            },
+            None,
+        )
+        .await;
 }

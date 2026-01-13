@@ -1,4 +1,4 @@
-use seed_nullable::prelude::{*};
+use seed_nullable::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,7 +7,13 @@ async fn main() {
         ..Default::default()
     };
     let client = NullableClient::new(config).expect("Failed to build client");
-    client.nullable.delete_user(&DeleteUserRequest {
-        username: Some(Some("xy".to_string()))
-    }, None).await;
+    client
+        .nullable
+        .delete_user(
+            &DeleteUserRequest {
+                username: Some(Some("xy".to_string())),
+            },
+            None,
+        )
+        .await;
 }

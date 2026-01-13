@@ -8,38 +8,24 @@ import java.util.Arrays;
 
 public class Example23 {
     public static void main(String[] args) {
-        SeedTraceClient client = SeedTraceClient
-            .builder()
-            .token("<token>")
-            .url("https://api.fern.com")
-            .build();
+        SeedTraceClient client = SeedTraceClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.problem().getDefaultStarterFiles(
-            GetDefaultStarterFilesRequest
-                .builder()
-                .outputType(
-                    VariableType.integerType()
-                )
-                .methodName("methodName")
-                .inputParams(
-                    Arrays.asList(
-                        VariableTypeAndName
-                            .builder()
-                            .variableType(
-                                VariableType.integerType()
-                            )
-                            .name("name")
-                            .build(),
-                        VariableTypeAndName
-                            .builder()
-                            .variableType(
-                                VariableType.integerType()
-                            )
-                            .name("name")
-                            .build()
-                    )
-                )
-                .build()
-        );
+        client.problem()
+                .getDefaultStarterFiles(GetDefaultStarterFilesRequest.builder()
+                        .outputType(VariableType.integerType())
+                        .methodName("methodName")
+                        .inputParams(Arrays.asList(
+                                VariableTypeAndName.builder()
+                                        .variableType(VariableType.integerType())
+                                        .name("name")
+                                        .build(),
+                                VariableTypeAndName.builder()
+                                        .variableType(VariableType.integerType())
+                                        .name("name")
+                                        .build()))
+                        .build());
     }
 }

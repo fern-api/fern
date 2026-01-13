@@ -1,4 +1,4 @@
-use seed_basic_auth::prelude::{*};
+use seed_basic_auth::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -9,5 +9,8 @@ async fn main() {
         ..Default::default()
     };
     let client = BasicAuthClient::new(config).expect("Failed to build client");
-    client.basic_auth.post_with_basic_auth(&serde_json::json!({"key":"value"}), None).await;
+    client
+        .basic_auth
+        .post_with_basic_auth(&serde_json::json!({"key":"value"}), None)
+        .await;
 }

@@ -1,4 +1,4 @@
-use seed_nullable_optional::prelude::{*};
+use seed_nullable_optional::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,5 +7,8 @@ async fn main() {
         ..Default::default()
     };
     let client = NullableOptionalClient::new(config).expect("Failed to build client");
-    client.nullable_optional.get_notification_settings(&"userId".to_string(), None).await;
+    client
+        .nullable_optional
+        .get_notification_settings(&"userId".to_string(), None)
+        .await;
 }

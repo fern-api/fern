@@ -1,4 +1,4 @@
-use seed_accept::prelude::{*};
+use seed_accept::prelude::*;
 
 #[tokio::main]
 async fn main() {

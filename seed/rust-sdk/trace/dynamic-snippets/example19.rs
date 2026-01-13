@@ -1,5 +1,5 @@
-use seed_trace::prelude::{*};
-use seed_trace::{PlaylistId};
+use seed_trace::prelude::*;
+use seed_trace::PlaylistId;
 
 #[tokio::main]
 async fn main() {
@@ -9,5 +9,8 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.playlist.delete_playlist(1, &PlaylistId("playlist_id".to_string()), None).await;
+    client
+        .playlist
+        .delete_playlist(1, &PlaylistId("playlist_id".to_string()), None)
+        .await;
 }

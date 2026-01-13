@@ -1,4 +1,4 @@
-use seed_api::prelude::{*};
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,8 +7,14 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.file_upload_example.upload_file(&UploadFileRequest {
-        file: b"test file content".to_vec(),
-        name: "name".to_string()
-    }, None).await;
+    client
+        .file_upload_example
+        .upload_file(
+            &UploadFileRequest {
+                file: b"test file content".to_vec(),
+                name: "name".to_string(),
+            },
+            None,
+        )
+        .await;
 }

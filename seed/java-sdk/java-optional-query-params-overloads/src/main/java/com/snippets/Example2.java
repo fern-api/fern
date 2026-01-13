@@ -4,10 +4,9 @@ import com.seed.javaOptionalQueryParamsOverloads.SeedJavaOptionalQueryParamsOver
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedJavaOptionalQueryParamsOverloadsClient client = SeedJavaOptionalQueryParamsOverloadsClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedJavaOptionalQueryParamsOverloadsClient client = SeedJavaOptionalQueryParamsOverloadsClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
         client.listAllPolicies();
     }

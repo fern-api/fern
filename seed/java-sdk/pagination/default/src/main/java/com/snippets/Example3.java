@@ -5,16 +5,14 @@ import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersM
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient
-            .builder()
-            .token("<token>")
-            .url("https://api.fern.com")
-            .build();
+        SeedPaginationClient client = SeedPaginationClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.inlineUsers().inlineUsers().listWithMixedTypeCursorPagination(
-            ListUsersMixedTypeCursorPaginationRequest
-                .builder()
-                .build()
-        );
+        client.inlineUsers()
+                .inlineUsers()
+                .listWithMixedTypeCursorPagination(
+                        ListUsersMixedTypeCursorPaginationRequest.builder().build());
     }
 }

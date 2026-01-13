@@ -1,5 +1,5 @@
-use seed_unknown_as_any::prelude::{*};
-use seed_unknown_as_any::{MyObject};
+use seed_unknown_as_any::prelude::*;
+use seed_unknown_as_any::MyObject;
 
 #[tokio::main]
 async fn main() {
@@ -8,7 +8,13 @@ async fn main() {
         ..Default::default()
     };
     let client = UnknownAsAnyClient::new(config).expect("Failed to build client");
-    client.unknown.post_object(&MyObject {
-        unknown: serde_json::json!({"key":"value"})
-    }, None).await;
+    client
+        .unknown
+        .post_object(
+            &MyObject {
+                unknown: serde_json::json!({"key":"value"}),
+            },
+            None,
+        )
+        .await;
 }

@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream</a>(...) -> typing.AsyncIterator[
+<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream</a>(...) -&gt; typing.AsyncIterator[
     AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]
 ]</code></summary>
 <dl>

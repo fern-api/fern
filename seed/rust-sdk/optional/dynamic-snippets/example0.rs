@@ -1,4 +1,4 @@
-use seed_objects_with_imports::prelude::{*};
+use seed_objects_with_imports::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,5 +7,14 @@ async fn main() {
         ..Default::default()
     };
     let client = ObjectsWithImportsClient::new(config).expect("Failed to build client");
-    client.optional.send_optional_body(&Some(HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))])), None).await;
+    client
+        .optional
+        .send_optional_body(
+            &Some(HashMap::from([(
+                "string".to_string(),
+                serde_json::json!({"key":"value"}),
+            )])),
+            None,
+        )
+        .await;
 }

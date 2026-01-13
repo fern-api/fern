@@ -1,4 +1,4 @@
-use seed_examples::prelude::{*};
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -8,8 +8,14 @@ async fn main() {
         ..Default::default()
     };
     let client = ExamplesClient::new(config).expect("Failed to build client");
-    client.service.get_metadata(&GetMetadataQueryRequest {
-        shallow: Some(false),
-        tag: vec![Some("development".to_string())]
-    }, Some(RequestOptions::new().additional_header("X-API-Version", "0.0.1"))).await;
+    client
+        .service
+        .get_metadata(
+            &GetMetadataQueryRequest {
+                shallow: Some(false),
+                tag: vec![Some("development".to_string())],
+            },
+            Some(RequestOptions::new().additional_header("X-API-Version", "0.0.1")),
+        )
+        .await;
 }

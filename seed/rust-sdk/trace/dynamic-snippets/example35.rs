@@ -1,4 +1,4 @@
-use seed_trace::prelude::{*};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {

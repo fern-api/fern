@@ -1,4 +1,4 @@
-use seed_file_download::prelude::{*};
+use seed_file_download::prelude::*;
 
 #[tokio::main]
 async fn main() {

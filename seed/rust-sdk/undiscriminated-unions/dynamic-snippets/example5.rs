@@ -1,5 +1,5 @@
-use seed_undiscriminated_unions::prelude::{*};
-use seed_undiscriminated_unions::{Request, MetadataUnion, OptionalMetadata, NamedMetadata};
+use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::{MetadataUnion, NamedMetadata, OptionalMetadata, Request};
 
 #[tokio::main]
 async fn main() {
@@ -8,7 +8,15 @@ async fn main() {
         ..Default::default()
     };
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
-    client.union_.call(&Request {
-        union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))])))))
-    }, None).await;
+    client
+        .union_
+        .call(
+            &Request {
+                union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
+                    HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))]),
+                )))),
+            },
+            None,
+        )
+        .await;
 }

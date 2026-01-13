@@ -5,13 +5,10 @@ import java.util.Optional;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedRequestParametersClient client = SeedRequestParametersClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedRequestParametersClient client = SeedRequestParametersClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
-        client.user().createUsernameOptional(
-            Optional.empty()
-        );
+        client.user().createUsernameOptional(Optional.empty());
     }
 }

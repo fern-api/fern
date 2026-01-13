@@ -1,4 +1,4 @@
-use seed_simple_api::prelude::{*};
+use seed_simple_api::prelude::*;
 
 #[tokio::main]
 async fn main() {

@@ -1,4 +1,4 @@
-use seed_api_wide_base_path::prelude::{*};
+use seed_api_wide_base_path::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,5 +7,14 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiWideBasePathClient::new(config).expect("Failed to build client");
-    client.service.post(&"pathParam".to_string(), &"serviceParam".to_string(), 1, &"resourceParam".to_string(), None).await;
+    client
+        .service
+        .post(
+            &"pathParam".to_string(),
+            &"serviceParam".to_string(),
+            1,
+            &"resourceParam".to_string(),
+            None,
+        )
+        .await;
 }

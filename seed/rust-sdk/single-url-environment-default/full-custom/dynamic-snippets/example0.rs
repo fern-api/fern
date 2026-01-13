@@ -1,4 +1,4 @@
-use full_custom_sdk::prelude::{*};
+use full_custom_sdk::prelude::*;
 
 #[tokio::main]
 async fn main() {
