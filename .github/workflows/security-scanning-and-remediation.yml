@@ -20,6 +20,12 @@ name: Create PRs to Remediate vulns
 
 on:
   workflow_dispatch: # Allow manual triggering
+    inputs:
+      scan_only:
+        description: 'When true, skip PR creation and Slack notifications (only run scans and upload to ECR)'
+        required: false
+        default: true
+        type: boolean
 
 jobs:
   create-dependabot-prs:
@@ -71,7 +77,7 @@ jobs:
             core.setOutput('alerts_json', JSON.stringify(alerts));
       - name: Create PRs and send Slack notifications
         id: create-prs
-        if: steps.fetch-alerts.outputs.alerts_json != '[]'
+        if: ${{ steps.fetch-alerts.outputs.alerts_json != '[]' && inputs.scan_only != true }}
         uses: actions/github-script@v7
         env:
           # ============================================================
@@ -394,6 +400,7 @@ jobs:
       # Format: One CVE ID per line in the ignored_cves input
       # ============================================================
       - name: Process vulnerabilities and create PR
+        if: ${{ inputs.scan_only != true }}
         uses: ./.github/actions/process-grype-vulns
         with:
           container_name: java-sdk
