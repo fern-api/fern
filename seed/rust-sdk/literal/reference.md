@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="/src/api/resources/headers/client.rs">send</a>(request: SendLiteralsInHeadersRequest) -> Result<SendResponse, ApiError></code></summary>
+<details><summary><code>client.headers.<a href="/src/api/resources/headers/client.rs">send</a>(request: SendLiteralsInHeadersRequest) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,7 @@ async fn main() {
 </details>
 
 ## Inlined
-<details><summary><code>client.inlined.<a href="/src/api/resources/inlined/client.rs">send</a>(request: SendLiteralsInlinedRequest) -> Result<SendResponse, ApiError></code></summary>
+<details><summary><code>client.inlined.<a href="/src/api/resources/inlined/client.rs">send</a>(request: SendLiteralsInlinedRequest) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -76,7 +76,6 @@ async fn main() {
 
 ```rust
 use seed_literal::prelude::*;
-use seed_literal::{ANestedLiteral, ATopLevelLiteral, SomeAliasedLiteral};
 
 #[tokio::main]
 async fn main() {
@@ -188,7 +187,7 @@ async fn main() {
 </details>
 
 ## Path
-<details><summary><code>client.path.<a href="/src/api/resources/path/client.rs">send</a>(id: String) -> Result<SendResponse, ApiError></code></summary>
+<details><summary><code>client.path.<a href="/src/api/resources/path/client.rs">send</a>(id: String) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -238,7 +237,7 @@ async fn main() {
 </details>
 
 ## Query
-<details><summary><code>client.query.<a href="/src/api/resources/query/client.rs">send</a>(prompt: Option<String>, optional_prompt: Option<Option<String>>, alias_prompt: Option<AliasToPrompt>, alias_optional_prompt: Option<Option<AliasToPrompt>>, query: Option<String>, stream: Option<bool>, optional_stream: Option<Option<bool>>, alias_stream: Option<AliasToStream>, alias_optional_stream: Option<Option<AliasToStream>>) -> Result<SendResponse, ApiError></code></summary>
+<details><summary><code>client.query.<a href="/src/api/resources/query/client.rs">send</a>(prompt: Option&lt;String&gt;, optional_prompt: Option&lt;Option&lt;String&gt;&gt;, alias_prompt: Option&lt;AliasToPrompt&gt;, alias_optional_prompt: Option&lt;Option&lt;AliasToPrompt&gt;&gt;, query: Option&lt;String&gt;, stream: Option&lt;bool&gt;, optional_stream: Option&lt;Option&lt;bool&gt;&gt;, alias_stream: Option&lt;AliasToStream&gt;, alias_optional_stream: Option&lt;Option&lt;AliasToStream&gt;&gt;) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -252,7 +251,6 @@ async fn main() {
 
 ```rust
 use seed_literal::prelude::*;
-use seed_literal::{AliasToPrompt, AliasToStream};
 
 #[tokio::main]
 async fn main() {
@@ -371,7 +369,7 @@ async fn main() {
 </details>
 
 ## Reference
-<details><summary><code>client.reference.<a href="/src/api/resources/reference/client.rs">send</a>(request: SendRequest) -> Result<SendResponse, ApiError></code></summary>
+<details><summary><code>client.reference.<a href="/src/api/resources/reference/client.rs">send</a>(request: SendRequest) -> Result&lt;SendResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -385,7 +383,6 @@ async fn main() {
 
 ```rust
 use seed_literal::prelude::*;
-use seed_literal::{ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral};
 
 #[tokio::main]
 async fn main() {

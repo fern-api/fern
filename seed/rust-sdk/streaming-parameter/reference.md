@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client.rs">generate</a>(request: GenerateRequest) -> Result<Stream<Vec<u8>>, ApiError></code></summary>
+<details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client.rs">generate</a>(request: GenerateRequest) -> Result&lt;Stream&lt;Vec&lt;u8&gt;&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

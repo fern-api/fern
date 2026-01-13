@@ -1,6 +1,6 @@
 # Reference
 ## Package
-<details><summary><code>client.package.<a href="/src/api/resources/package/client.rs">test</a>(for_: Option<String>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.package.<a href="/src/api/resources/package/client.rs">test</a>(for_: Option&lt;String&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 

@@ -44,7 +44,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_audiences::prelude::*;
-use seed_audiences::OptionalString;
 
 #[tokio::main]
 async fn main() {
