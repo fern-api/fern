@@ -186,6 +186,104 @@ import Pagination
         try #require(response == expectedResponse)
     }
 
+    @Test func listWithTopLevelBodyCursorPagination1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "next_cursor": "next_cursor_value",
+                  "data": [
+                    {
+                      "name": "Alice",
+                      "id": 1
+                    },
+                    {
+                      "name": "Bob",
+                      "id": 2
+                    }
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ListUsersTopLevelCursorPaginationResponse(
+            nextCursor: Optional("next_cursor_value"),
+            data: [
+                UserType(
+                    name: "Alice",
+                    id: 1
+                ),
+                UserType(
+                    name: "Bob",
+                    id: 2
+                )
+            ]
+        )
+        let response = try await client.users.listWithTopLevelBodyCursorPagination(
+            request: .init(
+                cursor: "initial_cursor",
+                filter: "active"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func listWithTopLevelBodyCursorPagination2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "next_cursor": "next_cursor",
+                  "data": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+                """.utf8
+            )
+        )
+        let client = PaginationClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ListUsersTopLevelCursorPaginationResponse(
+            nextCursor: Optional("next_cursor"),
+            data: [
+                UserType(
+                    name: "name",
+                    id: 1
+                ),
+                UserType(
+                    name: "name",
+                    id: 1
+                )
+            ]
+        )
+        let response = try await client.users.listWithTopLevelBodyCursorPagination(
+            request: .init(
+                cursor: "cursor",
+                filter: "filter"
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
     @Test func listWithOffsetPagination1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(

@@ -16,7 +16,7 @@ overrides:
   node-fetch@2.x>whatwg-url: ^14.0.0
   qs: 6.14.1
   url-join: ^4.0.1
-  '@fern-api/fdr-sdk': 0.142.22-c021dd849
+  '@fern-api/fdr-sdk': 0.142.23-f1d57e46f
   es-toolkit: ^1.39.10
   ts-essentials: ^10.1.1
   form-data: ^4.0.4
@@ -4866,8 +4866,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
@@ -4924,8 +4924,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5003,8 +5003,8 @@ importers:
         specifier: workspace:*
         version: link:../../configuration
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -5046,8 +5046,8 @@ importers:
         specifier: workspace:*
         version: link:../commons
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -5089,8 +5089,8 @@ importers:
         specifier: workspace:*
         version: link:../commons
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
@@ -5159,8 +5159,8 @@ importers:
   packages/cli/docs-markdown-utils:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5247,8 +5247,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5365,8 +5365,8 @@ importers:
         specifier: 0.0.65
         version: 0.0.65(typescript@5.9.3)
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5450,8 +5450,8 @@ importers:
         specifier: workspace:*
         version: link:../configuration
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -6302,8 +6302,8 @@ importers:
         specifier: 0.0.6-2ee1b7e28
         version: 0.0.6-2ee1b7e28
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../commons/fs-utils
@@ -6730,8 +6730,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -7221,8 +7221,8 @@ importers:
         specifier: workspace:*
         version: link:../../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../fern-definition/schema
@@ -7442,6 +7442,9 @@ importers:
       json-schema:
         specifier: ^0.4.0
         version: 0.4.0
+      jsonpath-plus:
+        specifier: 10.3.0
+        version: 10.3.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -7768,8 +7771,8 @@ importers:
   packages/core:
     dependencies:
       '@fern-api/fdr-sdk':
-        specifier: 0.142.22-c021dd849
-        version: 0.142.22-c021dd849(typescript@5.9.3)
+        specifier: 0.142.23-f1d57e46f
+        version: 0.142.23-f1d57e46f(typescript@5.9.3)
       '@fern-api/venus-api-sdk':
         specifier: 0.17.3-3-gf696595
         version: 0.17.3-3-gf696595
@@ -9414,8 +9417,8 @@ packages:
     resolution: {integrity: sha512-3qhAAuc4ZJWLaFtyZzaYXfF9OQ5iviNrvLDXtjKScKUNS134fR3v3c3xedCidTq5KedapuBECziUaOmmd6KXVA==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-api/fdr-sdk@0.142.22-c021dd849':
-    resolution: {integrity: sha512-0rN3Oz6aYiuTHOczSwUDo7yDeTYtJqsfC9O5atAisNhXEOar3aJTlZxlemjDYqp2RHlzXbNB2mYF1XHUfY4ruQ==}
+  '@fern-api/fdr-sdk@0.142.23-f1d57e46f':
+    resolution: {integrity: sha512-x7ettj2fdy7KlbugkLOhwJspMbhAMnhDMvSQyRm4elvJXe/frd8ZL4N013eHLhCsfW37XncPZICvD9T7OXjKqw==}
 
   '@fern-api/generator-cli@0.3.0':
     resolution: {integrity: sha512-9FCrYy7j+SPDWNc82YIM6H6rlvUI6Zebzy3rqQj+JNz07cig6292X8AS58ydkM4Kj3NWEPHFW9qNo2KU/C9EHQ==}
@@ -9430,8 +9433,8 @@ packages:
   '@fern-api/ui-core-utils@0.129.4-b6c699ad2':
     resolution: {integrity: sha512-V1jfV4u5fhpWEoLqCIA1QtRGpRR0NXyk68VGEHmEsezwA/gNF4587MJp5FWN59YsZmRt2hozODnp/umJ/iwkPg==}
 
-  '@fern-api/ui-core-utils@0.142.22-c021dd849':
-    resolution: {integrity: sha512-RsxSwYtAnomor5ZNN+vYwtdgF6Fh4eZ+uUeXTVgX/5EggBvNwoQPfB0356vW5IdAC6p99g2ARaGh/zSQ4u9FJA==}
+  '@fern-api/ui-core-utils@0.142.23-f1d57e46f':
+    resolution: {integrity: sha512-A3hNKwIIP9r62n4jXYRTOKROpEcGGX5Qdl0+VqMz2XaOagpGZL9BnQMjdrJOSFvRnO4Z9D9L0N9niZsuVE1H/Q==}
 
   '@fern-api/venus-api-sdk@0.17.3-3-gf696595':
     resolution: {integrity: sha512-JwtEDPtlrayTOTc4NR9opF4bD1LQtz222h1UnKseAv6Saopg2iHvxoGSf0SQfHA8i8atw+eJMNbHBWWTPdbBrA==}
@@ -9961,6 +9964,18 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
+
+  '@jsep-plugin/assignment@1.3.0':
+    resolution: {integrity: sha512-VVgV+CXrhbMI3aSusQyclHkenWSAm95WaiKrMxRFam3JSUiIaQjoMIw2sEs/OX4XifnqeQUN4DYbJjlA8EfktQ==}
+    engines: {node: '>= 10.16.0'}
+    peerDependencies:
+      jsep: ^0.4.0||^1.0.0
+
+  '@jsep-plugin/regex@1.0.4':
+    resolution: {integrity: sha512-q7qL4Mgjs1vByCaTnDFcBnV9HS7GVPJX5vyVoCgZHNSC9rjwIlmbXG5sUuorR5ndfHAIlJ8pVStxvjXHbNvtUg==}
+    engines: {node: '>= 10.16.0'}
+    peerDependencies:
+      jsep: ^0.4.0||^1.0.0
 
   '@jspm/core@2.1.0':
     resolution: {integrity: sha512-3sRl+pkyFY/kLmHl0cgHiFp2xEqErA8N3ECjMs7serSUBmoJ70lBa0PG5t0IM6WJgdZNyyI0R8YFfi5wM8+mzg==}
@@ -13408,6 +13423,10 @@ packages:
       canvas:
         optional: true
 
+  jsep@1.4.0:
+    resolution: {integrity: sha512-B7qPcEVE3NVkmSJbaYxvv4cHkVW7DQsZz13pUMrfS8z8Q/BuShN+gcTXrUlPiGqM2/t/EEaI030bpxMqY8gMlw==}
+    engines: {node: '>= 10.16.0'}
+
   jsesc@3.1.0:
     resolution: {integrity: sha512-/sM3dO2FOzXjKQhJuo0Q173wf2KOo8t4I8vHy6lF9poUp7bKT0/NHE8fPX23PwfhnykfqnC2xRxOnVw5XuGIaA==}
     engines: {node: '>=6'}
@@ -13445,6 +13464,11 @@ packages:
 
   jsonfile@6.2.0:
     resolution: {integrity: sha512-FGuPw30AdOIUTRMC2OMRtQV+jkVj2cfPqSeWXv1NEAJ1qZ5zb1X6z1mFhbfOB/iy3ssJCD+3KuZ8r8C3uVFlAg==}
+
+  jsonpath-plus@10.3.0:
+    resolution: {integrity: sha512-8TNmfeTCk2Le33A3vRRwtuworG/L5RrgMvdjhKZxvyShO+mBu2fP50OWUjRLNtvw344DdDarFh9buFAZs5ujeA==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
 
   jsonwebtoken@9.0.2:
     resolution: {integrity: sha512-PRp66vJ865SSqOlgqS8hujT5U4AOgMfhrwYIuIhfKaoSCZcirrmASQr8CX7cUg+RMih+hgznrjp99o+W4pJLHQ==}
@@ -17371,9 +17395,9 @@ snapshots:
 
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28': {}
 
-  '@fern-api/fdr-sdk@0.142.22-c021dd849(typescript@5.9.3)':
+  '@fern-api/fdr-sdk@0.142.23-f1d57e46f(typescript@5.9.3)':
     dependencies:
-      '@fern-api/ui-core-utils': 0.142.22-c021dd849
+      '@fern-api/ui-core-utils': 0.142.23-f1d57e46f
       '@types/readable-stream': 4.0.22
       '@ungap/structured-clone': 1.3.0
       dayjs: 1.11.19
@@ -17417,7 +17441,7 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.41
 
-  '@fern-api/ui-core-utils@0.142.22-c021dd849':
+  '@fern-api/ui-core-utils@0.142.23-f1d57e46f':
     dependencies:
       date-fns: 4.1.0
       date-fns-tz: 3.2.0(date-fns@4.1.0)
@@ -18222,6 +18246,14 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  '@jsep-plugin/assignment@1.3.0(jsep@1.4.0)':
+    dependencies:
+      jsep: 1.4.0
+
+  '@jsep-plugin/regex@1.0.4(jsep@1.4.0)':
+    dependencies:
+      jsep: 1.4.0
 
   '@jspm/core@2.1.0': {}
 
@@ -22529,6 +22561,8 @@ snapshots:
       - utf-8-validate
     optional: true
 
+  jsep@1.4.0: {}
+
   jsesc@3.1.0: {}
 
   json-buffer@3.0.1: {}
@@ -22554,6 +22588,12 @@ snapshots:
       universalify: 2.0.1
     optionalDependencies:
       graceful-fs: 4.2.11
+
+  jsonpath-plus@10.3.0:
+    dependencies:
+      '@jsep-plugin/assignment': 1.3.0(jsep@1.4.0)
+      '@jsep-plugin/regex': 1.0.4(jsep@1.4.0)
+      jsep: 1.4.0
 
   jsonwebtoken@9.0.2:
     dependencies:

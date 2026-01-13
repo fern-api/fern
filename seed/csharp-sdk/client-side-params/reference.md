@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListResourcesAsync</a>(ListResourcesRequest { ... }) -> IEnumerable<Resource></code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListResourcesAsync</a>(ListResourcesRequest { ... }) -> IEnumerable&lt;Resource&gt;</code></summary>
 <dl>
 <dd>
 
@@ -550,7 +550,7 @@ await client.Service.DeleteUserAsync("userId");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListConnectionsAsync</a>(ListConnectionsRequest { ... }) -> IEnumerable<Connection></code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedClientSideParams/Service/ServiceClient.cs">ListConnectionsAsync</a>(ListConnectionsRequest { ... }) -> IEnumerable&lt;Connection&gt;</code></summary>
 <dl>
 <dd>
 

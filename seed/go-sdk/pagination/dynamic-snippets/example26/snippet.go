@@ -16,12 +16,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ListUsersOptionalDataRequest{
-        Page: fern.Int(
-            1,
+    request := &fern.ListUsersCursorPaginationRequest{
+        StartingAfter: fern.String(
+            "starting_after",
         ),
     }
-    client.Users.ListWithOptionalData(
+    client.Users.ListWithCursorPagination(
         context.TODO(),
         request,
     )

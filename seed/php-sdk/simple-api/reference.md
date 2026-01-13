@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client->user->get($id) -> User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;get($id) -> User</code></summary>
 <dl>
 <dd>
 

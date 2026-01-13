@@ -244,6 +244,85 @@ export class UsersClient {
     }
 
     /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     *
+     * @param {SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithTopLevelBodyCursorPagination({
+     *         cursor: "initial_cursor",
+     *         filter: "active"
+     *     })
+     */
+    public async listWithTopLevelBodyCursorPagination(
+        request: SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersTopLevelCursorPaginationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.ListUsersTopLevelCursorPaginationResponse>> => {
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    this._options?.headers,
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users/top-level-cursor",
+                    ),
+                    method: "POST",
+                    headers: _headers,
+                    contentType: "application/json",
+                    queryParameters: requestOptions?.queryParams,
+                    requestType: "json",
+                    body: request,
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as SeedPagination.ListUsersTopLevelCursorPaginationResponse,
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedPaginationError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+                }
+                return handleNonStatusCodeError(
+                    _response.error,
+                    _response.rawResponse,
+                    "POST",
+                    "/users/top-level-cursor",
+                );
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<SeedPagination.User, SeedPagination.ListUsersTopLevelCursorPaginationResponse>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.next_cursor != null &&
+                !(typeof response?.next_cursor === "string" && response?.next_cursor === ""),
+            getItems: (response) => response?.data ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "cursor", response?.next_cursor));
+            },
+        });
+    }
+
+    /**
      * @param {SeedPagination.ListUsersOffsetPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *

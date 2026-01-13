@@ -40,7 +40,7 @@ await client.Service.GetResourceAsync("rsc-xyz");
 </dl>
 </details>
 
-<details><summary><code>client.Service.<a href="/src/SeedMixedCase/Service/ServiceClient.cs">ListResourcesAsync</a>(ListResourcesRequest { ... }) -> IEnumerable<Resource></code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedMixedCase/Service/ServiceClient.cs">ListResourcesAsync</a>(ListResourcesRequest { ... }) -> IEnumerable&lt;Resource&gt;</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.retries.<a href="/src/api/resources/retries/client.rs">get_users</a>() -> Result<Vec<User>, ApiError></code></summary>
+<details><summary><code>client.retries.<a href="/src/api/resources/retries/client.rs">get_users</a>() -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

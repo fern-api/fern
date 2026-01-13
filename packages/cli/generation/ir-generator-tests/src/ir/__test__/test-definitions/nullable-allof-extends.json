@@ -944,6 +944,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Returns a RootObject which inherits from a nullable schema."
                 },
@@ -1753,6 +1754,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Creates a test object with nullable allOf in request body."
                 }

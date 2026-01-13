@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>$client->headers->send($request)</code></summary>
+<details><summary><code>$client-&gt;headers-&gt;send($request)</code></summary>
 <dl>
 <dd>
 
@@ -71,7 +71,7 @@ $client->headers->send(
 </details>
 
 ## InlinedRequest
-<details><summary><code>$client->inlinedRequest->send($request)</code></summary>
+<details><summary><code>$client-&gt;inlinedRequest-&gt;send($request)</code></summary>
 <dl>
 <dd>
 
@@ -141,7 +141,7 @@ $client->inlinedRequest->send(
 </details>
 
 ## MultipartForm
-<details><summary><code>$client->multipartForm->multipartForm($request)</code></summary>
+<details><summary><code>$client-&gt;multipartForm-&gt;multipartForm($request)</code></summary>
 <dl>
 <dd>
 
@@ -167,7 +167,7 @@ $client->multipartForm->multipartForm($request);
 </details>
 
 ## PathParam
-<details><summary><code>$client->pathParam->send($operand, $operandOrColor)</code></summary>
+<details><summary><code>$client-&gt;pathParam-&gt;send($operand, $operandOrColor)</code></summary>
 <dl>
 <dd>
 
@@ -219,7 +219,7 @@ $client->pathParam->send(
 </details>
 
 ## QueryParam
-<details><summary><code>$client->queryParam->send($request)</code></summary>
+<details><summary><code>$client-&gt;queryParam-&gt;send($request)</code></summary>
 <dl>
 <dd>
 
@@ -288,7 +288,7 @@ $client->queryParam->send(
 </dl>
 </details>
 
-<details><summary><code>$client->queryParam->sendList($request)</code></summary>
+<details><summary><code>$client-&gt;queryParam-&gt;sendList($request)</code></summary>
 <dl>
 <dd>
 

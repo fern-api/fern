@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_with_bearer_token</a>() -> Result<String, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_with_bearer_token</a>() -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

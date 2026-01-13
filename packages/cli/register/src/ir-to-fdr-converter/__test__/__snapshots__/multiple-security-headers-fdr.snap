@@ -209,6 +209,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -366,6 +367,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -473,6 +475,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {
@@ -587,6 +590,7 @@
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {

@@ -5,7 +5,7 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 43 types for API operations
+//! - **Request/Response Types**: 45 types for API operations
 //! - **Model Types**: 28 types for data representation
 
 pub mod username_cursor;
@@ -50,12 +50,14 @@ pub mod users_list_users_extended_optional_list_response;
 pub mod users_list_users_pagination_response;
 pub mod users_list_users_optional_data_pagination_response;
 pub mod users_list_users_mixed_type_pagination_response;
+pub mod users_list_users_top_level_cursor_pagination_response;
 pub mod users_page;
 pub mod users_next_page;
 pub mod users_user;
 pub mod list_users_body_cursor_pagination_request;
 pub mod list_users_body_offset_pagination_request;
 pub mod list_users_body_cursor_pagination_request_request;
+pub mod list_users_top_level_body_cursor_pagination_request;
 pub mod list_users_body_offset_pagination_request_request;
 pub mod inline_users_inline_users_list_with_cursor_pagination_query_request;
 pub mod inline_users_inline_users_list_with_mixed_type_cursor_pagination_query_request;
@@ -122,12 +124,14 @@ pub use users_list_users_extended_optional_list_response::ListUsersExtendedOptio
 pub use users_list_users_pagination_response::ListUsersPaginationResponse2;
 pub use users_list_users_optional_data_pagination_response::ListUsersOptionalDataPaginationResponse;
 pub use users_list_users_mixed_type_pagination_response::ListUsersMixedTypePaginationResponse2;
+pub use users_list_users_top_level_cursor_pagination_response::ListUsersTopLevelCursorPaginationResponse;
 pub use users_page::Page2;
 pub use users_next_page::NextPage2;
 pub use users_user::User2;
 pub use list_users_body_cursor_pagination_request::ListUsersBodyCursorPaginationRequest;
 pub use list_users_body_offset_pagination_request::ListUsersBodyOffsetPaginationRequest;
 pub use list_users_body_cursor_pagination_request_request::ListUsersBodyCursorPaginationRequest2;
+pub use list_users_top_level_body_cursor_pagination_request::ListUsersTopLevelBodyCursorPaginationRequest;
 pub use list_users_body_offset_pagination_request_request::ListUsersBodyOffsetPaginationRequest2;
 pub use inline_users_inline_users_list_with_cursor_pagination_query_request::InlineUsersInlineUsersListWithCursorPaginationQueryRequest;
 pub use inline_users_inline_users_list_with_mixed_type_cursor_pagination_query_request::InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest;
