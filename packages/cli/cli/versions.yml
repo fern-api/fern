@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.38.1
+  changelogEntry:
+    - summary: |
+        Fix protobuf OpenAPI generation to support air-gapped environments. The CLI now checks for a pre-cached `buf.lock` file in the proto directory before calling `buf dep update`. This enables self-hosted deployments with `from-openapi: true` proto specs to work in air-gapped environments by pre-caching dependencies.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
 - version: 3.38.0
   changelogEntry:
     - summary: |

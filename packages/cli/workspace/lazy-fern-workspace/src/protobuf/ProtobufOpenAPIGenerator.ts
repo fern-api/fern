@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { cp, readFile, unlink, writeFile } from "fs/promises";
+import { access, cp, readFile, unlink, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { getProtobufYamlV1 } from "./utils";
 
@@ -140,14 +140,29 @@ export class ProtobufOpenAPIGenerator {
                 await writeFile(bufLockPath, existingBufLockContents);
                 cleanupBufLock = true;
             } else if (deps.length > 0) {
-                const bufDepUpdateResult = await buf(["dep", "update"]);
+                // Check if buf.lock already exists in the copied directory (e.g., pre-cached in air-gapped environments)
+                let bufLockExistsInCopiedDir = false;
                 try {
+                    await access(bufLockPath);
+                    bufLockExistsInCopiedDir = true;
+                    // Read the existing buf.lock contents for caching
                     bufLockContents = await readFile(bufLockPath, "utf-8");
-                } catch (err) {
-                    bufLockContents = undefined;
+                } catch {
+                    bufLockExistsInCopiedDir = false;
                 }
-                if (bufDepUpdateResult.exitCode !== 0) {
-                    this.context.failAndThrow(bufDepUpdateResult.stderr);
+
+                // Skip buf dep update if we already have a cached buf.lock file
+                // This enables air-gapped environments to work by pre-caching dependencies
+                if (!bufLockExistsInCopiedDir) {
+                    const bufDepUpdateResult = await buf(["dep", "update"]);
+                    try {
+                        bufLockContents = await readFile(bufLockPath, "utf-8");
+                    } catch (err) {
+                        bufLockContents = undefined;
+                    }
+                    if (bufDepUpdateResult.exitCode !== 0) {
+                        this.context.failAndThrow(bufDepUpdateResult.stderr);
+                    }
                 }
             }
 
