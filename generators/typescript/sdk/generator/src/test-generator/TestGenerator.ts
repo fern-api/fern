@@ -1299,6 +1299,23 @@ describe("${serviceName}", () => {
             hasPagination = false;
         }
 
+        // Extract pagination page field paths to ignore in request body matching
+        // When getNextPage() is called, the SDK sends a different page/cursor value than the original request
+        const paginationIgnoredFields: string[] = [];
+        if (endpoint.pagination !== undefined) {
+            // Both cursor and offset pagination have a "page" property that changes between requests
+            if (endpoint.pagination.type === "cursor" || endpoint.pagination.type === "offset") {
+                const pageProperty = endpoint.pagination.page;
+                // Build the full path to the page field (e.g., "pagination.cursor" or just "cursor" or "pagination.offset")
+                // PropertyPathItem.name is of type Name (use originalName), while property.name is NameAndWireValue (use wireValue)
+                const pathParts = [
+                    ...(pageProperty.propertyPath ?? []).map((p) => p.name.originalName),
+                    pageProperty.property.name.wireValue
+                ];
+                paginationIgnoredFields.push(pathParts.join("."));
+            }
+        }
+
         const expectedDeclaration = code`const expected = ${expected};`;
 
         const paginationBlock =
@@ -1353,7 +1370,10 @@ describe("${serviceName}", () => {
                     `;
                 })}${
                 rawRequestBody
-                    ? code`.${mockBodyMethod}(rawRequestBody)
+                    ? paginationIgnoredFields.length > 0
+                        ? code`.${mockBodyMethod}(rawRequestBody, { ignoredFields: ${literalOf(paginationIgnoredFields)} })
+                `
+                        : code`.${mockBodyMethod}(rawRequestBody)
                 `
                     : ""
             }.respondWith()

@@ -3,7 +3,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public partial class QueryClient
+public partial class QueryClient : IQueryClient
 {
     private RawClient _client;
 

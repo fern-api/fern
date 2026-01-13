@@ -1,5 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.14.2
+  changelogEntry:
+    - summary: |
+        Remove redundant type imports from README code snippets. The prelude import already re-exports all types via `pub use crate::api::*;`, so the additional explicit type imports were unnecessary.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 62
+
+- version: 0.14.1
+  changelogEntry:
+    - summary: |
+        Support complex dependency specs in extraDependencies and extraDevDependencies config. Dependencies can now be specified as either version strings or full RustDependencySpec objects with features, optional, git, path, and other Cargo.toml options. Also made API key header name configurable via IR auth schemes.
+      type: chore
+  createdAt: "2026-01-08"
+  irVersion: 62
+
+- version: 0.14.0
+  changelogEntry:
+    - summary: |
+        Change default datetime type to `DateTime<FixedOffset>` with flexible parsing. This preserves original timezone offsets from server responses while accepting any datetime format (with or without timezone). When no timezone is provided, UTC is assumed. Use `dateTimeType: "utc"` to convert all datetimes to UTC instead.
+      type: feat
+  createdAt: "2026-01-07"
+  irVersion: 62
+
 - version: 0.13.10
   changelogEntry:
     - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.

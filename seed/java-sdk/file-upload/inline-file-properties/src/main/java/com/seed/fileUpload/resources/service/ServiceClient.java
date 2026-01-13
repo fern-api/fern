@@ -139,6 +139,10 @@ public class ServiceClient {
         return this.rawClient.optionalArgs().body();
     }
 
+    public String optionalArgs(RequestOptions requestOptions) {
+        return this.rawClient.optionalArgs(requestOptions).body();
+    }
+
     public String optionalArgs(OptionalArgsRequest request) {
         return this.rawClient.optionalArgs(request).body();
     }

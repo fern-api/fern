@@ -213,7 +213,10 @@ export function generateFieldType(
     }
 }
 
-export function generateFieldAttributes(property: ObjectProperty | InlinedRequestBodyProperty): rust.Attribute[] {
+export function generateFieldAttributes(
+    property: ObjectProperty | InlinedRequestBodyProperty,
+    context?: ModelGeneratorContext
+): rust.Attribute[] {
     const attributes: rust.Attribute[] = [];
 
     // Add serde rename if the field name differs from wire name
@@ -225,6 +228,27 @@ export function generateFieldAttributes(property: ObjectProperty | InlinedReques
     const isOptional = isOptionalType(property.valueType);
     if (isOptional) {
         attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
+    }
+
+    // Add flexible datetime serde attribute - both "offset" (default) and "utc" use flexible parsing
+    // "offset" uses flexible_datetime::offset module (DateTime<FixedOffset>)
+    // "utc" uses flexible_datetime::utc module (DateTime<Utc>)
+    if (context) {
+        const dateTimeType = context.getDateTimeType();
+        const typeRef = isOptional ? getInnerTypeFromOptional(property.valueType) : property.valueType;
+        if (isDateTimeOnlyType(typeRef)) {
+            const modulePath = dateTimeType === "utc" 
+                ? "crate::core::flexible_datetime::utc" 
+                : "crate::core::flexible_datetime::offset";
+            if (isOptional) {
+                // For optional datetime fields with custom deserializer, we need serde(default)
+                // to handle missing fields in JSON (otherwise serde expects the field to be present)
+                attributes.push(Attribute.serde.default());
+                attributes.push(Attribute.serde.with(`${modulePath}::option`));
+            } else {
+                attributes.push(Attribute.serde.with(modulePath));
+            }
+        }
     }
 
     return attributes;
@@ -268,17 +292,28 @@ export function writeStructUseStatements(
     // Add chrono imports based on specific types needed
     const hasDateOnly = hasDateFields(properties);
     const hasDateTimeOnly = hasDateTimeOnlyFields(properties);
+    const useUtc = context.getDateTimeType() === "utc";
 
     // TODO: @iamnamananand996 - use AST mechanism for all imports
     if (hasDateOnly && hasDateTimeOnly) {
         // Both date and datetime types present
-        writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+        if (useUtc) {
+            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+        } else {
+            // Default: DateTime<FixedOffset>
+            writer.writeLine("use chrono::{DateTime, FixedOffset, NaiveDate};");
+        }
     } else if (hasDateOnly) {
         // Only date type present, import NaiveDate only
         writer.writeLine("use chrono::NaiveDate;");
     } else if (hasDateTimeOnly) {
-        // Only datetime type present, import DateTime and Utc only
-        writer.writeLine("use chrono::{DateTime, Utc};");
+        // Only datetime type present
+        if (useUtc) {
+            writer.writeLine("use chrono::{DateTime, Utc};");
+        } else {
+            // Default: DateTime<FixedOffset>
+            writer.writeLine("use chrono::{DateTime, FixedOffset};");
+        }
     }
 
     // Add std::collections if we have maps or sets

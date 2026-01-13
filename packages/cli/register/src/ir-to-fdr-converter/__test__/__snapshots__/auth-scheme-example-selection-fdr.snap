@@ -175,6 +175,7 @@ Examples should use the first available auth scheme (admin).
             },
           },
         },
+        "responseHeaders": [],
         "responsesV2": {
           "responses": [
             {

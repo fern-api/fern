@@ -123,6 +123,10 @@ public class RawUserClient {
         return createUsernameOptional(Optional.empty());
     }
 
+    public SeedRequestParametersHttpResponse<Void> createUsernameOptional(RequestOptions requestOptions) {
+        return createUsernameOptional(Optional.empty(), requestOptions);
+    }
+
     public SeedRequestParametersHttpResponse<Void> createUsernameOptional(
             Optional<CreateUsernameBodyOptionalProperties> request) {
         return createUsernameOptional(request, null);

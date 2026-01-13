@@ -14,7 +14,9 @@ pub struct ObjectWithOptionalField {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub bool: Option<bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub datetime: Option<DateTime<Utc>>,
+    #[serde(default)]
+    #[serde(with = "crate::core::flexible_datetime::offset::option")]
+    pub datetime: Option<DateTime<FixedOffset>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub date: Option<NaiveDate>,
     #[serde(skip_serializing_if = "Option::is_none")]

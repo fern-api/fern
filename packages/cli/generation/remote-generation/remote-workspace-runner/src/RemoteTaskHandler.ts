@@ -9,7 +9,7 @@ import axios from "axios";
 import chalk from "chalk";
 import decompress from "decompress";
 import { createWriteStream } from "fs";
-import { cp, mkdir, rm } from "fs/promises";
+import { chmod, cp, mkdir, readdir, rm } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
@@ -234,11 +234,38 @@ async function downloadZipForTask({
     await pipeline(request.data, createWriteStream(outputZipPath));
 
     // decompress to user-specified location
-    if (await doesPathExist(absolutePathToLocalOutput)) {
-        await rm(absolutePathToLocalOutput, { recursive: true });
-    }
+    // Force remove the directory to handle read-only files (e.g., .git/objects)
+    await forceRemoveDirectory(absolutePathToLocalOutput);
     await mkdir(absolutePathToLocalOutput, { recursive: true });
     await decompress(outputZipPath, absolutePathToLocalOutput);
+}
+
+async function forceRemoveDirectory(dirPath: AbsoluteFilePath): Promise<void> {
+    if (!(await doesPathExist(dirPath))) {
+        return;
+    }
+    await makeWritableRecursive(dirPath);
+    await rm(dirPath, { recursive: true, force: true });
+}
+
+async function makeWritableRecursive(dirPath: AbsoluteFilePath): Promise<void> {
+    try {
+        const entries = await readdir(dirPath, { withFileTypes: true });
+        for (const entry of entries) {
+            const fullPath = AbsoluteFilePath.of(path.join(dirPath, entry.name));
+            if (entry.isDirectory()) {
+                await makeWritableRecursive(fullPath);
+            }
+            try {
+                await chmod(fullPath, 0o755);
+            } catch {
+                // Ignore chmod errors - file might be deleted or inaccessible
+            }
+        }
+        await chmod(dirPath, 0o755);
+    } catch {
+        // Ignore errors - directory might not exist or be inaccessible
+    }
 }
 
 function convertLogLevel(logLevel: FernFiddle.LogLevel): LogLevel {
@@ -342,9 +369,9 @@ async function downloadFilesWithFernIgnoreInTempRepo({
 
     await runGitCommand(["restore", "."], tmpOutputResolutionDir, context);
 
-    await rm(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")), { recursive: true });
+    await forceRemoveDirectory(join(tmpOutputResolutionDir, RelativeFilePath.of(".git")));
 
-    await rm(absolutePathToLocalOutput, { recursive: true });
+    await forceRemoveDirectory(absolutePathToLocalOutput);
     await cp(tmpOutputResolutionDir, absolutePathToLocalOutput, { recursive: true });
 }
 

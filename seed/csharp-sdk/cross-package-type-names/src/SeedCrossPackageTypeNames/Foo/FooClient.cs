@@ -3,7 +3,7 @@ using SeedCrossPackageTypeNames.Core;
 
 namespace SeedCrossPackageTypeNames;
 
-public partial class FooClient
+public partial class FooClient : IFooClient
 {
     private RawClient _client;
 

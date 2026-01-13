@@ -4,6 +4,7 @@ using SeedOauthClientCredentialsMandatoryAuth.Nested;
 namespace SeedOauthClientCredentialsMandatoryAuth;
 
 public partial class SeedOauthClientCredentialsMandatoryAuthClient
+    : ISeedOauthClientCredentialsMandatoryAuthClient
 {
     private readonly RawClient _client;
 

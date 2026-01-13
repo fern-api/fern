@@ -2,7 +2,7 @@ using SeedExamples.Core;
 
 namespace SeedExamples.File_.Notification;
 
-public partial class NotificationClient
+public partial class NotificationClient : INotificationClient
 {
     private RawClient _client;
 

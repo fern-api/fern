@@ -1,5 +1,4 @@
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::{NestedObjectWithRequiredField, ObjectWithOptionalField};
 
 #[tokio::main]
 async fn main() {
@@ -23,9 +22,7 @@ async fn main() {
                         double: Some(1.1),
                         bool: Some(true),
                         datetime: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                         uuid: Some(
@@ -47,9 +44,7 @@ async fn main() {
                         double: Some(1.1),
                         bool: Some(true),
                         datetime: Some(
-                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                                .unwrap()
-                                .with_timezone(&Utc),
+                            DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                         ),
                         date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
                         uuid: Some(

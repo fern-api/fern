@@ -2,7 +2,7 @@ using SeedResponseProperty.Core;
 
 namespace SeedResponseProperty;
 
-public partial class SeedResponsePropertyClient
+public partial class SeedResponsePropertyClient : ISeedResponsePropertyClient
 {
     private readonly RawClient _client;
 

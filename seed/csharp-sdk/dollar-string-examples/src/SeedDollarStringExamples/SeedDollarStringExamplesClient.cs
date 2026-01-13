@@ -2,7 +2,7 @@ using SeedDollarStringExamples.Core;
 
 namespace SeedDollarStringExamples;
 
-public partial class SeedDollarStringExamplesClient
+public partial class SeedDollarStringExamplesClient : ISeedDollarStringExamplesClient
 {
     private readonly RawClient _client;
 

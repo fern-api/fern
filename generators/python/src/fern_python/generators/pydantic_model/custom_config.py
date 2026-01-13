@@ -31,6 +31,13 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
 
     wrapped_aliases: bool = False
 
+    positional_single_property_constructors: bool = False
+    """
+    When enabled, generates a custom __init__ method for models with a single required field
+    (ignoring discriminator/literal type fields with defaults). This allows positional argument
+    construction like `Isin("US0378331005")` instead of `Isin(isin="US0378331005")`.
+    """
+
     union_naming: UnionNamingVersions = "v0"
     """
     If you are dealing with discriminated union members that already have the discriminant property on them (and they're only used in one union)

@@ -2,7 +2,7 @@ using SeedHeaderToken.Core;
 
 namespace SeedHeaderToken;
 
-public partial class SeedHeaderTokenClient
+public partial class SeedHeaderTokenClient : ISeedHeaderTokenClient
 {
     private readonly RawClient _client;
 

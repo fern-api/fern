@@ -55,6 +55,10 @@ const AsIsFileSpecs = {
         relativePathToDir: "src/core",
         filename: "sse_stream.rs"
     },
+    FlexibleDatetime: {
+        relativePathToDir: "src/core",
+        filename: "flexible_datetime.rs"
+    },
     CoreMod: {
         relativePathToDir: "src/core",
         filename: "mod.rs"

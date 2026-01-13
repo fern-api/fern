@@ -2,7 +2,7 @@ using SeedStreaming.Core;
 
 namespace SeedStreaming;
 
-public partial class SeedStreamingClient
+public partial class SeedStreamingClient : ISeedStreamingClient
 {
     private readonly RawClient _client;
 

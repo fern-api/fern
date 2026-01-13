@@ -13,7 +13,7 @@ export function mockOAuthScheme(server: MockServer): void {
     server
         .mockEndpoint()
         .post("/token")
-        .jsonBody(rawRequestBody)
+        .formUrlEncodedBody(rawRequestBody)
         .respondWith()
         .statusCode(200)
         .jsonBody(rawResponseBody)

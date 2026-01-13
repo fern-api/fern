@@ -63,7 +63,9 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     ir.apiDisplayName ??
                     startCase(ir.apiName.originalName)
             });
-            const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.jsonOrThrow(_collectionDefinition);
+            const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.jsonOrThrow(_collectionDefinition, {
+                unrecognizedObjectKeys: "passthrough"
+            });
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Converted ir to postman collection");
 

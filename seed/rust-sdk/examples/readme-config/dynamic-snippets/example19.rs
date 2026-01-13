@@ -1,9 +1,4 @@
 use seed_examples::prelude::*;
-use seed_examples::{
-    Actor, Actress, BasicType, BigEntity, CastMember, ComplexType, Data, Directory, Entity,
-    EventInfo, Exception, ExceptionInfo, ExtendedMovie, File, Metadata, Migration, MigrationStatus,
-    Moment, MovieId, Node, StuntDouble, Tag, Test, Tree, Type,
-};
 
 #[tokio::main]
 async fn main() {
@@ -224,9 +219,7 @@ async fn main() {
                 moment: Some(Moment {
                     id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                     date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
-                    datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 }),
             },
             None,

@@ -4,7 +4,7 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Endpoints.ContentType;
 
-public partial class ContentTypeClient
+public partial class ContentTypeClient : IContentTypeClient
 {
     private RawClient _client;
 

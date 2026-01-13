@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { chmod, cp, unlink, writeFile } from "fs/promises";
+import { access, chmod, cp, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
@@ -168,15 +168,13 @@ export class ProtobufIRGenerator {
         absoluteFilepathToProtobufRoot: AbsoluteFilePath;
     }): Promise<void> {
         // Copy the entire protobuf root, excluding buf.yaml and buf.gen.yaml, to a temp directory
+        // Note: buf.lock is intentionally included to allow pre-cached dependencies to be used
+        // in air-gapped environments (e.g., self-hosted deployments)
         await cp(absoluteFilepathToProtobufRoot, protobufGeneratorConfigPath, {
             recursive: true,
             filter: (src) => {
                 const basename = path.basename(src);
-                return (
-                    basename !== "buf.lock" &&
-                    basename !== "buf.yaml" &&
-                    !(basename.startsWith("buf.gen.") && basename.endsWith(".yaml"))
-                );
+                return basename !== "buf.yaml" && !(basename.startsWith("buf.gen.") && basename.endsWith(".yaml"));
             }
         });
     }
@@ -242,12 +240,40 @@ export class ProtobufIRGenerator {
             stderr: "pipe"
         });
 
+        const bufLockPath = join(cwd, RelativeFilePath.of("buf.lock"));
+
         try {
             await writeFile(bufYamlPath, configContent);
+
             if (deps.length > 0) {
+                // Check if buf.lock already exists (e.g., pre-cached in air-gapped environments)
+                let bufLockExists = false;
+                try {
+                    await access(bufLockPath);
+                    bufLockExists = true;
+                } catch {
+                    bufLockExists = false;
+                }
+
+                // Always try buf dep update to populate the cache (needed at build time)
+                // If it fails with a network error and buf.lock exists, continue (air-gapped mode)
                 const bufDepUpdateResult = await buf(["dep", "update"]);
                 if (bufDepUpdateResult.exitCode !== 0) {
-                    this.context.failAndThrow(bufDepUpdateResult.stderr);
+                    const isNetworkError =
+                        bufDepUpdateResult.stderr.includes("server hosted at that remote is unavailable") ||
+                        bufDepUpdateResult.stderr.includes("failed to connect") ||
+                        bufDepUpdateResult.stderr.includes("network") ||
+                        bufDepUpdateResult.stderr.includes("ENOTFOUND") ||
+                        bufDepUpdateResult.stderr.includes("ETIMEDOUT");
+
+                    if (isNetworkError && bufLockExists) {
+                        // Air-gapped environment with pre-cached buf.lock - continue without updating
+                        this.context.logger.debug(
+                            "buf dep update failed due to network error, but buf.lock exists. Continuing in air-gapped mode."
+                        );
+                    } else {
+                        this.context.failAndThrow(bufDepUpdateResult.stderr);
+                    }
                 }
             }
 

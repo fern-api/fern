@@ -68,10 +68,12 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
     }
 
     public doGenerate(): CSharpFile {
+        const interfaceReference = this.context.getSubpackageInterfaceReference(this.subpackage);
         const class_ = this.csharp.class_({
             reference: this.classReference,
             partial: true,
-            access: ast.Access.Public
+            access: ast.Access.Public,
+            interfaceReferences: [interfaceReference]
         });
 
         class_.addField({

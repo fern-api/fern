@@ -74,6 +74,12 @@ public class RawOrganizationsClient {
     }
 
     public SeedPathParametersHttpResponse<User> getOrganizationUser(
+            String organizationId, String userId, RequestOptions requestOptions) {
+        return getOrganizationUser(
+                organizationId, userId, GetOrganizationUserRequest.builder().build(), requestOptions);
+    }
+
+    public SeedPathParametersHttpResponse<User> getOrganizationUser(
             String organizationId, String userId, GetOrganizationUserRequest request) {
         return getOrganizationUser(organizationId, userId, request, null);
     }
@@ -116,6 +122,12 @@ public class RawOrganizationsClient {
     public SeedPathParametersHttpResponse<List<Organization>> searchOrganizations(String organizationId) {
         return searchOrganizations(
                 organizationId, SearchOrganizationsRequest.builder().build());
+    }
+
+    public SeedPathParametersHttpResponse<List<Organization>> searchOrganizations(
+            String organizationId, RequestOptions requestOptions) {
+        return searchOrganizations(
+                organizationId, SearchOrganizationsRequest.builder().build(), requestOptions);
     }
 
     public SeedPathParametersHttpResponse<List<Organization>> searchOrganizations(

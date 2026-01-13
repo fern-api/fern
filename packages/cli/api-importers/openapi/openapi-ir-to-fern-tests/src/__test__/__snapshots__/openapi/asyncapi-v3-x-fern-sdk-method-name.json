@@ -93,12 +93,11 @@
           "messages": {
             "serverNotification": {
               "body": "root.ServerNotificationPayload",
-              "method-name": "sendMessage",
+              "method-name": "onNotification",
               "origin": "server",
             },
             "userMessage": {
               "body": "root.UserMessagePayload",
-              "method-name": "onNotification",
               "origin": "client",
             },
           },
@@ -118,11 +117,10 @@
     serverNotification:
       origin: server
       body: root.ServerNotificationPayload
-      method-name: sendMessage
+      method-name: onNotification
     userMessage:
       origin: client
       body: root.UserMessagePayload
-      method-name: onNotification
   examples:
     - messages: []
 imports:

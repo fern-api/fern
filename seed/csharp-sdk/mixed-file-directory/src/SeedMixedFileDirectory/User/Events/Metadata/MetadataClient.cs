@@ -4,7 +4,7 @@ using SeedMixedFileDirectory.Core;
 
 namespace SeedMixedFileDirectory.User_.Events;
 
-public partial class MetadataClient
+public partial class MetadataClient : IMetadataClient
 {
     private RawClient _client;
 

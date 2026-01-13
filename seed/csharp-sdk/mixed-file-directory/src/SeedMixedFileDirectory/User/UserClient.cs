@@ -4,7 +4,7 @@ using SeedMixedFileDirectory.User_;
 
 namespace SeedMixedFileDirectory;
 
-public partial class UserClient
+public partial class UserClient : IUserClient
 {
     private RawClient _client;
 

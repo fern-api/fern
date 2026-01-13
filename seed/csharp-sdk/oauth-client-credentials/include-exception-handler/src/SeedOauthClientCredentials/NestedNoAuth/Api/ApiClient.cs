@@ -3,7 +3,7 @@ using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials.NestedNoAuth;
 
-public partial class ApiClient
+public partial class ApiClient : IApiClient
 {
     private RawClient _client;
 

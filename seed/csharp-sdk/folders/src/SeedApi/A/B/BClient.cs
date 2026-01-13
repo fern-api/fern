@@ -3,7 +3,7 @@ using SeedApi.Core;
 
 namespace SeedApi.A.B;
 
-public partial class BClient
+public partial class BClient : IBClient
 {
     private RawClient _client;
 

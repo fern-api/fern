@@ -2,7 +2,7 @@
     "name": "@fern/simple-api",
     "version": "0.0.1",
     "private": false,
-    "repository": "github:simple-api/fern",
+    "repository": "git+https://github.com/simple-api/fern",
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

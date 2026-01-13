@@ -375,7 +375,8 @@
                 {
                   "key": "optionalDeadline",
                   "description": null,
-                  "value": "2024-01-15T09:30:00Z"
+                  "value": "2024-01-15T09:30:00Z",
+                  "disabled": true
                 },
                 {
                   "key": "keyValue",
@@ -385,7 +386,8 @@
                 {
                   "key": "optionalString",
                   "description": null,
-                  "value": "optionalString"
+                  "value": "optionalString",
+                  "disabled": true
                 },
                 {
                   "key": "nestedUser",
@@ -395,7 +397,8 @@
                 {
                   "key": "optionalUser",
                   "description": null,
-                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                  "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}",
+                  "disabled": true
                 },
                 {
                   "key": "excludeUser",
@@ -485,7 +488,8 @@
                     {
                       "key": "optionalDeadline",
                       "description": null,
-                      "value": "2024-01-15T09:30:00Z"
+                      "value": "2024-01-15T09:30:00Z",
+                      "disabled": true
                     },
                     {
                       "key": "keyValue",
@@ -495,7 +499,8 @@
                     {
                       "key": "optionalString",
                       "description": null,
-                      "value": "optionalString"
+                      "value": "optionalString",
+                      "disabled": true
                     },
                     {
                       "key": "nestedUser",
@@ -505,7 +510,8 @@
                     {
                       "key": "optionalUser",
                       "description": null,
-                      "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}"
+                      "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}",
+                      "disabled": true
                     },
                     {
                       "key": "excludeUser",

@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "identifier": {
+      "$ref": "#/definitions/Isin"
+    },
+    "quantity": {
+      "$ref": "#/definitions/Quantity"
+    }
+  },
+  "required": [
+    "identifier",
+    "quantity"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Isin": {
+      "type": "object",
+      "properties": {
+        "isin": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "isin"
+      ],
+      "additionalProperties": false
+    },
+    "Quantity": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "number"
+        },
+        "type": {
+          "const": "QUANTITY"
+        }
+      },
+      "required": [
+        "quantity",
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

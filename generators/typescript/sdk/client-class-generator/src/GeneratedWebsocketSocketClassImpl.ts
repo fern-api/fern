@@ -1,4 +1,4 @@
-import { WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
+import { TypeReference, WebSocketChannel, WebSocketMessage, WebSocketMessageBody } from "@fern-fern/ir-sdk/api";
 import { getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedWebsocketSocketClass, SdkContext } from "@fern-typescript/contexts";
 import { camelCase } from "lodash-es";
@@ -310,20 +310,48 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
 
     private generateSendHelperMethods(context: SdkContext): MethodDeclarationStructure[] {
         return this.getMessagesForOrigin("client").map((message) => {
-            const node = this.getNodeForMessage(context, message);
-            return this.generateSendMessage(context, message, node);
+            const bodyType = message.body.type === "reference" ? message.body.bodyType : undefined;
+            const isBytes = bodyType != null && this.isBytesType(context, bodyType);
+            const node = isBytes
+                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword) // placeholder, not used
+                : this.getNodeForMessage(context, message);
+            return this.generateSendMessage(context, message, node, isBytes);
         });
     }
 
     private generateSendMessage(
         context: SdkContext,
         message: WebSocketMessage,
-        node: ts.TypeNode
+        node: ts.TypeNode,
+        isBytes: boolean
     ): MethodDeclarationStructure {
-        const messageType = camelCase(message.type);
+        const methodName =
+            message.methodName != null
+                ? camelCase(message.methodName)
+                : `send${camelCase(message.type).charAt(0).toUpperCase() + camelCase(message.type).slice(1)}`;
+
+        if (isBytes) {
+            return {
+                kind: StructureKind.Method,
+                name: methodName,
+                scope: Scope.Public,
+                parameters: [
+                    {
+                        name: GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME,
+                        type: "ArrayBufferLike | Blob | ArrayBufferView"
+                    }
+                ],
+                returnType: "void",
+                statements: [
+                    "this.assertSocketIsOpen();",
+                    `this.sendBinary(${GeneratedWebsocketSocketClassImpl.MESSAGE_PARAMETER_NAME});`
+                ]
+            };
+        }
+
         return {
             kind: StructureKind.Method,
-            name: `send${messageType.charAt(0).toUpperCase() + messageType.slice(1)}`,
+            name: methodName,
             scope: Scope.Public,
             parameters: [
                 {
@@ -618,5 +646,22 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
         }
         const generatedType = context.type.getReferenceToType(message.body.bodyType);
         return ts.factory.createTypeReferenceNode(getTextOfTsNode(generatedType.typeNode), undefined);
+    }
+
+    private isBytesType(context: SdkContext, bodyType: TypeReference): boolean {
+        const resolved = context.type.resolveTypeReference(bodyType);
+        if (resolved.type !== "primitive") {
+            return false;
+        }
+        const primitive = resolved.primitive;
+        // Check for Fern's native `bytes` type which maps to BASE_64
+        if (primitive.v1 === "BASE_64") {
+            return true;
+        }
+        // Check for AsyncAPI/OpenAPI string with format: binary
+        if (primitive.v2 != null && primitive.v2.type === "string" && primitive.v2.validation?.format === "binary") {
+            return true;
+        }
+        return false;
     }
 }

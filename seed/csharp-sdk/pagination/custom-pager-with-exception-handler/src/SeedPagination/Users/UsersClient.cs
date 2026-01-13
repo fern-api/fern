@@ -3,7 +3,7 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
-public partial class UsersClient
+public partial class UsersClient : IUsersClient
 {
     private RawClient _client;
 

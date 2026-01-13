@@ -155,7 +155,7 @@ export class RequestGenerator {
 
     private generateRustFieldForProperty(property: ObjectProperty | InlinedRequestBodyProperty): rust.Field {
         const fieldType = generateFieldType(property, this.context);
-        const fieldAttributes = generateFieldAttributes(property);
+        const fieldAttributes = generateFieldAttributes(property, this.context);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
         // Add field documentation if available

@@ -2,7 +2,7 @@ using SeedWebsocket.Core;
 
 namespace SeedWebsocket.Empty;
 
-public partial class EmptyClient
+public partial class EmptyClient : IEmptyClient
 {
     private RawClient _client;
 

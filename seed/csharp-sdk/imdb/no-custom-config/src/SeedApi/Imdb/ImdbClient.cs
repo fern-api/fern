@@ -3,7 +3,7 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class ImdbClient
+public partial class ImdbClient : IImdbClient
 {
     private RawClient _client;
 

@@ -3,7 +3,7 @@ using SeedVersion.Core;
 
 namespace SeedVersion;
 
-public partial class UserClient
+public partial class UserClient : IUserClient
 {
     private RawClient _client;
 

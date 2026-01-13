@@ -3,7 +3,7 @@ using SeedCsharpXmlEntities.Core;
 
 namespace SeedCsharpXmlEntities;
 
-public partial class SeedCsharpXmlEntitiesClient
+public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
 {
     private readonly RawClient _client;
 

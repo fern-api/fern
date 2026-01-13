@@ -1,4 +1,54 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.8
+  changelogEntry:
+    - summary: |
+        Fix wire test mock server to ignore cursor mismatches in pagination tests.
+        When pagination tests call `getNextPage()`, the SDK correctly sends the cursor from the response,
+        but the mock server was rejecting the request because the cursor didn't match the original request.
+        The mock server now accepts an `ignoredFields` option to specify which fields to ignore during
+        request body matching. The test generator extracts pagination cursor field names from the IR
+        and passes them to the mock server at code generation time.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 63
+
+- version: 3.43.7
+  changelogEntry:
+    - summary: |
+        Support `bytes` argument type and custom method names for websocket messages.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 63
+
+- version: 3.43.6
+  changelogEntry:
+    - summary: |
+        Fix fetcher tests to use `.trim()` for platform-agnostic line ending comparisons.
+        This resolves test failures on Windows where files have CRLF line endings instead of LF.
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 63
+
+- version: 3.43.5
+  changelogEntry:
+    - summary: |
+        Fix GitHub repository URL format in package.json to use `git+https://` format,
+        ensuring local generation output matches remote generation.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 63
+
+- version: 3.43.4
+  changelogEntry:
+    - summary: |
+        Fix export of inline enum const values from request types. Previously, request types with inline enums
+        (defined directly in OpenAPI schemas) were exported using `export type { ... }` which only exports the
+        type, not the runtime const values. SDK consumers couldn't access enum values like `ConvertRequest.Resource.Auto`
+        at runtime. Now request types are exported using `export { ... }` which exports both the type and the const.
+      type: fix
+  createdAt: "2026-01-06"
+  irVersion: 63
+
 - version: 3.43.3
   changelogEntry:
     - summary: |

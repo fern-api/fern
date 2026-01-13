@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="/src/api/resources/completions/client.rs">stream</a>(request: StreamCompletionRequest) -> Result<Stream<Vec<u8>>, ApiError></code></summary>
+<details><summary><code>client.completions.<a href="/src/api/resources/completions/client.rs">stream</a>(request: StreamCompletionRequest) -> Result&lt;Stream&lt;Vec&lt;u8&gt;&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

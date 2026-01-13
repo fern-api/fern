@@ -1,5 +1,4 @@
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -11,11 +10,12 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest2 {
-                page: Some(1),
-                limit: Some(1),
+        .list_with_double_offset_pagination(
+            &ListWithDoubleOffsetPaginationQueryRequest2 {
+                page: Some(1.1),
+                per_page: Some(1.1),
                 order: Some(Order::Asc),
+                starting_after: Some("starting_after".to_string()),
             },
             None,
         )

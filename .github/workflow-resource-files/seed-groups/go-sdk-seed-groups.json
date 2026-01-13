@@ -2,11 +2,10 @@
   "totalTestTimeSeconds": 8426,
   "groups": [
     {
-      "fixtures": [
-        "version",
-        "simple-api",
-        "oauth-client-credentials",
-        "imdb:deep-package-path",
+            "fixtures": [
+              "version",
+              "simple-api",
+              "imdb:deep-package-path",
         "imdb:package-path",
         "inferred-auth-explicit",
         "package-yml:no-custom-config",

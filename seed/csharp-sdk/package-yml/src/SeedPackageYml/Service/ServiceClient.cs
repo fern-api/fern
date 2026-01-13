@@ -2,7 +2,7 @@ using SeedPackageYml.Core;
 
 namespace SeedPackageYml;
 
-public partial class ServiceClient
+public partial class ServiceClient : IServiceClient
 {
     private RawClient _client;
 

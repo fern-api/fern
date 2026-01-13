@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.13.0
+  changelogEntry:
+    - summary: |
+        Generate interfaces for all SDK clients to enable dependency injection and mocking for unit testing.
+
+        Each client class now implements a corresponding interface:
+        * Root client implements `I{ClientName}` (e.g., `IAcmeClient`)
+        * Sub-package clients implement `I{SubpackageName}Client` (e.g., `IUsersClient`)
+
+        This allows consumers to:
+        * Use dependency injection frameworks to inject client interfaces
+        * Mock client interfaces in unit tests using libraries like Moq or NSubstitute
+        * Follow SOLID principles with interface-based programming
+      type: feat
+  createdAt: "2026-01-06"
+  irVersion: 62
+
 - version: 2.12.2
   changelogEntry:
     - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.

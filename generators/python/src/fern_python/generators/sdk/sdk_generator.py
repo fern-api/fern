@@ -1,4 +1,5 @@
 import os
+import sys
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
 from .client_generator.client_generator import ClientGenerator
@@ -360,6 +361,26 @@ class SdkGenerator(AbstractGenerator):
                 snippet_test_factory=test_fac,
                 snippet_writer=snippet_writer,
                 ir=ir,
+            )
+
+        if custom_config.pydantic_config.positional_single_property_constructors:
+            warning_message = (
+                "\x1b[31;1m"
+                "WARNING: positional_single_property_constructors is enabled. "
+                "This allows Wrapper('value') syntax for single-required-field models, but if the model "
+                "later adds another required field, the positional __init__ will no longer be generated, "
+                "causing runtime failures for existing code. Use keyword arguments (Wrapper(field='value')) "
+                "for long-term stability."
+                "\x1b[0m"
+            )
+            print(warning_message, file=sys.stderr)
+            generator_exec_wrapper.send_update(
+                GeneratorUpdate.factory.log(
+                    LogUpdate(
+                        level=LogLevel.WARN,
+                        message=warning_message,
+                    )
+                )
             )
 
     def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:

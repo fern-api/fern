@@ -3,7 +3,7 @@ using SeedInferredAuthImplicitNoExpiry.Core;
 
 namespace SeedInferredAuthImplicitNoExpiry.Nested;
 
-public partial class ApiClient
+public partial class ApiClient : IApiClient
 {
     private RawClient _client;
 

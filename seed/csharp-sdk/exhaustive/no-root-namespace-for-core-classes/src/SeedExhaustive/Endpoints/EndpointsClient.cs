@@ -2,7 +2,7 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints;
 
-public partial class EndpointsClient
+public partial class EndpointsClient : IEndpointsClient
 {
     private RawClient _client;
 

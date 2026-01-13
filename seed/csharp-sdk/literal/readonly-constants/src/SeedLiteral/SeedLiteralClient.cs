@@ -2,7 +2,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public partial class SeedLiteralClient
+public partial class SeedLiteralClient : ISeedLiteralClient
 {
     private readonly RawClient _client;
 

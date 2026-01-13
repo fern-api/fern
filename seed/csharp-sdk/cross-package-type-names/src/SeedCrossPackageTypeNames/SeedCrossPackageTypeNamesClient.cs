@@ -4,7 +4,7 @@ using SeedCrossPackageTypeNames.FolderD;
 
 namespace SeedCrossPackageTypeNames;
 
-public partial class SeedCrossPackageTypeNamesClient
+public partial class SeedCrossPackageTypeNamesClient : ISeedCrossPackageTypeNamesClient
 {
     private readonly RawClient _client;
 

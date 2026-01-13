@@ -372,6 +372,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "request": {
                         "type": {
                             "type": "json",
@@ -542,6 +543,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         }
                     ],
                     "headers": [],
+                    "responseHeaders": [],
                     "requestsV2": {},
                     "response": {
                         "type": {
@@ -693,6 +695,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "requestsV2": {},
                     "responsesV2": {},
                     "errorsV2": [
@@ -774,6 +777,7 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "request": {
                         "type": {
                             "type": "bytes",
@@ -1211,6 +1215,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "request": {
                         "type": {
                             "type": "json",
@@ -1381,6 +1386,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         }
                     ],
                     "headers": [],
+                    "responseHeaders": [],
                     "requestsV2": {},
                     "response": {
                         "type": {
@@ -1532,6 +1538,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "requestsV2": {},
                     "responsesV2": {},
                     "errorsV2": [
@@ -1613,6 +1620,7 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
+                    "responseHeaders": [],
                     "request": {
                         "type": {
                             "type": "bytes",

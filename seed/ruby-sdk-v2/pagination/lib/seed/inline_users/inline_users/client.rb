@@ -80,7 +80,7 @@ module Seed
           params.except(*query_param_names)
 
           Seed::Internal::CursorItemIterator.new(
-            cursor_field: :next,
+            cursor_field: :next_,
             item_field: :users,
             initial_cursor: query_params[:cursor]
           ) do |next_cursor|
@@ -370,7 +370,7 @@ module Seed
           Seed::Internal::OffsetItemIterator.new(
             initial_page: query_params[:page],
             item_field: :users,
-            has_next_field: :hasNextPage,
+            has_next_field: :has_next_page,
             step: true
           ) do |next_page|
             query_params[:page] = next_page
@@ -414,7 +414,7 @@ module Seed
           params.except(*query_param_names)
 
           Seed::Internal::CursorItemIterator.new(
-            cursor_field: :next,
+            cursor_field: :next_,
             item_field: :users,
             initial_cursor: query_params[:cursor]
           ) do |next_cursor|
@@ -459,7 +459,7 @@ module Seed
           params.except(*query_param_names)
 
           Seed::Internal::CursorItemIterator.new(
-            cursor_field: :next,
+            cursor_field: :next_,
             item_field: :users,
             initial_cursor: query_params[:cursor]
           ) do |next_cursor|

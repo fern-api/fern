@@ -6,7 +6,7 @@ using SeedExamples.Health;
 
 namespace SeedExamples;
 
-public partial class SeedExamplesClient
+public partial class SeedExamplesClient : ISeedExamplesClient
 {
     private readonly RawClient _client;
 

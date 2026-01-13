@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">echo</a>(request: String) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">echo</a>(request: String) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/client.rs">create_type</a>(request: Type) -> Result<Identifier, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">create_type</a>(request: Type) -> Result&lt;Identifier, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +72,7 @@ async fn main() {
 </details>
 
 ## File Notification Service
-<details><summary><code>client.file().notification().service.<a href="/src/api/resources/file/notification/service/client.rs">get_exception</a>(notification_id: String) -> Result<Exception, ApiError></code></summary>
+<details><summary><code>client.file().notification().service.<a href="/src/api/resources/file/notification/service/client.rs">get_exception</a>(notification_id: String) -> Result&lt;Exception, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -128,7 +128,7 @@ async fn main() {
 </details>
 
 ## File Service
-<details><summary><code>client.file().service.<a href="/src/api/resources/file/service/client.rs">get_file</a>(filename: String) -> Result<File, ApiError></code></summary>
+<details><summary><code>client.file().service.<a href="/src/api/resources/file/service/client.rs">get_file</a>(filename: String) -> Result&lt;File, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -200,7 +200,7 @@ async fn main() {
 </details>
 
 ## Health Service
-<details><summary><code>client.health().service.<a href="/src/api/resources/health/service/client.rs">check</a>(id: String) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.health().service.<a href="/src/api/resources/health/service/client.rs">check</a>(id: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -268,7 +268,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.health().service.<a href="/src/api/resources/health/service/client.rs">ping</a>() -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.health().service.<a href="/src/api/resources/health/service/client.rs">ping</a>() -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -318,7 +318,7 @@ async fn main() {
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie</a>(movie_id: MovieId) -> Result<Movie, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_movie</a>(movie_id: MovieId) -> Result&lt;Movie, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -332,7 +332,6 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
-use seed_examples::MovieId;
 
 #[tokio::main]
 async fn main() {
@@ -372,7 +371,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_movie</a>(request: Movie) -> Result<MovieId, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_movie</a>(request: Movie) -> Result&lt;MovieId, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -386,7 +385,6 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
-use seed_examples::{Movie, MovieId, Tag};
 
 #[tokio::main]
 async fn main() {
@@ -435,7 +433,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_metadata</a>(shallow: Option<Option<bool>>) -> Result<Metadata, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">get_metadata</a>(shallow: Option&lt;Option&lt;bool&gt;&gt;) -> Result&lt;Metadata, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -502,7 +500,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_big_entity</a>(request: BigEntity) -> Result<Response, ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">create_big_entity</a>(request: BigEntity) -> Result&lt;Response, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -516,11 +514,6 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
-use seed_examples::{
-    Actor, Actress, BasicType, BigEntity, CastMember, ComplexType, Data, Directory, Entity,
-    EventInfo, Exception, ExceptionInfo, ExtendedMovie, File, Metadata, Migration, MigrationStatus,
-    Moment, MovieId, Node, StuntDouble, Tag, Test, Tree, Type,
-};
 
 #[tokio::main]
 async fn main() {
@@ -740,9 +733,7 @@ async fn main() {
                 moment: Some(Moment {
                     id: Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                     date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
-                    datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 }),
             },
             None,
@@ -760,7 +751,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">refresh_token</a>(request: Option<RefreshTokenRequest>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">refresh_token</a>(request: Option&lt;RefreshTokenRequest&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -774,7 +765,6 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
-use seed_examples::RefreshTokenRequest;
 
 #[tokio::main]
 async fn main() {

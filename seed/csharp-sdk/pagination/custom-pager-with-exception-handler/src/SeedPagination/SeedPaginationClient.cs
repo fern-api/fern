@@ -3,7 +3,7 @@ using SeedPagination.InlineUsers;
 
 namespace SeedPagination;
 
-public partial class SeedPaginationClient
+public partial class SeedPaginationClient : ISeedPaginationClient
 {
     private readonly RawClient _client;
 

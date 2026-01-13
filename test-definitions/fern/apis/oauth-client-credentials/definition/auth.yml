@@ -16,6 +16,7 @@ service:
       method: POST
       request:
         name: GetTokenRequest
+        content-type: application/x-www-form-urlencoded
         body:
           properties:
             client_id: string
@@ -42,6 +43,7 @@ service:
       method: POST
       request:
         name: RefreshTokenRequest
+        content-type: application/x-www-form-urlencoded
         body:
           properties:
             client_id: string
