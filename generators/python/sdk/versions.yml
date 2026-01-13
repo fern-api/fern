@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.46.15
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 62
+
 - version: 4.46.14
   changelogEntry:
     - summary: |
@@ -82,7 +89,7 @@
 
 - version: 4.46.7-rc1
   changelogEntry:
-    - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
       type: chore
   createdAt: "2026-01-05"
   irVersion: 62
