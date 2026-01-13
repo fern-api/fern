@@ -19,7 +19,8 @@ export const NoDuplicateOverridesRule: Rule = {
                 const openAPI = await loadOpenAPI({
                     absolutePathToOpenAPI: spec.absoluteFilepath,
                     context,
-                    absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides
+                    absolutePathToOpenAPIOverrides: spec.absoluteFilepathToOverrides,
+                    absolutePathToOpenAPIOverlays: spec.absoluteFilepathToOverlays
                 });
 
                 const apiToValidate = isOpenAPIV2(openAPI) ? await convertOpenAPIV2ToV3(openAPI) : openAPI;

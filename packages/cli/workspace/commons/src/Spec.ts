@@ -9,6 +9,7 @@ export interface OpenAPISpec {
     type: "openapi";
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    absoluteFilepathToOverlays: AbsoluteFilePath | undefined;
     source: Source;
     namespace?: string;
     settings?: ParseOpenAPIOptions;
