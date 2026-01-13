@@ -53,9 +53,9 @@
         "msw": "2.11.2",
         "@types/node": "^18.19.70",
         "typescript": "~5.7.2",
-        "@biomejs/biome": "2.3.1",
-        "oxlint": "1.32.0",
-        "oxlint-tsgolint": "0.8.4"
+        "@biomejs/biome": "2.3.11",
+        "oxlint": "1.39.0",
+        "oxlint-tsgolint": "0.11.0"
     },
     "browser": {
         "fs": false,

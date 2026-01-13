@@ -11,11 +11,11 @@ RUN npm install -g yarn@1.22.22 --force
 RUN corepack prepare yarn@1.22.22
 
 RUN pnpm add -g typescript@~5.7.2 \
-  prettier@3.4.2 \
-  oxfmt@0.17.0 \
-  @biomejs/biome@2.3.1 \
-  oxlint@1.32.0 \
-  oxlint-tsgolint@0.8.4 \
+  prettier@3.7.4 \
+  oxfmt@0.24.0 \
+  @biomejs/biome@2.3.11 \
+  oxlint@1.39.0 \
+  oxlint-tsgolint@0.11.0 \
   @types/node@^18.19.70 \
   webpack@^5.97.1 \
   msw@2.11.2 \

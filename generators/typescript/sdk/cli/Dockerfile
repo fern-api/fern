@@ -10,11 +10,12 @@ ENV PATH=$PNPM_HOME:$PATH
 
 RUN npm install -g pnpm@10.20.0 --force
 RUN npm install -g yarn@1.22.22 --force
-RUN pnpm add -g prettier@3.4.2 \
-  oxfmt@0.17.0 \
-  @biomejs/biome@2.3.1 \
-  oxlint@1.32.0 \
-  oxlint-tsgolint@0.8.4 \
+RUN pnpm add -g typescript@~5.7.2 \
+  prettier@3.7.4 \
+  oxfmt@0.24.0 \
+  @biomejs/biome@2.3.11 \
+  oxlint@1.39.0 \
+  oxlint-tsgolint@0.11.0 \
   @fern-api/generator-cli@0.5.3 \
   @types/node@^18.19.70 \
   ts-loader@^9.5.1 \
