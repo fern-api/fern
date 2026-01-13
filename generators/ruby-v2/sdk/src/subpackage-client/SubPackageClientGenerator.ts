@@ -33,7 +33,6 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
 
     public doGenerate(): RubyFile {
         const rootModule = this.context.getRootModule();
-        const modules = this.getClientModuleNames().map((name) => ruby.module({ name }));
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
 
         // Generate sync Client class
@@ -46,12 +45,14 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             node: ruby.codeblock((writer) => {
                 ruby.comment({ docs: "frozen_string_literal: true" });
                 writer.newLine();
-                // Wrap both classes in the same module hierarchy
-                const wrappedSync = ruby.wrapInModules(syncClientClass, modules);
+                // Create fresh modules for each wrapInModules call to avoid mutation issues
+                const syncModules = this.getClientModuleNames().map((name) => ruby.module({ name }));
+                const wrappedSync = ruby.wrapInModules(syncClientClass, syncModules);
                 wrappedSync.write(writer);
                 writer.newLine();
                 writer.newLine();
-                const wrappedAsync = ruby.wrapInModules(asyncClientClass, modules);
+                const asyncModules = this.getClientModuleNames().map((name) => ruby.module({ name }));
+                const wrappedAsync = ruby.wrapInModules(asyncClientClass, asyncModules);
                 wrappedAsync.write(writer);
             }),
             directory: this.getFilepath(),

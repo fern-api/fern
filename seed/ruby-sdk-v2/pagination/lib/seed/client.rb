@@ -32,4 +32,36 @@ module Seed
       @users ||= Seed::Users::Client.new(client: @raw_client)
     end
   end
+
+  class AsyncClient
+    # @param base_url [String, nil]
+    # @param token [String]
+    #
+    # @return [void]
+    def initialize(token:, base_url: nil)
+      @raw_client = Seed::Internal::Http::AsyncRawClient.new(
+        base_url: base_url,
+        headers: {
+          "User-Agent" => "fern_pagination/0.0.1",
+          "X-Fern-Language" => "Ruby",
+          Authorization: "Bearer #{token}"
+        }
+      )
+    end
+
+    # @return [Seed::Complex::AsyncClient]
+    def complex
+      @complex ||= Seed::Complex::AsyncClient.new(client: @raw_client)
+    end
+
+    # @return [Seed::InlineUsers::AsyncClient]
+    def inline_users
+      @inline_users ||= Seed::InlineUsers::AsyncClient.new(client: @raw_client)
+    end
+
+    # @return [Seed::Users::AsyncClient]
+    def users
+      @users ||= Seed::Users::AsyncClient.new(client: @raw_client)
+    end
+  end
 end
