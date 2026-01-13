@@ -16,6 +16,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CLIENT_VARIABLE_NAME = "client";
 
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
+    private static ASYNC_CLIENT_FEATURE_ID: FernGeneratorCli.FeatureId = "ASYNC_CLIENT";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
@@ -65,6 +66,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 predicate?: (endpoint: EndpointWithFilepath) => boolean;
             }
         > = {
+            [ReadmeSnippetBuilder.ASYNC_CLIENT_FEATURE_ID]: { renderer: this.renderAsyncClientSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Errors]: { renderer: this.renderErrorsSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
@@ -170,6 +172,20 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         ${closeMardownRubySnippet}`);
 
         return dedent`${fullString}`;
+    }
+
+    private renderAsyncClientSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`require "${this.rootPackageName}"
+require "async"
+
+${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::AsyncClient.new(
+    base_url: ${this.getEnvironmentURLExample()}
+)
+
+Async do
+    ${this.getMethodCall(endpoint)}
+end.wait
+        `);
     }
 
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {

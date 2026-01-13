@@ -10,7 +10,8 @@
         async-http library for non-blocking HTTP requests wrapped in Async blocks. Both sync and
         async clients share the same API interface, allowing users to choose based on their
         concurrency needs. Dependencies on `async` and `async-http` gems are automatically added
-        to the gemspec.
+        to the gemspec. The README now includes an "Async Client" section with usage examples
+        showing how to use the AsyncClient with Async blocks.
   irVersion: 61
 
 - version: 1.0.0-rc77
