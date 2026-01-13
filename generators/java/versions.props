@@ -9,7 +9,7 @@ org.apache.commons:commons-lang3 = 3.18.0
 
 # fern
 # Package is named irV63 and contains IR v63
-com.fern.fern:irV63 = 63.2.0
+com.fern.fern:irV63 = 63.1.0
 com.fern.fern:generator-exec-client = 0.0.806
 
 # testing
