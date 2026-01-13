@@ -266,6 +266,18 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         return `Client`;
     }
 
+    public getAsyncRootClientClassName(): string {
+        return `AsyncClient`;
+    }
+
+    public getAsyncRawClientClassReference(): ClassReference {
+        return ruby.classReference({
+            name: "AsyncRawClient",
+            modules: [this.getRootModuleName(), "Internal", "Http"],
+            fullyQualified: true
+        });
+    }
+
     public getReferenceToInternalJSONRequest(): ruby.ClassReference {
         return ruby.classReference({
             name: "Request",
@@ -336,6 +348,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             // HTTP
             AsIsFiles.HttpBaseRequest,
             AsIsFiles.HttpRawClient,
+            AsIsFiles.HttpAsyncRawClient,
 
             // JSON
             AsIsFiles.JsonRequest,

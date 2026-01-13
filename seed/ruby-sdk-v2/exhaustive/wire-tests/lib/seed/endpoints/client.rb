@@ -62,3 +62,245 @@ module Seed
     end
   end
 end
+
+module Seed
+  module Endpoints
+    class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
+      def initialize(client:)
+        @client = client
+      end
+
+      # @return [Seed::Container::Client]
+      def container
+        @container ||= Seed::Endpoints::Container::Client.new(client: @client)
+      end
+
+      # @return [Seed::ContentType::Client]
+      def content_type
+        @content_type ||= Seed::Endpoints::ContentType::Client.new(client: @client)
+      end
+
+      # @return [Seed::Enum::Client]
+      def enum
+        @enum ||= Seed::Endpoints::Enum::Client.new(client: @client)
+      end
+
+      # @return [Seed::HttpMethods::Client]
+      def http_methods
+        @http_methods ||= Seed::Endpoints::HttpMethods::Client.new(client: @client)
+      end
+
+      # @return [Seed::Object_::Client]
+      def object
+        @object ||= Seed::Endpoints::Object_::Client.new(client: @client)
+      end
+
+      # @return [Seed::Params::Client]
+      def params
+        @params ||= Seed::Endpoints::Params::Client.new(client: @client)
+      end
+
+      # @return [Seed::Primitive::Client]
+      def primitive
+        @primitive ||= Seed::Endpoints::Primitive::Client.new(client: @client)
+      end
+
+      # @return [Seed::Put::Client]
+      def put
+        @put ||= Seed::Endpoints::Put::Client.new(client: @client)
+      end
+
+      # @return [Seed::Union::Client]
+      def union
+        @union ||= Seed::Endpoints::Union::Client.new(client: @client)
+      end
+
+      # @return [Seed::Urls::Client]
+      def urls
+        @urls ||= Seed::Endpoints::Urls::Client.new(client: @client)
+      end
+    end
+
+    class AsyncClient
+      # @param client [Seed::Internal::Http::AsyncRawClient]
+      #
+      # @return [void]
+      def initialize(client:)
+        @client = client
+      end
+
+      # @return [Seed::Container::AsyncClient]
+      def container
+        @container ||= Seed::Endpoints::Container::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::ContentType::AsyncClient]
+      def content_type
+        @content_type ||= Seed::Endpoints::ContentType::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Enum::AsyncClient]
+      def enum
+        @enum ||= Seed::Endpoints::Enum::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::HttpMethods::AsyncClient]
+      def http_methods
+        @http_methods ||= Seed::Endpoints::HttpMethods::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Object_::AsyncClient]
+      def object
+        @object ||= Seed::Endpoints::Object_::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Params::AsyncClient]
+      def params
+        @params ||= Seed::Endpoints::Params::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Primitive::AsyncClient]
+      def primitive
+        @primitive ||= Seed::Endpoints::Primitive::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Put::AsyncClient]
+      def put
+        @put ||= Seed::Endpoints::Put::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Union::AsyncClient]
+      def union
+        @union ||= Seed::Endpoints::Union::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Urls::AsyncClient]
+      def urls
+        @urls ||= Seed::Endpoints::Urls::AsyncClient.new(client: @client)
+      end
+    end
+  end
+
+  module Endpoints
+    class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
+      def initialize(client:)
+        @client = client
+      end
+
+      # @return [Seed::Container::Client]
+      def container
+        @container ||= Seed::Endpoints::Container::Client.new(client: @client)
+      end
+
+      # @return [Seed::ContentType::Client]
+      def content_type
+        @content_type ||= Seed::Endpoints::ContentType::Client.new(client: @client)
+      end
+
+      # @return [Seed::Enum::Client]
+      def enum
+        @enum ||= Seed::Endpoints::Enum::Client.new(client: @client)
+      end
+
+      # @return [Seed::HttpMethods::Client]
+      def http_methods
+        @http_methods ||= Seed::Endpoints::HttpMethods::Client.new(client: @client)
+      end
+
+      # @return [Seed::Object_::Client]
+      def object
+        @object ||= Seed::Endpoints::Object_::Client.new(client: @client)
+      end
+
+      # @return [Seed::Params::Client]
+      def params
+        @params ||= Seed::Endpoints::Params::Client.new(client: @client)
+      end
+
+      # @return [Seed::Primitive::Client]
+      def primitive
+        @primitive ||= Seed::Endpoints::Primitive::Client.new(client: @client)
+      end
+
+      # @return [Seed::Put::Client]
+      def put
+        @put ||= Seed::Endpoints::Put::Client.new(client: @client)
+      end
+
+      # @return [Seed::Union::Client]
+      def union
+        @union ||= Seed::Endpoints::Union::Client.new(client: @client)
+      end
+
+      # @return [Seed::Urls::Client]
+      def urls
+        @urls ||= Seed::Endpoints::Urls::Client.new(client: @client)
+      end
+    end
+
+    class AsyncClient
+      # @param client [Seed::Internal::Http::AsyncRawClient]
+      #
+      # @return [void]
+      def initialize(client:)
+        @client = client
+      end
+
+      # @return [Seed::Container::AsyncClient]
+      def container
+        @container ||= Seed::Endpoints::Container::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::ContentType::AsyncClient]
+      def content_type
+        @content_type ||= Seed::Endpoints::ContentType::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Enum::AsyncClient]
+      def enum
+        @enum ||= Seed::Endpoints::Enum::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::HttpMethods::AsyncClient]
+      def http_methods
+        @http_methods ||= Seed::Endpoints::HttpMethods::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Object_::AsyncClient]
+      def object
+        @object ||= Seed::Endpoints::Object_::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Params::AsyncClient]
+      def params
+        @params ||= Seed::Endpoints::Params::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Primitive::AsyncClient]
+      def primitive
+        @primitive ||= Seed::Endpoints::Primitive::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Put::AsyncClient]
+      def put
+        @put ||= Seed::Endpoints::Put::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Union::AsyncClient]
+      def union
+        @union ||= Seed::Endpoints::Union::AsyncClient.new(client: @client)
+      end
+
+      # @return [Seed::Urls::AsyncClient]
+      def urls
+        @urls ||= Seed::Endpoints::Urls::AsyncClient.new(client: @client)
+      end
+    end
+  end
+end
