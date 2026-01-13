@@ -43,7 +43,7 @@ groups:
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV60
+          coordinate: com.fern.fern:irV63
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
