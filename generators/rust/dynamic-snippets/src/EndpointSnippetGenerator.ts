@@ -127,6 +127,272 @@ export class EndpointSnippetGenerator {
         return useStatements;
     }
 
+    /**
+     * Collect all type imports needed for an endpoint's request parameters.
+     * Note: Currently unused as prelude::* exports all types, but kept for potential future use.
+     */
+    private collectEndpointTypeImports(endpoint: FernIr.dynamic.Endpoint, imports: Set<string>): void {
+        const request = endpoint.request;
+
+        // Collect from path parameters
+        if (request.pathParameters) {
+            for (const param of request.pathParameters) {
+                this.collectTypeReferenceImports(param.typeReference, imports);
+            }
+        }
+
+        // Collect from inlined request
+        if (request.type === "inlined") {
+            // Query parameters
+            if (request.queryParameters) {
+                for (const param of request.queryParameters) {
+                    this.collectTypeReferenceImports(param.typeReference, imports);
+                }
+            }
+
+            // Headers
+            if (request.headers) {
+                for (const header of request.headers) {
+                    this.collectTypeReferenceImports(header.typeReference, imports);
+                }
+            }
+
+            // Body
+            if (request.body) {
+                this.collectRequestBodyTypeImports(request.body, imports);
+            }
+        } else if (request.type === "body") {
+            // Referenced body type
+            if (request.body?.type === "typeReference") {
+                this.collectTypeReferenceImports(request.body.value, imports);
+            }
+        }
+    }
+
+    /**
+     * Collect type imports from a request body.
+     */
+    private collectRequestBodyTypeImports(body: FernIr.dynamic.InlinedRequestBody, imports: Set<string>): void {
+        switch (body.type) {
+            case "properties":
+                for (const prop of body.value) {
+                    this.collectTypeReferenceImports(prop.typeReference, imports);
+                }
+                break;
+            case "referenced":
+                if (body.bodyType.type === "typeReference") {
+                    this.collectTypeReferenceImports(body.bodyType.value, imports);
+                }
+                break;
+            case "fileUpload":
+                for (const prop of body.properties) {
+                    if (prop.type === "bodyProperty") {
+                        this.collectTypeReferenceImports(prop.typeReference, imports);
+                    }
+                }
+                break;
+        }
+    }
+
+    // Helper to collect type imports from a value by analyzing its structure
+    private collectTypesFromValue(
+        value: unknown,
+        imports: Set<string>,
+        stdImports: Set<string>,
+        chronoImports: Set<string>,
+        uuidImports: Set<string>
+    ): void {
+        if (typeof value === "object" && value != null && !Array.isArray(value)) {
+            const obj = value as Record<string, unknown>;
+
+            // Check for HashMap usage
+            if (Object.keys(obj).length > 0) {
+                stdImports.add("HashMap");
+            }
+
+            // Look for discriminant fields that might indicate union types
+            Object.keys(obj).forEach((key) => {
+                // Common discriminant field names
+                if (key === "type" || key === "_type" || key.endsWith("_type")) {
+                    const discriminantValue = obj[key];
+                    if (typeof discriminantValue === "string") {
+                        // Try to find the corresponding union type
+                        this.findAndAddUnionTypes(discriminantValue, imports);
+                    }
+                }
+            });
+
+            // Recursively collect from nested objects
+            Object.values(obj).forEach((nestedValue) => {
+                this.collectTypesFromValue(nestedValue, imports, stdImports, chronoImports, uuidImports);
+            });
+        } else if (Array.isArray(value)) {
+            // Check for HashSet usage (arrays)
+            if (value.length > 0) {
+                stdImports.add("HashSet");
+            }
+            value.forEach((item) => this.collectTypesFromValue(item, imports, stdImports, chronoImports, uuidImports));
+        } else if (typeof value === "string") {
+            // Check for UUID pattern
+            if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)) {
+                uuidImports.add("Uuid");
+            }
+            // Check for date/time patterns
+            if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                chronoImports.add("NaiveDate");
+            }
+            if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(value)) {
+                chronoImports.add("DateTime");
+                chronoImports.add("Utc");
+            }
+        }
+    }
+
+    // Helper to find union types based on discriminant values
+    private findAndAddUnionTypes(discriminantValue: string, imports: Set<string>): void {
+        // Search through all types to find unions with this discriminant value
+        Object.values(this.context.ir.types).forEach((namedType) => {
+            if (namedType.type === "discriminatedUnion") {
+                const unionType = namedType as FernIr.dynamic.DiscriminatedUnionType;
+                if (Object.keys(unionType.types).includes(discriminantValue)) {
+                    imports.add(this.context.getStructName(namedType.declaration.name));
+
+                    // Also add the variant types
+                    const variantType = unionType.types[discriminantValue];
+                    if (variantType && variantType.type === "samePropertiesAsObject") {
+                        const referencedType = this.context.ir.types[variantType.typeId];
+                        if (referencedType) {
+                            imports.add(this.context.getStructName(referencedType.declaration.name));
+                            this.collectNestedTypeImports(referencedType, imports);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private collectNestedTypeImports(
+        namedType: FernIr.dynamic.NamedType,
+        imports: Set<string>,
+        visited: Set<string> = new Set()
+    ): void {
+        const typeName = namedType.declaration.name.pascalCase.safeName;
+
+        // Prevent infinite recursion by tracking visited types
+        if (visited.has(typeName)) {
+            return;
+        }
+        visited.add(typeName);
+
+        switch (namedType.type) {
+            case "object":
+                // Add the object type itself
+                imports.add(this.context.getStructName(namedType.declaration.name));
+
+                // Recursively collect imports from object properties
+                for (const property of namedType.properties) {
+                    this.collectTypeReferenceImports(property.typeReference, imports, visited);
+                }
+                break;
+            case "alias":
+                // Add the alias type itself
+                imports.add(this.context.getStructName(namedType.declaration.name));
+
+                // Recursively collect imports from the aliased type
+                this.collectTypeReferenceImports(namedType.typeReference, imports, visited);
+                break;
+            case "enum":
+                // Add the enum type
+                imports.add(this.context.getEnumName(namedType.declaration.name));
+                break;
+            case "discriminatedUnion":
+            case "undiscriminatedUnion":
+                // Add the union type
+                imports.add(this.context.getStructName(namedType.declaration.name));
+
+                // For discriminated unions, collect imports from union members
+                if (namedType.type === "discriminatedUnion") {
+                    Object.values(namedType.types).forEach((unionType) => {
+                        if (unionType.type === "singleProperty") {
+                            this.collectTypeReferenceImports(unionType.typeReference, imports, visited);
+                        } else if (unionType.type === "samePropertiesAsObject") {
+                            // Handle object-based union types
+                            const referencedType = this.context.ir.types[unionType.typeId];
+                            if (referencedType) {
+                                this.collectNestedTypeImports(referencedType, imports, visited);
+                            }
+                        }
+                    });
+                } else if (namedType.type === "undiscriminatedUnion") {
+                    // For undiscriminated unions (like CastMember), collect all variant types
+                    namedType.types.forEach((unionType) => {
+                        this.collectTypeReferenceImports(unionType, imports, visited);
+                    });
+                }
+                break;
+        }
+    }
+
+    private collectTypeReferenceImports(
+        typeReference: FernIr.dynamic.TypeReference,
+        imports: Set<string>,
+        visited: Set<string> = new Set()
+    ): void {
+        switch (typeReference.type) {
+            case "named": {
+                const typeId = typeReference.value;
+                const namedType = this.context.ir.types[typeId];
+                if (namedType) {
+                    this.collectNestedTypeImports(namedType, imports, visited);
+                }
+                break;
+            }
+            case "optional":
+            case "nullable": {
+                // Recursively collect from the inner type
+                const innerType = (
+                    typeReference as FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable
+                ).value;
+                if (innerType) {
+                    this.collectTypeReferenceImports(innerType, imports, visited);
+                }
+                break;
+            }
+            case "list": {
+                // Recursively collect from the list element type
+                const listElementType = (typeReference as FernIr.dynamic.TypeReference.List).value;
+                if (listElementType) {
+                    this.collectTypeReferenceImports(listElementType, imports, visited);
+                }
+                break;
+            }
+            case "set": {
+                // Recursively collect from the set element type
+                const setElementType = (typeReference as FernIr.dynamic.TypeReference.Set).value;
+                if (setElementType) {
+                    this.collectTypeReferenceImports(setElementType, imports, visited);
+                }
+                break;
+            }
+            case "map": {
+                // Recursively collect from map key and value types
+                const mapType = typeReference as FernIr.dynamic.MapType;
+                if (mapType.key) {
+                    this.collectTypeReferenceImports(mapType.key, imports, visited);
+                }
+                if (mapType.value) {
+                    this.collectTypeReferenceImports(mapType.value, imports, visited);
+                }
+                break;
+            }
+            case "primitive":
+            case "literal":
+            case "unknown":
+                // These don't require additional imports
+                break;
+        }
+    }
+
     private getClientConfigStruct({
         endpoint,
         snippet
