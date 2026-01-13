@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.38.2
+  changelogEntry:
+    - summary: |
+        Fix protobuf OpenAPI generation air-gapped support to properly populate buf cache at build time. The CLI now always attempts `buf dep update` first to populate the cache, and only continues on network errors if a pre-cached `buf.lock` file exists. This ensures dependencies are cached at build time while still supporting air-gapped runtime environments.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
 - version: 3.38.1
   changelogEntry:
     - summary: |

@@ -151,17 +151,31 @@ export class ProtobufOpenAPIGenerator {
                     bufLockExistsInCopiedDir = false;
                 }
 
-                // Skip buf dep update if we already have a cached buf.lock file
-                // This enables air-gapped environments to work by pre-caching dependencies
-                if (!bufLockExistsInCopiedDir) {
-                    const bufDepUpdateResult = await buf(["dep", "update"]);
+                // Always try buf dep update to populate the cache (needed at build time)
+                // If it fails with a network error and buf.lock exists, continue (air-gapped mode)
+                const bufDepUpdateResult = await buf(["dep", "update"]);
+                if (bufDepUpdateResult.exitCode !== 0) {
+                    const isNetworkError =
+                        bufDepUpdateResult.stderr.includes("server hosted at that remote is unavailable") ||
+                        bufDepUpdateResult.stderr.includes("failed to connect") ||
+                        bufDepUpdateResult.stderr.includes("network") ||
+                        bufDepUpdateResult.stderr.includes("ENOTFOUND") ||
+                        bufDepUpdateResult.stderr.includes("ETIMEDOUT");
+
+                    if (isNetworkError && bufLockExistsInCopiedDir) {
+                        // Air-gapped environment with pre-cached buf.lock - continue without updating
+                        this.context.logger.debug(
+                            "buf dep update failed due to network error, but buf.lock exists. Continuing in air-gapped mode."
+                        );
+                    } else {
+                        this.context.failAndThrow(bufDepUpdateResult.stderr);
+                    }
+                } else {
+                    // buf dep update succeeded, read the updated buf.lock
                     try {
                         bufLockContents = await readFile(bufLockPath, "utf-8");
                     } catch (err) {
                         bufLockContents = undefined;
-                    }
-                    if (bufDepUpdateResult.exitCode !== 0) {
-                        this.context.failAndThrow(bufDepUpdateResult.stderr);
                     }
                 }
             }
