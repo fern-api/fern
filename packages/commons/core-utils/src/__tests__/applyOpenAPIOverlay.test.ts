@@ -1309,4 +1309,53 @@ describe("applyOpenAPIOverlay", () => {
             }
         });
     });
+
+    it("should not mutate the input data object", () => {
+        const data = {
+            components: {
+                schemas: {
+                    User: {
+                        type: "object",
+                        properties: {
+                            name: {
+                                type: "string"
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const overlay = {
+            actions: [
+                {
+                    target: "$.components.schemas.User",
+                    description: "Add email property",
+                    update: {
+                        type: "object",
+                        properties: {
+                            name: {
+                                type: "string"
+                            },
+                            email: {
+                                type: "string"
+                            }
+                        }
+                    },
+                    remove: false
+                }
+            ]
+        };
+
+        // Create a deep copy to compare against
+        const originalData = JSON.parse(JSON.stringify(data));
+
+        applyOpenAPIOverlay({
+            data,
+            overlay
+        });
+
+        // Verify that the original data was not mutated
+        expect(data).toEqual(originalData);
+    });
 });

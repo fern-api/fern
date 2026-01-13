@@ -371,12 +371,16 @@
             "generatedName": "userUpdateSettings",
             "key": "settings",
             "schema": {
-              "generatedName": "",
+              "generatedName": "UserUpdateSettings",
               "value": {
-                "generatedName": "",
-                "type": "unknown"
+                "generatedName": "UserUpdateSettings",
+                "schema": "UserSettings",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "groupName": [],
               "type": "optional"
             },
             "audiences": [],

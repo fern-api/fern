@@ -1,4 +1,4 @@
-import { applyOpenAPIOverlay } from "@fern-api/core-utils";
+import { applyOpenAPIOverlay, type OverlayAction } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
@@ -8,13 +8,6 @@ import tmp from "tmp-promise";
 
 // Module-level temp directory - created once and reused
 let tempDir: string | undefined;
-
-interface OverlayAction {
-    target: string;
-    description: string;
-    update: unknown;
-    remove: boolean;
-}
 
 interface OverlayDocument {
     overlay: string;

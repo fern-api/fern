@@ -6,23 +6,21 @@ import { merge } from "lodash-es";
  * @see https://spec.openapis.org/overlay/latest.html
  */
 
-type OverlayAction = {
+export interface OverlayAction {
     target: string;
     description: string;
     update: unknown;
     remove: boolean;
-};
+}
 
-export function applyOpenAPIOverlay<T extends object>({
-    data,
-    overlay
-}: {
-    data: T;
-    overlay: {
-        actions: OverlayAction[];
-    };
-}): T {
-    const output = data;
+export interface Overlay {
+    actions: OverlayAction[];
+}
+
+export function applyOpenAPIOverlay<T extends object>({ data, overlay }: { data: T; overlay: Overlay }): T {
+    // Use structuredClone to avoid mutating the input data
+    // This prevents shared object references and ensures the input remains unchanged
+    const output = structuredClone(data);
     for (const action of overlay.actions) {
         const results = JSONPath({
             path: action.target,

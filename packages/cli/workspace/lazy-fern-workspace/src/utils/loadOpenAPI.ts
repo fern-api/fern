@@ -157,7 +157,8 @@ export async function loadOpenAPI({
     if (overridesFilepath != null || absolutePathToOpenAPIOverlays != null || result !== parsed) {
         return await parseOpenAPI({
             absolutePathToOpenAPI,
-            absolutePathToOpenAPIOverrides,
+            absolutePathToOpenAPIOverrides: overridesFilepath,
+            absolutePathToOpenAPIOverlays,
             parsed: result
         });
     }

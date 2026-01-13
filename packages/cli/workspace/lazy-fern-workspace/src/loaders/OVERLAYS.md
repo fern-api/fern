@@ -92,13 +92,36 @@ Key implementation details:
 - Actions are applied sequentially - each action operates on the result of the previous
 - Remove actions support both array elements and object properties
 
-### 6. OpenAPI Loading Integration
+### 6. Reference Resolution
+
+**File**: `packages/cli/workspace/lazy-fern-workspace/src/loaders/OpenAPIRefResolver.ts`
+
+Updated to support resolving `$ref` references in overlays. The resolver tries to resolve references in this order:
+1. Standard resolution relative to the base document
+2. If not found, try resolving relative to the overlay file location
+3. If still not found, try resolving relative to the overrides file location (if present)
+
+This allows overlays to reference schemas that are adjacent to the overlay file itself:
+
+```yaml
+# In overlays/overlays.yml
+settings:
+  $ref: "../common/common.yml#/components/schemas/UserSettings"  # Relative to overlay file
+  nullable: true
+```
+
+**Files Updated**:
+- `packages/cli/workspace/lazy-fern-workspace/src/utils/parseOpenAPI.ts`: Passes overlay path to resolver
+- `packages/cli/workspace/lazy-fern-workspace/src/utils/loadOpenAPI.ts`: Threads overlay path through parsing
+
+### 7. OpenAPI Loading Integration
 
 **File**: `packages/cli/workspace/lazy-fern-workspace/src/utils/loadOpenAPI.ts`
 
 - Added `absolutePathToOpenAPIOverlays` parameter
 - Overlays are applied after overrides (order: original → overrides → overlays)
 - Updated re-parse condition to include overlays
+- Passes overlay path to `parseOpenAPI` for reference resolution
 
 **File**: `packages/cli/workspace/lazy-fern-workspace/src/loaders/OpenAPILoader.ts`
 
