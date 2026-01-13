@@ -4,7 +4,8 @@
     - summary: |
         Add support for OpenAPI min/max validation keywords in the IR. This includes `minimum`, `maximum`, `exclusiveMinimum`, `exclusiveMaximum`, and `multipleOf` for numeric types (float, long, uint, uint64), as well as `minItems`/`maxItems` for list and set containers, and `minProperties`/`maxProperties` for map containers and objects.
       type: feat
-  createdAt: "2026-01-12"
+  createdAt: "2026-01-13"
+  irVersion: 63
 
 - version: 3.37.6
   changelogEntry:
