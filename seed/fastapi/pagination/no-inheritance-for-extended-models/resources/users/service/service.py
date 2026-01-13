@@ -17,10 +17,12 @@ from ..types.list_users_extended_response import ListUsersExtendedResponse
 from ..types.list_users_mixed_type_pagination_response import ListUsersMixedTypePaginationResponse
 from ..types.list_users_optional_data_pagination_response import ListUsersOptionalDataPaginationResponse
 from ..types.list_users_pagination_response import ListUsersPaginationResponse
+from ..types.list_users_top_level_cursor_pagination_response import ListUsersTopLevelCursorPaginationResponse
 from ..types.order import Order
 from ..types.username_container import UsernameContainer
 from .list_users_body_cursor_pagination_request import ListUsersBodyCursorPaginationRequest
 from .list_users_body_offset_pagination_request import ListUsersBodyOffsetPaginationRequest
+from .list_users_top_level_body_cursor_pagination_request import ListUsersTopLevelBodyCursorPaginationRequest
 
 
 class AbstractUsersService(AbstractFernService):
@@ -51,6 +53,17 @@ class AbstractUsersService(AbstractFernService):
     def list_with_body_cursor_pagination(
         self, *, body: ListUsersBodyCursorPaginationRequest
     ) -> ListUsersPaginationResponse: ...
+
+    @abc.abstractmethod
+    def list_with_top_level_body_cursor_pagination(
+        self, *, body: ListUsersTopLevelBodyCursorPaginationRequest
+    ) -> ListUsersTopLevelCursorPaginationResponse:
+        """
+        Pagination endpoint with a top-level cursor field in the request body.
+        This tests that the mock server correctly ignores cursor mismatches
+        when getNextPage() is called with a different cursor value.
+        """
+        ...
 
     @abc.abstractmethod
     def list_with_offset_pagination(
@@ -129,6 +142,7 @@ class AbstractUsersService(AbstractFernService):
         cls.__init_list_with_cursor_pagination(router=router)
         cls.__init_list_with_mixed_type_cursor_pagination(router=router)
         cls.__init_list_with_body_cursor_pagination(router=router)
+        cls.__init_list_with_top_level_body_cursor_pagination(router=router)
         cls.__init_list_with_offset_pagination(router=router)
         cls.__init_list_with_double_offset_pagination(router=router)
         cls.__init_list_with_body_offset_pagination(router=router)
@@ -292,6 +306,49 @@ class AbstractUsersService(AbstractFernService):
             response_model=None,
             description=AbstractUsersService.list_with_body_cursor_pagination.__doc__,
             **get_route_args(cls.list_with_body_cursor_pagination, default_tag="users"),
+        )(wrapper)
+
+    @classmethod
+    def __init_list_with_top_level_body_cursor_pagination(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.list_with_top_level_body_cursor_pagination)
+        type_hints = typing.get_type_hints(cls.list_with_top_level_body_cursor_pagination)
+
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(
+            cls.list_with_top_level_body_cursor_pagination,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
+
+        @functools.wraps(cls.list_with_top_level_body_cursor_pagination)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> ListUsersTopLevelCursorPaginationResponse:
+            try:
+                return cls.list_with_top_level_body_cursor_pagination(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'list_with_top_level_body_cursor_pagination' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(
+            path="/users/top-level-cursor",
+            response_model=None,
+            description=AbstractUsersService.list_with_top_level_body_cursor_pagination.__doc__,
+            **get_route_args(cls.list_with_top_level_body_cursor_pagination, default_tag="users"),
         )(wrapper)
 
     @classmethod

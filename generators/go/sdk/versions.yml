@@ -1,10 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 1.22.5
+- version: 1.22.6
   changelogEntry:
     - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
       type: chore
   createdAt: "2026-01-13"
+  irVersion: 60
+
+- version: 1.22.5
+  changelogEntry:
+    - summary: |
+        Gracefully handle `go fmt` failures during generation. When formatting fails, the generator
+        now logs a warning and continues to output the generated files instead of failing the entire
+        generation. This allows developers to debug generated output even when formatting issues occur.
+      type: fix
+  createdAt: "2026-01-12"
   irVersion: 60
 
 - version: 1.22.4

@@ -1,10 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
-- version: 4.46.15
+- version: 4.47.1
   changelogEntry:
     - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
       type: chore
+  createdAt: "2026-01-13"
+  irVersion: 62
+
+- version: 4.47.0
+  changelogEntry:
+    - summary: |
+        Add `X-Fern-Runtime` (e.g. `python/3.12.7`) and `X-Fern-Platform` (e.g. `darwin/25.2.0`) telemetry headers to all requests for better runtime/platform observability.
+      type: feat
   createdAt: "2026-01-13"
   irVersion: 62
 
