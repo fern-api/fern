@@ -85,6 +85,13 @@ export interface ConvertOpenAPIOptions {
     groupEnvironmentsByHost: boolean;
 
     /**
+     * If true, preserve server variables (e.g., {space_name}) in URLs instead of substituting them with default values.
+     * This is useful for documentation where you want users to see and edit the variable placeholders.
+     * Defaults to false (current behavior where variables are substituted with defaults).
+     */
+    preserveServerVariables: boolean;
+
+    /**
      * If `always`, remove discriminant properties from schemas in the IR, unless the schema is also used outside of a discriminated union.
      * If `never`, discriminant properties are preserved in the schemas.
      *
@@ -106,6 +113,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     wrapReferencesToNullableInOptional: false,
     coerceOptionalSchemasToNullable: false,
     groupEnvironmentsByHost: false,
+    preserveServerVariables: false,
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
 };
 

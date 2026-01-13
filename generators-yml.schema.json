@@ -874,6 +874,16 @@
             }
           ]
         },
+        "preserve-server-variables": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "remove-discriminants-from-schemas": {
           "oneOf": [
             {
@@ -1749,6 +1759,16 @@
             }
           ]
         },
+        "preserve-server-variables": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "remove-discriminants-from-schemas": {
           "oneOf": [
             {
@@ -2068,6 +2088,16 @@
           ]
         },
         "group-environments-by-host": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preserve-server-variables": {
           "oneOf": [
             {
               "type": "boolean"
@@ -2491,6 +2521,16 @@
           ]
         },
         "group-environments-by-host": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preserve-server-variables": {
           "oneOf": [
             {
               "type": "boolean"
