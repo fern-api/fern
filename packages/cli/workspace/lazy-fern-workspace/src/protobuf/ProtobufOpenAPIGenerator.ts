@@ -142,13 +142,16 @@ export class ProtobufOpenAPIGenerator {
             } else if (deps.length > 0) {
                 // Check if buf.lock already exists in the copied directory (e.g., pre-cached in air-gapped environments)
                 let bufLockExistsInCopiedDir = false;
+                this.context.logger.debug(`Checking for buf.lock at: ${bufLockPath}`);
                 try {
                     await access(bufLockPath);
                     bufLockExistsInCopiedDir = true;
                     // Read the existing buf.lock contents for caching
                     bufLockContents = await readFile(bufLockPath, "utf-8");
-                } catch {
+                    this.context.logger.debug(`Found pre-cached buf.lock file (${bufLockContents.length} bytes)`);
+                } catch (err) {
                     bufLockExistsInCopiedDir = false;
+                    this.context.logger.debug(`No buf.lock found: ${err}`);
                 }
 
                 // Always try buf dep update to populate the cache (needed at build time)
@@ -161,6 +164,10 @@ export class ProtobufOpenAPIGenerator {
                         bufDepUpdateResult.stderr.includes("network") ||
                         bufDepUpdateResult.stderr.includes("ENOTFOUND") ||
                         bufDepUpdateResult.stderr.includes("ETIMEDOUT");
+
+                    this.context.logger.debug(
+                        `buf dep update failed. isNetworkError=${isNetworkError}, bufLockExists=${bufLockExistsInCopiedDir}, stderr=${bufDepUpdateResult.stderr.substring(0, 200)}`
+                    );
 
                     if (isNetworkError && bufLockExistsInCopiedDir) {
                         // Air-gapped environment with pre-cached buf.lock - continue without updating

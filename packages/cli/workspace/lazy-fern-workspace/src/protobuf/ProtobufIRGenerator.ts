@@ -248,11 +248,14 @@ export class ProtobufIRGenerator {
             if (deps.length > 0) {
                 // Check if buf.lock already exists (e.g., pre-cached in air-gapped environments)
                 let bufLockExists = false;
+                this.context.logger.debug(`Checking for buf.lock at: ${bufLockPath}`);
                 try {
                     await access(bufLockPath);
                     bufLockExists = true;
-                } catch {
+                    this.context.logger.debug(`Found pre-cached buf.lock file`);
+                } catch (err) {
                     bufLockExists = false;
+                    this.context.logger.debug(`No buf.lock found: ${err}`);
                 }
 
                 // Always try buf dep update to populate the cache (needed at build time)
@@ -265,6 +268,10 @@ export class ProtobufIRGenerator {
                         bufDepUpdateResult.stderr.includes("network") ||
                         bufDepUpdateResult.stderr.includes("ENOTFOUND") ||
                         bufDepUpdateResult.stderr.includes("ETIMEDOUT");
+
+                    this.context.logger.debug(
+                        `buf dep update failed. isNetworkError=${isNetworkError}, bufLockExists=${bufLockExists}, stderr=${bufDepUpdateResult.stderr.substring(0, 200)}`
+                    );
 
                     if (isNetworkError && bufLockExists) {
                         // Air-gapped environment with pre-cached buf.lock - continue without updating
