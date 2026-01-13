@@ -1,4 +1,4 @@
-use seed_content_types::prelude::*;
+use seed_content_types::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,14 +7,8 @@ async fn main() {
         ..Default::default()
     };
     let client = ContentTypesClient::new(config).expect("Failed to build client");
-    client
-        .service
-        .patch(
-            &PatchProxyRequest {
-                application: Some("application".to_string()),
-                require_auth: Some(true),
-            },
-            None,
-        )
-        .await;
+    client.service.patch(&PatchProxyRequest {
+        application: Some("application".to_string()),
+        require_auth: Some(true)
+    }, None).await;
 }

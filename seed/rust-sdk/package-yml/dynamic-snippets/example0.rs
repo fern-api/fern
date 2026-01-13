@@ -1,5 +1,5 @@
-use seed_package_yml::prelude::*;
-use seed_package_yml::EchoRequest;
+use seed_package_yml::prelude::{*};
+use seed_package_yml::{EchoRequest};
 
 #[tokio::main]
 async fn main() {
@@ -8,14 +8,8 @@ async fn main() {
         ..Default::default()
     };
     let client = PackageYmlClient::new(config).expect("Failed to build client");
-    client
-        .echo(
-            &"id-ksfd9c1".to_string(),
-            &EchoRequest {
-                name: "Hello world!".to_string(),
-                size: 20,
-            },
-            None,
-        )
-        .await;
+    client.echo(&"id-ksfd9c1".to_string(), &EchoRequest {
+        name: "Hello world!".to_string(),
+        size: 20
+    }, None).await;
 }

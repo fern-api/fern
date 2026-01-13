@@ -1,4 +1,4 @@
-use seed_single_url_environment_default::prelude::*;
+use seed_single_url_environment_default::prelude::{*};
 
 #[tokio::main]
 async fn main() {

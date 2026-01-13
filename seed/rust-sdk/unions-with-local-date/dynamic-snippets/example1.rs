@@ -1,11 +1,5 @@
-use seed_unions::prelude::*;
-use seed_unions::{
-    ActiveDiamond, AttractiveScript, BigUnion, CircularCard, ColorfulCover, DiligentDeal,
-    DisloyalValue, DistinctFailure, FalseMirror, FrozenSleep, GaseousRoad, GruesomeCoach,
-    HarmoniousPlay, HastyPain, HoarseMouse, JumboEnd, LimpingStep, MistySnow, NormalSweet,
-    PopularLimit, PotableBad, PracticalPrinciple, PrimaryBlock, RotatingRatio, ThankfulFactor,
-    TotalWork, TriangularRepair, UniqueStress, UnwillingSmoke, VibrantExcitement,
-};
+use seed_unions::prelude::{*};
+use seed_unions::{BigUnion, NormalSweet, ThankfulFactor, JumboEnd, HastyPain, MistySnow, DistinctFailure, PracticalPrinciple, LimpingStep, VibrantExcitement, ActiveDiamond, PopularLimit, FalseMirror, PrimaryBlock, RotatingRatio, ColorfulCover, DisloyalValue, GruesomeCoach, TotalWork, HarmoniousPlay, UniqueStress, UnwillingSmoke, FrozenSleep, DiligentDeal, AttractiveScript, HoarseMouse, CircularCard, PotableBad, TriangularRepair, GaseousRoad};
 
 #[tokio::main]
 async fn main() {
@@ -14,15 +8,9 @@ async fn main() {
         ..Default::default()
     };
     let client = UnionsClient::new(config).expect("Failed to build client");
-    client
-        .bigunion
-        .update(
-            &BigUnion::NormalSweet {
-                data: NormalSweet {
-                    value: "value".to_string(),
-                },
-            },
-            None,
-        )
-        .await;
+    client.bigunion.update(&BigUnion::NormalSweet {
+        data: NormalSweet {
+            value: "value".to_string()
+        }
+    }, None).await;
 }

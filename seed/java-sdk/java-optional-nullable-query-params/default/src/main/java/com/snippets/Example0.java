@@ -7,18 +7,36 @@ import com.seed.javaOptionalNullableQueryParams.types.SortOrder;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedJavaOptionalNullableQueryParamsClient client = SeedJavaOptionalNullableQueryParamsClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedJavaOptionalNullableQueryParamsClient client = SeedJavaOptionalNullableQueryParamsClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
-        client.search(SearchRequest.builder()
-                .query(OptionalNullable.of(""))
-                .limit(OptionalNullable.of(1))
-                .includeArchived(OptionalNullable.of(true))
-                .sortOrder(OptionalNullable.of(SortOrder.ASC))
-                .optionalWithoutDefault(OptionalNullable.of("optionalWithoutDefault"))
-                .regularOptional(OptionalNullable.of("default-value"))
-                .regularOptionalNoDefault(OptionalNullable.of("regularOptionalNoDefault"))
-                .build());
+        client.search(
+            SearchRequest
+                .builder()
+                .query(
+                    OptionalNullable.of("")
+                )
+                .limit(
+                    OptionalNullable.of(1)
+                )
+                .includeArchived(
+                    OptionalNullable.of(true)
+                )
+                .sortOrder(
+                    OptionalNullable.of(SortOrder.ASC)
+                )
+                .optionalWithoutDefault(
+                    OptionalNullable.of("optionalWithoutDefault")
+                )
+                .regularOptional(
+                    OptionalNullable.of("default-value")
+                )
+                .regularOptionalNoDefault(
+                    OptionalNullable.of("regularOptionalNoDefault")
+                )
+                .build()
+        );
     }
 }

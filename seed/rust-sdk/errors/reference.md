@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo_without_endpoint_error</a>(request: FooRequest) -> Result<FooResponse, ApiError></code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo_without_endpoint_error</a>(request: FooRequest) -> Result&lt;FooResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -43,7 +43,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo</a>(request: FooRequest) -> Result<FooResponse, ApiError></code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo</a>(request: FooRequest) -> Result&lt;FooResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -86,7 +86,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo_with_examples</a>(request: FooRequest) -> Result<FooResponse, ApiError></code></summary>
+<details><summary><code>client.simple.<a href="/src/api/resources/simple/client.rs">foo_with_examples</a>(request: FooRequest) -> Result&lt;FooResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

@@ -1,5 +1,5 @@
-use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithRequiredField;
+use seed_exhaustive::prelude::{*};
+use seed_exhaustive::{ObjectWithRequiredField};
 
 #[tokio::main]
 async fn main() {
@@ -9,17 +9,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client
-        .endpoints
-        .container
-        .get_and_return_map_of_prim_to_object(
-            &HashMap::from([(
-                "string".to_string(),
-                ObjectWithRequiredField {
-                    string: "string".to_string(),
-                },
-            )]),
-            None,
-        )
-        .await;
+    client.endpoints.container.get_and_return_map_of_prim_to_object(&HashMap::from([("string".to_string(), ObjectWithRequiredField {
+    string: "string".to_string()
+})]), None).await;
 }

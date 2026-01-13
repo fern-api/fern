@@ -6,17 +6,24 @@ import com.seed.api.types.NullableObject;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client = SeedApiClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
         client.postWithNullableNamedRequestBodyType(
-                "id",
-                PostWithNullableNamedRequestBodyTypeRequest.builder()
-                        .body(NullableObject.builder()
-                                .id("id")
-                                .name("name")
-                                .age(1)
-                                .build())
-                        .build());
+            "id",
+            PostWithNullableNamedRequestBodyTypeRequest
+                .builder()
+                .body(
+                    NullableObject
+                        .builder()
+                        .id("id")
+                        .name("name")
+                        .age(1)
+                        .build()
+                )
+                .build()
+        );
     }
 }

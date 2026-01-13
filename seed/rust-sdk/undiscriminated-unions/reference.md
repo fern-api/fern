@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get</a>(request: MyUnion) -> Result<MyUnion, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get</a>(request: MyUnion) -> Result&lt;MyUnion, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_metadata</a>() -> Result<Metadata, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">get_metadata</a>() -> Result&lt;Metadata, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +72,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">update_metadata</a>(request: MetadataUnion) -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">update_metadata</a>(request: MetadataUnion) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -116,7 +116,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">call</a>(request: Request) -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">call</a>(request: Request) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -161,7 +161,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">duplicate_types_union</a>(request: UnionWithDuplicateTypes) -> Result<UnionWithDuplicateTypes, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">duplicate_types_union</a>(request: UnionWithDuplicateTypes) -> Result&lt;UnionWithDuplicateTypes, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -199,7 +199,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_unions</a>(request: NestedUnionRoot) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">nested_unions</a>(request: NestedUnionRoot) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -237,7 +237,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">test_camel_case_properties</a>(request: PaymentRequest) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.union_.<a href="/src/api/resources/union_/client.rs">test_camel_case_properties</a>(request: PaymentRequest) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

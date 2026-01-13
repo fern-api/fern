@@ -1,4 +1,4 @@
-use seed_server_sent_events::prelude::*;
+use seed_server_sent_events::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,13 +7,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
-    client
-        .completions
-        .stream(
-            &StreamCompletionRequest {
-                query: "query".to_string(),
-            },
-            None,
-        )
-        .await;
+    client.completions.stream(&StreamCompletionRequest {
+        query: "query".to_string()
+    }, None).await;
 }

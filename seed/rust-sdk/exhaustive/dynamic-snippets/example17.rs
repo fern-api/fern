@@ -1,5 +1,5 @@
-use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithMapOfMap;
+use seed_exhaustive::prelude::{*};
+use seed_exhaustive::{ObjectWithMapOfMap};
 
 #[tokio::main]
 async fn main() {
@@ -9,17 +9,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client
-        .endpoints
-        .object
-        .get_and_return_with_map_of_map(
-            &ObjectWithMapOfMap {
-                map: HashMap::from([(
-                    "map".to_string(),
-                    HashMap::from([("map".to_string(), "map".to_string())]),
-                )]),
-            },
-            None,
-        )
-        .await;
+    client.endpoints.object.get_and_return_with_map_of_map(&ObjectWithMapOfMap {
+        map: HashMap::from([("map".to_string(), HashMap::from([("map".to_string(), "map".to_string())]))])
+    }, None).await;
 }

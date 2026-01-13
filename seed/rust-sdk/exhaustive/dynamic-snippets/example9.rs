@@ -1,5 +1,5 @@
-use seed_exhaustive::prelude::*;
-use seed_exhaustive::WeatherReport;
+use seed_exhaustive::prelude::{*};
+use seed_exhaustive::{WeatherReport};
 
 #[tokio::main]
 async fn main() {
@@ -9,9 +9,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client
-        .endpoints
-        .enum_
-        .get_and_return_enum(&WeatherReport::Sunny, None)
-        .await;
+    client.endpoints.enum_.get_and_return_enum(&WeatherReport::Sunny, None).await;
 }

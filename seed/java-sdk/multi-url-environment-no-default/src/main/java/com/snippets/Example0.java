@@ -5,10 +5,16 @@ import com.seed.multiUrlEnvironmentNoDefault.resources.ec2.requests.BootInstance
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient.builder()
-                .token("<token>")
-                .build();
+        SeedMultiUrlEnvironmentNoDefaultClient client = SeedMultiUrlEnvironmentNoDefaultClient
+            .builder()
+            .token("<token>")
+            .build();
 
-        client.ec2().bootInstance(BootInstanceRequest.builder().size("size").build());
+        client.ec2().bootInstance(
+            BootInstanceRequest
+                .builder()
+                .size("size")
+                .build()
+        );
     }
 }

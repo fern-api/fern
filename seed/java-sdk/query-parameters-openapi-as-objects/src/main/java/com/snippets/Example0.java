@@ -13,54 +13,121 @@ import java.util.Optional;
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client = SeedApiClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
-        client.search(SearchRequest.builder()
+        client.search(
+            SearchRequest
+                .builder()
                 .limit(1)
                 .id("id")
                 .date("2023-01-15")
                 .deadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .bytes("bytes")
-                .user(User.builder()
+                .user(
+                    User
+                        .builder()
                         .name("name")
-                        .tags(Optional.of(Arrays.asList("tags", "tags")))
-                        .build())
-                .neighborRequired(SearchRequestNeighborRequired.of(User.builder()
-                        .name("name")
-                        .tags(Optional.of(Arrays.asList("tags", "tags")))
-                        .build()))
-                .userList(Arrays.asList(User.builder()
-                        .name("name")
-                        .tags(Optional.of(Arrays.asList("tags", "tags")))
-                        .build()))
-                .excludeUser(Arrays.asList(User.builder()
-                        .name("name")
-                        .tags(Optional.of(Arrays.asList("tags", "tags")))
-                        .build()))
-                .filter(Arrays.asList("filter"))
+                        .tags(
+                            Optional.of(
+                                Arrays.asList("tags", "tags")
+                            )
+                        )
+                        .build()
+                )
+                .neighborRequired(
+                    SearchRequestNeighborRequired.of(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Optional.of(
+                                    Arrays.asList("tags", "tags")
+                                )
+                            )
+                            .build()
+                    )
+                )
+                .userList(
+                    Arrays.asList(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Optional.of(
+                                    Arrays.asList("tags", "tags")
+                                )
+                            )
+                            .build()
+                    )
+                )
+                .excludeUser(
+                    Arrays.asList(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Optional.of(
+                                    Arrays.asList("tags", "tags")
+                                )
+                            )
+                            .build()
+                    )
+                )
+                .filter(
+                    Arrays.asList("filter")
+                )
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                .keyValue(new HashMap<String, String>() {
-                    {
+                .keyValue(
+                    new HashMap<String, String>() {{
                         put("keyValue", "keyValue");
-                    }
-                })
+                    }}
+                )
                 .optionalString("optionalString")
-                .nestedUser(NestedUser.builder()
+                .nestedUser(
+                    NestedUser
+                        .builder()
                         .name("name")
-                        .user(User.builder()
+                        .user(
+                            User
+                                .builder()
                                 .name("name")
-                                .tags(Optional.of(Arrays.asList("tags", "tags")))
-                                .build())
-                        .build())
-                .optionalUser(User.builder()
+                                .tags(
+                                    Optional.of(
+                                        Arrays.asList("tags", "tags")
+                                    )
+                                )
+                                .build()
+                        )
+                        .build()
+                )
+                .optionalUser(
+                    User
+                        .builder()
                         .name("name")
-                        .tags(Optional.of(Arrays.asList("tags", "tags")))
-                        .build())
-                .neighbor(SearchRequestNeighbor.of(User.builder()
-                        .name("name")
-                        .tags(Optional.of(Arrays.asList("tags", "tags")))
-                        .build()))
-                .build());
+                        .tags(
+                            Optional.of(
+                                Arrays.asList("tags", "tags")
+                            )
+                        )
+                        .build()
+                )
+                .neighbor(
+                    SearchRequestNeighbor.of(
+                        User
+                            .builder()
+                            .name("name")
+                            .tags(
+                                Optional.of(
+                                    Arrays.asList("tags", "tags")
+                                )
+                            )
+                            .build()
+                    )
+                )
+                .build()
+        );
     }
 }

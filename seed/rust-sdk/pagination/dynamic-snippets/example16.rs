@@ -1,5 +1,4 @@
-use seed_pagination::prelude::*;
-use seed_pagination::Order;
+use seed_pagination::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -9,16 +8,8 @@ async fn main() {
         ..Default::default()
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
-    client
-        .users
-        .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest2 {
-                page: Some(1),
-                per_page: Some(1),
-                order: Some(Order::Asc),
-                starting_after: Some("starting_after".to_string()),
-            },
-            None,
-        )
-        .await;
+    client.users.list_with_top_level_body_cursor_pagination(&ListUsersTopLevelBodyCursorPaginationRequest {
+        cursor: Some("initial_cursor".to_string()),
+        filter: Some("active".to_string())
+    }, None).await;
 }

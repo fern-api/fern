@@ -1,4 +1,4 @@
-use seed_bytes_upload::prelude::*;
+use seed_bytes_upload::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,8 +7,5 @@ async fn main() {
         ..Default::default()
     };
     let client = BytesUploadClient::new(config).expect("Failed to build client");
-    client
-        .service
-        .upload(&todo!("Invalid bytes value"), None)
-        .await;
+    client.service.upload(&todo!("Invalid bytes value"), None).await;
 }

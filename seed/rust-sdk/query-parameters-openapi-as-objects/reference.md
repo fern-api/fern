@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">search</a>(limit: Option<i64>, id: Option<String>, date: Option<String>, deadline: Option<String>, bytes: Option<String>, user: Option<User>, optional_deadline: Option<Option<String>>, key_value: Option<Option<std::collections::HashMap<String, String>>>, optional_string: Option<Option<String>>, nested_user: Option<Option<NestedUser>>, optional_user: Option<Option<User>>, neighbor: Option<Option<SearchRequestNeighbor>>, neighbor_required: Option<SearchRequestNeighborRequired>) -> Result<SearchResponse, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">search</a>(limit: Option&lt;i64&gt;, id: Option&lt;String&gt;, date: Option&lt;String&gt;, deadline: Option&lt;String&gt;, bytes: Option&lt;String&gt;, user: Option&lt;User&gt;, optional_deadline: Option&lt;Option&lt;String&gt;&gt;, key_value: Option&lt;Option&lt;std::collections::HashMap&lt;String, String&gt;&gt;&gt;, optional_string: Option&lt;Option&lt;String&gt;&gt;, nested_user: Option&lt;Option&lt;NestedUser&gt;&gt;, optional_user: Option&lt;Option&lt;User&gt;&gt;, neighbor: Option&lt;Option&lt;SearchRequestNeighbor&gt;&gt;, neighbor_required: Option&lt;SearchRequestNeighborRequired&gt;) -> Result&lt;SearchResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

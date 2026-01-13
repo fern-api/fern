@@ -6,16 +6,21 @@ import java.util.Arrays;
 
 public class Example17 {
     public static void main(String[] args) {
-        SeedExamplesClient client = SeedExamplesClient.builder()
-                .token("<token>")
-                .url("https://api.fern.com")
-                .build();
+        SeedExamplesClient client = SeedExamplesClient
+            .builder()
+            .token("<token>")
+            .url("https://api.fern.com")
+            .build();
 
-        client.service()
-                .getMetadata(GetMetadataRequest.builder()
-                        .xApiVersion("0.0.1")
-                        .tag(Arrays.asList("development"))
-                        .shallow(false)
-                        .build());
+        client.service().getMetadata(
+            GetMetadataRequest
+                .builder()
+                .xApiVersion("0.0.1")
+                .tag(
+                    Arrays.asList("development")
+                )
+                .shallow(false)
+                .build()
+        );
     }
 }

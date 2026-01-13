@@ -1,4 +1,4 @@
-use seed_trace::prelude::*;
+use seed_trace::prelude::{*};
 use seed_trace::{PlaylistCreateRequest, ProblemId};
 
 #[tokio::main]
@@ -9,24 +9,12 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client
-        .playlist
-        .create_playlist(
-            1,
-            &CreatePlaylistRequest {
-                datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                optional_datetime: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                ),
-                body: PlaylistCreateRequest {
-                    name: "name".to_string(),
-                    problems: vec![
-                        ProblemId("problems".to_string()),
-                        ProblemId("problems".to_string()),
-                    ],
-                },
-            },
-            None,
-        )
-        .await;
+    client.playlist.create_playlist(1, &CreatePlaylistRequest {
+        datetime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+        optional_datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
+        body: PlaylistCreateRequest {
+            name: "name".to_string(),
+            problems: vec![ProblemId("problems".to_string()), ProblemId("problems".to_string())]
+        }
+    }, None).await;
 }

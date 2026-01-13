@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.complex.<a href="/src/api/resources/complex/client.rs">search</a>(index: String, request: SearchRequest) -> Result<PaginatedConversationResponse, ApiError></code></summary>
+<details><summary><code>client.complex.<a href="/src/api/resources/complex/client.rs">search</a>(index: String, request: SearchRequest) -> Result&lt;PaginatedConversationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -73,7 +73,7 @@ async fn main() {
 </details>
 
 ## InlineUsers InlineUsers
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_cursor_pagination</a>(page: Option<Option<i64>>, per_page: Option<Option<i64>>, order: Option<Option<Order>>, starting_after: Option<Option<String>>) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_cursor_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -163,7 +163,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_mixed_type_cursor_pagination</a>(cursor: Option<Option<String>>) -> Result<ListUsersMixedTypePaginationResponse, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_mixed_type_cursor_pagination</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersMixedTypePaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -222,7 +222,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_body_cursor_pagination</a>(request: ListUsersBodyCursorPaginationRequest) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_body_cursor_pagination</a>(request: ListUsersBodyCursorPaginationRequest) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -282,7 +282,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_offset_pagination</a>(page: Option<Option<i64>>, per_page: Option<Option<i64>>, order: Option<Option<Order>>, starting_after: Option<Option<String>>) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_offset_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -372,7 +372,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_double_offset_pagination</a>(page: Option<Option<f64>>, per_page: Option<Option<f64>>, order: Option<Option<Order>>, starting_after: Option<Option<String>>) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_double_offset_pagination</a>(page: Option&lt;Option&lt;f64&gt;&gt;, per_page: Option&lt;Option&lt;f64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -462,7 +462,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_body_offset_pagination</a>(request: ListUsersBodyOffsetPaginationRequest) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_body_offset_pagination</a>(request: ListUsersBodyOffsetPaginationRequest) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -522,7 +522,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_offset_step_pagination</a>(page: Option<Option<i64>>, limit: Option<Option<i64>>, order: Option<Option<Order>>) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_offset_step_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, limit: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -604,7 +604,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_offset_pagination_has_next_page</a>(page: Option<Option<i64>>, limit: Option<Option<i64>>, order: Option<Option<Order>>) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_offset_pagination_has_next_page</a>(page: Option&lt;Option&lt;i64&gt;&gt;, limit: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -686,7 +686,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_extended_results</a>(cursor: Option<Option<String>>) -> Result<ListUsersExtendedResponse, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_extended_results</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersExtendedResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -745,7 +745,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_extended_results_and_optional_data</a>(cursor: Option<Option<String>>) -> Result<ListUsersExtendedOptionalListResponse, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_extended_results_and_optional_data</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersExtendedOptionalListResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -804,7 +804,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_usernames</a>(starting_after: Option<Option<String>>) -> Result<UsernameCursor, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_usernames</a>(starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;UsernameCursor, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -870,7 +870,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_global_config</a>(offset: Option<Option<i64>>) -> Result<UsernameContainer, ApiError></code></summary>
+<details><summary><code>client.inline_users().inline_users.<a href="/src/api/resources/inline_users/inline_users/client.rs">list_with_global_config</a>(offset: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;UsernameContainer, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -925,7 +925,7 @@ async fn main() {
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_cursor_pagination</a>(page: Option<Option<i64>>, per_page: Option<Option<i64>>, order: Option<Option<Order>>, starting_after: Option<Option<String>>) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_cursor_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1014,7 +1014,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_mixed_type_cursor_pagination</a>(cursor: Option<Option<String>>) -> Result<ListUsersMixedTypePaginationResponse, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_mixed_type_cursor_pagination</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersMixedTypePaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1072,7 +1072,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_body_cursor_pagination</a>(request: ListUsersBodyCursorPaginationRequest) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_body_cursor_pagination</a>(request: ListUsersBodyCursorPaginationRequest) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1131,7 +1131,93 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_offset_pagination</a>(page: Option<Option<i64>>, per_page: Option<Option<i64>>, order: Option<Option<Order>>, starting_after: Option<Option<String>>) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_top_level_body_cursor_pagination</a>(request: ListUsersTopLevelBodyCursorPaginationRequest) -> Result&lt;ListUsersTopLevelCursorPaginationResponse, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pagination endpoint with a top-level cursor field in the request body.
+This tests that the mock server correctly ignores cursor mismatches
+when getNextPage() is called with a different cursor value.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_pagination::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    let client = PaginationClient::new(config).expect("Failed to build client");
+    client
+        .users
+        .list_with_top_level_body_cursor_pagination(
+            &ListUsersTopLevelBodyCursorPaginationRequest {
+                cursor: Some("initial_cursor".to_string()),
+                filter: Some("active".to_string()),
+            },
+            None,
+        )
+        .await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `Option<String>` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `Option<String>` — An optional filter to apply to the results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_offset_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, per_page: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1220,7 +1306,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_double_offset_pagination</a>(page: Option<Option<f64>>, per_page: Option<Option<f64>>, order: Option<Option<Order>>, starting_after: Option<Option<String>>) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_double_offset_pagination</a>(page: Option&lt;Option&lt;f64&gt;&gt;, per_page: Option&lt;Option&lt;f64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;, starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1309,7 +1395,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_body_offset_pagination</a>(request: ListUsersBodyOffsetPaginationRequest) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_body_offset_pagination</a>(request: ListUsersBodyOffsetPaginationRequest) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1368,7 +1454,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_offset_step_pagination</a>(page: Option<Option<i64>>, limit: Option<Option<i64>>, order: Option<Option<Order>>) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_offset_step_pagination</a>(page: Option&lt;Option&lt;i64&gt;&gt;, limit: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1449,7 +1535,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_offset_pagination_has_next_page</a>(page: Option<Option<i64>>, limit: Option<Option<i64>>, order: Option<Option<Order>>) -> Result<ListUsersPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_offset_pagination_has_next_page</a>(page: Option&lt;Option&lt;i64&gt;&gt;, limit: Option&lt;Option&lt;i64&gt;&gt;, order: Option&lt;Option&lt;Order&gt;&gt;) -> Result&lt;ListUsersPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1530,7 +1616,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_extended_results</a>(cursor: Option<Option<String>>) -> Result<ListUsersExtendedResponse, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_extended_results</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersExtendedResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1588,7 +1674,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_extended_results_and_optional_data</a>(cursor: Option<Option<String>>) -> Result<ListUsersExtendedOptionalListResponse, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_extended_results_and_optional_data</a>(cursor: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;ListUsersExtendedOptionalListResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1646,7 +1732,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_usernames</a>(starting_after: Option<Option<String>>) -> Result<UsernameCursor, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_usernames</a>(starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;UsernameCursor, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1711,7 +1797,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_usernames_with_optional_response</a>(starting_after: Option<Option<String>>) -> Result<Option<UsernameCursor>, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_usernames_with_optional_response</a>(starting_after: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;Option&lt;UsernameCursor&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1776,7 +1862,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_global_config</a>(offset: Option<Option<i64>>) -> Result<UsernameContainer, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_global_config</a>(offset: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;UsernameContainer, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1829,7 +1915,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_optional_data</a>(page: Option<Option<i64>>) -> Result<ListUsersOptionalDataPaginationResponse, ApiError></code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client.rs">list_with_optional_data</a>(page: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;ListUsersOptionalDataPaginationResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

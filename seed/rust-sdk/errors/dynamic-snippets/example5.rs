@@ -1,5 +1,5 @@
-use seed_errors::prelude::*;
-use seed_errors::FooRequest;
+use seed_errors::prelude::{*};
+use seed_errors::{FooRequest};
 
 #[tokio::main]
 async fn main() {
@@ -8,13 +8,7 @@ async fn main() {
         ..Default::default()
     };
     let client = ErrorsClient::new(config).expect("Failed to build client");
-    client
-        .simple
-        .foo(
-            &FooRequest {
-                bar: "bar".to_string(),
-            },
-            None,
-        )
-        .await;
+    client.simple.foo(&FooRequest {
+        bar: "bar".to_string()
+    }, None).await;
 }

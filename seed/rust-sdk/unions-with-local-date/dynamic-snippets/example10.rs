@@ -1,5 +1,5 @@
-use seed_unions::prelude::*;
-use seed_unions::{Circle, Shape, Square};
+use seed_unions::prelude::{*};
+use seed_unions::{Shape, Circle, Square};
 
 #[tokio::main]
 async fn main() {
@@ -8,13 +8,9 @@ async fn main() {
         ..Default::default()
     };
     let client = UnionsClient::new(config).expect("Failed to build client");
-    client
-        .union_
-        .update(
-            &Shape::Circle {
-                data: Circle { radius: 1.1 },
-            },
-            None,
-        )
-        .await;
+    client.union_.update(&Shape::Circle {
+        data: Circle {
+            radius: 1.1
+        }
+    }, None).await;
 }

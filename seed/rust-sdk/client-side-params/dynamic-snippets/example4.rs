@@ -1,4 +1,4 @@
-use seed_client_side_params::prelude::*;
+use seed_client_side_params::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -8,15 +8,8 @@ async fn main() {
         ..Default::default()
     };
     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
-    client
-        .service
-        .get_user_by_id(
-            &"userId".to_string(),
-            &GetUserByIdQueryRequest {
-                fields: Some("fields".to_string()),
-                include_fields: Some(true),
-            },
-            None,
-        )
-        .await;
+    client.service.get_user_by_id(&"userId".to_string(), &GetUserByIdQueryRequest {
+        fields: Some("fields".to_string()),
+        include_fields: Some(true)
+    }, None).await;
 }

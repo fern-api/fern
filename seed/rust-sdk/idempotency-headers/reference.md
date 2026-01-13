@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.payment.<a href="/src/api/resources/payment/client.rs">create</a>(request: CreatePaymentRequest) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.payment.<a href="/src/api/resources/payment/client.rs">create</a>(request: CreatePaymentRequest) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -68,7 +68,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.payment.<a href="/src/api/resources/payment/client.rs">delete</a>(payment_id: String) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.payment.<a href="/src/api/resources/payment/client.rs">delete</a>(payment_id: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 

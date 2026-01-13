@@ -1,4 +1,4 @@
-use seed_license::prelude::*;
+use seed_license::prelude::{*};
 
 #[tokio::main]
 async fn main() {

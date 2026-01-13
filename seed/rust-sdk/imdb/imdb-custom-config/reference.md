@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">create_movie</a>(request: CreateMovieRequest) -> Result<MovieId, ApiError></code></summary>
+<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">create_movie</a>(request: CreateMovieRequest) -> Result&lt;MovieId, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -59,7 +59,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">get_movie</a>(movie_id: MovieId) -> Result<Movie, ApiError></code></summary>
+<details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client.rs">get_movie</a>(movie_id: MovieId) -> Result&lt;Movie, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

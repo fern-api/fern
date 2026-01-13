@@ -1,6 +1,6 @@
 # Reference
 ## Organization
-<details><summary><code>client.organization.<a href="/src/api/resources/organization/client.rs">create</a>(request: CreateOrganizationRequest) -> Result<Organization, ApiError></code></summary>
+<details><summary><code>client.organization.<a href="/src/api/resources/organization/client.rs">create</a>(request: CreateOrganizationRequest) -> Result&lt;Organization, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -58,7 +58,7 @@ async fn main() {
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">list</a>(limit: Option<Option<i64>>) -> Result<Vec<User>, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">list</a>(limit: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -125,7 +125,7 @@ async fn main() {
 </details>
 
 ## User Events
-<details><summary><code>client.user().events.<a href="/src/api/resources/user/events/client.rs">list_events</a>(limit: Option<Option<i64>>) -> Result<Vec<Event>, ApiError></code></summary>
+<details><summary><code>client.user().events.<a href="/src/api/resources/user/events/client.rs">list_events</a>(limit: Option&lt;Option&lt;i64&gt;&gt;) -> Result&lt;Vec&lt;Event&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -193,7 +193,7 @@ async fn main() {
 </details>
 
 ## User Events Metadata
-<details><summary><code>client.user().events().metadata.<a href="/src/api/resources/user/events/metadata/client.rs">get_metadata</a>(id: Option<Id>) -> Result<Metadata, ApiError></code></summary>
+<details><summary><code>client.user().events().metadata.<a href="/src/api/resources/user/events/metadata/client.rs">get_metadata</a>(id: Option&lt;Id&gt;) -> Result&lt;Metadata, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

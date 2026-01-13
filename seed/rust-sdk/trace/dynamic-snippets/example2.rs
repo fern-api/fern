@@ -1,12 +1,5 @@
-use seed_trace::prelude::*;
-use seed_trace::{
-    BinaryTreeNodeValue, BinaryTreeValue, CompileError, DoublyLinkedListNodeValue,
-    DoublyLinkedListValue, ErrorInfo, ExceptionInfo, ExceptionV2, GradedTestCaseUpdate,
-    InternalError, KeyValuePair, MapValue, NodeId, RecordedTestCaseUpdate, RunningSubmissionState,
-    RuntimeError, SinglyLinkedListNodeValue, SinglyLinkedListValue, SubmissionId, TestCaseGrade,
-    TestCaseHiddenGrade, TestCaseId, TestCaseNonHiddenGrade, TestSubmissionUpdate,
-    TestSubmissionUpdateInfo, VariableValue,
-};
+use seed_trace::prelude::{*};
+use seed_trace::{SubmissionId, TestSubmissionUpdate, TestSubmissionUpdateInfo, RunningSubmissionState, ErrorInfo, CompileError, RuntimeError, InternalError, ExceptionInfo, GradedTestCaseUpdate, TestCaseId, TestCaseGrade, TestCaseHiddenGrade, TestCaseNonHiddenGrade, VariableValue, MapValue, KeyValuePair, BinaryTreeValue, NodeId, BinaryTreeNodeValue, SinglyLinkedListValue, SinglyLinkedListNodeValue, DoublyLinkedListValue, DoublyLinkedListNodeValue, ExceptionV2, RecordedTestCaseUpdate};
 
 #[tokio::main]
 async fn main() {
@@ -16,17 +9,10 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client
-        .admin
-        .send_test_submission_update(
-            &SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-            &TestSubmissionUpdate {
-                update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
-                update_info: TestSubmissionUpdateInfo::Running {
-                    value: Default::default(),
-                },
-            },
-            None,
-        )
-        .await;
+    client.admin.send_test_submission_update(&SubmissionId(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()), &TestSubmissionUpdate {
+        update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+        update_info: TestSubmissionUpdateInfo::Running {
+            value: Default::default()
+        }
+    }, None).await;
 }

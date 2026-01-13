@@ -6,18 +6,20 @@ import com.seed.pagination.resources.inlineusers.inlineusers.types.Order;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient.builder()
-                .token("<token>")
-                .url("https://api.fern.com")
-                .build();
+        SeedPaginationClient client = SeedPaginationClient
+            .builder()
+            .token("<token>")
+            .url("https://api.fern.com")
+            .build();
 
-        client.inlineUsers()
-                .inlineUsers()
-                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
-                        .page(1)
-                        .perPage(1)
-                        .order(Order.ASC)
-                        .startingAfter("starting_after")
-                        .build());
+        client.inlineUsers().inlineUsers().listWithCursorPagination(
+            ListUsersCursorPaginationRequest
+                .builder()
+                .page(1)
+                .perPage(1)
+                .order(Order.ASC)
+                .startingAfter("starting_after")
+                .build()
+        );
     }
 }

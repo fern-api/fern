@@ -1,5 +1,5 @@
-use seed_version::prelude::*;
-use seed_version::UserId;
+use seed_version::prelude::{*};
+use seed_version::{UserId};
 
 #[tokio::main]
 async fn main() {
@@ -8,8 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = VersionClient::new(config).expect("Failed to build client");
-    client
-        .user
-        .get_user(&UserId("userId".to_string()), None)
-        .await;
+    client.user.get_user(&UserId("userId".to_string()), None).await;
 }

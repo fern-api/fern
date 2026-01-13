@@ -8,18 +8,30 @@ import java.util.Arrays;
 
 public class Example8 {
     public static void main(String[] args) {
-        SeedLiteralClient client =
-                SeedLiteralClient.builder().url("https://api.fern.com").build();
+        SeedLiteralClient client = SeedLiteralClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
-        client.reference()
-                .send(SendRequest.builder()
-                        .query("What is the weather today")
-                        .context("You're super wise")
-                        .containerObject(ContainerObject.builder()
-                                .nestedObjects(Arrays.asList(NestedObjectWithLiterals.builder()
-                                        .strProp("strProp")
-                                        .build()))
-                                .build())
-                        .build());
+        client.reference().send(
+            SendRequest
+                .builder()
+                .query("What is the weather today")
+                .context("You're super wise")
+                .containerObject(
+                    ContainerObject
+                        .builder()
+                        .nestedObjects(
+                            Arrays.asList(
+                                NestedObjectWithLiterals
+                                    .builder()
+                                    .strProp("strProp")
+                                    .build()
+                            )
+                        )
+                        .build()
+                )
+                .build()
+        );
     }
 }

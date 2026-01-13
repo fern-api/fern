@@ -1,4 +1,4 @@
-use seed_mixed_case::prelude::*;
+use seed_mixed_case::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,8 +7,5 @@ async fn main() {
         ..Default::default()
     };
     let client = MixedCaseClient::new(config).expect("Failed to build client");
-    client
-        .service
-        .get_resource(&"ResourceID".to_string(), None)
-        .await;
+    client.service.get_resource(&"ResourceID".to_string(), None).await;
 }

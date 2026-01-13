@@ -5,14 +5,18 @@ import com.seed.pathParameters.resources.organizations.requests.SearchOrganizati
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedPathParametersClient client = SeedPathParametersClient.builder()
-                .url("https://api.fern.com")
-                .tenantId("tenant_id")
-                .build();
+        SeedPathParametersClient client = SeedPathParametersClient
+            .builder()
+            .url("https://api.fern.com")
+            .tenantId("tenant_id")
+            .build();
 
-        client.organizations()
-                .searchOrganizations(
-                        "organization_id",
-                        SearchOrganizationsRequest.builder().limit(1).build());
+        client.organizations().searchOrganizations(
+            "organization_id",
+            SearchOrganizationsRequest
+                .builder()
+                .limit(1)
+                .build()
+        );
     }
 }

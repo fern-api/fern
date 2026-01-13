@@ -6,9 +6,18 @@ import com.seed.unions.resources.union.types.Shape;
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedUnionsClient client =
-                SeedUnionsClient.builder().url("https://api.fern.com").build();
+        SeedUnionsClient client = SeedUnionsClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
-        client.union().update(Shape.circle(Circle.builder().radius(1.1).build()));
+        client.union().update(
+            Shape.circle(
+                Circle
+                    .builder()
+                    .radius(1.1)
+                    .build()
+            )
+        );
     }
 }

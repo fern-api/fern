@@ -7,16 +7,24 @@ import com.seed.undiscriminatedUnions.resources.union.types.TokenizeCard;
 
 public class Example10 {
     public static void main(String[] args) {
-        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
-        client.union()
-                .testCamelCaseProperties(PaymentRequest.builder()
-                        .paymentMethod(PaymentMethodUnion.of(TokenizeCard.builder()
-                                .method("method")
-                                .cardNumber("cardNumber")
-                                .build()))
-                        .build());
+        client.union().testCamelCaseProperties(
+            PaymentRequest
+                .builder()
+                .paymentMethod(
+                    PaymentMethodUnion.of(
+                        TokenizeCard
+                            .builder()
+                            .method("method")
+                            .cardNumber("cardNumber")
+                            .build()
+                    )
+                )
+                .build()
+        );
     }
 }

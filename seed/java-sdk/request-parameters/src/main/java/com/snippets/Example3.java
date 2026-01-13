@@ -5,15 +5,18 @@ import com.seed.requestParameters.resources.user.types.CreateUsernameBodyOptiona
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedRequestParametersClient client = SeedRequestParametersClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedRequestParametersClient client = SeedRequestParametersClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
-        client.user()
-                .createUsernameOptional(CreateUsernameBodyOptionalProperties.builder()
-                        .username("username")
-                        .password("password")
-                        .name("test")
-                        .build());
+        client.user().createUsernameOptional(
+            CreateUsernameBodyOptionalProperties
+                .builder()
+                .username("username")
+                .password("password")
+                .name("test")
+                .build()
+        );
     }
 }

@@ -5,15 +5,19 @@ import com.seed.nullableOptional.resources.nullableoptional.requests.SearchUsers
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedNullableOptionalClient client =
-                SeedNullableOptionalClient.builder().url("https://api.fern.com").build();
+        SeedNullableOptionalClient client = SeedNullableOptionalClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
-        client.nullableOptional()
-                .searchUsers(SearchUsersRequest.builder()
-                        .query("query")
-                        .department("department")
-                        .role("role")
-                        .isActive(true)
-                        .build());
+        client.nullableOptional().searchUsers(
+            SearchUsersRequest
+                .builder()
+                .query("query")
+                .department("department")
+                .role("role")
+                .isActive(true)
+                .build()
+        );
     }
 }

@@ -1,5 +1,5 @@
-use seed_literal::prelude::*;
-use seed_literal::{ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral};
+use seed_literal::prelude::{*};
+use seed_literal::{SendRequest, SomeLiteral, ContainerObject, NestedObjectWithLiterals};
 
 #[tokio::main]
 async fn main() {
@@ -8,25 +8,19 @@ async fn main() {
         ..Default::default()
     };
     let client = LiteralClient::new(config).expect("Failed to build client");
-    client
-        .reference
-        .send(
-            &SendRequest {
-                prompt: "You are a helpful assistant".to_string(),
-                query: "What is the weather today".to_string(),
-                stream: false,
-                ending: Default::default(),
-                context: SomeLiteral("You're super wise".to_string()),
-                maybe_context: None,
-                container_object: ContainerObject {
-                    nested_objects: vec![NestedObjectWithLiterals {
-                        literal_1: "literal1".to_string(),
-                        literal_2: "literal2".to_string(),
-                        str_prop: "strProp".to_string(),
-                    }],
-                },
-            },
-            None,
-        )
-        .await;
+    client.reference.send(&SendRequest {
+        prompt: "You are a helpful assistant".to_string(),
+        query: "What is the weather today".to_string(),
+        stream: false,
+        ending: Default::default(),
+        context: SomeLiteral("You're super wise".to_string()),
+        maybe_context: None,
+        container_object: ContainerObject {
+            nested_objects: vec![NestedObjectWithLiterals {
+                literal_1: "literal1".to_string(),
+                literal_2: "literal2".to_string(),
+                str_prop: "strProp".to_string()
+            }]
+        }
+    }, None).await;
 }

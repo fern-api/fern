@@ -1,4 +1,4 @@
-use seed_audiences::prelude::*;
+use seed_audiences::prelude::{*};
 
 #[tokio::main]
 async fn main() {

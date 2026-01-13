@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>client.v_2.<a href="/src/api/resources/v_2/client.rs">test</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.v_2.<a href="/src/api/resources/v_2/client.rs">test</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -36,7 +36,7 @@ async fn main() {
 </details>
 
 ## Admin
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">update_test_submission_status</a>(submission_id: SubmissionId, request: TestSubmissionStatus) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">update_test_submission_status</a>(submission_id: SubmissionId, request: TestSubmissionStatus) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -101,7 +101,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">send_test_submission_update</a>(submission_id: SubmissionId, request: TestSubmissionUpdate) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">send_test_submission_update</a>(submission_id: SubmissionId, request: TestSubmissionUpdate) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -171,7 +171,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">update_workspace_submission_status</a>(submission_id: SubmissionId, request: WorkspaceSubmissionStatus) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">update_workspace_submission_status</a>(submission_id: SubmissionId, request: WorkspaceSubmissionStatus) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -232,7 +232,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">send_workspace_submission_update</a>(submission_id: SubmissionId, request: WorkspaceSubmissionUpdate) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">send_workspace_submission_update</a>(submission_id: SubmissionId, request: WorkspaceSubmissionUpdate) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -299,7 +299,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_test_case</a>(submission_id: SubmissionId, test_case_id: String, request: StoreTracedTestCaseRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_test_case</a>(submission_id: SubmissionId, test_case_id: String, request: StoreTracedTestCaseRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -469,7 +469,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_test_case_v_2</a>(submission_id: SubmissionId, test_case_id: TestCaseId, request: Vec<TraceResponseV2>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_test_case_v_2</a>(submission_id: SubmissionId, test_case_id: TestCaseId, request: Vec&lt;TraceResponseV2&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -617,7 +617,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_workspace</a>(submission_id: SubmissionId, request: StoreTracedWorkspaceRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_workspace</a>(submission_id: SubmissionId, request: StoreTracedWorkspaceRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -781,7 +781,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_workspace_v_2</a>(submission_id: SubmissionId, request: Vec<TraceResponseV2>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client.rs">store_traced_workspace_v_2</a>(submission_id: SubmissionId, request: Vec&lt;TraceResponseV2&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -921,7 +921,7 @@ async fn main() {
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client.rs">get_homepage_problems</a>() -> Result<Vec<ProblemId>, ApiError></code></summary>
+<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client.rs">get_homepage_problems</a>() -> Result&lt;Vec&lt;ProblemId&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -956,7 +956,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client.rs">set_homepage_problems</a>(request: Vec<ProblemId>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client.rs">set_homepage_problems</a>(request: Vec&lt;ProblemId&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1002,7 +1002,7 @@ async fn main() {
 </details>
 
 ## Migration
-<details><summary><code>client.migration.<a href="/src/api/resources/migration/client.rs">get_attempted_migrations</a>() -> Result<Vec<Migration>, ApiError></code></summary>
+<details><summary><code>client.migration.<a href="/src/api/resources/migration/client.rs">get_attempted_migrations</a>() -> Result&lt;Vec&lt;Migration&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1043,7 +1043,7 @@ async fn main() {
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">create_playlist</a>(service_param: i64, request: PlaylistCreateRequest, datetime: Option<String>, optional_datetime: Option<Option<String>>) -> Result<Playlist, ApiError></code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">create_playlist</a>(service_param: i64, request: PlaylistCreateRequest, datetime: Option&lt;String&gt;, optional_datetime: Option&lt;Option&lt;String&gt;&gt;) -> Result&lt;Playlist, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1143,7 +1143,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">get_playlists</a>(service_param: i64, limit: Option<Option<i64>>, other_field: Option<String>, multi_line_docs: Option<String>) -> Result<Vec<Playlist>, ApiError></code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">get_playlists</a>(service_param: i64, limit: Option&lt;Option&lt;i64&gt;&gt;, other_field: Option&lt;String&gt;, multi_line_docs: Option&lt;String&gt;) -> Result&lt;Vec&lt;Playlist&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1263,7 +1263,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">get_playlist</a>(service_param: i64, playlist_id: PlaylistId) -> Result<Playlist, ApiError></code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">get_playlist</a>(service_param: i64, playlist_id: PlaylistId) -> Result&lt;Playlist, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1339,7 +1339,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">update_playlist</a>(service_param: i64, playlist_id: PlaylistId, request: Option<UpdatePlaylistRequest>) -> Result<Option<Playlist>, ApiError></code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">update_playlist</a>(service_param: i64, playlist_id: PlaylistId, request: Option&lt;UpdatePlaylistRequest&gt;) -> Result&lt;Option&lt;Playlist&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1426,7 +1426,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">delete_playlist</a>(service_param: i64, playlist_id: PlaylistId) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client.rs">delete_playlist</a>(service_param: i64, playlist_id: PlaylistId) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1503,7 +1503,7 @@ async fn main() {
 </details>
 
 ## Problem
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">create_problem</a>(request: CreateProblemRequest) -> Result<CreateProblemResponse, ApiError></code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">create_problem</a>(request: CreateProblemRequest) -> Result&lt;CreateProblemResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1630,7 +1630,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">update_problem</a>(problem_id: ProblemId, request: CreateProblemRequest) -> Result<UpdateProblemResponse, ApiError></code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">update_problem</a>(problem_id: ProblemId, request: CreateProblemRequest) -> Result&lt;UpdateProblemResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1773,7 +1773,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">delete_problem</a>(problem_id: ProblemId) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">delete_problem</a>(problem_id: ProblemId) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1841,7 +1841,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">get_default_starter_files</a>(request: GetDefaultStarterFilesRequest) -> Result<GetDefaultStarterFilesResponse, ApiError></code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client.rs">get_default_starter_files</a>(request: GetDefaultStarterFilesRequest) -> Result&lt;GetDefaultStarterFilesResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1949,7 +1949,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">create_execution_session</a>(language: Language) -> Result<ExecutionSessionResponse, ApiError></code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">create_execution_session</a>(language: Language) -> Result&lt;ExecutionSessionResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2017,7 +2017,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">get_execution_session</a>(session_id: String) -> Result<Option<ExecutionSessionResponse>, ApiError></code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">get_execution_session</a>(session_id: String) -> Result&lt;Option&lt;ExecutionSessionResponse&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2084,7 +2084,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">stop_execution_session</a>(session_id: String) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">stop_execution_session</a>(session_id: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2151,7 +2151,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">get_execution_sessions_state</a>() -> Result<GetExecutionSessionStateResponse, ApiError></code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client.rs">get_execution_sessions_state</a>() -> Result&lt;GetExecutionSessionStateResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2187,7 +2187,7 @@ async fn main() {
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client.rs">set_num_warm_instances</a>(language: Language, num_warm_instances: i64) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client.rs">set_num_warm_instances</a>(language: Language, num_warm_instances: i64) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2249,7 +2249,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client.rs">get_num_warm_instances</a>() -> Result<std::collections::HashMap<Language, i64>, ApiError></code></summary>
+<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client.rs">get_num_warm_instances</a>() -> Result&lt;std::collections::HashMap&lt;Language, i64&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2285,7 +2285,7 @@ async fn main() {
 </details>
 
 ## V2 Problem
-<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_lightweight_problems</a>() -> Result<Vec<LightweightProblemInfoV2>, ApiError></code></summary>
+<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_lightweight_problems</a>() -> Result&lt;Vec&lt;LightweightProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2334,7 +2334,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_problems</a>() -> Result<Vec<ProblemInfoV2>, ApiError></code></summary>
+<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_problems</a>() -> Result&lt;Vec&lt;ProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2383,7 +2383,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_latest_problem</a>(problem_id: ProblemId) -> Result<ProblemInfoV2, ApiError></code></summary>
+<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_latest_problem</a>(problem_id: ProblemId) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2452,7 +2452,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result<ProblemInfoV2, ApiError></code></summary>
+<details><summary><code>client.v_2().problem.<a href="/src/api/resources/v_2/problem/client.rs">get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2530,7 +2530,7 @@ async fn main() {
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_lightweight_problems</a>() -> Result<Vec<LightweightProblemInfoV2>, ApiError></code></summary>
+<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_lightweight_problems</a>() -> Result&lt;Vec&lt;LightweightProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2579,7 +2579,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_problems</a>() -> Result<Vec<ProblemInfoV2>, ApiError></code></summary>
+<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_problems</a>() -> Result&lt;Vec&lt;ProblemInfoV2&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2628,7 +2628,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_latest_problem</a>(problem_id: ProblemId) -> Result<ProblemInfoV2, ApiError></code></summary>
+<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_latest_problem</a>(problem_id: ProblemId) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2697,7 +2697,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result<ProblemInfoV2, ApiError></code></summary>
+<details><summary><code>client.v_2().v_3().problem.<a href="/src/api/resources/v_2/v_3/problem/client.rs">get_problem_version</a>(problem_id: ProblemId, problem_version: i64) -> Result&lt;ProblemInfoV2, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

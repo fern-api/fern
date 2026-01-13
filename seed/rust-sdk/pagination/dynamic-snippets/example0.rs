@@ -1,9 +1,5 @@
-use seed_pagination::prelude::*;
-use seed_pagination::{
-    MultipleFilterSearchRequest, MultipleFilterSearchRequestOperator,
-    MultipleFilterSearchRequestValue, SearchRequest, SearchRequestQuery, SingleFilterSearchRequest,
-    SingleFilterSearchRequestOperator, StartingAfterPaging,
-};
+use seed_pagination::prelude::{*};
+use seed_pagination::{SearchRequest, StartingAfterPaging, SearchRequestQuery, SingleFilterSearchRequest, SingleFilterSearchRequestOperator, MultipleFilterSearchRequest, MultipleFilterSearchRequestOperator, MultipleFilterSearchRequestValue};
 
 #[tokio::main]
 async fn main() {
@@ -13,22 +9,15 @@ async fn main() {
         ..Default::default()
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
-    client
-        .complex
-        .search(
-            &"index".to_string(),
-            &SearchRequest {
-                pagination: Some(StartingAfterPaging {
-                    per_page: 1,
-                    starting_after: Some("starting_after".to_string()),
-                }),
-                query: SearchRequestQuery::SingleFilterSearchRequest(SingleFilterSearchRequest {
-                    field: Some("field".to_string()),
-                    operator: Some(SingleFilterSearchRequestOperator::Equals),
-                    value: Some("value".to_string()),
-                }),
-            },
-            None,
-        )
-        .await;
+    client.complex.search(&"index".to_string(), &SearchRequest {
+        pagination: Some(StartingAfterPaging {
+            per_page: 1,
+            starting_after: Some("starting_after".to_string())
+        }),
+        query: SearchRequestQuery::SingleFilterSearchRequest(SingleFilterSearchRequest {
+            field: Some("field".to_string()),
+            operator: Some(SingleFilterSearchRequestOperator::Equals),
+            value: Some("value".to_string())
+        })
+    }, None).await;
 }

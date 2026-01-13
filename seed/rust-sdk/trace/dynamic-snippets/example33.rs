@@ -1,5 +1,5 @@
-use seed_trace::prelude::*;
-use seed_trace::ProblemId;
+use seed_trace::prelude::{*};
+use seed_trace::{ProblemId};
 
 #[tokio::main]
 async fn main() {
@@ -9,9 +9,5 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client
-        .v_2
-        .problem
-        .get_problem_version(&ProblemId("problemId".to_string()), 1, None)
-        .await;
+    client.v_2.problem.get_problem_version(&ProblemId("problemId".to_string()), 1, None).await;
 }

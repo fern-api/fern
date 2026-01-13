@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::*;
+use seed_exhaustive::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -8,12 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client
-        .endpoints
-        .container
-        .get_and_return_map_prim_to_prim(
-            &HashMap::from([("string".to_string(), "string".to_string())]),
-            None,
-        )
-        .await;
+    client.endpoints.container.get_and_return_map_prim_to_prim(&HashMap::from([("string".to_string(), "string".to_string())]), None).await;
 }

@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_body</a>(request: Option<std::collections::HashMap<String, serde_json::Value>>) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_body</a>(request: Option&lt;std::collections::HashMap&lt;String, serde_json::Value&gt;&gt;) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -43,7 +43,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_typed_body</a>(request: Option<SendOptionalBodyRequest>) -> Result<String, ApiError></code></summary>
+<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_typed_body</a>(request: Option&lt;SendOptionalBodyRequest&gt;) -> Result&lt;String, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -86,7 +86,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_nullable_with_all_optional_properties</a>(action_id: String, id: String, request: Option<Option<DeployParams>>) -> Result<DeployResponse, ApiError></code></summary>
+<details><summary><code>client.optional.<a href="/src/api/resources/optional/client.rs">send_optional_nullable_with_all_optional_properties</a>(action_id: String, id: String, request: Option&lt;Option&lt;DeployParams&gt;&gt;) -> Result&lt;DeployResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

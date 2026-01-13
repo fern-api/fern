@@ -1,5 +1,5 @@
-use seed_api::prelude::*;
-use seed_api::PlainObject;
+use seed_api::prelude::{*};
+use seed_api::{PlainObject};
 
 #[tokio::main]
 async fn main() {
@@ -8,22 +8,15 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .test_group
-        .test_method_name(
-            &"path_param".to_string(),
-            &TestMethodNameRequest {
-                query_param_object: Some(Some(PlainObject {
-                    id: Some("id".to_string()),
-                    name: Some("name".to_string()),
-                })),
-                query_param_integer: Some(Some(1)),
-                body: Some(PlainObject {
-                    id: Some("id".to_string()),
-                    name: Some("name".to_string()),
-                }),
-            },
-            None,
-        )
-        .await;
+    client.test_group.test_method_name(&"path_param".to_string(), &TestMethodNameRequest {
+        query_param_object: Some(Some(PlainObject {
+            id: Some("id".to_string()),
+            name: Some("name".to_string())
+        })),
+        query_param_integer: Some(Some(1)),
+        body: Some(PlainObject {
+            id: Some("id".to_string()),
+            name: Some("name".to_string())
+        })
+    }, None).await;
 }

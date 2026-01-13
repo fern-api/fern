@@ -4,10 +4,11 @@ import com.seed.accept.SeedAcceptClient;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedAcceptClient client = SeedAcceptClient.builder()
-                .token("<token>")
-                .url("https://api.fern.com")
-                .build();
+        SeedAcceptClient client = SeedAcceptClient
+            .builder()
+            .token("<token>")
+            .url("https://api.fern.com")
+            .build();
 
         client.service().endpoint();
     }

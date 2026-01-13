@@ -5,12 +5,18 @@ import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQue
 
 public class Example26 {
     public static void main(String[] args) {
-        Best client =
-                Best.builder().token("<token>").url("https://api.fern.com").build();
+        Best client = Best
+            .builder()
+            .token("<token>")
+            .url("https://api.fern.com")
+            .build();
 
-        client.endpoints()
-                .params()
-                .getWithPathAndQuery(
-                        "param", GetWithPathAndQuery.builder().query("query").build());
+        client.endpoints().params().getWithPathAndQuery(
+            "param",
+            GetWithPathAndQuery
+                .builder()
+                .query("query")
+                .build()
+        );
     }
 }

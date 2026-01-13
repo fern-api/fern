@@ -5,10 +5,16 @@ import com.seed.inferredAuthImplicitApiKey.resources.auth.requests.GetTokenReque
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedInferredAuthImplicitApiKeyClient client = SeedInferredAuthImplicitApiKeyClient.builder()
-                .url("https://api.fern.com")
-                .build();
+        SeedInferredAuthImplicitApiKeyClient client = SeedInferredAuthImplicitApiKeyClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
-        client.auth().getToken(GetTokenRequest.builder().apiKey("api_key").build());
+        client.auth().getToken(
+            GetTokenRequest
+                .builder()
+                .apiKey("api_key")
+                .build()
+        );
     }
 }

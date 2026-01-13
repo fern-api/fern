@@ -1,4 +1,4 @@
-use seed_variables::prelude::*;
+use seed_variables::prelude::{*};
 
 #[tokio::main]
 async fn main() {

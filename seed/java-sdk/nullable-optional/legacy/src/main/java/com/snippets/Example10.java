@@ -4,8 +4,10 @@ import com.seed.nullableOptional.SeedNullableOptionalClient;
 
 public class Example10 {
     public static void main(String[] args) {
-        SeedNullableOptionalClient client =
-                SeedNullableOptionalClient.builder().url("https://api.fern.com").build();
+        SeedNullableOptionalClient client = SeedNullableOptionalClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
         client.nullableOptional().getNotificationSettings("userId");
     }

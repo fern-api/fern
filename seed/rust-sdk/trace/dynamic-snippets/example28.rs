@@ -1,5 +1,5 @@
-use seed_trace::prelude::*;
-use seed_trace::Language;
+use seed_trace::prelude::{*};
+use seed_trace::{Language};
 
 #[tokio::main]
 async fn main() {
@@ -9,8 +9,5 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client
-        .sysprop
-        .set_num_warm_instances(&Language::Java, 1, None)
-        .await;
+    client.sysprop.set_num_warm_instances(&Language::Java, 1, None).await;
 }

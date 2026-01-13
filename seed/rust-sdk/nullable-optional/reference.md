@@ -1,6 +1,6 @@
 # Reference
 ## NullableOptional
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_user</a>(user_id: String) -> Result<UserResponse, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_user</a>(user_id: String) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">create_user</a>(request: CreateUserRequest) -> Result<UserResponse, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">create_user</a>(request: CreateUserRequest) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -134,7 +134,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_user</a>(user_id: String, request: UpdateUserRequest) -> Result<UserResponse, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_user</a>(user_id: String, request: UpdateUserRequest) -> Result&lt;UserResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -218,7 +218,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">list_users</a>(limit: Option<Option<i64>>, offset: Option<Option<i64>>, include_deleted: Option<Option<bool>>, sort_by: Option<Option<Option<String>>>) -> Result<Vec<UserResponse>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">list_users</a>(limit: Option&lt;Option&lt;i64&gt;&gt;, offset: Option&lt;Option&lt;i64&gt;&gt;, include_deleted: Option&lt;Option&lt;bool&gt;&gt;, sort_by: Option&lt;Option&lt;Option&lt;String&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -316,7 +316,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">search_users</a>(query: Option<String>, department: Option<Option<String>>, role: Option<Option<String>>, is_active: Option<Option<Option<bool>>>) -> Result<Vec<UserResponse>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">search_users</a>(query: Option&lt;String&gt;, department: Option&lt;Option&lt;String&gt;&gt;, role: Option&lt;Option&lt;String&gt;&gt;, is_active: Option&lt;Option&lt;Option&lt;bool&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -414,7 +414,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">create_complex_profile</a>(request: ComplexProfile) -> Result<ComplexProfile, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">create_complex_profile</a>(request: ComplexProfile) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -592,7 +592,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_complex_profile</a>(profile_id: String) -> Result<ComplexProfile, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_complex_profile</a>(profile_id: String) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -658,7 +658,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_complex_profile</a>(profile_id: String, request: UpdateComplexProfileRequest) -> Result<ComplexProfile, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_complex_profile</a>(profile_id: String, request: UpdateComplexProfileRequest) -> Result&lt;ComplexProfile, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -808,7 +808,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">test_deserialization</a>(request: DeserializationTestRequest) -> Result<DeserializationTestResponse, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">test_deserialization</a>(request: DeserializationTestRequest) -> Result&lt;DeserializationTestResponse, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -919,7 +919,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">filter_by_role</a>(role: Option<Option<UserRole>>, status: Option<Option<UserStatus>>, secondary_role: Option<Option<Option<UserRole>>>) -> Result<Vec<UserResponse>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">filter_by_role</a>(role: Option&lt;Option&lt;UserRole&gt;&gt;, status: Option&lt;Option&lt;UserStatus&gt;&gt;, secondary_role: Option&lt;Option&lt;Option&lt;UserRole&gt;&gt;&gt;) -> Result&lt;Vec&lt;UserResponse&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1009,7 +1009,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_notification_settings</a>(user_id: String) -> Result<Option<NotificationMethod>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_notification_settings</a>(user_id: String) -> Result&lt;Option&lt;NotificationMethod&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1075,7 +1075,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_tags</a>(user_id: String, request: UpdateTagsRequest) -> Result<Vec<String>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">update_tags</a>(user_id: String, request: UpdateTagsRequest) -> Result&lt;Vec&lt;String&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1173,7 +1173,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_search_results</a>(request: SearchRequest) -> Result<Option<Vec<SearchResult>>, ApiError></code></summary>
+<details><summary><code>client.nullable_optional.<a href="/src/api/resources/nullable_optional/client.rs">get_search_results</a>(request: SearchRequest) -> Result&lt;Option&lt;Vec&lt;SearchResult&gt;&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

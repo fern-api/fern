@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">get_users</a>(avatar: Option<Option<String>>, extra: Option<Option<Option<bool>>>) -> Result<Vec<User>, ApiError></code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">get_users</a>(avatar: Option&lt;Option&lt;String&gt;&gt;, extra: Option&lt;Option&lt;Option&lt;bool&gt;&gt;&gt;) -> Result&lt;Vec&lt;User&gt;, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">create_user</a>(request: CreateUserRequest) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">create_user</a>(request: CreateUserRequest) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -188,7 +188,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">delete_user</a>(request: DeleteUserRequest) -> Result<bool, ApiError></code></summary>
+<details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client.rs">delete_user</a>(request: DeleteUserRequest) -> Result&lt;bool, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

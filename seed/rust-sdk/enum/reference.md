@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="/src/api/resources/headers/client.rs">send</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.headers.<a href="/src/api/resources/headers/client.rs">send</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -44,7 +44,7 @@ async fn main() {
 </details>
 
 ## InlinedRequest
-<details><summary><code>client.inlined_request.<a href="/src/api/resources/inlined_request/client.rs">send</a>(request: SendEnumInlinedRequest) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.inlined_request.<a href="/src/api/resources/inlined_request/client.rs">send</a>(request: SendEnumInlinedRequest) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -131,7 +131,7 @@ async fn main() {
 
 ## MultipartForm
 ## PathParam
-<details><summary><code>client.path_param.<a href="/src/api/resources/path_param/client.rs">send</a>(operand: Operand, operand_or_color: ColorOrOperand) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.path_param.<a href="/src/api/resources/path_param/client.rs">send</a>(operand: Operand, operand_or_color: ColorOrOperand) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -197,7 +197,7 @@ async fn main() {
 </details>
 
 ## QueryParam
-<details><summary><code>client.query_param.<a href="/src/api/resources/query_param/client.rs">send</a>(operand: Option<Operand>, maybe_operand: Option<Option<Operand>>, operand_or_color: Option<ColorOrOperand>, maybe_operand_or_color: Option<Option<ColorOrOperand>>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.query_param.<a href="/src/api/resources/query_param/client.rs">send</a>(operand: Option&lt;Operand&gt;, maybe_operand: Option&lt;Option&lt;Operand&gt;&gt;, operand_or_color: Option&lt;ColorOrOperand&gt;, maybe_operand_or_color: Option&lt;Option&lt;ColorOrOperand&gt;&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -282,7 +282,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.query_param.<a href="/src/api/resources/query_param/client.rs">send_list</a>() -> Result<(), ApiError></code></summary>
+<details><summary><code>client.query_param.<a href="/src/api/resources/query_param/client.rs">send_list</a>() -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 

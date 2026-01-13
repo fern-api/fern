@@ -1,5 +1,5 @@
-use seed_examples::prelude::*;
-use seed_examples::RefreshTokenRequest;
+use seed_examples::prelude::{*};
+use seed_examples::{RefreshTokenRequest};
 
 #[tokio::main]
 async fn main() {

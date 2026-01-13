@@ -1,5 +1,5 @@
-use seed_trace::prelude::*;
-use seed_trace::{PlaylistId, ProblemId, UpdatePlaylistRequest};
+use seed_trace::prelude::{*};
+use seed_trace::{PlaylistId, UpdatePlaylistRequest, ProblemId};
 
 #[tokio::main]
 async fn main() {
@@ -9,19 +9,8 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client
-        .playlist
-        .update_playlist(
-            1,
-            &PlaylistId("playlistId".to_string()),
-            &Some(UpdatePlaylistRequest {
-                name: "name".to_string(),
-                problems: vec![
-                    ProblemId("problems".to_string()),
-                    ProblemId("problems".to_string()),
-                ],
-            }),
-            None,
-        )
-        .await;
+    client.playlist.update_playlist(1, &PlaylistId("playlistId".to_string()), &Some(UpdatePlaylistRequest {
+        name: "name".to_string(),
+        problems: vec![ProblemId("problems".to_string()), ProblemId("problems".to_string())]
+    }), None).await;
 }

@@ -68,6 +68,33 @@ impl UsersClient {
             .await
     }
 
+    /// Pagination endpoint with a top-level cursor field in the request body.
+    /// This tests that the mock server correctly ignores cursor mismatches
+    /// when getNextPage() is called with a different cursor value.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn list_with_top_level_body_cursor_pagination(
+        &self,
+        request: &ListUsersTopLevelBodyCursorPaginationRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<ListUsersTopLevelCursorPaginationResponse, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/users/top-level-cursor",
+                Some(serde_json::to_value(request).unwrap_or_default()),
+                None,
+                options,
+            )
+            .await
+    }
+
     pub async fn list_with_offset_pagination(
         &self,
         request: &UsersListWithOffsetPaginationQueryRequest,

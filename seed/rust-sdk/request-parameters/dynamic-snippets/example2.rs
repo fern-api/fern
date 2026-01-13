@@ -1,5 +1,5 @@
-use seed_request_parameters::prelude::*;
-use seed_request_parameters::CreateUsernameBodyOptionalProperties;
+use seed_request_parameters::prelude::{*};
+use seed_request_parameters::{CreateUsernameBodyOptionalProperties};
 
 #[tokio::main]
 async fn main() {
@@ -8,15 +8,9 @@ async fn main() {
         ..Default::default()
     };
     let client = RequestParametersClient::new(config).expect("Failed to build client");
-    client
-        .user
-        .create_username_optional(
-            &Some(Some(CreateUsernameBodyOptionalProperties {
-                username: None,
-                password: None,
-                name: None,
-            })),
-            None,
-        )
-        .await;
+    client.user.create_username_optional(&Some(Some(CreateUsernameBodyOptionalProperties {
+        username: None,
+        password: None,
+        name: None
+    })), None).await;
 }

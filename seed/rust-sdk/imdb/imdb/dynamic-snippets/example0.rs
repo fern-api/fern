@@ -1,5 +1,5 @@
-use seed_api::prelude::*;
-use seed_api::CreateMovieRequest;
+use seed_api::prelude::{*};
+use seed_api::{CreateMovieRequest};
 
 #[tokio::main]
 async fn main() {
@@ -9,14 +9,8 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client
-        .imdb
-        .create_movie(
-            &CreateMovieRequest {
-                title: "title".to_string(),
-                rating: 1.1,
-            },
-            None,
-        )
-        .await;
+    client.imdb.create_movie(&CreateMovieRequest {
+        title: "title".to_string(),
+        rating: 1.1
+    }, None).await;
 }

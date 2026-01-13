@@ -4,10 +4,10 @@ import com.seed.oauthClientCredentialsEnvironmentVariables.SeedOauthClientCreden
 
 public class Example4 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsEnvironmentVariablesClient client =
-                SeedOauthClientCredentialsEnvironmentVariablesClient.withCredentials("<clientId>", "<clientSecret>")
-                        .url("https://api.fern.com")
-                        .build();
+        SeedOauthClientCredentialsEnvironmentVariablesClient client = SeedOauthClientCredentialsEnvironmentVariablesClient.withCredentials("<clientId>", "<clientSecret>")
+            .url("https://api.fern.com")
+            .build()
+        ;
 
         client.simple().getSomething();
     }

@@ -1,5 +1,5 @@
-use seed_undiscriminated_unions::prelude::*;
-use seed_undiscriminated_unions::{NestedUnionL1, NestedUnionL2, NestedUnionRoot};
+use seed_undiscriminated_unions::prelude::{*};
+use seed_undiscriminated_unions::{NestedUnionRoot, NestedUnionL1, NestedUnionL2};
 
 #[tokio::main]
 async fn main() {
@@ -8,8 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
-    client
-        .union_
-        .nested_unions(&NestedUnionRoot::String("string".to_string()), None)
-        .await;
+    client.union_.nested_unions(&NestedUnionRoot::String("string".to_string()), None).await;
 }

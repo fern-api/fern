@@ -5,10 +5,16 @@ import com.seed.serverSentEvents.resources.completions.requests.StreamCompletion
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedServerSentEventsClient client =
-                SeedServerSentEventsClient.builder().url("https://api.fern.com").build();
+        SeedServerSentEventsClient client = SeedServerSentEventsClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
         client.completions().stream(
-                StreamCompletionRequest.builder().query("foo").build());
+            StreamCompletionRequest
+                .builder()
+                .query("foo")
+                .build()
+        );
     }
 }

@@ -5,9 +5,15 @@ import com.seed.api.types.RootObject;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedApiClient client =
-                SeedApiClient.builder().url("https://api.fern.com").build();
+        SeedApiClient client = SeedApiClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
-        client.createTest(RootObject.builder().build());
+        client.createTest(
+            RootObject
+                .builder()
+                .build()
+        );
     }
 }

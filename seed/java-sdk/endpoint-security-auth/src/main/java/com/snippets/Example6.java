@@ -4,10 +4,11 @@ import com.seed.endpointSecurityAuth.SeedEndpointSecurityAuthClient;
 
 public class Example6 {
     public static void main(String[] args) {
-        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient.builder()
-                .token("<token>")
-                .url("https://api.fern.com")
-                .build();
+        SeedEndpointSecurityAuthClient client = SeedEndpointSecurityAuthClient
+            .builder()
+            .token("<token>")
+            .url("https://api.fern.com")
+            .build();
 
         client.user().getWithBearer();
     }

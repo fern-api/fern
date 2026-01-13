@@ -1,5 +1,5 @@
-use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithOptionalField;
+use seed_exhaustive::prelude::{*};
+use seed_exhaustive::{ObjectWithOptionalField};
 
 #[tokio::main]
 async fn main() {
@@ -9,26 +9,19 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client
-        .endpoints
-        .content_type
-        .post_json_patch_content_with_charset_type(
-            &ObjectWithOptionalField {
-                string: Some("string".to_string()),
-                integer: Some(1),
-                long: Some(1000000),
-                double: Some(1.1),
-                bool: Some(true),
-                datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
-                date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
-                uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
-                base_64: Some("SGVsbG8gd29ybGQh".to_string()),
-                list: Some(vec!["list".to_string(), "list".to_string()]),
-                set: Some(HashSet::from(["set".to_string()])),
-                map: Some(HashMap::from([(1, "map".to_string())])),
-                bigint: Some("1000000".to_string()),
-            },
-            None,
-        )
-        .await;
+    client.endpoints.content_type.post_json_patch_content_with_charset_type(&ObjectWithOptionalField {
+        string: Some("string".to_string()),
+        integer: Some(1),
+        long: Some(1000000),
+        double: Some(1.1),
+        bool: Some(true),
+        datetime: Some(DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap()),
+        date: Some(NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap()),
+        uuid: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
+        base_64: Some("SGVsbG8gd29ybGQh".to_string()),
+        list: Some(vec!["list".to_string(), "list".to_string()]),
+        set: Some(HashSet::from(["set".to_string()])),
+        map: Some(HashMap::from([(1, "map".to_string())])),
+        bigint: Some("1000000".to_string())
+    }, None).await;
 }

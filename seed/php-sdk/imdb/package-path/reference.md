@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>$client->imdb->createMovie($request) -> string</code></summary>
+<details><summary><code>$client-&gt;imdb-&gt;createMovie($request) -> string</code></summary>
 <dl>
 <dd>
 
@@ -59,7 +59,7 @@ $client->imdb->createMovie(
 </dl>
 </details>
 
-<details><summary><code>$client->imdb->getMovie($movieId) -> Movie</code></summary>
+<details><summary><code>$client-&gt;imdb-&gt;getMovie($movieId) -> Movie</code></summary>
 <dl>
 <dd>
 

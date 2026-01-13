@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>$client->user->createUsername($request)</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createUsername($request)</code></summary>
 <dl>
 <dd>
 
@@ -74,7 +74,7 @@ $client->user->createUsername(
 </dl>
 </details>
 
-<details><summary><code>$client->user->createUsernameWithReferencedType($request)</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createUsernameWithReferencedType($request)</code></summary>
 <dl>
 <dd>
 
@@ -134,7 +134,7 @@ $client->user->createUsernameWithReferencedType(
 </dl>
 </details>
 
-<details><summary><code>$client->user->createUsernameOptional($request)</code></summary>
+<details><summary><code>$client-&gt;user-&gt;createUsernameOptional($request)</code></summary>
 <dl>
 <dd>
 
@@ -176,7 +176,7 @@ $client->user->createUsernameOptional(
 </dl>
 </details>
 
-<details><summary><code>$client->user->getUsername($request) -> User</code></summary>
+<details><summary><code>$client-&gt;user-&gt;getUsername($request) -> User</code></summary>
 <dl>
 <dd>
 

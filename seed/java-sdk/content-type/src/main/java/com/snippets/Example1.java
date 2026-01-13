@@ -8,39 +8,42 @@ import java.util.Optional;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedContentTypesClient client =
-                SeedContentTypesClient.builder().url("https://api.fern.com").build();
+        SeedContentTypesClient client = SeedContentTypesClient
+            .builder()
+            .url("https://api.fern.com")
+            .build();
 
-        client.service()
-                .patchComplex(
-                        "id",
-                        PatchComplexRequest.builder()
-                                .name("name")
-                                .age(1)
-                                .active(true)
-                                .metadata(new HashMap<String, Object>() {
-                                    {
-                                        put("metadata", new HashMap<String, Object>() {
-                                            {
-                                                put("key", "value");
-                                            }
-                                        });
-                                    }
-                                })
-                                .tags(Optional.of(Arrays.asList("tags", "tags")))
-                                .email("email")
-                                .nickname("nickname")
-                                .bio("bio")
-                                .profileImageUrl("profileImageUrl")
-                                .settings(new HashMap<String, Object>() {
-                                    {
-                                        put("settings", new HashMap<String, Object>() {
-                                            {
-                                                put("key", "value");
-                                            }
-                                        });
-                                    }
-                                })
-                                .build());
+        client.service().patchComplex(
+            "id",
+            PatchComplexRequest
+                .builder()
+                .name("name")
+                .age(1)
+                .active(true)
+                .metadata(
+                    new HashMap<String, Object>() {{
+                        put("metadata", new 
+                        HashMap<String, Object>() {{put("key", "value");
+                        }});
+                    }}
+                )
+                .tags(
+                    Optional.of(
+                        Arrays.asList("tags", "tags")
+                    )
+                )
+                .email("email")
+                .nickname("nickname")
+                .bio("bio")
+                .profileImageUrl("profileImageUrl")
+                .settings(
+                    new HashMap<String, Object>() {{
+                        put("settings", new 
+                        HashMap<String, Object>() {{put("key", "value");
+                        }});
+                    }}
+                )
+                .build()
+        );
     }
 }

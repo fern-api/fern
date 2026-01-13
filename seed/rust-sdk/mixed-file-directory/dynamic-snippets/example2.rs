@@ -1,4 +1,4 @@
-use seed_mixed_file_directory::prelude::*;
+use seed_mixed_file_directory::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -7,9 +7,7 @@ async fn main() {
         ..Default::default()
     };
     let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
-    client
-        .user
-        .events
-        .list_events(&ListEventsQueryRequest { limit: Some(1) }, None)
-        .await;
+    client.user.events.list_events(&ListEventsQueryRequest {
+        limit: Some(1)
+    }, None).await;
 }

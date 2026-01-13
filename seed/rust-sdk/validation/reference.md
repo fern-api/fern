@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/src/client.rs">create</a>(request: CreateRequest) -> Result<Type, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">create</a>(request: CreateRequest) -> Result&lt;Type, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -83,7 +83,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/client.rs">get</a>(decimal: Option<f64>, even: Option<i64>, name: Option<String>) -> Result<Type, ApiError></code></summary>
+<details><summary><code>client.<a href="/src/client.rs">get</a>(decimal: Option&lt;f64&gt;, even: Option&lt;i64&gt;, name: Option&lt;String&gt;) -> Result&lt;Type, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

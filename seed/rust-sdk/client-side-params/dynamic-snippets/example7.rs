@@ -1,4 +1,4 @@
-use seed_client_side_params::prelude::*;
+use seed_client_side_params::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -8,8 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
-    client
-        .service
-        .delete_user(&"userId".to_string(), None)
-        .await;
+    client.service.delete_user(&"userId".to_string(), None).await;
 }

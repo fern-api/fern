@@ -1,4 +1,4 @@
-use seed_pagination::prelude::*;
+use seed_pagination::prelude::{*};
 
 #[tokio::main]
 async fn main() {
@@ -8,13 +8,7 @@ async fn main() {
         ..Default::default()
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
-    client
-        .users
-        .list_usernames_custom(
-            &ListUsernamesCustomQueryRequest {
-                starting_after: Some("starting_after".to_string()),
-            },
-            None,
-        )
-        .await;
+    client.users.list_usernames_custom(&ListUsernamesCustomQueryRequest {
+        starting_after: Some("starting_after".to_string())
+    }, None).await;
 }
