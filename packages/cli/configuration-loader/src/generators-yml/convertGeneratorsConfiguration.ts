@@ -34,6 +34,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     resolveAliases: undefined,
     groupMultiApiEnvironments: undefined,
     groupEnvironmentsByHost: undefined,
+    preserveServerVariables: undefined,
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined,
     removeDiscriminantsFromSchemas: undefined,
@@ -101,6 +102,7 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"],
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
+        preserveServerVariables: settings?.["preserve-server-variables"],
         removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
             settings?.["remove-discriminants-from-schemas"]
         ),
@@ -157,6 +159,7 @@ export function parseBaseApiDefinitionSettingsSchema(
         wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
         coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        preserveServerVariables: settings?.["preserve-server-variables"],
         removeDiscriminantsFromSchemas: parseRemoveDiscriminantsFromSchemas(
             settings?.["remove-discriminants-from-schemas"]
         ),

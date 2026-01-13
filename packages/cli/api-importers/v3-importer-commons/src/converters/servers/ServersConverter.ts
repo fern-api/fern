@@ -147,6 +147,11 @@ export class ServersConverter extends AbstractConverter<
             return server.url;
         }
 
+        // If preserveServerVariables is enabled, keep the URL template with {variable} placeholders
+        if (this.context.settings.preserveServerVariables) {
+            return server.url;
+        }
+
         let url = server.url;
         for (const [variableName, variable] of Object.entries(server.variables)) {
             if (variable.default != null) {

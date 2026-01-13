@@ -214,6 +214,13 @@ types:
           - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
           - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
         default: false
+      preserve-server-variables:
+        type: optional<boolean>
+        docs: |
+          If true, preserve server variables (e.g., {space_name}) in URLs instead of substituting them with default values.
+          This is useful for documentation where you want users to see and edit the variable placeholders.
+          Defaults to false (current behavior where variables are substituted with defaults).
+        default: false
       remove-discriminants-from-schemas:
         type: optional<RemoveDiscriminantsFromSchemas>
         docs: |
@@ -372,6 +379,13 @@ types:
           - Use server name alone if no collision
           - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
           - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
+        default: false
+      preserve-server-variables:
+        type: optional<boolean>
+        docs: |
+          If true, preserve server variables (e.g., {space_name}) in URLs instead of substituting them with default values.
+          This is useful for documentation where you want users to see and edit the variable placeholders.
+          Defaults to false (current behavior where variables are substituted with defaults).
         default: false
       remove-discriminants-from-schemas:
         type: optional<RemoveDiscriminantsFromSchemas>
