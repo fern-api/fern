@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.48.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `pydantic_config.positional_single_property_constructors` to allow `Wrapper("value")`
+        for single-required-field models (excluding discriminator literals). Note: can break if the model
+        later adds required fields; kwargs are more stable.
+      type: feat
+  createdAt: "2025-12-18"
+  irVersion: 62
 
 - version: 4.47.1
   changelogEntry:
