@@ -42,7 +42,7 @@ client.union().get(
 </dl>
 </details>
 
-<details><summary><code>client.union.getMetadata() -> Map&lt;Key, String&gt;</code></summary>
+<details><summary><code>client.union.getMetadata() -> Map&amp;lt;Key, String&amp;gt;</code></summary>
 <dl>
 <dd>
 

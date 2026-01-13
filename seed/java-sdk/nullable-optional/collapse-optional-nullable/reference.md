@@ -243,7 +243,7 @@ client.nullableOptional().updateUser(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.listUsers() -> List&lt;UserResponse&gt;</code></summary>
+<details><summary><code>client.nullableOptional.listUsers() -> List&amp;lt;UserResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -337,7 +337,7 @@ client.nullableOptional().listUsers(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.searchUsers() -> List&lt;UserResponse&gt;</code></summary>
+<details><summary><code>client.nullableOptional.searchUsers() -> List&amp;lt;UserResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1129,7 +1129,7 @@ client.nullableOptional().testDeserialization(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.filterByRole() -> List&lt;UserResponse&gt;</code></summary>
+<details><summary><code>client.nullableOptional.filterByRole() -> List&amp;lt;UserResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1212,7 +1212,7 @@ client.nullableOptional().filterByRole(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.getNotificationSettings(userId) -> Optional&lt;NotificationMethod&gt;</code></summary>
+<details><summary><code>client.nullableOptional.getNotificationSettings(userId) -> Optional&amp;lt;NotificationMethod&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1266,7 +1266,7 @@ client.nullableOptional().getNotificationSettings("userId");
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.updateTags(userId, request) -> List&lt;String&gt;</code></summary>
+<details><summary><code>client.nullableOptional.updateTags(userId, request) -> List&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1364,7 +1364,7 @@ client.nullableOptional().updateTags(
 </dl>
 </details>
 
-<details><summary><code>client.nullableOptional.getSearchResults(request) -> Optional&lt;List&lt;SearchResult&gt;&gt;</code></summary>
+<details><summary><code>client.nullableOptional.getSearchResults(request) -> Optional&amp;lt;List&amp;lt;SearchResult&amp;gt;&amp;gt;</code></summary>
 <dl>
 <dd>
 

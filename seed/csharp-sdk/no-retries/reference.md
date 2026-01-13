@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.Retries.<a href="/src/SeedNoRetries/Retries/RetriesClient.cs">GetUsersAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.Retries.<a href="/src/SeedNoRetries/Retries/RetriesClient.cs">GetUsersAsync</a>() -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 

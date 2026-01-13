@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.ec_2.<a href="src/seed/ec_2/client.py">boot_instance</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.ec_2.<a href="src/seed/ec_2/client.py">boot_instance</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -59,7 +59,7 @@ client.ec_2.boot_instance(
 </details>
 
 ## S3
-<details><summary><code>client.s_3.<a href="src/seed/s_3/client.py">get_presigned_url</a>(...) -> AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.s_3.<a href="src/seed/s_3/client.py">get_presigned_url</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>client.endpoints.container.getAndReturnListOfPrimitives(request) -> List&lt;String&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnListOfPrimitives(request) -> List&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ client.endpoints().container().getAndReturnListOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnListOfObjects(request) -> List&lt;ObjectWithRequiredField&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnListOfObjects(request) -> List&amp;lt;ObjectWithRequiredField&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ client.endpoints().container().getAndReturnListOfObjects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnSetOfPrimitives(request) -> Set&lt;String&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnSetOfPrimitives(request) -> Set&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -137,7 +137,7 @@ client.endpoints().container().getAndReturnSetOfPrimitives(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnSetOfObjects(request) -> Set&lt;ObjectWithRequiredField&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnSetOfObjects(request) -> Set&amp;lt;ObjectWithRequiredField&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -186,7 +186,7 @@ client.endpoints().container().getAndReturnSetOfObjects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnMapPrimToPrim(request) -> Map&lt;String, String&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnMapPrimToPrim(request) -> Map&amp;lt;String, String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -230,7 +230,7 @@ client.endpoints().container().getAndReturnMapPrimToPrim(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnMapOfPrimToObject(request) -> Map&lt;String, ObjectWithRequiredField&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnMapOfPrimToObject(request) -> Map&amp;lt;String, ObjectWithRequiredField&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -277,7 +277,7 @@ client.endpoints().container().getAndReturnMapOfPrimToObject(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.getAndReturnOptional(request) -> Optional&lt;ObjectWithRequiredField&gt;</code></summary>
+<details><summary><code>client.endpoints.container.getAndReturnOptional(request) -> Optional&amp;lt;ObjectWithRequiredField&amp;gt;</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user</a>(user_id: UserId) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_user</a>(user_id: UserId) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -14,7 +14,6 @@
 
 ```rust
 use seed_version::prelude::*;
-use seed_version::UserId;
 
 #[tokio::main]
 async fn main() {

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_user</a>(request: CreateUserRequest) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_user</a>(request: CreateUserRequest) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 

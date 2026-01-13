@@ -248,19 +248,43 @@ export class ProtobufIRGenerator {
             if (deps.length > 0) {
                 // Check if buf.lock already exists (e.g., pre-cached in air-gapped environments)
                 let bufLockExists = false;
+                this.context.logger.debug(`Checking for buf.lock at: ${bufLockPath}`);
                 try {
                     await access(bufLockPath);
                     bufLockExists = true;
-                } catch {
+                    this.context.logger.debug(`Found pre-cached buf.lock file`);
+                } catch (err) {
                     bufLockExists = false;
+                    this.context.logger.debug(`No buf.lock found: ${err}`);
                 }
 
-                // Skip buf dep update if we already have a cached buf.lock file
-                // This enables air-gapped environments to work by pre-caching dependencies
-                if (!bufLockExists) {
-                    const bufDepUpdateResult = await buf(["dep", "update"]);
-                    if (bufDepUpdateResult.exitCode !== 0) {
-                        this.context.failAndThrow(bufDepUpdateResult.stderr);
+                // Always try buf dep update to populate the cache (needed at build time)
+                // If it fails with a network error and buf.lock exists, continue (air-gapped mode)
+                // Note: execa throws an exception when the command fails, so we need to catch it
+                try {
+                    await buf(["dep", "update"]);
+                } catch (bufDepUpdateError: unknown) {
+                    // execa throws an exception when the command fails with non-zero exit code
+                    const errorMessage =
+                        bufDepUpdateError instanceof Error ? bufDepUpdateError.message : String(bufDepUpdateError);
+                    const isNetworkError =
+                        errorMessage.includes("server hosted at that remote is unavailable") ||
+                        errorMessage.includes("failed to connect") ||
+                        errorMessage.includes("network") ||
+                        errorMessage.includes("ENOTFOUND") ||
+                        errorMessage.includes("ETIMEDOUT");
+
+                    this.context.logger.debug(
+                        `buf dep update failed. isNetworkError=${isNetworkError}, bufLockExists=${bufLockExists}, error=${errorMessage.substring(0, 200)}`
+                    );
+
+                    if (isNetworkError && bufLockExists) {
+                        // Air-gapped environment with pre-cached buf.lock - continue without updating
+                        this.context.logger.debug(
+                            "buf dep update failed due to network error, but buf.lock exists. Continuing in air-gapped mode."
+                        );
+                    } else {
+                        this.context.failAndThrow(errorMessage);
                     }
                 }
             }

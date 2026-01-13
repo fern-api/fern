@@ -19,6 +19,8 @@ export const ArraySchemaWithExample: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         value: core.serialization.lazy(() => serializers.SchemaWithExample),
+        minItems: core.serialization.number().optional(),
+        maxItems: core.serialization.number().optional(),
         example: core.serialization.list(core.serialization.unknown()).optional(),
     })
     .extend(WithSdkGroupName)
@@ -40,6 +42,8 @@ export declare namespace ArraySchemaWithExample {
             WithTitle.Raw,
             WithInline.Raw {
         value: serializers.SchemaWithExample.Raw;
+        minItems?: number | null;
+        maxItems?: number | null;
         example?: unknown[] | null;
     }
 }

@@ -1,9 +1,4 @@
 use seed_nullable_optional::prelude::*;
-use seed_nullable_optional::{
-    Address, ComplexProfile, Document, EmailNotification, NotificationMethod, NullableUserId,
-    OptionalUserId, Organization, PushNotification, SearchResult, SmsNotification, UserResponse,
-    UserRole, UserStatus,
-};
 
 #[tokio::main]
 async fn main() {

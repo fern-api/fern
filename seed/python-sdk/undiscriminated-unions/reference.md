@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -> AsyncHttpResponse[MyUnion]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -&gt; AsyncHttpResponse[MyUnion]</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ client.union.get(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get_metadata</a>() -> AsyncHttpResponse[Metadata]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">get_metadata</a>() -&gt; AsyncHttpResponse[Metadata]</code></summary>
 <dl>
 <dd>
 
@@ -102,7 +102,7 @@ client.union.get_metadata()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">update_metadata</a>(...) -> AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">update_metadata</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -158,7 +158,7 @@ client.union.update_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">call</a>(...) -> AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">call</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -214,7 +214,7 @@ client.union.call(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">duplicate_types_union</a>(...) -> AsyncHttpResponse[UnionWithDuplicateTypes]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">duplicate_types_union</a>(...) -&gt; AsyncHttpResponse[UnionWithDuplicateTypes]</code></summary>
 <dl>
 <dd>
 
@@ -270,7 +270,7 @@ client.union.duplicate_types_union(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">nested_unions</a>(...) -> AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">nested_unions</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -326,7 +326,7 @@ client.union.nested_unions(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">test_camel_case_properties</a>(...) -> AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">test_camel_case_properties</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 

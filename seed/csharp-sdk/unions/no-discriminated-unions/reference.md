@@ -80,7 +80,7 @@ await client.Bigunion.UpdateAsync(new NormalSweet { Value = "value" });
 </dl>
 </details>
 
-<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateManyAsync</a>(IEnumerable<object> { ... }) -> Dictionary<string, bool></code></summary>
+<details><summary><code>client.Bigunion.<a href="/src/SeedUnions/Bigunion/BigunionClient.cs">UpdateManyAsync</a>(IEnumerable&lt;object&gt; { ... }) -> Dictionary&lt;string, bool&gt;</code></summary>
 <dl>
 <dd>
 

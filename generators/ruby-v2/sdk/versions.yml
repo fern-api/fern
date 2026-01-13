@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 1.0.0-rc78
+- version: 1.0.0-rc79
   createdAt: "2026-01-13"
   changelogEntry:
     - type: feat
@@ -12,6 +12,13 @@
         concurrency needs. Dependencies on `async` and `async-http` gems are automatically added
         to the gemspec. The README now includes an "Async Client" section with usage examples
         showing how to use the AsyncClient with Async blocks.
+  irVersion: 61
+
+- version: 1.0.0-rc78
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
   irVersion: 61
 
 - version: 1.0.0-rc77
@@ -58,7 +65,7 @@
 
 - version: 1.0.0-rc75
   changelogEntry:
-    - summary: Update Dockerfile CVE patches to work with newer generator-cli package structures.
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
       type: chore
   createdAt: "2026-01-05"
   irVersion: 61

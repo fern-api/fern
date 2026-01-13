@@ -31,7 +31,9 @@ export function convertAdditionalProperties({
     groupName,
     example,
     encoding,
-    source
+    source,
+    minProperties,
+    maxProperties
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -48,6 +50,8 @@ export function convertAdditionalProperties({
     example: unknown | undefined;
     encoding: Encoding | undefined;
     source: Source;
+    minProperties: number | undefined;
+    maxProperties: number | undefined;
 }): SchemaWithExample {
     if (additionalProperties === undefined) {
         additionalProperties = context.options.additionalPropertiesDefaultsTo;
@@ -102,7 +106,9 @@ export function convertAdditionalProperties({
         namespace,
         groupName,
         example,
-        encoding
+        encoding,
+        minProperties,
+        maxProperties
     });
 }
 
@@ -147,7 +153,9 @@ export function wrapMap({
     namespace,
     groupName,
     example,
-    encoding
+    encoding,
+    minProperties,
+    maxProperties
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -162,6 +170,8 @@ export function wrapMap({
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
     encoding: Encoding | undefined;
+    minProperties: number | undefined;
+    maxProperties: number | undefined;
 }): SchemaWithExample {
     let result: SchemaWithExample = SchemaWithExample.map({
         nameOverride,
@@ -175,7 +185,9 @@ export function wrapMap({
         groupName,
         encoding,
         example,
-        inline: undefined
+        inline: undefined,
+        minProperties,
+        maxProperties
     });
     if (wrapAsNullable) {
         result = SchemaWithExample.nullable({

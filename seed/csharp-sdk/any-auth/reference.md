@@ -49,7 +49,7 @@ await client.Auth.GetTokenAsync(
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedAnyAuth/User/UserClient.cs">GetAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedAnyAuth/User/UserClient.cs">GetAsync</a>() -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -74,7 +74,7 @@ await client.User.GetAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedAnyAuth/User/UserClient.cs">GetAdminsAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedAnyAuth/User/UserClient.cs">GetAdminsAsync</a>() -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 

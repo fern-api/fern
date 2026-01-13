@@ -26,6 +26,7 @@ import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPagi
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;
+import com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.ListUsersExtendedOptionalListResponse;
@@ -33,6 +34,7 @@ import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
 import com.seed.pagination.resources.users.types.ListUsersMixedTypePaginationResponse;
 import com.seed.pagination.resources.users.types.ListUsersOptionalDataPaginationResponse;
 import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
+import com.seed.pagination.resources.users.types.ListUsersTopLevelCursorPaginationResponse;
 import com.seed.pagination.resources.users.types.NextPage;
 import com.seed.pagination.resources.users.types.Page;
 import com.seed.pagination.resources.users.types.User;
@@ -263,6 +265,97 @@ public class RawUsersClient {
                         new SyncPagingIterable<User>(
                                 startingAfter.isPresent(), result, parsedResponse, () -> listWithBodyCursorPagination(
                                                 nextRequest, requestOptions)
+                                        .body()),
+                        response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedPaginationException("Network error executing HTTP request", e);
+        }
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination() {
+        return listWithTopLevelBodyCursorPagination(
+                ListUsersTopLevelBodyCursorPaginationRequest.builder().build());
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination(
+            RequestOptions requestOptions) {
+        return listWithTopLevelBodyCursorPagination(
+                ListUsersTopLevelBodyCursorPaginationRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination(
+            ListUsersTopLevelBodyCursorPaginationRequest request) {
+        return listWithTopLevelBodyCursorPagination(request, null);
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SeedPaginationHttpResponse<SyncPagingIterable<User>> listWithTopLevelBodyCursorPagination(
+            ListUsersTopLevelBodyCursorPaginationRequest request, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users")
+                .addPathSegments("top-level-cursor")
+                .build();
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+        } catch (JsonProcessingException e) {
+            throw new SeedPaginationException("Failed to serialize request", e);
+        }
+        Request okhttpRequest = new Request.Builder()
+                .url(httpUrl)
+                .method("POST", body)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Accept", "application/json")
+                .build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                ListUsersTopLevelCursorPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                        responseBodyString, ListUsersTopLevelCursorPaginationResponse.class);
+                Optional<String> startingAfter = parsedResponse.getNextCursor();
+                ListUsersTopLevelBodyCursorPaginationRequest nextRequest =
+                        ListUsersTopLevelBodyCursorPaginationRequest.builder()
+                                .from(request)
+                                .cursor(startingAfter)
+                                .build();
+                List<User> result = parsedResponse.getData();
+                return new SeedPaginationHttpResponse<>(
+                        new SyncPagingIterable<User>(
+                                startingAfter.isPresent(),
+                                result,
+                                parsedResponse,
+                                () -> listWithTopLevelBodyCursorPagination(nextRequest, requestOptions)
                                         .body()),
                         response);
             }

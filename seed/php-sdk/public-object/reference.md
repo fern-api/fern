@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->get()</code></summary>
+<details><summary><code>$client-&gt;service-&gt;get()</code></summary>
 <dl>
 <dd>
 

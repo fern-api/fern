@@ -1,6 +1,6 @@
 # Reference
 ## Organization
-<details><summary><code>$client->organization->create($request) -> Organization</code></summary>
+<details><summary><code>$client-&gt;organization-&gt;create($request) -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -59,7 +59,7 @@ $client->organization->create(
 </details>
 
 ## User
-<details><summary><code>$client->user->list($request) -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;list($request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -118,7 +118,7 @@ $client->user->list(
 </details>
 
 ## User Events
-<details><summary><code>$client->user->events->listEvents($request) -> array</code></summary>
+<details><summary><code>$client-&gt;user-&gt;events-&gt;listEvents($request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -177,7 +177,7 @@ $client->user->events->listEvents(
 </details>
 
 ## User Events Metadata
-<details><summary><code>$client->user->events->metadata->getMetadata($request) -> Metadata</code></summary>
+<details><summary><code>$client-&gt;user-&gt;events-&gt;metadata-&gt;getMetadata($request) -> Metadata</code></summary>
 <dl>
 <dd>
 
