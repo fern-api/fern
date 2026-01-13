@@ -50,14 +50,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{
-    ActualResult, BinaryTreeNodeValue, BinaryTreeValue, CompileError, DoublyLinkedListNodeValue,
-    DoublyLinkedListValue, ErrorInfo, ExceptionInfo, ExceptionV2, InternalError, KeyValuePair,
-    MapValue, NodeId, RunningSubmissionState, RuntimeError, SinglyLinkedListNodeValue,
-    SinglyLinkedListValue, SubmissionId, SubmissionStatusForTestCase, TestCaseGrade,
-    TestCaseHiddenGrade, TestCaseNonHiddenGrade, TestCaseResult, TestCaseResultWithStdout,
-    TestSubmissionStatus, TracedTestCase, VariableValue,
-};
 
 #[tokio::main]
 async fn main() {
@@ -115,14 +107,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{
-    BinaryTreeNodeValue, BinaryTreeValue, CompileError, DoublyLinkedListNodeValue,
-    DoublyLinkedListValue, ErrorInfo, ExceptionInfo, ExceptionV2, GradedTestCaseUpdate,
-    InternalError, KeyValuePair, MapValue, NodeId, RecordedTestCaseUpdate, RunningSubmissionState,
-    RuntimeError, SinglyLinkedListNodeValue, SinglyLinkedListValue, SubmissionId, TestCaseGrade,
-    TestCaseHiddenGrade, TestCaseId, TestCaseNonHiddenGrade, TestSubmissionUpdate,
-    TestSubmissionUpdateInfo, VariableValue,
-};
 
 #[tokio::main]
 async fn main() {
@@ -185,10 +169,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{
-    CompileError, ErrorInfo, ExceptionInfo, ExceptionV2, InternalError, RunningSubmissionState,
-    RuntimeError, SubmissionId, WorkspaceRunDetails, WorkspaceSubmissionStatus,
-};
 
 #[tokio::main]
 async fn main() {
@@ -246,11 +226,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{
-    CompileError, ErrorInfo, ExceptionInfo, ExceptionV2, InternalError, RunningSubmissionState,
-    RuntimeError, SubmissionId, WorkspaceRunDetails, WorkspaceSubmissionUpdate,
-    WorkspaceSubmissionUpdateInfo, WorkspaceTracedUpdate,
-};
 
 #[tokio::main]
 async fn main() {
@@ -313,15 +288,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{
-    ActualResult, BinaryTreeNodeAndTreeValue, BinaryTreeNodeValue, BinaryTreeValue,
-    DebugKeyValuePairs, DebugMapValue, DebugVariableValue, DoublyLinkedListNodeAndListValue,
-    DoublyLinkedListNodeValue, DoublyLinkedListValue, ExceptionInfo, ExceptionV2,
-    ExpressionLocation, GenericValue, KeyValuePair, MapValue, NodeId, Scope,
-    SinglyLinkedListNodeAndListValue, SinglyLinkedListNodeValue, SinglyLinkedListValue, StackFrame,
-    StackInformation, SubmissionId, TestCaseResult, TestCaseResultWithStdout, TraceResponse,
-    VariableValue,
-};
 
 #[tokio::main]
 async fn main() {
@@ -483,13 +449,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{
-    BinaryTreeNodeAndTreeValue, BinaryTreeNodeValue, BinaryTreeValue, DebugKeyValuePairs,
-    DebugMapValue, DebugVariableValue, DoublyLinkedListNodeAndListValue, DoublyLinkedListNodeValue,
-    DoublyLinkedListValue, ExpressionLocation, GenericValue, NodeId, Scope,
-    SinglyLinkedListNodeAndListValue, SinglyLinkedListNodeValue, SinglyLinkedListValue, StackFrame,
-    StackInformation, SubmissionId, TestCaseId, TraceResponseV2, TracedFile,
-};
 
 #[tokio::main]
 async fn main() {
@@ -631,13 +590,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{
-    BinaryTreeNodeAndTreeValue, BinaryTreeNodeValue, BinaryTreeValue, DebugKeyValuePairs,
-    DebugMapValue, DebugVariableValue, DoublyLinkedListNodeAndListValue, DoublyLinkedListNodeValue,
-    DoublyLinkedListValue, ExceptionInfo, ExceptionV2, ExpressionLocation, GenericValue, NodeId,
-    Scope, SinglyLinkedListNodeAndListValue, SinglyLinkedListNodeValue, SinglyLinkedListValue,
-    StackFrame, StackInformation, SubmissionId, TraceResponse, WorkspaceRunDetails,
-};
 
 #[tokio::main]
 async fn main() {
@@ -795,13 +747,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{
-    BinaryTreeNodeAndTreeValue, BinaryTreeNodeValue, BinaryTreeValue, DebugKeyValuePairs,
-    DebugMapValue, DebugVariableValue, DoublyLinkedListNodeAndListValue, DoublyLinkedListNodeValue,
-    DoublyLinkedListValue, ExpressionLocation, GenericValue, NodeId, Scope,
-    SinglyLinkedListNodeAndListValue, SinglyLinkedListNodeValue, SinglyLinkedListValue, StackFrame,
-    StackInformation, SubmissionId, TraceResponseV2, TracedFile,
-};
 
 #[tokio::main]
 async fn main() {
@@ -970,7 +915,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -1071,7 +1015,6 @@ Create a new playlist
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{PlaylistCreateRequest, ProblemId};
 
 #[tokio::main]
 async fn main() {
@@ -1291,7 +1234,6 @@ Returns a playlist
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::PlaylistId;
 
 #[tokio::main]
 async fn main() {
@@ -1367,7 +1309,6 @@ Updates a playlist
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{PlaylistId, ProblemId, UpdatePlaylistRequest};
 
 #[tokio::main]
 async fn main() {
@@ -1454,7 +1395,6 @@ Deletes a playlist
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::PlaylistId;
 
 #[tokio::main]
 async fn main() {
@@ -1531,13 +1471,6 @@ Creates a problem
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{
-    BinaryTreeNodeValue, BinaryTreeValue, CreateProblemRequest, DoublyLinkedListNodeValue,
-    DoublyLinkedListValue, FileInfo, KeyValuePair, Language, ListType, MapType, MapValue, NodeId,
-    ProblemDescription, ProblemDescriptionBoard, ProblemFiles, SinglyLinkedListNodeValue,
-    SinglyLinkedListValue, TestCase, TestCaseWithExpectedResult, VariableType, VariableTypeAndName,
-    VariableValue,
-};
 
 #[tokio::main]
 async fn main() {
@@ -1658,13 +1591,6 @@ Updates a problem
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{
-    BinaryTreeNodeValue, BinaryTreeValue, CreateProblemRequest, DoublyLinkedListNodeValue,
-    DoublyLinkedListValue, FileInfo, KeyValuePair, Language, ListType, MapType, MapValue, NodeId,
-    ProblemDescription, ProblemDescriptionBoard, ProblemFiles, ProblemId,
-    SinglyLinkedListNodeValue, SinglyLinkedListValue, TestCase, TestCaseWithExpectedResult,
-    VariableType, VariableTypeAndName, VariableValue,
-};
 
 #[tokio::main]
 async fn main() {
@@ -1801,7 +1727,6 @@ Soft deletes a problem
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -1869,7 +1794,6 @@ Returns default starter files for problem
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::{ListType, MapType, VariableType, VariableTypeAndName};
 
 #[tokio::main]
 async fn main() {
@@ -1977,7 +1901,6 @@ Returns sessionId and execution server URL for session. Spins up server.
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::Language;
 
 #[tokio::main]
 async fn main() {
@@ -2201,7 +2124,6 @@ async fn main() {
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::Language;
 
 #[tokio::main]
 async fn main() {
@@ -2411,7 +2333,6 @@ Returns latest version of a problem
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -2480,7 +2401,6 @@ Returns requested version of a problem
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -2656,7 +2576,6 @@ Returns latest version of a problem
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {
@@ -2725,7 +2644,6 @@ Returns requested version of a problem
 
 ```rust
 use seed_trace::prelude::*;
-use seed_trace::ProblemId;
 
 #[tokio::main]
 async fn main() {

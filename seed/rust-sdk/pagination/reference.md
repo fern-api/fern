@@ -14,11 +14,6 @@
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::{
-    MultipleFilterSearchRequest, MultipleFilterSearchRequestOperator,
-    MultipleFilterSearchRequestValue, SearchRequest, SearchRequestQuery, SingleFilterSearchRequest,
-    SingleFilterSearchRequestOperator, StartingAfterPaging,
-};
 
 #[tokio::main]
 async fn main() {
@@ -87,7 +82,6 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -296,7 +290,6 @@ in order to fetch the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -386,7 +379,6 @@ the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -536,7 +528,6 @@ in order to fetch the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -618,7 +609,6 @@ paginated endpoint.
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -818,7 +808,6 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -939,7 +928,6 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1231,7 +1219,6 @@ the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1320,7 +1307,6 @@ the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1468,7 +1454,6 @@ in order to fetch the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1549,7 +1534,6 @@ paginated endpoint.
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1746,7 +1730,6 @@ async fn main() {
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {
@@ -1811,7 +1794,6 @@ the next page of results.
 
 ```rust
 use seed_pagination::prelude::*;
-use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {

@@ -332,7 +332,6 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
-use seed_examples::MovieId;
 
 #[tokio::main]
 async fn main() {
@@ -386,7 +385,6 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
-use seed_examples::{Movie, MovieId, Tag};
 
 #[tokio::main]
 async fn main() {
@@ -516,11 +514,6 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
-use seed_examples::{
-    Actor, Actress, BasicType, BigEntity, CastMember, ComplexType, Data, Directory, Entity,
-    EventInfo, Exception, ExceptionInfo, ExtendedMovie, File, Metadata, Migration, MigrationStatus,
-    Moment, MovieId, Node, StuntDouble, Tag, Test, Tree, Type,
-};
 
 #[tokio::main]
 async fn main() {
@@ -772,7 +765,6 @@ async fn main() {
 
 ```rust
 use seed_examples::prelude::*;
-use seed_examples::RefreshTokenRequest;
 
 #[tokio::main]
 async fn main() {

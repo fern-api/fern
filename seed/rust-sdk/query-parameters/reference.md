@@ -14,7 +14,6 @@
 
 ```rust
 use seed_query_parameters::prelude::*;
-use seed_query_parameters::{NestedUser, User};
 
 #[tokio::main]
 async fn main() {

@@ -28,7 +28,6 @@ Add a movie to the database using the movies/* /... path.
 
 ```rust
 use seed_api::prelude::*;
-use seed_api::CreateMovieRequest;
 
 #[tokio::main]
 async fn main() {
@@ -73,7 +72,6 @@ async fn main() {
 
 ```rust
 use seed_api::prelude::*;
-use seed_api::MovieId;
 
 #[tokio::main]
 async fn main() {

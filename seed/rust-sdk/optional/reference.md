@@ -57,7 +57,6 @@ async fn main() {
 
 ```rust
 use seed_objects_with_imports::prelude::*;
-use seed_objects_with_imports::SendOptionalBodyRequest;
 
 #[tokio::main]
 async fn main() {
@@ -115,7 +114,6 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 
 ```rust
 use seed_objects_with_imports::prelude::*;
-use seed_objects_with_imports::DeployParams;
 
 #[tokio::main]
 async fn main() {

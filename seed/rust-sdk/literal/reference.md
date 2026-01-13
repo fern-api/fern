@@ -76,7 +76,6 @@ async fn main() {
 
 ```rust
 use seed_literal::prelude::*;
-use seed_literal::{ANestedLiteral, ATopLevelLiteral, SomeAliasedLiteral};
 
 #[tokio::main]
 async fn main() {
@@ -252,7 +251,6 @@ async fn main() {
 
 ```rust
 use seed_literal::prelude::*;
-use seed_literal::{AliasToPrompt, AliasToStream};
 
 #[tokio::main]
 async fn main() {
@@ -385,7 +383,6 @@ async fn main() {
 
 ```rust
 use seed_literal::prelude::*;
-use seed_literal::{ContainerObject, NestedObjectWithLiterals, SendRequest, SomeLiteral};
 
 #[tokio::main]
 async fn main() {

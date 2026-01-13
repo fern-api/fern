@@ -28,7 +28,6 @@ Add a movie to the database using the movies/* /... path.
 
 ```rust
 use custom_imdb_sdk::prelude::*;
-use custom_imdb_sdk::CreateMovieRequest;
 
 #[tokio::main]
 async fn main() {
@@ -73,7 +72,6 @@ async fn main() {
 
 ```rust
 use custom_imdb_sdk::prelude::*;
-use custom_imdb_sdk::MovieId;
 
 #[tokio::main]
 async fn main() {

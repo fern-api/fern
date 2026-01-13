@@ -1,5 +1,4 @@
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::{NestedObjectWithOptionalField, ObjectWithOptionalField};
 
 #[tokio::main]
 async fn main() {

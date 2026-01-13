@@ -98,7 +98,6 @@ async fn main() {
 
 ```rust
 use seed_request_parameters::prelude::*;
-use seed_request_parameters::CreateUsernameBody;
 
 #[tokio::main]
 async fn main() {
@@ -161,7 +160,6 @@ async fn main() {
 
 ```rust
 use seed_request_parameters::prelude::*;
-use seed_request_parameters::CreateUsernameBodyOptionalProperties;
 
 #[tokio::main]
 async fn main() {
@@ -206,7 +204,6 @@ async fn main() {
 
 ```rust
 use seed_request_parameters::prelude::*;
-use seed_request_parameters::{NestedUser, User};
 
 #[tokio::main]
 async fn main() {

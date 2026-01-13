@@ -51,7 +51,6 @@ async fn main() {
 
 ```rust
 use seed_unknown_as_any::prelude::*;
-use seed_unknown_as_any::MyObject;
 
 #[tokio::main]
 async fn main() {

@@ -53,7 +53,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -142,7 +141,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -229,7 +227,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -277,7 +274,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -323,7 +319,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithOptionalField;
 
 #[tokio::main]
 async fn main() {
@@ -380,7 +375,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithOptionalField;
 
 #[tokio::main]
 async fn main() {
@@ -438,7 +432,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::WeatherReport;
 
 #[tokio::main]
 async fn main() {
@@ -533,7 +526,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -578,7 +570,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -639,7 +630,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithOptionalField;
 
 #[tokio::main]
 async fn main() {
@@ -767,7 +757,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithOptionalField;
 
 #[tokio::main]
 async fn main() {
@@ -824,7 +813,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -869,7 +857,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithMapOfMap;
 
 #[tokio::main]
 async fn main() {
@@ -917,7 +904,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::{NestedObjectWithOptionalField, ObjectWithOptionalField};
 
 #[tokio::main]
 async fn main() {
@@ -977,7 +963,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::{NestedObjectWithRequiredField, ObjectWithOptionalField};
 
 #[tokio::main]
 async fn main() {
@@ -1053,7 +1038,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::{NestedObjectWithRequiredField, ObjectWithOptionalField};
 
 #[tokio::main]
 async fn main() {
@@ -2155,7 +2139,6 @@ async fn main() {
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::{Animal, Cat, Dog};
 
 #[tokio::main]
 async fn main() {
@@ -2359,7 +2342,6 @@ POST with custom object in request body, response is an object
 
 ```rust
 use seed_exhaustive::prelude::*;
-use seed_exhaustive::ObjectWithOptionalField;
 
 #[tokio::main]
 async fn main() {
