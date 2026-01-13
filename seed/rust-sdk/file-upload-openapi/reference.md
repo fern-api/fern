@@ -1,6 +1,6 @@
 # Reference
 ## FileUploadExample
-<details><summary><code>client.file_upload_example.<a href="/src/api/resources/file_upload_example/client.rs">upload_file</a>() -> Result<FileId, ApiError></code></summary>
+<details><summary><code>client.file_upload_example.<a href="/src/api/resources/file_upload_example/client.rs">upload_file</a>() -> Result&lt;FileId, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
