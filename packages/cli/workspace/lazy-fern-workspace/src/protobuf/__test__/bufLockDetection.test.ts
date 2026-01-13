@@ -102,7 +102,7 @@ deps:
 
         await writeFile(join(nestedDir, RelativeFilePath.of("buf.yaml")), "version: v1\n");
         await writeFile(join(nestedDir, RelativeFilePath.of("buf.lock")), bufLockContent);
-        await writeFile(join(nestedDir, RelativeFilePath.of("service.proto")), "syntax = \"proto3\";\n");
+        await writeFile(join(nestedDir, RelativeFilePath.of("service.proto")), 'syntax = "proto3";\n');
 
         // Copy the nested directory (simulating what happens when root is ./protos/grpc-with-deps/)
         await cp(nestedDir, destDir, { recursive: true });
