@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->patch($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;patch($request)</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ $client->service->patch(
 </dl>
 </details>
 
-<details><summary><code>$client->service->patchComplex($id, $request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;patchComplex($id, $request)</code></summary>
 <dl>
 <dd>
 
@@ -215,7 +215,7 @@ $client->service->patchComplex(
 </dl>
 </details>
 
-<details><summary><code>$client->service->namedPatchWithMixed($id, $request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;namedPatchWithMixed($id, $request)</code></summary>
 <dl>
 <dd>
 
@@ -301,7 +301,7 @@ $client->service->namedPatchWithMixed(
 </dl>
 </details>
 
-<details><summary><code>$client->service->optionalMergePatchTest($request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;optionalMergePatchTest($request)</code></summary>
 <dl>
 <dd>
 
@@ -398,7 +398,7 @@ $client->service->optionalMergePatchTest(
 </dl>
 </details>
 
-<details><summary><code>$client->service->regularPatch($id, $request)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;regularPatch($id, $request)</code></summary>
 <dl>
 <dd>
 

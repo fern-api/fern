@@ -205,7 +205,7 @@ await client.NullableOptional.UpdateUserAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">ListUsersAsync</a>(ListUsersRequest { ... }) -> IEnumerable<UserResponse></code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">ListUsersAsync</a>(ListUsersRequest { ... }) -> IEnumerable&lt;UserResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -267,7 +267,7 @@ await client.NullableOptional.ListUsersAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">SearchUsersAsync</a>(SearchUsersRequest { ... }) -> IEnumerable<UserResponse></code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">SearchUsersAsync</a>(SearchUsersRequest { ... }) -> IEnumerable&lt;UserResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -798,7 +798,7 @@ await client.NullableOptional.TestDeserializationAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">FilterByRoleAsync</a>(FilterByRoleRequest { ... }) -> IEnumerable<UserResponse></code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">FilterByRoleAsync</a>(FilterByRoleRequest { ... }) -> IEnumerable&lt;UserResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -913,7 +913,7 @@ await client.NullableOptional.GetNotificationSettingsAsync("userId");
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateTagsAsync</a>(userId, UpdateTagsRequest { ... }) -> IEnumerable<string></code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">UpdateTagsAsync</a>(userId, UpdateTagsRequest { ... }) -> IEnumerable&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -983,7 +983,7 @@ await client.NullableOptional.UpdateTagsAsync(
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetSearchResultsAsync</a>(SearchRequest { ... }) -> IEnumerable<SearchResult>?</code></summary>
+<details><summary><code>client.NullableOptional.<a href="/src/SeedNullableOptional/NullableOptional/NullableOptionalClient.cs">GetSearchResultsAsync</a>(SearchRequest { ... }) -> IEnumerable&lt;SearchResult&gt;?</code></summary>
 <dl>
 <dd>
 

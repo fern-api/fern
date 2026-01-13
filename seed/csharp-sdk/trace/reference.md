@@ -409,7 +409,7 @@ await client.Admin.StoreTracedTestCaseAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseV2Async</a>(submissionId, testCaseId, IEnumerable<TraceResponseV2> { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedTestCaseV2Async</a>(submissionId, testCaseId, IEnumerable&lt;TraceResponseV2&gt; { ... })</code></summary>
 <dl>
 <dd>
 
@@ -717,7 +717,7 @@ await client.Admin.StoreTracedWorkspaceAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceV2Async</a>(submissionId, IEnumerable<TraceResponseV2> { ... })</code></summary>
+<details><summary><code>client.Admin.<a href="/src/SeedTrace/Admin/AdminClient.cs">StoreTracedWorkspaceV2Async</a>(submissionId, IEnumerable&lt;TraceResponseV2&gt; { ... })</code></summary>
 <dl>
 <dd>
 
@@ -853,7 +853,7 @@ await client.Admin.StoreTracedWorkspaceV2Async(
 </details>
 
 ## Homepage
-<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">GetHomepageProblemsAsync</a>() -> IEnumerable<string></code></summary>
+<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">GetHomepageProblemsAsync</a>() -> IEnumerable&lt;string&gt;</code></summary>
 <dl>
 <dd>
 
@@ -878,7 +878,7 @@ await client.Homepage.GetHomepageProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">SetHomepageProblemsAsync</a>(IEnumerable<string> { ... })</code></summary>
+<details><summary><code>client.Homepage.<a href="/src/SeedTrace/Homepage/HomepageClient.cs">SetHomepageProblemsAsync</a>(IEnumerable&lt;string&gt; { ... })</code></summary>
 <dl>
 <dd>
 
@@ -919,7 +919,7 @@ await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string", "s
 </details>
 
 ## Migration
-<details><summary><code>client.Migration.<a href="/src/SeedTrace/Migration/MigrationClient.cs">GetAttemptedMigrationsAsync</a>(GetAttemptedMigrationsRequest { ... }) -> IEnumerable<Migration></code></summary>
+<details><summary><code>client.Migration.<a href="/src/SeedTrace/Migration/MigrationClient.cs">GetAttemptedMigrationsAsync</a>(GetAttemptedMigrationsRequest { ... }) -> IEnumerable&lt;Migration&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1036,7 +1036,7 @@ await client.Playlist.CreatePlaylistAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistsAsync</a>(serviceParam, GetPlaylistsRequest { ... }) -> IEnumerable<Playlist></code></summary>
+<details><summary><code>client.Playlist.<a href="/src/SeedTrace/Playlist/PlaylistClient.cs">GetPlaylistsAsync</a>(serviceParam, GetPlaylistsRequest { ... }) -> IEnumerable&lt;Playlist&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1944,7 +1944,7 @@ await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
 </dl>
 </details>
 
-<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">GetNumWarmInstancesAsync</a>() -> Dictionary<Language, int></code></summary>
+<details><summary><code>client.Sysprop.<a href="/src/SeedTrace/Sysprop/SyspropClient.cs">GetNumWarmInstancesAsync</a>() -> Dictionary&lt;Language, int&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1970,7 +1970,7 @@ await client.Sysprop.GetNumWarmInstancesAsync();
 </details>
 
 ## V2 Problem
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<LightweightProblemInfoV2></code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable&lt;LightweightProblemInfoV2&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2009,7 +2009,7 @@ await client.V2.Problem.GetLightweightProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<ProblemInfoV2></code></summary>
+<details><summary><code>client.V2.Problem.<a href="/src/SeedTrace/V2/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable&lt;ProblemInfoV2&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2165,7 +2165,7 @@ await client.V2.Problem.GetProblemVersionAsync("problemId", 1);
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable<LightweightProblemInfoV2></code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetLightweightProblemsAsync</a>() -> IEnumerable&lt;LightweightProblemInfoV2&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2204,7 +2204,7 @@ await client.V2.V3.Problem.GetLightweightProblemsAsync();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable<ProblemInfoV2></code></summary>
+<details><summary><code>client.V2.V3.Problem.<a href="/src/SeedTrace/V2/V3/Problem/ProblemClient.cs">GetProblemsAsync</a>() -> IEnumerable&lt;ProblemInfoV2&gt;</code></summary>
 <dl>
 <dd>
 

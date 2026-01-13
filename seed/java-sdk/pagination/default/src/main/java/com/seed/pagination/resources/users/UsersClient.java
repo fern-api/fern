@@ -18,6 +18,7 @@ import com.seed.pagination.resources.users.requests.ListUsersMixedTypeCursorPagi
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;
+import com.seed.pagination.resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.User;
@@ -92,6 +93,48 @@ public class UsersClient {
             ListUsersBodyCursorPaginationRequest request, RequestOptions requestOptions) {
         return this.rawClient
                 .listWithBodyCursorPagination(request, requestOptions)
+                .body();
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SyncPagingIterable<User> listWithTopLevelBodyCursorPagination() {
+        return this.rawClient.listWithTopLevelBodyCursorPagination().body();
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SyncPagingIterable<User> listWithTopLevelBodyCursorPagination(RequestOptions requestOptions) {
+        return this.rawClient
+                .listWithTopLevelBodyCursorPagination(requestOptions)
+                .body();
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SyncPagingIterable<User> listWithTopLevelBodyCursorPagination(
+            ListUsersTopLevelBodyCursorPaginationRequest request) {
+        return this.rawClient.listWithTopLevelBodyCursorPagination(request).body();
+    }
+
+    /**
+     * Pagination endpoint with a top-level cursor field in the request body.
+     * This tests that the mock server correctly ignores cursor mismatches
+     * when getNextPage() is called with a different cursor value.
+     */
+    public SyncPagingIterable<User> listWithTopLevelBodyCursorPagination(
+            ListUsersTopLevelBodyCursorPaginationRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .listWithTopLevelBodyCursorPagination(request, requestOptions)
                 .body();
     }
 

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->submitFormData($request) -> PostSubmitResponse</code></summary>
+<details><summary><code>$client-&gt;submitFormData($request) -> PostSubmitResponse</code></summary>
 <dl>
 <dd>
 

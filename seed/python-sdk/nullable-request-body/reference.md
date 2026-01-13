@@ -1,6 +1,6 @@
 # Reference
 ## TestGroup
-<details><summary><code>client.test_group.<a href="src/seed/test_group/client.py">test_method_name</a>(...) -> AsyncHttpResponse[typing.Any]</code></summary>
+<details><summary><code>client.test_group.<a href="src/seed/test_group/client.py">test_method_name</a>(...) -&gt; AsyncHttpResponse[typing.Any]</code></summary>
 <dl>
 <dd>
 

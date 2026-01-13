@@ -1,4 +1,5 @@
 use seed_pagination::prelude::*;
+use seed_pagination::Order;
 
 #[tokio::main]
 async fn main() {

@@ -49,7 +49,7 @@ await client.Auth.GetTokenAsync(
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithBearerAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithBearerAsync</a>() -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -74,7 +74,7 @@ await client.User.GetWithBearerAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithApiKeyAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithApiKeyAsync</a>() -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -99,7 +99,7 @@ await client.User.GetWithApiKeyAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithOAuthAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithOAuthAsync</a>() -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -124,7 +124,7 @@ await client.User.GetWithOAuthAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithBasicAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithBasicAsync</a>() -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -149,7 +149,7 @@ await client.User.GetWithBasicAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithInferredAuthAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithInferredAuthAsync</a>() -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -174,7 +174,7 @@ await client.User.GetWithInferredAuthAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithAnyAuthAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithAnyAuthAsync</a>() -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -199,7 +199,7 @@ await client.User.GetWithAnyAuthAsync();
 </dl>
 </details>
 
-<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithAllAuthAsync</a>() -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedEndpointSecurityAuth/User/UserClient.cs">GetWithAllAuthAsync</a>() -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
