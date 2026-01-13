@@ -1,5 +1,5 @@
-use seed_undiscriminated_unions::prelude::{*};
-use seed_undiscriminated_unions::{UnionWithDuplicateTypes};
+use seed_undiscriminated_unions::prelude::*;
+use seed_undiscriminated_unions::UnionWithDuplicateTypes;
 
 #[tokio::main]
 async fn main() {
@@ -8,5 +8,8 @@ async fn main() {
         ..Default::default()
     };
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
-    client.union_.duplicate_types_union(&UnionWithDuplicateTypes::String("string".to_string()), None).await;
+    client
+        .union_
+        .duplicate_types_union(&UnionWithDuplicateTypes::String("string".to_string()), None)
+        .await;
 }

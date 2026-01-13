@@ -1,4 +1,4 @@
-use seed_alias_extends::prelude::{*};
+use seed_alias_extends::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,8 +7,13 @@ async fn main() {
         ..Default::default()
     };
     let client = AliasExtendsClient::new(config).expect("Failed to build client");
-    client.extended_inline_request_body(&InlinedChildRequest {
-        parent: "parent".to_string(),
-        child: "child".to_string()
-    }, None).await;
+    client
+        .extended_inline_request_body(
+            &InlinedChildRequest {
+                parent: "parent".to_string(),
+                child: "child".to_string(),
+            },
+            None,
+        )
+        .await;
 }

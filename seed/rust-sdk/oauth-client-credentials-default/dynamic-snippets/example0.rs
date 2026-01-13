@@ -1,4 +1,4 @@
-use seed_oauth_client_credentials_default::prelude::{*};
+use seed_oauth_client_credentials_default::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,9 +7,15 @@ async fn main() {
         ..Default::default()
     };
     let client = OauthClientCredentialsDefaultClient::new(config).expect("Failed to build client");
-    client.auth.get_token(&GetTokenRequest {
-        client_id: "client_id".to_string(),
-        client_secret: "client_secret".to_string(),
-        grant_type: "client_credentials".to_string()
-    }, None).await;
+    client
+        .auth
+        .get_token(
+            &GetTokenRequest {
+                client_id: "client_id".to_string(),
+                client_secret: "client_secret".to_string(),
+                grant_type: "client_credentials".to_string(),
+            },
+            None,
+        )
+        .await;
 }

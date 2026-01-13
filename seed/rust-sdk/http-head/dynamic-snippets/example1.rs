@@ -1,4 +1,4 @@
-use seed_http_head::prelude::{*};
+use seed_http_head::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,7 +7,5 @@ async fn main() {
         ..Default::default()
     };
     let client = HttpHeadClient::new(config).expect("Failed to build client");
-    client.user.list(&ListQueryRequest {
-        limit: 1
-    }, None).await;
+    client.user.list(&ListQueryRequest { limit: 1 }, None).await;
 }

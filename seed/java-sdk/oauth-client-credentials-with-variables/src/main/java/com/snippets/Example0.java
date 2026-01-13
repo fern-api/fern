@@ -5,18 +5,16 @@ import com.seed.oauthClientCredentialsWithVariables.resources.auth.requests.GetT
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsWithVariablesClient client = SeedOauthClientCredentialsWithVariablesClient.withCredentials("<clientId>", "<clientSecret>")
-            .url("https://api.fern.com")
-            .build()
-        ;
+        SeedOauthClientCredentialsWithVariablesClient client =
+                SeedOauthClientCredentialsWithVariablesClient.withCredentials("<clientId>", "<clientSecret>")
+                        .url("https://api.fern.com")
+                        .build();
 
-        client.auth().getTokenWithClientCredentials(
-            GetTokenRequest
-                .builder()
-                .clientId("client_id")
-                .clientSecret("client_secret")
-                .scope("scope")
-                .build()
-        );
+        client.auth()
+                .getTokenWithClientCredentials(GetTokenRequest.builder()
+                        .clientId("client_id")
+                        .clientSecret("client_secret")
+                        .scope("scope")
+                        .build());
     }
 }

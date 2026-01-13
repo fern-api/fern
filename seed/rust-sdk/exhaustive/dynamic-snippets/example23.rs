@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::{*};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -8,8 +8,15 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.endpoints.params.get_with_query(&GetWithQueryQueryRequest {
-        query: "query".to_string(),
-        number: 1
-    }, None).await;
+    client
+        .endpoints
+        .params
+        .get_with_query(
+            &GetWithQueryQueryRequest {
+                query: "query".to_string(),
+                number: 1,
+            },
+            None,
+        )
+        .await;
 }

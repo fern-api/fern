@@ -6,19 +6,12 @@ import java.util.Optional;
 
 public class Example6 {
     public static void main(String[] args) {
-        Best client = Best
-            .builder()
-            .token("<token>")
-            .url("https://api.fern.com")
-            .build();
+        Best client =
+                Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().container().getAndReturnOptional(
-            Optional.of(
-                ObjectWithRequiredField
-                    .builder()
-                    .string("string")
-                    .build()
-            )
-        );
+        client.endpoints()
+                .container()
+                .getAndReturnOptional(Optional.of(
+                        ObjectWithRequiredField.builder().string("string").build()));
     }
 }

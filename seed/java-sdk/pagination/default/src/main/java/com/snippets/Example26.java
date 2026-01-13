@@ -5,17 +5,14 @@ import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationReq
 
 public class Example26 {
     public static void main(String[] args) {
-        SeedPaginationClient client = SeedPaginationClient
-            .builder()
-            .token("<token>")
-            .url("https://api.fern.com")
-            .build();
+        SeedPaginationClient client = SeedPaginationClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.users().listWithCursorPagination(
-            ListUsersCursorPaginationRequest
-                .builder()
-                .startingAfter("starting_after")
-                .build()
-        );
+        client.users()
+                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
+                        .startingAfter("starting_after")
+                        .build());
     }
 }

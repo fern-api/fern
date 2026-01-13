@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 

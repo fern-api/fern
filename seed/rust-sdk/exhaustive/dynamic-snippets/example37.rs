@@ -1,4 +1,4 @@
-use seed_exhaustive::prelude::{*};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -8,5 +8,9 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.endpoints.primitive.get_and_return_base_64(&"SGVsbG8gd29ybGQh".to_string(), None).await;
+    client
+        .endpoints
+        .primitive
+        .get_and_return_base_64(&"SGVsbG8gd29ybGQh".to_string(), None)
+        .await;
 }

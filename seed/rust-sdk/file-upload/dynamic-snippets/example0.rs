@@ -1,4 +1,4 @@
-use seed_file_upload::prelude::{*};
+use seed_file_upload::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,7 +7,13 @@ async fn main() {
         ..Default::default()
     };
     let client = FileUploadClient::new(config).expect("Failed to build client");
-    client.service.just_file(&JustFileRequest {
-        file: b"test file content".to_vec()
-    }, None).await;
+    client
+        .service
+        .just_file(
+            &JustFileRequest {
+                file: b"test file content".to_vec(),
+            },
+            None,
+        )
+        .await;
 }

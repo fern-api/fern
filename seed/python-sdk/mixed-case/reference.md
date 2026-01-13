@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_resource</a>(...) -> AsyncHttpResponse[Resource]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_resource</a>(...) -&gt; AsyncHttpResponse[Resource]</code></summary>
 <dl>
 <dd>
 
@@ -56,7 +56,7 @@ client.service.get_resource(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_resources</a>(...) -> AsyncHttpResponse[typing.List[Resource]]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_resources</a>(...) -&gt; AsyncHttpResponse[typing.List[Resource]]</code></summary>
 <dl>
 <dd>
 

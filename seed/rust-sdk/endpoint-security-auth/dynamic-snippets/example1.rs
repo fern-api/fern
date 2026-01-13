@@ -1,4 +1,4 @@
-use seed_endpoint_security_auth::prelude::{*};
+use seed_endpoint_security_auth::prelude::*;
 
 #[tokio::main]
 async fn main() {

@@ -1,4 +1,4 @@
-use seed_no_retries::prelude::{*};
+use seed_no_retries::prelude::*;
 
 #[tokio::main]
 async fn main() {

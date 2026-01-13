@@ -1,4 +1,4 @@
-use seed_oauth_client_credentials_default::prelude::{*};
+use seed_oauth_client_credentials_default::prelude::*;
 
 #[tokio::main]
 async fn main() {

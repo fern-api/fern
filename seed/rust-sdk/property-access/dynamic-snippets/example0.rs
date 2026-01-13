@@ -1,4 +1,4 @@
-use seed_property_access::prelude::{*};
+use seed_property_access::prelude::*;
 use seed_property_access::{User, UserProfile, UserProfileVerification};
 
 #[tokio::main]
@@ -8,16 +8,21 @@ async fn main() {
         ..Default::default()
     };
     let client = PropertyAccessClient::new(config).expect("Failed to build client");
-    client.create_user(&User {
-        id: "id".to_string(),
-        email: "email".to_string(),
-        password: "password".to_string(),
-        profile: UserProfile {
-            name: "name".to_string(),
-            verification: UserProfileVerification {
-                verified: "verified".to_string()
+    client
+        .create_user(
+            &User {
+                id: "id".to_string(),
+                email: "email".to_string(),
+                password: "password".to_string(),
+                profile: UserProfile {
+                    name: "name".to_string(),
+                    verification: UserProfileVerification {
+                        verified: "verified".to_string(),
+                    },
+                    ssn: "ssn".to_string(),
+                },
             },
-            ssn: "ssn".to_string()
-        }
-    }, None).await;
+            None,
+        )
+        .await;
 }

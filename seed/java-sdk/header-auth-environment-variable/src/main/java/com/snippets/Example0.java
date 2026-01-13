@@ -4,11 +4,10 @@ import com.seed.headerTokenEnvironmentVariable.SeedHeaderTokenEnvironmentVariabl
 
 public class Example0 {
     public static void main(String[] args) {
-        SeedHeaderTokenEnvironmentVariableClient client = SeedHeaderTokenEnvironmentVariableClient
-            .builder()
-            .headerTokenAuth("<value>")
-            .url("https://api.fern.com")
-            .build();
+        SeedHeaderTokenEnvironmentVariableClient client = SeedHeaderTokenEnvironmentVariableClient.builder()
+                .headerTokenAuth("<value>")
+                .url("https://api.fern.com")
+                .build();
 
         client.service().getWithBearerToken();
     }

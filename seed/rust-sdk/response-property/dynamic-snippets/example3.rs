@@ -1,4 +1,4 @@
-use seed_response_property::prelude::{*};
+use seed_response_property::prelude::*;
 
 #[tokio::main]
 async fn main() {

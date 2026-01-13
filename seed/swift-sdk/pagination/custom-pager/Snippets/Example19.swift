@@ -8,8 +8,10 @@ private func main() async throws {
     )
 
     _ = try await client.users.listWithCursorPagination(
-        page: 1,
-        order: .asc
+        page: 1.1,
+        perPage: 1.1,
+        order: .asc,
+        startingAfter: "starting_after"
     )
 }
 

@@ -1,4 +1,4 @@
-use seed_content_types::prelude::{*};
+use seed_content_types::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,8 +7,15 @@ async fn main() {
         ..Default::default()
     };
     let client = ContentTypesClient::new(config).expect("Failed to build client");
-    client.service.regular_patch(&"id".to_string(), &RegularPatchRequest {
-        field_1: Some("field1".to_string()),
-        field_2: Some(1)
-    }, None).await;
+    client
+        .service
+        .regular_patch(
+            &"id".to_string(),
+            &RegularPatchRequest {
+                field_1: Some("field1".to_string()),
+                field_2: Some(1),
+            },
+            None,
+        )
+        .await;
 }

@@ -6,26 +6,25 @@ import java.util.HashMap;
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedClientSideParamsClient client = SeedClientSideParamsClient
-            .builder()
-            .token("<token>")
-            .url("https://api.fern.com")
-            .build();
+        SeedClientSideParamsClient client = SeedClientSideParamsClient.builder()
+                .token("<token>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.service().searchResources(
-            SearchResourcesRequest
-                .builder()
-                .limit(1)
-                .offset(1)
-                .query("query")
-                .filters(
-                    new HashMap<String, Object>() {{
-                        put("filters", new 
-                        HashMap<String, Object>() {{put("key", "value");
-                        }});
-                    }}
-                )
-                .build()
-        );
+        client.service()
+                .searchResources(SearchResourcesRequest.builder()
+                        .limit(1)
+                        .offset(1)
+                        .query("query")
+                        .filters(new HashMap<String, Object>() {
+                            {
+                                put("filters", new HashMap<String, Object>() {
+                                    {
+                                        put("key", "value");
+                                    }
+                                });
+                            }
+                        })
+                        .build());
     }
 }

@@ -1,5 +1,5 @@
-use seed_exhaustive::prelude::{*};
-use seed_exhaustive::{ObjectWithRequiredField};
+use seed_exhaustive::prelude::*;
+use seed_exhaustive::ObjectWithRequiredField;
 
 #[tokio::main]
 async fn main() {
@@ -9,7 +9,14 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.endpoints.http_methods.test_post(&ObjectWithRequiredField {
-        string: "string".to_string()
-    }, None).await;
+    client
+        .endpoints
+        .http_methods
+        .test_post(
+            &ObjectWithRequiredField {
+                string: "string".to_string(),
+            },
+            None,
+        )
+        .await;
 }

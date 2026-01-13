@@ -1,4 +1,4 @@
-use seed_trace::prelude::{*};
+use seed_trace::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -8,5 +8,8 @@ async fn main() {
         ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.submission.stop_execution_session(&"sessionId".to_string(), None).await;
+    client
+        .submission
+        .stop_execution_session(&"sessionId".to_string(), None)
+        .await;
 }

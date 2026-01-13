@@ -1,4 +1,4 @@
-use seed_path_parameters::prelude::{*};
+use seed_path_parameters::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,7 +7,13 @@ async fn main() {
         ..Default::default()
     };
     let client = PathParametersClient::new(config).expect("Failed to build client");
-    client.organizations.search_organizations(&"tenant_id".to_string(), &"organization_id".to_string(), &SearchOrganizationsQueryRequest {
-        limit: Some(1)
-    }, None).await;
+    client
+        .organizations
+        .search_organizations(
+            &"tenant_id".to_string(),
+            &"organization_id".to_string(),
+            &SearchOrganizationsQueryRequest { limit: Some(1) },
+            None,
+        )
+        .await;
 }

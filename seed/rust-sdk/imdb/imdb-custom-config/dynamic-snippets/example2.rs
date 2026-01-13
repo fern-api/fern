@@ -1,5 +1,5 @@
-use custom_imdb_sdk::prelude::{*};
-use custom_imdb_sdk::{MovieId};
+use custom_imdb_sdk::prelude::*;
+use custom_imdb_sdk::MovieId;
 
 #[tokio::main]
 async fn main() {
@@ -9,5 +9,8 @@ async fn main() {
         ..Default::default()
     };
     let client = CustomImdbClient::new(config).expect("Failed to build client");
-    client.imdb.get_movie(&MovieId("movieId".to_string()), None).await;
+    client
+        .imdb
+        .get_movie(&MovieId("movieId".to_string()), None)
+        .await;
 }

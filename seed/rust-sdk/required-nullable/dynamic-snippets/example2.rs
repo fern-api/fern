@@ -1,4 +1,4 @@
-use seed_api::prelude::{*};
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -7,9 +7,15 @@ async fn main() {
         ..Default::default()
     };
     let client = ApiClient::new(config).expect("Failed to build client");
-    client.update_foo(&"id".to_string(), &UpdateFooRequest {
-        nullable_text: Some(Some("nullable_text".to_string())),
-        nullable_number: Some(Some(1.1)),
-        non_nullable_text: Some("non_nullable_text".to_string())
-    }, Some(RequestOptions::new().additional_header("X-Idempotency-Key", "X-Idempotency-Key"))).await;
+    client
+        .update_foo(
+            &"id".to_string(),
+            &UpdateFooRequest {
+                nullable_text: Some(Some("nullable_text".to_string())),
+                nullable_number: Some(Some(1.1)),
+                non_nullable_text: Some("non_nullable_text".to_string()),
+            },
+            Some(RequestOptions::new().additional_header("X-Idempotency-Key", "X-Idempotency-Key")),
+        )
+        .await;
 }

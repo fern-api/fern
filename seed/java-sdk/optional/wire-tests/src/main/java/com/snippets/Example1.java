@@ -6,18 +6,12 @@ import java.util.Optional;
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedObjectsWithImportsClient client = SeedObjectsWithImportsClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
-        client.optional().sendOptionalTypedBody(
-            Optional.of(
-                SendOptionalBodyRequest
-                    .builder()
-                    .message("message")
-                    .build()
-            )
-        );
+        client.optional()
+                .sendOptionalTypedBody(Optional.of(
+                        SendOptionalBodyRequest.builder().message("message").build()));
     }
 }

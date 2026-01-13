@@ -1,4 +1,4 @@
-use seed_header_token_environment_variable::prelude::{*};
+use seed_header_token_environment_variable::prelude::*;
 
 #[tokio::main]
 async fn main() {

@@ -1,4 +1,4 @@
-use seed_bearer_token_environment_variable::prelude::{*};
+use seed_bearer_token_environment_variable::prelude::*;
 
 #[tokio::main]
 async fn main() {

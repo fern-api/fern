@@ -1,4 +1,4 @@
-use seed_basic_auth::prelude::{*};
+use seed_basic_auth::prelude::*;
 
 #[tokio::main]
 async fn main() {

@@ -7,21 +7,18 @@ import java.util.Optional;
 
 public class Example3 {
     public static void main(String[] args) {
-        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient
-            .builder()
-            .url("https://api.fern.com")
-            .build();
+        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient.builder()
+                .url("https://api.fern.com")
+                .build();
 
-        client.union().updateMetadata(
-            MetadataUnion.of(
-                Optional.of(
-                    new HashMap<String, Object>() {{
-                        put("string", new 
-                        HashMap<String, Object>() {{put("key", "value");
-                        }});
-                    }}
-                )
-            )
-        );
+        client.union().updateMetadata(MetadataUnion.of(Optional.of(new HashMap<String, Object>() {
+            {
+                put("string", new HashMap<String, Object>() {
+                    {
+                        put("key", "value");
+                    }
+                });
+            }
+        })));
     }
 }

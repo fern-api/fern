@@ -5,17 +5,15 @@ import com.seed.oauthClientCredentialsReference.resources.auth.types.GetTokenReq
 
 public class Example1 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials("<clientId>", "<clientSecret>")
-            .url("https://api.fern.com")
-            .build()
-        ;
+        SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials(
+                        "<clientId>", "<clientSecret>")
+                .url("https://api.fern.com")
+                .build();
 
-        client.auth().getToken(
-            GetTokenRequest
-                .builder()
-                .clientId("client_id")
-                .clientSecret("client_secret")
-                .build()
-        );
+        client.auth()
+                .getToken(GetTokenRequest.builder()
+                        .clientId("client_id")
+                        .clientSecret("client_secret")
+                        .build());
     }
 }

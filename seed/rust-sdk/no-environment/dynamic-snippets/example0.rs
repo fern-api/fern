@@ -1,4 +1,4 @@
-use seed_no_environment::prelude::{*};
+use seed_no_environment::prelude::*;
 
 #[tokio::main]
 async fn main() {

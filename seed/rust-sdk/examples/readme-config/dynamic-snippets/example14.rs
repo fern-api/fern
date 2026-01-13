@@ -1,5 +1,5 @@
-use seed_examples::prelude::{*};
-use seed_examples::{MovieId};
+use seed_examples::prelude::*;
+use seed_examples::MovieId;
 
 #[tokio::main]
 async fn main() {
@@ -9,5 +9,8 @@ async fn main() {
         ..Default::default()
     };
     let client = ExamplesClient::new(config).expect("Failed to build client");
-    client.service.get_movie(&MovieId("movieId".to_string()), None).await;
+    client
+        .service
+        .get_movie(&MovieId("movieId".to_string()), None)
+        .await;
 }

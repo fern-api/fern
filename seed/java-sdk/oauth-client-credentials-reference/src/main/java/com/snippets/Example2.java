@@ -4,10 +4,10 @@ import com.seed.oauthClientCredentialsReference.SeedOauthClientCredentialsRefere
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials("<clientId>", "<clientSecret>")
-            .url("https://api.fern.com")
-            .build()
-        ;
+        SeedOauthClientCredentialsReferenceClient client = SeedOauthClientCredentialsReferenceClient.withCredentials(
+                        "<clientId>", "<clientSecret>")
+                .url("https://api.fern.com")
+                .build();
 
         client.simple().getSomething();
     }
