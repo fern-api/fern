@@ -156,17 +156,28 @@ export class ProtobufOpenAPIGenerator {
 
                 // Always try buf dep update to populate the cache (needed at build time)
                 // If it fails with a network error and buf.lock exists, continue (air-gapped mode)
-                const bufDepUpdateResult = await buf(["dep", "update"]);
-                if (bufDepUpdateResult.exitCode !== 0) {
+                // Note: execa throws an exception when the command fails, so we need to catch it
+                try {
+                    await buf(["dep", "update"]);
+                    // buf dep update succeeded, read the updated buf.lock
+                    try {
+                        bufLockContents = await readFile(bufLockPath, "utf-8");
+                    } catch (err) {
+                        bufLockContents = undefined;
+                    }
+                } catch (bufDepUpdateError: unknown) {
+                    // execa throws an exception when the command fails with non-zero exit code
+                    const errorMessage =
+                        bufDepUpdateError instanceof Error ? bufDepUpdateError.message : String(bufDepUpdateError);
                     const isNetworkError =
-                        bufDepUpdateResult.stderr.includes("server hosted at that remote is unavailable") ||
-                        bufDepUpdateResult.stderr.includes("failed to connect") ||
-                        bufDepUpdateResult.stderr.includes("network") ||
-                        bufDepUpdateResult.stderr.includes("ENOTFOUND") ||
-                        bufDepUpdateResult.stderr.includes("ETIMEDOUT");
+                        errorMessage.includes("server hosted at that remote is unavailable") ||
+                        errorMessage.includes("failed to connect") ||
+                        errorMessage.includes("network") ||
+                        errorMessage.includes("ENOTFOUND") ||
+                        errorMessage.includes("ETIMEDOUT");
 
                     this.context.logger.debug(
-                        `buf dep update failed. isNetworkError=${isNetworkError}, bufLockExists=${bufLockExistsInCopiedDir}, stderr=${bufDepUpdateResult.stderr.substring(0, 200)}`
+                        `buf dep update failed. isNetworkError=${isNetworkError}, bufLockExists=${bufLockExistsInCopiedDir}, error=${errorMessage.substring(0, 200)}`
                     );
 
                     if (isNetworkError && bufLockExistsInCopiedDir) {
@@ -175,14 +186,7 @@ export class ProtobufOpenAPIGenerator {
                             "buf dep update failed due to network error, but buf.lock exists. Continuing in air-gapped mode."
                         );
                     } else {
-                        this.context.failAndThrow(bufDepUpdateResult.stderr);
-                    }
-                } else {
-                    // buf dep update succeeded, read the updated buf.lock
-                    try {
-                        bufLockContents = await readFile(bufLockPath, "utf-8");
-                    } catch (err) {
-                        bufLockContents = undefined;
+                        this.context.failAndThrow(errorMessage);
                     }
                 }
             }

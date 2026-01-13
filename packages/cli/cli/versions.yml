@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.39.3
+  changelogEntry:
+    - summary: |
+        Fix protobuf air-gapped support to properly catch execa exceptions when `buf dep update` fails. The `execa` library throws exceptions on non-zero exit codes rather than returning a result object, so the network error detection logic was never being reached. Both `ProtobufOpenAPIGenerator` and `ProtobufIRGenerator` now wrap `buf dep update` in a try-catch block to properly handle network errors in air-gapped environments.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
 - version: 3.39.2
   changelogEntry:
     - summary: |
