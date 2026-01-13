@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "trader": {
+      "$ref": "#/definitions/Trader"
+    }
+  },
+  "required": [
+    "trader"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "Trader": {
+      "type": "object",
+      "properties": {
+        "uuid_": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "uuid_"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
