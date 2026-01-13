@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix context-aware HTML encoding in reference.md generation. Return values in code blocks are now HTML encoded (e.g., `Page&lt;User, Response&gt;`), while parameter types use markdown link syntax for linked types (e.g., `[CreateUserRequest](/types/requests.ts)`) and backticks for unlinked types (e.g., `` `Record<string, string>` ``) to ensure proper rendering in markdown.
+      type: fix
+  createdAt: "2026-01-12"
+  version: 0.5.3
+
+- changelogEntry:
+    - summary: |
         Fix how npm finds and executes generator-cli.
       type: fix
   createdAt: "2026-01-12"
