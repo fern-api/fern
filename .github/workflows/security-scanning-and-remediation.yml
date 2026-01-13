@@ -22,7 +22,7 @@ on:
   workflow_dispatch: # Allow manual triggering
     inputs:
       scan_only:
-        description: 'When true, skip PR creation and Slack notifications (only run scans and upload to ECR)'
+        description: 'Skip PR creation & Slack notifications'
         required: false
         default: true
         type: boolean
