@@ -432,9 +432,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         generatedInferredAuthTokenSupplier.ifPresent(this::addGeneratedFile);
 
-        // subpackage clients and their WebSocket channels
+        // subpackage clients and their WebSocket channels - parallelized for performance
         log(generatorExecClient, "Generating API client classes");
-        ir.getSubpackages().values().forEach(subpackage -> {
+        ir.getSubpackages().values().parallelStream().forEach(subpackage -> {
             // Generate subpackage clients if there are endpoints or WebSocket channels
             if (subpackage.getHasEndpointsInTree() || subpackage.getWebsocket().isPresent()) {
                 AbstractSubpackageClientGenerator syncServiceClientGenerator = new SyncSubpackageClientGenerator(

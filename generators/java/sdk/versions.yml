@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.3
+  changelogEntry:
+    - summary: |
+        Optimize IR parsing performance by using streaming JSON parsing instead of building the full
+        JSON tree in memory. This reduces memory usage significantly for large API specifications.
+        Also adds JVM tuning flags (-Xms4g, G1GC configuration) for improved garbage collection
+        performance during local seed testing.
+      type: chore
+    - summary: |
+        Parallelize code generation for improved performance on multi-core machines. Type generation,
+        interface generation, and subpackage client generation now run in parallel using Java parallel
+        streams. This can significantly reduce generation time for large API specifications with many
+        types and endpoints.
+      type: chore
+  createdAt: "2026-01-14"
+  irVersion: 63
+
 - version: 3.28.2
   changelogEntry:
     - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
