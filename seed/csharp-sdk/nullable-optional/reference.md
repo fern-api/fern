@@ -449,7 +449,7 @@ await client.NullableOptional.CreateComplexProfileAsync(
             "optionalNullableArray",
             "optionalNullableArray",
         },
-        NullableListOfNullables = new List<string>()
+        NullableListOfNullables = new List<string?>()
         {
             "nullableListOfNullables",
             "nullableListOfNullables",

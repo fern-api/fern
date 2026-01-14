@@ -27,11 +27,11 @@ public partial class TestGroupClient : ITestGroupClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.QueryParamObject != null)
+        if (request.QueryParamObject.IsDefined)
         {
-            _query["query_param_object"] = JsonUtils.Serialize(request.QueryParamObject);
+            _query["query_param_object"] = JsonUtils.Serialize(request.QueryParamObject.Value);
         }
-        if (request.QueryParamInteger != null)
+        if (request.QueryParamInteger.IsDefined)
         {
             _query["query_param_integer"] = request.QueryParamInteger.Value.ToString();
         }

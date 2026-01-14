@@ -16,7 +16,7 @@ public record GetUsersRequest
     public IEnumerable<bool> Activated { get; set; } = new List<bool>();
 
     [JsonIgnore]
-    public IEnumerable<string> Tags { get; set; } = new List<string>();
+    public IEnumerable<string?> Tags { get; set; } = new List<string?>();
 
     [JsonIgnore]
     public Optional<bool?> Extra { get; set; }

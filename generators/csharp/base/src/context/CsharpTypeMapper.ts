@@ -83,7 +83,7 @@ export class CsharpTypeMapper extends WithGeneration {
                 return this.Collection.list(this.convert({ reference: container.list, unboxOptionals: true }));
             case "map": {
                 const key = this.convert({ reference: container.keyType });
-                const value = this.convert({ reference: container.valueType });
+                const value = this.convert({ reference: container.valueType, unboxOptionals: true });
                 if (is.Primitive.object(value)) {
                     // object map values should be nullable.
                     return this.Collection.map(key, value.asOptional());
@@ -111,8 +111,9 @@ export class CsharpTypeMapper extends WithGeneration {
             }
             case "nullable":
                 // Use ? syntax for nullable reference types
+                // When unwrapping optionals (e.g., inside collections), preserve nullable
                 return unboxOptionals
-                    ? this.convert({ reference: container.nullable, unboxOptionals })
+                    ? this.convert({ reference: container.nullable, unboxOptionals: false }).asOptional()
                     : this.convert({ reference: container.nullable }).asOptional();
             case "literal":
                 return this.convertLiteral({ literal: container.literal });

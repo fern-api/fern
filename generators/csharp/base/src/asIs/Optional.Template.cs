@@ -50,7 +50,7 @@ public interface IOptional
 /// var request3 = new UpdateUserRequest();  // Will send: {} (name not included)
 /// </code>
 /// </example>
-public readonly struct Optional<T> : IOptional
+public readonly struct Optional<T> : IOptional, IEquatable<Optional<T>>
 {
     private readonly T _value;
     private readonly bool _isDefined;
@@ -225,10 +225,13 @@ public readonly struct Optional<T> : IOptional
     }
 
     /// <inheritdoc/>
-    public override bool Equals(object? obj) =>
-        obj is Optional<T> other
-        && _isDefined == other._isDefined
+    public bool Equals(Optional<T> other) =>
+        _isDefined == other._isDefined
         && EqualityComparer<T>.Default.Equals(_value, other._value);
+
+    /// <inheritdoc/>
+    public override bool Equals(object? obj) =>
+        obj is Optional<T> other && Equals(other);
 
     /// <inheritdoc/>
     public override int GetHashCode()

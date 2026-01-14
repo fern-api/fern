@@ -97,6 +97,7 @@ export const AsIsFiles = {
             JsonElementComparer: "test/Utils/JsonElementComparer.Template.cs",
             NUnitExtensions: "test/Utils/NUnitExtensions.Template.cs",
             OneOfComparer: "test/Utils/OneOfComparer.Template.cs",
+            OptionalComparer: "test/Utils/OptionalComparer.Template.cs",
             ReadOnlyMemoryComparer: "test/Utils/ReadOnlyMemoryComparer.Template.cs"
         },
         Pagination: [

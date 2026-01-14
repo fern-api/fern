@@ -40,7 +40,7 @@ public partial class NullableClient : INullableClient
         {
             _query["avatar"] = request.Avatar;
         }
-        if (request.Extra != null)
+        if (request.Extra.IsDefined)
         {
             _query["extra"] = JsonUtils.Serialize(request.Extra.Value);
         }
@@ -93,7 +93,7 @@ public partial class NullableClient : INullableClient
     ///             Avatar = "avatar",
     ///             Activated = true,
     ///             Status = new Status(new Status.Active()),
-    ///             Values = new Dictionary&lt;string, Optional&lt;string?&gt;&gt;() { { "values", "values" } },
+    ///             Values = new Dictionary&lt;string, string?&gt;() { { "values", "values" } },
     ///         },
     ///         Avatar = "avatar",
     ///     }

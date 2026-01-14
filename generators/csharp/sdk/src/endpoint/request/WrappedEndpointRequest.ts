@@ -271,15 +271,17 @@ export class WrappedEndpointRequest extends EndpointRequest {
         allowOptionals?: boolean;
     }): ast.CodeBlock {
         const parameter = parameterOverride ?? `${this.getParameterName()}.${name.pascalCase.safeName}`;
-        if (this.isString(reference)) {
-            return this.csharp.codeblock(`${parameter}`);
-        }
+        const isOptional = this.isOptional({ typeReference: reference });
+        const isNullable = this.isNullable({ typeReference: reference });
+        const isStruct = this.isStruct({ typeReference: reference });
+
+        // Add .Value for Optional<T?> (both optional and nullable) or nullable structs
         const maybeDotValue =
-            (this.isOptional({ typeReference: reference }) || this.isNullable({ typeReference: reference })) &&
-            this.isStruct({ typeReference: reference }) &&
-            (allowOptionals ?? true)
-                ? ".Value"
-                : "";
+            ((isOptional && isNullable) || (isNullable && isStruct)) && (allowOptionals ?? true) ? ".Value" : "";
+
+        if (this.isString(reference)) {
+            return this.csharp.codeblock(`${parameter}${maybeDotValue}`);
+        }
 
         if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
             return this.csharp.codeblock((writer) => {

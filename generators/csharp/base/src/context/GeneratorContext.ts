@@ -487,7 +487,13 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
     public isNullable(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
-                return typeReference.container.type === "nullable";
+                if (typeReference.container.type === "nullable") {
+                    return true;
+                }
+                if (typeReference.container.type === "optional") {
+                    return this.isNullable(typeReference.container.optional);
+                }
+                return false;
         }
         return false;
     }

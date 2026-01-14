@@ -75,7 +75,7 @@ public record ComplexProfile : IJsonOnDeserialized
 
     [Nullable]
     [JsonPropertyName("nullableListOfNullables")]
-    public IEnumerable<string>? NullableListOfNullables { get; set; }
+    public IEnumerable<string?>? NullableListOfNullables { get; set; }
 
     [Nullable]
     [JsonPropertyName("nullableMapOfNullables")]

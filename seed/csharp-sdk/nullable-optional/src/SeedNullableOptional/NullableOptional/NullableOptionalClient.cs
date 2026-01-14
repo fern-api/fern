@@ -220,19 +220,19 @@ public partial class NullableOptionalClient : INullableOptionalClient
         var _query = new Dictionary<string, object>();
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit.Value.ToString();
+            _query["limit"] = request.Limit.ToString();
         }
         if (request.Offset != null)
         {
-            _query["offset"] = request.Offset.Value.ToString();
+            _query["offset"] = request.Offset.ToString();
         }
         if (request.IncludeDeleted != null)
         {
-            _query["includeDeleted"] = JsonUtils.Serialize(request.IncludeDeleted.Value);
+            _query["includeDeleted"] = JsonUtils.Serialize(request.IncludeDeleted);
         }
-        if (request.SortBy != null)
+        if (request.SortBy.IsDefined)
         {
-            _query["sortBy"] = request.SortBy;
+            _query["sortBy"] = request.SortBy.Value;
         }
         var response = await _client
             .SendRequestAsync(
@@ -297,7 +297,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
         {
             _query["role"] = request.Role;
         }
-        if (request.IsActive != null)
+        if (request.IsActive.IsDefined)
         {
             _query["isActive"] = JsonUtils.Serialize(request.IsActive.Value);
         }
@@ -434,7 +434,7 @@ public partial class NullableOptionalClient : INullableOptionalClient
     ///             "optionalNullableArray",
     ///             "optionalNullableArray",
     ///         },
-    ///         NullableListOfNullables = new List&lt;string&gt;()
+    ///         NullableListOfNullables = new List&lt;string?&gt;()
     ///         {
     ///             "nullableListOfNullables",
     ///             "nullableListOfNullables",
@@ -803,9 +803,9 @@ public partial class NullableOptionalClient : INullableOptionalClient
         _query["role"] = request.Role.Value.ToString();
         if (request.Status != null)
         {
-            _query["status"] = request.Status.Value.Stringify();
+            _query["status"] = request.Status.Stringify();
         }
-        if (request.SecondaryRole != null)
+        if (request.SecondaryRole.IsDefined)
         {
             _query["secondaryRole"] = request.SecondaryRole.Value.ToString();
         }
