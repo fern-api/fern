@@ -66,7 +66,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
         > = {
             [FernGeneratorCli.StructuredFeatureId.Errors]: { renderer: this.renderErrorsSnippet.bind(this) },
+            [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
+            ADDITIONAL_HEADERS: { renderer: this.renderAdditionalHeadersSnippet.bind(this) },
+            ADDITIONAL_QUERY_PARAMETERS: { renderer: this.renderAdditionalQueryParametersSnippet.bind(this) },
             ...(this.isPaginationEnabled
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
@@ -230,6 +233,44 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             response = ${this.getMethodCall(endpoint)}(
                 ...,
                 timeout: 30  # 30 second timeout
+            )
+        `);
+    }
+
+    private renderRetriesSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`require "${this.rootPackageName}"
+
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::Client.new(
+                base_url: ${this.getEnvironmentURLExample()},
+                max_retries: 3  # Configure max retries (default is 2)
+            )
+        `);
+    }
+
+    private renderAdditionalHeadersSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`require "${this.rootPackageName}"
+
+            response = ${this.getMethodCall(endpoint)}(
+                ...,
+                request_options: {
+                    additional_headers: {
+                        "X-Custom-Header" => "custom-value"
+                    }
+                }
+            )
+        `);
+    }
+
+    private renderAdditionalQueryParametersSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`require "${this.rootPackageName}"
+
+            response = ${this.getMethodCall(endpoint)}(
+                ...,
+                request_options: {
+                    additional_query_parameters: {
+                        "custom_param" => "custom-value"
+                    }
+                }
             )
         `);
     }

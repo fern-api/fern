@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.28.2
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.28.1
+  changelogEntry:
+    - summary: |
+        Update libtasn1-6 and gnupg packages in container to fix CVE-2021-46848, CVE-2025-13151, CVE-2025-68973.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
 - version: 3.28.0
   changelogEntry:
     - summary: |

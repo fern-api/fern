@@ -146,6 +146,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
             field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
             use_pydantic_field_aliases=self._custom_config.use_pydantic_field_aliases,
+            positional_single_property_constructors=self._custom_config.positional_single_property_constructors,
         ) as internal_pydantic_model_for_single_union_type:
             for pydantic_field in properties:
                 internal_pydantic_model_for_single_union_type.add_field(pydantic_field)

@@ -267,7 +267,9 @@ export function getSchemaFromFernType({
                           groupName,
                           encoding: undefined,
                           example: undefined,
-                          inline: undefined
+                          inline: undefined,
+                          minProperties: undefined,
+                          maxProperties: undefined
                       })
                     : undefined,
             list: (itemType) =>
@@ -282,7 +284,9 @@ export function getSchemaFromFernType({
                           namespace,
                           groupName,
                           example: undefined,
-                          inline: undefined
+                          inline: undefined,
+                          minItems: undefined,
+                          maxItems: undefined
                       })
                     : undefined,
             optional: (itemType) =>
@@ -325,7 +329,9 @@ export function getSchemaFromFernType({
                           namespace,
                           groupName,
                           example: undefined,
-                          inline: undefined
+                          inline: undefined,
+                          minItems: undefined,
+                          maxItems: undefined
                       })
                     : undefined,
             literal: (literal) =>

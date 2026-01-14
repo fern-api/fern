@@ -350,6 +350,13 @@ fixtures:
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
+  python-positional-single-property:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          positional_single_property_constructors: true
+      outputFolder: with-positional-constructors
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2

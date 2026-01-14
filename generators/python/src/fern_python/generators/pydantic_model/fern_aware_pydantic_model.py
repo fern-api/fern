@@ -100,6 +100,7 @@ class FernAwarePydanticModel:
             field_metadata_getter=lambda: self._context.core_utilities.get_field_metadata(),
             use_pydantic_field_aliases=self._custom_config.use_pydantic_field_aliases,
             coerce_numbers_to_str=custom_config.coerce_numbers_to_str,
+            positional_single_property_constructors=custom_config.positional_single_property_constructors,
         )
 
         self._force_update_forward_refs = force_update_forward_refs

@@ -666,6 +666,8 @@ types:
       properties: list<ObjectProperty>
       allOfPropertyConflicts: list<AllOfPropertyConflict>
       additionalProperties: boolean
+      minProperties: optional<integer>
+      maxProperties: optional<integer>
 
   # OpenAPI IR to Fern:
   # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.
@@ -716,6 +718,8 @@ types:
       - commons.WithInline
     properties:
       value: Schema
+      minItems: optional<integer>
+      maxItems: optional<integer>
 
   MapSchema:
     extends:
@@ -730,6 +734,8 @@ types:
     properties:
       key: PrimitiveSchema
       value: Schema
+      minProperties: optional<integer>
+      maxProperties: optional<integer>
 
   OptionalSchema:
     extends:
@@ -822,6 +828,12 @@ types:
       - commons.WithInline
     properties:
       discriminantProperty: string
+      discriminantPropertyNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-property-name` on a discriminator object.
+          When set, this is used as the code generation name while
+          discriminantProperty is used as the wire format.
       commonProperties: list<CommonProperty>
       schemas: map<string, Schema>
 

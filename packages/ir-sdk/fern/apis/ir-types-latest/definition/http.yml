@@ -46,6 +46,9 @@ types:
       displayName: optional<string>
       method: HttpMethod
       headers: list<HttpHeader>
+      responseHeaders:
+        type: optional<list<HttpHeader>>
+        docs: Headers returned in the response
       baseUrl: optional<environment.EnvironmentBaseUrlId>
       v2BaseUrls: optional<list<environment.EnvironmentBaseUrlId>>
       basePath:

@@ -28,6 +28,8 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
 # Go stdlib CVEs (60+): git-lfs 3.0.2 embeds Go 1.18.1 with many critical vulnerabilities
 # CVE-2024-10524, CVE-2021-31879: wget vulnerabilities
 # CVE-2025-64720, CVE-2025-65018, CVE-2025-64505, CVE-2025-64506: libpng16-16 vulnerabilities
+# CVE-2021-46848, CVE-2025-13151: libtasn1-6 vulnerabilities
+# CVE-2025-68973: gnupg/gpg vulnerabilities
 # Use purge instead of remove to fully remove packages from dpkg database
 # Add retry logic for apt-get update to handle transient mirror sync issues
 RUN set -eux; \
@@ -42,7 +44,9 @@ RUN set -eux; \
       echo "apt-get update failed, retrying in 20s..."; \
       sleep 20; \
     done; \
-    apt-get install -y --only-upgrade libpng16-16 && \
+    apt-get install -y --only-upgrade libpng16-16 libtasn1-6 \
+        dirmngr gnupg gnupg-l10n gnupg-utils gpg gpg-agent \
+        gpg-wks-client gpg-wks-server gpgconf gpgsm gpgv && \
     apt-get purge -y --allow-remove-essential \
         python3.10 python3.10-minimal \
         python3 python3-minimal \
@@ -87,7 +91,7 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 
 RUN test -f /bin/java-v2 || echo "java-v2 CLI not found or not executable"
 
-RUN npm install -f -g @fern-api/generator-cli@0.5.0
+RUN npm install -f -g @fern-api/generator-cli@0.5.3
 
 # Patch @octokit/request to fix CVE-2025-25290 (ReDoS vulnerability)
 # Use npm pack + tar to replace the package without running npm install (which fails due to workspace: protocol)

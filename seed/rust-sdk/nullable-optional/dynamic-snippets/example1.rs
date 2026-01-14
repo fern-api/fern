@@ -1,5 +1,4 @@
 use seed_nullable_optional::prelude::*;
-use seed_nullable_optional::{Address, CreateUserRequest, NullableUserId, OptionalUserId};
 
 #[tokio::main]
 async fn main() {

@@ -55,7 +55,7 @@ await client.Organization.CreateAsync(new CreateOrganizationRequest { Name = "na
 </details>
 
 ## User
-<details><summary><code>client.User.<a href="/src/SeedMixedFileDirectory/User/UserClient.cs">ListAsync</a>(ListUsersRequest { ... }) -> IEnumerable<User></code></summary>
+<details><summary><code>client.User.<a href="/src/SeedMixedFileDirectory/User/UserClient.cs">ListAsync</a>(ListUsersRequest { ... }) -> IEnumerable&lt;User&gt;</code></summary>
 <dl>
 <dd>
 
@@ -110,7 +110,7 @@ await client.User.ListAsync(new ListUsersRequest { Limit = 1 });
 </details>
 
 ## User Events
-<details><summary><code>client.User.Events.<a href="/src/SeedMixedFileDirectory/User/Events/EventsClient.cs">ListEventsAsync</a>(ListUserEventsRequest { ... }) -> IEnumerable<Event></code></summary>
+<details><summary><code>client.User.Events.<a href="/src/SeedMixedFileDirectory/User/Events/EventsClient.cs">ListEventsAsync</a>(ListUserEventsRequest { ... }) -> IEnumerable&lt;Event&gt;</code></summary>
 <dl>
 <dd>
 

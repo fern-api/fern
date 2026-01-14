@@ -749,6 +749,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Retrieve a user.\nThis endpoint is used to retrieve a user."
                 },
@@ -1593,6 +1594,7 @@
                     "audiences": null,
                     "retries": null,
                     "apiPlayground": null,
+                    "responseHeaders": [],
                     "availability": null,
                     "docs": "Create a new user.\nThis endpoint is used to create a new user."
                 }

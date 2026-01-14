@@ -71,7 +71,7 @@ client.auth().getToken(
 </details>
 
 ## User
-<details><summary><code>client.user.getWithBearer() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.getWithBearer() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -96,7 +96,7 @@ client.user().getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>client.user.getWithApiKey() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.getWithApiKey() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +121,7 @@ client.user().getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>client.user.getWithOAuth() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.getWithOAuth() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -146,7 +146,7 @@ client.user().getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>client.user.getWithBasic() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.getWithBasic() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -171,7 +171,7 @@ client.user().getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>client.user.getWithInferredAuth() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.getWithInferredAuth() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -196,7 +196,7 @@ client.user().getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>client.user.getWithAnyAuth() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.getWithAnyAuth() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -221,7 +221,7 @@ client.user().getWithBearer();
 </dl>
 </details>
 
-<details><summary><code>client.user.getWithAllAuth() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.getWithAllAuth() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 

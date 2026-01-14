@@ -478,12 +478,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 const absoluteFilepathToOverrides = spec.overrides
                     ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides))
                     : undefined;
+                const absoluteFilepathToOverlays = spec.overlays
+                    ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overlays))
+                    : undefined;
 
                 // Create a minimal OpenAPI spec with default settings
                 const openApiSpec: OpenAPISpec = {
                     type: "openapi",
                     absoluteFilepath,
                     absoluteFilepathToOverrides,
+                    absoluteFilepathToOverlays,
                     // Use default settings from existing specs for compatibility
                     settings: this.specs.length > 0 ? this.specs[0]?.settings : undefined,
                     source: {

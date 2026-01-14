@@ -10245,6 +10245,7 @@
               },
               "generatedName": "DeploymentConfigEnv",
               "groupName": [],
+              "maxItems": 100,
               "type": "array"
             },
             "audiences": []

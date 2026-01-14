@@ -39,7 +39,7 @@ await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
 </dl>
 </details>
 
-<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf<BasicType, ComplexType> { ... }) -> Identifier</code></summary>
+<details><summary><code>client.<a href="/src/SeedExamples/SeedExamplesClient.cs">CreateTypeAsync</a>(OneOf&lt;BasicType, ComplexType&gt; { ... }) -> Identifier</code></summary>
 <dl>
 <dd>
 

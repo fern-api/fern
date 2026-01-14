@@ -40,7 +40,7 @@ client.service().getResource("rsc-xyz");
 </dl>
 </details>
 
-<details><summary><code>client.service.listResources() -> List&lt;Resource&gt;</code></summary>
+<details><summary><code>client.service.listResources() -> List&amp;lt;Resource&amp;gt;</code></summary>
 <dl>
 <dd>
 

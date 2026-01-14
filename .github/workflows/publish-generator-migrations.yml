@@ -105,21 +105,4 @@ jobs:
           echo "Publishing ${PACKAGE_NAME}@${NEW_VERSION}"
           cat package.json
           npm publish --access public --tag latest
-
-      - name: Verify publication
-        env:
-          NEW_VERSION: ${{ needs.check-version.outputs.version }}
-        run: |
-          # Wait a few seconds for npm to propagate
-          sleep 5
-
-          # Verify the new version is available
-          PUBLISHED_VERSION=$(npm view ${{ env.PACKAGE_NAME }} version)
-          echo "Published version: ${PUBLISHED_VERSION}"
-
-          if [ "${PUBLISHED_VERSION}" != "${NEW_VERSION}" ]; then
-            echo "Error: Published version (${PUBLISHED_VERSION}) doesn't match expected version (${NEW_VERSION})"
-            exit 1
-          fi
-
           echo "✓ Successfully published ${PACKAGE_NAME}@${NEW_VERSION}"

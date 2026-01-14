@@ -1,4 +1,86 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.41.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-property-name` extension on OpenAPI discriminators. This allows specifying a code-generation-friendly name for discriminant properties that have non-alphanumeric wire values (e.g., `@type`). The extension can be applied directly in the OpenAPI spec or via an overrides file.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.40.1
+  changelogEntry:
+    - summary: |
+        Speed up AI example generation and reduce number of retries on failure.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.40.0
+  changelogEntry:
+    - summary: |
+        Add support for OpenAPI min/max validation keywords in the IR. This includes `minimum`, `maximum`, `exclusiveMinimum`, `exclusiveMaximum`, and `multipleOf` for numeric types (float, long, uint, uint64), as well as `minItems`/`maxItems` for list and set containers, and `minProperties`/`maxProperties` for map containers and objects.
+      type: feat
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.39.4
+  changelogEntry:
+    - summary: |
+        Optimize air-gapped environment detection for protobuf generation. The CLI now detects network availability once at startup using a 30-second timeout instead of having multiple timeouts for each buf command. Both `ProtobufIRGenerator` and `ProtobufOpenAPIGenerator` now use a shared `detectAirGappedMode()` utility function that sets an `isAirGapped` flag to skip network calls after initial detection. This significantly improves performance in air-gapped environments.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.39.3
+  changelogEntry:
+    - summary: |
+        Fix protobuf air-gapped support to properly catch execa exceptions when `buf dep update` fails. The `execa` library throws exceptions on non-zero exit codes rather than returning a result object, so the network error detection logic was never being reached. Both `ProtobufOpenAPIGenerator` and `ProtobufIRGenerator` now wrap `buf dep update` in a try-catch block to properly handle network errors in air-gapped environments.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.39.2
+  changelogEntry:
+    - summary: |
+        Add debug logging to protobuf air-gapped support to help diagnose buf.lock detection issues. The CLI now logs the buf.lock path being checked, whether it was found, and detailed error information when buf dep update fails.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.39.1
+  changelogEntry:
+    - summary: |
+        Fix protobuf air-gapped support to properly populate buf cache at build time. Both `ProtobufOpenAPIGenerator` and `ProtobufIRGenerator` now always attempt `buf dep update` first to populate the cache, and only continue on network errors if a pre-cached `buf.lock` file exists. This ensures dependencies are cached at build time while still supporting air-gapped runtime environments.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.39.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `pydantic_config.positional_single_property_constructors` to allow `Wrapper("value")`
+        for single-required-field models (excluding discriminator literals). Note: can break if the model
+        later adds required fields; kwargs are more stable.
+      type: feat
+  createdAt: "2025-12-19"
+  irVersion: 63
+
+- version: 3.38.1
+  changelogEntry:
+    - summary: |
+        Fix protobuf OpenAPI generation to support air-gapped environments. The CLI now checks for a pre-cached `buf.lock` file in the proto directory before calling `buf dep update`. This enables self-hosted deployments with `from-openapi: true` proto specs to work in air-gapped environments by pre-caching dependencies.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.38.0
+  changelogEntry:
+    - summary: |
+        Add support for parsing response headers from OpenAPI specs. Response headers defined on success responses (2xx) are now captured in the IR and available for SDK generators and documentation.
+      type: feat
+  createdAt: "2026-01-12"
+  irVersion: 63
+
 - version: 3.37.6
   changelogEntry:
     - summary: |
