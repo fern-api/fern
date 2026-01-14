@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">chat_stream</a>(...) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[ChatStreamEvent]]]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">chat_stream</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[ChatStreamEvent]]]</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ for chunk in response.data:
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">chat</a>(...) -> AsyncHttpResponse[ChatResponse]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">chat</a>(...) -&gt; AsyncHttpResponse[ChatResponse]</code></summary>
 <dl>
 <dd>
 
