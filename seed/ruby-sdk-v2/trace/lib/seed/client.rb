@@ -57,4 +57,61 @@ module Seed
       @sysprop ||= Seed::Sysprop::Client.new(client: @raw_client)
     end
   end
+
+  class AsyncClient
+    # @param base_url [String, nil]
+    # @param token [String]
+    #
+    # @return [void]
+    def initialize(token:, base_url: nil)
+      @raw_client = Seed::Internal::Http::AsyncRawClient.new(
+        base_url: base_url || Seed::Environment::PROD,
+        headers: {
+          "User-Agent" => "fern_trace/0.0.1",
+          "X-Fern-Language" => "Ruby",
+          Authorization: "Bearer #{token}"
+        }
+      )
+    end
+
+    # @return [Seed::V2::AsyncClient]
+    def v_2
+      @v_2 ||= Seed::V2::AsyncClient.new(client: @raw_client)
+    end
+
+    # @return [Seed::Admin::AsyncClient]
+    def admin
+      @admin ||= Seed::Admin::AsyncClient.new(client: @raw_client)
+    end
+
+    # @return [Seed::Homepage::AsyncClient]
+    def homepage
+      @homepage ||= Seed::Homepage::AsyncClient.new(client: @raw_client)
+    end
+
+    # @return [Seed::Migration::AsyncClient]
+    def migration
+      @migration ||= Seed::Migration::AsyncClient.new(client: @raw_client)
+    end
+
+    # @return [Seed::Playlist::AsyncClient]
+    def playlist
+      @playlist ||= Seed::Playlist::AsyncClient.new(client: @raw_client)
+    end
+
+    # @return [Seed::Problem::AsyncClient]
+    def problem
+      @problem ||= Seed::Problem::AsyncClient.new(client: @raw_client)
+    end
+
+    # @return [Seed::Submission::AsyncClient]
+    def submission
+      @submission ||= Seed::Submission::AsyncClient.new(client: @raw_client)
+    end
+
+    # @return [Seed::Sysprop::AsyncClient]
+    def sysprop
+      @sysprop ||= Seed::Sysprop::AsyncClient.new(client: @raw_client)
+    end
+  end
 end

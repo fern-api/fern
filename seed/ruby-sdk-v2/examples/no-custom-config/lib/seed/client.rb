@@ -32,4 +32,36 @@ module Seed
       @service ||= Seed::Service::Client.new(client: @raw_client)
     end
   end
+
+  class AsyncClient
+    # @param base_url [String, nil]
+    # @param token [String]
+    #
+    # @return [void]
+    def initialize(token:, base_url: nil)
+      @raw_client = Seed::Internal::Http::AsyncRawClient.new(
+        base_url: base_url,
+        headers: {
+          "User-Agent" => "fern_examples/0.0.1",
+          "X-Fern-Language" => "Ruby",
+          Authorization: "Bearer #{token}"
+        }
+      )
+    end
+
+    # @return [Seed::File::AsyncClient]
+    def file
+      @file ||= Seed::File::AsyncClient.new(client: @raw_client)
+    end
+
+    # @return [Seed::Health::AsyncClient]
+    def health
+      @health ||= Seed::Health::AsyncClient.new(client: @raw_client)
+    end
+
+    # @return [Seed::Service::AsyncClient]
+    def service
+      @service ||= Seed::Service::AsyncClient.new(client: @raw_client)
+    end
+  end
 end

@@ -20,4 +20,24 @@ module Seed
       @nullable_optional ||= Seed::NullableOptional::Client.new(client: @raw_client)
     end
   end
+
+  class AsyncClient
+    # @param base_url [String, nil]
+    #
+    # @return [void]
+    def initialize(base_url: nil)
+      @raw_client = Seed::Internal::Http::AsyncRawClient.new(
+        base_url: base_url,
+        headers: {
+          "User-Agent" => "fern_nullable-optional/0.0.1",
+          "X-Fern-Language" => "Ruby"
+        }
+      )
+    end
+
+    # @return [Seed::NullableOptional::AsyncClient]
+    def nullable_optional
+      @nullable_optional ||= Seed::NullableOptional::AsyncClient.new(client: @raw_client)
+    end
+  end
 end
