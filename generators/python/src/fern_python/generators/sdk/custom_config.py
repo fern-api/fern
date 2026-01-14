@@ -43,6 +43,77 @@ class CustomReadmeSection(pydantic.BaseModel):
     content: str
 
 
+class StructuralValidationConfig(pydantic.BaseModel):
+    """Configuration for structural validation (validates types/structure but not exact values)."""
+
+    # List of example patterns to include for structural validation.
+    # If None, all examples are included. If empty list, none are included.
+    # Format: "ServiceName.methodName" or "ServiceName.methodName:exampleName"
+    include_examples: Optional[List[str]] = None
+
+    # List of example patterns to exclude from structural validation.
+    # Format: "ServiceName.methodName" or "ServiceName.methodName:exampleName"
+    exclude_examples: Optional[List[str]] = None
+
+    # Whether to allow extra fields in the response that aren't in the example.
+    # Default: True (allow extra fields for evolving APIs)
+    allow_extra_fields: bool = True
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
+class StrictValidationConfig(pydantic.BaseModel):
+    """Configuration for strict validation (validates exact response values)."""
+
+    # List of example patterns to include for strict validation.
+    # If None, all examples are included. If empty list, none are included.
+    # Format: "ServiceName.methodName" or "ServiceName.methodName:exampleName"
+    include_examples: Optional[List[str]] = None
+
+    # List of example patterns to exclude from strict validation.
+    # Format: "ServiceName.methodName" or "ServiceName.methodName:exampleName"
+    exclude_examples: Optional[List[str]] = None
+
+    # Whether to allow extra fields in the response that aren't in the example.
+    # Default: False (strict validation expects exact match)
+    allow_extra_fields: bool = False
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
+class WireTestValidationConfig(pydantic.BaseModel):
+    """Configuration for wire test response validation.
+
+    This extends the existing wire tests with configurable validation modes:
+    1. Status validation: Always runs - verifies the request succeeds (no exception)
+    2. Structural validation: Validates response types/structure match the example
+    3. Strict validation: Validates exact response values match the example
+
+    Validation can be disabled at runtime via WIRE_TEST_VALIDATION=off environment variable.
+    """
+
+    # Whether to test all examples for each endpoint.
+    # Default: False (test only the first successful example, matching existing behavior)
+    test_all_examples: bool = False
+
+    # Configuration for structural validation (validates types/structure but not exact values).
+    # By default, structural validation runs on all generated tests.
+    structural_validation: StructuralValidationConfig = pydantic.Field(
+        default_factory=lambda: StructuralValidationConfig(include_examples=None, exclude_examples=[])
+    )
+
+    # Configuration for strict validation (validates exact response values).
+    # By default, strict validation is disabled (empty include list).
+    strict_validation: StrictValidationConfig = pydantic.Field(
+        default_factory=lambda: StrictValidationConfig(include_examples=[], exclude_examples=[])
+    )
+
+    class Config:
+        extra = pydantic.Extra.forbid
+
+
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
     extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
@@ -126,6 +197,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     enable_wire_tests: bool = False
 
     custom_pager_name: Optional[str] = None
+
+    # Configuration for wire test response validation.
+    # When provided, enables configurable validation modes for wire tests.
+    wire_test_validation_config: Optional[WireTestValidationConfig] = None
 
     class Config:
         extra = pydantic.Extra.forbid

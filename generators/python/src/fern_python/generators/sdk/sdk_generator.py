@@ -353,6 +353,7 @@ class SdkGenerator(AbstractGenerator):
             generator_exec_wrapper=generator_exec_wrapper,
             generated_root_client=generated_root_client,
             generated_environment=base_environment,
+            wire_test_validation_config=context.custom_config.wire_test_validation_config,
         )
 
         # Only write unit tests if specified in config

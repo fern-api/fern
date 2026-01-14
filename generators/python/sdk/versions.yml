@@ -33,6 +33,22 @@
   createdAt: "2026-01-10"
   irVersion: 62
 
+- version: 4.47.0-rc0
+  changelogEntry:
+    - summary: |
+        Add wire test validation configuration for production environment testing. When `wire_test_validation_config`
+        is provided, the existing wire tests gain configurable validation modes:
+        - Status validation: Always runs - verifies the request succeeds (no exception)
+        - Structural validation: Validates response types/structure match the example (configurable allow_extra_fields)
+        - Strict validation: Validates exact response values match the example (configurable allow_extra_fields)
+        - Per-endpoint validation filtering via include/exclude patterns (e.g., `ServiceName.methodName`)
+        - Multi-example testing: Set `test_all_examples: true` to test all examples per endpoint
+        - Runtime control via `WIRE_TEST_VALIDATION=off` environment variable to disable validation
+        This is a non-breaking change - existing wire tests are unchanged unless the new config is provided.
+      type: feat
+  createdAt: "2025-01-12"
+  irVersion: 62
+
 - version: 4.46.13
   changelogEntry:
     - summary: |
