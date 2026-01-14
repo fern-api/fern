@@ -11,6 +11,7 @@ export const PlaygroundSettings: core.serialization.ObjectSchema<
     serializers.PlaygroundSettings.Raw,
     FernDocsConfig.PlaygroundSettings
 > = core.serialization.object({
+    hidden: core.serialization.boolean().optional(),
     environments: core.serialization.list(core.serialization.string()).optional(),
     button: PlaygroundButtonSettings.optional(),
     oauth: core.serialization.boolean().optional(),
@@ -18,15 +19,14 @@ export const PlaygroundSettings: core.serialization.ObjectSchema<
         "limit-websocket-messages-per-connection",
         core.serialization.number().optional(),
     ),
-    hidden: core.serialization.boolean().optional(),
 });
 
 export declare namespace PlaygroundSettings {
     export interface Raw {
+        hidden?: boolean | null;
         environments?: string[] | null;
         button?: PlaygroundButtonSettings.Raw | null;
         oauth?: boolean | null;
         "limit-websocket-messages-per-connection"?: number | null;
-        hidden?: boolean | null;
     }
 }

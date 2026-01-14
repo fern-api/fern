@@ -2,7 +2,7 @@ using SeedErrors.Core;
 
 namespace SeedErrors;
 
-public partial class SeedErrorsClient
+public partial class SeedErrorsClient : ISeedErrorsClient
 {
     private readonly RawClient _client;
 

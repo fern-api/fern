@@ -13,7 +13,9 @@ from .parameter import Parameter
 
 class NonVoidFunctionSignature(UniversalBaseModel):
     parameters: typing.List[Parameter]
-    return_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="returnType")]
+    return_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="returnType")] = pydantic.Field(
+        alias="returnType"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

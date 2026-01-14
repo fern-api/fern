@@ -32,6 +32,10 @@ public class RawUsersClient {
         return listUsernamesCustom(ListUsernamesRequestCustom.builder().build());
     }
 
+    public SeedPaginationHttpResponse<FernCustomPaginator<String>> listUsernamesCustom(RequestOptions requestOptions) {
+        return listUsernamesCustom(ListUsernamesRequestCustom.builder().build(), requestOptions);
+    }
+
     public SeedPaginationHttpResponse<FernCustomPaginator<String>> listUsernamesCustom(
             ListUsernamesRequestCustom request) {
         return listUsernamesCustom(request, null);

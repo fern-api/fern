@@ -5,7 +5,7 @@ using SeedExhaustive.Types.Union;
 
 namespace SeedExhaustive.Endpoints.Union;
 
-public partial class UnionClient
+public partial class UnionClient : IUnionClient
 {
     private RawClient _client;
 

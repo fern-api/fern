@@ -4,7 +4,7 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive;
 
-public partial class NoReqBodyClient
+public partial class NoReqBodyClient : INoReqBodyClient
 {
     private RawClient _client;
 

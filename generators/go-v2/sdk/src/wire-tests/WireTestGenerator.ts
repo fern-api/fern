@@ -15,6 +15,7 @@ import {
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
+import { OAuthWireTestGenerator } from "./OAuthWireTestGenerator";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
 export class WireTestGenerator {
@@ -88,6 +89,13 @@ export class WireTestGenerator {
         }
         // Generate docker-compose.test.yml and wiremock-mappings.json for WireMock
         new WireTestSetupGenerator(this.context, this.context.ir).generate();
+
+        // Generate OAuth-specific wire tests if the API uses OAuth
+        const oauthTestGenerator = new OAuthWireTestGenerator(this.context);
+        const oauthTestFile = oauthTestGenerator.generate();
+        if (oauthTestFile != null) {
+            this.context.project.addGoFiles(oauthTestFile);
+        }
     }
 
     private async generateServiceTestFile(
@@ -118,6 +126,7 @@ export class WireTestGenerator {
         imports.set("http", "net/http");
         imports.set("bytes", "bytes");
         imports.set("encoding/json", "encoding/json");
+        imports.set("os", "os"); // For reading WIREMOCK_PORT env var
 
         // Track test function name counts to generate unique names for duplicates (e.g., Test1, Test2, Test3)
         const testFunctionNameCounts = new Map<string, number>();
@@ -224,7 +233,12 @@ export class WireTestGenerator {
                 return_: [],
                 body: go.codeblock((writer) => {
                     // Build the request body for WireMock's requests/find endpoint
-                    writer.writeNode(go.codeblock('WiremockAdminURL := "http://localhost:8080/__admin"'));
+                    // Use WIREMOCK_PORT env var if set (for parallel test execution), otherwise default to 8080
+                    writer.writeNode(
+                        go.codeblock(
+                            'wiremockPort := os.Getenv("WIREMOCK_PORT")\n\tif wiremockPort == "" {\n\t\twiremockPort = "8080"\n\t}\n\tWiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"'
+                        )
+                    );
                     writer.newLine();
                     writer.writeNode(go.codeblock("var reqBody bytes.Buffer"));
                     writer.newLine();
@@ -324,7 +338,12 @@ export class WireTestGenerator {
                     ],
                     return_: [],
                     body: go.codeblock((writer) => {
-                        writer.writeNode(go.codeblock('WireMockBaseURL := "http://localhost:8080"'));
+                        // Use WIREMOCK_PORT env var if set (for parallel test execution), otherwise default to 8080
+                        writer.writeNode(
+                            go.codeblock(
+                                'wiremockPort := os.Getenv("WIREMOCK_PORT")\n\tif wiremockPort == "" {\n\t\twiremockPort = "8080"\n\t}\n\tWireMockBaseURL := "http://localhost:" + wiremockPort'
+                            )
+                        );
                         writer.newLine();
                         writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
                         writer.newLine();

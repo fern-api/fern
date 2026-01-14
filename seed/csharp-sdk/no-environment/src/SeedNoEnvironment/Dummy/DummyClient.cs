@@ -3,7 +3,7 @@ using SeedNoEnvironment.Core;
 
 namespace SeedNoEnvironment;
 
-public partial class DummyClient
+public partial class DummyClient : IDummyClient
 {
     private RawClient _client;
 

@@ -3,7 +3,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public partial class MigrationClient
+public partial class MigrationClient : IMigrationClient
 {
     private RawClient _client;
 

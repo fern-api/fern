@@ -2,7 +2,7 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-public partial class SeedUnionsClient
+public partial class SeedUnionsClient : ISeedUnionsClient
 {
     private readonly RawClient _client;
 

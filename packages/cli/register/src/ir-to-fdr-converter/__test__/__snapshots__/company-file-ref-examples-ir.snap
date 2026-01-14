@@ -265,6 +265,7 @@
             "isWildcardStatusCode": undefined,
             "statusCode": 201,
           },
+          "responseHeaders": [],
           "retries": undefined,
           "sdkRequest": undefined,
           "security": undefined,

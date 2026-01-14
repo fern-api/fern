@@ -3,7 +3,7 @@ using SeedTrace.V2;
 
 namespace SeedTrace;
 
-public partial class SeedTraceClient
+public partial class SeedTraceClient : ISeedTraceClient
 {
     private readonly RawClient _client;
 

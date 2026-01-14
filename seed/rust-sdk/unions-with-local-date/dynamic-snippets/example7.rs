@@ -1,5 +1,4 @@
 use seed_unions::prelude::*;
-use seed_unions::UnionWithTime;
 
 #[tokio::main]
 async fn main() {
@@ -12,9 +11,7 @@ async fn main() {
         .types
         .update(
             &UnionWithTime::Datetime {
-                value: DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z")
-                    .unwrap()
-                    .with_timezone(&Utc),
+                value: DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap(),
             },
             None,
         )

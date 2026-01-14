@@ -41,6 +41,11 @@ public class RawObjectClient {
   }
 
   public SeedExhaustiveHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField(
+      RequestOptions requestOptions) {
+    return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build(),requestOptions);
+  }
+
+  public SeedExhaustiveHttpResponse<ObjectWithOptionalField> getAndReturnWithOptionalField(
       ObjectWithOptionalField request) {
     return getAndReturnWithOptionalField(request,null);
   }
@@ -172,6 +177,11 @@ public class RawObjectClient {
   public SeedExhaustiveHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
       ) {
     return getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField.builder().build());
+  }
+
+  public SeedExhaustiveHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(
+      RequestOptions requestOptions) {
+    return getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField.builder().build(),requestOptions);
   }
 
   public SeedExhaustiveHttpResponse<NestedObjectWithOptionalField> getAndReturnNestedWithOptionalField(

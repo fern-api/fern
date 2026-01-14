@@ -2,7 +2,7 @@ using SeedOauthClientCredentialsDefault.Core;
 
 namespace SeedOauthClientCredentialsDefault;
 
-public partial class SimpleClient
+public partial class SimpleClient : ISimpleClient
 {
     private RawClient _client;
 

@@ -2,7 +2,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public partial class AdminClient
+public partial class AdminClient : IAdminClient
 {
     private RawClient _client;
 

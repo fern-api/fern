@@ -42,6 +42,12 @@ public class SeedApiClient {
         return this.rawClient.postWithNonNullableNamedRequestBodyType(id).body();
     }
 
+    public ResponseBody postWithNonNullableNamedRequestBodyType(String id, RequestOptions requestOptions) {
+        return this.rawClient
+                .postWithNonNullableNamedRequestBodyType(id, requestOptions)
+                .body();
+    }
+
     public ResponseBody postWithNonNullableNamedRequestBodyType(String id, NonNullableObject request) {
         return this.rawClient
                 .postWithNonNullableNamedRequestBodyType(id, request)

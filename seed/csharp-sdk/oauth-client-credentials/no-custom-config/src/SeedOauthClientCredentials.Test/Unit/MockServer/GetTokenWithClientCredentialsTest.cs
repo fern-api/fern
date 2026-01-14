@@ -33,6 +33,7 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
+                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -85,6 +86,7 @@ public class GetTokenWithClientCredentialsTest : BaseMockServerTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
+                    .WithHeader("Content-Type", "application/x-www-form-urlencoded")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

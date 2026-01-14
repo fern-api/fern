@@ -19,4 +19,6 @@ export interface ObjectSchemaWithExample
     allOfPropertyConflicts: FernOpenapiIr.AllOfPropertyConflict[];
     fullExamples: FernOpenapiIr.NamedFullExample[] | undefined;
     additionalProperties: boolean;
+    minProperties: number | undefined;
+    maxProperties: number | undefined;
 }

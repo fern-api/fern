@@ -175,22 +175,28 @@ async function compareResults(
     localResult: GenerationResultSuccess,
     remoteResult: GenerationResultSuccess
 ): Promise<TestCaseResult> {
-    const { context } = testCase;
+    const { generator, context } = testCase;
     const { logger, workingDirectory } = context;
 
     logger.debug(`Running diff between:\n  Remote: ${remoteResult.outputFolder}\n  Local: ${localResult.outputFolder}`);
 
+    // Build diff exclusion args
+    const diffExcludeArgs = [
+        "--exclude=.git",
+        "--exclude=node_modules",
+        "--exclude=.DS_Store",
+        "--exclude=.fern" // Ignore .fern/metadata.json for all generators
+    ];
+
+    // TypeScript SDK generates pnpm-lock.yaml which may differ between local/remote
+    if (generator === "ts-sdk") {
+        diffExcludeArgs.push("--exclude=pnpm-lock.yaml");
+    }
+
     const diffResult = await loggingExeca(
         logger,
         DIFF_COMMAND,
-        [
-            DIFF_RECURSIVE_FLAG,
-            "--exclude=.git",
-            "--exclude=node_modules",
-            "--exclude=.DS_Store",
-            remoteResult.outputFolder,
-            localResult.outputFolder
-        ],
+        [DIFF_RECURSIVE_FLAG, ...diffExcludeArgs, remoteResult.outputFolder, localResult.outputFolder],
         {
             cwd: workingDirectory,
             reject: false // Don't reject on non-zero exit (diff returns 1 when files differ)

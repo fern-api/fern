@@ -106,7 +106,8 @@ export class MethodConverter extends AbstractConverter<ProtofileConverterContext
                 }),
                 audiences: [],
                 retries: undefined,
-                apiPlayground: undefined
+                apiPlayground: undefined,
+                responseHeaders: []
             }
         };
     }

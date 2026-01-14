@@ -2,7 +2,7 @@ using SeedClientSideParams.Core;
 
 namespace SeedClientSideParams;
 
-public partial class SeedClientSideParamsClient
+public partial class SeedClientSideParamsClient : ISeedClientSideParamsClient
 {
     private readonly RawClient _client;
 

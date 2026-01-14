@@ -80,6 +80,12 @@ public class RawSeedApiClient {
     }
 
     public SeedApiHttpResponse<ResponseBody> postWithNonNullableNamedRequestBodyType(
+            String id, RequestOptions requestOptions) {
+        return postWithNonNullableNamedRequestBodyType(
+                id, NonNullableObject.builder().build(), requestOptions);
+    }
+
+    public SeedApiHttpResponse<ResponseBody> postWithNonNullableNamedRequestBodyType(
             String id, NonNullableObject request) {
         return postWithNonNullableNamedRequestBodyType(id, request, null);
     }

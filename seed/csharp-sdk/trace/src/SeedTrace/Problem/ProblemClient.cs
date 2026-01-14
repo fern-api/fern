@@ -3,7 +3,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public partial class ProblemClient
+public partial class ProblemClient : IProblemClient
 {
     private RawClient _client;
 

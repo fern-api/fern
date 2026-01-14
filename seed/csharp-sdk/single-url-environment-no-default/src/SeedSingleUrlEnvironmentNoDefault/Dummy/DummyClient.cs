@@ -3,7 +3,7 @@ using SeedSingleUrlEnvironmentNoDefault.Core;
 
 namespace SeedSingleUrlEnvironmentNoDefault;
 
-public partial class DummyClient
+public partial class DummyClient : IDummyClient
 {
     private RawClient _client;
 

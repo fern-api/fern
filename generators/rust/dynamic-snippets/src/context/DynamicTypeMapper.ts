@@ -69,7 +69,7 @@ export class DynamicTypeMapper {
             case "DATE":
                 return "NaiveDate";
             case "DATE_TIME":
-                return "DateTime<Utc>";
+                return this.context.getDateTimeType() === "utc" ? "DateTime<Utc>" : "DateTime<FixedOffset>";
             default:
                 return "String";
         }

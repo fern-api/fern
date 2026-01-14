@@ -134,6 +134,17 @@ types:
   #   properties:
   #     app-id: string
 
+  AiExamplesConfig:
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: |
+          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+      style:
+        type: optional<string>
+        docs: |
+          Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
+
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
@@ -178,6 +189,12 @@ types:
       "ai-chat": optional<AIChatConfig>
 
       "ai-search": optional<AIChatConfig>
+
+      # ai examples
+      "ai-examples":
+        type: optional<AiExamplesConfig>
+        docs: |
+          Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
 
       # seo
       metadata: optional<MetadataConfig>
@@ -525,6 +542,7 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiReferenceConfiguration
+      - PythonDocsConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
       - FolderConfiguration
@@ -1095,6 +1113,27 @@ types:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
 
+  PythonDocsConfiguration:
+    docs: |
+      Configuration for generating Python library documentation from source code.
+      The docs are generated from a GitHub repository and merged into the navigation.
+    properties:
+      python-docs:
+        type: string
+        docs: |
+          GitHub URL to the repository containing the Python library source code.
+          Example: https://github.com/NVIDIA/NeMo-RL
+      title:
+        type: optional<string>
+        docs: |
+          Navigation title for the Python docs section.
+          @default: "Python Reference"
+      slug:
+        type: optional<string>
+        docs: |
+          URL slug for the Python docs pages.
+          @default: "python-docs"
+
   ApiReferenceLayoutItem:
     docs: |
       Use the `layout` object to customize the order that your API endpoints
@@ -1611,17 +1650,22 @@ types:
           Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
       ai-examples:
         type: optional<boolean>
-        availability: pre-release
+        availability: deprecated
         docs: |
           Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+
+          DEPRECATED: Use the top-level `ai-examples` property instead.
       ai-example-style-instructions:
         type: optional<string>
-        availability: pre-release
+        availability: deprecated
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+          DEPRECATED: Use the top-level `ai-example-style-instructions` property instead.
+
   PlaygroundSettings:
     properties:
+      hidden: optional<boolean>
       environments:
         type: optional<list<string>>
         docs: A list of environment IDs that are allowed to be used in the playground.

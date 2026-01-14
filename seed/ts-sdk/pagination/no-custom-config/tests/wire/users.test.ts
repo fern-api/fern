@@ -119,7 +119,7 @@ describe("UsersClient", () => {
         server
             .mockEndpoint({ once: false })
             .post("/users")
-            .jsonBody(rawRequestBody)
+            .jsonBody(rawRequestBody, { ignoredFields: ["pagination.cursor"] })
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
@@ -152,6 +152,50 @@ describe("UsersClient", () => {
             pagination: {
                 cursor: "cursor",
             },
+        });
+
+        expect(expected.data).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
+    });
+
+    test("listWithTopLevelBodyCursorPagination", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { cursor: "initial_cursor", filter: "active" };
+        const rawResponseBody = {
+            next_cursor: "next_cursor_value",
+            data: [
+                { name: "Alice", id: 1 },
+                { name: "Bob", id: 2 },
+            ],
+        };
+        server
+            .mockEndpoint({ once: false })
+            .post("/users/top-level-cursor")
+            .jsonBody(rawRequestBody, { ignoredFields: ["cursor"] })
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const expected = {
+            next_cursor: "next_cursor_value",
+            data: [
+                {
+                    name: "Alice",
+                    id: 1,
+                },
+                {
+                    name: "Bob",
+                    id: 2,
+                },
+            ],
+        };
+        const page = await client.users.listWithTopLevelBodyCursorPagination({
+            cursor: "initial_cursor",
+            filter: "active",
         });
 
         expect(expected.data).toEqual(page.data);
@@ -290,7 +334,7 @@ describe("UsersClient", () => {
         server
             .mockEndpoint({ once: false })
             .post("/users")
-            .jsonBody(rawRequestBody)
+            .jsonBody(rawRequestBody, { ignoredFields: ["pagination.page"] })
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)

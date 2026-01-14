@@ -3,7 +3,7 @@ using SeedPackageYml.Core;
 
 namespace SeedPackageYml;
 
-public partial class SeedPackageYmlClient
+public partial class SeedPackageYmlClient : ISeedPackageYmlClient
 {
     private readonly RawClient _client;
 

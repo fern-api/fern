@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">test</a>() -> core.APIResponse<void, SeedTrace.v2.test.Error></code></summary>
+<details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">test</a>() -> core.APIResponse&lt;void, SeedTrace.v2.test.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ await client.v2.test();
 </details>
 
 ## Admin
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">updateTestSubmissionStatus</a>(submissionId, { ...params }) -> core.APIResponse<void, SeedTrace.admin.updateTestSubmissionStatus.Error></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">updateTestSubmissionStatus</a>(submissionId, { ...params }) -> core.APIResponse&lt;void, SeedTrace.admin.updateTestSubmissionStatus.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -101,7 +101,7 @@ await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ff
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">sendTestSubmissionUpdate</a>(submissionId, { ...params }) -> core.APIResponse<void, SeedTrace.admin.sendTestSubmissionUpdate.Error></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">sendTestSubmissionUpdate</a>(submissionId, { ...params }) -> core.APIResponse&lt;void, SeedTrace.admin.sendTestSubmissionUpdate.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -164,7 +164,7 @@ await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc3
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">updateWorkspaceSubmissionStatus</a>(submissionId, { ...params }) -> core.APIResponse<void, SeedTrace.admin.updateWorkspaceSubmissionStatus.Error></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">updateWorkspaceSubmissionStatus</a>(submissionId, { ...params }) -> core.APIResponse&lt;void, SeedTrace.admin.updateWorkspaceSubmissionStatus.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -223,7 +223,7 @@ await client.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">sendWorkspaceSubmissionUpdate</a>(submissionId, { ...params }) -> core.APIResponse<void, SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">sendWorkspaceSubmissionUpdate</a>(submissionId, { ...params }) -> core.APIResponse&lt;void, SeedTrace.admin.sendWorkspaceSubmissionUpdate.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -286,7 +286,7 @@ await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedTestCase</a>(submissionId, testCaseId, { ...params }) -> core.APIResponse<void, SeedTrace.admin.storeTracedTestCase.Error></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedTestCase</a>(submissionId, testCaseId, { ...params }) -> core.APIResponse&lt;void, SeedTrace.admin.storeTracedTestCase.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -438,7 +438,7 @@ await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedTestCaseV2</a>(submissionId, testCaseId, { ...params }) -> core.APIResponse<void, SeedTrace.admin.storeTracedTestCaseV2.Error></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedTestCaseV2</a>(submissionId, testCaseId, { ...params }) -> core.APIResponse&lt;void, SeedTrace.admin.storeTracedTestCaseV2.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -579,7 +579,7 @@ await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedWorkspace</a>(submissionId, { ...params }) -> core.APIResponse<void, SeedTrace.admin.storeTracedWorkspace.Error></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedWorkspace</a>(submissionId, { ...params }) -> core.APIResponse&lt;void, SeedTrace.admin.storeTracedWorkspace.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -720,7 +720,7 @@ await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", 
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedWorkspaceV2</a>(submissionId, { ...params }) -> core.APIResponse<void, SeedTrace.admin.storeTracedWorkspaceV2.Error></code></summary>
+<details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">storeTracedWorkspaceV2</a>(submissionId, { ...params }) -> core.APIResponse&lt;void, SeedTrace.admin.storeTracedWorkspaceV2.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -854,7 +854,7 @@ await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client/Client.ts">getHomepageProblems</a>() -> core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error></code></summary>
+<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client/Client.ts">getHomepageProblems</a>() -> core.APIResponse&lt;SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -895,7 +895,7 @@ await client.homepage.getHomepageProblems();
 </dl>
 </details>
 
-<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client/Client.ts">setHomepageProblems</a>({ ...params }) -> core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error></code></summary>
+<details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client/Client.ts">setHomepageProblems</a>({ ...params }) -> core.APIResponse&lt;void, SeedTrace.homepage.setHomepageProblems.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -945,7 +945,7 @@ await client.homepage.setHomepageProblems(["string", "string"]);
 </details>
 
 ## Migration
-<details><summary><code>client.migration.<a href="/src/api/resources/migration/client/Client.ts">getAttemptedMigrations</a>({ ...params }) -> core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error></code></summary>
+<details><summary><code>client.migration.<a href="/src/api/resources/migration/client/Client.ts">getAttemptedMigrations</a>({ ...params }) -> core.APIResponse&lt;SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -997,7 +997,7 @@ await client.migration.getAttemptedMigrations({
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">createPlaylist</a>(serviceParam, { ...params }) -> core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error></code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">createPlaylist</a>(serviceParam, { ...params }) -> core.APIResponse&lt;SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1075,7 +1075,7 @@ await client.playlist.createPlaylist(1, {
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">getPlaylists</a>(serviceParam, { ...params }) -> core.APIResponse<SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error></code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">getPlaylists</a>(serviceParam, { ...params }) -> core.APIResponse&lt;SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1152,7 +1152,7 @@ await client.playlist.getPlaylists(1, {
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">getPlaylist</a>(serviceParam, playlistId) -> core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.getPlaylist.Error></code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">getPlaylist</a>(serviceParam, playlistId) -> core.APIResponse&lt;SeedTrace.Playlist, SeedTrace.playlist.getPlaylist.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1223,7 +1223,7 @@ await client.playlist.getPlaylist(1, "playlistId");
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">updatePlaylist</a>(serviceParam, playlistId, { ...params }) -> core.APIResponse<SeedTrace.Playlist | undefined, SeedTrace.playlist.updatePlaylist.Error></code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">updatePlaylist</a>(serviceParam, playlistId, { ...params }) -> core.APIResponse&lt;SeedTrace.Playlist | undefined, SeedTrace.playlist.updatePlaylist.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1305,7 +1305,7 @@ await client.playlist.updatePlaylist(1, "playlistId", {
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">deletePlaylist</a>(serviceParam, playlist_id) -> core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error></code></summary>
+<details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">deletePlaylist</a>(serviceParam, playlist_id) -> core.APIResponse&lt;void, SeedTrace.playlist.deletePlaylist.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1377,7 +1377,7 @@ await client.playlist.deletePlaylist(1, "playlist_id");
 </details>
 
 ## Problem
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">createProblem</a>({ ...params }) -> core.APIResponse<SeedTrace.CreateProblemResponse, SeedTrace.problem.createProblem.Error></code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">createProblem</a>({ ...params }) -> core.APIResponse&lt;SeedTrace.CreateProblemResponse, SeedTrace.problem.createProblem.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1512,7 +1512,7 @@ await client.problem.createProblem({
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">updateProblem</a>(problemId, { ...params }) -> core.APIResponse<SeedTrace.UpdateProblemResponse, SeedTrace.problem.updateProblem.Error></code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">updateProblem</a>(problemId, { ...params }) -> core.APIResponse&lt;SeedTrace.UpdateProblemResponse, SeedTrace.problem.updateProblem.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1655,7 +1655,7 @@ await client.problem.updateProblem("problemId", {
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">deleteProblem</a>(problemId) -> core.APIResponse<void, SeedTrace.problem.deleteProblem.Error></code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">deleteProblem</a>(problemId) -> core.APIResponse&lt;void, SeedTrace.problem.deleteProblem.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1718,7 +1718,7 @@ await client.problem.deleteProblem("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">getDefaultStarterFiles</a>({ ...params }) -> core.APIResponse<SeedTrace.GetDefaultStarterFilesResponse, SeedTrace.problem.getDefaultStarterFiles.Error></code></summary>
+<details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">getDefaultStarterFiles</a>({ ...params }) -> core.APIResponse&lt;SeedTrace.GetDefaultStarterFilesResponse, SeedTrace.problem.getDefaultStarterFiles.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1798,7 +1798,7 @@ await client.problem.getDefaultStarterFiles({
 </details>
 
 ## Submission
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">createExecutionSession</a>(language) -> core.APIResponse<SeedTrace.ExecutionSessionResponse, SeedTrace.submission.createExecutionSession.Error></code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">createExecutionSession</a>(language) -> core.APIResponse&lt;SeedTrace.ExecutionSessionResponse, SeedTrace.submission.createExecutionSession.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1861,7 +1861,7 @@ await client.submission.createExecutionSession("JAVA");
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">getExecutionSession</a>(sessionId) -> core.APIResponse<SeedTrace.ExecutionSessionResponse | undefined, SeedTrace.submission.getExecutionSession.Error></code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">getExecutionSession</a>(sessionId) -> core.APIResponse&lt;SeedTrace.ExecutionSessionResponse | undefined, SeedTrace.submission.getExecutionSession.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1924,7 +1924,7 @@ await client.submission.getExecutionSession("sessionId");
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">stopExecutionSession</a>(sessionId) -> core.APIResponse<void, SeedTrace.submission.stopExecutionSession.Error></code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">stopExecutionSession</a>(sessionId) -> core.APIResponse&lt;void, SeedTrace.submission.stopExecutionSession.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -1987,7 +1987,7 @@ await client.submission.stopExecutionSession("sessionId");
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">getExecutionSessionsState</a>() -> core.APIResponse<SeedTrace.GetExecutionSessionStateResponse, SeedTrace.submission.getExecutionSessionsState.Error></code></summary>
+<details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">getExecutionSessionsState</a>() -> core.APIResponse&lt;SeedTrace.GetExecutionSessionStateResponse, SeedTrace.submission.getExecutionSessionsState.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2029,7 +2029,7 @@ await client.submission.getExecutionSessionsState();
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">setNumWarmInstances</a>(language, numWarmInstances) -> core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error></code></summary>
+<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">setNumWarmInstances</a>(language, numWarmInstances) -> core.APIResponse&lt;void, SeedTrace.sysprop.setNumWarmInstances.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2086,7 +2086,7 @@ await client.sysprop.setNumWarmInstances("JAVA", 1);
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">getNumWarmInstances</a>() -> core.APIResponse<Record<SeedTrace.Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error></code></summary>
+<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">getNumWarmInstances</a>() -> core.APIResponse&lt;Record&lt;SeedTrace.Language, number | undefined&gt;, SeedTrace.sysprop.getNumWarmInstances.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2128,7 +2128,7 @@ await client.sysprop.getNumWarmInstances();
 </details>
 
 ## V2 Problem
-<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getLightweightProblems</a>() -> core.APIResponse<SeedTrace.LightweightProblemInfoV2[], SeedTrace.v2.problem.getLightweightProblems.Error></code></summary>
+<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getLightweightProblems</a>() -> core.APIResponse&lt;SeedTrace.LightweightProblemInfoV2[], SeedTrace.v2.problem.getLightweightProblems.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2183,7 +2183,7 @@ await client.v2.problem.getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getProblems</a>() -> core.APIResponse<SeedTrace.ProblemInfoV2[], SeedTrace.v2.problem.getProblems.Error></code></summary>
+<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getProblems</a>() -> core.APIResponse&lt;SeedTrace.ProblemInfoV2[], SeedTrace.v2.problem.getProblems.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2238,7 +2238,7 @@ await client.v2.problem.getProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getLatestProblem</a>(problemId) -> core.APIResponse<SeedTrace.ProblemInfoV2, SeedTrace.v2.problem.getLatestProblem.Error></code></summary>
+<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getLatestProblem</a>(problemId) -> core.APIResponse&lt;SeedTrace.ProblemInfoV2, SeedTrace.v2.problem.getLatestProblem.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2301,7 +2301,7 @@ await client.v2.problem.getLatestProblem("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getProblemVersion</a>(problemId, problemVersion) -> core.APIResponse<SeedTrace.ProblemInfoV2, SeedTrace.v2.problem.getProblemVersion.Error></code></summary>
+<details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getProblemVersion</a>(problemId, problemVersion) -> core.APIResponse&lt;SeedTrace.ProblemInfoV2, SeedTrace.v2.problem.getProblemVersion.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2373,7 +2373,7 @@ await client.v2.problem.getProblemVersion("problemId", 1);
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getLightweightProblems</a>() -> core.APIResponse<SeedTrace.LightweightProblemInfoV2[], SeedTrace.v2.v3.problem.getLightweightProblems.Error></code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getLightweightProblems</a>() -> core.APIResponse&lt;SeedTrace.LightweightProblemInfoV2[], SeedTrace.v2.v3.problem.getLightweightProblems.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2428,7 +2428,7 @@ await client.v2.v3.problem.getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getProblems</a>() -> core.APIResponse<SeedTrace.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error></code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getProblems</a>() -> core.APIResponse&lt;SeedTrace.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2483,7 +2483,7 @@ await client.v2.v3.problem.getProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getLatestProblem</a>(problemId) -> core.APIResponse<SeedTrace.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error></code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getLatestProblem</a>(problemId) -> core.APIResponse&lt;SeedTrace.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error&gt;</code></summary>
 <dl>
 <dd>
 
@@ -2546,7 +2546,7 @@ await client.v2.v3.problem.getLatestProblem("problemId");
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getProblemVersion</a>(problemId, problemVersion) -> core.APIResponse<SeedTrace.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error></code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getProblemVersion</a>(problemId, problemVersion) -> core.APIResponse&lt;SeedTrace.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error&gt;</code></summary>
 <dl>
 <dd>
 

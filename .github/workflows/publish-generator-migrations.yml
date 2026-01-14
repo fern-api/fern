@@ -1,0 +1,108 @@
+name: Publish Generator Migrations
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/generator-migrations/**"
+      - "packages/migrations-base/**"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version to publish (e.g., 0.2.0). If not specified, will auto-increment patch version."
+        required: false
+        type: string
+
+env:
+  PACKAGE_NAME: "@fern-api/generator-migrations"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.determine_version.outputs.version }}
+      should_publish: ${{ steps.determine_version.outputs.should_publish }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Determine version
+        id: determine_version
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            # Manual workflow dispatch with explicit version
+            NEW_VERSION="${{ inputs.version }}"
+            SHOULD_PUBLISH="true"
+          else
+            # Automatic publish - check if package files changed
+            if git diff --name-only HEAD~1..HEAD | grep -E '^packages/(generator-migrations|migrations-base)/'; then
+              # Get current published version from npm
+              CURRENT_VERSION=$(npm view ${{ env.PACKAGE_NAME }} version 2>/dev/null || echo "0.0.0")
+              echo "Current published version: ${CURRENT_VERSION}"
+
+              # Auto-increment patch version
+              IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
+              NEW_VERSION="$major.$minor.$((patch + 1))"
+              SHOULD_PUBLISH="true"
+            else
+              # No relevant files changed
+              NEW_VERSION="0.0.0"
+              SHOULD_PUBLISH="false"
+            fi
+          fi
+
+          echo "version=${NEW_VERSION}" >> $GITHUB_OUTPUT
+          echo "should_publish=${SHOULD_PUBLISH}" >> $GITHUB_OUTPUT
+          echo "Will publish version: ${NEW_VERSION} (should_publish=${SHOULD_PUBLISH})"
+
+  publish-package:
+    needs: check-version
+    if: needs.check-version.outputs.should_publish == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - name: Test packages
+        run: |
+          pnpm turbo run test --filter=@fern-api/migrations-base
+          pnpm turbo run test --filter=${{ env.PACKAGE_NAME }}
+
+      - name: Setup Node for npm publish
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          scope: "@fern-api"
+
+      - name: Build and publish generator-migrations
+        env:
+          NEW_VERSION: ${{ needs.check-version.outputs.version }}
+        run: |
+          # Build with bundled dependencies (includes migrations-base)
+          pnpm turbo run dist --filter=${{ env.PACKAGE_NAME }} -- ${NEW_VERSION}
+
+          # Publish from dist directory
+          cd packages/generator-migrations/dist
+          echo "Publishing ${PACKAGE_NAME}@${NEW_VERSION}"
+          cat package.json
+          npm publish --access public --tag latest
+          echo "✓ Successfully published ${PACKAGE_NAME}@${NEW_VERSION}"

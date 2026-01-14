@@ -407,12 +407,14 @@ export class EndpointSnippetGenerator {
         return python.invokeMethod({
             on: python.reference({ name: CLIENT_VAR_NAME }),
             method: this.getMethod({ endpoint }),
-            arguments_: this.getMethodArgs({ endpoint, snippet }).map((arg) =>
-                python.methodArgument({
-                    name: arg.name,
-                    value: arg.value
-                })
-            ),
+            arguments_: this.getMethodArgs({ endpoint, snippet })
+                .filter((arg) => !python.TypeInstantiation.isNop(arg.value))
+                .map((arg) =>
+                    python.methodArgument({
+                        name: arg.name,
+                        value: arg.value
+                    })
+                ),
             multiline: true
         });
     }
@@ -591,6 +593,14 @@ export class EndpointSnippetGenerator {
                     }
                 ];
             case "object": {
+                if (this.context.customConfig.inline_request_params === false) {
+                    return [
+                        {
+                            name: REQUEST_BODY_ARG_NAME,
+                            value: this.context.dynamicTypeLiteralMapper.convert({ typeReference, value })
+                        }
+                    ];
+                }
                 const bodyProperties = this.context.associateByWireValue({
                     parameters: named.properties,
                     values: this.context.getRecord(value) ?? {}

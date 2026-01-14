@@ -4,7 +4,7 @@ using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials.Auth;
 
-public partial class AuthClient
+public partial class AuthClient : IAuthClient
 {
     private RawClient _client;
 

@@ -5,6 +5,6 @@ package enum
 type MultipartFormRequest struct {
 	Color          Color   `json:"color" url:"-"`
 	MaybeColor     *Color  `json:"maybeColor,omitempty" url:"-"`
-	ColorList      []Color `json:"colorList,omitempty" url:"-"`
+	ColorList      []Color `json:"colorList" url:"-"`
 	MaybeColorList []Color `json:"maybeColorList,omitempty" url:"-"`
 }

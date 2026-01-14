@@ -3,7 +3,7 @@ using SeedAudiences.Core;
 
 namespace SeedAudiences;
 
-public partial class FooClient
+public partial class FooClient : IFooClient
 {
     private RawClient _client;
 

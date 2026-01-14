@@ -83,7 +83,7 @@ export async function publishDocs({
     let urlToOutput = customDomains[0] ?? domain;
     const basePath = parseBasePath(domain);
     const disableDynamicSnippets =
-        docsWorkspace.config.experimental && !docsWorkspace.config.experimental.dynamicSnippets;
+        docsWorkspace.config.experimental && docsWorkspace.config.experimental.dynamicSnippets === false;
 
     const resolver = new DocsDefinitionResolver({
         domain,
@@ -261,7 +261,7 @@ export async function publishDocs({
 
             const aiEnhancerConfig = getAIEnhancerConfig(
                 withAiExamples,
-                docsWorkspace.config.experimental?.aiExampleStyleInstructions
+                docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
             );
             if (aiEnhancerConfig && workspace) {
                 const sources = workspace.getSources();
@@ -403,13 +403,81 @@ export async function publishDocs({
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
+    // Handle Python docs generation if configured
+    let libraryDocsConfig: DocsV2Write.LibraryDocsRegistrationConfig | undefined;
+    const pythonDocsSection = extractPythonDocsSectionFromConfig(docsWorkspace.config);
+    if (pythonDocsSection != null) {
+        // Config is already deserialized with camelCase properties
+        const githubUrl = pythonDocsSection.pythonDocs;
+
+        context.logger.info(`Generating Python documentation from ${githubUrl}...`);
+
+        // Start Python docs generation
+        const startResponse = await fdr.docs.v2.write.startLibraryDocsGeneration({
+            orgId: CjsFdrSdk.OrgId(organization),
+            githubUrl: CjsFdrSdk.Url(githubUrl),
+            language: "PYTHON",
+            config: {
+                branch: undefined,
+                packagePath: undefined,
+                title: pythonDocsSection.title,
+                slug: pythonDocsSection.slug
+            }
+        });
+
+        if (!startResponse.ok) {
+            return context.failAndThrow(`Failed to start Python docs generation for ${githubUrl}`, startResponse.error);
+        }
+
+        const jobId = startResponse.body.jobId;
+        context.logger.debug(`Python docs generation started with jobId: ${jobId}`);
+
+        // Poll for completion
+        const POLL_INTERVAL_MS = 3000;
+        const MAX_POLL_ATTEMPTS = 100; // ~5 minutes
+        let pollAttempts = 0;
+
+        while (pollAttempts < MAX_POLL_ATTEMPTS) {
+            const statusResponse = await fdr.docs.v2.write.getLibraryDocsGenerationStatus(jobId);
+
+            if (!statusResponse.ok) {
+                return context.failAndThrow(`Failed to check Python docs generation status`, statusResponse.error);
+            }
+
+            const status = statusResponse.body.status;
+            context.logger.debug(`Python docs generation status: ${status}`);
+
+            if (status === "COMPLETED") {
+                context.logger.info("Python documentation generation completed.");
+                libraryDocsConfig = {
+                    jobId,
+                    slug: pythonDocsSection.slug,
+                    title: pythonDocsSection.title
+                };
+                break;
+            } else if (status === "FAILED") {
+                const errorMsg = statusResponse.body.error?.message ?? "Unknown error";
+                return context.failAndThrow(`Python docs generation failed: ${errorMsg}`);
+            }
+
+            // Wait before next poll
+            await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+            pollAttempts++;
+        }
+
+        if (pollAttempts >= MAX_POLL_ATTEMPTS) {
+            return context.failAndThrow("Python docs generation timed out");
+        }
+    }
+
     context.logger.info("Publishing docs to FDR...");
     const publishStart = performance.now();
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         DocsV1Write.DocsRegistrationId(docsRegistrationId),
         {
             docsDefinition,
-            excludeApis: false
+            excludeApis: false,
+            libraryDocs: libraryDocsConfig
         }
     );
 
@@ -435,6 +503,11 @@ export async function publishDocs({
                 return context.failAndThrow(
                     "Failed to publish docs to " + domain,
                     `Docs registration ID ${docsRegistrationId} does not exist.`
+                );
+            case "LibraryDocsJobInvalidForRegistrationError":
+                return context.failAndThrow(
+                    "Failed to publish docs to " + domain,
+                    "Library docs job is invalid for registration. The job may not exist, may not be completed, or may belong to a different organization."
                 );
             default:
                 return context.failAndThrow("Failed to publish docs to " + domain, registerDocsResponse.error);
@@ -1054,4 +1127,109 @@ function extractErrorDetails(error: unknown): Record<string, unknown> {
         // Include the raw error for complete debugging if needed
         rawError: error
     };
+}
+
+/**
+ * Extracts the first library section configuration from the docs config navigation.
+ * Only supports Python libraries for now.
+ */
+function extractPythonDocsSectionFromConfig(
+    config: docsYml.RawSchemas.DocsConfiguration
+): docsYml.RawSchemas.PythonDocsConfiguration | undefined {
+    const navigation = config.navigation;
+    if (navigation == null) {
+        return undefined;
+    }
+
+    // Helper to check if an item is a Python docs config
+    // Note: The config is deserialized, so the key is "pythonDocs" (camelCase)
+    const isPythonDocsConfig = (item: unknown): item is docsYml.RawSchemas.PythonDocsConfiguration => {
+        return (
+            item != null &&
+            typeof item === "object" &&
+            "pythonDocs" in item &&
+            typeof (item as Record<string, unknown>).pythonDocs === "string"
+        );
+    };
+
+    // Helper to recursively search navigation items
+    const findPythonDocsSectionInItems = (
+        items: unknown[] | undefined
+    ): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
+        if (items == null) {
+            return undefined;
+        }
+        for (const item of items) {
+            if (isPythonDocsConfig(item)) {
+                return item;
+            }
+            // Check in section contents
+            if (item != null && typeof item === "object" && "section" in item) {
+                const sectionItem = item as { contents?: unknown[] };
+                if (sectionItem.contents) {
+                    const found = findPythonDocsSectionInItems(sectionItem.contents);
+                    if (found) {
+                        return found;
+                    }
+                }
+            }
+            // Check in tabbed navigation items (items with tab and layout properties)
+            if (item != null && typeof item === "object" && "tab" in item && "layout" in item) {
+                const tabbedItem = item as { layout?: unknown[] };
+                if (tabbedItem.layout) {
+                    const found = findPythonDocsSectionInItems(tabbedItem.layout);
+                    if (found) {
+                        return found;
+                    }
+                }
+            }
+        }
+        return undefined;
+    };
+
+    // Handle different navigation structures
+    // Navigation can be: NavigationItem[] | TabbedNavigationConfig | VersionedNavigationConfig
+    const nav = navigation as unknown;
+
+    // Check if it's an array (simple navigation)
+    if (Array.isArray(nav)) {
+        return findPythonDocsSectionInItems(nav);
+    }
+
+    // Check if it's an object with tabs or versions
+    if (nav != null && typeof nav === "object") {
+        const navObj = nav as Record<string, unknown>;
+
+        // Tabbed navigation - check each tab's layout
+        if (Array.isArray(navObj.tabs)) {
+            for (const tab of navObj.tabs) {
+                if (tab != null && typeof tab === "object") {
+                    const tabObj = tab as Record<string, unknown>;
+                    if (Array.isArray(tabObj.layout)) {
+                        const found = findPythonDocsSectionInItems(tabObj.layout);
+                        if (found) {
+                            return found;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Versioned navigation - check each version's navigation
+        if (Array.isArray(navObj.versions)) {
+            for (const version of navObj.versions) {
+                if (version != null && typeof version === "object") {
+                    const versionObj = version as Record<string, unknown>;
+                    if (Array.isArray(versionObj.navigation)) {
+                        const found = findPythonDocsSectionInItems(versionObj.navigation);
+                        if (found) {
+                            return found;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return undefined;
 }

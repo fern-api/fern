@@ -9,6 +9,7 @@ plugin (wiremock_pytest_plugin.py) so that the container is started exactly
 once per test run, even when using pytest-xdist.
 """
 
+import inspect
 from typing import Any, Dict, Optional
 
 import requests
@@ -26,9 +27,23 @@ def get_client(test_id: str) -> SeedServerSentEvents:
     Returns:
         A configured client instance with all required auth parameters.
     """
+    test_headers = {"X-Test-Id": test_id}
+
+    # Prefer passing headers directly if the client constructor supports it.
+    try:
+        if "headers" in inspect.signature(SeedServerSentEvents).parameters:
+            return SeedServerSentEvents(
+                base_url="http://localhost:8080",
+                headers=test_headers,
+            )
+    except (TypeError, ValueError):
+        pass
+
+    import httpx
+
     return SeedServerSentEvents(
         base_url="http://localhost:8080",
-        headers={"X-Test-Id": test_id},
+        httpx_client=httpx.Client(headers=test_headers),
     )
 
 

@@ -10,7 +10,9 @@ from ....core.serialization import FieldMetadata
 
 class Cat(UniversalBaseModel):
     name: str
-    likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")]
+    likes_to_meow: typing_extensions.Annotated[bool, FieldMetadata(alias="likesToMeow")] = pydantic.Field(
+        alias="likesToMeow"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

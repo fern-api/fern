@@ -42,6 +42,7 @@ export declare namespace OperationConverter {
         streamResponse: HttpResponse | undefined;
         errors: ResponseErrorConverter.Output[];
         examples?: Record<string, OpenAPIV3_1.ExampleObject>;
+        responseHeaders: FernIr.HttpHeader[];
     }
 
     type BaseEndpoint = Omit<
@@ -194,12 +195,10 @@ export class OperationConverter extends AbstractOperationConverter {
             headers: headers.filter(
                 (header, index, self) => index === self.findIndex((h) => h.name.wireValue === header.name.wireValue)
             ),
+            responseHeaders: convertedResponseBody?.responseHeaders,
             sdkRequest: undefined,
             errors,
-            auth:
-                this.operation.security != null ||
-                this.context.spec.security != null ||
-                this.shouldApplyDefaultAuthOverrides(),
+            auth: this.computeEndpointAuth(),
             security:
                 this.operation.security ?? this.context.spec.security ?? this.getDefaultSecurityFromAuthOverrides(),
             availability: this.context.getAvailability({
@@ -321,7 +320,8 @@ export class OperationConverter extends AbstractOperationConverter {
                     v2Responses: undefined,
                     streamResponse: undefined,
                     errors: [],
-                    examples: {}
+                    examples: {},
+                    responseHeaders: []
                 };
             }
             // Convert Successful Responses (2xx)
@@ -367,6 +367,10 @@ export class OperationConverter extends AbstractOperationConverter {
                             body: converted.streamResponseBody,
                             docs: resolvedResponse.description
                         };
+
+                        if (converted.headers != null) {
+                            convertedResponseBody.responseHeaders = converted.headers;
+                        }
                     }
 
                     convertedResponseBody.v2Responses = [
@@ -419,7 +423,8 @@ export class OperationConverter extends AbstractOperationConverter {
                     v2Responses: undefined,
                     streamResponse: undefined,
                     errors: [],
-                    examples: {}
+                    examples: {},
+                    responseHeaders: []
                 };
             }
             const responseBodyConverter = new ResponseBodyConverter({
@@ -463,6 +468,21 @@ export class OperationConverter extends AbstractOperationConverter {
         return convertedResponseBody;
     }
 
+    private computeEndpointAuth(): boolean {
+        if (this.operation.security != null && this.operation.security.length === 0) {
+            return false;
+        }
+
+        if (this.operation.security != null && this.operation.security.length > 0) {
+            return true;
+        }
+
+        return (
+            (this.context.spec.security != null && this.context.spec.security.length > 0) ||
+            this.shouldApplyDefaultAuthOverrides()
+        );
+    }
+
     /**
      * Converts security scheme IDs to HTTP headers
      * @param securitySchemeIds - List of security scheme IDs
@@ -474,7 +494,8 @@ export class OperationConverter extends AbstractOperationConverter {
         }
 
         const hasGlobalSecurity = this.context.spec.security != null && this.context.spec.security.length > 0;
-        const hasEndpointSecurity = this.operation.security != null;
+        // Check for non-empty endpoint security (empty array means explicit no-auth, not "has security")
+        const hasEndpointSecurity = this.operation.security != null && this.operation.security.length > 0;
 
         // If there's already security defined (global or endpoint), don't apply defaults
         return !(hasGlobalSecurity || hasEndpointSecurity);

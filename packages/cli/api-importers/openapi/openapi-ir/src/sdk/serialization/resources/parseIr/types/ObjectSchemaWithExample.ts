@@ -27,6 +27,8 @@ export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
         allOfPropertyConflicts: core.serialization.list(AllOfPropertyConflict),
         fullExamples: core.serialization.list(NamedFullExample).optional(),
         additionalProperties: core.serialization.boolean(),
+        minProperties: core.serialization.number().optional(),
+        maxProperties: core.serialization.number().optional(),
     })
     .extend(WithSdkGroupName)
     .extend(WithNamespace)
@@ -53,5 +55,7 @@ export declare namespace ObjectSchemaWithExample {
         allOfPropertyConflicts: AllOfPropertyConflict.Raw[];
         fullExamples?: NamedFullExample.Raw[] | null;
         additionalProperties: boolean;
+        minProperties?: number | null;
+        maxProperties?: number | null;
     }
 }

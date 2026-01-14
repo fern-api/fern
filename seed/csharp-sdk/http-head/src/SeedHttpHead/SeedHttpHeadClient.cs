@@ -2,7 +2,7 @@ using SeedHttpHead.Core;
 
 namespace SeedHttpHead;
 
-public partial class SeedHttpHeadClient
+public partial class SeedHttpHeadClient : ISeedHttpHeadClient
 {
     private readonly RawClient _client;
 

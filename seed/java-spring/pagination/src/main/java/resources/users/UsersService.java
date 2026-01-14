@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import resources.users.requests.ListUsersBodyOffsetPaginationRequest;
+import resources.users.requests.ListUsersTopLevelBodyCursorPaginationRequest;
 import resources.users.types.ListUsersExtendedOptionalListResponse;
 import resources.users.types.ListUsersExtendedResponse;
 import resources.users.types.ListUsersMixedTypePaginationResponse;
 import resources.users.types.ListUsersOptionalDataPaginationResponse;
 import resources.users.types.ListUsersPaginationResponse;
+import resources.users.types.ListUsersTopLevelCursorPaginationResponse;
 import resources.users.types.Order;
 import resources.users.types.UsernameContainer;
 import types.UsernameCursor;
@@ -52,6 +54,14 @@ public interface UsersService {
   )
   ListUsersPaginationResponse listWithBodyCursorPagination(
       @RequestBody ListUsersBodyCursorPaginationRequest body);
+
+  @PostMapping(
+      value = "/top-level-cursor",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  ListUsersTopLevelCursorPaginationResponse listWithTopLevelBodyCursorPagination(
+      @RequestBody ListUsersTopLevelBodyCursorPaginationRequest body);
 
   @GetMapping(
       value = "",

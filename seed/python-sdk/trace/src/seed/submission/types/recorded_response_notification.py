@@ -10,9 +10,15 @@ from .submission_id import SubmissionId
 
 
 class RecordedResponseNotification(UniversalBaseModel):
-    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")]
-    trace_responses_size: typing_extensions.Annotated[int, FieldMetadata(alias="traceResponsesSize")]
-    test_case_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="testCaseId")] = None
+    submission_id: typing_extensions.Annotated[SubmissionId, FieldMetadata(alias="submissionId")] = pydantic.Field(
+        alias="submissionId"
+    )
+    trace_responses_size: typing_extensions.Annotated[int, FieldMetadata(alias="traceResponsesSize")] = pydantic.Field(
+        alias="traceResponsesSize"
+    )
+    test_case_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="testCaseId")] = pydantic.Field(
+        alias="testCaseId", default=None
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

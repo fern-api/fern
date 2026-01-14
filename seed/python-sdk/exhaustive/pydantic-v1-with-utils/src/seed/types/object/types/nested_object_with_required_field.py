@@ -9,7 +9,9 @@ from .object_with_optional_field import ObjectWithOptionalField
 
 class NestedObjectWithRequiredField(UniversalBaseModel):
     string: str
-    nested_object: typing_extensions.Annotated[ObjectWithOptionalField, FieldMetadata(alias="NestedObject")]
+    nested_object: typing_extensions.Annotated[ObjectWithOptionalField, FieldMetadata(alias="NestedObject")] = (
+        pydantic.Field(alias="NestedObject")
+    )
 
     class Config:
         frozen = True

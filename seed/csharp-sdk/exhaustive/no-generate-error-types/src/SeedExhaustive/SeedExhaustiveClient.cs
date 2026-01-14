@@ -3,7 +3,7 @@ using SeedExhaustive.Endpoints;
 
 namespace SeedExhaustive;
 
-public partial class SeedExhaustiveClient
+public partial class SeedExhaustiveClient : ISeedExhaustiveClient
 {
     private readonly RawClient _client;
 

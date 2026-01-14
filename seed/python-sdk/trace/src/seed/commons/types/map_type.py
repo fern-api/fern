@@ -11,8 +11,12 @@ from ...core.serialization import FieldMetadata
 
 
 class MapType(UniversalBaseModel):
-    key_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="keyType")]
-    value_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="valueType")]
+    key_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="keyType")] = pydantic.Field(
+        alias="keyType"
+    )
+    value_type: typing_extensions.Annotated["VariableType", FieldMetadata(alias="valueType")] = pydantic.Field(
+        alias="valueType"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

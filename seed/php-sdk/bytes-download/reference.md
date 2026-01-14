@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>$client->service->simple()</code></summary>
+<details><summary><code>$client-&gt;service-&gt;simple()</code></summary>
 <dl>
 <dd>
 
@@ -25,7 +25,7 @@ $client->service->simple();
 </dl>
 </details>
 
-<details><summary><code>$client->service->download($id)</code></summary>
+<details><summary><code>$client-&gt;service-&gt;download($id)</code></summary>
 <dl>
 <dd>
 

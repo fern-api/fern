@@ -9,8 +9,12 @@ from ...core.serialization import FieldMetadata
 
 
 class LightweightStackframeInformation(UniversalBaseModel):
-    num_stack_frames: typing_extensions.Annotated[int, FieldMetadata(alias="numStackFrames")]
-    top_stack_frame_method_name: typing_extensions.Annotated[str, FieldMetadata(alias="topStackFrameMethodName")]
+    num_stack_frames: typing_extensions.Annotated[int, FieldMetadata(alias="numStackFrames")] = pydantic.Field(
+        alias="numStackFrames"
+    )
+    top_stack_frame_method_name: typing_extensions.Annotated[str, FieldMetadata(alias="topStackFrameMethodName")] = (
+        pydantic.Field(alias="topStackFrameMethodName")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

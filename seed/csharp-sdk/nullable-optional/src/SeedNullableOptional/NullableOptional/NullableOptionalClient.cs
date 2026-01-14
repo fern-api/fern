@@ -3,7 +3,7 @@ using SeedNullableOptional.Core;
 
 namespace SeedNullableOptional;
 
-public partial class NullableOptionalClient
+public partial class NullableOptionalClient : INullableOptionalClient
 {
     private RawClient _client;
 

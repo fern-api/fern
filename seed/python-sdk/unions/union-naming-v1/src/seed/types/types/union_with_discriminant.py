@@ -14,7 +14,9 @@ from .foo import Foo
 
 class FooUnionWithDiscriminant(UniversalBaseModel):
     foo: Foo
-    type: typing_extensions.Annotated[typing.Literal["foo"], FieldMetadata(alias="_type")] = "foo"
+    type: typing_extensions.Annotated[typing.Literal["foo"], FieldMetadata(alias="_type")] = pydantic.Field(
+        alias="_type", default="foo"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
@@ -27,7 +29,9 @@ class FooUnionWithDiscriminant(UniversalBaseModel):
 
 class BarUnionWithDiscriminant(UniversalBaseModel):
     bar: Bar
-    type: typing_extensions.Annotated[typing.Literal["bar"], FieldMetadata(alias="_type")] = "bar"
+    type: typing_extensions.Annotated[typing.Literal["bar"], FieldMetadata(alias="_type")] = pydantic.Field(
+        alias="_type", default="bar"
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2

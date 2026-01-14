@@ -6,6 +6,7 @@ mod query_parameter_builder;
 #[cfg(feature = "sse")]
 mod sse_stream;
 mod utils;
+pub mod flexible_datetime;
 
 pub use http_client::{ByteStream, HttpClient};
 pub use request_options::RequestOptions;

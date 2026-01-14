@@ -43,7 +43,6 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_api::prelude::*;
-use seed_api::{NestedUser, SearchRequestNeighbor, SearchRequestNeighborRequired, User};
 
 #[tokio::main]
 async fn main() {
@@ -57,9 +56,7 @@ async fn main() {
                 limit: 1,
                 id: "id".to_string(),
                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
-                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                    .unwrap()
-                    .with_timezone(&Utc),
+                deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 bytes: "bytes".to_string(),
                 user: User {
                     name: Some("name".to_string()),
@@ -70,9 +67,7 @@ async fn main() {
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 })],
                 optional_deadline: Some(
-                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
-                        .unwrap()
-                        .with_timezone(&Utc),
+                    DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
                 ),
                 key_value: Some(HashMap::from([(
                     "keyValue".to_string(),

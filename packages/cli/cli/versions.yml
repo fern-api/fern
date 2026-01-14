@@ -1,4 +1,199 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.1
+  changelogEntry:
+    - summary: |
+        Rename java-model generator to fern-java-model.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.42.0
+  changelogEntry:
+    - summary: |
+        Add placeholder page for python-docs in `fern docs dev`. When running local development, a helpful placeholder page is shown explaining that Python library documentation requires `fern generate --docs` or `fern generate --docs --preview` to generate.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.41.1
+  changelogEntry:
+    - summary: |
+        Support `ai-examples` and `ai-example-style-instructions` configuration options from `experimental` with the new `enabled` and `style`, under `ai-examples` in the top-level `docs.yml` configuration.
+      type: chore
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.41.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-property-name` extension on OpenAPI discriminators. This allows specifying a code-generation-friendly name for discriminant properties that have non-alphanumeric wire values (e.g., `@type`). The extension can be applied directly in the OpenAPI spec or via an overrides file.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.40.1
+  changelogEntry:
+    - summary: |
+        Speed up AI example generation and reduce number of retries on failure.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.40.0
+  changelogEntry:
+    - summary: |
+        Add support for OpenAPI min/max validation keywords in the IR. This includes `minimum`, `maximum`, `exclusiveMinimum`, `exclusiveMaximum`, and `multipleOf` for numeric types (float, long, uint, uint64), as well as `minItems`/`maxItems` for list and set containers, and `minProperties`/`maxProperties` for map containers and objects.
+      type: feat
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.39.4
+  changelogEntry:
+    - summary: |
+        Optimize air-gapped environment detection for protobuf generation. The CLI now detects network availability once at startup using a 30-second timeout instead of having multiple timeouts for each buf command. Both `ProtobufIRGenerator` and `ProtobufOpenAPIGenerator` now use a shared `detectAirGappedMode()` utility function that sets an `isAirGapped` flag to skip network calls after initial detection. This significantly improves performance in air-gapped environments.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.39.3
+  changelogEntry:
+    - summary: |
+        Fix protobuf air-gapped support to properly catch execa exceptions when `buf dep update` fails. The `execa` library throws exceptions on non-zero exit codes rather than returning a result object, so the network error detection logic was never being reached. Both `ProtobufOpenAPIGenerator` and `ProtobufIRGenerator` now wrap `buf dep update` in a try-catch block to properly handle network errors in air-gapped environments.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.39.2
+  changelogEntry:
+    - summary: |
+        Add debug logging to protobuf air-gapped support to help diagnose buf.lock detection issues. The CLI now logs the buf.lock path being checked, whether it was found, and detailed error information when buf dep update fails.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.39.1
+  changelogEntry:
+    - summary: |
+        Fix protobuf air-gapped support to properly populate buf cache at build time. Both `ProtobufOpenAPIGenerator` and `ProtobufIRGenerator` now always attempt `buf dep update` first to populate the cache, and only continue on network errors if a pre-cached `buf.lock` file exists. This ensures dependencies are cached at build time while still supporting air-gapped runtime environments.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.39.0
+  changelogEntry:
+    - summary: |
+        Add opt-in `pydantic_config.positional_single_property_constructors` to allow `Wrapper("value")`
+        for single-required-field models (excluding discriminator literals). Note: can break if the model
+        later adds required fields; kwargs are more stable.
+      type: feat
+  createdAt: "2025-12-19"
+  irVersion: 63
+
+- version: 3.38.1
+  changelogEntry:
+    - summary: |
+        Fix protobuf OpenAPI generation to support air-gapped environments. The CLI now checks for a pre-cached `buf.lock` file in the proto directory before calling `buf dep update`. This enables self-hosted deployments with `from-openapi: true` proto specs to work in air-gapped environments by pre-caching dependencies.
+      type: fix
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.38.0
+  changelogEntry:
+    - summary: |
+        Add support for parsing response headers from OpenAPI specs. Response headers defined on success responses (2xx) are now captured in the IR and available for SDK generators and documentation.
+      type: feat
+  createdAt: "2026-01-12"
+  irVersion: 63
+
+- version: 3.37.6
+  changelogEntry:
+    - summary: |
+        Bump IR version to 63.
+      type: chore
+  createdAt: "2026-01-12"
+  irVersion: 63
+
+- version: 3.37.5
+  changelogEntry:
+    - summary: |
+        Fix `fern docs preview delete` and `fern docs preview list` commands to support preview URLs with UUID-style hashes containing hyphens (e.g., `org-preview-9b2b47f0-c44b-4338-b579-46872f33404a.docs.buildwithfern.com`).
+      type: fix
+  createdAt: "2026-01-12"
+  irVersion: 62
+
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        Fix `security: []` handling in OpenAPI importer to correctly mark endpoints as not requiring authentication.
+      type: fix
+  createdAt: "2026-01-10"
+  irVersion: 62
+
+- version: 3.37.4
+  changelogEntry:
+    - summary: |
+        Fix protobuf IR generation to support air-gapped environments. The CLI now uses a pre-cached `buf.lock` file if it exists, skipping the network call to `buf dep update`. This enables self-hosted deployments to work in air-gapped environments by running `buf dep update` at build time to cache dependencies.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 3.38.0
+  changelogEntry:
+    - summary: |
+        Add support for automatic configuration migration in _generators.yml_ when running `fern generator upgrade --include-major`.
+        Major version upgrades with breaking configuration changes will now automatically update your generator configuration, eliminating manual migration steps.
+      type: feat
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 3.37.3
+  changelogEntry:
+    - summary: |
+        no-op: initiate bulk cli update
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 3.37.2
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --preview` failing with permission errors when the `.preview` folder already exists. The CLI now properly handles read-only files (like `.git/objects`) by making them writable before deletion.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 3.37.1
+  changelogEntry:
+    - summary: |
+        Push full channel message payload schemas through when creating type references; helps support 'bytes' for websocket methods.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 62
+
+- version: 3.37.0
+  changelogEntry:
+    - summary: |
+        Add Excel file support (.xlsx) to the allowed file types for documentation uploads. This enables users to host Excel files using the `<Download />` component.
+      type: chore
+  createdAt: "2026-01-08"
+  irVersion: 62
+
+- version: 3.36.0
+  changelogEntry:
+    - summary: |
+        The `fern init` command now automatically creates a `.gitignore` file inside the `fern/` folder with entries to ignore `.preview` and `.definition` directories.
+      type: feat
+  createdAt: "2026-01-07"
+  irVersion: 62
+
+- version: 3.35.2
+  changelogEntry:
+    - summary: |
+        Default dynamic SDK snippets on if the experimental configuration is already present.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 62
+
 - version: 3.35.1
   changelogEntry:
     - summary: |
@@ -178,8 +373,8 @@
 - version: 3.27.0
   changelogEntry:
     - summary: |
-        Add `ENDPOINT_SECURITY` value to `AuthSchemesRequirement` enum in the IR. 
-        This allows users to specify that authentication requirements are defined per-endpoint rather than globally. 
+        Add `ENDPOINT_SECURITY` value to `AuthSchemesRequirement` enum in the IR.
+        This allows users to specify that authentication requirements are defined per-endpoint rather than globally.
         Users can now use `endpoint-security: {}` in their Fern API definition's `auth` field to indicate that security is configured on individual endpoints via the `security` field.
       type: feat
   createdAt: "2025-12-18"

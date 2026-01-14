@@ -9,9 +9,13 @@ from ...core.serialization import FieldMetadata
 
 
 class NestedObjectWithLiterals(UniversalBaseModel):
-    literal_1: typing_extensions.Annotated[typing.Literal["literal1"], FieldMetadata(alias="literal1")] = "literal1"
-    literal_2: typing_extensions.Annotated[typing.Literal["literal2"], FieldMetadata(alias="literal2")] = "literal2"
-    str_prop: typing_extensions.Annotated[str, FieldMetadata(alias="strProp")]
+    literal_1: typing_extensions.Annotated[typing.Literal["literal1"], FieldMetadata(alias="literal1")] = (
+        pydantic.Field(alias="literal1", default="literal1")
+    )
+    literal_2: typing_extensions.Annotated[typing.Literal["literal2"], FieldMetadata(alias="literal2")] = (
+        pydantic.Field(alias="literal2", default="literal2")
+    )
+    str_prop: typing_extensions.Annotated[str, FieldMetadata(alias="strProp")] = pydantic.Field(alias="strProp")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

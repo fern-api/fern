@@ -13,7 +13,9 @@ from .test_case_template_id import TestCaseTemplateId
 
 
 class TestCaseTemplate(UniversalBaseModel):
-    template_id: typing_extensions.Annotated[TestCaseTemplateId, FieldMetadata(alias="templateId")]
+    template_id: typing_extensions.Annotated[TestCaseTemplateId, FieldMetadata(alias="templateId")] = pydantic.Field(
+        alias="templateId"
+    )
     name: str
     implementation: TestCaseImplementation
 

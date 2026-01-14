@@ -3,7 +3,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public partial class HeadersClient
+public partial class HeadersClient : IHeadersClient
 {
     private RawClient _client;
 

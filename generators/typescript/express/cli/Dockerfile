@@ -10,11 +10,11 @@ ENV PATH=$PNPM_HOME:$PATH
 
 RUN npm install -g pnpm@10.20.0 --force
 RUN npm install -g yarn@1.22.22 --force
-RUN pnpm install -g prettier@3.4.2
-RUN pnpm install -g oxfmt@0.17.0
-RUN pnpm install -g @biomejs/biome@2.3.1
-RUN pnpm install -g oxlint@1.32.0
-RUN pnpm install -g oxlint-tsgolint@0.8.4
+RUN pnpm install -g prettier@3.7.4
+RUN pnpm install -g oxfmt@0.24.0
+RUN pnpm install -g @biomejs/biome@2.3.11
+RUN pnpm install -g oxlint@1.39.0
+RUN pnpm install -g oxlint-tsgolint@0.11.0
 
 WORKDIR /tmp/cache-warm
 
@@ -28,11 +28,11 @@ RUN echo '{ \
     "axios": "0.27.2", \
     "esbuild": "0.16.15", \
     "express": "4.18.2", \
-    "@biomejs/biome": "2.3.1", \
-    "prettier": "3.4.2", \
-    "oxfmt": "0.17.0", \
-    "oxlint": "1.32.0", \
-    "oxlint-tsgolint": "0.8.4", \
+    "@biomejs/biome": "2.3.11", \
+    "prettier": "3.7.4", \
+    "oxfmt": "0.24.0", \
+    "oxlint": "1.39.0", \
+    "oxlint-tsgolint": "0.11.0", \
     "typescript": "5.7.2", \
     "url-join": "4.0.1" \
   } \

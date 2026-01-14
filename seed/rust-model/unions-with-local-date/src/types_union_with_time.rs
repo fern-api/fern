@@ -12,6 +12,7 @@ pub enum UnionWithTime {
         },
 
         Datetime {
-            value: DateTime<Utc>,
+            #[serde(with = "crate::core::flexible_datetime::offset")]
+            value: DateTime<FixedOffset>,
         },
 }

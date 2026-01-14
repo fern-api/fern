@@ -2,7 +2,7 @@ using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
 
-public partial class SeedIdempotencyHeadersClient
+public partial class SeedIdempotencyHeadersClient : ISeedIdempotencyHeadersClient
 {
     private readonly RawClient _client;
 

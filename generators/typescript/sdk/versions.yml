@@ -1,4 +1,110 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.12
+  changelogEntry:
+    - summary: |
+        Fix passthrough() function to only include truly unknown/extra properties in the result.
+        Previously, when a type had `additionalProperties: true` and used property name mapping
+        (e.g., snake_case to camelCase), the passthrough would spread both the original raw object
+        and the transformed value, resulting in duplicate properties with both naming conventions.
+        Now the passthrough correctly filters out known properties before spreading, ensuring only
+        extra properties that aren't part of the schema definition are included.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+- version: 3.43.11
+  changelogEntry:
+    - summary: Update linters and formatters to latest versions.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.43.10
+  changelogEntry:
+    - summary: |
+        Update Dockerfile to only pre-cache for the default configuration options to reduce image size from 1.45GB to 823MB.
+        The following dependencies are no longer pre-cached:
+        * jest
+        * @types/jest
+        * node-fetch
+        * @types/node-fetch
+        * qs
+        * @types/qs
+        * readable-stream
+        * @types/readable-stream
+        * form-data
+        * formdata-node
+        * jest-environment-jsdom
+        * prettier
+        * oxfmt
+        * oxlint
+        * oxlint-tsgolint
+        * ts-jest
+        * form-data-encoder
+        * fetch-mock-jest
+
+        Additionally, the Dockerfile only pre-caches using pnpm, removing duplicate yarn cache.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.43.9
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.43.8
+  changelogEntry:
+    - summary: |
+        Fix wire test mock server to ignore cursor mismatches in pagination tests.
+        When pagination tests call `getNextPage()`, the SDK correctly sends the cursor from the response,
+        but the mock server was rejecting the request because the cursor didn't match the original request.
+        The mock server now accepts an `ignoredFields` option to specify which fields to ignore during
+        request body matching. The test generator extracts pagination cursor field names from the IR
+        and passes them to the mock server at code generation time.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 63
+
+- version: 3.43.7
+  changelogEntry:
+    - summary: |
+        Support `bytes` argument type and custom method names for websocket messages.
+      type: fix
+  createdAt: "2026-01-09"
+  irVersion: 63
+
+- version: 3.43.6
+  changelogEntry:
+    - summary: |
+        Fix fetcher tests to use `.trim()` for platform-agnostic line ending comparisons.
+        This resolves test failures on Windows where files have CRLF line endings instead of LF.
+      type: fix
+  createdAt: "2026-01-08"
+  irVersion: 63
+
+- version: 3.43.5
+  changelogEntry:
+    - summary: |
+        Fix GitHub repository URL format in package.json to use `git+https://` format,
+        ensuring local generation output matches remote generation.
+      type: fix
+  createdAt: "2026-01-07"
+  irVersion: 63
+
+- version: 3.43.4
+  changelogEntry:
+    - summary: |
+        Fix export of inline enum const values from request types. Previously, request types with inline enums
+        (defined directly in OpenAPI schemas) were exported using `export type { ... }` which only exports the
+        type, not the runtime const values. SDK consumers couldn't access enum values like `ConvertRequest.Resource.Auto`
+        at runtime. Now request types are exported using `export { ... }` which exports both the type and the const.
+      type: fix
+  createdAt: "2026-01-06"
+  irVersion: 63
+
 - version: 3.43.3
   changelogEntry:
     - summary: |

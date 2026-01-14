@@ -5,12 +5,11 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface PlaygroundSettings {
+    hidden?: boolean;
     /** A list of environment IDs that are allowed to be used in the playground. If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled. */
     environments?: string[];
     button?: FernDocsConfig.PlaygroundButtonSettings;
     oauth?: boolean;
     /** The maximum number of websocket messages per connection in the playground. */
     limitWebsocketMessagesPerConnection?: number;
-    /** Whether the playground should be hidden for this endpoint. */
-    hidden?: boolean;
 }

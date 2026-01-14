@@ -959,7 +959,7 @@ client.admin().storeTracedWorkspaceV2(
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.getHomepageProblems() -> List&lt;String&gt;</code></summary>
+<details><summary><code>client.homepage.getHomepageProblems() -> List&amp;lt;String&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1027,7 +1027,7 @@ client.homepage().setHomepageProblems(
 </details>
 
 ## Migration
-<details><summary><code>client.migration.getAttemptedMigrations() -> List&lt;Migration&gt;</code></summary>
+<details><summary><code>client.migration.getAttemptedMigrations() -> List&amp;lt;Migration&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1167,7 +1167,7 @@ client.playlist().createPlaylist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.getPlaylists(serviceParam) -> List&lt;Playlist&gt;</code></summary>
+<details><summary><code>client.playlist.getPlaylists(serviceParam) -> List&amp;lt;Playlist&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -1340,7 +1340,7 @@ client.playlist().getPlaylist(1, "playlistId");
 </dl>
 </details>
 
-<details><summary><code>client.playlist.updatePlaylist(serviceParam, playlistId, request) -> Optional&lt;Playlist&gt;</code></summary>
+<details><summary><code>client.playlist.updatePlaylist(serviceParam, playlistId, request) -> Optional&amp;lt;Playlist&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2026,7 +2026,7 @@ client.submission().createExecutionSession(Language.JAVA);
 </dl>
 </details>
 
-<details><summary><code>client.submission.getExecutionSession(sessionId) -> Optional&lt;ExecutionSessionResponse&gt;</code></summary>
+<details><summary><code>client.submission.getExecutionSession(sessionId) -> Optional&amp;lt;ExecutionSessionResponse&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2208,7 +2208,7 @@ client.sysprop().setNumWarmInstances(Language.JAVA, 1);
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.getNumWarmInstances() -> Map&lt;Language, Integer&gt;</code></summary>
+<details><summary><code>client.sysprop.getNumWarmInstances() -> Map&amp;lt;Language, Integer&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2234,7 +2234,7 @@ client.sysprop().getNumWarmInstances();
 </details>
 
 ## V2 Problem
-<details><summary><code>client.v2.problem.getLightweightProblems() -> List&lt;LightweightProblemInfoV2&gt;</code></summary>
+<details><summary><code>client.v2.problem.getLightweightProblems() -> List&amp;lt;LightweightProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2273,7 +2273,7 @@ client.v2().problem().getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.getProblems() -> List&lt;ProblemInfoV2&gt;</code></summary>
+<details><summary><code>client.v2.problem.getProblems() -> List&amp;lt;ProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2429,7 +2429,7 @@ client.v2().problem().getProblemVersion("problemId", 1);
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.v2.v3.problem.getLightweightProblems() -> List&lt;LightweightProblemInfoV2&gt;</code></summary>
+<details><summary><code>client.v2.v3.problem.getLightweightProblems() -> List&amp;lt;LightweightProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -2468,7 +2468,7 @@ client.v2().problem().getLightweightProblems();
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.getProblems() -> List&lt;ProblemInfoV2&gt;</code></summary>
+<details><summary><code>client.v2.v3.problem.getProblems() -> List&amp;lt;ProblemInfoV2&amp;gt;</code></summary>
 <dl>
 <dd>
 

@@ -155,22 +155,26 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "per_page",
                       "description": "Defaults to per page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "order",
                       "description": null,
-                      "value": "asc"
+                      "value": "asc",
+                      "disabled": true
                     },
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "starting_after"
+                      "value": "starting_after",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -205,22 +209,26 @@
                         {
                           "key": "page",
                           "description": "Defaults to first page",
-                          "value": "1"
+                          "value": "1",
+                          "disabled": true
                         },
                         {
                           "key": "per_page",
                           "description": "Defaults to per page",
-                          "value": "1"
+                          "value": "1",
+                          "disabled": true
                         },
                         {
                           "key": "order",
                           "description": null,
-                          "value": "asc"
+                          "value": "asc",
+                          "disabled": true
                         },
                         {
                           "key": "starting_after",
                           "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                          "value": "starting_after"
+                          "value": "starting_after",
+                          "disabled": true
                         }
                       ],
                       "variable": []
@@ -259,7 +267,8 @@
                     {
                       "key": "cursor",
                       "description": null,
-                      "value": "cursor"
+                      "value": "cursor",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -294,7 +303,8 @@
                         {
                           "key": "cursor",
                           "description": null,
-                          "value": "cursor"
+                          "value": "cursor",
+                          "disabled": true
                         }
                       ],
                       "variable": []
@@ -411,22 +421,26 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "per_page",
                       "description": "Defaults to per page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "order",
                       "description": null,
-                      "value": "asc"
+                      "value": "asc",
+                      "disabled": true
                     },
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "starting_after"
+                      "value": "starting_after",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -461,22 +475,26 @@
                         {
                           "key": "page",
                           "description": "Defaults to first page",
-                          "value": "1"
+                          "value": "1",
+                          "disabled": true
                         },
                         {
                           "key": "per_page",
                           "description": "Defaults to per page",
-                          "value": "1"
+                          "value": "1",
+                          "disabled": true
                         },
                         {
                           "key": "order",
                           "description": null,
-                          "value": "asc"
+                          "value": "asc",
+                          "disabled": true
                         },
                         {
                           "key": "starting_after",
                           "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                          "value": "starting_after"
+                          "value": "starting_after",
+                          "disabled": true
                         }
                       ],
                       "variable": []
@@ -515,22 +533,26 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1.1"
+                      "value": "1.1",
+                      "disabled": true
                     },
                     {
                       "key": "per_page",
                       "description": "Defaults to per page",
-                      "value": "1.1"
+                      "value": "1.1",
+                      "disabled": true
                     },
                     {
                       "key": "order",
                       "description": null,
-                      "value": "asc"
+                      "value": "asc",
+                      "disabled": true
                     },
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "starting_after"
+                      "value": "starting_after",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -565,22 +587,26 @@
                         {
                           "key": "page",
                           "description": "Defaults to first page",
-                          "value": "1.1"
+                          "value": "1.1",
+                          "disabled": true
                         },
                         {
                           "key": "per_page",
                           "description": "Defaults to per page",
-                          "value": "1.1"
+                          "value": "1.1",
+                          "disabled": true
                         },
                         {
                           "key": "order",
                           "description": null,
-                          "value": "asc"
+                          "value": "asc",
+                          "disabled": true
                         },
                         {
                           "key": "starting_after",
                           "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                          "value": "starting_after"
+                          "value": "starting_after",
+                          "disabled": true
                         }
                       ],
                       "variable": []
@@ -697,17 +723,20 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "limit",
                       "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "order",
                       "description": null,
-                      "value": "asc"
+                      "value": "asc",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -742,17 +771,20 @@
                         {
                           "key": "page",
                           "description": "Defaults to first page",
-                          "value": "1"
+                          "value": "1",
+                          "disabled": true
                         },
                         {
                           "key": "limit",
                           "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
-                          "value": "1"
+                          "value": "1",
+                          "disabled": true
                         },
                         {
                           "key": "order",
                           "description": null,
-                          "value": "asc"
+                          "value": "asc",
+                          "disabled": true
                         }
                       ],
                       "variable": []
@@ -791,17 +823,20 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "limit",
                       "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "order",
                       "description": null,
-                      "value": "asc"
+                      "value": "asc",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -836,17 +871,20 @@
                         {
                           "key": "page",
                           "description": "Defaults to first page",
-                          "value": "1"
+                          "value": "1",
+                          "disabled": true
                         },
                         {
                           "key": "limit",
                           "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
-                          "value": "1"
+                          "value": "1",
+                          "disabled": true
                         },
                         {
                           "key": "order",
                           "description": null,
-                          "value": "asc"
+                          "value": "asc",
+                          "disabled": true
                         }
                       ],
                       "variable": []
@@ -885,7 +923,8 @@
                     {
                       "key": "cursor",
                       "description": null,
-                      "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                      "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -920,7 +959,8 @@
                         {
                           "key": "cursor",
                           "description": null,
-                          "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                          "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                          "disabled": true
                         }
                       ],
                       "variable": []
@@ -959,7 +999,8 @@
                     {
                       "key": "cursor",
                       "description": null,
-                      "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                      "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -994,7 +1035,8 @@
                         {
                           "key": "cursor",
                           "description": null,
-                          "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                          "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                          "disabled": true
                         }
                       ],
                       "variable": []
@@ -1033,7 +1075,8 @@
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "starting_after"
+                      "value": "starting_after",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -1068,7 +1111,8 @@
                         {
                           "key": "starting_after",
                           "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                          "value": "starting_after"
+                          "value": "starting_after",
+                          "disabled": true
                         }
                       ],
                       "variable": []
@@ -1107,7 +1151,8 @@
                     {
                       "key": "offset",
                       "description": null,
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -1142,7 +1187,8 @@
                         {
                           "key": "offset",
                           "description": null,
-                          "value": "1"
+                          "value": "1",
+                          "disabled": true
                         }
                       ],
                       "variable": []
@@ -1190,22 +1236,26 @@
                 {
                   "key": "page",
                   "description": "Defaults to first page",
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 },
                 {
                   "key": "per_page",
                   "description": "Defaults to per page",
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 },
                 {
                   "key": "order",
                   "description": null,
-                  "value": "asc"
+                  "value": "asc",
+                  "disabled": true
                 },
                 {
                   "key": "starting_after",
                   "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                  "value": "starting_after"
+                  "value": "starting_after",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -1240,22 +1290,26 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "per_page",
                       "description": "Defaults to per page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "order",
                       "description": null,
-                      "value": "asc"
+                      "value": "asc",
+                      "disabled": true
                     },
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "starting_after"
+                      "value": "starting_after",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -1294,7 +1348,8 @@
                 {
                   "key": "cursor",
                   "description": null,
-                  "value": "cursor"
+                  "value": "cursor",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -1329,7 +1384,8 @@
                     {
                       "key": "cursor",
                       "description": null,
-                      "value": "cursor"
+                      "value": "cursor",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -1431,6 +1487,127 @@
         },
         {
           "_type": "endpoint",
+          "name": "List With Top Level Body Cursor Pagination",
+          "request": {
+            "description": "Pagination endpoint with a top-level cursor field in the request body.\nThis tests that the mock server correctly ignores cursor mismatches\nwhen getNextPage() is called with a different cursor value.",
+            "url": {
+              "raw": "{{baseUrl}}/users/top-level-cursor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users",
+                "top-level-cursor"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"cursor\": \"initial_cursor\",\n    \"filter\": \"active\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Pagination endpoint with a top-level cursor field in the request body.\nThis tests that the mock server correctly ignores cursor mismatches\nwhen getNextPage() is called with a different cursor value.",
+                "url": {
+                  "raw": "{{baseUrl}}/users/top-level-cursor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    "top-level-cursor"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"cursor\": \"initial_cursor\",\n    \"filter\": \"active\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"next_cursor\": \"next_cursor_value\",\n    \"data\": [\n        {\n            \"name\": \"Alice\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"Bob\",\n            \"id\": 2\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Pagination endpoint with a top-level cursor field in the request body.\nThis tests that the mock server correctly ignores cursor mismatches\nwhen getNextPage() is called with a different cursor value.",
+                "url": {
+                  "raw": "{{baseUrl}}/users/top-level-cursor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    "top-level-cursor"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"cursor\": \"cursor\",\n    \"filter\": \"filter\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"next_cursor\": \"next_cursor\",\n    \"data\": [\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        },\n        {\n            \"name\": \"name\",\n            \"id\": 1\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
           "name": "List With Offset Pagination",
           "request": {
             "description": null,
@@ -1446,22 +1623,26 @@
                 {
                   "key": "page",
                   "description": "Defaults to first page",
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 },
                 {
                   "key": "per_page",
                   "description": "Defaults to per page",
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 },
                 {
                   "key": "order",
                   "description": null,
-                  "value": "asc"
+                  "value": "asc",
+                  "disabled": true
                 },
                 {
                   "key": "starting_after",
                   "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                  "value": "starting_after"
+                  "value": "starting_after",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -1496,22 +1677,26 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "per_page",
                       "description": "Defaults to per page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "order",
                       "description": null,
-                      "value": "asc"
+                      "value": "asc",
+                      "disabled": true
                     },
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "starting_after"
+                      "value": "starting_after",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -1550,22 +1735,26 @@
                 {
                   "key": "page",
                   "description": "Defaults to first page",
-                  "value": "1.1"
+                  "value": "1.1",
+                  "disabled": true
                 },
                 {
                   "key": "per_page",
                   "description": "Defaults to per page",
-                  "value": "1.1"
+                  "value": "1.1",
+                  "disabled": true
                 },
                 {
                   "key": "order",
                   "description": null,
-                  "value": "asc"
+                  "value": "asc",
+                  "disabled": true
                 },
                 {
                   "key": "starting_after",
                   "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                  "value": "starting_after"
+                  "value": "starting_after",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -1600,22 +1789,26 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1.1"
+                      "value": "1.1",
+                      "disabled": true
                     },
                     {
                       "key": "per_page",
                       "description": "Defaults to per page",
-                      "value": "1.1"
+                      "value": "1.1",
+                      "disabled": true
                     },
                     {
                       "key": "order",
                       "description": null,
-                      "value": "asc"
+                      "value": "asc",
+                      "disabled": true
                     },
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "starting_after"
+                      "value": "starting_after",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -1732,17 +1925,20 @@
                 {
                   "key": "page",
                   "description": "Defaults to first page",
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 },
                 {
                   "key": "limit",
                   "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 },
                 {
                   "key": "order",
                   "description": null,
-                  "value": "asc"
+                  "value": "asc",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -1777,17 +1973,20 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "limit",
                       "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "order",
                       "description": null,
-                      "value": "asc"
+                      "value": "asc",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -1826,17 +2025,20 @@
                 {
                   "key": "page",
                   "description": "Defaults to first page",
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 },
                 {
                   "key": "limit",
                   "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 },
                 {
                   "key": "order",
                   "description": null,
-                  "value": "asc"
+                  "value": "asc",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -1871,17 +2073,20 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "limit",
                       "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     },
                     {
                       "key": "order",
                       "description": null,
-                      "value": "asc"
+                      "value": "asc",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -1920,7 +2125,8 @@
                 {
                   "key": "cursor",
                   "description": null,
-                  "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                  "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -1955,7 +2161,8 @@
                     {
                       "key": "cursor",
                       "description": null,
-                      "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                      "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -1994,7 +2201,8 @@
                 {
                   "key": "cursor",
                   "description": null,
-                  "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                  "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -2029,7 +2237,8 @@
                     {
                       "key": "cursor",
                       "description": null,
-                      "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                      "value": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -2068,7 +2277,8 @@
                 {
                   "key": "starting_after",
                   "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                  "value": "starting_after"
+                  "value": "starting_after",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -2103,7 +2313,8 @@
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "starting_after"
+                      "value": "starting_after",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -2142,7 +2353,8 @@
                 {
                   "key": "starting_after",
                   "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                  "value": "starting_after"
+                  "value": "starting_after",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -2177,7 +2389,8 @@
                     {
                       "key": "starting_after",
                       "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
-                      "value": "starting_after"
+                      "value": "starting_after",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -2216,7 +2429,8 @@
                 {
                   "key": "offset",
                   "description": null,
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -2251,7 +2465,8 @@
                     {
                       "key": "offset",
                       "description": null,
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -2291,7 +2506,8 @@
                 {
                   "key": "page",
                   "description": "Defaults to first page",
-                  "value": "1"
+                  "value": "1",
+                  "disabled": true
                 }
               ],
               "variable": []
@@ -2327,7 +2543,8 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -2366,7 +2583,8 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -2405,7 +2623,8 @@
                     {
                       "key": "page",
                       "description": "Defaults to first page",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     }
                   ],
                   "variable": []

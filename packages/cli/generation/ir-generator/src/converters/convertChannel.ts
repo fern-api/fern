@@ -292,15 +292,10 @@ function convertMessageSchema({
     body: RawSchemas.WebSocketChannelMessageBodySchema;
     file: FernFileContext;
 }): WebSocketMessageBody {
-    if (typeof body === "string") {
+    if (typeof body === "string" || isReferencedWebhookPayloadSchema(body)) {
         return WebSocketMessageBody.reference({
             docs: undefined,
             bodyType: file.parseTypeReference(body)
-        });
-    } else if (isReferencedWebhookPayloadSchema(body)) {
-        return WebSocketMessageBody.reference({
-            docs: undefined,
-            bodyType: file.parseTypeReference(body.type)
         });
     } else {
         return WebSocketMessageBody.inlinedBody({

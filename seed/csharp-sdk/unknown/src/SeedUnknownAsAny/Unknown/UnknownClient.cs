@@ -3,7 +3,7 @@ using SeedUnknownAsAny.Core;
 
 namespace SeedUnknownAsAny;
 
-public partial class UnknownClient
+public partial class UnknownClient : IUnknownClient
 {
     private RawClient _client;
 

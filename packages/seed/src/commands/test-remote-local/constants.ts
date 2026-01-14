@@ -103,7 +103,7 @@ export const GITHUB_TOKEN_ENV_VAR_REFERENCE = "${GITHUB_TOKEN}";
 // Docker Hub
 export const DOCKER_HUB_API_BASE_URL = "https://hub.docker.com/v2";
 export const DOCKER_HUB_TAGS_PAGE_SIZE = 100;
-export const DOCKER_HUB_TAGS_ORDERING = "-last_updated";
+export const DOCKER_HUB_TAGS_ORDERING = "last_updated";
 
 // GitHub
 export const GITHUB_BASE_URL = "https://github.com";

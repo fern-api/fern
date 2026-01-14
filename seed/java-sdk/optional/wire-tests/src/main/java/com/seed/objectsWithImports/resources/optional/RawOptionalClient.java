@@ -36,6 +36,10 @@ public class RawOptionalClient {
         return sendOptionalBody(Optional.empty());
     }
 
+    public SeedObjectsWithImportsHttpResponse<String> sendOptionalBody(RequestOptions requestOptions) {
+        return sendOptionalBody(Optional.empty(), requestOptions);
+    }
+
     public SeedObjectsWithImportsHttpResponse<String> sendOptionalBody(Optional<Map<String, Object>> request) {
         return sendOptionalBody(request, null);
     }
@@ -84,6 +88,10 @@ public class RawOptionalClient {
 
     public SeedObjectsWithImportsHttpResponse<String> sendOptionalTypedBody() {
         return sendOptionalTypedBody(Optional.empty());
+    }
+
+    public SeedObjectsWithImportsHttpResponse<String> sendOptionalTypedBody(RequestOptions requestOptions) {
+        return sendOptionalTypedBody(Optional.empty(), requestOptions);
     }
 
     public SeedObjectsWithImportsHttpResponse<String> sendOptionalTypedBody(Optional<SendOptionalBodyRequest> request) {
@@ -139,6 +147,15 @@ public class RawOptionalClient {
     public SeedObjectsWithImportsHttpResponse<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
             String actionId, String id) {
         return sendOptionalNullableWithAllOptionalProperties(actionId, id, Optional.empty());
+    }
+
+    /**
+     * Tests optional(nullable(T)) where T has only optional properties.
+     * This should not generate wire tests expecting {} when Optional.empty() is passed.
+     */
+    public SeedObjectsWithImportsHttpResponse<DeployResponse> sendOptionalNullableWithAllOptionalProperties(
+            String actionId, String id, RequestOptions requestOptions) {
+        return sendOptionalNullableWithAllOptionalProperties(actionId, id, Optional.empty(), requestOptions);
     }
 
     /**

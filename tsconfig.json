@@ -498,6 +498,9 @@
     },
     {
       "path": "./packages/cli/ai"
+    },
+    {
+      "path": "./packages/migrations-base"
     }
   ]
 }

@@ -672,7 +672,10 @@ export function buildOneOfTypeDeclaration({
         return {
             name: schema.nameOverride ?? schema.generatedName,
             schema: {
-                discriminant: schema.discriminantProperty,
+                discriminant:
+                    schema.discriminantPropertyNameOverride != null
+                        ? { name: schema.discriminantPropertyNameOverride, value: schema.discriminantProperty }
+                        : schema.discriminantProperty,
                 "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
                 availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,

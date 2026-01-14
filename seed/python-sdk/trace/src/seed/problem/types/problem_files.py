@@ -10,8 +10,12 @@ from ...core.serialization import FieldMetadata
 
 
 class ProblemFiles(UniversalBaseModel):
-    solution_file: typing_extensions.Annotated[FileInfo, FieldMetadata(alias="solutionFile")]
-    read_only_files: typing_extensions.Annotated[typing.List[FileInfo], FieldMetadata(alias="readOnlyFiles")]
+    solution_file: typing_extensions.Annotated[FileInfo, FieldMetadata(alias="solutionFile")] = pydantic.Field(
+        alias="solutionFile"
+    )
+    read_only_files: typing_extensions.Annotated[typing.List[FileInfo], FieldMetadata(alias="readOnlyFiles")] = (
+        pydantic.Field(alias="readOnlyFiles")
+    )
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

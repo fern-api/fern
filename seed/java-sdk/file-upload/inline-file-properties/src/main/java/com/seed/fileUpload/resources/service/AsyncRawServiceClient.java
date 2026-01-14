@@ -1128,6 +1128,10 @@ public class AsyncRawServiceClient {
         return optionalArgs(OptionalArgsRequest.builder().build());
     }
 
+    public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(RequestOptions requestOptions) {
+        return optionalArgs(OptionalArgsRequest.builder().build(), requestOptions);
+    }
+
     public CompletableFuture<SeedFileUploadHttpResponse<String>> optionalArgs(OptionalArgsRequest request) {
         return optionalArgs(request, null);
     }

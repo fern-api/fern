@@ -38,6 +38,10 @@ public class RawNullableClient {
         return getUsers(GetUsersRequest.builder().build());
     }
 
+    public SeedNullableHttpResponse<List<User>> getUsers(RequestOptions requestOptions) {
+        return getUsers(GetUsersRequest.builder().build(), requestOptions);
+    }
+
     public SeedNullableHttpResponse<List<User>> getUsers(GetUsersRequest request) {
         return getUsers(request, null);
     }
@@ -136,6 +140,10 @@ public class RawNullableClient {
 
     public SeedNullableHttpResponse<Boolean> deleteUser() {
         return deleteUser(DeleteUserRequest.builder().build());
+    }
+
+    public SeedNullableHttpResponse<Boolean> deleteUser(RequestOptions requestOptions) {
+        return deleteUser(DeleteUserRequest.builder().build(), requestOptions);
     }
 
     public SeedNullableHttpResponse<Boolean> deleteUser(DeleteUserRequest request) {

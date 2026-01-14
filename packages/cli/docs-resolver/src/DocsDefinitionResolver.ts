@@ -1126,7 +1126,9 @@ export class DocsDefinitionResolver {
             apiSection: async (value) => this.toApiSectionNode({ item: value, parentSlug }),
             section: async (value) => this.toSectionNode({ prefix, item: value, parentSlug }),
             link: async (value) => this.toLinkNode(value),
-            changelog: async (value) => this.toChangelogNode(value, parentSlug)
+            changelog: async (value) => this.toChangelogNode(value, parentSlug),
+            // Library sections are handled by FDR during registration, returning placeholder
+            pythonDocsSection: async (value) => this.toPythonDocsSectionPlaceholder(value, parentSlug)
         });
     }
 
@@ -1150,7 +1152,9 @@ export class DocsDefinitionResolver {
             section: async (value) =>
                 this.toSectionNode({ prefix, item: value, parentSlug, hideChildren, parentAvailability }),
             link: async (value) => this.toLinkNode(value),
-            changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren)
+            changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren),
+            // Library sections are handled by FDR during registration, returning placeholder
+            pythonDocsSection: async (value) => this.toPythonDocsSectionPlaceholder(value, parentSlug)
         });
     }
 
@@ -1339,6 +1343,88 @@ export class DocsDefinitionResolver {
             url: FernNavigation.V1.Url(item.url),
             icon: this.resolveIconFileId(item.icon),
             target: item.target
+        };
+    }
+
+    /**
+     * Python docs sections are handled by FDR during finishDocsRegister.
+     * The CLI starts the generation job, polls for completion, and passes the jobId to FDR.
+     * FDR then merges the generated Python docs into the navigation.
+     *
+     * In dev mode (fern docs dev), this placeholder returns a visible page with helpful content
+     * explaining that Python library docs are only generated during `fern generate --docs`.
+     *
+     * In production mode, FDR replaces/augments this with the actual generated documentation.
+     */
+    private toPythonDocsSectionPlaceholder(
+        item: docsYml.DocsNavigationItem.PythonDocsSection,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): FernNavigation.V1.PageNode {
+        const title = item.title ?? "Python Reference";
+        const urlSlug = item.slug ?? "python-docs";
+        const slug = parentSlug.apply({ urlSlug });
+
+        // Create a synthetic page ID for the placeholder
+        const syntheticPageId = `__python-docs-placeholder-${urlSlug}__.mdx`;
+        const pageId = FernNavigation.PageId(syntheticPageId);
+
+        // Add placeholder markdown content to parsedDocsConfig.pages
+        const placeholderMarkdown = `---
+title: ${title}
+---
+
+<Warning>
+Python library documentation is not yet supported with \`fern docs dev\`. This feature will be added in a future release. To view the generated documentation, run \`fern generate --docs --preview\`.
+</Warning>
+
+## About Python Library Docs
+
+When you publish your documentation using \`fern generate --docs\`, Fern will:
+
+1. Clone and analyze your Python repository from: \`${item.githubUrl}\`
+2. Parse the Python source code to extract docstrings and type information
+3. Generate comprehensive API reference documentation
+4. Integrate the generated docs into your documentation site
+
+## How to Generate
+
+To generate the full Python library documentation, run:
+
+\`\`\`bash
+fern generate --docs
+\`\`\`
+
+Or to preview without publishing:
+
+\`\`\`bash
+fern generate --docs --preview
+\`\`\`
+
+The generated documentation will replace this placeholder page with complete API reference content including:
+
+- Module and package documentation
+- Class and function references
+- Type annotations and signatures
+- Docstring content
+`;
+
+        this.parsedDocsConfig.pages[RelativeFilePath.of(syntheticPageId)] = placeholderMarkdown;
+
+        const id = this.#idgen.get(pageId);
+        return {
+            id,
+            type: "page",
+            slug: slug.get(),
+            title,
+            icon: undefined,
+            hidden: false,
+            viewers: undefined,
+            orphaned: undefined,
+            pageId,
+            authed: undefined,
+            noindex: true, // Don't index placeholder pages
+            featureFlags: undefined,
+            availability: undefined
         };
     }
 

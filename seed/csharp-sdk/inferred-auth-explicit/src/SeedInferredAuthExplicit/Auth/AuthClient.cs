@@ -3,7 +3,7 @@ using SeedInferredAuthExplicit.Core;
 
 namespace SeedInferredAuthExplicit;
 
-public partial class AuthClient
+public partial class AuthClient : IAuthClient
 {
     private RawClient _client;
 

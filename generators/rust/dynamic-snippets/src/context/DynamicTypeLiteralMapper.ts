@@ -121,8 +121,14 @@ export class DynamicTypeLiteralMapper {
             case "DATE":
                 return rust.Expression.raw('NaiveDate::parse_from_str("2024-01-01", "%Y-%m-%d").unwrap()');
             case "DATE_TIME":
+                if (this.context.getDateTimeType() === "utc") {
+                    return rust.Expression.raw(
+                        'DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap().with_timezone(&Utc)'
+                    );
+                }
+                // Default: DateTime<FixedOffset> - preserves original timezone
                 return rust.Expression.raw(
-                    'DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap().with_timezone(&Utc)'
+                    'DateTime::parse_from_rfc3339("2024-01-01T00:00:00Z").unwrap()'
                 );
             default:
                 return rust.Expression.raw("Default::default()");
@@ -205,17 +211,27 @@ export class DynamicTypeLiteralMapper {
                 if (str == null) {
                     return rust.Expression.raw("Default::default()");
                 }
-                // Parse DateTime: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap().with_timezone(&Utc)
+                // For "utc" config, convert to UTC: DateTime::parse_from_rfc3339("...").unwrap().with_timezone(&Utc)
+                if (this.context.getDateTimeType() === "utc") {
+                    return rust.Expression.methodCall({
+                        target: rust.Expression.methodCall({
+                            target: rust.Expression.functionCall("DateTime::parse_from_rfc3339", [
+                                rust.Expression.stringLiteral(str)
+                            ]),
+                            method: "unwrap",
+                            args: []
+                        }),
+                        method: "with_timezone",
+                        args: [rust.Expression.raw("&Utc")]
+                    });
+                }
+                // Default: DateTime<FixedOffset> - preserves original timezone
                 return rust.Expression.methodCall({
-                    target: rust.Expression.methodCall({
-                        target: rust.Expression.functionCall("DateTime::parse_from_rfc3339", [
-                            rust.Expression.stringLiteral(str)
-                        ]),
-                        method: "unwrap",
-                        args: []
-                    }),
-                    method: "with_timezone",
-                    args: [rust.Expression.raw("&Utc")]
+                    target: rust.Expression.functionCall("DateTime::parse_from_rfc3339", [
+                        rust.Expression.stringLiteral(str)
+                    ]),
+                    method: "unwrap",
+                    args: []
                 });
             }
             case "BASE_64": {

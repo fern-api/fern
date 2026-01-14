@@ -96,13 +96,25 @@ export function visitRawTypeReference<R>({
                 v1: PrimitiveTypeV1.Float,
                 v2: undefined
             });
-        case RawPrimitiveType.long:
+        case RawPrimitiveType.long: {
+            const maybeNumberValidation = validation != null ? (validation as NumberValidationSchema) : undefined;
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Long,
                 v2: PrimitiveTypeV2.long({
-                    default: _default != null ? (_default as number) : undefined
+                    default: _default != null ? (_default as number) : undefined,
+                    validation:
+                        maybeNumberValidation != null
+                            ? {
+                                  min: maybeNumberValidation.min,
+                                  max: maybeNumberValidation.max,
+                                  exclusiveMin: maybeNumberValidation.exclusiveMin,
+                                  exclusiveMax: maybeNumberValidation.exclusiveMax,
+                                  multipleOf: maybeNumberValidation.multipleOf
+                              }
+                            : undefined
                 })
             });
+        }
         case RawPrimitiveType.boolean:
             return visitor.primitive({
                 v1: PrimitiveTypeV1.Boolean,

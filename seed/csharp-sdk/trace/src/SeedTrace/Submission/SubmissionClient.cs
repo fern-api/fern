@@ -3,7 +3,7 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public partial class SubmissionClient
+public partial class SubmissionClient : ISubmissionClient
 {
     private RawClient _client;
 

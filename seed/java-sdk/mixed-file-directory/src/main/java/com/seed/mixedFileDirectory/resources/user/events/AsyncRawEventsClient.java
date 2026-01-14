@@ -44,6 +44,14 @@ public class AsyncRawEventsClient {
      * List all user events.
      */
     public CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<Event>>> listEvents(
+            RequestOptions requestOptions) {
+        return listEvents(ListUserEventsRequest.builder().build(), requestOptions);
+    }
+
+    /**
+     * List all user events.
+     */
+    public CompletableFuture<SeedMixedFileDirectoryHttpResponse<List<Event>>> listEvents(
             ListUserEventsRequest request) {
         return listEvents(request, null);
     }

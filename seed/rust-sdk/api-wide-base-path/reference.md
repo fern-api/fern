@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">post</a>(path_param: String, service_param: String, endpoint_param: i64, resource_param: String) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">post</a>(path_param: String, service_param: String, endpoint_param: i64, resource_param: String) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 

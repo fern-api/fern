@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>$client->search($request) -> SearchResponse</code></summary>
+<details><summary><code>$client-&gt;search($request) -> SearchResponse</code></summary>
 <dl>
 <dd>
 

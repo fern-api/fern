@@ -2,7 +2,7 @@ using SeedPublicObject.Core;
 
 namespace SeedPublicObject;
 
-public partial class SeedPublicObjectClient
+public partial class SeedPublicObjectClient : ISeedPublicObjectClient
 {
     private readonly RawClient _client;
 

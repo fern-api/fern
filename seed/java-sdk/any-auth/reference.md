@@ -71,7 +71,7 @@ client.auth().getToken(
 </details>
 
 ## User
-<details><summary><code>client.user.get() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.get() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
@@ -96,7 +96,7 @@ client.user().get();
 </dl>
 </details>
 
-<details><summary><code>client.user.getAdmins() -> List&lt;User&gt;</code></summary>
+<details><summary><code>client.user.getAdmins() -> List&amp;lt;User&amp;gt;</code></summary>
 <dl>
 <dd>
 
