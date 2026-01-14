@@ -480,9 +480,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     })
                 );
                 writer.writeTextStatement("");
-
-                // Subscribe to _client.PropertyChanged to forward to our PropertyChanged
-                writer.writeTextStatement("_client.PropertyChanged += (sender, e) => PropertyChanged?.Invoke(this, e)");
+                // Note: PropertyChanged event forwarding is handled by the event's add/remove accessors
             }),
             doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" })
         };
@@ -842,7 +840,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             isAsync: true,
             name: "ConnectAsync",
-            return_: this.System.Threading.Tasks.Task(),
+            // Note: Don't specify return_ for async void methods - the AST handles Task return type automatically
             doc: this.csharp.xmlDocBlockOf({
                 summary: "Asynchronously establishes a WebSocket connection."
             }),
@@ -860,7 +858,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             isAsync: true,
             name: "CloseAsync",
-            return_: this.System.Threading.Tasks.Task(),
+            // Note: Don't specify return_ for async void methods - the AST handles Task return type automatically
             doc: this.csharp.xmlDocBlockOf({
                 summary: "Asynchronously closes the WebSocket connection."
             }),
@@ -874,20 +872,29 @@ export class WebSocketClientGenerator extends WithGeneration {
      * Creates the DisposeAsync method for IAsyncDisposable implementation.
      */
     private createDisposeAsyncMethod(cls: ast.Class) {
+        // Note: We don't use isAsync: true because the AST wraps the return type in Task<T>,
+        // but IAsyncDisposable.DisposeAsync() must return ValueTask directly.
+        // Instead, we return a ValueTask that wraps the async operation.
         cls.addMethod({
             access: ast.Access.Public,
-            isAsync: true,
             name: "DisposeAsync",
             return_: this.System.Threading.Tasks.ValueTask(),
             doc: this.csharp.xmlDocBlockOf({
                 summary: "Asynchronously disposes the WebSocket client."
             }),
             body: this.csharp.codeblock((writer) => {
-                writer.writeTextStatement("await _client.DisposeAsync().ConfigureAwait(false)");
+                writer.writeLine("return new ValueTask(DisposeAsyncCore());");
+                writer.writeLine("");
+                writer.writeLine("async Task DisposeAsyncCore()");
+                writer.writeLine("{");
+                writer.indent();
+                writer.writeLine("await _client.DisposeAsync().ConfigureAwait(false);");
                 // Dispose event fields
                 for (const event of this.events) {
-                    writer.writeTextStatement(`${event.name}.Dispose()`);
+                    writer.writeLine(`${event.name}.Dispose();`);
                 }
+                writer.dedent();
+                writer.writeLine("}");
             })
         });
     }
@@ -914,12 +921,26 @@ export class WebSocketClientGenerator extends WithGeneration {
 
     /**
      * Creates the PropertyChanged event for INotifyPropertyChanged implementation.
-     * Note: C# events are written directly as raw code since the AST doesn't support event declarations.
+     * The event is forwarded from the internal _client instance.
      */
     private createPropertyChangedEvent(cls: ast.Class) {
-        // The PropertyChanged event is handled by forwarding from _client in the constructor
-        // The actual event declaration is written as part of the class body
         cls.addNamespaceReference("System.ComponentModel");
+        // Add the PropertyChanged event with add/remove accessors (C# event syntax)
+        cls.addField({
+            origin: cls.explicit("PropertyChanged"),
+            access: ast.Access.Public,
+            type: this.System.ComponentModel.PropertyChangedEventHandler,
+            summary: "Event that is raised when a property value changes.",
+            isEvent: true,
+            accessors: {
+                add: (writer) => {
+                    writer.write("_client.PropertyChanged += value");
+                },
+                remove: (writer) => {
+                    writer.write("_client.PropertyChanged -= value");
+                }
+            }
+        });
     }
 
     /**

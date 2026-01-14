@@ -1,5 +1,5 @@
 // ReSharper disable UnusedMember.Global
-namespace SeedWebsocket.Core.Async.Events;
+namespace SeedWebsocket.Core.WebSockets;
 
 /// <summary>
 /// Wraps an event that can be subscribed to and can be invoked.

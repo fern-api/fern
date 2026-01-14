@@ -1,4 +1,4 @@
-namespace SeedWebsocket.Core.Async;
+namespace SeedWebsocket.Core.WebSockets;
 
 /// <summary>
 /// Represents the current state of an asynchronous connection.

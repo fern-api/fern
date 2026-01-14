@@ -1,9 +1,9 @@
-﻿// ReSharper disable All
+// ReSharper disable All
 #pragma warning disable
 using System.Net.WebSockets;
 using System.Text;
 
-namespace SeedWebsocket.Core.Async;
+namespace SeedWebsocket.Core.WebSockets;
 
 internal partial class WebSocketConnection
 {

@@ -1,6 +1,6 @@
-﻿// ReSharper disable All
+// ReSharper disable All
 // #pragma warning disable
-namespace SeedWebsocket.Core.Async.Models;
+namespace SeedWebsocket.Core.WebSockets;
 
 /// <summary>
 /// Specifies the type of reconnection that occurred in a WebSocket connection.

@@ -1,8 +1,8 @@
-﻿// ReSharper disable All
+// ReSharper disable All
 // #pragma warning disable
 // #pragma warning disable CS8600
 // #pragma warning disable CS8619
-namespace SeedWebsocket.Core.Async.Threading;
+namespace SeedWebsocket.Core.WebSockets;
 
 /// <summary>
 /// Provides a convenient wrapper around SemaphoreSlim that enables easy use of locking inside 'using' blocks.

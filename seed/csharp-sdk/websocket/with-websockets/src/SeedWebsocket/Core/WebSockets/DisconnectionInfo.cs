@@ -1,8 +1,8 @@
-﻿// ReSharper disable All
+// ReSharper disable All
 #pragma warning disable
 using System.Net.WebSockets;
 
-namespace SeedWebsocket.Core.Async.Models;
+namespace SeedWebsocket.Core.WebSockets;
 
 /// <summary>
 /// Contains information about a WebSocket disconnection event.

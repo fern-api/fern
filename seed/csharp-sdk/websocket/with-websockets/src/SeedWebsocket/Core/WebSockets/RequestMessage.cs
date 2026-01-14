@@ -1,6 +1,6 @@
-﻿// ReSharper disable All
+// ReSharper disable All
 // #pragma warning disable
-namespace SeedWebsocket.Core.Async;
+namespace SeedWebsocket.Core.WebSockets;
 
 /// <summary>
 /// Abstract base class for WebSocket request messages.

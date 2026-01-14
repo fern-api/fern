@@ -1,6 +1,6 @@
-﻿// ReSharper disable All
+// ReSharper disable All
 #pragma warning disable
-namespace SeedWebsocket.Core.Async.Exceptions;
+namespace SeedWebsocket.Core.WebSockets;
 
 /// <summary>
 /// Custom exception related to WebSocket connection operations.

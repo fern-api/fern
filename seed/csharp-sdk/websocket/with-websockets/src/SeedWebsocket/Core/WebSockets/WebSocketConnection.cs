@@ -5,11 +5,8 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.IO;
-using SeedWebsocket.Core.Async.Exceptions;
-using SeedWebsocket.Core.Async.Models;
-using SeedWebsocket.Core.Async.Threading;
 
-namespace SeedWebsocket.Core.Async;
+namespace SeedWebsocket.Core.WebSockets;
 
 /// <summary>
 /// A simple websocket client with built-in reconnection and error handling

@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace SeedWebsocket.Core.Async;
+namespace SeedWebsocket.Core.WebSockets;
 
 /// <summary>
 /// Represents a collection of query parameters that can be used to build URL query strings.
