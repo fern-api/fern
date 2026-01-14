@@ -1128,7 +1128,7 @@ export class DocsDefinitionResolver {
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug),
             // Library sections are handled by FDR during registration, returning placeholder
-            librarySection: async () => this.toLibrarySectionPlaceholder(parentSlug)
+            pythonDocsSection: async () => this.toPythonDocsSectionPlaceholder(parentSlug)
         });
     }
 
@@ -1154,7 +1154,7 @@ export class DocsDefinitionResolver {
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren),
             // Library sections are handled by FDR during registration, returning placeholder
-            librarySection: async () => this.toLibrarySectionPlaceholder(parentSlug)
+            pythonDocsSection: async () => this.toPythonDocsSectionPlaceholder(parentSlug)
         });
     }
 
@@ -1347,20 +1347,20 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Library sections are handled by FDR during finishDocsRegister.
+     * Python docs sections are handled by FDR during finishDocsRegister.
      * The CLI starts the generation job, polls for completion, and passes the jobId to FDR.
-     * FDR then merges the generated library docs into the navigation.
+     * FDR then merges the generated Python docs into the navigation.
      *
      * This placeholder returns a hidden section that will be replaced/augmented by FDR.
      */
-    private toLibrarySectionPlaceholder(parentSlug: FernNavigation.V1.SlugGenerator): FernNavigation.V1.SectionNode {
-        // Return a hidden placeholder section - FDR will append the actual library docs
-        const slug = parentSlug.apply({ urlSlug: "library-docs", skipUrlSlug: true });
+    private toPythonDocsSectionPlaceholder(parentSlug: FernNavigation.V1.SlugGenerator): FernNavigation.V1.SectionNode {
+        // Return a hidden placeholder section - FDR will append the actual Python docs
+        const slug = parentSlug.apply({ urlSlug: "python-docs", skipUrlSlug: true });
         return {
             type: "section",
-            id: this.#idgen.get("library-docs-placeholder"),
+            id: this.#idgen.get("python-docs-placeholder"),
             slug: slug.get(),
-            title: "Library Reference",
+            title: "Python Reference",
             collapsed: false,
             hidden: true, // Hidden - actual content comes from FDR
             children: [],

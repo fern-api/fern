@@ -403,37 +403,37 @@ export async function publishDocs({
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
-    // Handle library docs generation if configured
+    // Handle Python docs generation if configured
     let libraryDocsConfig: DocsV2Write.LibraryDocsRegistrationConfig | undefined;
-    const librarySection = extractLibrarySectionFromConfig(docsWorkspace.config);
-    if (librarySection != null) {
+    const pythonDocsSection = extractPythonDocsSectionFromConfig(docsWorkspace.config);
+    if (pythonDocsSection != null) {
         // Config is already deserialized with camelCase properties
-        const githubUrl = librarySection.libraryDocs;
+        const githubUrl = pythonDocsSection.pythonDocs;
 
-        context.logger.info(`Generating library documentation from ${githubUrl}...`);
+        context.logger.info(`Generating Python documentation from ${githubUrl}...`);
 
-        // Start library docs generation
+        // Start Python docs generation
         const startResponse = await fdr.docs.v2.write.startLibraryDocsGeneration({
             orgId: CjsFdrSdk.OrgId(organization),
             githubUrl: CjsFdrSdk.Url(githubUrl),
             language: "PYTHON",
             config: {
-                branch: librarySection.branch,
-                packagePath: librarySection.packagePath,
-                title: librarySection.title,
-                slug: librarySection.slug
+                branch: undefined,
+                packagePath: undefined,
+                title: pythonDocsSection.title,
+                slug: pythonDocsSection.slug
             }
         });
 
         if (!startResponse.ok) {
             return context.failAndThrow(
-                `Failed to start library docs generation for ${githubUrl}`,
+                `Failed to start Python docs generation for ${githubUrl}`,
                 startResponse.error
             );
         }
 
         const jobId = startResponse.body.jobId;
-        context.logger.debug(`Library docs generation started with jobId: ${jobId}`);
+        context.logger.debug(`Python docs generation started with jobId: ${jobId}`);
 
         // Poll for completion
         const POLL_INTERVAL_MS = 3000;
@@ -444,23 +444,23 @@ export async function publishDocs({
             const statusResponse = await fdr.docs.v2.write.getLibraryDocsGenerationStatus(jobId);
 
             if (!statusResponse.ok) {
-                return context.failAndThrow(`Failed to check library docs generation status`, statusResponse.error);
+                return context.failAndThrow(`Failed to check Python docs generation status`, statusResponse.error);
             }
 
             const status = statusResponse.body.status;
-            context.logger.debug(`Library docs generation status: ${status}`);
+            context.logger.debug(`Python docs generation status: ${status}`);
 
             if (status === "COMPLETED") {
-                context.logger.info("Library documentation generation completed.");
+                context.logger.info("Python documentation generation completed.");
                 libraryDocsConfig = {
                     jobId,
-                    slug: librarySection.slug,
-                    title: librarySection.title
+                    slug: pythonDocsSection.slug,
+                    title: pythonDocsSection.title
                 };
                 break;
             } else if (status === "FAILED") {
                 const errorMsg = statusResponse.body.error?.message ?? "Unknown error";
-                return context.failAndThrow(`Library docs generation failed: ${errorMsg}`);
+                return context.failAndThrow(`Python docs generation failed: ${errorMsg}`);
             }
 
             // Wait before next poll
@@ -469,7 +469,7 @@ export async function publishDocs({
         }
 
         if (pollAttempts >= MAX_POLL_ATTEMPTS) {
-            return context.failAndThrow("Library docs generation timed out");
+            return context.failAndThrow("Python docs generation timed out");
         }
     }
 
@@ -1136,41 +1136,41 @@ function extractErrorDetails(error: unknown): Record<string, unknown> {
  * Extracts the first library section configuration from the docs config navigation.
  * Only supports Python libraries for now.
  */
-function extractLibrarySectionFromConfig(
+function extractPythonDocsSectionFromConfig(
     config: docsYml.RawSchemas.DocsConfiguration
-): docsYml.RawSchemas.LibraryReferenceConfiguration | undefined {
+): docsYml.RawSchemas.PythonDocsConfiguration | undefined {
     const navigation = config.navigation;
     if (navigation == null) {
         return undefined;
     }
 
-    // Helper to check if an item is a library reference config
-    // Note: The config is deserialized, so the key is "libraryDocs" (camelCase)
-    const isLibraryConfig = (item: unknown): item is docsYml.RawSchemas.LibraryReferenceConfiguration => {
+    // Helper to check if an item is a Python docs config
+    // Note: The config is deserialized, so the key is "pythonDocs" (camelCase)
+    const isPythonDocsConfig = (item: unknown): item is docsYml.RawSchemas.PythonDocsConfiguration => {
         return (
             item != null &&
             typeof item === "object" &&
-            "libraryDocs" in item &&
-            typeof (item as Record<string, unknown>).libraryDocs === "string"
+            "pythonDocs" in item &&
+            typeof (item as Record<string, unknown>).pythonDocs === "string"
         );
     };
 
     // Helper to recursively search navigation items
-    const findLibrarySectionInItems = (
+    const findPythonDocsSectionInItems = (
         items: unknown[] | undefined
-    ): docsYml.RawSchemas.LibraryReferenceConfiguration | undefined => {
+    ): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
         if (items == null) {
             return undefined;
         }
         for (const item of items) {
-            if (isLibraryConfig(item)) {
+            if (isPythonDocsConfig(item)) {
                 return item;
             }
             // Check in section contents
             if (item != null && typeof item === "object" && "section" in item) {
                 const sectionItem = item as { contents?: unknown[] };
                 if (sectionItem.contents) {
-                    const found = findLibrarySectionInItems(sectionItem.contents);
+                    const found = findPythonDocsSectionInItems(sectionItem.contents);
                     if (found) {
                         return found;
                     }
@@ -1180,7 +1180,7 @@ function extractLibrarySectionFromConfig(
             if (item != null && typeof item === "object" && "tab" in item && "layout" in item) {
                 const tabbedItem = item as { layout?: unknown[] };
                 if (tabbedItem.layout) {
-                    const found = findLibrarySectionInItems(tabbedItem.layout);
+                    const found = findPythonDocsSectionInItems(tabbedItem.layout);
                     if (found) {
                         return found;
                     }
@@ -1196,7 +1196,7 @@ function extractLibrarySectionFromConfig(
 
     // Check if it's an array (simple navigation)
     if (Array.isArray(nav)) {
-        return findLibrarySectionInItems(nav);
+        return findPythonDocsSectionInItems(nav);
     }
 
     // Check if it's an object with tabs or versions
@@ -1209,7 +1209,7 @@ function extractLibrarySectionFromConfig(
                 if (tab != null && typeof tab === "object") {
                     const tabObj = tab as Record<string, unknown>;
                     if (Array.isArray(tabObj.layout)) {
-                        const found = findLibrarySectionInItems(tabObj.layout);
+                        const found = findPythonDocsSectionInItems(tabObj.layout);
                         if (found) {
                             return found;
                         }
@@ -1224,7 +1224,7 @@ function extractLibrarySectionFromConfig(
                 if (version != null && typeof version === "object") {
                     const versionObj = version as Record<string, unknown>;
                     if (Array.isArray(versionObj.navigation)) {
-                        const found = findLibrarySectionInItems(versionObj.navigation);
+                        const found = findPythonDocsSectionInItems(versionObj.navigation);
                         if (found) {
                             return found;
                         }

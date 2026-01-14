@@ -328,13 +328,8 @@ async function collectIconsFromNavigationItem({
                 });
             }
             break;
-        case "librarySection":
-            if (item.icon != null) {
-                await addIconToFilepaths({
-                    iconPath: item.icon,
-                    filepaths
-                });
-            }
+        case "pythonDocsSection":
+            // Python docs sections don't have icons in the minimal first iteration
             break;
     }
 }

@@ -100,7 +100,7 @@ export function visitDocsNavigationItem({
         case "page":
         case "link":
         case "changelog":
-        case "librarySection":
+        case "pythonDocsSection":
             return;
         default:
             assertNever(item);

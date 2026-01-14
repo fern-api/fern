@@ -1086,21 +1086,12 @@ async function convertNavigationItem({
             context
         });
     }
-    if (isRawLibrarySectionConfig(rawConfig)) {
+    if (isRawPythonDocsSectionConfig(rawConfig)) {
         return {
-            type: "librarySection",
-            githubUrl: rawConfig.libraryDocs,
-            branch: rawConfig.branch ?? undefined,
-            packagePath: rawConfig.packagePath ?? undefined,
+            type: "pythonDocsSection",
+            githubUrl: rawConfig.pythonDocs,
             title: rawConfig.title ?? undefined,
-            slug: rawConfig.slug ?? undefined,
-            icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
-            hidden: rawConfig.hidden ?? undefined,
-            collapsed: rawConfig.collapsed ?? undefined,
-            availability: rawConfig.availability ?? undefined,
-            viewers: parseRoles(rawConfig.viewers),
-            orphaned: rawConfig.orphaned,
-            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+            slug: rawConfig.slug ?? undefined
         };
     }
     assertNever(rawConfig);
@@ -1279,8 +1270,8 @@ function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConf
     return isPlainObject(item) && typeof item.folder === "string";
 }
 
-function isRawLibrarySectionConfig(item: unknown): item is docsYml.RawSchemas.LibraryReferenceConfiguration {
-    return isPlainObject(item) && typeof item.libraryDocs === "string";
+function isRawPythonDocsSectionConfig(item: unknown): item is docsYml.RawSchemas.PythonDocsConfiguration {
+    return isPlainObject(item) && typeof item.pythonDocs === "string";
 }
 
 function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceSectionConfiguration {

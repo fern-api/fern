@@ -1347,61 +1347,11 @@
       ],
       "additionalProperties": false
     },
-    "docs.LibraryReferenceConfiguration": {
+    "docs.PythonDocsConfiguration": {
       "type": "object",
       "properties": {
-        "viewers": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "feature-flag": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "library-docs": {
+        "python-docs": {
           "type": "string"
-        },
-        "branch": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "package-path": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
         },
         "title": {
           "oneOf": [
@@ -1422,50 +1372,10 @@
               "type": "null"
             }
           ]
-        },
-        "icon": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "hidden": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "collapsed": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "availability": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Availability"
-            },
-            {
-              "type": "null"
-            }
-          ]
         }
       },
       "required": [
-        "library-docs"
+        "python-docs"
       ],
       "additionalProperties": false
     },
@@ -1675,7 +1585,7 @@
           "$ref": "#/definitions/docs.ApiReferenceConfiguration"
         },
         {
-          "$ref": "#/definitions/docs.LibraryReferenceConfiguration"
+          "$ref": "#/definitions/docs.PythonDocsConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LinkConfiguration"
