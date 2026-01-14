@@ -11,10 +11,8 @@ from .core.http_response import AsyncHttpResponse, HttpResponse
 from .core.http_sse._api import EventSource
 from .core.pydantic_utilities import parse_obj_as
 from .core.request_options import RequestOptions
-from .core.serialization import convert_and_respect_annotation_metadata
 from .types.chat_response import ChatResponse
 from .types.chat_stream_event import ChatStreamEvent
-from .types.message import Message
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -26,12 +24,13 @@ class RawSeedApi:
 
     @contextlib.contextmanager
     def chat_stream(
-        self, *, messages: typing.Sequence[Message], request_options: typing.Optional[RequestOptions] = None
+        self, *, prompt: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[HttpResponse[typing.Iterator[ChatStreamEvent]]]:
         """
         Parameters
         ----------
-        messages : typing.Sequence[Message]
+        prompt : str
+            The user's message
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -45,9 +44,7 @@ class RawSeedApi:
             "chat",
             method="POST",
             json={
-                "messages": convert_and_respect_annotation_metadata(
-                    object_=messages, annotation=typing.Sequence[Message], direction="write"
-                ),
+                "prompt": prompt,
                 "stream": True,
             },
             headers={
@@ -98,12 +95,13 @@ class RawSeedApi:
             yield _stream()
 
     def chat(
-        self, *, messages: typing.Sequence[Message], request_options: typing.Optional[RequestOptions] = None
+        self, *, prompt: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[ChatResponse]:
         """
         Parameters
         ----------
-        messages : typing.Sequence[Message]
+        prompt : str
+            The user's message
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -117,9 +115,7 @@ class RawSeedApi:
             "chat",
             method="POST",
             json={
-                "messages": convert_and_respect_annotation_metadata(
-                    object_=messages, annotation=typing.Sequence[Message], direction="write"
-                ),
+                "prompt": prompt,
                 "stream": False,
             },
             headers={
@@ -150,12 +146,13 @@ class AsyncRawSeedApi:
 
     @contextlib.asynccontextmanager
     async def chat_stream(
-        self, *, messages: typing.Sequence[Message], request_options: typing.Optional[RequestOptions] = None
+        self, *, prompt: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[ChatStreamEvent]]]:
         """
         Parameters
         ----------
-        messages : typing.Sequence[Message]
+        prompt : str
+            The user's message
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -169,9 +166,7 @@ class AsyncRawSeedApi:
             "chat",
             method="POST",
             json={
-                "messages": convert_and_respect_annotation_metadata(
-                    object_=messages, annotation=typing.Sequence[Message], direction="write"
-                ),
+                "prompt": prompt,
                 "stream": True,
             },
             headers={
@@ -222,12 +217,13 @@ class AsyncRawSeedApi:
             yield await _stream()
 
     async def chat(
-        self, *, messages: typing.Sequence[Message], request_options: typing.Optional[RequestOptions] = None
+        self, *, prompt: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[ChatResponse]:
         """
         Parameters
         ----------
-        messages : typing.Sequence[Message]
+        prompt : str
+            The user's message
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -241,9 +237,7 @@ class AsyncRawSeedApi:
             "chat",
             method="POST",
             json={
-                "messages": convert_and_respect_annotation_metadata(
-                    object_=messages, annotation=typing.Sequence[Message], direction="write"
-                ),
+                "prompt": prompt,
                 "stream": False,
             },
             headers={

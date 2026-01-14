@@ -30,9 +30,7 @@ paths:
       x-fern-examples:
         - name: default
           request:
-            messages:
-              - role: user
-                content: "Hello"
+            prompt: "Hello"
           response:
             body:
               message: "Hello! How can I help you?"
@@ -42,26 +40,14 @@ components:
     ChatRequest:
       type: object
       required:
-        - messages
+        - prompt
       properties:
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Message'
+        prompt:
+          type: string
+          description: The user's message
         stream:
           type: boolean
           default: false
-    Message:
-      type: object
-      required:
-        - role
-        - content
-      properties:
-        role:
-          type: string
-          enum: [user, assistant, system]
-        content:
-          type: string
     ChatResponse:
       type: object
       properties:

@@ -12,18 +12,13 @@
 <dd>
 
 ```python
-from seed import Message, SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.chat_stream(
-    messages=[
-        Message(
-            role="user",
-            content="content",
-        )
-    ],
+    prompt="prompt",
 )
 for chunk in response.data:
     yield chunk
@@ -42,7 +37,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**messages:** `typing.Sequence[Message]` 
+**prompt:** `str` — The user's message
     
 </dd>
 </dl>
@@ -75,18 +70,13 @@ for chunk in response.data:
 <dd>
 
 ```python
-from seed import Message, SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 client.chat(
-    messages=[
-        Message(
-            role="user",
-            content="Hello",
-        )
-    ],
+    prompt="Hello",
 )
 
 ```
@@ -103,7 +93,7 @@ client.chat(
 <dl>
 <dd>
 
-**messages:** `typing.Sequence[Message]` 
+**prompt:** `str` — The user's message
     
 </dd>
 </dl>

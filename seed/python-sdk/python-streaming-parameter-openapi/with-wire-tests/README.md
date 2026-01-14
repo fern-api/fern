@@ -35,18 +35,13 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import Message, SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.chat_stream(
-    messages=[
-        Message(
-            role="user",
-            content="content",
-        )
-    ],
+    prompt="prompt",
 )
 for chunk in response.data:
     yield chunk
@@ -59,7 +54,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedApi, Message
+from seed import AsyncSeedApi
 
 client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -68,12 +63,7 @@ client = AsyncSeedApi(
 
 async def main() -> None:
     response = await client.chat_stream(
-        messages=[
-            Message(
-                role="user",
-                content="content",
-            )
-        ],
+        prompt="prompt",
     )
     async for chunk in response.data:
         yield chunk
@@ -102,18 +92,13 @@ except ApiError as e:
 The SDK supports streaming responses, as well, the response will be a generator that you can loop over.
 
 ```python
-from seed import Message, SeedApi
+from seed import SeedApi
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.chat_stream(
-    messages=[
-        Message(
-            role="user",
-            content="content",
-        )
-    ],
+    prompt="prompt",
 )
 for chunk in response.data:
     yield chunk

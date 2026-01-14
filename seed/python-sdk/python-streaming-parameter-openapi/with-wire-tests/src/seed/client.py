@@ -8,7 +8,6 @@ from .core.request_options import RequestOptions
 from .raw_client import AsyncRawSeedApi, RawSeedApi
 from .types.chat_response import ChatResponse
 from .types.chat_stream_event import ChatStreamEvent
-from .types.message import Message
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -80,12 +79,13 @@ class SeedApi:
         return self._raw_client
 
     def chat_stream(
-        self, *, messages: typing.Sequence[Message], request_options: typing.Optional[RequestOptions] = None
+        self, *, prompt: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[ChatStreamEvent]:
         """
         Parameters
         ----------
-        messages : typing.Sequence[Message]
+        prompt : str
+            The user's message
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -97,32 +97,26 @@ class SeedApi:
 
         Examples
         --------
-        from seed import Message, SeedApi
+        from seed import SeedApi
 
         client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.chat_stream(
-            messages=[
-                Message(
-                    role="user",
-                    content="content",
-                )
-            ],
+            prompt="prompt",
         )
         for chunk in response:
             yield chunk
         """
-        with self._raw_client.chat_stream(messages=messages, request_options=request_options) as r:
+        with self._raw_client.chat_stream(prompt=prompt, request_options=request_options) as r:
             yield from r.data
 
-    def chat(
-        self, *, messages: typing.Sequence[Message], request_options: typing.Optional[RequestOptions] = None
-    ) -> ChatResponse:
+    def chat(self, *, prompt: str, request_options: typing.Optional[RequestOptions] = None) -> ChatResponse:
         """
         Parameters
         ----------
-        messages : typing.Sequence[Message]
+        prompt : str
+            The user's message
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -134,21 +128,16 @@ class SeedApi:
 
         Examples
         --------
-        from seed import Message, SeedApi
+        from seed import SeedApi
 
         client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
         )
         client.chat(
-            messages=[
-                Message(
-                    role="user",
-                    content="Hello",
-                )
-            ],
+            prompt="Hello",
         )
         """
-        _response = self._raw_client.chat(messages=messages, request_options=request_options)
+        _response = self._raw_client.chat(prompt=prompt, request_options=request_options)
         return _response.data
 
 
@@ -218,12 +207,13 @@ class AsyncSeedApi:
         return self._raw_client
 
     async def chat_stream(
-        self, *, messages: typing.Sequence[Message], request_options: typing.Optional[RequestOptions] = None
+        self, *, prompt: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[ChatStreamEvent]:
         """
         Parameters
         ----------
-        messages : typing.Sequence[Message]
+        prompt : str
+            The user's message
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -237,7 +227,7 @@ class AsyncSeedApi:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi, Message
+        from seed import AsyncSeedApi
 
         client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
@@ -246,12 +236,7 @@ class AsyncSeedApi:
 
         async def main() -> None:
             response = await client.chat_stream(
-                messages=[
-                    Message(
-                        role="user",
-                        content="content",
-                    )
-                ],
+                prompt="prompt",
             )
             async for chunk in response:
                 yield chunk
@@ -259,17 +244,16 @@ class AsyncSeedApi:
 
         asyncio.run(main())
         """
-        async with self._raw_client.chat_stream(messages=messages, request_options=request_options) as r:
+        async with self._raw_client.chat_stream(prompt=prompt, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk
 
-    async def chat(
-        self, *, messages: typing.Sequence[Message], request_options: typing.Optional[RequestOptions] = None
-    ) -> ChatResponse:
+    async def chat(self, *, prompt: str, request_options: typing.Optional[RequestOptions] = None) -> ChatResponse:
         """
         Parameters
         ----------
-        messages : typing.Sequence[Message]
+        prompt : str
+            The user's message
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -283,7 +267,7 @@ class AsyncSeedApi:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi, Message
+        from seed import AsyncSeedApi
 
         client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
@@ -292,16 +276,11 @@ class AsyncSeedApi:
 
         async def main() -> None:
             await client.chat(
-                messages=[
-                    Message(
-                        role="user",
-                        content="Hello",
-                    )
-                ],
+                prompt="Hello",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.chat(messages=messages, request_options=request_options)
+        _response = await self._raw_client.chat(prompt=prompt, request_options=request_options)
         return _response.data
