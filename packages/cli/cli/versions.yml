@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.41.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-property-name` extension on OpenAPI discriminators. This allows specifying a code-generation-friendly name for discriminant properties that have non-alphanumeric wire values (e.g., `@type`). The extension can be applied directly in the OpenAPI spec or via an overrides file.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 63
+
 - version: 3.40.0
   changelogEntry:
     - summary: |
