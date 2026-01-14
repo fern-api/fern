@@ -42,6 +42,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -168,27 +169,37 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     pendingFieldName = parser.currentName();
                     break;
                 case VALUE_NUMBER_INT:
-                    long longValue = parser.getLongValue();
-                    boolean isOverflow = isIntegerOverflow(longValue);
+                    // Use BigInteger to safely read values that might exceed long range
+                    BigInteger bigValue = parser.getBigIntegerValue();
+                    boolean exceedsLongRange = bigValue.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0
+                            || bigValue.compareTo(BigInteger.valueOf(Long.MIN_VALUE)) < 0;
+                    boolean exceedsIntRange = bigValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0
+                            || bigValue.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0;
 
-                    // Check if this is an "integer" field with overflow value
-                    if ("integer".equals(pendingFieldName) && isOverflow) {
+                    // Check if this is an "integer" field with overflow value (exceeds int range)
+                    if ("integer".equals(pendingFieldName) && exceedsIntRange) {
                         // Rewrite field name from "integer" to "long"
                         generator.writeFieldName("long");
-                        generator.writeNumber(longValue);
+                        if (exceedsLongRange) {
+                            generator.writeNumber(bigValue);
+                        } else {
+                            generator.writeNumber(bigValue.longValue());
+                        }
                         conversions[0]++;
                         log.debug(
                                 "Integer overflow detected in IR example value: {}. Converting to long type.",
-                                longValue);
+                                bigValue);
                     } else {
                         if (pendingFieldName != null) {
                             generator.writeFieldName(pendingFieldName);
                         }
                         // Write as-is, preserving the original type when possible
-                        if (longValue >= Integer.MIN_VALUE && longValue <= Integer.MAX_VALUE) {
-                            generator.writeNumber((int) longValue);
+                        if (!exceedsIntRange) {
+                            generator.writeNumber(bigValue.intValue());
+                        } else if (!exceedsLongRange) {
+                            generator.writeNumber(bigValue.longValue());
                         } else {
-                            generator.writeNumber(longValue);
+                            generator.writeNumber(bigValue);
                         }
                     }
                     pendingFieldName = null;
@@ -232,11 +243,6 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     break;
             }
         }
-    }
-
-    /** Checks if a long value overflows the integer range. */
-    private static boolean isIntegerOverflow(long value) {
-        return value > Integer.MAX_VALUE || value < Integer.MIN_VALUE;
     }
 
     private static void runCommandBlocking(String[] command, Path workingDirectory, Map<String, String> environment) {
