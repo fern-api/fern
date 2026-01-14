@@ -7,7 +7,6 @@ import {
     EndpointResponseExample,
     EndpointWithExample,
     FernOpenapiIr,
-    FullExample,
     GlobalHeader,
     HeaderExample,
     NamedFullExample,
