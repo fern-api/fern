@@ -397,6 +397,5 @@ allowedFailures:
   - response-property
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
-  - python-streaming-parameter-openapi:with-wire-tests # TODO: fix wiremock stub generation for streaming endpoints
   - trace
   - websocket
