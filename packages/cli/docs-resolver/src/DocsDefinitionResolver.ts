@@ -1373,10 +1373,8 @@ export class DocsDefinitionResolver {
 title: ${title}
 ---
 
-# ${title}
-
 <Note>
-This is a placeholder page. Python library documentation is automatically generated when you run \`fern generate --docs\`.
+This is a placeholder page. Python library documentation is automatically generated when you run \`fern generate --docs\` or \`fern generate --docs --preview\`.
 </Note>
 
 ## About Python Library Docs
@@ -1394,6 +1392,12 @@ To generate the full Python library documentation, run:
 
 \`\`\`bash
 fern generate --docs
+\`\`\`
+
+Or to preview without publishing:
+
+\`\`\`bash
+fern generate --docs --preview
 \`\`\`
 
 The generated documentation will replace this placeholder page with complete API reference content including:
