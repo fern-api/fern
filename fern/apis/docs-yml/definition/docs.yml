@@ -1644,6 +1644,7 @@ types:
 
   PlaygroundSettings:
     properties:
+      hidden: optional<boolean>
       environments:
         type: optional<list<string>>
         docs: A list of environment IDs that are allowed to be used in the playground.
