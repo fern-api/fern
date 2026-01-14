@@ -1,6 +1,6 @@
-﻿// ReSharper disable All
+// ReSharper disable All
 // #pragma warning disable
-namespace <%= namespace%>.Async;
+namespace <%= namespace%>.WebSockets;
 
 /// <summary>
 /// Abstract base class for WebSocket request messages.

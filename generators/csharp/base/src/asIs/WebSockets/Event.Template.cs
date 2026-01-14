@@ -1,5 +1,5 @@
 // ReSharper disable UnusedMember.Global
-namespace <%= namespace%>.Async.Events;
+namespace <%= namespace%>.WebSockets;
 
 /// <summary>
 /// Wraps an event that can be subscribed to and can be invoked.

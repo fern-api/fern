@@ -1,4 +1,4 @@
-namespace <%= namespace%>.Async;
+namespace <%= namespace%>.WebSockets;
 
 /// <summary>
 /// Represents the current state of an asynchronous connection.

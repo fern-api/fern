@@ -1,6 +1,6 @@
-﻿// ReSharper disable All
+// ReSharper disable All
 #pragma warning disable
-namespace <%= namespace%>.Async.Models;
+namespace <%= namespace%>.WebSockets;
 
 /// <summary>
 /// Contains information about a WebSocket reconnection event.

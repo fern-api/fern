@@ -310,17 +310,27 @@ export class WebSocketClientGenerator extends WithGeneration {
         const optionsClass = this.csharp.class_({
             reference: this.optionsClassReference,
             doc: this.csharp.xmlDocBlockOf({ summary: "Options for the API client" }),
-            access: ast.Access.Public,
-            parentClassReference: this.Types.AsyncApiOptions
+            access: ast.Access.Public
         });
         this.settings.temporaryWebsocketEnvironments;
 
         const baseUrl = `${this.defaultEnvironment ?? this.websocketChannel.baseUrl ?? ""}`;
 
+        // Add a private backing field for BaseUrl when using environments
+        if (this.hasEnvironments) {
+            optionsClass.addField({
+                origin: optionsClass.explicit("_baseUrl"),
+                access: ast.Access.Private,
+                type: this.Primitive.string,
+                initializer: this.csharp.codeblock((writer) => {
+                    writer.write(`"${baseUrl.replace(/"/g, '\\"')}"`);
+                })
+            });
+        }
+
         optionsClass.addField({
             origin: optionsClass.explicit("BaseUrl"),
             access: ast.Access.Public,
-            override: true,
             type: this.Primitive.string,
             summary: "The Websocket URL for the API connection.",
             get: true,
@@ -333,11 +343,11 @@ export class WebSocketClientGenerator extends WithGeneration {
             accessors: this.hasEnvironments
                 ? {
                       set: (writer: Writer) => {
-                          writer.write(`base.BaseUrl = value`);
+                          writer.write(`_baseUrl = value`);
                       },
                       get: (writer: Writer) => {
                           writer.writeNode(this.classReference);
-                          writer.write(`.Environments.getBaseUrl(base.BaseUrl)`);
+                          writer.write(`.Environments.getBaseUrl(_baseUrl)`);
                       }
                   }
                 : undefined
@@ -353,10 +363,10 @@ export class WebSocketClientGenerator extends WithGeneration {
                 set: true,
                 accessors: {
                     set: (writer: Writer) => {
-                        writer.write(`base.BaseUrl = value`);
+                        writer.write(`_baseUrl = value`);
                     },
                     get: (writer: Writer) => {
-                        writer.write(`base.BaseUrl`);
+                        writer.write(`_baseUrl`);
                     }
                 }
             });
@@ -428,7 +438,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 //
             }),
             doc: this.csharp.xmlDocBlockOf({ summary: "Default constructor" }),
-            baseConstructorCall: this.csharp.invokeMethod({
+            thisConstructorCall: this.csharp.invokeMethod({
                 method: "this",
                 arguments_: [
                     this.csharp.codeblock((writer) => {
@@ -445,60 +455,8 @@ export class WebSocketClientGenerator extends WithGeneration {
     }
 
     /**
-     * Creates property accessors for query parameters.
-     *
-     * Each query parameter becomes a public property that:
-     * - Gets its value from the ApiOptions
-     * - Sets its value with change notification
-     *
-     * @returns Array of property field definitions
-     */
-    private createPropertyAccessors(cls: ast.Class) {
-        for (const pathParameter of this.websocketChannel.pathParameters) {
-            cls.addField({
-                origin: pathParameter,
-                access: ast.Access.Public,
-                type: this.context.csharpTypeMapper.convert({
-                    reference: pathParameter.valueType
-                }),
-                summary: pathParameter.docs ?? "",
-                accessors: {
-                    get: (writer) => {
-                        writer.write(`ApiOptions.${pathParameter.name.pascalCase.safeName}`);
-                    },
-                    set: (writer) => {
-                        writer.write(
-                            `NotifyIfPropertyChanged( EqualityComparer<string>.Default.Equals(ApiOptions.${pathParameter.name.pascalCase.safeName}), ApiOptions.${pathParameter.name.pascalCase.safeName} = value)`
-                        );
-                    }
-                }
-            });
-        }
-
-        for (const queryParameter of this.websocketChannel.queryParameters) {
-            cls.addField({
-                origin: queryParameter,
-                access: ast.Access.Public,
-                type: this.context.csharpTypeMapper.convert({
-                    reference: queryParameter.valueType
-                }),
-                summary: queryParameter.docs ?? "",
-                accessors: {
-                    get: (writer) => {
-                        writer.write(`ApiOptions.${queryParameter.name.name.pascalCase.safeName}`);
-                    },
-                    set: (writer) => {
-                        writer.write(
-                            `NotifyIfPropertyChanged( EqualityComparer<string>.Default.Equals(ApiOptions.${queryParameter.name.name.pascalCase.safeName}), ApiOptions.${queryParameter.name.name.pascalCase.safeName} = value)`
-                        );
-                    }
-                }
-            });
-        }
-    }
-
-    /**
      * Creates a constructor that accepts custom options.
+     * Initializes _options and _client fields with the WebSocket URI and message handler.
      *
      * @returns Constructor definition that takes an Options parameter
      */
@@ -507,17 +465,26 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             parameters: [this.optionsParameter],
             body: this.csharp.codeblock((writer) => {
-                //
-            }),
-            doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" }),
-            baseConstructorCall: this.csharp.invokeMethod({
-                method: "base",
-                arguments_: [
-                    this.csharp.codeblock((writer) => {
-                        writer.write(this.optionsParameter.name);
+                // Initialize _options
+                writer.writeTextStatement(`_options = ${this.optionsParameter.name}`);
+
+                // Build the URI
+                writer.writeLine("var uri = CreateUri();");
+
+                // Initialize _client with URI and OnTextMessage handler
+                writer.write("_client = ");
+                writer.writeNode(
+                    this.csharp.instantiateClass({
+                        classReference: this.Types.WebSocketClient,
+                        arguments_: [this.csharp.codeblock("uri"), this.csharp.codeblock("OnTextMessage")]
                     })
-                ]
-            })
+                );
+                writer.writeTextStatement("");
+
+                // Subscribe to _client.PropertyChanged to forward to our PropertyChanged
+                writer.writeTextStatement("_client.PropertyChanged += (sender, e) => PropertyChanged?.Invoke(this, e)");
+            }),
+            doc: this.csharp.xmlDocBlockOf({ summary: "Constructor with options" })
         };
     }
 
@@ -537,8 +504,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         // - add query parameters for all options
 
         cls.addMethod({
-            access: ast.Access.Protected,
-            override: true,
+            access: ast.Access.Private,
             name: "CreateUri",
             return_: this.System.Uri,
             parameters: [],
@@ -551,7 +517,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 writer.write("var uri = ");
                 writer.writeNode(
                     this.System.UriBuilder.new({
-                        arguments_: [this.csharp.codeblock((writer) => writer.write("BaseUrl"))]
+                        arguments_: [this.csharp.codeblock((writer) => writer.write("_options.BaseUrl"))]
                     })
                 );
 
@@ -568,7 +534,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     writer.pushScope();
                     for (const queryParameter of this.websocketChannel.queryParameters) {
                         writer.write(
-                            `{ "${queryParameter.name.name.originalName}", ${queryParameter.name.name.pascalCase.safeName} },\n`
+                            `{ "${queryParameter.name.name.originalName}", _options.${queryParameter.name.name.pascalCase.safeName} },\n`
                         );
                     }
                     writer.popScope();
@@ -592,7 +558,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     if (pp) {
                         parts.push(
                             this.csharp.codeblock((writer) =>
-                                writer.write(`Uri.EscapeDataString(${pp.name.pascalCase.safeName})`)
+                                writer.write(`Uri.EscapeDataString(_options.${pp.name.pascalCase.safeName})`)
                             )
                         );
                     }
@@ -615,31 +581,6 @@ export class WebSocketClientGenerator extends WithGeneration {
 
                 // return the URI
                 writer.writeTextStatement("return uri.Uri");
-            })
-        });
-    }
-
-    /**
-     * Creates the SetConnectionOptions method for configuring WebSocket connection.
-     *
-     * This method allows customization of the underlying ClientWebSocketOptions
-     * before establishing the connection.
-     *
-     * @returns The SetConnectionOptions method definition
-     */
-    private createSetConnectionOptionsMethod(cls: ast.Class) {
-        cls.addMethod({
-            access: ast.Access.Protected,
-            override: true,
-            name: "SetConnectionOptions",
-            parameters: [
-                this.csharp.parameter({
-                    name: "options",
-                    type: this.System.Net.WebSockets.ClientWebSocketOptions
-                })
-            ],
-            body: this.csharp.codeblock((writer) => {
-                //
             })
         });
     }
@@ -753,8 +694,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      */
     private createOnTextMessageMethod(cls: ast.Class) {
         cls.addMethod({
-            access: ast.Access.Protected,
-            override: true,
+            access: ast.Access.Private,
             isAsync: true,
             name: "OnTextMessage",
             doc: this.csharp.xmlDocBlockOf({
@@ -818,35 +758,12 @@ export class WebSocketClientGenerator extends WithGeneration {
     }
 
     /**
-     * Creates the DisposeEvents method for cleaning up event subscriptions.
-     *
-     * @returns The DisposeEvents method definition
-     */
-    private createDisposeEventsMethod(cls: ast.Class) {
-        cls.addMethod({
-            access: ast.Access.Protected,
-            override: true,
-            name: "DisposeEvents",
-            doc: this.csharp.xmlDocBlockOf({
-                summary: "Disposes of event subscriptions"
-            }),
-            parameters: [],
-            body: this.csharp.codeblock((writer) => {
-                //
-                for (const event of this.events) {
-                    writer.writeTextStatement(`${event.name}.Dispose()`);
-                }
-            })
-        });
-    }
-
-    /**
      * Creates Send methods for each client-to-server message type.
      *
      * Each method:
      * - Accepts a strongly-typed message parameter
      * - Serializes the message to JSON
-     * - Sends it through the WebSocket connection
+     * - Sends it through the WebSocket connection via _client.SendInstant
      *
      * @returns Array of Send method definitions
      */
@@ -867,7 +784,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 }),
 
                 body: this.csharp.codeblock((writer) => {
-                    writer.writeLine(`await SendInstant(`);
+                    writer.writeLine(`await _client.SendInstant(`);
                     writer.writeNode(this.Types.JsonUtils);
                     writer.writeTextStatement(`.Serialize(message)).ConfigureAwait(false)`);
                 })
@@ -900,20 +817,158 @@ export class WebSocketClientGenerator extends WithGeneration {
         }
     }
 
-    private createEnvironmentFields(cls: ast.Class) {
+    /**
+     * Creates the Status property that forwards to _client.Status.
+     */
+    private createStatusProperty(cls: ast.Class) {
         cls.addField({
-            origin: cls.explicit("Environment"),
+            origin: cls.explicit("Status"),
             access: ast.Access.Public,
-            type: this.Primitive.string,
-            summary: "The Environment for the API connection.",
+            type: this.Types.ConnectionStatus,
+            summary: "Gets the current connection status of the WebSocket.",
             accessors: {
                 get: (writer) => {
-                    writer.write(`ApiOptions.Environment`);
-                },
-                set: (writer) => {
-                    writer.write(
-                        `NotifyIfPropertyChanged( EqualityComparer<string>.Default.Equals(ApiOptions.Environment), ApiOptions.Environment = value)`
-                    );
+                    writer.write(`_client.Status`);
+                }
+            }
+        });
+    }
+
+    /**
+     * Creates the ConnectAsync method that forwards to _client.ConnectAsync.
+     */
+    private createConnectAsyncMethod(cls: ast.Class) {
+        cls.addMethod({
+            access: ast.Access.Public,
+            isAsync: true,
+            name: "ConnectAsync",
+            return_: this.System.Threading.Tasks.Task,
+            doc: this.csharp.xmlDocBlockOf({
+                summary: "Asynchronously establishes a WebSocket connection."
+            }),
+            body: this.csharp.codeblock((writer) => {
+                writer.writeTextStatement("await _client.ConnectAsync().ConfigureAwait(false)");
+            })
+        });
+    }
+
+    /**
+     * Creates the CloseAsync method that forwards to _client.CloseAsync.
+     */
+    private createCloseAsyncMethod(cls: ast.Class) {
+        cls.addMethod({
+            access: ast.Access.Public,
+            isAsync: true,
+            name: "CloseAsync",
+            return_: this.System.Threading.Tasks.Task,
+            doc: this.csharp.xmlDocBlockOf({
+                summary: "Asynchronously closes the WebSocket connection."
+            }),
+            body: this.csharp.codeblock((writer) => {
+                writer.writeTextStatement("await _client.CloseAsync().ConfigureAwait(false)");
+            })
+        });
+    }
+
+    /**
+     * Creates the DisposeAsync method for IAsyncDisposable implementation.
+     */
+    private createDisposeAsyncMethod(cls: ast.Class) {
+        cls.addMethod({
+            access: ast.Access.Public,
+            isAsync: true,
+            name: "DisposeAsync",
+            return_: this.System.Threading.Tasks.ValueTask,
+            doc: this.csharp.xmlDocBlockOf({
+                summary: "Asynchronously disposes the WebSocket client."
+            }),
+            body: this.csharp.codeblock((writer) => {
+                writer.writeTextStatement("await _client.DisposeAsync().ConfigureAwait(false)");
+                // Dispose event fields
+                for (const event of this.events) {
+                    writer.writeTextStatement(`${event.name}.Dispose()`);
+                }
+            })
+        });
+    }
+
+    /**
+     * Creates the Dispose method for IDisposable implementation.
+     */
+    private createDisposeMethod(cls: ast.Class) {
+        cls.addMethod({
+            access: ast.Access.Public,
+            name: "Dispose",
+            doc: this.csharp.xmlDocBlockOf({
+                summary: "Disposes the WebSocket client."
+            }),
+            body: this.csharp.codeblock((writer) => {
+                writer.writeTextStatement("_client.Dispose()");
+                // Dispose event fields
+                for (const event of this.events) {
+                    writer.writeTextStatement(`${event.name}.Dispose()`);
+                }
+            })
+        });
+    }
+
+    /**
+     * Creates the PropertyChanged event for INotifyPropertyChanged implementation.
+     */
+    private createPropertyChangedEvent(cls: ast.Class) {
+        cls.addField({
+            origin: cls.explicit("PropertyChanged"),
+            access: ast.Access.Public,
+            type: this.csharp.type({
+                reference: this.System.ComponentModel.PropertyChangedEventHandler,
+                isOptional: true
+            }),
+            summary: "Event that is raised when a property value changes.",
+            isEvent: true
+        });
+
+        // Subscribe to _client.PropertyChanged in constructor
+    }
+
+    /**
+     * Creates event forwarders for Connected, Closed, and ExceptionOccurred from _client.
+     */
+    private createClientEventForwarders(cls: ast.Class) {
+        // Connected event
+        cls.addField({
+            origin: cls.explicit("Connected"),
+            access: ast.Access.Public,
+            type: this.Types.WebSocketEvent(this.Types.WebSocketConnected),
+            summary: "Event that is raised when the WebSocket connection is established.",
+            accessors: {
+                get: (writer) => {
+                    writer.write(`_client.Connected`);
+                }
+            }
+        });
+
+        // Closed event
+        cls.addField({
+            origin: cls.explicit("Closed"),
+            access: ast.Access.Public,
+            type: this.Types.WebSocketEvent(this.Types.WebSocketClosed),
+            summary: "Event that is raised when the WebSocket connection is closed.",
+            accessors: {
+                get: (writer) => {
+                    writer.write(`_client.Closed`);
+                }
+            }
+        });
+
+        // ExceptionOccurred event
+        cls.addField({
+            origin: cls.explicit("ExceptionOccurred"),
+            access: ast.Access.Public,
+            type: this.Types.WebSocketEvent(this.System.Exception),
+            summary: "Event that is raised when an exception occurs during WebSocket operations.",
+            accessors: {
+                get: (writer) => {
+                    writer.write(`_client.ExceptionOccurred`);
                 }
             }
         });
@@ -925,10 +980,11 @@ export class WebSocketClientGenerator extends WithGeneration {
      * Assembles all components into a single class:
      * - Constructors (default and with options)
      * - Nested Options class
-     * - Property accessors for query parameters
-     * - Core WebSocket methods (CreateUri, SetConnectionOptions, etc.)
-     * - Event fields for message handling
+     * - Private _options and _client fields
+     * - Status property forwarded from _client
+     * - Event fields forwarded from _client (Connected, Closed, ExceptionOccurred)
      * - Send methods for outgoing messages
+     * - IAsyncDisposable, IDisposable, INotifyPropertyChanged implementations
      *
      * @returns The complete WebSocket client class definition
      */
@@ -938,7 +994,26 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             partial: true,
             doc: this.websocketChannel.docs ? { summary: this.websocketChannel.docs } : undefined,
-            parentClassReference: this.Types.AsyncApi(this.optionsClassReference)
+            implements_: [
+                this.System.IAsyncDisposable,
+                this.System.IDisposable,
+                this.System.ComponentModel.INotifyPropertyChanged
+            ]
+        });
+
+        // Add private fields for options and client
+        cls.addField({
+            origin: cls.explicit("_options"),
+            access: ast.Access.Private,
+            readonly: true,
+            type: this.optionsClassReference
+        });
+
+        cls.addField({
+            origin: cls.explicit("_client"),
+            access: ast.Access.Private,
+            readonly: true,
+            type: this.Types.WebSocketClient
         });
 
         if (!WebSocketClientGenerator.hasRequiredOptions(this.websocketChannel, this.context)) {
@@ -948,11 +1023,30 @@ export class WebSocketClientGenerator extends WithGeneration {
         cls.addConstructor(this.createConstructorWithOptions());
 
         cls.addNestedClass(this.createOptionsClass());
-        this.createPropertyAccessors(cls);
+
+        // Add Status property forwarded from _client
+        this.createStatusProperty(cls);
+
+        // Add ConnectAsync and CloseAsync methods
+        this.createConnectAsyncMethod(cls);
+        this.createCloseAsyncMethod(cls);
+
+        // Add IAsyncDisposable and IDisposable implementations
+        this.createDisposeAsyncMethod(cls);
+        this.createDisposeMethod(cls);
+
+        // Add INotifyPropertyChanged implementation
+        this.createPropertyChangedEvent(cls);
+
+        // Add event fields forwarded from _client
+        this.createClientEventForwarders(cls);
+
+        // Add CreateUri method (private, used in constructor)
         this.createCreateUriMethod(cls);
-        this.createSetConnectionOptionsMethod(cls);
+
+        // Add OnTextMessage method (private, passed to WebSocketClient constructor)
         this.createOnTextMessageMethod(cls);
-        this.createDisposeEventsMethod(cls);
+
         this.createSendMessageMethods(cls);
         this.createEventFields(cls);
         const environmentsClass = this.createEnvironmentsClass();
@@ -960,9 +1054,6 @@ export class WebSocketClientGenerator extends WithGeneration {
             cls.addNestedClass(environmentsClass);
         }
 
-        if (this.hasEnvironments) {
-            this.createEnvironmentFields(cls);
-        }
         return cls;
     }
 

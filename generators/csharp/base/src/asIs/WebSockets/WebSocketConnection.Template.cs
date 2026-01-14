@@ -2,14 +2,11 @@
 #pragma warning disable
 using System.Net.WebSockets;
 using System.Text;
-using <%= namespace%>.Async.Exceptions;
-using <%= namespace%>.Async.Models;
-using <%= namespace%>.Async.Threading;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.IO;
 
-namespace <%= namespace%>.Async;
+namespace <%= namespace%>.WebSockets;
 
 /// <summary>
 /// A simple websocket client with built-in reconnection and error handling

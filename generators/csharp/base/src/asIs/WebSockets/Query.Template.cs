@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace <%= namespace%>.Async;
+namespace <%= namespace%>.WebSockets;
 
 /// <summary>
 /// Represents a collection of query parameters that can be used to build URL query strings.

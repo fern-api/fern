@@ -1,6 +1,6 @@
-﻿// ReSharper disable All
+// ReSharper disable All
 // #pragma warning disable
-namespace <%= namespace%>.Async.Models;
+namespace <%= namespace%>.WebSockets;
 
 /// <summary>
 /// Specifies the type of reconnection that occurred in a WebSocket connection.
