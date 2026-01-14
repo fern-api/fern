@@ -48,7 +48,9 @@ export function convertObject({
     fullExamples,
     additionalProperties,
     availability,
-    source
+    source,
+    minProperties,
+    maxProperties
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -69,6 +71,8 @@ export function convertObject({
     availability: Availability | undefined;
     encoding: Encoding | undefined;
     source: Source;
+    minProperties: number | undefined;
+    maxProperties: number | undefined;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...getNonIgnoredProperties({ properties, breadcrumbs, context }) };
@@ -304,7 +308,9 @@ export function convertObject({
         additionalProperties,
         availability,
         source,
-        context
+        context,
+        minProperties,
+        maxProperties
     });
 }
 
@@ -324,7 +330,9 @@ export function wrapObject({
     additionalProperties,
     availability,
     source,
-    context
+    context,
+    minProperties,
+    maxProperties
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -342,6 +350,8 @@ export function wrapObject({
     availability: Availability | undefined;
     source: Source;
     context: SchemaParserContext;
+    minProperties: number | undefined;
+    maxProperties: number | undefined;
 }): SchemaWithExample {
     let result: SchemaWithExample = SchemaWithExample.object({
         description,
@@ -357,7 +367,9 @@ export function wrapObject({
         additionalProperties: isAdditionalPropertiesAny(additionalProperties, context.options),
         availability,
         source,
-        inline: undefined
+        inline: undefined,
+        minProperties,
+        maxProperties
     });
     if (wrapAsNullable) {
         result = SchemaWithExample.nullable({

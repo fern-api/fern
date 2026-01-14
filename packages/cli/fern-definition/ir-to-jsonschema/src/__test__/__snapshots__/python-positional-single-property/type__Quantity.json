@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "quantity": {
+      "type": "number"
+    },
+    "type": {
+      "const": "QUANTITY"
+    }
+  },
+  "required": [
+    "quantity",
+    "type"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

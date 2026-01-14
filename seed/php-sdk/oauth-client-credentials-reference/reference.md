@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>$client->auth->getToken($request) -> TokenResponse</code></summary>
+<details><summary><code>$client-&gt;auth-&gt;getToken($request) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -46,7 +46,7 @@ $client->auth->getToken(
 </details>
 
 ## Simple
-<details><summary><code>$client->simple->getSomething()</code></summary>
+<details><summary><code>$client-&gt;simple-&gt;getSomething()</code></summary>
 <dl>
 <dd>
 

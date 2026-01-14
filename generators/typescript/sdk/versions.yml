@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.43.9
+- version: 3.43.12
   changelogEntry:
     - summary: |
         Fix nullable enum query parameters to be dropped when undefined is passed instead of being
@@ -8,7 +8,51 @@
         request as an empty value. Now undefined values remain undefined and are properly dropped
         from the query string.
       type: fix
-  createdAt: "2026-01-12"
+  createdAt: "2026-01-14"
+  irVersion: 63
+
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.11
+  changelogEntry:
+    - summary: Update linters and formatters to latest versions.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.43.10
+  changelogEntry:
+    - summary: |
+        Update Dockerfile to only pre-cache for the default configuration options to reduce image size from 1.45GB to 823MB.
+        The following dependencies are no longer pre-cached:
+        * jest
+        * @types/jest
+        * node-fetch
+        * @types/node-fetch
+        * qs
+        * @types/qs
+        * readable-stream
+        * @types/readable-stream
+        * form-data
+        * formdata-node
+        * jest-environment-jsdom
+        * prettier
+        * oxfmt
+        * oxlint
+        * oxlint-tsgolint
+        * ts-jest
+        * form-data-encoder
+        * fetch-mock-jest
+
+        Additionally, the Dockerfile only pre-caches using pnpm, removing duplicate yarn cache.
+      type: chore
+  createdAt: "2026-01-13"
+  irVersion: 63
+
+- version: 3.43.9
+  changelogEntry:
+    - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
+      type: chore
+  createdAt: "2026-01-13"
   irVersion: 63
 
 - version: 3.43.8

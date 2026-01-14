@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>$client->nullable->getUsers($request) -> array</code></summary>
+<details><summary><code>$client-&gt;nullable-&gt;getUsers($request) -> array</code></summary>
 <dl>
 <dd>
 
@@ -86,7 +86,7 @@ $client->nullable->getUsers(
 </dl>
 </details>
 
-<details><summary><code>$client->nullable->createUser($request) -> User</code></summary>
+<details><summary><code>$client-&gt;nullable-&gt;createUser($request) -> User</code></summary>
 <dl>
 <dd>
 
@@ -169,7 +169,7 @@ $client->nullable->createUser(
 </dl>
 </details>
 
-<details><summary><code>$client->nullable->deleteUser($request) -> bool</code></summary>
+<details><summary><code>$client-&gt;nullable-&gt;deleteUser($request) -> bool</code></summary>
 <dl>
 <dd>
 

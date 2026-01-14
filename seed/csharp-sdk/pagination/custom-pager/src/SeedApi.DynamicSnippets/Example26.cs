@@ -12,9 +12,9 @@ public class Example26
             }
         );
 
-        await client.Users.ListWithOptionalDataAsync(
-            new ListUsersOptionalDataRequest {
-                Page = 1
+        await client.Users.ListUsernamesWithOptionalResponseAsync(
+            new ListUsernamesWithOptionalResponseRequest {
+                StartingAfter = "starting_after"
             }
         );
     }

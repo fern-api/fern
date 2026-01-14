@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -> AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -&gt; AsyncHttpResponse[TokenResponse]</code></summary>
 <dl>
 <dd>
 
@@ -68,7 +68,7 @@ client.auth.get_token(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>() -&gt; AsyncHttpResponse[typing.List[User]]</code></summary>
 <dl>
 <dd>
 
@@ -116,7 +116,7 @@ client.user.get()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_admins</a>() -> AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_admins</a>() -&gt; AsyncHttpResponse[typing.List[User]]</code></summary>
 <dl>
 <dd>
 

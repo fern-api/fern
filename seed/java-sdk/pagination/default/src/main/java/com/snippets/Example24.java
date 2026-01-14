@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
+import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
+import java.util.UUID;
 
 public class Example24 {
     public static void main(String[] args) {
@@ -11,8 +12,8 @@ public class Example24 {
                 .build();
 
         client.users()
-                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
-                        .startingAfter("starting_after")
+                .listWithExtendedResults(ListUsersExtendedRequest.builder()
+                        .cursor(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
                         .build());
     }
 }

@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">create_movie</a>(...) -> AsyncHttpResponse[MovieId]</code></summary>
+<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">create_movie</a>(...) -&gt; AsyncHttpResponse[MovieId]</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.imdb.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">get_movie</a>(...) -> AsyncHttpResponse[Movie]</code></summary>
+<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">get_movie</a>(...) -&gt; AsyncHttpResponse[Movie]</code></summary>
 <dl>
 <dd>
 

@@ -4,7 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { OpenAPI } from "openapi-types";
-
+import { applyOverlays } from "../loaders/applyOverlays";
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides";
 import { parseOpenAPI } from "./parseOpenAPI";
 
@@ -53,11 +53,13 @@ const OPENAPI_EXAMPLES_KEYS = [
 export async function loadOpenAPI({
     context,
     absolutePathToOpenAPI,
-    absolutePathToOpenAPIOverrides
+    absolutePathToOpenAPIOverrides,
+    absolutePathToOpenAPIOverlays
 }: {
     context: TaskContext;
     absolutePathToOpenAPI: AbsoluteFilePath;
     absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
+    absolutePathToOpenAPIOverlays: AbsoluteFilePath | undefined;
 }): Promise<OpenAPI.Document> {
     const parsed = await parseOpenAPI({
         absolutePathToOpenAPI
@@ -86,6 +88,16 @@ export async function loadOpenAPI({
             context,
             data: result,
             allowNullKeys: OPENAPI_EXAMPLES_KEYS
+        });
+    }
+
+    // Apply OpenAPI Overlays (after overrides)
+    if (absolutePathToOpenAPIOverlays != null) {
+        result = await applyOverlays<OpenAPI.Document>({
+            absoluteFilePathToOverlay: absolutePathToOpenAPIOverlays,
+            absoluteFilePathToOpenAPI: absolutePathToOpenAPI,
+            context,
+            data: result
         });
     }
 
@@ -142,10 +154,11 @@ export async function loadOpenAPI({
         // Silently ignore if AI examples override file doesn't exist
     }
 
-    if (overridesFilepath != null || result !== parsed) {
+    if (overridesFilepath != null || absolutePathToOpenAPIOverlays != null || result !== parsed) {
         return await parseOpenAPI({
             absolutePathToOpenAPI,
-            absolutePathToOpenAPIOverrides,
+            absolutePathToOpenAPIOverrides: overridesFilepath,
+            absolutePathToOpenAPIOverlays,
             parsed: result
         });
     }

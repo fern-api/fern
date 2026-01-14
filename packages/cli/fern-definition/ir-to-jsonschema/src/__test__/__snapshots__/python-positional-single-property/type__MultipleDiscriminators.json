@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string"
+    },
+    "type": {
+      "const": "TYPE_A"
+    },
+    "version": {
+      "const": "v1"
+    }
+  },
+  "required": [
+    "value",
+    "type",
+    "version"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

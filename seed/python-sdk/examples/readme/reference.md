@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">echo</a>(...) -> AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">echo</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.echo(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">create_type</a>(...) -> AsyncHttpResponse[Identifier]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">create_type</a>(...) -&gt; AsyncHttpResponse[Identifier]</code></summary>
 <dl>
 <dd>
 
@@ -116,7 +116,7 @@ client.create_type(
 </details>
 
 ## File Notification Service
-<details><summary><code>client.file.notification.service.<a href="src/seed/file/notification/service/client.py">get_exception</a>(...) -> AsyncHttpResponse[Exception]</code></summary>
+<details><summary><code>client.file.notification.service.<a href="src/seed/file/notification/service/client.py">get_exception</a>(...) -&gt; AsyncHttpResponse[Exception]</code></summary>
 <dl>
 <dd>
 
@@ -175,7 +175,7 @@ client.file.notification.service.get_exception(
 </details>
 
 ## File Service
-<details><summary><code>client.file.service.<a href="src/seed/file/service/client.py">get_file</a>(...) -> AsyncHttpResponse[File]</code></summary>
+<details><summary><code>client.file.service.<a href="src/seed/file/service/client.py">get_file</a>(...) -&gt; AsyncHttpResponse[File]</code></summary>
 <dl>
 <dd>
 
@@ -257,7 +257,7 @@ client.file.service.get_file(
 </details>
 
 ## Health Service
-<details><summary><code>client.health.service.<a href="src/seed/health/service/client.py">check</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.health.service.<a href="src/seed/health/service/client.py">check</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -329,7 +329,7 @@ client.health.service.check(
 </dl>
 </details>
 
-<details><summary><code>client.health.service.<a href="src/seed/health/service/client.py">ping</a>() -> AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.health.service.<a href="src/seed/health/service/client.py">ping</a>() -&gt; AsyncHttpResponse[bool]</code></summary>
 <dl>
 <dd>
 
@@ -392,7 +392,7 @@ client.health.service.ping()
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie</a>(...) -> AsyncHttpResponse[Movie]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie</a>(...) -&gt; AsyncHttpResponse[Movie]</code></summary>
 <dl>
 <dd>
 
@@ -450,7 +450,7 @@ client.service.get_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">create_movie</a>(...) -> AsyncHttpResponse[MovieId]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">create_movie</a>(...) -&gt; AsyncHttpResponse[MovieId]</code></summary>
 <dl>
 <dd>
 
@@ -583,7 +583,7 @@ client.service.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_metadata</a>(...) -> AsyncHttpResponse[Metadata]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_metadata</a>(...) -&gt; AsyncHttpResponse[Metadata]</code></summary>
 <dl>
 <dd>
 
@@ -659,7 +659,7 @@ client.service.get_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">create_big_entity</a>(...) -> AsyncHttpResponse[Response]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">create_big_entity</a>(...) -&gt; AsyncHttpResponse[Response]</code></summary>
 <dl>
 <dd>
 
@@ -1029,7 +1029,7 @@ client.service.create_big_entity(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">refresh_token</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">refresh_token</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 

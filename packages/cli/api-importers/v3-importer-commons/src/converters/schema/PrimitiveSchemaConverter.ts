@@ -87,8 +87,8 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: "LONG",
                             v2: PrimitiveTypeV2.long({
-                                default: this.context.getAsNumber(this.schema.default)
-                                // TODO: add validation here
+                                default: this.context.getAsNumber(this.schema.default),
+                                validation: this.getNumberValidation(this.schema)
                             })
                         });
                     case "uint32":
@@ -147,8 +147,8 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: "LONG",
                             v2: PrimitiveTypeV2.long({
-                                default: this.context.getAsNumber(this.schema.default)
-                                // TODO: add validation here
+                                default: this.context.getAsNumber(this.schema.default),
+                                validation: this.getNumberValidation(this.schema)
                             })
                         });
                     case "uint32":

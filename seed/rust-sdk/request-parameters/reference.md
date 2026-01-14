@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username</a>(request: CreateUsernameRequest, tags: Option<Vec<String>>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username</a>(request: CreateUsernameRequest, tags: Option&lt;Vec&lt;String&gt;&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username_with_referenced_type</a>(request: CreateUsernameBody, tags: Option<Vec<String>>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username_with_referenced_type</a>(request: CreateUsernameBody, tags: Option&lt;Vec&lt;String&gt;&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -98,7 +98,6 @@ async fn main() {
 
 ```rust
 use seed_request_parameters::prelude::*;
-use seed_request_parameters::CreateUsernameBody;
 
 #[tokio::main]
 async fn main() {
@@ -147,7 +146,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username_optional</a>(request: Option<Option<CreateUsernameBodyOptionalProperties>>) -> Result<(), ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">create_username_optional</a>(request: Option&lt;Option&lt;CreateUsernameBodyOptionalProperties&gt;&gt;) -> Result&lt;(), ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -161,7 +160,6 @@ async fn main() {
 
 ```rust
 use seed_request_parameters::prelude::*;
-use seed_request_parameters::CreateUsernameBodyOptionalProperties;
 
 #[tokio::main]
 async fn main() {
@@ -192,7 +190,7 @@ async fn main() {
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_username</a>(limit: Option<i64>, id: Option<String>, date: Option<String>, deadline: Option<String>, bytes: Option<String>, user: Option<User>, user_list: Option<Vec<User>>, optional_deadline: Option<Option<String>>, key_value: Option<std::collections::HashMap<String, String>>, optional_string: Option<Option<String>>, nested_user: Option<NestedUser>, optional_user: Option<Option<User>>, long_param: Option<String>, big_int_param: Option<String>) -> Result<User, ApiError></code></summary>
+<details><summary><code>client.user.<a href="/src/api/resources/user/client.rs">get_username</a>(limit: Option&lt;i64&gt;, id: Option&lt;String&gt;, date: Option&lt;String&gt;, deadline: Option&lt;String&gt;, bytes: Option&lt;String&gt;, user: Option&lt;User&gt;, user_list: Option&lt;Vec&lt;User&gt;&gt;, optional_deadline: Option&lt;Option&lt;String&gt;&gt;, key_value: Option&lt;std::collections::HashMap&lt;String, String&gt;&gt;, optional_string: Option&lt;Option&lt;String&gt;&gt;, nested_user: Option&lt;NestedUser&gt;, optional_user: Option&lt;Option&lt;User&gt;&gt;, long_param: Option&lt;String&gt;, big_int_param: Option&lt;String&gt;) -> Result&lt;User, ApiError&gt;</code></summary>
 <dl>
 <dd>
 
@@ -206,7 +204,6 @@ async fn main() {
 
 ```rust
 use seed_request_parameters::prelude::*;
-use seed_request_parameters::{NestedUser, User};
 
 #[tokio::main]
 async fn main() {
