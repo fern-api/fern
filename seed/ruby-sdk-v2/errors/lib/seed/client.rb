@@ -20,4 +20,24 @@ module Seed
       @simple ||= Seed::Simple::Client.new(client: @raw_client)
     end
   end
+
+  class AsyncClient
+    # @param base_url [String, nil]
+    #
+    # @return [void]
+    def initialize(base_url: nil)
+      @raw_client = Seed::Internal::Http::AsyncRawClient.new(
+        base_url: base_url,
+        headers: {
+          "User-Agent" => "fern_errors/0.0.1",
+          "X-Fern-Language" => "Ruby"
+        }
+      )
+    end
+
+    # @return [Seed::Simple::AsyncClient]
+    def simple
+      @simple ||= Seed::Simple::AsyncClient.new(client: @raw_client)
+    end
+  end
 end

@@ -14,6 +14,7 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
 - [Override Section](#override-section)
 - [Generator Invocation Custom Section](#generator-invocation-custom-section)
 - [Usage](#usage)
+- [Async Client](#async-client)
 - [Environments](#environments)
 - [Errors](#errors)
 - [Advanced](#advanced)
@@ -198,6 +199,23 @@ client.service.create_big_entity(
     datetime: '2024-01-15T09:30:00Z'
   }
 );
+```
+
+## Async Client
+
+The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+
+```ruby
+require "seed"
+require "async"
+
+client = Seed::AsyncClient.new(
+base_url: "https://example.com"
+)
+
+Async do
+client.service.create_big_entity
+end.wait
 ```
 
 ## Environments

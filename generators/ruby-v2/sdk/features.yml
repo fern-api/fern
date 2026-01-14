@@ -3,6 +3,10 @@ features:
     description: |
       Instantiate and use the client with the following:
 
+  - id: ASYNC_CLIENT
+    description: |
+      The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+
   - id: ENVIRONMENTS
 
   - id: PAGINATION

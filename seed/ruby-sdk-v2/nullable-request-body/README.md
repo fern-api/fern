@@ -8,6 +8,7 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
 
 - [Reference](#reference)
 - [Usage](#usage)
+- [Async Client](#async-client)
 - [Environments](#environments)
 - [Errors](#errors)
 - [Advanced](#advanced)
@@ -34,6 +35,23 @@ client.test_group.test_method_name(
   path_param: 'path_param',
   body: {}
 );
+```
+
+## Async Client
+
+The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+
+```ruby
+require "seed"
+require "async"
+
+client = Seed::AsyncClient.new(
+base_url: "https://example.com"
+)
+
+Async do
+client.test_group.test_method_name
+end.wait
 ```
 
 ## Environments

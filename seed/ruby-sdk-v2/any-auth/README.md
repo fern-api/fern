@@ -8,10 +8,14 @@ The Seed Ruby library provides convenient access to the Seed APIs from Ruby.
 
 - [Reference](#reference)
 - [Usage](#usage)
+- [Async Client](#async-client)
 - [Environments](#environments)
 - [Errors](#errors)
 - [Advanced](#advanced)
+  - [Retries](#retries)
   - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query Parameters](#additional-query-parameters)
 - [Contributing](#contributing)
 
 ## Reference
@@ -33,6 +37,23 @@ client.auth.get_token(
   audience: 'https://api.example.com',
   grant_type: 'client_credentials'
 );
+```
+
+## Async Client
+
+The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+
+```ruby
+require "seed"
+require "async"
+
+client = Seed::AsyncClient.new(
+base_url: "https://example.com"
+)
+
+Async do
+client.auth.get_token
+end.wait
 ```
 
 ## Environments
@@ -76,6 +97,28 @@ end
 
 ## Advanced
 
+### Retries
+
+The SDK is instrumented with automatic retries. A request will be retried as long as the request is deemed
+retryable and the number of retry attempts has not grown larger than the configured retry limit (default: 2).
+
+A request is deemed retryable when any of the following HTTP status codes is returned:
+
+- [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+- [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+- [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+Use the `max_retries` option to configure this behavior.
+
+```ruby
+require "seed"
+
+client = Seed::Client.new(
+    base_url: "https://example.com",
+    max_retries: 3  # Configure max retries (default is 2)
+)
+```
+
 ### Timeouts
 
 The SDK defaults to a 60 second timeout. Use the `timeout` option to configure this behavior.
@@ -86,6 +129,40 @@ require "seed"
 response = client.auth.get_token(
     ...,
     timeout: 30  # 30 second timeout
+)
+```
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `additional_headers` request option.
+
+```ruby
+require "seed"
+
+response = client.auth.get_token(
+    ...,
+    request_options: {
+        additional_headers: {
+            "X-Custom-Header" => "custom-value"
+        }
+    }
+)
+```
+
+### Additional Query Parameters
+
+If you would like to send additional query parameters as part of the request, use the `additional_query_parameters` request option.
+
+```ruby
+require "seed"
+
+response = client.auth.get_token(
+    ...,
+    request_options: {
+        additional_query_parameters: {
+            "custom_param" => "custom-value"
+        }
+    }
 )
 ```
 

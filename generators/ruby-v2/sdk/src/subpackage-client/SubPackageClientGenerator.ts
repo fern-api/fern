@@ -19,6 +19,7 @@ export declare namespace SubClientGenerator {
 }
 
 const CLIENT_CLASS_NAME = "Client";
+const ASYNC_CLIENT_CLASS_NAME = "AsyncClient";
 
 export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private subpackageId: SubpackageId;
@@ -32,17 +33,48 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
 
     public doGenerate(): RubyFile {
         const rootModule = this.context.getRootModule();
+        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+
+        // Generate sync Client class
+        const syncClientClass = this.generateClientClass(rootModule, isMultiUrl, false);
+
+        // Generate async AsyncClient class
+        const asyncClientClass = this.generateClientClass(rootModule, isMultiUrl, true);
+
+        return new RubyFile({
+            node: ruby.codeblock((writer) => {
+                ruby.comment({ docs: "frozen_string_literal: true" });
+                writer.newLine();
+                // Create fresh modules for each wrapInModules call to avoid mutation issues
+                const syncModules = this.getClientModuleNames().map((name) => ruby.module({ name }));
+                const wrappedSync = ruby.wrapInModules(syncClientClass, syncModules);
+                wrappedSync.write(writer);
+                writer.newLine();
+                writer.newLine();
+                const asyncModules = this.getClientModuleNames().map((name) => ruby.module({ name }));
+                const wrappedAsync = ruby.wrapInModules(asyncClientClass, asyncModules);
+                wrappedAsync.write(writer);
+            }),
+            directory: this.getFilepath(),
+            filename: `client.rb`,
+            customConfig: this.context.customConfig
+        });
+    }
+
+    private generateClientClass(rootModule: ruby.Module_, isMultiUrl: boolean, isAsync: boolean): ruby.Class_ {
+        const className = isAsync ? ASYNC_CLIENT_CLASS_NAME : CLIENT_CLASS_NAME;
+        const rawClientClassReference = isAsync
+            ? this.context.getAsyncRawClientClassReference()
+            : this.context.getRawClientClassReference();
+
         const clientClass = ruby.class_({
-            name: CLIENT_CLASS_NAME
+            name: className
         });
 
-        const modules = this.getClientModuleNames().map((name) => ruby.module({ name }));
-
-        const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         const initializeParams: ruby.KeywordParameter[] = [
             ruby.parameters.keyword({
                 name: "client",
-                type: ruby.Type.class_(this.context.getRawClientClassReference())
+                type: ruby.Type.class_(rawClientClassReference)
             })
         ];
 
@@ -85,7 +117,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             if (!this.context.subPackageHasEndpoints(subpackage)) {
                 continue;
             }
-            clientClass.addMethod(this.getSubpackageClientGetter(subpackage, rootModule));
+            clientClass.addMethod(this.getSubpackageClientGetter(subpackage, rootModule, isAsync));
         }
 
         if (this.subpackage.service != null) {
@@ -94,16 +126,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
             clientClass.addStatements(methods);
         }
 
-        return new RubyFile({
-            node: ruby.codeblock((writer) => {
-                ruby.comment({ docs: "frozen_string_literal: true" });
-                writer.newLine();
-                ruby.wrapInModules(clientClass, modules).write(writer);
-            }),
-            directory: this.getFilepath(),
-            filename: `client.rb`,
-            customConfig: this.context.customConfig
-        });
+        return clientClass;
     }
 
     private getClientModuleNames(): string[] {
@@ -144,14 +167,22 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
         return methods;
     }
 
-    private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
+    private getSubpackageClientGetter(
+        subpackage: FernIr.Subpackage,
+        rootModule: ruby.Module_,
+        isAsync: boolean
+    ): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const clientClassName = isAsync ? ASYNC_CLIENT_CLASS_NAME : CLIENT_CLASS_NAME;
+        const instanceVarName = isAsync
+            ? `async_${subpackage.name.snakeCase.safeName}`
+            : subpackage.name.snakeCase.safeName;
         return new ruby.Method({
             name: subpackage.name.snakeCase.safeName,
             kind: ruby.MethodKind.Instance,
             returnType: ruby.Type.class_(
                 ruby.classReference({
-                    name: "Client",
+                    name: clientClassName,
                     modules: [rootModule.name, subpackage.name.pascalCase.safeName],
                     fullyQualified: true
                 })
@@ -160,17 +191,17 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
                 ruby.codeblock((writer) => {
                     if (isMultiUrl) {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${instanceVarName} ||= ` +
                                 `${this.getClientModuleNames().join("::")}::` +
                                 `${subpackage.name.pascalCase.safeName}::` +
-                                `Client.new(client: @client, base_url: @base_url, environment: @environment)`
+                                `${clientClassName}.new(client: @client, base_url: @base_url, environment: @environment)`
                         );
                     } else {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${instanceVarName} ||= ` +
                                 `${this.getClientModuleNames().join("::")}::` +
                                 `${subpackage.name.pascalCase.safeName}::` +
-                                `Client.new(client: @client)`
+                                `${clientClassName}.new(client: @client)`
                         );
                     }
                 })

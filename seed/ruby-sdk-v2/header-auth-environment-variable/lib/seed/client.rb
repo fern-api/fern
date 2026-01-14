@@ -22,4 +22,26 @@ module Seed
       @service ||= Seed::Service::Client.new(client: @raw_client)
     end
   end
+
+  class AsyncClient
+    # @param base_url [String, nil]
+    # @param header_token_auth [String]
+    #
+    # @return [void]
+    def initialize(base_url: nil, header_token_auth: ENV.fetch("HEADER_TOKEN_ENV_VAR", nil))
+      @raw_client = Seed::Internal::Http::AsyncRawClient.new(
+        base_url: base_url,
+        headers: {
+          "User-Agent" => "fern_header-auth-environment-variable/0.0.1",
+          "X-Fern-Language" => "Ruby",
+          "x-api-key" => "test_prefix #{header_token_auth}"
+        }
+      )
+    end
+
+    # @return [Seed::Service::AsyncClient]
+    def service
+      @service ||= Seed::Service::AsyncClient.new(client: @raw_client)
+    end
+  end
 end

@@ -1,5 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc79
+  createdAt: "2026-01-13"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add async client generation support using the async-http gem. The SDK now generates both
+        synchronous `Client` and asynchronous `AsyncClient` classes. The AsyncClient uses the
+        async-http library for non-blocking HTTP requests wrapped in Async blocks. Both sync and
+        async clients share the same API interface, allowing users to choose based on their
+        concurrency needs. Dependencies on `async` and `async-http` gems are automatically added
+        to the gemspec. The README now includes an "Async Client" section with usage examples
+        showing how to use the AsyncClient with Async blocks.
+  irVersion: 61
+
 - version: 1.0.0-rc78
   changelogEntry:
     - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.

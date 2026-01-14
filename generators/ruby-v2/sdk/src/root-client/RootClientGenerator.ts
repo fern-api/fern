@@ -19,18 +19,29 @@ interface InferredAuthParameter {
 export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     public doGenerate(): RubyFile {
         const rootModule = this.context.getRootModule();
-        const class_ = ruby.class_({ name: this.context.getRootClientClassName() });
 
-        class_.addMethod(this.getInitializeMethod());
-
+        // Generate sync Client class
+        const syncClass = ruby.class_({ name: this.context.getRootClientClassName() });
+        syncClass.addMethod(this.getInitializeMethod(false));
         for (const subpackage of this.getSubpackages()) {
-            // skip subpackages that have no endpoints (recursively)
             if (!this.context.subPackageHasEndpoints(subpackage)) {
                 continue;
             }
-            class_.addMethod(this.getSubpackageClientGetter(subpackage, rootModule));
+            syncClass.addMethod(this.getSubpackageClientGetter(subpackage, rootModule, false));
         }
-        rootModule.addStatement(class_);
+        rootModule.addStatement(syncClass);
+
+        // Generate async AsyncClient class
+        const asyncClass = ruby.class_({ name: this.context.getAsyncRootClientClassName() });
+        asyncClass.addMethod(this.getInitializeMethod(true));
+        for (const subpackage of this.getSubpackages()) {
+            if (!this.context.subPackageHasEndpoints(subpackage)) {
+                continue;
+            }
+            asyncClass.addMethod(this.getSubpackageClientGetter(subpackage, rootModule, true));
+        }
+        rootModule.addStatement(asyncClass);
+
         return new RubyFile({
             node: astNodeToCodeBlockWithComments(rootModule, [Comments.FrozenStringLiteral]),
             directory: this.getDirectory(),
@@ -51,7 +62,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return "client.rb";
     }
 
-    private getInitializeMethod(): ruby.Method {
+    private getInitializeMethod(isAsync: boolean): ruby.Method {
         const parameters: ruby.KeywordParameter[] = [];
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
 
@@ -88,7 +99,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
         const inferredAuth = this.context.getInferredAuth();
         if (inferredAuth != null) {
-            method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth));
+            method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth, isAsync));
         }
 
         if (isMultiUrl) {
@@ -101,11 +112,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         }
 
         const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+        const rawClientClassReference = isAsync
+            ? this.context.getAsyncRawClientClassReference()
+            : this.context.getRawClientClassReference();
 
         method.addStatement(
             ruby.codeblock((writer) => {
                 writer.write(`@raw_client = `);
-                writer.writeNode(this.context.getRawClientClassReference());
+                writer.writeNode(rawClientClassReference);
                 writer.writeLine(`.new(`);
                 writer.indent();
                 if (isMultiUrl) {
@@ -141,7 +155,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return method;
     }
 
-    private getInferredAuthInitializationStatement(scheme: InferredAuthScheme): ruby.AstNode {
+    private getInferredAuthInitializationStatement(scheme: InferredAuthScheme, isAsync: boolean): ruby.AstNode {
         const inferredParams = this.getParametersForInferredAuth(scheme);
 
         // Get the auth service/endpoint info to determine the auth client class
@@ -155,12 +169,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
         const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+        const rawClientClassReference = isAsync
+            ? this.context.getAsyncRawClientClassReference()
+            : this.context.getRawClientClassReference();
 
         return ruby.codeblock((writer) => {
             // Create an unauthenticated raw client for the auth endpoint
             writer.writeLine(`# Create an unauthenticated client for the auth endpoint`);
             writer.write(`auth_raw_client = `);
-            writer.writeNode(this.context.getRawClientClassReference());
+            writer.writeNode(rawClientClassReference);
             writer.writeLine(`.new(`);
             writer.indent();
 
@@ -432,14 +449,22 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return ruby.TypeLiteral.hash(headers);
     }
 
-    private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
+    private getSubpackageClientGetter(
+        subpackage: FernIr.Subpackage,
+        rootModule: ruby.Module_,
+        isAsync: boolean
+    ): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const clientClassName = isAsync ? "AsyncClient" : "Client";
+        const instanceVarName = isAsync
+            ? `async_${subpackage.name.snakeCase.safeName}`
+            : subpackage.name.snakeCase.safeName;
         return new ruby.Method({
             name: subpackage.name.snakeCase.safeName,
             kind: ruby.MethodKind.Instance,
             returnType: ruby.Type.class_(
                 ruby.classReference({
-                    name: "Client",
+                    name: clientClassName,
                     modules: [rootModule.name, subpackage.name.pascalCase.safeName],
                     fullyQualified: true
                 })
@@ -448,17 +473,17 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 ruby.codeblock((writer) => {
                     if (isMultiUrl) {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${instanceVarName} ||= ` +
                                 `${rootModule.name}::` +
                                 `${subpackage.name.pascalCase.safeName}::` +
-                                `Client.new(client: @raw_client, base_url: @base_url, environment: @environment)`
+                                `${clientClassName}.new(client: @raw_client, base_url: @base_url, environment: @environment)`
                         );
                     } else {
                         writer.writeLine(
-                            `@${subpackage.name.snakeCase.safeName} ||= ` +
+                            `@${instanceVarName} ||= ` +
                                 `${rootModule.name}::` +
                                 `${subpackage.name.pascalCase.safeName}::` +
-                                `Client.new(client: @raw_client)`
+                                `${clientClassName}.new(client: @raw_client)`
                         );
                     }
                 })
