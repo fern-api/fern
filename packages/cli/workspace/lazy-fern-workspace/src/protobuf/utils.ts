@@ -1,4 +1,90 @@
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
+import { runExeca } from "@fern-api/logging-execa";
+import { access, cp, rm } from "fs/promises";
+import tmp from "tmp-promise";
+
+/**
+ * Check if an error message indicates a network error.
+ */
+export function isNetworkError(errorMessage: string): boolean {
+    return (
+        errorMessage.includes("server hosted at that remote is unavailable") ||
+        errorMessage.includes("failed to connect") ||
+        errorMessage.includes("network") ||
+        errorMessage.includes("ENOTFOUND") ||
+        errorMessage.includes("ETIMEDOUT") ||
+        errorMessage.includes("TIMEDOUT") ||
+        errorMessage.includes("timed out")
+    );
+}
+
+/**
+ * Detect if we're in an air-gapped environment by trying buf dep update once.
+ * Returns true if air-gapped (network unavailable), false otherwise.
+ */
+export async function detectAirGappedMode(
+    absoluteFilepathToProtobufRoot: AbsoluteFilePath,
+    logger: Logger
+): Promise<boolean> {
+    const bufLockPath = join(absoluteFilepathToProtobufRoot, RelativeFilePath.of("buf.lock"));
+
+    // Check if buf.lock exists (required for air-gapped mode)
+    let bufLockExists = false;
+    try {
+        await access(bufLockPath);
+        bufLockExists = true;
+        logger.debug(`Found buf.lock at: ${bufLockPath}`);
+    } catch {
+        logger.debug(`No buf.lock found at: ${bufLockPath}`);
+    }
+
+    if (!bufLockExists) {
+        // No buf.lock means we need network access - not air-gapped
+        return false;
+    }
+
+    // Try a network check with buf dep update using a 30-second timeout
+    const tmpDir = AbsoluteFilePath.of((await tmp.dir()).path);
+    try {
+        // Copy buf.yaml and buf.lock to temp dir for the test
+        const bufYamlPath = join(absoluteFilepathToProtobufRoot, RelativeFilePath.of("buf.yaml"));
+        try {
+            await cp(bufYamlPath, join(tmpDir, RelativeFilePath.of("buf.yaml")));
+            await cp(bufLockPath, join(tmpDir, RelativeFilePath.of("buf.lock")));
+        } catch {
+            // If we can't copy the files, assume not air-gapped
+            return false;
+        }
+
+        // Try buf dep update with a timeout (30 seconds)
+        try {
+            await runExeca(logger, "buf", ["dep", "update"], {
+                cwd: tmpDir,
+                stdio: "pipe",
+                timeout: 30000 // 30 second timeout for detection
+            });
+            // Network works - not air-gapped
+            logger.debug("Network check succeeded - not in air-gapped mode");
+            return false;
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            if (isNetworkError(errorMessage)) {
+                logger.debug(`Network check failed - entering air-gapped mode: ${errorMessage.substring(0, 100)}`);
+                return true;
+            }
+            // Non-network error - assume not air-gapped
+            return false;
+        }
+    } finally {
+        // Cleanup temp dir and its contents
+        try {
+            await rm(tmpDir, { recursive: true, force: true });
+        } catch {
+            // Ignore cleanup errors
+        }
+    }
+}
 
 export const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 export const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
