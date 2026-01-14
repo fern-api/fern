@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { runExeca } from "@fern-api/logging-execa";
-import { access, cp, unlink } from "fs/promises";
+import { access, cp, rm } from "fs/promises";
 import tmp from "tmp-promise";
 
 /**
@@ -44,7 +44,7 @@ export async function detectAirGappedMode(
         return false;
     }
 
-    // Try a quick network check with buf dep update using a short timeout
+    // Try a network check with buf dep update using a 30-second timeout
     const tmpDir = AbsoluteFilePath.of((await tmp.dir()).path);
     try {
         // Copy buf.yaml and buf.lock to temp dir for the test
@@ -77,10 +77,9 @@ export async function detectAirGappedMode(
             return false;
         }
     } finally {
-        // Cleanup temp dir
+        // Cleanup temp dir and its contents
         try {
-            await unlink(join(tmpDir, RelativeFilePath.of("buf.yaml")));
-            await unlink(join(tmpDir, RelativeFilePath.of("buf.lock")));
+            await rm(tmpDir, { recursive: true, force: true });
         } catch {
             // Ignore cleanup errors
         }

@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { chmod, cp, unlink, writeFile } from "fs/promises";
+import { access, chmod, cp, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
@@ -265,6 +265,15 @@ export class ProtobufIRGenerator {
                 // If we're in air-gapped mode, skip buf dep update entirely
                 if (this.isAirGapped) {
                     this.context.logger.debug("Air-gapped mode: skipping buf dep update");
+                    // Verify buf.lock exists in the working directory (should have been copied from source)
+                    const bufLockPath = join(cwd, RelativeFilePath.of("buf.lock"));
+                    try {
+                        await access(bufLockPath);
+                    } catch {
+                        this.context.failAndThrow(
+                            "Air-gapped mode requires a pre-cached buf.lock file. Please run 'buf dep update' at build time to cache dependencies."
+                        );
+                    }
                 } else {
                     // Run buf dep update to populate the cache (needed at build time)
                     await buf(["dep", "update"]);
