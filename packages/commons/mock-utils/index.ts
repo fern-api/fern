@@ -20,6 +20,7 @@ export interface WireMockMapping {
         method: string;
         pathParameters?: Record<string, { equalTo: string }>;
         formParameters?: Record<string, unknown>;
+        bodyPatterns?: Array<{ matchesJsonPath: string }>;
     };
     response: {
         status: number;
@@ -197,7 +198,11 @@ export class WireMock {
                 urlPathTemplate,
                 method: endpoint.method,
                 pathParameters: Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
-                formParameters: {}
+                formParameters: {},
+                // For SSE endpoints, add body pattern to match stream: true
+                // This allows WireMock to differentiate between streaming and non-streaming requests
+                // when both endpoints share the same URL path
+                bodyPatterns: isSseResponse ? [{ matchesJsonPath: "$[?(@.stream == true)]" }] : undefined
             },
             response: {
                 status,
@@ -208,7 +213,8 @@ export class WireMock {
             },
             uuid,
             persistent: true,
-            priority: 3,
+            // SSE endpoints get higher priority (lower number) so they match first when stream: true
+            priority: isSseResponse ? 2 : 3,
             metadata: {
                 mocklab: {
                     created: {
