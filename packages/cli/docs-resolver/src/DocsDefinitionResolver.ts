@@ -1373,9 +1373,9 @@ export class DocsDefinitionResolver {
 title: ${title}
 ---
 
-<Note>
-This is a placeholder page. Python library documentation is automatically generated when you run \`fern generate --docs\` or \`fern generate --docs --preview\`.
-</Note>
+<Warning>
+Python library documentation is not yet supported with \`fern docs dev\`. This feature will be added in a future release. To view the generated documentation, run \`fern generate --docs --preview\`.
+</Warning>
 
 ## About Python Library Docs
 
@@ -1406,10 +1406,6 @@ The generated documentation will replace this placeholder page with complete API
 - Class and function references
 - Type annotations and signatures
 - Docstring content
-
-## Local Development
-
-During local development with \`fern docs dev\`, this placeholder is shown because the Python documentation generation requires server-side processing that is only available during the full docs generation process.
 `;
 
         this.parsedDocsConfig.pages[RelativeFilePath.of(syntheticPageId)] = placeholderMarkdown;
