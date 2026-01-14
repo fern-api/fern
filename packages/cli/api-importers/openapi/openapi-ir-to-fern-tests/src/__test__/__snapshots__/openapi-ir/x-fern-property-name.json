@@ -45,6 +45,108 @@
           "type": "openapi"
         },
         "type": "object"
+      },
+      "DataDataSourceOptions": {
+        "value": {
+          "commonProperties": [],
+          "description": "Options specific to data requests for DL+ subscribers.",
+          "discriminantProperty": "@type",
+          "discriminantPropertyNameOverride": "type",
+          "generatedName": "DataDataSourceOptions",
+          "schemas": {
+            "DataDlPlus": {
+              "generatedName": "ComponentsSchemasDataDlPlusOptions",
+              "schema": "DataDlPlusOptions",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "DataDl": {
+              "generatedName": "ComponentsSchemasDataDlOptions",
+              "schema": "DataDlOptions",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            }
+          },
+          "groupName": [],
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "discriminated"
+        },
+        "type": "oneOf"
+      },
+      "DataDlPlusOptions": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "dataDlPlusOptionsDlPlusFeature",
+            "key": "dlPlusFeature",
+            "schema": {
+              "generatedName": "DataDlPlusOptionsDlPlusFeature",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "DataDlPlusOptionsDlPlusFeature",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "DataDlPlusOptions",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "DataDlOptions": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "dataDlOptionsDlFeature",
+            "key": "dlFeature",
+            "schema": {
+              "generatedName": "DataDlOptionsDlFeature",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "DataDlOptionsDlFeature",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "DataDlOptions",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
       }
     },
     "namespacedSchemas": {}

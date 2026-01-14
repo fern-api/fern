@@ -25,6 +25,43 @@
               "openapi": "../openapi.yml",
             },
           },
+          "DataDataSourceOptions": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": {
+              "name": "type",
+              "value": "@type",
+            },
+            "docs": "Options specific to data requests for DL+ subscribers.",
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "DataDl": "DataDlOptions",
+              "DataDlPlus": "DataDlPlusOptions",
+            },
+          },
+          "DataDlOptions": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "dlFeature": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "DataDlPlusOptions": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "dlPlusFeature": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
         },
       },
       "rawContents": "types:
@@ -35,6 +72,27 @@
         validation:
           format: uuid
         name: renamed_id
+    source:
+      openapi: ../openapi.yml
+  DataDataSourceOptions:
+    discriminant:
+      name: type
+      value: '@type'
+    base-properties: {}
+    docs: Options specific to data requests for DL+ subscribers.
+    union:
+      DataDlPlus: DataDlPlusOptions
+      DataDl: DataDlOptions
+    source:
+      openapi: ../openapi.yml
+  DataDlPlusOptions:
+    properties:
+      dlPlusFeature: optional<string>
+    source:
+      openapi: ../openapi.yml
+  DataDlOptions:
+    properties:
+      dlFeature: optional<string>
     source:
       openapi: ../openapi.yml
 ",

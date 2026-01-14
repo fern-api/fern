@@ -12,3 +12,33 @@ components:
           x-fern-property-name: renamed_id
           type: string
           format: uuid
+    DataDataSourceOptions:
+      type: object
+      description: Options specific to data requests for DL+ subscribers.
+      oneOf:
+        - $ref: "#/components/schemas/DataDlPlusOptions"
+        - $ref: "#/components/schemas/DataDlOptions"
+      discriminator:
+        propertyName: "@type"
+        x-fern-property-name: type
+        mapping:
+          DataDlPlus: "#/components/schemas/DataDlPlusOptions"
+          DataDl: "#/components/schemas/DataDlOptions"
+    DataDlPlusOptions:
+      type: object
+      properties:
+        "@type":
+          type: string
+        dlPlusFeature:
+          type: string
+      required:
+        - "@type"
+    DataDlOptions:
+      type: object
+      properties:
+        "@type":
+          type: string
+        dlFeature:
+          type: string
+      required:
+        - "@type"
