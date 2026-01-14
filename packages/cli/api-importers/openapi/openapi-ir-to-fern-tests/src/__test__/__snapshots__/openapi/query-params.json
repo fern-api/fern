@@ -14,6 +14,20 @@
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "filter": {
+                      "age": 30,
+                      "location": {
+                        "city": "New York",
+                        "coordinates": {
+                          "latitude": 40.7128,
+                          "longitude": -74.006,
+                        },
+                        "country": "USA",
+                      },
+                      "name": "John",
+                    },
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -202,7 +216,17 @@ service:
         type: SearchResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            filter:
+              name: John
+              age: 30
+              location:
+                city: New York
+                country: USA
+                coordinates:
+                  latitude: 40.7128
+                  longitude: -74.006
+          response:
             body:
               results:
                 - results
