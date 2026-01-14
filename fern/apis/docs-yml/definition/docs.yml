@@ -179,6 +179,16 @@ types:
 
       "ai-search": optional<AIChatConfig>
 
+      # ai examples
+      "ai-examples":
+        type: optional<boolean>
+        docs: |
+          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+      "ai-example-style-instructions":
+        type: optional<string>
+        docs: |
+          Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
+
       # seo
       metadata: optional<MetadataConfig>
       redirects: optional<list<RedirectConfig>>
@@ -1631,16 +1641,6 @@ types:
           By default, SDK snippets are static code examples that are displayed in your API Reference. Alternatively, you can use dynamic SDK snippets that allow users to modify parameters and see code examples update in real time.
 
           Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
-      ai-examples:
-        type: optional<boolean>
-        availability: pre-release
-        docs: |
-          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
-      ai-example-style-instructions:
-        type: optional<string>
-        availability: pre-release
-        docs: |
-          Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
   PlaygroundSettings:
     properties:

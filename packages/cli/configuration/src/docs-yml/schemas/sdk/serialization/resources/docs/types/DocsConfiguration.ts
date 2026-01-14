@@ -57,6 +57,11 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     languages: core.serialization.list(Language).optional(),
     aiChat: core.serialization.property("ai-chat", AiChatConfig.optional()),
     aiSearch: core.serialization.property("ai-search", AiChatConfig.optional()),
+    aiExamples: core.serialization.property("ai-examples", core.serialization.boolean().optional()),
+    aiExampleStyleInstructions: core.serialization.property(
+        "ai-example-style-instructions",
+        core.serialization.string().optional(),
+    ),
     metadata: MetadataConfig.optional(),
     redirects: core.serialization.list(RedirectConfig).optional(),
     logo: LogoConfiguration.optional(),
@@ -92,6 +97,8 @@ export declare namespace DocsConfiguration {
         languages?: Language.Raw[] | null;
         "ai-chat"?: AiChatConfig.Raw | null;
         "ai-search"?: AiChatConfig.Raw | null;
+        "ai-examples"?: boolean | null;
+        "ai-example-style-instructions"?: string | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectConfig.Raw[] | null;
         logo?: LogoConfiguration.Raw | null;
