@@ -43,8 +43,16 @@ export async function visitDocsConfigFileYamlAst({
         analytics: noop,
         aiChat: noop,
         aiSearch: noop,
-        aiExamples: noop,
-        aiExampleStyleInstructions: noop,
+        aiExamples: async (aiExamples) => {
+            // Handle nested structure (new format)
+            if (aiExamples != null && typeof aiExamples === "object") {
+                await visitObjectAsync(aiExamples, {
+                    enabled: noop,
+                    style: noop
+                });
+            }
+            // If it's a boolean, it's the old format which is handled by noop
+        },
         pageActions: noop,
         announcement: noop,
         backgroundImage: async (background) => {

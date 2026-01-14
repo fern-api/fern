@@ -261,8 +261,7 @@ export async function publishDocs({
 
             const aiEnhancerConfig = getAIEnhancerConfig(
                 withAiExamples,
-                docsWorkspace.config.aiExampleStyleInstructions ??
-                    docsWorkspace.config.experimental?.aiExampleStyleInstructions
+                docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
             );
             if (aiEnhancerConfig && workspace) {
                 const sources = workspace.getSources();

@@ -134,6 +134,17 @@ types:
   #   properties:
   #     app-id: string
 
+  AiExamplesConfig:
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: |
+          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+      style:
+        type: optional<string>
+        docs: |
+          Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
+
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
@@ -181,13 +192,9 @@ types:
 
       # ai examples
       "ai-examples":
-        type: optional<boolean>
+        type: optional<AiExamplesConfig>
         docs: |
-          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
-      "ai-example-style-instructions":
-        type: optional<string>
-        docs: |
-          Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
+          Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
 
       # seo
       metadata: optional<MetadataConfig>

@@ -2,10 +2,7 @@
 - version: 3.40.2
   changelogEntry:
     - summary: |
-        Move `ai-examples` and `ai-example-style-instructions` configuration options from `experimental` to the top-level `docs.yml` configuration. These options are now stable and can be used directly in `docs.yml` without the `experimental` prefix. The experimental location is still supported for backward compatibility.
-      type: feat
-    - summary: |
-        Remove the "new feature added (experimental)" log message from AI example enhancement since the feature is now stable.
+        Support `ai-examples` and `ai-example-style-instructions` configuration options from `experimental` with the new `enabled` and `style`, under `ai-examples` in the top-level `docs.yml` configuration.
       type: chore
   createdAt: "2026-01-14"
   irVersion: 63
