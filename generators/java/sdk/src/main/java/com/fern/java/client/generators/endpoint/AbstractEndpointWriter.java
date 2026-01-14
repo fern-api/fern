@@ -17,6 +17,8 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fern.ir.model.environment.EnvironmentBaseUrlId;
+import com.fern.ir.model.auth.AuthSchemeKey;
+import com.fern.ir.model.auth.AuthScope;
 import com.fern.ir.model.http.*;
 import com.fern.ir.model.types.*;
 import com.fern.java.client.ClientGeneratorContext;
@@ -55,6 +57,7 @@ public abstract class AbstractEndpointWriter {
     public static final String APPLICATION_JSON_HEADER = "application/json";
     public static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
     public static final String REQUEST_BUILDER_NAME = "_requestBuilder";
+    public static final String MERGE_HEADERS_METHOD_NAME = "mergeHeaders";
     private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
     private final GeneratedClientOptions generatedClientOptions;
@@ -1052,5 +1055,55 @@ public abstract class AbstractEndpointWriter {
                 return Optional.empty();
             }
         });
+    }
+
+    protected CodeBlock getEndpointMetadataCodeBlock(HttpEndpoint endpoint) {
+        ClassName endpointMetadataClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("EndpointMetadata");
+
+        if (endpoint.getSecurity().isEmpty() || endpoint.getSecurity().get().isEmpty()) {
+            return CodeBlock.of("$T.empty()", endpointMetadataClassName);
+        }
+
+        CodeBlock.Builder securityListBuilder = CodeBlock.builder();
+        securityListBuilder.add("new $T($T.asList(", endpointMetadataClassName, java.util.Arrays.class);
+
+        List<HttpEndpointSecurityItem> securityItems = endpoint.getSecurity().get();
+        boolean firstItem = true;
+        for (HttpEndpointSecurityItem item : securityItems) {
+            if (!firstItem) {
+                securityListBuilder.add(", ");
+            }
+            firstItem = false;
+
+            Map<AuthSchemeKey, List<AuthScope>> schemeMap = item.get();
+
+            securityListBuilder.add("$T.of(", java.util.Map.class);
+            boolean firstScheme = true;
+            for (Map.Entry<AuthSchemeKey, List<AuthScope>> entry : schemeMap.entrySet()) {
+                if (!firstScheme) {
+                    securityListBuilder.add(", ");
+                }
+                firstScheme = false;
+
+                String schemeKey = entry.getKey().get();
+                List<AuthScope> scopes = entry.getValue();
+
+                securityListBuilder.add("$S, $T.of(", schemeKey, java.util.List.class);
+                boolean firstScope = true;
+                for (AuthScope scope : scopes) {
+                    if (!firstScope) {
+                        securityListBuilder.add(", ");
+                    }
+                    firstScope = false;
+                    securityListBuilder.add("$S", scope.get());
+                }
+                securityListBuilder.add(")");
+            }
+            securityListBuilder.add(")");
+        }
+        securityListBuilder.add("))");
+
+        return securityListBuilder.build();
     }
 }

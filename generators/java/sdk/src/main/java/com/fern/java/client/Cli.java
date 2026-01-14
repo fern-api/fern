@@ -8,6 +8,9 @@ import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.BasicAuthScheme;
+import com.fern.ir.model.auth.BearerAuthScheme;
+import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.ir.model.auth.InferredAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
@@ -49,6 +52,12 @@ import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.SyncRootClientGenerator;
 import com.fern.java.client.generators.SyncSubpackageClientGenerator;
 import com.fern.java.client.generators.TestGenerator;
+import com.fern.java.client.generators.auth.AuthProviderGenerator;
+import com.fern.java.client.generators.auth.BasicAuthProviderGenerator;
+import com.fern.java.client.generators.auth.BearerAuthProviderGenerator;
+import com.fern.java.client.generators.auth.EndpointMetadataGenerator;
+import com.fern.java.client.generators.auth.HeaderAuthProviderGenerator;
+import com.fern.java.client.generators.auth.RoutingAuthProviderGenerator;
 import com.fern.java.client.generators.websocket.AsyncWebSocketChannelWriter;
 import com.fern.java.client.generators.websocket.SyncWebSocketChannelWriter;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
@@ -372,6 +381,37 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         SuppliersGenerator suppliersGenerator = new SuppliersGenerator(context);
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();
         this.addGeneratedFile(generatedSuppliersFile);
+
+        if (context.isEndpointSecurity()) {
+            log(generatorExecClient, "Generating auth provider infrastructure for endpoint security");
+
+            AuthProviderGenerator authProviderGenerator = new AuthProviderGenerator(context);
+            this.addGeneratedFile(authProviderGenerator.generateFile());
+
+            EndpointMetadataGenerator endpointMetadataGenerator = new EndpointMetadataGenerator(context);
+            this.addGeneratedFile(endpointMetadataGenerator.generateFile());
+
+            RoutingAuthProviderGenerator routingAuthProviderGenerator = new RoutingAuthProviderGenerator(context);
+            this.addGeneratedFile(routingAuthProviderGenerator.generateFile());
+
+            for (AuthScheme authScheme : context.getResolvedAuthSchemes()) {
+                authScheme.getBearer().ifPresent(bearerScheme -> {
+                    BearerAuthProviderGenerator bearerGenerator = new BearerAuthProviderGenerator(context, bearerScheme);
+                    this.addGeneratedFile(bearerGenerator.generateFile());
+                });
+
+                authScheme.getBasic().ifPresent(basicScheme -> {
+                    BasicAuthProviderGenerator basicGenerator = new BasicAuthProviderGenerator(context, basicScheme);
+                    this.addGeneratedFile(basicGenerator.generateFile());
+                });
+
+                authScheme.getHeader().ifPresent(headerScheme -> {
+                    String schemeName = headerScheme.getName().getName().getPascalCase().getSafeName();
+                    HeaderAuthProviderGenerator headerGenerator = new HeaderAuthProviderGenerator(context, headerScheme, schemeName);
+                    this.addGeneratedFile(headerGenerator.generateFile());
+                });
+            }
+        }
 
         HttpResponseGenerator httpResponseGenerator = new HttpResponseGenerator(context);
         this.addGeneratedFile(httpResponseGenerator.generateFile());

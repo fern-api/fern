@@ -134,18 +134,35 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             sdkRequestBodyType.visit(
                     new RequestBodyInitializer(builder, generatedObjectMapper, endpoint, sendContentType, contentType));
 
+            if (clientGeneratorContext.isEndpointSecurity()) {
+                builder.add("$T<String, String> _headers = new $T<>($L.$L($L));\n",
+                        java.util.Map.class,
+                        java.util.HashMap.class,
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                builder.add("_headers.putAll($L.$L($L));\n",
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.AUTH_HEADERS_METHOD_NAME,
+                        getEndpointMetadataCodeBlock(httpEndpoint));
+            }
+
             builder.add("$T $L = new $T.Builder()\n", Request.class, variables.getOkhttpRequestName(), Request.class)
                     .indent()
                     .add(".url(")
                     .add(inlineableHttpUrl)
                     .add(")\n")
-                    .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName())
-                    .add(
-                            ".headers($T.of($L.$L($L)))\n",
-                            Headers.class,
-                            clientOptionsMember.name,
-                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                    .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName());
+            if (clientGeneratorContext.isEndpointSecurity()) {
+                builder.add(".headers($T.of(_headers))\n", Headers.class);
+            } else {
+                builder.add(
+                        ".headers($T.of($L.$L($L)))\n",
+                        Headers.class,
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            }
             if (sendContentType) {
                 sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<Void>() {
 
@@ -176,18 +193,36 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             .build())
                     .visit(new RequestBodyInitializer(
                             builder, generatedObjectMapper, endpoint, sendContentType, contentType));
+
+            if (clientGeneratorContext.isEndpointSecurity()) {
+                builder.add("$T<String, String> _headers = new $T<>($L.$L($L));\n",
+                        java.util.Map.class,
+                        java.util.HashMap.class,
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                builder.add("_headers.putAll($L.$L($L));\n",
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.AUTH_HEADERS_METHOD_NAME,
+                        getEndpointMetadataCodeBlock(httpEndpoint));
+            }
+
             builder.add("$T $L = new $T.Builder()\n", Request.class, variables.getOkhttpRequestName(), Request.class)
                     .indent()
                     .add(".url(")
                     .add(inlineableHttpUrl)
                     .add(")\n")
-                    .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName())
-                    .add(
-                            ".headers($T.of($L.$L($L)))\n",
-                            Headers.class,
-                            clientOptionsMember.name,
-                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                    .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName());
+            if (clientGeneratorContext.isEndpointSecurity()) {
+                builder.add(".headers($T.of(_headers))\n", Headers.class);
+            } else {
+                builder.add(
+                        ".headers($T.of($L.$L($L)))\n",
+                        Headers.class,
+                        clientOptionsMember.name,
+                        ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                        AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+            }
             if (sendContentType) {
                 builder.add(".addHeader($S, $S)\n", AbstractEndpointWriter.CONTENT_TYPE_HEADER, contentType);
             }

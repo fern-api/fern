@@ -66,9 +66,11 @@ import com.squareup.javapoet.TypeVariableName;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import javax.lang.model.element.Modifier;
 import okhttp3.OkHttpClient;
 
@@ -269,7 +271,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 }));
 
         // Always use staged builder when OAuth client credentials are present (token override is always enabled)
-        boolean useStagedBuilder = hasOAuthClientCredentials && !isExtensible;
+        boolean useStagedBuilder = hasOAuthClientCredentials && !isExtensible && !generatorContext.isEndpointSecurity();
 
         if (isExtensible) {
             ClassName implClassName = builderName.nestedClass("Impl");
@@ -393,8 +395,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 }));
 
         // Always use staged builder pattern when OAuth client credentials are present (token override is always
-        // enabled)
-        boolean useStagedBuilder = hasOAuthClientCredentials && !isExtensible;
+        boolean useStagedBuilder = hasOAuthClientCredentials && !isExtensible && !generatorContext.isEndpointSecurity();
 
         TypeSpec.Builder clientBuilder;
         if (isExtensible) {
@@ -508,6 +509,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             .docs(httpHeader.getDocs())
                             .build());
                 });
+            }
+
+            if (generatorContext.isEndpointSecurity() && configureAuthBuilder != null) {
+                authSchemeHandler.addRoutingAuthProviderSetup();
             }
         }
 
@@ -888,6 +893,27 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         private final boolean isMandatory;
         private final boolean isExtensible;
         private final boolean useStagedBuilder;
+        private final List<AuthProviderInfo> authProviderInfos = new ArrayList<>();
+        private final Set<String> createdFields = new HashSet<>();
+
+        private class AuthProviderInfo {
+            final String schemeKey;
+            final String providerClass;
+            final String fieldName;
+            final String secondaryFieldName;
+            final String envVarHint;
+            final boolean isBasicAuth;
+
+            AuthProviderInfo(String schemeKey, String providerClass, String fieldName,
+                           String secondaryFieldName, String envVarHint, boolean isBasicAuth) {
+                this.schemeKey = schemeKey;
+                this.providerClass = providerClass;
+                this.fieldName = fieldName;
+                this.secondaryFieldName = secondaryFieldName;
+                this.envVarHint = envVarHint;
+                this.isBasicAuth = isBasicAuth;
+            }
+        }
 
         private AuthSchemeHandler(
                 TypeSpec.Builder clientBuilder,
@@ -900,7 +926,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             this.buildMethod = buildMethod;
             this.configureAuthMethod = configureAuthMethod;
             this.configureCustomHeadersMethod = configureCustomHeadersMethod;
-            this.isMandatory = clientGeneratorContext.getIr().getSdkConfig().getIsAuthMandatory();
+            this.isMandatory = clientGeneratorContext.getIr().getSdkConfig().getIsAuthMandatory()
+                    && !generatorContext.isEndpointSecurity();
             this.isExtensible = isExtensible;
             this.useStagedBuilder = useStagedBuilder;
         }
@@ -923,7 +950,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow();
             }
 
-            if (this.configureAuthMethod != null) {
+            // For ENDPOINT_SECURITY, track auth info instead of adding headers directly
+            if (generatorContext.isEndpointSecurity()) {
+                String envVarHint = bearer.getTokenEnvVar()
+                        .map(env -> "Please provide " + fieldName + " via ." + fieldName + "() or set "
+                                + env.get() + " environment variable")
+                        .orElse("Please provide " + fieldName + " via ." + fieldName + "()");
+                authProviderInfos.add(new AuthProviderInfo("Bearer", "BearerAuthProvider", fieldName, null,
+                        envVarHint, false));
+            } else if (this.configureAuthMethod != null) {
                 this.configureAuthMethod
                         .beginControlFlow("if (this.$L != null)", fieldName)
                         .addStatement("builder.addHeader($S, $S + this.$L)", "Authorization", "Bearer ", fieldName)
@@ -994,7 +1029,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow();
             }
 
-            if (this.configureAuthMethod != null) {
+            // For ENDPOINT_SECURITY, track auth info instead of adding headers directly
+            if (generatorContext.isEndpointSecurity()) {
+                String envVarHint = "Please provide credentials via .credentials()";
+                if (basic.getUsernameEnvVar().isPresent() && basic.getPasswordEnvVar().isPresent()) {
+                    envVarHint += " or set " + basic.getUsernameEnvVar().get().get() + " and "
+                            + basic.getPasswordEnvVar().get().get() + " environment variables";
+                }
+                authProviderInfos.add(new AuthProviderInfo("Basic", "BasicAuthProvider", usernameFieldName,
+                        passwordFieldName, envVarHint, true));
+            } else if (this.configureAuthMethod != null) {
                 this.configureAuthMethod
                         .beginControlFlow(
                                 "if (this.$L != null && this.$L != null)", usernameFieldName, passwordFieldName)
@@ -1099,7 +1143,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             ClassName inferredAuthTokenSupplierClassName =
                     generatedInferredAuthTokenSupplier.get().getClassName();
 
-            if (configureAuthMethod != null) {
+            // Skip adding headers directly for ENDPOINT_SECURITY mode - auth is handled via RoutingAuthProvider
+            if (configureAuthMethod != null && !generatorContext.isEndpointSecurity()) {
                 String condition = requiredCredentialPropertyNames.stream()
                         .map(name -> "this." + name + " != null")
                         .reduce((a, b) -> a + " && " + b)
@@ -1246,26 +1291,28 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     // Extensible builder mode - use flat builder with runtime validation
                     createTokenOverrideSetter(tokenOverridePropertyName);
 
-                    // Add validation: must provide either token OR (clientId AND clientSecret), but not both
-                    buildMethod
-                            .beginControlFlow(
-                                    "if (this.$L != null && (this.clientId != null || this.clientSecret != null))",
-                                    tokenOverridePropertyName)
-                            .addStatement(
-                                    "throw new $T($S)",
-                                    IllegalStateException.class,
-                                    "Cannot provide both '" + tokenOverridePropertyName
-                                            + "' and 'clientId'/'clientSecret'. Use one authentication method.")
-                            .endControlFlow()
-                            .beginControlFlow(
-                                    "if (this.$L == null && (this.clientId == null || this.clientSecret == null))",
-                                    tokenOverridePropertyName)
-                            .addStatement(
-                                    "throw new $T($S)",
-                                    IllegalStateException.class,
-                                    "Please provide either '" + tokenOverridePropertyName
-                                            + "' or both 'clientId' and 'clientSecret'")
-                            .endControlFlow();
+                    if (!generatorContext.isEndpointSecurity()) {
+                        // Add validation: must provide either token OR (clientId AND clientSecret), but not both
+                        buildMethod
+                                .beginControlFlow(
+                                        "if (this.$L != null && (this.clientId != null || this.clientSecret != null))",
+                                        tokenOverridePropertyName)
+                                .addStatement(
+                                        "throw new $T($S)",
+                                        IllegalStateException.class,
+                                        "Cannot provide both '" + tokenOverridePropertyName
+                                                + "' and 'clientId'/'clientSecret'. Use one authentication method.")
+                                .endControlFlow()
+                                .beginControlFlow(
+                                        "if (this.$L == null && (this.clientId == null || this.clientSecret == null))",
+                                        tokenOverridePropertyName)
+                                .addStatement(
+                                        "throw new $T($S)",
+                                        IllegalStateException.class,
+                                        "Please provide either '" + tokenOverridePropertyName
+                                                + "' or both 'clientId' and 'clientSecret'")
+                                .endControlFlow();
+                    }
 
                     createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
                     createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
@@ -1275,7 +1322,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         createSetter(propName, Optional.empty(), Optional.empty());
                     }
 
-                    if (configureAuthMethod != null) {
+                    if (configureAuthMethod != null && !generatorContext.isEndpointSecurity()) {
                         // Token override is always enabled - check for token first
                         configureAuthMethod.beginControlFlow("if (this.$L != null)", tokenOverridePropertyName);
                         configureAuthMethod.addStatement(
@@ -1711,9 +1758,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     || !(header.getValueType().isContainer()
                             && header.getValueType().getContainer().get().isLiteral())) {
                 createSetter(fieldName, header.getHeaderEnvVar(), Optional.empty());
-                if ((respectMandatoryAuth && isMandatory)
-                        || !(header.getValueType().isContainer()
-                                && header.getValueType().getContainer().get().isOptional())) {
+                boolean skipValidation = generatorContext.isEndpointSecurity() && respectMandatoryAuth;
+                if (!skipValidation
+                        && ((respectMandatoryAuth && isMandatory)
+                                || !(header.getValueType().isContainer()
+                                        && header.getValueType().getContainer().get().isOptional()))) {
                     this.buildMethod
                             .beginControlFlow("if ($L == null)", fieldName)
                             .addStatement(
@@ -1730,6 +1779,19 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         header.getValueType().getContainer().get().getLiteral().get();
 
                 createSetter(fieldName, header.getHeaderEnvVar(), Optional.of(literal));
+            }
+
+            if (generatorContext.isEndpointSecurity() && respectMandatoryAuth) {
+                String schemeKey = header.getKey().get(); // e.g., "ApiKey"
+                String envVarHint = header.getHeaderEnvVar()
+                        .map(env -> "Please provide " + fieldName + " via ." + fieldName + "() or set "
+                                + env.get() + " environment variable")
+                        .orElse("Please provide " + fieldName + " via ." + fieldName + "()");
+                String headerName = header.getName().getWireValue();
+                String prefix = header.getPrefix().orElse("");
+                authProviderInfos.add(new AuthProviderInfo(schemeKey, "ApiKeyAuthProvider", fieldName, null,
+                        envVarHint, false));
+                return null;
             }
 
             MethodSpec.Builder targetMethod =
@@ -1766,6 +1828,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         private void createSetter(
                 String fieldName, Optional<EnvironmentVariable> environmentVariable, Optional<Literal> literal) {
+            // Skip if already created to prevent duplicate fields/methods
+            if (createdFields.contains(fieldName)) {
+                return;
+            }
+            createdFields.add(fieldName);
+
             FieldSpec.Builder field = FieldSpec.builder(String.class, fieldName).addModifiers(Modifier.PRIVATE);
             if (environmentVariable.isPresent()) {
                 field.initializer("System.getenv($S)", environmentVariable.get().get());
@@ -1810,6 +1878,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         }
 
         private void createTokenOverrideSetter(String fieldName) {
+            // Skip if already created to prevent duplicate fields/methods
+            if (createdFields.contains(fieldName)) {
+                return;
+            }
+            createdFields.add(fieldName);
+
             FieldSpec.Builder field = FieldSpec.builder(String.class, fieldName)
                     .addModifiers(Modifier.PRIVATE)
                     .initializer("null");
@@ -1836,6 +1910,57 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         private String getErrorMessage(String fieldName, EnvironmentVariable environmentVariable) {
             return "Please provide " + fieldName + " or set the " + environmentVariable.get() + " "
                     + "environment variable.";
+        }
+
+        /**
+         * Generate code to build and set the RoutingAuthProvider in setAuthentication().
+         * This is called only for ENDPOINT_SECURITY mode.
+         */
+        public void addRoutingAuthProviderSetup() {
+            if (this.configureAuthMethod == null || authProviderInfos.isEmpty()) {
+                return;
+            }
+
+            ClassName routingAuthProviderClassName =
+                    clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("RoutingAuthProvider");
+
+            this.configureAuthMethod.addStatement(
+                    "$T.Builder routingBuilder = $T.builder()",
+                    routingAuthProviderClassName,
+                    routingAuthProviderClassName);
+
+            for (AuthProviderInfo info : authProviderInfos) {
+                ClassName providerClassName =
+                        clientGeneratorContext.getPoetClassNameFactory().getCoreClassName(info.providerClass);
+
+                if (info.isBasicAuth) {
+                    String usernameField = info.fieldName;
+                    String passwordField = info.secondaryFieldName;
+                    this.configureAuthMethod
+                            .beginControlFlow(
+                                    "if (this.$L != null && this.$L != null)", usernameField, passwordField)
+                            .addStatement(
+                                    "routingBuilder.addAuthProvider($S, new $T(() -> this.$L, () -> this.$L), $S)",
+                                    info.schemeKey,
+                                    providerClassName,
+                                    usernameField,
+                                    passwordField,
+                                    info.envVarHint)
+                            .endControlFlow();
+                } else {
+                    this.configureAuthMethod
+                            .beginControlFlow("if (this.$L != null)", info.fieldName)
+                            .addStatement(
+                                    "routingBuilder.addAuthProvider($S, new $T(() -> this.$L), $S)",
+                                    info.schemeKey,
+                                    providerClassName,
+                                    info.fieldName,
+                                    info.envVarHint)
+                            .endControlFlow();
+                }
+            }
+
+            this.configureAuthMethod.addStatement("builder.authProvider(routingBuilder.build())");
         }
 
         @Override

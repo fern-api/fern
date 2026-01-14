@@ -3,12 +3,12 @@
  */
 package com.seed.endpointSecurityAuth;
 
+import com.seed.endpointSecurityAuth.core.ApiKeyAuthProvider;
+import com.seed.endpointSecurityAuth.core.BasicAuthProvider;
+import com.seed.endpointSecurityAuth.core.BearerAuthProvider;
 import com.seed.endpointSecurityAuth.core.ClientOptions;
 import com.seed.endpointSecurityAuth.core.Environment;
-import com.seed.endpointSecurityAuth.core.InferredAuthTokenSupplier;
-import com.seed.endpointSecurityAuth.core.OAuthTokenSupplier;
-import com.seed.endpointSecurityAuth.resources.auth.AuthClient;
-import java.util.Base64;
+import com.seed.endpointSecurityAuth.core.RoutingAuthProvider;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -25,15 +25,15 @@ public class SeedEndpointSecurityAuthClientBuilder {
 
     private String apiKey = System.getenv("MY_API_KEY");
 
+    private String clientId = System.getenv("MY_CLIENT_ID");
+
+    private String clientSecret = System.getenv("MY_CLIENT_SECRET");
+
     private String username = System.getenv("MY_USERNAME");
 
     private String password = System.getenv("MY_PASSWORD");
 
-    private String clientId = null;
-
-    private String clientSecret = null;
-
-    protected Environment environment;
+    private Environment environment;
 
     private OkHttpClient httpClient;
 
@@ -56,37 +56,8 @@ public class SeedEndpointSecurityAuthClientBuilder {
     }
 
     /**
-     * Creates a builder that uses a pre-generated access token for authentication.
-     * Use this when you already have a valid access token and want to bypass
-     * the OAuth client credentials flow.
-     *
-     * @param token The access token to use for Authorization header
-     * @return A builder configured for token authentication
-     */
-    public static _TokenAuth withToken(String token) {
-        return new _TokenAuth(token);
-    }
-
-    /**
-     * Creates a builder that uses OAuth client credentials for authentication.
-     * The builder will automatically handle token acquisition and refresh.
-     *
-     * @param clientId The OAuth client ID
-     * @param clientSecret The OAuth client secret
-     * @return A builder configured for OAuth client credentials authentication
-     */
-    public static _CredentialsAuth withCredentials(String clientId, String clientSecret) {
-        return new _CredentialsAuth(clientId, clientSecret);
-    }
-
-    public SeedEndpointSecurityAuthClientBuilder credentials(String username, String password) {
-        this.username = username;
-        this.password = password;
-        return this;
-    }
-
-    /**
-     * Sets clientId
+     * Sets clientId.
+     * Defaults to the MY_CLIENT_ID environment variable.
      */
     public SeedEndpointSecurityAuthClientBuilder clientId(String clientId) {
         this.clientId = clientId;
@@ -94,10 +65,17 @@ public class SeedEndpointSecurityAuthClientBuilder {
     }
 
     /**
-     * Sets clientSecret
+     * Sets clientSecret.
+     * Defaults to the MY_CLIENT_SECRET environment variable.
      */
     public SeedEndpointSecurityAuthClientBuilder clientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
+        return this;
+    }
+
+    public SeedEndpointSecurityAuthClientBuilder credentials(String username, String password) {
+        this.username = username;
+        this.password = password;
         return this;
     }
 
@@ -183,24 +161,26 @@ public class SeedEndpointSecurityAuthClientBuilder {
      * }</pre>
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
+        RoutingAuthProvider.Builder routingBuilder = RoutingAuthProvider.builder();
         if (this.token != null) {
-            builder.addHeader("Authorization", "Bearer " + this.token);
+            routingBuilder.addAuthProvider(
+                    "Bearer",
+                    new BearerAuthProvider(() -> this.token),
+                    "Please provide token via .token() or set MY_TOKEN environment variable");
         }
-        builder.addHeader("X-API-Key", this.apiKey);
+        if (this.apiKey != null) {
+            routingBuilder.addAuthProvider(
+                    "ApiKey",
+                    new ApiKeyAuthProvider(() -> this.apiKey),
+                    "Please provide apiKey via .apiKey() or set MY_API_KEY environment variable");
+        }
         if (this.username != null && this.password != null) {
-            String unencodedToken = this.username + ":" + this.password;
-            String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
-            builder.addHeader("Authorization", "Basic " + encodedToken);
+            routingBuilder.addAuthProvider(
+                    "Basic",
+                    new BasicAuthProvider(() -> this.username, () -> this.password),
+                    "Please provide credentials via .credentials() or set MY_USERNAME and MY_PASSWORD environment variables");
         }
-        if (this.clientId != null && this.clientSecret != null) {
-            ClientOptions.Builder authClientOptionsBuilder =
-                    ClientOptions.builder().environment(this.environment);
-            AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
-            InferredAuthTokenSupplier inferredAuthTokenSupplier =
-                    new InferredAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
-            builder.addHeader(
-                    "Authorization", () -> inferredAuthTokenSupplier.get().get("Authorization"));
-        }
+        builder.authProvider(routingBuilder.build());
     }
 
     /**
@@ -276,47 +256,7 @@ public class SeedEndpointSecurityAuthClientBuilder {
     protected void validateConfiguration() {}
 
     public SeedEndpointSecurityAuthClient build() {
-        if (apiKey == null) {
-            throw new RuntimeException("Please provide apiKey or set the MY_API_KEY environment variable.");
-        }
         validateConfiguration();
         return new SeedEndpointSecurityAuthClient(buildClientOptions());
-    }
-
-    public static final class _TokenAuth extends SeedEndpointSecurityAuthClientBuilder {
-        private final String token;
-
-        _TokenAuth(String token) {
-            this.token = token;
-        }
-
-        @Override
-        protected void setAuthentication(ClientOptions.Builder builder) {
-            builder.addHeader("Authorization", "Bearer " + this.token);
-        }
-    }
-
-    public static final class _CredentialsAuth extends SeedEndpointSecurityAuthClientBuilder {
-        private final String clientId;
-
-        private final String clientSecret;
-
-        _CredentialsAuth(String clientId, String clientSecret) {
-            this.clientId = clientId;
-            this.clientSecret = clientSecret;
-        }
-
-        @Override
-        public SeedEndpointSecurityAuthClient build() {
-            validateConfiguration();
-            ClientOptions baseOptions = buildClientOptions();
-            AuthClient authClient = new AuthClient(baseOptions);
-            OAuthTokenSupplier oAuthTokenSupplier =
-                    new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
-            ClientOptions finalOptions = ClientOptions.Builder.from(baseOptions)
-                    .addHeader("Authorization", oAuthTokenSupplier)
-                    .build();
-            return new SeedEndpointSecurityAuthClient(finalOptions);
-        }
     }
 }
