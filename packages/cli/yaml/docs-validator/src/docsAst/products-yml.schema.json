@@ -621,6 +621,16 @@
     "docs.PlaygroundSettings": {
       "type": "object",
       "properties": {
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "environments": {
           "oneOf": [
             {
