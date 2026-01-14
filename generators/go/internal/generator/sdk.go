@@ -3574,11 +3574,12 @@ type requestBodyVisitor struct {
 
 func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.InlinedRequestBody) error {
 	typeVisitor := &typeVisitor{
-		typeName:           inlinedRequestBody.Name.PascalCase.UnsafeName,
-		baseImportPath:     r.baseImportPath,
-		importPath:         r.importPath,
-		writer:             r.writer,
-		gettersPassByValue: r.writer.gettersPassByValue,
+		typeName:                     inlinedRequestBody.Name.PascalCase.UnsafeName,
+		baseImportPath:               r.baseImportPath,
+		importPath:                   r.importPath,
+		writer:                       r.writer,
+		gettersPassByValue:           r.writer.gettersPassByValue,
+		alwaysSendRequiredProperties: r.writer.alwaysSendRequiredProperties,
 	}
 	objectTypeDeclaration := inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody)
 	objectProperties := typeVisitor.visitObjectProperties(
@@ -3641,11 +3642,12 @@ func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) e
 		r.writer.P(parameterName, " ", parameterType, " `json:\"-\" url:\"-\"`")
 	}
 	typeVisitor := &typeVisitor{
-		typeName:           fileUpload.Name.PascalCase.UnsafeName,
-		baseImportPath:     r.baseImportPath,
-		importPath:         r.importPath,
-		writer:             r.writer,
-		gettersPassByValue: r.writer.gettersPassByValue,
+		typeName:                     fileUpload.Name.PascalCase.UnsafeName,
+		baseImportPath:               r.baseImportPath,
+		importPath:                   r.importPath,
+		writer:                       r.writer,
+		gettersPassByValue:           r.writer.gettersPassByValue,
+		alwaysSendRequiredProperties: r.writer.alwaysSendRequiredProperties,
 	}
 	objectTypeDeclaration := inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties)
 	objectProperties := typeVisitor.visitObjectProperties(
