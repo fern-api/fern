@@ -16,6 +16,12 @@ export interface DiscriminatedOneOfSchema
         FernOpenapiIr.WithTitle,
         FernOpenapiIr.WithInline {
     discriminantProperty: string;
+    /**
+     * Populated by `x-fern-property-name` on a discriminator object.
+     * When set, this is used as the code generation name while
+     * discriminantProperty is used as the wire format.
+     */
+    discriminantPropertyNameOverride: string | undefined;
     commonProperties: FernOpenapiIr.CommonProperty[];
     schemas: Record<string, FernOpenapiIr.Schema>;
 }
