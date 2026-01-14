@@ -171,20 +171,26 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                 case VALUE_NUMBER_INT:
                     // Use BigInteger to safely read values that might exceed long range
                     BigInteger bigValue = parser.getBigIntegerValue();
-                    boolean exceedsLongRange = bigValue.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0
-                            || bigValue.compareTo(BigInteger.valueOf(Long.MIN_VALUE)) < 0;
                     boolean exceedsIntRange = bigValue.compareTo(BigInteger.valueOf(Integer.MAX_VALUE)) > 0
                             || bigValue.compareTo(BigInteger.valueOf(Integer.MIN_VALUE)) < 0;
+
+                    // Saturate values that exceed long range to Long.MAX_VALUE or Long.MIN_VALUE
+                    // This matches the behavior of Jackson's asLong() method used in the original
+                    // tree-based implementation
+                    long saturatedValue;
+                    if (bigValue.compareTo(BigInteger.valueOf(Long.MAX_VALUE)) > 0) {
+                        saturatedValue = Long.MAX_VALUE;
+                    } else if (bigValue.compareTo(BigInteger.valueOf(Long.MIN_VALUE)) < 0) {
+                        saturatedValue = Long.MIN_VALUE;
+                    } else {
+                        saturatedValue = bigValue.longValue();
+                    }
 
                     // Check if this is an "integer" field with overflow value (exceeds int range)
                     if ("integer".equals(pendingFieldName) && exceedsIntRange) {
                         // Rewrite field name from "integer" to "long"
                         generator.writeFieldName("long");
-                        if (exceedsLongRange) {
-                            generator.writeNumber(bigValue);
-                        } else {
-                            generator.writeNumber(bigValue.longValue());
-                        }
+                        generator.writeNumber(saturatedValue);
                         conversions[0]++;
                         log.debug(
                                 "Integer overflow detected in IR example value: {}. Converting to long type.",
@@ -196,10 +202,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         // Write as-is, preserving the original type when possible
                         if (!exceedsIntRange) {
                             generator.writeNumber(bigValue.intValue());
-                        } else if (!exceedsLongRange) {
-                            generator.writeNumber(bigValue.longValue());
                         } else {
-                            generator.writeNumber(bigValue);
+                            generator.writeNumber(saturatedValue);
                         }
                     }
                     pendingFieldName = null;
