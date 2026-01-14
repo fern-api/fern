@@ -7,6 +7,12 @@
         Also adds JVM tuning flags (-Xms4g, G1GC configuration) for improved garbage collection
         performance during local seed testing.
       type: chore
+    - summary: |
+        Parallelize code generation for improved performance on multi-core machines. Type generation,
+        interface generation, and subpackage client generation now run in parallel using Java parallel
+        streams. This can significantly reduce generation time for large API specifications with many
+        types and endpoints.
+      type: chore
   createdAt: "2026-01-14"
   irVersion: 63
 
