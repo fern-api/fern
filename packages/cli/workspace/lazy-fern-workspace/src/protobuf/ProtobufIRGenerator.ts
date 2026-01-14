@@ -119,6 +119,10 @@ export class ProtobufIRGenerator {
 
         // Create a temporary buf config file to prevent conflicts
         // Try buf export with v1 first, then fall back to v2 if it fails
+        // If buf export fails due to network issues, fall back to copying files directly
+        let bufExportSucceeded = false;
+        let lastError: unknown = null;
+
         for (const version of ["v1", "v2"]) {
             this.context.logger.info(`Using buf export with version: ${version}`);
 
@@ -141,22 +145,56 @@ export class ProtobufIRGenerator {
                     ],
                     {
                         cwd: absoluteFilepathToProtobufRoot,
-                        stdio: "pipe"
+                        stdio: "pipe",
+                        timeout: 30000 // 30 second timeout for air-gapped environments
                     }
                 );
 
                 if (result.exitCode !== 0) {
-                    this.context.failAndThrow(result.stderr);
+                    lastError = new Error(result.stderr);
+                    await tmpBufConfigFile.cleanup();
+                    continue;
                 }
 
                 await tmpBufConfigFile.cleanup();
+                bufExportSucceeded = true;
                 return;
             } catch (error) {
+                lastError = error;
                 await tmpBufConfigFile.cleanup();
                 if (version === "v2") {
+                    // Check if this is a network error - if so, fall back to copying files
+                    const errorMessage = error instanceof Error ? error.message : String(error);
+                    const isNetworkError =
+                        errorMessage.includes("server hosted at that remote is unavailable") ||
+                        errorMessage.includes("failed to connect") ||
+                        errorMessage.includes("network") ||
+                        errorMessage.includes("ENOTFOUND") ||
+                        errorMessage.includes("ETIMEDOUT") ||
+                        errorMessage.includes("TIMEDOUT") ||
+                        errorMessage.includes("timed out");
+
+                    if (isNetworkError) {
+                        this.context.logger.debug(
+                            `buf export failed due to network error, falling back to copying files: ${errorMessage.substring(0, 200)}`
+                        );
+                        break; // Fall through to copy fallback
+                    }
                     throw error;
                 }
             }
+        }
+
+        // If buf export failed (likely due to network issues in air-gapped environment),
+        // fall back to copying the proto files directly
+        if (!bufExportSucceeded) {
+            this.context.logger.debug(
+                "buf export failed, falling back to copying proto files directly for air-gapped support"
+            );
+            await this.copyProtobufFilesFromRoot({
+                protobufGeneratorConfigPath,
+                absoluteFilepathToProtobufRoot
+            });
         }
     }
 
