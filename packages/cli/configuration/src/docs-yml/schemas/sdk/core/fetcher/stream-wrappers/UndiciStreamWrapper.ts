@@ -157,7 +157,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
     }
 
     public async text(): Promise<string> {
-        const chunks: BlobPart[] = [];
+        const chunks: ReadFormat[] = [];
 
         while (true) {
             const { done, value } = await this.reader.read();
@@ -170,7 +170,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
         }
 
         const decoder = new TextDecoder(this.encoding || "utf-8");
-        return decoder.decode(await new Blob(chunks).arrayBuffer());
+        return decoder.decode(await new Blob(chunks as BlobPart[]).arrayBuffer());
     }
 
     public async json<T>(): Promise<T> {
