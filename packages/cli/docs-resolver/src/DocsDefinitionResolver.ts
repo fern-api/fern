@@ -1128,7 +1128,7 @@ export class DocsDefinitionResolver {
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug),
             // Library sections are handled by FDR during registration, returning placeholder
-            pythonDocsSection: async () => this.toPythonDocsSectionPlaceholder(parentSlug)
+            pythonDocsSection: async (value) => this.toPythonDocsSectionPlaceholder(value, parentSlug)
         });
     }
 
@@ -1154,7 +1154,7 @@ export class DocsDefinitionResolver {
             link: async (value) => this.toLinkNode(value),
             changelog: async (value) => this.toChangelogNode(value, parentSlug, hideChildren),
             // Library sections are handled by FDR during registration, returning placeholder
-            pythonDocsSection: async () => this.toPythonDocsSectionPlaceholder(parentSlug)
+            pythonDocsSection: async (value) => this.toPythonDocsSectionPlaceholder(value, parentSlug)
         });
     }
 
@@ -1351,28 +1351,80 @@ export class DocsDefinitionResolver {
      * The CLI starts the generation job, polls for completion, and passes the jobId to FDR.
      * FDR then merges the generated Python docs into the navigation.
      *
-     * This placeholder returns a hidden section that will be replaced/augmented by FDR.
+     * In dev mode (fern docs dev), this placeholder returns a visible page with helpful content
+     * explaining that Python library docs are only generated during `fern generate --docs`.
+     *
+     * In production mode, FDR replaces/augments this with the actual generated documentation.
      */
-    private toPythonDocsSectionPlaceholder(parentSlug: FernNavigation.V1.SlugGenerator): FernNavigation.V1.SectionNode {
-        // Return a hidden placeholder section - FDR will append the actual Python docs
-        const slug = parentSlug.apply({ urlSlug: "python-docs", skipUrlSlug: true });
+    private toPythonDocsSectionPlaceholder(
+        item: docsYml.DocsNavigationItem.PythonDocsSection,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): FernNavigation.V1.PageNode {
+        const title = item.title ?? "Python Reference";
+        const urlSlug = item.slug ?? "python-docs";
+        const slug = parentSlug.apply({ urlSlug });
+
+        // Create a synthetic page ID for the placeholder
+        const syntheticPageId = `__python-docs-placeholder-${urlSlug}__.mdx`;
+        const pageId = FernNavigation.PageId(syntheticPageId);
+
+        // Add placeholder markdown content to parsedDocsConfig.pages
+        const placeholderMarkdown = `---
+title: ${title}
+---
+
+# ${title}
+
+<Note>
+This is a placeholder page. Python library documentation is automatically generated when you run \`fern generate --docs\`.
+</Note>
+
+## About Python Library Docs
+
+When you publish your documentation using \`fern generate --docs\`, Fern will:
+
+1. Clone and analyze your Python repository from: \`${item.githubUrl}\`
+2. Parse the Python source code to extract docstrings and type information
+3. Generate comprehensive API reference documentation
+4. Integrate the generated docs into your documentation site
+
+## How to Generate
+
+To generate the full Python library documentation, run:
+
+\`\`\`bash
+fern generate --docs
+\`\`\`
+
+The generated documentation will replace this placeholder page with complete API reference content including:
+
+- Module and package documentation
+- Class and function references
+- Type annotations and signatures
+- Docstring content
+
+## Local Development
+
+During local development with \`fern docs dev\`, this placeholder is shown because the Python documentation generation requires server-side processing that is only available during the full docs generation process.
+`;
+
+        this.parsedDocsConfig.pages[RelativeFilePath.of(syntheticPageId)] = placeholderMarkdown;
+
+        const id = this.#idgen.get(pageId);
         return {
-            type: "section",
-            id: this.#idgen.get("python-docs-placeholder"),
+            id,
+            type: "page",
             slug: slug.get(),
-            title: "Python Reference",
-            collapsed: false,
-            hidden: true, // Hidden - actual content comes from FDR
-            children: [],
-            overviewPageId: undefined,
+            title,
             icon: undefined,
+            hidden: false,
             viewers: undefined,
             orphaned: undefined,
+            pageId,
             authed: undefined,
-            pointsTo: undefined,
-            availability: undefined,
+            noindex: true, // Don't index placeholder pages
             featureFlags: undefined,
-            noindex: undefined
+            availability: undefined
         };
     }
 
