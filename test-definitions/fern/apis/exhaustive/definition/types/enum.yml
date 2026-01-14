@@ -6,6 +6,13 @@ types:
       - RAINING
       - SNOWING
 
+  # Object with optional enum field to test wire test generation
+  # when example doesn't provide a value for the enum
+  ObjectWithOptionalEnum:
+    properties:
+      string: string
+      weather: optional<WeatherReport>
+
 errors:
   ErrorWithEnumBody:
     status-code: 400

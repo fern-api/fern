@@ -8,7 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from . import docs, enum, object, union
     from .docs import ObjectWithDocs
-    from .enum import ErrorWithEnumBody, WeatherReport
+    from .enum import ErrorWithEnumBody, ObjectWithOptionalEnum, WeatherReport
     from .object import (
         DoubleOptional,
         NestedObjectWithOptionalField,
@@ -38,6 +38,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NestedObjectWithRequiredFieldError": ".object",
     "ObjectWithDocs": ".docs",
     "ObjectWithMapOfMap": ".object",
+    "ObjectWithOptionalEnum": ".enum",
     "ObjectWithOptionalField": ".object",
     "ObjectWithOptionalFieldError": ".object",
     "ObjectWithRequiredField": ".object",
@@ -87,6 +88,7 @@ __all__ = [
     "NestedObjectWithRequiredFieldError",
     "ObjectWithDocs",
     "ObjectWithMapOfMap",
+    "ObjectWithOptionalEnum",
     "ObjectWithOptionalField",
     "ObjectWithOptionalFieldError",
     "ObjectWithRequiredField",
