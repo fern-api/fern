@@ -7,6 +7,14 @@
   createdAt: "2026-01-13"
   irVersion: 63
 
+- version: 3.39.4
+  changelogEntry:
+    - summary: |
+        Fix protobuf air-gapped support for `buf export` command. When a proto spec has a `target` specified, the CLI now adds a 30-second timeout to `buf export` and falls back to copying proto files directly if the command fails due to network issues. This enables self-hosted deployments with targeted proto specs to work in air-gapped environments.
+      type: fix
+  createdAt: "2026-01-14"
+  irVersion: 63
+
 - version: 3.39.3
   changelogEntry:
     - summary: |
