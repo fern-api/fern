@@ -471,14 +471,6 @@ export class ExampleEndpointFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
-                this.logger.debug(
-                    `Expected a primitive example but got ${example.type} for path parameter ${
-                        pathParameter.name
-                    } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                );
-                example = undefined;
-            }
             if (required && example == null) {
                 return [];
             } else if (example != null) {
@@ -503,14 +495,6 @@ export class ExampleEndpointFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
-                this.logger.debug(
-                    `Expected a primitive example but got ${example.type} for query parameter ${
-                        queryParameter.name
-                    } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                );
-                example = undefined;
-            }
             if (required && example == null) {
                 return [];
             } else if (example != null) {
@@ -534,14 +518,6 @@ export class ExampleEndpointFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
-                this.logger.debug(
-                    `Expected a primitive example but got ${example.type} for header ${
-                        header.name
-                    } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                );
-                example = undefined;
-            }
             if (required && example == null) {
                 return [];
             } else if (example != null) {
@@ -586,14 +562,6 @@ export class ExampleEndpointFactory {
                 }
             });
 
-            if (example != null && !isExamplePrimitive(example)) {
-                this.logger.debug(
-                    `Expected a primitive example but got ${example.type} for global header ${
-                        globalHeader.header
-                    } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                );
-                example = undefined;
-            }
             if (example == null) {
                 return [];
             } else if (example != null) {
@@ -861,34 +829,6 @@ function getResponseSchema(response: ResponseWithExample | null | undefined): Sc
         return { type: "unsupported" };
     }
     return { type: "present", schema: response.schema, examples: response.fullExamples ?? [] };
-}
-
-export function isExamplePrimitive(example: FullExample): boolean {
-    switch (example.type) {
-        case "primitive":
-        case "enum":
-        case "literal":
-            return true;
-        case "unknown":
-            return isExamplePrimitive(example);
-        case "array":
-        case "object":
-        case "map":
-            return false;
-        case "oneOf":
-            switch (example.value.type) {
-                case "discriminated":
-                    return false;
-                case "undiscriminated":
-                    return isExamplePrimitive(example.value.value);
-                default:
-                    return false;
-            }
-        case "null":
-            return true;
-        default:
-            assertNever(example);
-    }
 }
 
 export function getNameFromSchemaWithExample(schema: SchemaWithExample): string | undefined {

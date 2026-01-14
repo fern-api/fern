@@ -8,7 +8,6 @@ import {
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
 
-import { isExamplePrimitive } from "../openapi/v3/converters/ExampleEndpointFactory";
 import { convertSchema } from "../schema/convertSchemas";
 import { ExampleTypeFactory } from "../schema/examples/ExampleTypeFactory";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
@@ -64,9 +63,6 @@ export class ExampleWebsocketSessionFactory {
                         ignoreOptionals: true
                     }
                 });
-                if (example != null && !isExamplePrimitive(example)) {
-                    example = undefined;
-                }
                 if (required && example == null) {
                     continue;
                 } else if (example != null) {
@@ -90,9 +86,6 @@ export class ExampleWebsocketSessionFactory {
                         ignoreOptionals: true
                     }
                 });
-                if (example != null && !isExamplePrimitive(example)) {
-                    example = undefined;
-                }
                 if (required && example == null) {
                     continue;
                 } else if (example != null) {
@@ -176,9 +169,6 @@ export class ExampleWebsocketSessionFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
-                example = undefined;
-            }
             if (required && example == null) {
                 return undefined;
             } else if (example != null) {
@@ -202,9 +192,6 @@ export class ExampleWebsocketSessionFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
-                example = undefined;
-            }
             if (required && example == null) {
                 return undefined;
             } else if (example != null) {
