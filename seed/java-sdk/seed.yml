@@ -43,7 +43,7 @@ test:
       - chmod +x install-gradle.sh && ./install-gradle.sh
       - cd sdk && tar -xvf build/distributions/sdk.tar -C .
       - pnpm turbo run compile --filter @fern-api/java-sdk && pnpm turbo run dist:cli --filter @fern-api/java-sdk
-    runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli {CONFIG_PATH}
+    runCommand: cd sdk/sdk && java -Xms4g -XX:G1HeapRegionSize=16m -XX:MaxGCPauseMillis=100 -XX:InitiatingHeapOccupancyPercent=35 -cp sdk.jar:lib/* com.fern.java.client.Cli {CONFIG_PATH}
     env:
       # Path to Node.js executable (uses system node)
       NODE_PATH: node

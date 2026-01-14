@@ -3,10 +3,10 @@ package com.fern.java;
 import static com.fern.java.GeneratorLogging.log;
 import static com.fern.java.GeneratorLogging.logError;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
@@ -37,8 +37,11 @@ import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
 import com.fern.java.output.gradle.GradleRepository;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -93,125 +96,147 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         }
     }
 
-    /** Loads and preprocesses the IR from file, handling integer overflow values. */
+    /**
+     * Loads and preprocesses the IR from file using streaming parsing to reduce memory usage. Handles integer overflow
+     * values by transforming {"integer": overflow_value} to {"long": value} during the streaming parse, avoiding the
+     * need to build the full JSON tree in memory.
+     */
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
             File irFile = new File(generatorConfig.getIrFilepath());
 
-            JsonNode rootNode = ObjectMappers.JSON_MAPPER.readTree(irFile);
+            // Use streaming transformation to handle integer overflow without building full tree
+            JsonFactory factory = ObjectMappers.JSON_MAPPER.getFactory();
+            ByteArrayOutputStream transformedOutput = new ByteArrayOutputStream();
+            int[] conversions = {0}; // Use array to allow modification in lambda
 
-            IntegerOverflowProcessor processor = new IntegerOverflowProcessor();
-            processor.processNodeInPlace(rootNode);
+            try (JsonParser parser = factory.createParser(irFile);
+                    JsonGenerator generator = factory.createGenerator(transformedOutput)) {
 
-            if (processor.getConversions() > 0) {
-                log.info("Converted {} integer overflow value(s) to long type in IR", processor.getConversions());
+                transformJsonStream(parser, generator, conversions);
             }
 
-            return ObjectMappers.JSON_MAPPER.treeToValue(rootNode, IntermediateRepresentation.class);
+            if (conversions[0] > 0) {
+                log.info("Converted {} integer overflow value(s) to long type in IR", conversions[0]);
+            }
+
+            // Parse the transformed JSON directly into the IR model
+            try (InputStream transformedInput = new ByteArrayInputStream(transformedOutput.toByteArray())) {
+                return ObjectMappers.JSON_MAPPER.readValue(transformedInput, IntermediateRepresentation.class);
+            }
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);
         }
     }
 
-    /** Processes JSON nodes in-place to convert integer overflow values to long type. */
-    private static class IntegerOverflowProcessor {
-        private int conversions = 0;
+    /**
+     * Transforms JSON stream, converting integer overflow values to long type. This streaming approach avoids building
+     * the full JSON tree in memory. When an "integer" field with an overflow value is detected, it rewrites the field
+     * name to "long".
+     */
+    private static void transformJsonStream(JsonParser parser, JsonGenerator generator, int[] conversions)
+            throws IOException {
+        String pendingFieldName = null;
 
-        public int getConversions() {
-            return conversions;
+        while (parser.nextToken() != null) {
+            JsonToken token = parser.currentToken();
+
+            switch (token) {
+                case START_OBJECT:
+                    if (pendingFieldName != null) {
+                        generator.writeFieldName(pendingFieldName);
+                        pendingFieldName = null;
+                    }
+                    generator.writeStartObject();
+                    break;
+                case END_OBJECT:
+                    generator.writeEndObject();
+                    break;
+                case START_ARRAY:
+                    if (pendingFieldName != null) {
+                        generator.writeFieldName(pendingFieldName);
+                        pendingFieldName = null;
+                    }
+                    generator.writeStartArray();
+                    break;
+                case END_ARRAY:
+                    generator.writeEndArray();
+                    break;
+                case FIELD_NAME:
+                    // Delay writing field name until we see the value
+                    // This allows us to rewrite "integer" to "long" if needed
+                    pendingFieldName = parser.currentName();
+                    break;
+                case VALUE_NUMBER_INT:
+                    long longValue = parser.getLongValue();
+                    boolean isOverflow = isIntegerOverflow(longValue);
+
+                    // Check if this is an "integer" field with overflow value
+                    if ("integer".equals(pendingFieldName) && isOverflow) {
+                        // Rewrite field name from "integer" to "long"
+                        generator.writeFieldName("long");
+                        generator.writeNumber(longValue);
+                        conversions[0]++;
+                        log.debug(
+                                "Integer overflow detected in IR example value: {}. Converting to long type.",
+                                longValue);
+                    } else {
+                        if (pendingFieldName != null) {
+                            generator.writeFieldName(pendingFieldName);
+                        }
+                        // Write as-is, preserving the original type when possible
+                        if (longValue >= Integer.MIN_VALUE && longValue <= Integer.MAX_VALUE) {
+                            generator.writeNumber((int) longValue);
+                        } else {
+                            generator.writeNumber(longValue);
+                        }
+                    }
+                    pendingFieldName = null;
+                    break;
+                case VALUE_NUMBER_FLOAT:
+                    if (pendingFieldName != null) {
+                        generator.writeFieldName(pendingFieldName);
+                        pendingFieldName = null;
+                    }
+                    generator.writeNumber(parser.getDecimalValue());
+                    break;
+                case VALUE_STRING:
+                    if (pendingFieldName != null) {
+                        generator.writeFieldName(pendingFieldName);
+                        pendingFieldName = null;
+                    }
+                    generator.writeString(parser.getText());
+                    break;
+                case VALUE_TRUE:
+                    if (pendingFieldName != null) {
+                        generator.writeFieldName(pendingFieldName);
+                        pendingFieldName = null;
+                    }
+                    generator.writeBoolean(true);
+                    break;
+                case VALUE_FALSE:
+                    if (pendingFieldName != null) {
+                        generator.writeFieldName(pendingFieldName);
+                        pendingFieldName = null;
+                    }
+                    generator.writeBoolean(false);
+                    break;
+                case VALUE_NULL:
+                    if (pendingFieldName != null) {
+                        generator.writeFieldName(pendingFieldName);
+                        pendingFieldName = null;
+                    }
+                    generator.writeNull();
+                    break;
+                default:
+                    break;
+            }
         }
+    }
 
-        /**
-         * Processes a node in-place, modifying the tree structure directly. For container nodes (objects/arrays), this
-         * recursively processes children. Only creates new nodes when an actual integer-to-long conversion is needed.
-         */
-        public void processNodeInPlace(JsonNode node) {
-            if (node == null) {
-                return;
-            }
-
-            if (node.isObject()) {
-                processObjectNodeInPlace((ObjectNode) node);
-            } else if (node.isArray()) {
-                processArrayNodeInPlace((ArrayNode) node);
-            }
-            // Number nodes are handled by their parent containers when replacement is needed
-        }
-
-        private void processObjectNodeInPlace(ObjectNode objectNode) {
-            // Check for integer overflow pattern: {"integer": <overflow_value>} -> {"long": <value>}
-            if (objectNode.has("integer")) {
-                JsonNode integerNode = objectNode.get("integer");
-                if (integerNode.isNumber() && isIntegerOverflow(integerNode)) {
-                    long value = integerNode.asLong();
-                    log.debug("Integer overflow detected in IR example value: {}. Converting to long type.", value);
-                    objectNode.remove("integer");
-                    objectNode.put("long", value);
-                    conversions++;
-                }
-            }
-
-            // Collect field names first to avoid ConcurrentModificationException
-            // when we need to replace values during iteration
-            List<String> fieldNames = new ArrayList<>();
-            objectNode.fieldNames().forEachRemaining(fieldNames::add);
-
-            for (String fieldName : fieldNames) {
-                // Skip the integer/long fields we just processed
-                if ("integer".equals(fieldName) || "long".equals(fieldName)) {
-                    continue;
-                }
-
-                JsonNode fieldValue = objectNode.get(fieldName);
-                if (fieldValue == null) {
-                    continue;
-                }
-
-                if (fieldValue.isObject()) {
-                    processObjectNodeInPlace((ObjectNode) fieldValue);
-                } else if (fieldValue.isArray()) {
-                    processArrayNodeInPlace((ArrayNode) fieldValue);
-                } else if (fieldValue.isNumber() && isIntegerOverflow(fieldValue)) {
-                    objectNode.put(fieldName, fieldValue.asLong());
-                    conversions++;
-                }
-            }
-        }
-
-        private void processArrayNodeInPlace(ArrayNode arrayNode) {
-            for (int i = 0; i < arrayNode.size(); i++) {
-                JsonNode element = arrayNode.get(i);
-                if (element == null) {
-                    continue;
-                }
-
-                if (element.isObject()) {
-                    processObjectNodeInPlace((ObjectNode) element);
-                } else if (element.isArray()) {
-                    processArrayNodeInPlace((ArrayNode) element);
-                } else if (element.isNumber() && isIntegerOverflow(element)) {
-                    arrayNode.set(i, JsonNodeFactory.instance.numberNode(element.asLong()));
-                    conversions++;
-                }
-            }
-        }
-
-        private boolean isIntegerOverflow(JsonNode numberNode) {
-            if (!numberNode.isNumber()) {
-                return false;
-            }
-
-            try {
-                if (numberNode.isIntegralNumber()) {
-                    long value = numberNode.asLong();
-                    return value > Integer.MAX_VALUE || value < Integer.MIN_VALUE;
-                }
-            } catch (Exception e) {
-                log.debug("Failed to check integer overflow for value: {}", numberNode);
-            }
-
-            return false;
-        }
+    /** Checks if a long value overflows the integer range. */
+    private static boolean isIntegerOverflow(long value) {
+        return value > Integer.MAX_VALUE || value < Integer.MIN_VALUE;
     }
 
     private static void runCommandBlocking(String[] command, Path workingDirectory, Map<String, String> environment) {
