@@ -15,7 +15,7 @@ from typing import Any, Dict, Optional
 
 import requests
 
-from seed.client import SeedServerSentEvents
+from seed.client import SeedApi
 
 
 def _get_wiremock_base_url() -> str:
@@ -24,7 +24,7 @@ def _get_wiremock_base_url() -> str:
     return f"http://localhost:{port}"
 
 
-def get_client(test_id: str) -> SeedServerSentEvents:
+def get_client(test_id: str) -> SeedApi:
     """
     Creates a configured client instance for wire tests.
 
@@ -39,8 +39,8 @@ def get_client(test_id: str) -> SeedServerSentEvents:
 
     # Prefer passing headers directly if the client constructor supports it.
     try:
-        if "headers" in inspect.signature(SeedServerSentEvents).parameters:
-            return SeedServerSentEvents(
+        if "headers" in inspect.signature(SeedApi).parameters:
+            return SeedApi(
                 base_url=base_url,
                 headers=test_headers,
             )
@@ -49,7 +49,7 @@ def get_client(test_id: str) -> SeedServerSentEvents:
 
     import httpx
 
-    return SeedServerSentEvents(
+    return SeedApi(
         base_url=base_url,
         httpx_client=httpx.Client(headers=test_headers),
     )
