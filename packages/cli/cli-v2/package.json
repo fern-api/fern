@@ -1,11 +1,11 @@
 {
-  "name": "@fern-api/cli-logger",
+  "name": "@fern-api/cli-v2",
   "version": "0.0.0",
   "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/cli/cli-logger"
+    "directory": "packages/cli/cli-v2"
   },
   "sideEffects": false,
   "type": "module",
@@ -25,30 +25,26 @@
     "lib"
   ],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
-  "dependencies": {
-    "chalk": "^5.3.0"
-  },
   "devDependencies": {
-    "@fern-api/configs": "workspace:*",
-    "@fern-api/core-utils": "workspace:*",
-    "@fern-api/logger": "workspace:*",
-    "@fern-api/task-context": "workspace:*",
-    "@types/is-ci": "^3.0.4",
-    "@types/node": "18.15.3",
-    "ansi-escapes": "^5.0.0",
+    "commander": "^14.0.2",
     "depcheck": "^1.4.7",
-    "chalk": "^5.3.0",
-    "is-ci": "^3.0.1",
-    "ora": "^7.0.1",
     "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "@fern-api/cli-logger": "workspace:*",
+    "@fern-api/configs": "workspace:*",
+    "@fern-api/logger": "workspace:*",
+    "@types/node": "18.15.3"
   }
 }

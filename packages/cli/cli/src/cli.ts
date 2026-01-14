@@ -2,6 +2,7 @@
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import { runCliV2 } from "@fern-api/cli-v2";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
@@ -205,6 +206,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
+    addV2Command(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -1790,6 +1792,28 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 cliContext,
                 outputPath: resolve(cwd(), argv.outputPath)
             });
+        }
+    );
+}
+
+function addV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "v2 [args...]",
+        false, // Hidden from --help while in-development.
+        (yargs) =>
+            yargs
+                .positional("args", {
+                    array: true,
+                    string: true
+                })
+                .help(false),
+        async (argv) => {
+            try {
+                await runCliV2(argv.args?.map((arg) => String(arg)) ?? []);
+            } catch (error) {
+                cliContext.logger.error("CLI v2 failed:", String(error));
+                cliContext.failWithoutThrowing();
+            }
         }
     );
 }

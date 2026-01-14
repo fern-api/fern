@@ -6,10 +6,13 @@ import IS_CI from "is-ci";
 import ora, { Ora } from "ora";
 
 import { Log } from "./Log";
-import { TaskContextImpl } from "./TaskContextImpl";
+
+interface Task {
+    printInteractiveTasks: ({ spinner }: { spinner: string }) => string;
+}
 
 export class TtyAwareLogger {
-    private tasks: TaskContextImpl[] = [];
+    private tasks: Task[] = [];
     private lastPaint = "";
     private spinner = ora({ spinner: "dots11" });
     private interval: NodeJS.Timer | undefined;
@@ -46,7 +49,7 @@ export class TtyAwareLogger {
         this.interval = setInterval(this.repaint.bind(this), getSpinnerInterval(this.spinner));
     }
 
-    public registerTask(context: TaskContextImpl): void {
+    public registerTask(context: Task): void {
         this.tasks.push(context);
     }
 
