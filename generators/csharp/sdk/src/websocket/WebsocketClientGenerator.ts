@@ -618,7 +618,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                         for (const oneOfType of type.generics) {
                             result.push({
                                 type: oneOfType,
-                                eventType: this.Types.AsyncEvent(oneOfType),
+                                eventType: this.Types.WebSocketEvent(oneOfType),
                                 name: is.ClassReference(oneOfType) ? oneOfType.name : undefined
                             });
                         }
@@ -626,7 +626,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                         // otherwise it's just a single type here
                         result.push({
                             type,
-                            eventType: this.Types.AsyncEvent(type),
+                            eventType: this.Types.WebSocketEvent(type),
                             name:
                                 reference._visit({
                                     container: () => undefined,
@@ -665,7 +665,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     return {
                         reference: each.body.bodyType,
                         type,
-                        eventType: this.Types.AsyncEvent(type),
+                        eventType: this.Types.WebSocketEvent(type),
                         name:
                             bodyType._visit({
                                 container: () => undefined,
@@ -842,7 +842,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             isAsync: true,
             name: "ConnectAsync",
-            return_: this.System.Threading.Tasks.Task,
+            return_: this.System.Threading.Tasks.Task(),
             doc: this.csharp.xmlDocBlockOf({
                 summary: "Asynchronously establishes a WebSocket connection."
             }),
@@ -860,7 +860,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             isAsync: true,
             name: "CloseAsync",
-            return_: this.System.Threading.Tasks.Task,
+            return_: this.System.Threading.Tasks.Task(),
             doc: this.csharp.xmlDocBlockOf({
                 summary: "Asynchronously closes the WebSocket connection."
             }),
@@ -878,7 +878,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             isAsync: true,
             name: "DisposeAsync",
-            return_: this.System.Threading.Tasks.ValueTask,
+            return_: this.System.Threading.Tasks.ValueTask(),
             doc: this.csharp.xmlDocBlockOf({
                 summary: "Asynchronously disposes the WebSocket client."
             }),
@@ -914,20 +914,12 @@ export class WebSocketClientGenerator extends WithGeneration {
 
     /**
      * Creates the PropertyChanged event for INotifyPropertyChanged implementation.
+     * Note: C# events are written directly as raw code since the AST doesn't support event declarations.
      */
     private createPropertyChangedEvent(cls: ast.Class) {
-        cls.addField({
-            origin: cls.explicit("PropertyChanged"),
-            access: ast.Access.Public,
-            type: this.csharp.type({
-                reference: this.System.ComponentModel.PropertyChangedEventHandler,
-                isOptional: true
-            }),
-            summary: "Event that is raised when a property value changes.",
-            isEvent: true
-        });
-
-        // Subscribe to _client.PropertyChanged in constructor
+        // The PropertyChanged event is handled by forwarding from _client in the constructor
+        // The actual event declaration is written as part of the class body
+        cls.addNamespaceReference("System.ComponentModel");
     }
 
     /**
@@ -994,7 +986,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             partial: true,
             doc: this.websocketChannel.docs ? { summary: this.websocketChannel.docs } : undefined,
-            implements_: [
+            interfaceReferences: [
                 this.System.IAsyncDisposable,
                 this.System.IDisposable,
                 this.System.ComponentModel.INotifyPropertyChanged
