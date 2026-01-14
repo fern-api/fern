@@ -16,7 +16,7 @@ var (
 type PostWithObjectBody struct {
 	FieldString  string                         `json:"string" url:"-"`
 	Integer      int                            `json:"integer" url:"-"`
-	NestedObject *types.ObjectWithOptionalField `json:"NestedObject,omitempty" url:"-"`
+	NestedObject *types.ObjectWithOptionalField `json:"NestedObject" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
