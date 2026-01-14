@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.0
+  changelogEntry:
+    - summary: |
+        Add placeholder page for python-docs in `fern docs dev`. When running local development, a helpful placeholder page is shown explaining that Python library documentation requires `fern generate --docs` or `fern generate --docs --preview` to generate.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 63
+
 - version: 3.41.1
   changelogEntry:
     - summary: |
