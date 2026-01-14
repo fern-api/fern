@@ -525,6 +525,7 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiReferenceConfiguration
+      - PythonDocsConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
       - FolderConfiguration
@@ -1094,6 +1095,27 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
+
+  PythonDocsConfiguration:
+    docs: |
+      Configuration for generating Python library documentation from source code.
+      The docs are generated from a GitHub repository and merged into the navigation.
+    properties:
+      python-docs:
+        type: string
+        docs: |
+          GitHub URL to the repository containing the Python library source code.
+          Example: https://github.com/NVIDIA/NeMo-RL
+      title:
+        type: optional<string>
+        docs: |
+          Navigation title for the Python docs section.
+          @default: "Python Reference"
+      slug:
+        type: optional<string>
+        docs: |
+          URL slug for the Python docs pages.
+          @default: "python-docs"
 
   ApiReferenceLayoutItem:
     docs: |
