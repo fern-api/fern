@@ -6,7 +6,7 @@
         JSON tree in memory. This reduces memory usage significantly for large API specifications.
         Also adds JVM tuning flags (-Xms4g, G1GC configuration) for improved garbage collection
         performance during local seed testing.
-      type: feat
+      type: chore
   createdAt: "2026-01-14"
   irVersion: 63
 
