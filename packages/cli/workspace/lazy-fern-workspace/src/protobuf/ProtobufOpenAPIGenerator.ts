@@ -3,7 +3,7 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { access, cp, readFile, unlink, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { getProtobufYamlV1 } from "./utils";
+import { detectAirGappedMode, getProtobufYamlV1 } from "./utils";
 
 const PROTOBUF_GENERATOR_CONFIG_FILENAME = "buf.gen.yaml";
 const PROTOBUF_GENERATOR_OUTPUT_PATH = "output";
@@ -11,6 +11,7 @@ const PROTOBUF_GENERATOR_OUTPUT_FILEPATH = `${PROTOBUF_GENERATOR_OUTPUT_PATH}/op
 
 export class ProtobufOpenAPIGenerator {
     private context: TaskContext;
+    private isAirGapped: boolean | undefined;
 
     constructor({ context }: { context: TaskContext }) {
         this.context = context;
@@ -56,6 +57,11 @@ export class ProtobufOpenAPIGenerator {
         deps: string[];
         existingBufLockContents?: string;
     }): Promise<{ absoluteFilepath: AbsoluteFilePath; bufLockContents: string | undefined }> {
+        // Detect air-gapped mode once at the start if we have dependencies
+        if (deps.length > 0 && this.isAirGapped === undefined) {
+            this.isAirGapped = await detectAirGappedMode(absoluteFilepathToProtobufRoot, this.context.logger);
+        }
+
         const protobufGeneratorConfigPath = await this.setupProtobufGeneratorConfig({
             absoluteFilepathToProtobufRoot,
             relativeFilepathToProtobufRoot
@@ -140,54 +146,26 @@ export class ProtobufOpenAPIGenerator {
                 await writeFile(bufLockPath, existingBufLockContents);
                 cleanupBufLock = true;
             } else if (deps.length > 0) {
-                // Check if buf.lock already exists in the copied directory (e.g., pre-cached in air-gapped environments)
-                let bufLockExistsInCopiedDir = false;
-                this.context.logger.debug(`Checking for buf.lock at: ${bufLockPath}`);
-                try {
-                    await access(bufLockPath);
-                    bufLockExistsInCopiedDir = true;
-                    // Read the existing buf.lock contents for caching
-                    bufLockContents = await readFile(bufLockPath, "utf-8");
-                    this.context.logger.debug(`Found pre-cached buf.lock file (${bufLockContents.length} bytes)`);
-                } catch (err) {
-                    bufLockExistsInCopiedDir = false;
-                    this.context.logger.debug(`No buf.lock found: ${err}`);
-                }
-
-                // Always try buf dep update to populate the cache (needed at build time)
-                // If it fails with a network error and buf.lock exists, continue (air-gapped mode)
-                // Note: execa throws an exception when the command fails, so we need to catch it
-                try {
-                    await buf(["dep", "update"]);
-                    // buf dep update succeeded, read the updated buf.lock
+                // If we're in air-gapped mode, skip buf dep update entirely
+                if (this.isAirGapped) {
+                    this.context.logger.debug("Air-gapped mode: skipping buf dep update");
+                    // Verify buf.lock exists in the working directory (should have been copied from source)
                     try {
-                        bufLockContents = await readFile(bufLockPath, "utf-8");
-                    } catch (err) {
-                        bufLockContents = undefined;
-                    }
-                } catch (bufDepUpdateError: unknown) {
-                    // execa throws an exception when the command fails with non-zero exit code
-                    const errorMessage =
-                        bufDepUpdateError instanceof Error ? bufDepUpdateError.message : String(bufDepUpdateError);
-                    const isNetworkError =
-                        errorMessage.includes("server hosted at that remote is unavailable") ||
-                        errorMessage.includes("failed to connect") ||
-                        errorMessage.includes("network") ||
-                        errorMessage.includes("ENOTFOUND") ||
-                        errorMessage.includes("ETIMEDOUT");
-
-                    this.context.logger.debug(
-                        `buf dep update failed. isNetworkError=${isNetworkError}, bufLockExists=${bufLockExistsInCopiedDir}, error=${errorMessage.substring(0, 200)}`
-                    );
-
-                    if (isNetworkError && bufLockExistsInCopiedDir) {
-                        // Air-gapped environment with pre-cached buf.lock - continue without updating
-                        this.context.logger.debug(
-                            "buf dep update failed due to network error, but buf.lock exists. Continuing in air-gapped mode."
+                        await access(bufLockPath);
+                    } catch {
+                        this.context.failAndThrow(
+                            "Air-gapped mode requires a pre-cached buf.lock file. Please run 'buf dep update' at build time to cache dependencies."
                         );
-                    } else {
-                        this.context.failAndThrow(errorMessage);
                     }
+                } else {
+                    // Run buf dep update to populate the cache (needed at build time)
+                    await buf(["dep", "update"]);
+                }
+                // Read buf.lock contents for caching
+                try {
+                    bufLockContents = await readFile(bufLockPath, "utf-8");
+                } catch {
+                    bufLockContents = undefined;
                 }
             }
 
