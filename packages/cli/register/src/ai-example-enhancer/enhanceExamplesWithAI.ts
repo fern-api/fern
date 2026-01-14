@@ -12,7 +12,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { join } from "path";
 import { LambdaExampleEnhancer } from "./lambdaClient";
 import { SpinnerStatusCoordinator } from "./spinnerStatusCoordinator";
-import { AIExampleEnhancerConfig } from "./types";
+import { AIExampleEnhancerConfig, ConcurrencyStats, ProcessingResult, ProgressCallback, QueuedRequest } from "./types";
 import { removeInvalidAiExamples, validateAiExamplesFromFile } from "./validateAiExamples";
 import {
     EnhancedExampleRecord,
@@ -49,6 +49,106 @@ class CircuitBreaker {
 
     public getThreshold(): number {
         return this.failureThreshold;
+    }
+}
+
+// Concurrent endpoint processor using rolling window queue
+class ConcurrentEndpointProcessor {
+    private readonly maxConcurrency: number;
+    private activeRequests = new Map<string, QueuedRequest>();
+    private pendingQueue: Array<() => Promise<ProcessingResult>> = [];
+    private results = new Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>();
+    private stats: ConcurrencyStats = { pending: 0, active: 0, completed: 0, failed: 0, totalStarted: 0 };
+    private completedSinceLastCallback: ProcessingResult[] = [];
+
+    constructor(
+        maxConcurrency: number,
+        private progressCallback?: ProgressCallback
+    ) {
+        this.maxConcurrency = maxConcurrency;
+    }
+
+    public async processAll(
+        workItems: Array<() => Promise<ProcessingResult>>
+    ): Promise<Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>> {
+        this.pendingQueue = [...workItems];
+        this.stats.pending = this.pendingQueue.length;
+        this.stats.totalStarted = this.pendingQueue.length;
+
+        // Fill initial slots
+        while (this.pendingQueue.length > 0 && this.activeRequests.size < this.maxConcurrency) {
+            this.startNext();
+        }
+
+        // Process completions as they occur
+        while (this.activeRequests.size > 0) {
+            // Create promises that resolve with their ID and result
+            const racingPromises = Array.from(this.activeRequests.entries()).map(([id, queuedRequest]) =>
+                queuedRequest.promise.then((result) => ({ id, result }))
+            );
+
+            const { id: completedId, result } = await Promise.race(racingPromises);
+            await this.handleCompletion(completedId, result);
+
+            // Start next request if queue has work
+            if (this.pendingQueue.length > 0) {
+                this.startNext();
+            }
+        }
+
+        return this.results;
+    }
+
+    private startNext(): void {
+        if (this.pendingQueue.length === 0 || this.activeRequests.size >= this.maxConcurrency) {
+            return;
+        }
+
+        const workItemFactory = this.pendingQueue.shift()!;
+        const id = `req-${Date.now()}-${Math.random()}`;
+        const promise = workItemFactory();
+
+        const queuedRequest: QueuedRequest = {
+            id,
+            promise,
+            startTime: Date.now()
+        };
+
+        this.activeRequests.set(id, queuedRequest);
+        this.stats.pending = this.pendingQueue.length;
+        this.stats.active = this.activeRequests.size;
+    }
+
+    private async handleCompletion(completedId: string, result: ProcessingResult): Promise<void> {
+        // Remove the completed request
+        const completedRequest = this.activeRequests.get(completedId);
+        if (completedRequest) {
+            this.activeRequests.delete(completedId);
+        }
+
+        // Update stats and results
+        if (result.success) {
+            this.stats.completed++;
+            this.results.set(result.endpointKey, {
+                enhancedReq: result.enhancedReq,
+                enhancedRes: result.enhancedRes
+            });
+        } else {
+            this.stats.failed++;
+        }
+
+        this.stats.active = this.activeRequests.size;
+        this.completedSinceLastCallback.push(result);
+
+        // Notify progress if callback provided
+        if (this.progressCallback) {
+            this.progressCallback({ ...this.stats }, [...this.completedSinceLastCallback]);
+            this.completedSinceLastCallback = [];
+        }
+    }
+
+    public getStats(): ConcurrencyStats {
+        return { ...this.stats };
     }
 }
 
@@ -649,13 +749,11 @@ async function processEndpointsConcurrently(
     apiStats?: { count: number; total: number },
     circuitBreaker?: CircuitBreaker
 ): Promise<Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>> {
-    const enhancementResults = new Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>();
-
-    // Process endpoints concurrently (1 Lambda call per endpoint)
+    // Process endpoints using rolling window queue instead of blocking chunks
     const maxConcurrentRequests = parseInt(process.env.FERN_AI_MAX_CONCURRENT || "25", 10);
 
     context.logger.debug(
-        `Processing ${allWorkItems.length} endpoints with max ${maxConcurrentRequests} concurrent Lambda calls`
+        `Processing ${allWorkItems.length} endpoints with max ${maxConcurrentRequests} concurrent Lambda calls using rolling window queue`
     );
 
     // Check circuit breaker before processing
@@ -663,72 +761,125 @@ async function processEndpointsConcurrently(
         context.logger.debug(
             `Circuit breaker is open after ${circuitBreaker.getFailureCount()} failures (threshold: ${circuitBreaker.getThreshold()}). Skipping AI enhancement for remaining endpoints.`
         );
-        return enhancementResults;
+        return new Map();
     }
 
-    // Process all work items concurrently in chunks
-    for (let i = 0; i < allWorkItems.length; i += maxConcurrentRequests) {
-        const chunk = allWorkItems.slice(i, i + maxConcurrentRequests);
-        const chunkNumber = Math.floor(i / maxConcurrentRequests) + 1;
+    let completedCount = 0;
+    let lastSaveCount = 0;
+    const saveInterval = Math.max(10, Math.floor(allWorkItems.length / 20)); // Save every 10 or ~5% of items
 
-        context.logger.debug(`Processing chunk ${chunkNumber} with ${chunk.length} endpoints concurrently`);
+    // Progress callback for real-time updates
+    const progressCallback: ProgressCallback = (stats: ConcurrencyStats, recentCompletions: ProcessingResult[]) => {
+        // Update progress tracking
+        if (statusId && apiStats) {
+            const coordinator = SpinnerStatusCoordinator.getInstance();
+            coordinator.update(statusId, stats.completed);
+        }
 
-        // Check circuit breaker before processing each chunk
+        // Check if circuit breaker should stop processing
         if (circuitBreaker?.shouldSkip()) {
-            context.logger.debug(`Circuit breaker opened during processing. Stopping at chunk ${chunkNumber}.`);
-            break;
+            context.logger.debug(`Circuit breaker opened during processing. Processed ${stats.completed} endpoints.`);
+            return;
         }
 
-        // Process each endpoint concurrently
-        const endpointPromises = chunk.map((workItem, index) =>
-            processEndpoint(
-                workItem,
-                enhancer,
-                context,
-                organizationId,
-                stats,
-                enhancedExampleRecords,
-                openApiSpec,
-                sourceFilePath,
-                statusId,
-                apiStats,
-                i + index + 1,
-                circuitBreaker
-            )
-        );
-
-        // Wait for all endpoints in this chunk to complete
-        const results = await Promise.allSettled(endpointPromises);
-
-        // Process results
-        for (let j = 0; j < results.length; j++) {
-            const result = results[j];
-            if (!result) {
-                continue;
-            }
-
-            if (result.status === "fulfilled" && result.value) {
-                const { endpointKey, enhancedReq, enhancedRes } = result.value;
-                enhancementResults.set(endpointKey, { enhancedReq, enhancedRes });
-            } else if (result.status === "rejected") {
-                context.logger.debug(`Endpoint ${i + j + 1} failed: ${result.reason}`);
-            }
-        }
-
-        // Save incrementally after each chunk
+        // Incremental save based on completion count
         if (sourceFilePath && enhancedExampleRecords.length > 0) {
-            try {
-                await writeAiExamplesOverride({
+            const newCompletions = stats.completed - lastSaveCount;
+            if (newCompletions >= saveInterval) {
+                // Save incrementally (don't await to avoid blocking)
+                writeAiExamplesOverride({
                     enhancedExamples: enhancedExampleRecords,
                     sourceFilePath,
                     context
-                });
-                context.logger.debug(`Saved ${enhancedExampleRecords.length} examples after chunk ${chunkNumber}`);
-            } catch (error) {
-                context.logger.debug(`Failed to save incremental results: ${error}`);
+                })
+                    .then(() => {
+                        context.logger.debug(
+                            `Saved ${enhancedExampleRecords.length} examples after ${stats.completed} completions`
+                        );
+                    })
+                    .catch((error) => {
+                        context.logger.debug(`Failed to save incremental results: ${error}`);
+                    });
+                lastSaveCount = stats.completed;
             }
         }
+    };
+
+    // Create work item factories that wrap processEndpoint calls
+    const workItemFactories = allWorkItems.map((workItem, index) => {
+        return async (): Promise<ProcessingResult> => {
+            try {
+                // Check circuit breaker before processing each item
+                if (circuitBreaker?.shouldSkip()) {
+                    return {
+                        endpointKey: workItem.endpointKey,
+                        success: false,
+                        error: "Circuit breaker is open"
+                    };
+                }
+
+                const result = await processEndpoint(
+                    workItem,
+                    enhancer,
+                    context,
+                    organizationId,
+                    stats,
+                    enhancedExampleRecords,
+                    openApiSpec,
+                    sourceFilePath,
+                    statusId,
+                    apiStats,
+                    index + 1,
+                    circuitBreaker
+                );
+
+                if (result) {
+                    return {
+                        endpointKey: result.endpointKey,
+                        enhancedReq: result.enhancedReq,
+                        enhancedRes: result.enhancedRes,
+                        success: true
+                    };
+                } else {
+                    return {
+                        endpointKey: workItem.endpointKey,
+                        success: false,
+                        error: "processEndpoint returned null"
+                    };
+                }
+            } catch (error) {
+                context.logger.debug(`Work item factory error for ${workItem.endpointKey}: ${error}`);
+                return {
+                    endpointKey: workItem.endpointKey,
+                    success: false,
+                    error: String(error)
+                };
+            }
+        };
+    });
+
+    // Create and run concurrent processor with rolling window queue
+    const processor = new ConcurrentEndpointProcessor(maxConcurrentRequests, progressCallback);
+    const enhancementResults = await processor.processAll(workItemFactories);
+
+    // Final save if there are unsaved changes
+    if (sourceFilePath && enhancedExampleRecords.length > 0) {
+        try {
+            await writeAiExamplesOverride({
+                enhancedExamples: enhancedExampleRecords,
+                sourceFilePath,
+                context
+            });
+            context.logger.debug(`Final save: ${enhancedExampleRecords.length} examples saved`);
+        } catch (error) {
+            context.logger.debug(`Failed to save final results: ${error}`);
+        }
     }
+
+    const processingStats = processor.getStats();
+    context.logger.debug(
+        `Completed processing: ${processingStats.completed} succeeded, ${processingStats.failed} failed`
+    );
 
     return enhancementResults;
 }
@@ -776,74 +927,65 @@ async function processEndpoint(
         openApiSpec: prunedOpenApiSpec
     };
 
-    // Simple retry (2 attempts max) - Lambda client handles retries internally but we add one more layer
-    for (let attempt = 1; attempt <= 2; attempt++) {
-        try {
-            const result = await enhancer.enhanceExample(request);
+    // Single attempt - Lambda client handles retries internally (1 retry total)
+    try {
+        const result = await enhancer.enhanceExample(request);
 
-            // Record success in circuit breaker
-            circuitBreaker?.recordSuccess();
+        // Record success in circuit breaker
+        circuitBreaker?.recordSuccess();
 
-            // Check if anything was actually enhanced
-            const requestChanged = result.enhancedRequestExample !== request.originalRequestExample;
-            const responseChanged = result.enhancedResponseExample !== request.originalResponseExample;
+        // Check if anything was actually enhanced
+        const requestChanged = result.enhancedRequestExample !== request.originalRequestExample;
+        const responseChanged = result.enhancedResponseExample !== request.originalResponseExample;
 
-            if (requestChanged || responseChanged) {
-                // Create enhanced example record
-                const enhancedExampleRecord: EnhancedExampleRecord = {
-                    endpoint: workItem.example.path,
-                    method: workItem.endpoint.method,
-                    pathParameters: workItem.example.pathParameters,
-                    queryParameters: workItem.example.queryParameters,
-                    headers: workItem.example.headers,
-                    requestBody: requestChanged ? result.enhancedRequestExample : undefined,
-                    responseBody: responseChanged ? result.enhancedResponseExample : undefined
-                };
+        if (requestChanged || responseChanged) {
+            // Create enhanced example record
+            const enhancedExampleRecord: EnhancedExampleRecord = {
+                endpoint: workItem.example.path,
+                method: workItem.endpoint.method,
+                pathParameters: workItem.example.pathParameters,
+                queryParameters: workItem.example.queryParameters,
+                headers: workItem.example.headers,
+                requestBody: requestChanged ? result.enhancedRequestExample : undefined,
+                responseBody: responseChanged ? result.enhancedResponseExample : undefined
+            };
 
-                enhancedExampleRecords.push(enhancedExampleRecord);
-                stats.count++;
-                if (apiStats) {
-                    apiStats.count++;
-                }
-                context.logger.debug(`Successfully enhanced ${workItem.endpoint.method} ${workItem.example.path}`);
+            enhancedExampleRecords.push(enhancedExampleRecord);
+            stats.count++;
+            if (apiStats) {
+                apiStats.count++;
+            }
+            context.logger.debug(`Successfully enhanced ${workItem.endpoint.method} ${workItem.example.path}`);
 
-                // Update progress
-                if (statusId && apiStats) {
-                    const coordinator = SpinnerStatusCoordinator.getInstance();
-                    coordinator.update(statusId, apiStats.count);
-                }
-
-                return {
-                    endpointKey,
-                    enhancedReq: result.enhancedRequestExample,
-                    enhancedRes: result.enhancedResponseExample
-                };
+            // Update progress
+            if (statusId && apiStats) {
+                const coordinator = SpinnerStatusCoordinator.getInstance();
+                coordinator.update(statusId, apiStats.count);
             }
 
-            // If nothing changed, still return success (just no enhancement needed)
-            context.logger.debug(`No changes needed for ${workItem.endpoint.method} ${workItem.example.path}`);
             return {
                 endpointKey,
                 enhancedReq: result.enhancedRequestExample,
                 enhancedRes: result.enhancedResponseExample
             };
-        } catch (error) {
-            // Record failure in circuit breaker
-            circuitBreaker?.recordFailure();
-
-            context.logger.debug(
-                `Endpoint ${workItem.endpoint.method} ${workItem.example.path} attempt ${attempt} failed: ${error}`
-            );
-
-            if (attempt < 2) {
-                // Simple backoff before retry
-                await new Promise((resolve) => setTimeout(resolve, 1500));
-            }
         }
+
+        // If nothing changed, still return success (just no enhancement needed)
+        context.logger.debug(`No changes needed for ${workItem.endpoint.method} ${workItem.example.path}`);
+        return {
+            endpointKey,
+            enhancedReq: result.enhancedRequestExample,
+            enhancedRes: result.enhancedResponseExample
+        };
+    } catch (error) {
+        // Record failure in circuit breaker
+        circuitBreaker?.recordFailure();
+
+        context.logger.debug(`Endpoint ${workItem.endpoint.method} ${workItem.example.path} failed: ${error}`);
     }
 
-    // All attempts failed
-    context.logger.debug(`Failed to enhance ${workItem.endpoint.method} ${workItem.example.path} after all attempts`);
+    // Enhancement failed
+    context.logger.debug(`Failed to enhance ${workItem.endpoint.method} ${workItem.example.path}`);
     return null;
 }
 
