@@ -270,8 +270,8 @@ export function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed
             };
         },
         passthrough: () => {
-            const knownRawKeys = new Set(schema._getRawProperties());
-            const knownParsedKeys = new Set(schema._getParsedProperties());
+            const knownRawKeys = new Set<string>(schema._getRawProperties() as string[]);
+            const knownParsedKeys = new Set<string>(schema._getParsedProperties() as string[]);
             const baseSchema: BaseObjectSchema<Raw & { [key: string]: unknown }, Parsed & { [key: string]: unknown }> =
                 {
                     _getParsedProperties: () => schema._getParsedProperties(),
