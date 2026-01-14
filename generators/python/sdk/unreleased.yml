@@ -4,11 +4,3 @@
 #
 # Rack up changes here, then copy the block over to versions.yml when ready to release
 - version: unreleased
-  changelogEntry:
-    - summary: |
-        Fix WireMock stub generation for streaming endpoints. When an endpoint has both streaming
-        and non-streaming variants (via x-fern-streaming with stream-condition), the generated
-        WireMock stubs now include request body matching criteria to differentiate between them.
-        SSE stubs match on `stream: true` in the request body and have higher priority, ensuring
-        wire tests correctly route streaming requests to the SSE stub.
-      type: fix
