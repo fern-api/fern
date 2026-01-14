@@ -42,3 +42,33 @@ components:
           type: string
       required:
         - "@type"
+    # Test case for discriminator with x-fern-property-name applied via overrides
+    TestIdentity:
+      type: object
+      description: Test description
+      oneOf:
+        - $ref: "#/components/schemas/TestA"
+        - $ref: "#/components/schemas/TestB"
+      discriminator:
+        propertyName: "@type"
+        mapping:
+          TestA: "#/components/schemas/TestA"
+          TestB: "#/components/schemas/TestB"
+    TestA:
+      type: object
+      properties:
+        "@type":
+          type: string
+        aFeature:
+          type: string
+      required:
+        - "@type"
+    TestB:
+      type: object
+      properties:
+        "@type":
+          type: string
+        bFeature:
+          type: string
+      required:
+        - "@type"

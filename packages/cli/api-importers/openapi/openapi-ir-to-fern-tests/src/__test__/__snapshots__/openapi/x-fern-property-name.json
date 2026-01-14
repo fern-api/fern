@@ -62,6 +62,43 @@
               "openapi": "../openapi.yml",
             },
           },
+          "TestA": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "aFeature": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TestB": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "bFeature": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "TestIdentity": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": {
+              "name": "type",
+              "value": "@type",
+            },
+            "docs": "Test description",
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "TestA": "TestA",
+              "TestB": "TestB",
+            },
+          },
         },
       },
       "rawContents": "types:
@@ -93,6 +130,27 @@
   DataDlOptions:
     properties:
       dlFeature: optional<string>
+    source:
+      openapi: ../openapi.yml
+  TestIdentity:
+    discriminant:
+      name: type
+      value: '@type'
+    base-properties: {}
+    docs: Test description
+    union:
+      TestA: TestA
+      TestB: TestB
+    source:
+      openapi: ../openapi.yml
+  TestA:
+    properties:
+      aFeature: optional<string>
+    source:
+      openapi: ../openapi.yml
+  TestB:
+    properties:
+      bFeature: optional<string>
     source:
       openapi: ../openapi.yml
 ",
