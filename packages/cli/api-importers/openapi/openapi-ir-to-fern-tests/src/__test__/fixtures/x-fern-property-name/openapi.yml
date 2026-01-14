@@ -12,33 +12,33 @@ components:
           x-fern-property-name: renamed_id
           type: string
           format: uuid
-    DataDataSourceOptions:
+    UnionWithDiscriminant:
       type: object
-      description: Options specific to data requests for DL+ subscribers.
+      description: A union type with a discriminant property.
       oneOf:
-        - $ref: "#/components/schemas/DataDlPlusOptions"
-        - $ref: "#/components/schemas/DataDlOptions"
+        - $ref: "#/components/schemas/VariantOne"
+        - $ref: "#/components/schemas/VariantTwo"
       discriminator:
         propertyName: "@type"
         x-fern-property-name: type
         mapping:
-          DataDlPlus: "#/components/schemas/DataDlPlusOptions"
-          DataDl: "#/components/schemas/DataDlOptions"
-    DataDlPlusOptions:
+          VariantOne: "#/components/schemas/VariantOne"
+          VariantTwo: "#/components/schemas/VariantTwo"
+    VariantOne:
       type: object
       properties:
         "@type":
           type: string
-        dlPlusFeature:
+        featureOne:
           type: string
       required:
         - "@type"
-    DataDlOptions:
+    VariantTwo:
       type: object
       properties:
         "@type":
           type: string
-        dlFeature:
+        featureTwo:
           type: string
       required:
         - "@type"

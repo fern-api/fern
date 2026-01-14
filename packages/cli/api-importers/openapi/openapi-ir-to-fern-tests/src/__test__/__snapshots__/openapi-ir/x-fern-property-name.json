@@ -46,26 +46,26 @@
         },
         "type": "object"
       },
-      "DataDataSourceOptions": {
+      "UnionWithDiscriminant": {
         "value": {
           "commonProperties": [],
-          "description": "Options specific to data requests for DL+ subscribers.",
+          "description": "A union type with a discriminant property.",
           "discriminantProperty": "@type",
           "discriminantPropertyNameOverride": "type",
-          "generatedName": "DataDataSourceOptions",
+          "generatedName": "UnionWithDiscriminant",
           "schemas": {
-            "DataDlPlus": {
-              "generatedName": "ComponentsSchemasDataDlPlusOptions",
-              "schema": "DataDlPlusOptions",
+            "VariantOne": {
+              "generatedName": "ComponentsSchemasVariantOne",
+              "schema": "VariantOne",
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
               },
               "type": "reference"
             },
-            "DataDl": {
-              "generatedName": "ComponentsSchemasDataDlOptions",
-              "schema": "DataDlOptions",
+            "VariantTwo": {
+              "generatedName": "ComponentsSchemasVariantTwo",
+              "schema": "VariantTwo",
               "source": {
                 "file": "../openapi.yml",
                 "type": "openapi"
@@ -82,20 +82,20 @@
         },
         "type": "oneOf"
       },
-      "DataDlPlusOptions": {
+      "VariantOne": {
         "allOf": [],
         "properties": [
           {
             "conflict": {},
-            "generatedName": "dataDlPlusOptionsDlPlusFeature",
-            "key": "dlPlusFeature",
+            "generatedName": "variantOneFeatureOne",
+            "key": "featureOne",
             "schema": {
-              "generatedName": "DataDlPlusOptionsDlPlusFeature",
+              "generatedName": "VariantOneFeatureOne",
               "value": {
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "DataDlPlusOptionsDlPlusFeature",
+                "generatedName": "VariantOneFeatureOne",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -106,7 +106,7 @@
           }
         ],
         "allOfPropertyConflicts": [],
-        "generatedName": "DataDlPlusOptions",
+        "generatedName": "VariantOne",
         "groupName": [],
         "additionalProperties": false,
         "source": {
@@ -115,20 +115,20 @@
         },
         "type": "object"
       },
-      "DataDlOptions": {
+      "VariantTwo": {
         "allOf": [],
         "properties": [
           {
             "conflict": {},
-            "generatedName": "dataDlOptionsDlFeature",
-            "key": "dlFeature",
+            "generatedName": "variantTwoFeatureTwo",
+            "key": "featureTwo",
             "schema": {
-              "generatedName": "DataDlOptionsDlFeature",
+              "generatedName": "VariantTwoFeatureTwo",
               "value": {
                 "schema": {
                   "type": "string"
                 },
-                "generatedName": "DataDlOptionsDlFeature",
+                "generatedName": "VariantTwoFeatureTwo",
                 "groupName": [],
                 "type": "primitive"
               },
@@ -139,7 +139,7 @@
           }
         ],
         "allOfPropertyConflicts": [],
-        "generatedName": "DataDlOptions",
+        "generatedName": "VariantTwo",
         "groupName": [],
         "additionalProperties": false,
         "source": {

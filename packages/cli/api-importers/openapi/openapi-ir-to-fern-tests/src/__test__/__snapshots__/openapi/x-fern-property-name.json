@@ -25,43 +25,6 @@
               "openapi": "../openapi.yml",
             },
           },
-          "DataDataSourceOptions": {
-            "availability": undefined,
-            "base-properties": {},
-            "discriminant": {
-              "name": "type",
-              "value": "@type",
-            },
-            "docs": "Options specific to data requests for DL+ subscribers.",
-            "encoding": undefined,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-            "union": {
-              "DataDl": "DataDlOptions",
-              "DataDlPlus": "DataDlPlusOptions",
-            },
-          },
-          "DataDlOptions": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "dlFeature": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "DataDlPlusOptions": {
-            "docs": undefined,
-            "inline": undefined,
-            "properties": {
-              "dlPlusFeature": "optional<string>",
-            },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "TestA": {
             "docs": undefined,
             "inline": undefined,
@@ -99,6 +62,43 @@
               "TestB": "TestB",
             },
           },
+          "UnionWithDiscriminant": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": {
+              "name": "type",
+              "value": "@type",
+            },
+            "docs": "A union type with a discriminant property.",
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "VariantOne": "VariantOne",
+              "VariantTwo": "VariantTwo",
+            },
+          },
+          "VariantOne": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "featureOne": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "VariantTwo": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "featureTwo": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
         },
       },
       "rawContents": "types:
@@ -111,25 +111,25 @@
         name: renamed_id
     source:
       openapi: ../openapi.yml
-  DataDataSourceOptions:
+  UnionWithDiscriminant:
     discriminant:
       name: type
       value: '@type'
     base-properties: {}
-    docs: Options specific to data requests for DL+ subscribers.
+    docs: A union type with a discriminant property.
     union:
-      DataDlPlus: DataDlPlusOptions
-      DataDl: DataDlOptions
+      VariantOne: VariantOne
+      VariantTwo: VariantTwo
     source:
       openapi: ../openapi.yml
-  DataDlPlusOptions:
+  VariantOne:
     properties:
-      dlPlusFeature: optional<string>
+      featureOne: optional<string>
     source:
       openapi: ../openapi.yml
-  DataDlOptions:
+  VariantTwo:
     properties:
-      dlFeature: optional<string>
+      featureTwo: optional<string>
     source:
       openapi: ../openapi.yml
   TestIdentity:
