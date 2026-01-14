@@ -426,10 +426,7 @@ export async function publishDocs({
         });
 
         if (!startResponse.ok) {
-            return context.failAndThrow(
-                `Failed to start Python docs generation for ${githubUrl}`,
-                startResponse.error
-            );
+            return context.failAndThrow(`Failed to start Python docs generation for ${githubUrl}`, startResponse.error);
         }
 
         const jobId = startResponse.body.jobId;
