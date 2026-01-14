@@ -104,7 +104,11 @@ class ConcurrentEndpointProcessor {
             return;
         }
 
-        const workItemFactory = this.pendingQueue.shift()!;
+        const workItemFactory = this.pendingQueue.shift();
+        if (!workItemFactory) {
+            return; // Should never happen given the length check above
+        }
+
         const id = `req-${Date.now()}-${Math.random()}`;
         const promise = workItemFactory();
 
