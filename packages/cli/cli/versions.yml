@@ -10,7 +10,7 @@
 - version: 3.39.4
   changelogEntry:
     - summary: |
-        Optimize air-gapped environment detection for protobuf generation. The CLI now detects network availability once at startup using a 5-second timeout instead of having multiple 30-second timeouts for each buf command. Both `ProtobufIRGenerator` and `ProtobufOpenAPIGenerator` now use an `isAirGapped` flag to skip network calls after initial detection, with try-catch backup for safety. This significantly improves performance in air-gapped environments.
+        Optimize air-gapped environment detection for protobuf generation. The CLI now detects network availability once at startup using a 30-second timeout instead of having multiple timeouts for each buf command. Both `ProtobufIRGenerator` and `ProtobufOpenAPIGenerator` now use a shared `detectAirGappedMode()` utility function that sets an `isAirGapped` flag to skip network calls after initial detection. This significantly improves performance in air-gapped environments.
       type: fix
   createdAt: "2026-01-14"
   irVersion: 63
