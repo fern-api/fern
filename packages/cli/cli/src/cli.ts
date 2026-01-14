@@ -21,6 +21,7 @@ import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
+import { generateCarapaceYAML } from "./carapace-completion";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
@@ -207,6 +208,7 @@ async function tryRunCli(cliContext: CliContext) {
     addGeneratorCommands(cli, cliContext);
 
     addProtocGenFernCommand(cli, cliContext);
+    addCompletionCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -1661,4 +1663,29 @@ function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
             }
         });
     });
+}
+
+function addCompletionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "completion",
+        "Generate shell completion specification",
+        (yargs) =>
+            yargs.option("format", {
+                choices: ["carapace"],
+                default: "carapace",
+                description: "Output format for completion"
+            }),
+        async (argv) => {
+            if (argv.format === "carapace") {
+                try {
+                    const yaml = generateCarapaceYAML();
+                    cliContext.logger.info(yaml);
+                } catch (error) {
+                    cliContext.failWithoutThrowing("Failed to generate carapace completion", error);
+                }
+            } else {
+                cliContext.failWithoutThrowing(`Unsupported completion format: ${argv.format}`);
+            }
+        }
+    );
 }
