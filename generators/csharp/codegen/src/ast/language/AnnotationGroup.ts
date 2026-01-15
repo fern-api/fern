@@ -35,8 +35,11 @@ export class AnnotationGroup extends AstNode {
             if (i > 0) {
                 writer.write(", ");
             }
-            const reference = this.getReference(this.items[i]!);
-            reference.writeAsAttribute(writer);
+            const item = this.items[i];
+            if (item != null) {
+                const reference = this.getReference(item);
+                reference.writeAsAttribute(writer);
+            }
         }
         writer.write("]");
     }
