@@ -17,6 +17,7 @@ import {
     ExampleQueryParameterShape,
     ExampleRequestBody,
     ExampleResponse,
+    ExampleTypeReferenceShape,
     Name
 } from "@fern-api/ir-sdk";
 import { hashJSON } from "@fern-api/ir-utils";
@@ -476,7 +477,12 @@ function convertExampleResponse({
     workspace: FernWorkspace;
 }): ExampleResponse {
     if (example.response == null) {
-        return ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined));
+        return ExampleResponse.ok(
+            ExampleEndpointSuccessResponse.body({
+                jsonExample: undefined,
+                shape: ExampleTypeReferenceShape.unknown({ unknown: undefined })
+            })
+        );
     }
     return visitExampleResponseSchema(endpoint, example.response, {
         body: (example) => {
@@ -504,7 +510,17 @@ function convertExampleResponse({
 
             return ExampleResponse.ok(
                 ExampleEndpointSuccessResponse.body(
-                    convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace })
+                    convertExampleResponseBody({
+                        endpoint,
+                        example,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    }) ?? {
+                        jsonExample: undefined,
+                        shape: ExampleTypeReferenceShape.unknown({ unknown: undefined })
+                    }
                 )
             );
         },
