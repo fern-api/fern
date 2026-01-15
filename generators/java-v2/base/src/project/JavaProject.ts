@@ -42,12 +42,22 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
             // Apply gradle-distribution-url override if configured
             await this.applyGradleDistributionUrlOverride();
 
-            this.context.logger.debug(`JavaProject: Running spotlessApply`);
-            await loggingExeca(this.context.logger, "./gradlew", [":spotlessApply"], {
+            const enableProfiling = this.context.customConfig["enable-gradle-profiling"] === true;
+            const gradleArgs = [":spotlessApply"];
+            if (enableProfiling) {
+                gradleArgs.push("--profile");
+                this.context.logger.info(`JavaProject: Running spotlessApply with profiling enabled`);
+            } else {
+                this.context.logger.debug(`JavaProject: Running spotlessApply`);
+            }
+            await loggingExeca(this.context.logger, "./gradlew", gradleArgs, {
                 doNotPipeOutput: false,
                 cwd: this.absolutePathToOutputDirectory
             });
             this.context.logger.debug(`JavaProject: Successfully ran spotlessApply`);
+            if (enableProfiling) {
+                this.context.logger.info(`JavaProject: Gradle profiling report generated in build/reports/profile/`);
+            }
         }
     }
 

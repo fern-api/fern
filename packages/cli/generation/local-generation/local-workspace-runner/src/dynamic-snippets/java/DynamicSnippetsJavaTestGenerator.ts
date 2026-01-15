@@ -74,11 +74,21 @@ export class DynamicSnippetsJavaTestGenerator {
         const gradlewExists = await doesPathExist(gradlewPath, "file");
         if (gradlewExists) {
             try {
-                await loggingExeca(this.context.logger, "./gradlew", [":spotlessApply"], {
+                const customConfig = this.generatorConfig.customConfig as Record<string, unknown> | undefined;
+                const enableProfiling = customConfig?.["enable-gradle-profiling"] === true;
+                const gradleArgs = [":spotlessApply"];
+                if (enableProfiling) {
+                    gradleArgs.push("--profile");
+                    this.context.logger.info("Running spotlessApply with profiling enabled");
+                }
+                await loggingExeca(this.context.logger, "./gradlew", gradleArgs, {
                     doNotPipeOutput: false,
                     cwd: outputDir
                 });
                 this.context.logger.debug("Successfully ran spotlessApply");
+                if (enableProfiling) {
+                    this.context.logger.info("Gradle profiling report generated in build/reports/profile/");
+                }
             } catch (e) {
                 this.context.failAndThrow("Failed to run spotlessApply", e);
             }
