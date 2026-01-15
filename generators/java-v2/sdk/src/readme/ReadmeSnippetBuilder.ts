@@ -937,7 +937,8 @@ ${clientClassName} client = ${clientClassName}.builder()
 
         // Get access path to WebSocket client from root client
         const clientAccessParts = fernFilepath.allParts.map(
-            (part: { camelCase: { safeName: string } }) => this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
+            (part: { camelCase: { safeName: string } }) =>
+                this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
         );
         const wsClientAccess =
             clientAccessParts.length > 0
