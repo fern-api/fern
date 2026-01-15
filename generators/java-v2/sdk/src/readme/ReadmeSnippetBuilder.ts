@@ -195,7 +195,8 @@ This SDK supports two authentication methods:
 If you already have a valid access token, you can use it directly:
 
 \`\`\`java
-${clientClassName} client = ${clientClassName}.withToken("your-access-token")
+${clientClassName} client = ${clientClassName}.builder()
+    .token("your-access-token")
     .url("https://api.example.com")
     .build();
 \`\`\`
@@ -205,7 +206,8 @@ ${clientClassName} client = ${clientClassName}.withToken("your-access-token")
 The SDK can automatically handle token acquisition and refresh:
 
 \`\`\`java
-${clientClassName} client = ${clientClassName}.withCredentials("client-id", "client-secret")
+${clientClassName} client = ${clientClassName}.builder()
+    .credentials("client-id", "client-secret")
     .url("https://api.example.com")
     .build();
 \`\`\``;

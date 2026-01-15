@@ -47,6 +47,16 @@ public class SeedOauthClientCredentialsClientBuilder {
         return new _CredentialsAuth(clientId, clientSecret);
     }
 
+    /**
+     * Creates a new client builder.
+     * Use this method to start building a client with the classic builder pattern.
+     *
+     * @return A builder for configuring authentication and creating the client
+     */
+    public static _Builder builder() {
+        return new _Builder();
+    }
+
     public SeedOauthClientCredentialsClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
@@ -248,6 +258,32 @@ public class SeedOauthClientCredentialsClientBuilder {
                     .addHeader("Authorization", oAuthTokenSupplier)
                     .build();
             return new SeedOauthClientCredentialsClient(finalOptions);
+        }
+    }
+
+    public static final class _Builder {
+        /**
+         * Configure the client to use a pre-generated access token for authentication.
+         * Use this when you already have a valid access token and want to bypass
+         * the OAuth client credentials flow.
+         *
+         * @param token The access token to use for Authorization header
+         * @return A builder configured for token authentication
+         */
+        public _TokenAuth token(String token) {
+            return new _TokenAuth(token);
+        }
+
+        /**
+         * Configure the client to use OAuth client credentials for authentication.
+         * The builder will automatically handle token acquisition and refresh.
+         *
+         * @param clientId The OAuth client ID
+         * @param clientSecret The OAuth client secret
+         * @return A builder configured for OAuth client credentials authentication
+         */
+        public _CredentialsAuth credentials(String clientId, String clientSecret) {
+            return new _CredentialsAuth(clientId, clientSecret);
         }
     }
 }
