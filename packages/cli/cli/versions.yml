@@ -2,8 +2,7 @@
 - version: 3.43.0
   changelogEntry:
     - summary: |
-        Add support for `enable-gradle-profiling` configuration option in Java dynamic snippets test generation.
-        When enabled, the `spotlessApply` command runs with `--profile` flag for debugging slow Gradle builds.
+        Add `enable-gradle-profiling` flag for gradle commands run during generation.
       type: feat
   createdAt: "2026-01-15"
   irVersion: 63
