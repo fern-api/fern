@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "properties": {
+    "role": {
+      "$ref": "#/definitions/MessageRole"
+    },
+    "content": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "role",
+    "content"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "MessageRole": {
+      "type": "string",
+      "enum": [
+        "user",
+        "assistant",
+        "system"
+      ]
+    }
+  }
+}

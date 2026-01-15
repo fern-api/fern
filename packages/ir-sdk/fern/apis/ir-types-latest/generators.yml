@@ -38,7 +38,7 @@ groups:
           noOptionalProperties: true
   java:
     generators:
-      - name: fernapi/java-model
+      - name: fernapi/fern-java-model
         version: 1.8.5
         output:
           location: maven

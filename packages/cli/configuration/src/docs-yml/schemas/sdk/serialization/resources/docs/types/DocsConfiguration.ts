@@ -22,6 +22,7 @@ import { ExperimentalConfig } from "./ExperimentalConfig";
 import { ProgrammingLanguage } from "./ProgrammingLanguage";
 import { Language } from "./Language";
 import { AiChatConfig } from "./AiChatConfig";
+import { AiExamplesConfig } from "./AiExamplesConfig";
 import { MetadataConfig } from "./MetadataConfig";
 import { RedirectConfig } from "./RedirectConfig";
 import { LogoConfiguration } from "./LogoConfiguration";
@@ -57,6 +58,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     languages: core.serialization.list(Language).optional(),
     aiChat: core.serialization.property("ai-chat", AiChatConfig.optional()),
     aiSearch: core.serialization.property("ai-search", AiChatConfig.optional()),
+    aiExamples: core.serialization.property("ai-examples", AiExamplesConfig.optional()),
     metadata: MetadataConfig.optional(),
     redirects: core.serialization.list(RedirectConfig).optional(),
     logo: LogoConfiguration.optional(),
@@ -92,6 +94,7 @@ export declare namespace DocsConfiguration {
         languages?: Language.Raw[] | null;
         "ai-chat"?: AiChatConfig.Raw | null;
         "ai-search"?: AiChatConfig.Raw | null;
+        "ai-examples"?: AiExamplesConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectConfig.Raw[] | null;
         logo?: LogoConfiguration.Raw | null;

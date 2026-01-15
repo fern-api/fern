@@ -124,7 +124,7 @@ Fern's model generators will output schemas or types defined in your OpenAPI spe
 | Generator ID                  | Latest Version                                                                                   | Entrypoint                                                                    |
 | ----------------------------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
 | `fernapi/fern-pydantic-model` | ![Pydantic Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-pydantic-model) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)           |
-| `fernapi/java-model`          | ![Java Model Generator Version](https://img.shields.io/docker/v/fernapi/java-model)              | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
+| `fernapi/fern-java-model`     | ![Java Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-model)         | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
 | `fernapi/fern-ruby-model`     | ![Ruby Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-model)         | [cli.ts](./generators/ruby/model/src/cli.ts)                                  |
 | `fernapi/fern-go-model`       | ![Go Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-model)             | [main.go](./generators/go/cmd/fern-go-model/main.go)                          |
 
