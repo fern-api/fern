@@ -45,7 +45,9 @@ export async function generateOpenAPIForWorkspaces({
                 await mkdir(dirname(outputPath), { recursive: true });
                 await writeFile(
                     outputPath,
-                    outputPath.endsWith(".json") ? JSON.stringify(openapi, undefined, indent) : yaml.dump(openapi, { indent })
+                    outputPath.endsWith(".json")
+                        ? JSON.stringify(openapi, undefined, indent)
+                        : yaml.dump(openapi, { indent })
                 );
             });
         })
