@@ -195,6 +195,16 @@
         }
       ]
     },
+    "ai-examples": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.AiExamplesConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "metadata": {
       "oneOf": [
         {
@@ -1552,6 +1562,16 @@
     "docs.PlaygroundSettings": {
       "type": "object",
       "properties": {
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "environments": {
           "oneOf": [
             {
@@ -3902,6 +3922,32 @@
               "items": {
                 "$ref": "#/definitions/docs.AIChatDatasource"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.AiExamplesConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "style": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"

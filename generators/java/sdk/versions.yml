@@ -1,4 +1,37 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.29.2
+  changelogEntry:
+    - summary: |
+        Add `notify`, `notifyAll`, and `wait` to reserved method names to prevent generated SDK
+        methods from conflicting with final methods in Java's Object class. This fixes compilation
+        errors when an API has a subpackage named "notify" (e.g., Twilio's Notify API).
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.29.1
+  changelogEntry:
+    - summary: |
+        Fix `_Builder` class to support all builder methods (url, timeout, environment, maxRetries,
+        httpClient, addHeader) so method chaining works in any order. This allows customers upgrading
+        from 3.18.x who wrote `builder().url().token()` to continue working without compile errors.
+        Configuration values set on `_Builder` are now properly passed through to `_TokenAuth` and
+        `_CredentialsAuth` when `token()` or `credentials()` is called.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.29.0
+  changelogEntry:
+    - summary: |
+        Add backward-compatible `builder()` method for OAuth client credentials authentication.
+        This restores support for the classic builder pattern `Client.builder().token("...")` and
+        `Client.builder().credentials("...", "...")` alongside the existing `withToken()` and
+        `withCredentials()` shortcuts. This prevents breaking changes for customers who upgraded.
+      type: feat
+  createdAt: "2026-01-14"
+  irVersion: 63
+
 - version: 3.28.2
   changelogEntry:
     - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.

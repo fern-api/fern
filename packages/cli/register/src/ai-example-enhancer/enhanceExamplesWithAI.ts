@@ -4,8 +4,6 @@ import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { type EndpointSelector, type HttpMethod, OpenAPIPruner } from "@fern-api/openapi-pruner";
 import { TaskContext } from "@fern-api/task-context";
-import boxen from "boxen";
-import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
@@ -155,9 +153,6 @@ class ConcurrentEndpointProcessor {
         return { ...this.stats };
     }
 }
-
-// Static flag to ensure the informative message is only logged once per process
-let hasLoggedInfoMessage = false;
 
 interface BodyV3 {
     type?: "json" | "stream" | "sse" | "filename";
@@ -395,24 +390,6 @@ async function performAIEnhancement(
     sourceFilePath?: AbsoluteFilePath,
     apiName?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
-    // Log informative message only once per process
-    if (!hasLoggedInfoMessage) {
-        const message =
-            chalk.blue("Notice: new feature added (experimental)!\n\n") +
-            "We are generating realistic examples for endpoints in your spec.\n" +
-            "This will not override your current examples. Please wait a moment.\n\n" +
-            "Future runs will use saved examples. If you wish to override the content of the\n" +
-            "examples, please edit and commit auto-generated `ai_examples_override.yml` files.";
-        const boxedMessage = boxen(message, {
-            padding: 1,
-            textAlignment: "left",
-            borderColor: "blue",
-            borderStyle: "round"
-        });
-        context.logger.info("\n" + boxedMessage + "\n");
-        hasLoggedInfoMessage = true;
-    }
-
     const enhancer = new LambdaExampleEnhancer(config, context, token, organizationId);
     const circuitBreaker = new CircuitBreaker();
 

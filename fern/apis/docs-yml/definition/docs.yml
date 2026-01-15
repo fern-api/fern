@@ -134,6 +134,17 @@ types:
   #   properties:
   #     app-id: string
 
+  AiExamplesConfig:
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: |
+          Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+      style:
+        type: optional<string>
+        docs: |
+          Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
+
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
@@ -178,6 +189,12 @@ types:
       "ai-chat": optional<AIChatConfig>
 
       "ai-search": optional<AIChatConfig>
+
+      # ai examples
+      "ai-examples":
+        type: optional<AiExamplesConfig>
+        docs: |
+          Configure AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
 
       # seo
       metadata: optional<MetadataConfig>
@@ -1633,17 +1650,22 @@ types:
           Enable dynamic snippets in `docs.yml`, then configure them by following the SDK snippets setup instructions.
       ai-examples:
         type: optional<boolean>
-        availability: pre-release
+        availability: deprecated
         docs: |
           Enable AI-powered example enhancement for API documentation. When enabled, API examples will be enhanced with AI-generated content to provide more comprehensive and realistic examples.
+
+          DEPRECATED: Use the top-level `ai-examples` property instead.
       ai-example-style-instructions:
         type: optional<string>
-        availability: pre-release
+        availability: deprecated
         docs: |
           Custom styling instructions for AI-generated examples. When provided, these instructions will guide the AI in generating examples that match your preferred style, naming conventions, or domain-specific terminology. Limited to 500 characters.
 
+          DEPRECATED: Use the top-level `ai-example-style-instructions` property instead.
+
   PlaygroundSettings:
     properties:
+      hidden: optional<boolean>
       environments:
         type: optional<list<string>>
         docs: A list of environment IDs that are allowed to be used in the playground.
