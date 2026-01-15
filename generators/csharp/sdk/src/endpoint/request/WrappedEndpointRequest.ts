@@ -388,7 +388,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const maybeDotValue = needsDotValue ? ".Value" : "";
 
         if (this.isString(reference)) {
-            return this.csharp.codeblock(`${parameter}`);
+            // When using experimental explicit nullable/optional, Optional<string?> needs .Value to unwrap
+            const needsOptionalValue =
+                (allowOptionals ?? true) &&
+                this.context.generation.settings.enableExplicitNullableOptional &&
+                isOptional &&
+                isNullable;
+            const optionalValue = needsOptionalValue ? ".Value" : "";
+            return this.csharp.codeblock(`${parameter}${optionalValue}`);
         }
 
         if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
