@@ -2,6 +2,7 @@
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import { runCliV2 } from "@fern-api/cli-v2";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
@@ -205,6 +206,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
+    addV2Command(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -1803,6 +1805,27 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 outputPath: resolve(cwd(), argv.outputPath),
                 indent: argv.indent
             });
+        }
+    );
+}
+
+function addV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "v2",
+        false, // Hidden from --help while in-development.
+        (yargs) =>
+            yargs.help(false).version(false).strict(false).parserConfiguration({
+                "unknown-options-as-args": true
+            }),
+        async (argv) => {
+            try {
+                // Pass through all arguments after "v2" to the v2 CLI
+                const v2Args = argv._.slice(1).map(String);
+                await runCliV2(v2Args);
+            } catch (error) {
+                cliContext.logger.error("CLI v2 failed:", String(error));
+                cliContext.failWithoutThrowing();
+            }
         }
     );
 }

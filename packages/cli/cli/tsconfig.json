@@ -131,6 +131,9 @@
       "path": "../cli-logger"
     },
     {
+      "path": "../cli-v2"
+    },
+    {
       "path": "../../commons/casings-generator"
     },
     {
