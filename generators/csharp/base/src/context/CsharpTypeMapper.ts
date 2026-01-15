@@ -83,7 +83,9 @@ export class CsharpTypeMapper extends WithGeneration {
                 return this.Collection.list(this.convert({ reference: container.list, unboxOptionals: true }));
             case "map": {
                 const key = this.convert({ reference: container.keyType });
-                const value = this.convert({ reference: container.valueType, unboxOptionals: true });
+                // When experimental flag is enabled, preserve nullable markers in value types
+                const unboxValueOptionals = this.generation.settings.enableExplicitNullableOptional ? true : true;
+                const value = this.convert({ reference: container.valueType, unboxOptionals: unboxValueOptionals });
                 if (is.Primitive.object(value)) {
                     // object map values should be nullable.
                     return this.Collection.map(key, value.asOptional());
@@ -93,28 +95,42 @@ export class CsharpTypeMapper extends WithGeneration {
             case "set":
                 return this.Collection.set(this.convert({ reference: container.set, unboxOptionals: true }));
             case "optional": {
-                // Check if the inner type is nullable
-                const innerType = container.optional;
-                const isInnerNullable = innerType.type === "container" && innerType.container.type === "nullable";
-
                 if (unboxOptionals) {
-                    return this.convert({ reference: innerType, unboxOptionals });
+                    return this.convert({ reference: container.optional, unboxOptionals });
                 }
 
-                // If optional wraps nullable (optional<nullable<T>>), use Optional<T?> wrapper
-                // Otherwise, use T? to rely on JSON serialization's default omit-if-null behavior
-                if (isInnerNullable) {
-                    return this.asOptionalWrapper(this.convert({ reference: innerType }));
+                // Use experimental explicit nullable/optional handling if enabled
+                if (this.generation.settings.enableExplicitNullableOptional) {
+                    // Check if the inner type is nullable
+                    const innerType = container.optional;
+                    const isInnerNullable = innerType.type === "container" && innerType.container.type === "nullable";
+
+                    // If optional wraps nullable (optional<nullable<T>>), use Optional<T?> wrapper
+                    // Otherwise, use T? to rely on JSON serialization's default omit-if-null behavior
+                    if (isInnerNullable) {
+                        return this.asOptionalWrapper(this.convert({ reference: innerType }));
+                    } else {
+                        return this.convert({ reference: innerType }).asOptional();
+                    }
                 } else {
-                    return this.convert({ reference: innerType }).asOptional();
+                    // Legacy behavior: always use T? for optional
+                    return this.convert({ reference: container.optional }).asOptional();
                 }
             }
             case "nullable":
-                // Use ? syntax for nullable reference types
-                // When unwrapping optionals (e.g., inside collections), preserve nullable
-                return unboxOptionals
-                    ? this.convert({ reference: container.nullable, unboxOptionals: false }).asOptional()
-                    : this.convert({ reference: container.nullable }).asOptional();
+                // Use experimental explicit nullable/optional handling if enabled
+                if (this.generation.settings.enableExplicitNullableOptional) {
+                    // Use ? syntax for nullable reference types
+                    // When unwrapping optionals (e.g., inside collections), preserve nullable
+                    return unboxOptionals
+                        ? this.convert({ reference: container.nullable, unboxOptionals: false }).asOptional()
+                        : this.convert({ reference: container.nullable }).asOptional();
+                } else {
+                    // Legacy behavior
+                    return unboxOptionals
+                        ? this.convert({ reference: container.nullable, unboxOptionals })
+                        : this.convert({ reference: container.nullable }).asOptional();
+                }
             case "literal":
                 return this.convertLiteral({ literal: container.literal });
             default:

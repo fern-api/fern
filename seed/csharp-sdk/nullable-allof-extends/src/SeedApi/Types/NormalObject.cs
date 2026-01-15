@@ -14,7 +14,6 @@ public record NormalObject : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("normalField")]
     public string? NormalField { get; set; }
 

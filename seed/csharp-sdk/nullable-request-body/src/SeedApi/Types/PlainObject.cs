@@ -11,11 +11,9 @@ public record PlainObject : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
-    [Optional]
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 

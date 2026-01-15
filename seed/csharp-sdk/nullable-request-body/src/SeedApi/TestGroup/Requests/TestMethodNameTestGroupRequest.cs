@@ -10,10 +10,10 @@ public record TestMethodNameTestGroupRequest
     public required string PathParam { get; set; }
 
     [JsonIgnore]
-    public Optional<PlainObject?> QueryParamObject { get; set; }
+    public PlainObject? QueryParamObject { get; set; }
 
     [JsonIgnore]
-    public Optional<int?> QueryParamInteger { get; set; }
+    public int? QueryParamInteger { get; set; }
 
     [JsonIgnore]
     public PlainObject? Body { get; set; }

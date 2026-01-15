@@ -14,7 +14,6 @@ public record NullableObject : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("nullableField")]
     public string? NullableField { get; set; }
 

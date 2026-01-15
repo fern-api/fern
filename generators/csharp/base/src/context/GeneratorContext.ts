@@ -490,7 +490,8 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
                 if (typeReference.container.type === "nullable") {
                     return true;
                 }
-                if (typeReference.container.type === "optional") {
+                // Only check through optional wrapper if experimental flag is enabled
+                if (this.settings.enableExplicitNullableOptional && typeReference.container.type === "optional") {
                     return this.isNullable(typeReference.container.optional);
                 }
                 return false;

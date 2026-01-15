@@ -111,17 +111,19 @@ export function generateField(
             fieldAttributes.push(context.createJsonAccessAttribute(property.propertyAccess));
         }
 
-        // Add Optional/Nullable attributes - combine them if both are present
-        if (typeInfo.isOptional && typeInfo.isNullable) {
-            // Both optional and nullable - use annotation group [Nullable, Optional]
-            const items = [context.createNullableAttribute(), context.createOptionalAttribute()];
-            fieldAttributes.push(context.csharp.annotationGroup({ items }));
-        } else if (typeInfo.isOptional) {
-            // Only optional
-            fieldAttributes.push(context.createOptionalAttribute());
-        } else if (typeInfo.isNullable) {
-            // Only nullable
-            fieldAttributes.push(context.createNullableAttribute());
+        // Add Optional/Nullable attributes - combine them if both are present (only if feature flag is enabled)
+        if (context.generation.settings.enableExplicitNullableOptional) {
+            if (typeInfo.isOptional && typeInfo.isNullable) {
+                // Both optional and nullable - use annotation group [Nullable, Optional]
+                const items = [context.createNullableAttribute(), context.createOptionalAttribute()];
+                fieldAttributes.push(context.csharp.annotationGroup({ items }));
+            } else if (typeInfo.isOptional) {
+                // Only optional
+                fieldAttributes.push(context.createOptionalAttribute());
+            } else if (typeInfo.isNullable) {
+                // Only nullable
+                fieldAttributes.push(context.createNullableAttribute());
+            }
         }
 
         fieldAttributes.push(context.createJsonPropertyNameAttribute(property.name.wireValue));

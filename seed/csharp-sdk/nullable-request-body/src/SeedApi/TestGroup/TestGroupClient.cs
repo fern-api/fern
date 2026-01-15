@@ -27,13 +27,13 @@ public partial class TestGroupClient : ITestGroupClient
     )
     {
         var _query = new Dictionary<string, object>();
-        if (request.QueryParamObject.IsDefined)
+        if (request.QueryParamObject != null)
         {
-            _query["query_param_object"] = JsonUtils.Serialize(request.QueryParamObject.Value);
+            _query["query_param_object"] = JsonUtils.Serialize(request.QueryParamObject);
         }
-        if (request.QueryParamInteger.IsDefined)
+        if (request.QueryParamInteger != null)
         {
-            _query["query_param_integer"] = request.QueryParamInteger.Value.ToString();
+            _query["query_param_integer"] = request.QueryParamInteger.ToString();
         }
         var response = await _client
             .SendRequestAsync(
