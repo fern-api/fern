@@ -5,7 +5,7 @@ import { Config, DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippet
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { mkdir, writeFile } from "fs/promises";
+import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
 
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
@@ -87,7 +87,16 @@ export class DynamicSnippetsJavaTestGenerator {
                 });
                 this.context.logger.debug("Successfully ran spotlessApply");
                 if (enableProfiling) {
-                    this.context.logger.info("Gradle profiling report generated in build/reports/profile/");
+                    // Copy build/reports/ to reports/ at the root so it's not gitignored
+                    const buildReportsPath = join(outputDir, RelativeFilePath.of("build/reports"));
+                    const reportsPath = join(outputDir, RelativeFilePath.of("reports"));
+                    const buildReportsExists = await doesPathExist(buildReportsPath, "directory");
+                    if (buildReportsExists) {
+                        await cp(buildReportsPath, reportsPath, { recursive: true });
+                        this.context.logger.info("Gradle profiling report copied to reports/");
+                    } else {
+                        this.context.logger.info("No profiling report found in build/reports/");
+                    }
                 }
             } catch (e) {
                 this.context.failAndThrow("Failed to run spotlessApply", e);
