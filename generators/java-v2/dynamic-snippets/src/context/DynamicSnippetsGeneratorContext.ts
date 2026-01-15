@@ -25,9 +25,11 @@ const RESERVED_NAMES = new Set([
     "import",
     "for",
     "assert",
-    "switch",
-    "getClass"
+    "switch"
 ]);
+
+// Method names that conflict with final methods in Java's Object class
+const RESERVED_METHOD_NAMES = new Set(["getClass", "notify", "notifyAll", "wait"]);
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
@@ -74,7 +76,12 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getMethodName(name: FernIr.Name): string {
-        return this.getName(name.camelCase.safeName);
+        const methodName = name.camelCase.safeName;
+        // Use suffix for reserved method names to match Java v1 generator behavior
+        if (this.isReservedMethodName(methodName)) {
+            return methodName + "_";
+        }
+        return this.getName(methodName);
     }
 
     public getRootClientClassReference(): java.ClassReference {
@@ -445,5 +452,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     private isReservedName(name: string): boolean {
         return RESERVED_NAMES.has(name);
+    }
+
+    private isReservedMethodName(name: string): boolean {
+        return RESERVED_METHOD_NAMES.has(name);
     }
 }

@@ -810,7 +810,9 @@ ${clientClassName} client = ${clientClassName}.builder()
     }
 
     private getAccessFromRootClient(fernFilepath: FernFilepath): java.AstNode {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.camelCase.safeName + "()");
+        const clientAccessParts = fernFilepath.allParts.map(
+            (part) => this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
+        );
         return clientAccessParts.length > 0
             ? java.codeblock(`${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`)
             : java.codeblock(ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME);
@@ -935,7 +937,8 @@ ${clientClassName} client = ${clientClassName}.builder()
 
         // Get access path to WebSocket client from root client
         const clientAccessParts = fernFilepath.allParts.map(
-            (part: { camelCase: { safeName: string } }) => part.camelCase.safeName + "()"
+            (part: { camelCase: { safeName: string } }) =>
+                this.getKeyWordCompatibleMethodName(part.camelCase.safeName) + "()"
         );
         const wsClientAccess =
             clientAccessParts.length > 0
@@ -1078,5 +1081,14 @@ ${clientClassName} client = ${clientClassName}.builder()
         });
 
         return this.renderSnippet(snippet);
+    }
+
+    private static RESERVED_METHOD_NAMES = new Set(["getClass", "notify", "notifyAll", "wait"]);
+
+    private getKeyWordCompatibleMethodName(methodName: string): string {
+        if (ReadmeSnippetBuilder.RESERVED_METHOD_NAMES.has(methodName)) {
+            return methodName + "_";
+        }
+        return methodName;
     }
 }
