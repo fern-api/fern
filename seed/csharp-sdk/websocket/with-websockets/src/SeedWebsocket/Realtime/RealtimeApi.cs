@@ -1,14 +1,25 @@
-using System.Net.WebSockets;
+using System.ComponentModel;
 using System.Text.Json;
 using SeedWebsocket.Core;
-using SeedWebsocket.Core.Async;
-using SeedWebsocket.Core.Async.Events;
-using SeedWebsocket.Core.Async.Models;
+using SeedWebsocket.Core.WebSockets;
 
 namespace SeedWebsocket;
 
-public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
+public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropertyChanged
 {
+    private readonly RealtimeApi.Options _options;
+
+    private readonly WebSocketClient _client;
+
+    /// <summary>
+    /// Event that is raised when a property value changes.
+    /// </summary>
+    public event PropertyChangedEventHandler PropertyChanged
+    {
+        add => _client.PropertyChanged += value;
+        remove => _client.PropertyChanged -= value;
+    }
+
     /// <summary>
     /// Event handler for ReceiveEvent.
     /// Use ReceiveEvent.Subscribe(...) to receive messages.
@@ -37,72 +48,56 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
     /// Constructor with options
     /// </summary>
     public RealtimeApi(RealtimeApi.Options options)
-        : base(options) { }
-
-    public string SessionId
     {
-        get => ApiOptions.SessionId;
-        set =>
-            NotifyIfPropertyChanged(
-                EqualityComparer<string>.Default.Equals(ApiOptions.SessionId),
-                ApiOptions.SessionId = value
-            );
-    }
-
-    public string? Model
-    {
-        get => ApiOptions.Model;
-        set =>
-            NotifyIfPropertyChanged(
-                EqualityComparer<string>.Default.Equals(ApiOptions.Model),
-                ApiOptions.Model = value
-            );
-    }
-
-    public int? Temperature
-    {
-        get => ApiOptions.Temperature;
-        set =>
-            NotifyIfPropertyChanged(
-                EqualityComparer<string>.Default.Equals(ApiOptions.Temperature),
-                ApiOptions.Temperature = value
-            );
-    }
-
-    public string? LanguageCode
-    {
-        get => ApiOptions.LanguageCode;
-        set =>
-            NotifyIfPropertyChanged(
-                EqualityComparer<string>.Default.Equals(ApiOptions.LanguageCode),
-                ApiOptions.LanguageCode = value
-            );
-    }
-
-    /// <summary>
-    /// Creates the Uri for the websocket connection from the BaseUrl and parameters
-    /// </summary>
-    protected override Uri CreateUri()
-    {
-        var uri = new UriBuilder(BaseUrl)
+        _options = options;
+        var uri = new UriBuilder(_options.BaseUrl)
         {
             Query = new Query()
             {
-                { "model", Model },
-                { "temperature", Temperature },
-                { "language-code", LanguageCode },
+                { "model", _options.Model },
+                { "temperature", _options.Temperature },
+                { "language-code", _options.LanguageCode },
             },
         };
-        uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(SessionId)}";
-        return uri.Uri;
+        uri.Path = $"{uri.Path.TrimEnd('/')}/realtime/{Uri.EscapeDataString(_options.SessionId)}";
+        _client = new WebSocketClient(uri.Uri, OnTextMessage);
     }
 
-    protected override void SetConnectionOptions(ClientWebSocketOptions options) { }
+    /// <summary>
+    /// Gets the current connection status of the WebSocket.
+    /// </summary>
+    public ConnectionStatus Status => _client.Status;
+
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is established.
+    /// </summary>
+    public Event<Connected> Connected => _client.Connected;
+
+    /// <summary>
+    /// Event that is raised when the WebSocket connection is closed.
+    /// </summary>
+    public Event<Closed> Closed => _client.Closed;
+
+    /// <summary>
+    /// Event that is raised when an exception occurs during WebSocket operations.
+    /// </summary>
+    public Event<Exception> ExceptionOccurred => _client.ExceptionOccurred;
+
+    /// <summary>
+    /// Disposes of event subscriptions
+    /// </summary>
+    private void DisposeEvents()
+    {
+        ReceiveEvent.Dispose();
+        ReceiveSnakeCase.Dispose();
+        ReceiveEvent2.Dispose();
+        ReceiveEvent3.Dispose();
+    }
 
     /// <summary>
     /// Dispatches incoming WebSocket messages
     /// </summary>
-    protected async override Task OnTextMessage(Stream stream)
+    private async Task OnTextMessage(Stream stream)
     {
         var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
         if (json == null)
@@ -152,14 +147,39 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
     }
 
     /// <summary>
-    /// Disposes of event subscriptions
+    /// Asynchronously establishes a WebSocket connection.
     /// </summary>
-    protected override void DisposeEvents()
+    public async Task ConnectAsync()
     {
-        ReceiveEvent.Dispose();
-        ReceiveSnakeCase.Dispose();
-        ReceiveEvent2.Dispose();
-        ReceiveEvent3.Dispose();
+        await _client.ConnectAsync().ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Asynchronously closes the WebSocket connection.
+    /// </summary>
+    public async Task CloseAsync()
+    {
+        await _client.CloseAsync().ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Asynchronously disposes the WebSocket client, closing any active connections and cleaning up resources.
+    /// </summary>
+    public async ValueTask DisposeAsync()
+    {
+        await _client.DisposeAsync();
+        DisposeEvents();
+        GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    /// Synchronously disposes the WebSocket client, closing any active connections and cleaning up resources.
+    /// </summary>
+    public void Dispose()
+    {
+        _client.Dispose();
+        DisposeEvents();
+        GC.SuppressFinalize(this);
     }
 
     /// <summary>
@@ -167,7 +187,7 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
     /// </summary>
     public async Task Send(SendEvent message)
     {
-        await SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -175,7 +195,7 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
     /// </summary>
     public async Task Send(SendSnakeCase message)
     {
-        await SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -183,18 +203,18 @@ public partial class RealtimeApi : AsyncApi<RealtimeApi.Options>
     /// </summary>
     public async Task Send(SendEvent2 message)
     {
-        await SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
     }
 
     /// <summary>
     /// Options for the API client
     /// </summary>
-    public class Options : AsyncApiOptions
+    public class Options
     {
         /// <summary>
         /// The Websocket URL for the API connection.
         /// </summary>
-        override public string BaseUrl { get; set; } = "";
+        public string BaseUrl { get; set; } = "";
 
         public string? Model { get; set; }
 
