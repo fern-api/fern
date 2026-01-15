@@ -1,4 +1,49 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.14.0
+  changelogEntry:
+    - summary: |
+        Add support for explicit nullable/optional type handling with the new `Optional<T>` type.
+
+        When `experimental-explicit-nullable-optional: true` is configured in generators.yml, the SDK will use `Optional<T?>` for nullable optional fields, enabling three-state semantics for PATCH requests:
+        * **Undefined**: Field not set - won't be included in the request (leave unchanged on server)
+        * **Defined with null**: Field explicitly set to null - will send `null` (clear the field on server)
+        * **Defined with value**: Field set to a value - will send the value (update the field on server)
+
+        Example usage:
+        ```csharp
+        public class UpdateUserRequest
+        {
+            public Optional<string?> Name { get; set; } = Optional<string?>.Undefined;
+            public Optional<string?> Email { get; set; } = Optional<string?>.Undefined;
+        }
+
+        // Don't send name field (leave unchanged)
+        var request1 = new UpdateUserRequest();
+
+        // Set name to a value
+        var request2 = new UpdateUserRequest { Name = "John" };
+
+        // Clear name (send null)
+        var request3 = new UpdateUserRequest { Name = null };
+        ```
+
+        The `Optional<T>` type includes:
+        * `IsDefined` property to check if a value is set
+        * `Value` property to access the value (throws if undefined)
+        * `TryGetValue` method for safe value access
+        * Implicit conversion operators for ergonomic usage
+        * Full JSON serialization support
+        * `IEquatable<Optional<T>>` implementation for proper equality checks
+      type: feat
+    - summary: |
+        Fix query parameter serialization to properly handle nullable struct types (DateTime?, DateOnly?, etc.) by adding `.Value` accessor when needed.
+      type: fix
+    - summary: |
+        Improve nullable and optional type handling throughout the generator, including collection value types and type mapping.
+      type: fix
+  createdAt: "2026-01-15"
+  irVersion: 62
+
 - version: 2.13.1
   changelogEntry:
     - summary: Update Dockerfile to use the latest generator-cli with improve reference.md generation.
