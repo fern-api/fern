@@ -18,11 +18,9 @@ public record Error : IJsonOnDeserialized
     [JsonPropertyName("code")]
     public required ErrorCode Code { get; set; }
 
-    [Optional]
     [JsonPropertyName("detail")]
     public string? Detail { get; set; }
 
-    [Optional]
     [JsonPropertyName("field")]
     public string? Field { get; set; }
 

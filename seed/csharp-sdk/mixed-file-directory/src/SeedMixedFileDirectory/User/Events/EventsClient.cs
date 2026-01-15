@@ -32,7 +32,7 @@ public partial class EventsClient : IEventsClient
         var _query = new Dictionary<string, object>();
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit.Value.ToString();
+            _query["limit"] = request.Limit.ToString();
         }
         var response = await _client
             .SendRequestAsync(

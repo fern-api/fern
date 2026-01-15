@@ -26,7 +26,6 @@ public record SendRequest : IJsonOnDeserialized
     [JsonPropertyName("context")]
     public string Context { get; set; } = "You're super wise";
 
-    [Optional]
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }
 

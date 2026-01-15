@@ -14,7 +14,6 @@ public record InitializeProblemRequest : IJsonOnDeserialized
     [JsonPropertyName("problemId")]
     public required string ProblemId { get; set; }
 
-    [Optional]
     [JsonPropertyName("problemVersion")]
     public int? ProblemVersion { get; set; }
 

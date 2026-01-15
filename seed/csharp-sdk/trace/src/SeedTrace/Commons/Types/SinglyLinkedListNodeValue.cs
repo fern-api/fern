@@ -17,7 +17,6 @@ public record SinglyLinkedListNodeValue : IJsonOnDeserialized
     [JsonPropertyName("val")]
     public required double Val { get; set; }
 
-    [Optional]
     [JsonPropertyName("next")]
     public string? Next { get; set; }
 

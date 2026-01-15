@@ -14,7 +14,6 @@ public record UserPage : IJsonOnDeserialized
     [JsonPropertyName("data")]
     public required UserListContainer Data { get; set; }
 
-    [Optional]
     [JsonPropertyName("next")]
     public string? Next { get; set; }
 

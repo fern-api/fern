@@ -90,7 +90,7 @@ await client.Optional.SendOptionalTypedBodyAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalNullableWithAllOptionalPropertiesAsync</a>(actionId, id, Optional<DeployParams?> { ... }) -> DeployResponse</code></summary>
+<details><summary><code>client.Optional.<a href="/src/SeedObjectsWithImports/Optional/OptionalClient.cs">SendOptionalNullableWithAllOptionalPropertiesAsync</a>(actionId, id, DeployParams? { ... }) -> DeployResponse</code></summary>
 <dl>
 <dd>
 
@@ -153,7 +153,7 @@ await client.Optional.SendOptionalNullableWithAllOptionalPropertiesAsync(
 <dl>
 <dd>
 
-**request:** `Optional<DeployParams?>` 
+**request:** `DeployParams?` 
     
 </dd>
 </dl>

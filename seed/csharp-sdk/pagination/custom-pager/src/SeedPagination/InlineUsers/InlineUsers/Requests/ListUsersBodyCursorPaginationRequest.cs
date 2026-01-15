@@ -10,7 +10,6 @@ public record ListUsersBodyCursorPaginationRequest
     /// The object that contains the cursor used for pagination
     /// in order to fetch the next page of results.
     /// </summary>
-    [Optional]
     [JsonPropertyName("pagination")]
     public WithCursor? Pagination { get; set; }
 

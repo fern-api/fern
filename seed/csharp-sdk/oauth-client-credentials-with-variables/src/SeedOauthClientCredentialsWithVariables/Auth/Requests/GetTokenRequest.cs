@@ -18,7 +18,6 @@ public record GetTokenRequest
     [JsonPropertyName("grant_type")]
     public string GrantType { get; set; } = "client_credentials";
 
-    [Optional]
     [JsonPropertyName("scope")]
     public string? Scope { get; set; }
 

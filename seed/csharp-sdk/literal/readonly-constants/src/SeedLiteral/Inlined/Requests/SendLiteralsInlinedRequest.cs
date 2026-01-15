@@ -17,14 +17,12 @@ public record SendLiteralsInlinedRequest
             );
     }
 
-    [Optional]
     [JsonPropertyName("context")]
     public string? Context { get; set; }
 
     [JsonPropertyName("query")]
     public required string Query { get; set; }
 
-    [Optional]
     [JsonPropertyName("temperature")]
     public double? Temperature { get; set; }
 
@@ -46,7 +44,6 @@ public record SendLiteralsInlinedRequest
             );
     }
 
-    [Optional]
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }
 

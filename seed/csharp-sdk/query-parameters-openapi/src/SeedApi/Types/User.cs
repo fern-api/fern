@@ -11,11 +11,9 @@ public record User : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 
-    [Optional]
     [JsonPropertyName("tags")]
     public IEnumerable<string>? Tags { get; set; }
 

@@ -11,19 +11,15 @@ public record DocumentMetadata : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("author")]
     public string? Author { get; set; }
 
-    [Optional]
     [JsonPropertyName("id")]
     public int? Id { get; set; }
 
-    [Optional]
     [JsonPropertyName("tags")]
     public IEnumerable<object>? Tags { get; set; }
 
-    [Optional]
     [JsonPropertyName("title")]
     public string? Title { get; set; }
 

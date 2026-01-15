@@ -14,7 +14,6 @@ public record StreamedCompletion : IJsonOnDeserialized
     [JsonPropertyName("delta")]
     public required string Delta { get; set; }
 
-    [Optional]
     [JsonPropertyName("tokens")]
     public int? Tokens { get; set; }
 

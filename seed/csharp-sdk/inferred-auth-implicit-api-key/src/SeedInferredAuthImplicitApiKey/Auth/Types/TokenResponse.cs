@@ -23,7 +23,6 @@ public record TokenResponse : IJsonOnDeserialized
     [JsonPropertyName("expires_in")]
     public required int ExpiresIn { get; set; }
 
-    [Optional]
     [JsonPropertyName("scope")]
     public string? Scope { get; set; }
 

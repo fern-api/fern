@@ -11,7 +11,6 @@ public record FirstItemType : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("type")]
     public string? Type { get; set; }
 

@@ -17,7 +17,6 @@ public record CreateUserRequest
     /// The age of the user.
     /// This property is not required.
     /// </summary>
-    [Optional]
     [JsonPropertyName("age")]
     public int? Age { get; set; }
 

@@ -113,7 +113,7 @@ public partial class SeedApiClient : ISeedApiClient
         _query["neighborRequired"] = JsonUtils.Serialize(request.NeighborRequired);
         if (request.OptionalDeadline != null)
         {
-            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
+            _query["optionalDeadline"] = request.OptionalDeadline.ToString(
                 Constants.DateTimeFormat
             );
         }

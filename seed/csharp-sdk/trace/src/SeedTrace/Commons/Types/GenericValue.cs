@@ -11,7 +11,6 @@ public record GenericValue : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("stringifiedType")]
     public string? StringifiedType { get; set; }
 

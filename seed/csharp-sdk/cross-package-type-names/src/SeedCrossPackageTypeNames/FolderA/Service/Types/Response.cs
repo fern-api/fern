@@ -12,7 +12,6 @@ public record Response : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("foo")]
     public SeedCrossPackageTypeNames.FolderB.Foo? Foo { get; set; }
 

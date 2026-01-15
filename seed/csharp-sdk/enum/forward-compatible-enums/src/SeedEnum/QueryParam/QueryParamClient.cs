@@ -27,7 +27,7 @@ public partial class QueryParamClient : IQueryParamClient
         _query["operandOrColor"] = JsonUtils.Serialize(request.OperandOrColor);
         if (request.MaybeOperand != null)
         {
-            _query["maybeOperand"] = request.MaybeOperand.Value.Stringify();
+            _query["maybeOperand"] = request.MaybeOperand.Stringify();
         }
         if (request.MaybeOperandOrColor != null)
         {

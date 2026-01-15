@@ -22,7 +22,6 @@ public record TestCaseV2 : IJsonOnDeserialized
     public Dictionary<string, VariableValue> Arguments { get; set; } =
         new Dictionary<string, VariableValue>();
 
-    [Optional]
     [JsonPropertyName("expects")]
     public TestCaseExpects? Expects { get; set; }
 

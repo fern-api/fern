@@ -11,11 +11,9 @@ public record NestedUser : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("name")]
     public string? Name { get; set; }
 
-    [Optional]
     [JsonPropertyName("user")]
     public User? User { get; set; }
 

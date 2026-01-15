@@ -29,7 +29,6 @@ public record Connection : IJsonOnDeserialized
     /// <summary>
     /// Display name for the connection
     /// </summary>
-    [Optional]
     [JsonPropertyName("display_name")]
     public string? DisplayName { get; set; }
 
@@ -42,35 +41,30 @@ public record Connection : IJsonOnDeserialized
     /// <summary>
     /// Connection-specific configuration options
     /// </summary>
-    [Optional]
     [JsonPropertyName("options")]
     public Dictionary<string, object?>? Options { get; set; }
 
     /// <summary>
     /// List of client IDs that can use this connection
     /// </summary>
-    [Optional]
     [JsonPropertyName("enabled_clients")]
     public IEnumerable<string>? EnabledClients { get; set; }
 
     /// <summary>
     /// Applicable realms for enterprise connections
     /// </summary>
-    [Optional]
     [JsonPropertyName("realms")]
     public IEnumerable<string>? Realms { get; set; }
 
     /// <summary>
     /// Whether this is a domain connection
     /// </summary>
-    [Optional]
     [JsonPropertyName("is_domain_connection")]
     public bool? IsDomainConnection { get; set; }
 
     /// <summary>
     /// Additional metadata
     /// </summary>
-    [Optional]
     [JsonPropertyName("metadata")]
     public Dictionary<string, object?>? Metadata { get; set; }
 

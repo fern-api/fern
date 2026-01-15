@@ -14,7 +14,6 @@ public record StartingAfterPaging : IJsonOnDeserialized
     [JsonPropertyName("per_page")]
     public required int PerPage { get; set; }
 
-    [Optional]
     [JsonPropertyName("starting_after")]
     public string? StartingAfter { get; set; }
 

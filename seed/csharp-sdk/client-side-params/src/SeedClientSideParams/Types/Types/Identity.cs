@@ -23,11 +23,9 @@ public record Identity : IJsonOnDeserialized
     [JsonPropertyName("is_social")]
     public required bool IsSocial { get; set; }
 
-    [Optional]
     [JsonPropertyName("access_token")]
     public string? AccessToken { get; set; }
 
-    [Optional]
     [JsonPropertyName("expires_in")]
     public int? ExpiresIn { get; set; }
 

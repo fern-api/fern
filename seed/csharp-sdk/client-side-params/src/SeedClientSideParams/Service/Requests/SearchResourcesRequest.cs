@@ -21,11 +21,9 @@ public record SearchResourcesRequest
     /// <summary>
     /// Search query text
     /// </summary>
-    [Optional]
     [JsonPropertyName("query")]
     public string? Query { get; set; }
 
-    [Optional]
     [JsonPropertyName("filters")]
     public Dictionary<string, object?>? Filters { get; set; }
 

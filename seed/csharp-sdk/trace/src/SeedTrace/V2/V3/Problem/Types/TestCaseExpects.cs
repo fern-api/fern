@@ -12,7 +12,6 @@ public record TestCaseExpects : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("expectedStdout")]
     public string? ExpectedStdout { get; set; }
 

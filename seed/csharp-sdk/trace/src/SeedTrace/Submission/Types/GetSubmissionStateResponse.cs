@@ -11,7 +11,6 @@ public record GetSubmissionStateResponse : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("timeSubmitted")]
     public DateTime? TimeSubmitted { get; set; }
 

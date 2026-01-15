@@ -21,7 +21,6 @@ public record TokenResponse : IJsonOnDeserialized
     [JsonPropertyName("expires_in")]
     public required int ExpiresIn { get; set; }
 
-    [Optional]
     [JsonPropertyName("refresh_token")]
     public string? RefreshToken { get; set; }
 

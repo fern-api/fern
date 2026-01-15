@@ -11,11 +11,9 @@ public record ListUsersOptionalDataPaginationResponse : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("hasNextPage")]
     public bool? HasNextPage { get; set; }
 
-    [Optional]
     [JsonPropertyName("page")]
     public Page? Page { get; set; }
 
@@ -25,7 +23,6 @@ public record ListUsersOptionalDataPaginationResponse : IJsonOnDeserialized
     [JsonPropertyName("total_count")]
     public required int TotalCount { get; set; }
 
-    [Optional]
     [JsonPropertyName("data")]
     public IEnumerable<User>? Data { get; set; }
 

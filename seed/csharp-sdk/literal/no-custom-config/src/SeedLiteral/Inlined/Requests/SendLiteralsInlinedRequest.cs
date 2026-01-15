@@ -9,14 +9,12 @@ public record SendLiteralsInlinedRequest
     [JsonPropertyName("prompt")]
     public string Prompt { get; set; } = "You are a helpful assistant";
 
-    [Optional]
     [JsonPropertyName("context")]
     public string? Context { get; set; }
 
     [JsonPropertyName("query")]
     public required string Query { get; set; }
 
-    [Optional]
     [JsonPropertyName("temperature")]
     public double? Temperature { get; set; }
 
@@ -26,7 +24,6 @@ public record SendLiteralsInlinedRequest
     [JsonPropertyName("aliasedContext")]
     public string AliasedContext { get; set; } = "You're super wise";
 
-    [Optional]
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }
 

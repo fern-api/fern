@@ -11,39 +11,30 @@ public record UpdateUserRequest : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("email")]
     public string? Email { get; set; }
 
-    [Optional]
     [JsonPropertyName("email_verified")]
     public bool? EmailVerified { get; set; }
 
-    [Optional]
     [JsonPropertyName("username")]
     public string? Username { get; set; }
 
-    [Optional]
     [JsonPropertyName("phone_number")]
     public string? PhoneNumber { get; set; }
 
-    [Optional]
     [JsonPropertyName("phone_verified")]
     public bool? PhoneVerified { get; set; }
 
-    [Optional]
     [JsonPropertyName("user_metadata")]
     public Dictionary<string, object?>? UserMetadata { get; set; }
 
-    [Optional]
     [JsonPropertyName("app_metadata")]
     public Dictionary<string, object?>? AppMetadata { get; set; }
 
-    [Optional]
     [JsonPropertyName("password")]
     public string? Password { get; set; }
 
-    [Optional]
     [JsonPropertyName("blocked")]
     public bool? Blocked { get; set; }
 

@@ -11,11 +11,9 @@ public record ListUsersPaginationResponse : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("hasNextPage")]
     public bool? HasNextPage { get; set; }
 
-    [Optional]
     [JsonPropertyName("page")]
     public Page? Page { get; set; }
 

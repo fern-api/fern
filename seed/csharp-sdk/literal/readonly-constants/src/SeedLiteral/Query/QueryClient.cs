@@ -50,13 +50,11 @@ public partial class QueryClient : IQueryClient
         }
         if (request.OptionalStream != null)
         {
-            _query["optional_stream"] = JsonUtils.Serialize(request.OptionalStream.Value);
+            _query["optional_stream"] = JsonUtils.Serialize(request.OptionalStream);
         }
         if (request.AliasOptionalStream != null)
         {
-            _query["alias_optional_stream"] = JsonUtils.Serialize(
-                request.AliasOptionalStream.Value
-            );
+            _query["alias_optional_stream"] = JsonUtils.Serialize(request.AliasOptionalStream);
         }
         var response = await _client
             .SendRequestAsync(

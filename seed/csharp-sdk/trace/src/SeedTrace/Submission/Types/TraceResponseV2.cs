@@ -20,18 +20,15 @@ public record TraceResponseV2 : IJsonOnDeserialized
     [JsonPropertyName("file")]
     public required TracedFile File { get; set; }
 
-    [Optional]
     [JsonPropertyName("returnValue")]
     public DebugVariableValue? ReturnValue { get; set; }
 
-    [Optional]
     [JsonPropertyName("expressionLocation")]
     public ExpressionLocation? ExpressionLocation { get; set; }
 
     [JsonPropertyName("stack")]
     public required StackInformation Stack { get; set; }
 
-    [Optional]
     [JsonPropertyName("stdout")]
     public string? Stdout { get; set; }
 

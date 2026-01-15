@@ -11,7 +11,6 @@ public record Tree : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("nodes")]
     public IEnumerable<Node>? Nodes { get; set; }
 

@@ -17,11 +17,9 @@ public record DoublyLinkedListNodeValue : IJsonOnDeserialized
     [JsonPropertyName("val")]
     public required double Val { get; set; }
 
-    [Optional]
     [JsonPropertyName("next")]
     public string? Next { get; set; }
 
-    [Optional]
     [JsonPropertyName("prev")]
     public string? Prev { get; set; }
 

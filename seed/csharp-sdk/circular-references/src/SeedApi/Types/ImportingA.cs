@@ -11,7 +11,6 @@ public record ImportingA : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("a")]
     public A? A { get; set; }
 

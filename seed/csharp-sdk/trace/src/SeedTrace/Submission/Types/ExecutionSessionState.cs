@@ -11,7 +11,6 @@ public record ExecutionSessionState : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("lastTimeContacted")]
     public string? LastTimeContacted { get; set; }
 
@@ -24,7 +23,6 @@ public record ExecutionSessionState : IJsonOnDeserialized
     [JsonPropertyName("isWarmInstance")]
     public required bool IsWarmInstance { get; set; }
 
-    [Optional]
     [JsonPropertyName("awsTaskId")]
     public string? AwsTaskId { get; set; }
 

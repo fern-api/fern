@@ -24,11 +24,9 @@ public record SubmitRequestV2 : IJsonOnDeserialized
     [JsonPropertyName("problemId")]
     public required string ProblemId { get; set; }
 
-    [Optional]
     [JsonPropertyName("problemVersion")]
     public int? ProblemVersion { get; set; }
 
-    [Optional]
     [JsonPropertyName("userId")]
     public string? UserId { get; set; }
 

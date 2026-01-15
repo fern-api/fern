@@ -11,7 +11,6 @@ public record SinglyLinkedListValue : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("head")]
     public string? Head { get; set; }
 

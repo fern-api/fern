@@ -18,7 +18,6 @@ public record Page : IJsonOnDeserialized
     [JsonPropertyName("page")]
     public required int Page_ { get; set; }
 
-    [Optional]
     [JsonPropertyName("next")]
     public NextPage? Next { get; set; }
 

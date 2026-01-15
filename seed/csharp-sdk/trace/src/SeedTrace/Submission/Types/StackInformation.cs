@@ -14,7 +14,6 @@ public record StackInformation : IJsonOnDeserialized
     [JsonPropertyName("numStackFrames")]
     public required int NumStackFrames { get; set; }
 
-    [Optional]
     [JsonPropertyName("topStackFrame")]
     public StackFrame? TopStackFrame { get; set; }
 

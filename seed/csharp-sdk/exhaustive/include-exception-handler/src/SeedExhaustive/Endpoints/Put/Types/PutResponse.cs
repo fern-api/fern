@@ -12,7 +12,6 @@ public record PutResponse : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("errors")]
     public IEnumerable<Error>? Errors { get; set; }
 

@@ -10,7 +10,6 @@ public record ListUsersBodyOffsetPaginationRequest
     /// The object that contains the offset used for pagination
     /// in order to fetch the next page of results.
     /// </summary>
-    [Optional]
     [JsonPropertyName("pagination")]
     public WithPage? Pagination { get; set; }
 

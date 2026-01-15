@@ -14,11 +14,9 @@ public record Node : IJsonOnDeserialized
     [JsonPropertyName("name")]
     public required string Name { get; set; }
 
-    [Optional]
     [JsonPropertyName("nodes")]
     public IEnumerable<Node>? Nodes { get; set; }
 
-    [Optional]
     [JsonPropertyName("trees")]
     public IEnumerable<Tree>? Trees { get; set; }
 

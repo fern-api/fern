@@ -11,7 +11,6 @@ public record GetTraceResponsesPageRequest : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("offset")]
     public int? Offset { get; set; }
 

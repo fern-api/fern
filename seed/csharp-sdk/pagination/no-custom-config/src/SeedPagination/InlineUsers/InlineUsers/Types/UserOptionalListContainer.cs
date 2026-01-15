@@ -12,7 +12,6 @@ public record UserOptionalListContainer : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("users")]
     public IEnumerable<User>? Users { get; set; }
 

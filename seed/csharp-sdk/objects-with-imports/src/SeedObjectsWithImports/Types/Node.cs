@@ -15,11 +15,9 @@ public record Node : IJsonOnDeserialized
     [JsonPropertyName("id")]
     public required string Id { get; set; }
 
-    [Optional]
     [JsonPropertyName("label")]
     public string? Label { get; set; }
 
-    [Optional]
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
 

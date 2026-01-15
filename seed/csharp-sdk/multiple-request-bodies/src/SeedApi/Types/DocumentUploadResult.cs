@@ -11,11 +11,9 @@ public record DocumentUploadResult : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("fileId")]
     public string? FileId { get; set; }
 
-    [Optional]
     [JsonPropertyName("status")]
     public string? Status { get; set; }
 

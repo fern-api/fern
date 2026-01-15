@@ -110,7 +110,7 @@ public partial class ServiceClient : IServiceClient
         }
         if (request.MaybeInteger != null)
         {
-            _query["maybeInteger"] = request.MaybeInteger.Value.ToString();
+            _query["maybeInteger"] = request.MaybeInteger.ToString();
         }
         var multipartFormRequest_ = new MultipartFormRequest
         {

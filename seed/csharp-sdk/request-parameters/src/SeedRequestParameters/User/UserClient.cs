@@ -113,7 +113,7 @@ public partial class UserClient : IUserClient
     /// await client.User.CreateUsernameOptionalAsync(new CreateUsernameBodyOptionalProperties());
     /// </code></example>
     public async Task CreateUsernameOptionalAsync(
-        Optional<CreateUsernameBodyOptionalProperties?> request,
+        CreateUsernameBodyOptionalProperties? request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
@@ -227,7 +227,7 @@ public partial class UserClient : IUserClient
         _query["bigIntParam"] = request.BigIntParam;
         if (request.OptionalDeadline != null)
         {
-            _query["optionalDeadline"] = request.OptionalDeadline.Value.ToString(
+            _query["optionalDeadline"] = request.OptionalDeadline.ToString(
                 Constants.DateTimeFormat
             );
         }

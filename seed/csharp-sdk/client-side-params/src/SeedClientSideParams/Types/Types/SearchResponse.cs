@@ -14,11 +14,9 @@ public record SearchResponse : IJsonOnDeserialized
     [JsonPropertyName("results")]
     public IEnumerable<Resource> Results { get; set; } = new List<Resource>();
 
-    [Optional]
     [JsonPropertyName("total")]
     public int? Total { get; set; }
 
-    [Optional]
     [JsonPropertyName("next_offset")]
     public int? NextOffset { get; set; }
 

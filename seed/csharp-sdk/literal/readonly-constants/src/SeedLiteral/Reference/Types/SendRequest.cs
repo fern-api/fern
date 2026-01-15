@@ -50,7 +50,6 @@ public record SendRequest : IJsonOnDeserialized
             );
     }
 
-    [Optional]
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }
 

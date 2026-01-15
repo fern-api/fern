@@ -12,7 +12,6 @@ public record Foo : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("foo")]
     public FolderC.Foo? Foo_ { get; set; }
 

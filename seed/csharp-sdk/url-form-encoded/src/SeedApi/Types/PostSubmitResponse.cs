@@ -11,11 +11,9 @@ public record PostSubmitResponse : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [Optional]
     [JsonPropertyName("status")]
     public string? Status { get; set; }
 
-    [Optional]
     [JsonPropertyName("message")]
     public string? Message { get; set; }
 
