@@ -364,13 +364,12 @@ function filterExampleResponse({
         ok: (ok) =>
             ok._visit<ExampleResponse>({
                 body: (exampleTypeReference) => {
-                    const filtered = exampleTypeReference != null
-                        ? filterExampleTypeReference({ filteredIr, exampleTypeReference })
-                        : undefined;
+                    const filtered =
+                        exampleTypeReference != null
+                            ? filterExampleTypeReference({ filteredIr, exampleTypeReference })
+                            : undefined;
                     return ExampleResponse.ok(
-                        ExampleEndpointSuccessResponse.body(
-                            filtered as unknown as ExampleTypeReference
-                        )
+                        ExampleEndpointSuccessResponse.body(filtered as unknown as ExampleTypeReference)
                     );
                 },
                 stream: (stream) =>
