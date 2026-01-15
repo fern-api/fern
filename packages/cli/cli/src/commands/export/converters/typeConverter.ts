@@ -75,6 +75,7 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
                             exampleTypeFromEndpointResponse.shape.shape.type === "object"
                         ) {
                             exampleProperty = exampleTypeFromEndpointResponse.shape.shape.properties.find(
+                                // biome-ignore lint/suspicious/noExplicitAny: TypeScript cannot narrow the type through nested conditionals
                                 (example: any) => {
                                     return example.name.wireValue === property.name.wireValue;
                                 }
