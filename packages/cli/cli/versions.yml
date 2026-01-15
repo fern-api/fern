@@ -7,6 +7,25 @@
   createdAt: "2026-01-15"
   irVersion: 63
 
+- version: 3.43.0
+  changelogEntry:
+    - summary: |
+        Add --indent flag to 'fern api update' to allow specification of indent size in spaces.
+      type: feat
+    - summary: |
+        Add --indent flag to 'fern export' to allow specification of indent size in spaces.
+      type: feat
+  createdAt: "2026-01-15"
+  irVersion: 63
+
+- version: 3.42.4
+  changelogEntry:
+    - summary: |
+        Update experimental flag options to support `exclude-apis`
+      type: feat
+  createdAt: "2026-01-15"
+  irVersion: 63
+
 - version: 3.42.3
   changelogEntry:
     - summary: |
