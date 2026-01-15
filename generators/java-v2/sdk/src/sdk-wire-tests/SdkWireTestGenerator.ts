@@ -415,13 +415,17 @@ export class SdkWireTestGenerator {
             // Correct both the endpoint declaration and the request declaration's fernFilepath
             // This ensures that both the service chain (e.g., client.proxy().proxyV1Service())
             // and the request type imports (e.g., FetchServiceRequest) use the correct package
-            const correctedRequest = {
-                ...dynamicEndpoint.request,
-                declaration: {
-                    ...dynamicEndpoint.request.declaration,
-                    fernFilepath: correctedFernFilepath
-                }
-            };
+            // Only inlined requests have a declaration property; body requests do not
+            const correctedRequest =
+                dynamicEndpoint.request.type === "inlined"
+                    ? {
+                          ...dynamicEndpoint.request,
+                          declaration: {
+                              ...dynamicEndpoint.request.declaration,
+                              fernFilepath: correctedFernFilepath
+                          }
+                      }
+                    : dynamicEndpoint.request;
 
             const correctedDynamicEndpoint = {
                 ...dynamicEndpoint,
