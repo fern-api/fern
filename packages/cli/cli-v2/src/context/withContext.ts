@@ -1,20 +1,18 @@
 import { LogLevel } from "@fern-api/logger";
 import { Context } from "./Context";
-import { GlobalOptions } from "./GlobalOptions";
+import type { GlobalArgs } from "./GlobalArgs";
 
-export function withContext<T>(handler: (context: Context, args: T) => Promise<void>) {
-    return (args: T) => {
-        const globalOptions: GlobalOptions = {
-            verbose: (args as GlobalOptions).verbose,
-            logLevel: (args as GlobalOptions).logLevel
-        };
-        const context = createContext(globalOptions);
+export function withContext<T extends GlobalArgs>(
+    handler: (context: Context, args: T) => Promise<void>
+): (args: T) => Promise<void> {
+    return async (args: T) => {
+        const context = createContext(args);
         return handler(context, args);
     };
 }
 
-function createContext(options: GlobalOptions): Context {
-    const logLevel = options.verbose ? LogLevel.Debug : parseLogLevel(options.logLevel || "info");
+function createContext(options: GlobalArgs): Context {
+    const logLevel = parseLogLevel(options["log-level"] ?? "info");
     return new Context({
         stdout: process.stdout,
         stderr: process.stderr,

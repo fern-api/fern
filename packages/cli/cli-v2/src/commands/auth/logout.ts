@@ -1,12 +1,13 @@
-import { Command } from "commander";
+import type { Argv } from "yargs";
 import { Context } from "../../context/Context";
+import type { GlobalArgs } from "../../context/GlobalArgs";
 import { withContext } from "../../context/withContext";
 
-interface LogoutArgs {}
+export interface LogoutArgs extends GlobalArgs {}
 
-export const logoutCommand = new Command("logout")
-    .description("Log out of fern")
-    .action(withContext<LogoutArgs>(handleLogout));
+export function addLogoutCommand(cli: Argv<GlobalArgs>): void {
+    cli.command("logout", "Log out of fern", (yargs) => yargs, withContext<LogoutArgs>(handleLogout));
+}
 
 async function handleLogout(context: Context, _args: LogoutArgs): Promise<void> {
     context.stdout.info("Logging out...");

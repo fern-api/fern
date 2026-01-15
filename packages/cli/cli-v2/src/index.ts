@@ -1,1 +1,1 @@
-export { program, runCliV2 } from "./cli";
+export { runCliV2 } from "./cli";

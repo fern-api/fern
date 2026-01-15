@@ -1,19 +1,29 @@
-import { Command } from "commander";
-import { createAuthCommand } from "./commands/auth";
-
-export const program = new Command()
-    .name("fern-v2")
-    .description("Fern CLI v2")
-    .version("0.0.1")
-    .option("-v, --verbose", "Enable verbose logging", false)
-    .option("--log-level <level>", "Set log level", "info");
-
-program.addCommand(createAuthCommand());
+import type { Argv } from "yargs";
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
+import { addAuthCommand } from "./commands/auth";
+import { GlobalArgs } from "./context/GlobalArgs";
 
 export async function runCliV2(argv?: string[]): Promise<void> {
-    if (argv) {
-        await program.parseAsync(argv, { from: "user" });
-        return;
-    }
-    await program.parseAsync(process.argv);
+    const cli = createCliV2(argv);
+    await cli.parse();
+}
+
+function createCliV2(argv?: string[]): Argv<GlobalArgs> {
+    const cli: Argv<GlobalArgs> = yargs(argv ?? hideBin(process.argv))
+        .scriptName("fern")
+        .version("0.0.1")
+        .option("log-level", {
+            type: "string",
+            description: "Set log level",
+            choices: ["debug", "info", "warn", "error"] as const,
+            default: "info"
+        })
+        .strict()
+        .demandCommand()
+        .recommendCommands();
+
+    addAuthCommand(cli);
+
+    return cli;
 }

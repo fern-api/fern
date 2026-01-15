@@ -1798,18 +1798,17 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "v2 [args...]",
+        "v2",
         false, // Hidden from --help while in-development.
         (yargs) =>
-            yargs
-                .positional("args", {
-                    array: true,
-                    string: true
-                })
-                .help(false),
+            yargs.help(false).version(false).strict(false).parserConfiguration({
+                "unknown-options-as-args": true
+            }),
         async (argv) => {
             try {
-                await runCliV2(argv.args?.map((arg) => String(arg)) ?? []);
+                // Pass through all arguments after "v2" to the v2 CLI
+                const v2Args = argv._.slice(1).map(String);
+                await runCliV2(v2Args);
             } catch (error) {
                 cliContext.logger.error("CLI v2 failed:", String(error));
                 cliContext.failWithoutThrowing();

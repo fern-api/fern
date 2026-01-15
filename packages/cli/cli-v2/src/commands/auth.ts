@@ -1,12 +1,17 @@
-import { Command } from "commander";
-import { loginCommand } from "./auth/login";
-import { logoutCommand } from "./auth/logout";
-import { tokenCommand } from "./auth/token";
+import type { Argv } from "yargs";
+import type { GlobalArgs } from "../context/GlobalArgs";
+import { addLoginCommand } from "./auth/login";
+import { addLogoutCommand } from "./auth/logout";
+import { addTokenCommand } from "./auth/token";
 
-export function createAuthCommand(): Command {
-    const authCommand = new Command("auth").description("Authenticate fern");
-    authCommand.addCommand(loginCommand);
-    authCommand.addCommand(logoutCommand);
-    authCommand.addCommand(tokenCommand);
-    return authCommand;
+export function addAuthCommand(cli: Argv<GlobalArgs>): void {
+    cli.command("auth", "Authenticate fern", (yargs) => {
+        addLoginCommand(yargs);
+        addLogoutCommand(yargs);
+        addTokenCommand(yargs);
+        return yargs.demandCommand(1).fail((_msg, _err, yargs) => {
+            yargs.showHelp();
+            process.exit(1);
+        });
+    });
 }
