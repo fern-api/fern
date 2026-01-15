@@ -217,8 +217,7 @@ public final class HttpUrlBuilder {
         });
         // Add additional query parameters from RequestOptions (these override request-defined parameters)
         codeBlock.beginControlFlow(
-                "if ($L != null)",
-                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                "if ($L != null)", AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
         codeBlock.beginControlFlow(
                 "$L.getQueryParameters().forEach((key, value) ->",
                 AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
