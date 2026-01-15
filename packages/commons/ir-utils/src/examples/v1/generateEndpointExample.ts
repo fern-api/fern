@@ -7,6 +7,7 @@ import {
     ExampleRequestBody,
     ExampleResponse,
     ExampleTypeReference,
+    ExampleTypeReferenceShape,
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
@@ -77,7 +78,12 @@ export function generateEndpointExample({
         serviceHeaders: [],
         rootPathParameters: [],
         request: undefined,
-        response: ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined)),
+        response: ExampleResponse.ok(
+            ExampleEndpointSuccessResponse.body({
+                jsonExample: undefined,
+                shape: ExampleTypeReferenceShape.unknown({ unknown: undefined })
+            })
+        ),
         docs: undefined
     };
 
