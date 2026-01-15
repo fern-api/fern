@@ -357,6 +357,13 @@ export async function enhanceExamplesWithAI(
         return apiDefinition;
     }
 
+    // Skip AI enhancement in self-hosted environments to avoid external network calls
+    // Self-hosted containers run in airgapped environments without access to Venus/Lambda
+    if (process.env.FERN_SELF_HOSTED === "true") {
+        context.logger.debug("AI example enhancement is skipped in self-hosted environments");
+        return apiDefinition;
+    }
+
     // Wrap the entire AI enhancement pipeline in try-catch to prevent CLI crashes
     try {
         return await performAIEnhancement(
