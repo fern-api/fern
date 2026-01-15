@@ -2,7 +2,7 @@
 - version: 3.44.1
   changelogEntry:
     - summary: |
-        Skip AI example enhancement in self-hosted environments to prevent network errors in airgapped deployments. When `FERN_SELF_HOSTED=true` is set, the CLI no longer attempts to call Venus or FDR Lambda for AI enhancement.
+        Add air-gapped environment detection for AI example enhancement. The CLI now detects network availability before attempting AI enhancement by checking connectivity to Venus. In air-gapped environments, AI enhancement is automatically skipped to prevent network errors. This follows the same pattern used for protobuf generation air-gap detection.
       type: fix
   createdAt: "2026-01-15"
   irVersion: 63
