@@ -42,7 +42,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getRootClientClassName(): string {
-        return "Client";
+        return this.customConfig?.clientModuleName ?? "Client";
     }
 
     public getRootModuleName(): string {
